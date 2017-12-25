@@ -8,13 +8,13 @@ npm install vxe-utils --save
 
 ### 按需引入
 ``` shell
-import { dateToString, stringToDate } from 'vxe-utils/core'
+import { dateToString, stringToDate } from 'xe-utils/core'
 
 let dateStr = dateToString(new Date())
 let date = stringToDate(dateStr)
 ```
 
-### 在Vue模块化的打包环境中通过 Vue.use() 来全局安装
+### 如果是全局安装，通过实例调用this.$ajax函数this默认指向当前vue实例
 ``` shell
 import Vue from 'vue'
 import XEUtils from 'xe-utils'
