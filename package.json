@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xlz26296/xe-utils.git"
+    "url": "git+https://github.com/xuliangzhan/xe-utils.git"
   },
   "keywords": [
     "utils",
@@ -23,7 +23,7 @@
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xlz26296/xe-utils/issues"
+    "url": "https://github.com/xuliangzhan/xe-utils/issues"
   },
-  "homepage": "https://github.com/xlz26296/xe-utils#readme"
+  "homepage": "https://github.com/xuliangzhan/xe-utils#readme"
 }
