@@ -28,5 +28,6 @@ XEUtils.mixin(core)
 XEUtils.mixin(browse)
 
 export default Object.assign({
-  utils: XEUtils
+  utils: XEUtils,
+  mixin: XEUtils.mixin
 }, core, browse)
