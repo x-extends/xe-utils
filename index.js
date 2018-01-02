@@ -3,16 +3,13 @@ import * as browse from './src/browse'
 
 function XEUtils () {}
 
-Object.assign(XEUtils, {
-
-  context: window,
-
-  /**
-   * 函数扩展
-   *
-   * @param {Object} methods 扩展函数对象
-   */
-  mixin (methods) {
+/**
+ * 函数扩展
+ *
+ * @param {Object} methods 扩展函数对象
+ */
+export function mixin (methods) {
+  if (methods) {
     Object.keys(methods).forEach(function (name) {
       var fn = methods[name]
       XEUtils[name] = typeof fn === 'function' ? function () {
@@ -22,12 +19,11 @@ Object.assign(XEUtils, {
       } : fn
     })
   }
-})
+}
 
-XEUtils.mixin(core)
-XEUtils.mixin(browse)
+mixin(core)
+mixin(browse)
 
-export default Object.assign({
-  utils: XEUtils,
-  mixin: XEUtils.mixin
-}, core, browse)
+export var constructor = XEUtils
+export * from './src/core'
+export * from './src/browse'

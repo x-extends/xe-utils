@@ -14,13 +14,20 @@ let dateStr = dateToString(new Date())
 let date = stringToDate(dateStr)
 ```
 
-### 如果是全局安装，通过实例调用this.$utils函数this默认指向当前vue实例
+### 引入所有
+``` shell
+import * as XEUtils from 'xe-utils'
+
+let dateStr = XEUtils.dateToString(new Date())
+let date = XEUtils.stringToDate(dateStr)
+```
+
+### Vue全局安装，通过实例调用this.$utils函数this默认指向当前vue实例
 ``` shell
 import Vue from 'vue'
-import XEUtils from 'xe-utils'
 import VXEUtils from 'vxe-utils'
 
-Vue.use(VXEUtils, XEUtils)
+Vue.use(VXEUtils)
 
 // 在Vue实例中使用
 let date = this.$utils.stringToDate('2017-12-20', 'yyyy-MM-dd')
