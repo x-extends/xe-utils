@@ -3,7 +3,7 @@
 ## 通过NPM安装最新版本
 
 ``` shell
-npm install vxe-utils --save
+npm install xe-utils --save
 ```
 
 ### 按需引入
