@@ -8,7 +8,7 @@ function XEUtils () {}
  *
  * @param {Object} methods 扩展函数对象
  */
-export function mixin (methods) {
+function mixin (methods) {
   if (methods) {
     Object.keys(methods).forEach(function (name) {
       var fn = methods[name]
@@ -23,7 +23,8 @@ export function mixin (methods) {
 
 mixin(core)
 mixin(browse)
+XEUtils.mixin = mixin
 
-export var constructor = XEUtils
 export * from './src/core'
 export * from './src/browse'
+export default XEUtils

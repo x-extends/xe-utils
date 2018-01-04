@@ -16,7 +16,7 @@ let date = stringToDate(dateStr)
 
 ### 引入所有
 ``` shell
-import * as XEUtils from 'xe-utils'
+import XEUtils from 'xe-utils'
 
 let dateStr = XEUtils.dateToString(new Date())
 let date = XEUtils.stringToDate(dateStr)
@@ -25,13 +25,29 @@ let date = XEUtils.stringToDate(dateStr)
 ### Vue全局安装，通过实例调用this.$utils函数this默认指向当前vue实例
 ``` shell
 import Vue from 'vue'
+import XEUtils from 'xe-utils'
 import VXEUtils from 'vxe-utils'
 
-Vue.use(VXEUtils)
+Vue.use(VXEUtils, XEUtils)
 
 // 在Vue实例中使用
 let date = this.$utils.stringToDate('2017-12-20', 'yyyy-MM-dd')
 ```
+
+### 支持自定义扩展
+``` shell
+import Vue from 'vue'
+import XEUtils from 'xe-utils'
+import VXEUtils from 'vxe-utils'
+import customs from './customs' // ./customs.js export function custom1 () {} 
+
+XEUtils.mixin(customs)
+Vue.use(VXEUtils, XEUtils)
+
+// 调用自定义扩展函数
+this.$utils.custom1()
+```
+
 ## API :
 ### *./core/base*
 #### isNaN (val) 判断是否非数值
