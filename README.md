@@ -34,7 +34,7 @@ Vue.use(VXEUtils, XEUtils)
 let date = this.$utils.stringToDate('2017-12-20', 'yyyy-MM-dd')
 ```
 
-### 支持自定义扩展
+### 自定义扩展
 ``` shell
 import Vue from 'vue'
 import XEUtils from 'xe-utils'
