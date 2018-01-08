@@ -360,7 +360,12 @@ import { each } from 'xe-utils'
 
 let result = []
 each({a: 11, b: 22}, (item, key) => {
-  // // this 指向当前vue实例
+  if (key === 'b') {
+    result.push(item)
+  }
+}) // [22]
+this.$utils.each({a: 11, b: 22}, function (item, key) {
+  // this 指向当前vue实例
   if (key === 'b') {
     result.push(item)
   }
@@ -372,7 +377,11 @@ import { groupBy } from 'xe-utils'
 
 let result1 = groupBy([{type: 'a'}, {type: 'b'}]], 'type') // {a: [{a: 'a'}], b: [{b: 'b'}]}
 let result2 = groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
-  // // this 指向当前vue实例
+  return item.type
+}) // {a: [{a: 'a'}], b: [{b: 'b'}]}
+
+var result3 = this.$utils.groupBy([{type: 'a'}, {type: 'b'}]], function (item, key) {
+  // this 指向当前vue实例
   return item.type
 }) // {a: [{a: 'a'}], b: [{b: 'b'}]}
 ```
@@ -382,7 +391,11 @@ import { mapObject } from 'xe-utils'
 
 let result = []
 mapObject([{type: 'a'}, {type: 'b'}]], (item, key) => {
-  // // this 指向当前vue实例
+  return item.type
+}) // {a: {type: 'a', b: {type: 'b'}}}
+
+this.$utils.mapObject([{type: 'a'}, {type: 'b'}]], function (item, key) {
+    // this 指向当前vue实例
   return item.type
 }) // {a: {type: 'a', b: {type: 'b'}}}
 ```
@@ -420,7 +433,11 @@ import { sort } from 'xe-utils'
 
 sort([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
 sort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => {
-  // // this 指向当前vue实例
+  return v1.a > v2.a ? 1 : -1
+}) // [{a: 4}, {a: 5}, {a: 9}]
+
+this.$utils.sort([{a: 9}, {a: 4}, {a: 5}], function (v1, v2) {
+  // this 指向当前vue实例
   return v1.a > v2.a ? 1 : -1
 }) // [{a: 4}, {a: 5}, {a: 9}]
 ```
@@ -441,11 +458,14 @@ sample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
 import { some } from 'xe-utils'
 
 some([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
   return item.a === 55
 }) // false
 some([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
+  return item.a === 11
+}) // true
+
+this.$utils.some([{a: 11}, {a: 22}]], function (item, key) {
+  // this 指向当前vue实例
   return item.a === 11
 }) // true
 ```
@@ -454,11 +474,14 @@ some([{a: 11}, {a: 22}]], (item, key) => {
 import { every } from 'xe-utils'
 
 every([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
   return item.a === 11
 }) // false
 every([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
+  return item.a === 11 || item.a === 22
+}) // true
+
+this.$utils.every([{a: 11}, {a: 22}]], function (item, key) {
+  // this 指向当前vue实例
   return item.a === 11 || item.a === 22
 }) // true
 ```
@@ -467,7 +490,11 @@ every([{a: 11}, {a: 22}]], (item, key) => {
 import { filter } from 'xe-utils'
 
 filter([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
+  return item.a > 11
+}) // [{a: 22}]
+
+this.$utils.filter([{a: 11}, {a: 22}]], function (item, key) {
+  // this 指向当前vue实例
   return item.a > 11
 }) // [{a: 22}]
 ```
@@ -476,11 +503,14 @@ filter([{a: 11}, {a: 22}]], (item, key) => {
 import { find } from 'xe-utils'
 
 find([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
   return item.a === 55
 }) // null
 find([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
+  return item.a === 22
+}) // {a: 22}
+
+this.$utils.find([{a: 11}, {a: 22}]], function (item, key) {
+  // this 指向当前vue实例
   return item.a === 22
 }) // {a: 22}
 ```
@@ -489,7 +519,11 @@ find([{a: 11}, {a: 22}]], (item, key) => {
 import { map } from 'xe-utils'
 
 map([{a: 11}, {a: 22}]], (item, key) => {
-  // // this 指向当前vue实例
+  return item.a
+}) // [11, 22]
+
+this.$utils.map([{a: 11}, {a: 22}]], function (item, key) {
+  // this 指向当前vue实例
   return item.a
 }) // [11, 22]
 ```
@@ -590,7 +624,11 @@ import { min } from 'xe-utils'
 min([22, 66, 77, 11]) // 11
 min([{a: 11}, {a: 44}], 'a') // 11
 min([{a: 11}, {a: 44}], (item) => {
-  // // this 指向当前vue实例
+  return item.a
+}) // {a: 11}
+
+this.$utils.min([{a: 11}, {a: 44}], function (item) {
+  // this 指向当前vue实例
   return item.a
 }) // {a: 11}
 ```
@@ -601,7 +639,11 @@ import { max } from 'xe-utils'
 max([22, 66, 77, 11]) // 77
 max([{a: 11}, {a: 44}], 'a') // 44
 max([{a: 11}, {a: 44}], (item) => {
-  // // this 指向当前vue实例
+  return item.a
+}) // {a: 44}
+
+this.$utils.max([{a: 11}, {a: 44}], function (item) {
+  // this 指向当前vue实例
   return item.a
 }) // {a: 44}
 ```
