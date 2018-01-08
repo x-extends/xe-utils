@@ -45,7 +45,7 @@ export function stringToDate (str, format) {
           }
         }
       })
-      return new Date(...dates)
+      return new Date(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
     }
   }
   return 'Invalid Date'
