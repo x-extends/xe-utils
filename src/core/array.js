@@ -27,8 +27,8 @@ export function uniq (array) {
   */
 export function union () {
   var result = []
-  for (var array of arguments) {
-    result = result.concat(array)
+  for (var index = 0, len = arguments.length; index < len; index++) {
+    result = result.concat(arguments[index])
   }
   return uniq(result)
 }
