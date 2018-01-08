@@ -45,7 +45,7 @@ XEUtils.mixin(customs)
 Vue.use(VXEUtils, XEUtils)
 
 // 调用自定义扩展函数
-custom1()
+this.$utils.custom1()
 ```
 
 ## API :

@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "1.0.62",
+  "version": "1.0.7",
   "description": "XExtends Utils 提供一整套实用函数式编程功能",
   "main": "index.js",
   "scripts": {
