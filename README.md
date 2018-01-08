@@ -39,7 +39,7 @@ var date = this.$utils.stringToDate('2017-12-20', 'yyyy-MM-dd')
 import Vue from 'vue'
 import XEUtils from 'xe-utils'
 import VXEUtils from 'vxe-utils'
-import customs from './customs' // ./customs.js export function custom1 () {} 
+import customs from './customs' // 文件: ./customs.js 代码: export function custom1 () {} 
 
 XEUtils.mixin(customs)
 Vue.use(VXEUtils, XEUtils)
