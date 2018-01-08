@@ -9,8 +9,8 @@ function parse (uri) {
   var params = uri.split('?')[1] || ''
   if (params) {
     params.split('&').forEach(function (param) {
-      var [key, val] = param.split('=')
-      result[decodeURIComponent(key)] = val ? decodeURIComponent(val) : val
+      var items = param.split('=')
+      result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
     })
   }
   return result

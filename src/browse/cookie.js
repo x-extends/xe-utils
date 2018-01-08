@@ -41,7 +41,7 @@ export function cookie (name, value, options) {
     var result = {}
     document.cookie.split('; ').forEach(function (val) {
       var items = val.split('=')
-      result[decodeURIComponent(items[0])] = decodeURIComponent(items[1])
+      result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
     })
     return arguments.length === 1 ? result[name] : result
   }
