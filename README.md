@@ -364,8 +364,7 @@ each({a: 11, b: 22}, (item, key) => {
     result.push(item)
   }
 }) // [22]
-this.$utils.each({a: 11, b: 22}, function (item, key) {
-  // this 指向当前vue实例
+this.$utils.each({a: 11, b: 22}, (item, key) => {
   if (key === 'b') {
     result.push(item)
   }
@@ -380,8 +379,7 @@ let result2 = groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: [{a: 'a'}], b: [{b: 'b'}]}
 
-var result3 = this.$utils.groupBy([{type: 'a'}, {type: 'b'}]], function (item, key) {
-  // this 指向当前vue实例
+var result3 = this.$utils.groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: [{a: 'a'}], b: [{b: 'b'}]}
 ```
@@ -394,8 +392,7 @@ mapObject([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: {type: 'a', b: {type: 'b'}}}
 
-this.$utils.mapObject([{type: 'a'}, {type: 'b'}]], function (item, key) {
-    // this 指向当前vue实例
+this.$utils.mapObject([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: {type: 'a', b: {type: 'b'}}}
 ```
@@ -436,8 +433,7 @@ sort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => {
   return v1.a > v2.a ? 1 : -1
 }) // [{a: 4}, {a: 5}, {a: 9}]
 
-this.$utils.sort([{a: 9}, {a: 4}, {a: 5}], function (v1, v2) {
-  // this 指向当前vue实例
+this.$utils.sort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => {
   return v1.a > v2.a ? 1 : -1
 }) // [{a: 4}, {a: 5}, {a: 9}]
 ```
@@ -464,8 +460,7 @@ some([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11
 }) // true
 
-this.$utils.some([{a: 11}, {a: 22}]], function (item, key) {
-  // this 指向当前vue实例
+this.$utils.some([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11
 }) // true
 ```
@@ -480,8 +475,7 @@ every([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11 || item.a === 22
 }) // true
 
-this.$utils.every([{a: 11}, {a: 22}]], function (item, key) {
-  // this 指向当前vue实例
+this.$utils.every([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11 || item.a === 22
 }) // true
 ```
@@ -493,8 +487,7 @@ filter([{a: 11}, {a: 22}]], (item, key) => {
   return item.a > 11
 }) // [{a: 22}]
 
-this.$utils.filter([{a: 11}, {a: 22}]], function (item, key) {
-  // this 指向当前vue实例
+this.$utils.filter([{a: 11}, {a: 22}]], (item, key) => {
   return item.a > 11
 }) // [{a: 22}]
 ```
@@ -509,8 +502,7 @@ find([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 22
 }) // {a: 22}
 
-this.$utils.find([{a: 11}, {a: 22}]], function (item, key) {
-  // this 指向当前vue实例
+this.$utils.find([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 22
 }) // {a: 22}
 ```
@@ -522,8 +514,7 @@ map([{a: 11}, {a: 22}]], (item, key) => {
   return item.a
 }) // [11, 22]
 
-this.$utils.map([{a: 11}, {a: 22}]], function (item, key) {
-  // this 指向当前vue实例
+this.$utils.map([{a: 11}, {a: 22}]], (item, key) => {
   return item.a
 }) // [11, 22]
 ```
@@ -627,8 +618,7 @@ min([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 11}
 
-this.$utils.min([{a: 11}, {a: 44}], function (item) {
-  // this 指向当前vue实例
+this.$utils.min([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 11}
 ```
@@ -642,8 +632,7 @@ max([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 44}
 
-this.$utils.max([{a: 11}, {a: 44}], function (item) {
-  // this 指向当前vue实例
+this.$utils.max([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 44}
 ```

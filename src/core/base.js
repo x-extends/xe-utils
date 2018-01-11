@@ -499,12 +499,11 @@ function eachObj (obj, iteratee, context) {
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Object}
   */
 export function each (obj, iteratee, context) {
   if (obj) {
-    context = context || this
     if (isArray(obj)) {
       return obj.forEach(iteratee, context)
     }
@@ -518,14 +517,13 @@ export function each (obj, iteratee, context) {
   *
   * @param {Array} obj 对象
   * @param {Function} iteratee 回调/对象属性
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Object}
   */
 export function groupBy (obj, iteratee, context) {
   var groupKey, attr
   var result = {}
   if (obj) {
-    context = context || this
     if (isString(iteratee)) {
       attr = iteratee
       iteratee = null
@@ -551,12 +549,11 @@ export function groupBy (obj, iteratee, context) {
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Object}
   */
 export function mapObject (obj, iteratee, context) {
   var result = {}
-  context = context || this
   each(obj, function (val, index) {
     result[index] = iteratee.call(context, val, index, obj)
   })

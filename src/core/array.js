@@ -90,12 +90,11 @@ export function sample (array, number) {
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Boolean}
   */
 export function some (obj, iteratee, context) {
   if (obj) {
-    context = context || this
     if (isArray(obj)) {
       return obj.some(iteratee, context)
     } else {
@@ -116,12 +115,11 @@ export function some (obj, iteratee, context) {
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Boolean}
   */
 export function every (obj, iteratee, context) {
   if (obj) {
-    context = context || this
     if (isArray(obj)) {
       return obj.every(iteratee, context)
     } else {
@@ -142,12 +140,11 @@ export function every (obj, iteratee, context) {
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Object}
   */
 export function filter (obj, iteratee, context) {
   if (obj) {
-    context = context || this
     if (isArray(obj)) {
       return obj.filter(iteratee, context)
     } else {
@@ -168,12 +165,11 @@ export function filter (obj, iteratee, context) {
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Object}
   */
 export function find (obj, iteratee, context) {
   if (obj) {
-    context = context || this
     if (isArray(obj)) {
       return obj.find(iteratee, context)
     } else {
@@ -193,13 +189,12 @@ export function find (obj, iteratee, context) {
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文(this默认指向当前vue组件)
+  * @param {Object} context 上下文
   * @return {Array}
   */
 export function map (obj, iteratee, context) {
   var result = []
   if (obj) {
-    context = context || this
     if (isArray(obj)) {
       return obj.map(iteratee, context)
     } else {

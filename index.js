@@ -9,16 +9,7 @@ function XEUtils () {}
  * @param {Object} methods 扩展函数对象
  */
 function mixin (methods) {
-  if (methods) {
-    Object.keys(methods).forEach(function (name) {
-      var fn = methods[name]
-      XEUtils[name] = typeof fn === 'function' ? function () {
-        var rest = fn.apply(XEUtils.context || window, arguments)
-        XEUtils.context = window
-        return rest
-      } : fn
-    })
-  }
+  return Object.assign(XEUtils, methods)
 }
 
 mixin(core)
