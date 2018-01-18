@@ -1,4 +1,4 @@
-# XExtends Utils 提供一整套实用函数式编程功能
+# XExtends Utils 提供一套实用函数式编程功能
 
 ## 通过NPM安装最新版本
 
@@ -10,16 +10,16 @@ npm install xe-utils --save
 ``` shell
 import { dateToString, stringToDate } from 'xe-utils'
 
-let dateStr = dateToString(new Date())
-let date = stringToDate(dateStr)
+const dateStr = dateToString(new Date())
+const date = stringToDate(dateStr)
 ```
 
 ### 引入所有
 ``` shell
 import XEUtils from 'xe-utils'
 
-let dateStr = XEUtils.dateToString(new Date())
-let date = XEUtils.stringToDate(dateStr)
+const dateStr = XEUtils.dateToString(new Date())
+const date = XEUtils.stringToDate(dateStr)
 ```
 
 ### Vue全局安装
@@ -34,12 +34,19 @@ Vue.use(VXEUtils, XEUtils)
 var date = this.$utils.stringToDate('2017-12-20', 'yyyy-MM-dd')
 ```
 
-### 自定义扩展
+### 混合函数
+#### 文件 ./customs.js
+``` shell
+export function custom1 () {
+  console.log('自定义函数')
+} 
+```
+#### 代码
 ``` shell
 import Vue from 'vue'
 import XEUtils from 'xe-utils'
 import VXEUtils from 'vxe-utils'
-import customs from './customs' // 文件: ./customs.js 代码: export function custom1 () {} 
+import customs from './customs'
 
 XEUtils.mixin(customs)
 Vue.use(VXEUtils, XEUtils)
@@ -48,8 +55,7 @@ Vue.use(VXEUtils, XEUtils)
 this.$utils.custom1()
 ```
 
-## API :
-### *./core/base*
+## 'xe-utils' 函数库
 #### isNaN (val) 判断是否非数值
 ```shell
 import { isNaN } from 'xe-utils'
@@ -298,10 +304,10 @@ includes([11, 22], 22) // true
 ```shell
 import { assign, extend } from 'xe-utils'
 
-let obj1 = {a: null}
+const obj1 = {a: null}
 assign(obj1, {a: 11}) // {a: 11}
 extend(obj1, {a: 11}) // {a: 11}
-let obj2 = {c: null}
+const obj2 = {c: null}
 assign(obj2, {a: 11}, {b: 22}) // {a: 11, b: 22, c: null}
 extend(obj2, {a: 11}, {b: 22}) // {a: 11, b: 22, c: null}
 ```
@@ -358,7 +364,7 @@ last([11, 22]) // 22
 ```shell
 import { each } from 'xe-utils'
 
-let result = []
+const result = []
 each({a: 11, b: 22}, (item, key) => {
   if (key === 'b') {
     result.push(item)
@@ -374,8 +380,8 @@ this.$utils.each({a: 11, b: 22}, (item, key) => {
 ```shell
 import { groupBy } from 'xe-utils'
 
-let result1 = groupBy([{type: 'a'}, {type: 'b'}]], 'type') // {a: [{a: 'a'}], b: [{b: 'b'}]}
-let result2 = groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
+const result1 = groupBy([{type: 'a'}, {type: 'b'}]], 'type') // {a: [{a: 'a'}], b: [{b: 'b'}]}
+const result2 = groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: [{a: 'a'}], b: [{b: 'b'}]}
 
@@ -387,7 +393,7 @@ var result3 = this.$utils.groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
 ```shell
 import { mapObject } from 'xe-utils'
 
-let result = []
+const result = []
 mapObject([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: {type: 'a', b: {type: 'b'}}}
@@ -400,18 +406,17 @@ this.$utils.mapObject([{type: 'a'}, {type: 'b'}]], (item, key) => {
 ```shell
 import { clone } from 'xe-utils'
 
-let v1 = {a: 11, b: {b1: 22}
-let v2 = clone({a: 11, b: 22})
+const v1 = {a: 11, b: {b1: 22}
+const v2 = clone({a: 11, b: 22})
 if (v1.b === v2.b) {
   // true
 }
-let v3 = clone(v1, true)
+const v3 = clone(v1, true)
 if (v1.b === v3.b) {
   // false
 }
 ```
 
-### *./core/array*
 #### uniq ( array ) 数组去重
 ```shell
 import { uniq } from 'xe-utils'
@@ -519,7 +524,6 @@ this.$utils.map([{a: 11}, {a: 22}]], (item, key) => {
 }) // [11, 22]
 ```
 
-### *./core/date*
 #### now ( ) 返回时间戳
 ```shell
 import { now } from 'xe-utils'
@@ -595,11 +599,10 @@ import { getDateDiff } from 'xe-utils'
 getDateDiff('2017-11-20', '2017-12-21') // {MM: 1, dd: 1}
 getDateDiff('2017-12-20', '2017-12-21') // {dd: 1}
 getDateDiff('2017-12-20', '2017-12-21') // {dd: 1, ss: 30}
-let dateDiff = getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
-let content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
+const dateDiff = getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
+const content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
 ```
 
-### *./core/number*
 #### random ( min, max ) 获取一个指定范围内随机数
 ```shell
 import { random } from 'xe-utils'
@@ -637,7 +640,6 @@ this.$utils.max([{a: 11}, {a: 44}], (item) => {
 }) // {a: 44}
 ```
 
-### *./core/string*
 #### escape ( str ) 转义HTML字符串，替换&, <, >, ", ', `字符
 ```shell
 import { escape } from 'xe-utils'
@@ -651,7 +653,6 @@ import { unescape } from 'xe-utils'
 unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
 ```
 
-### *./browse/type*
 #### browse ( ) 获取浏览器内核
 ```shell
 import { browse } from 'xe-utils'
@@ -660,7 +661,6 @@ browse() // {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: true}
 this.$browse // {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: true}
 ```
 
-### *./browse/locat*
 #### locat ( ) 获取地址栏信息
 ```shell
 import { locat } from 'xe-utils'
@@ -669,7 +669,6 @@ locat() // {hash: '', host: '', hostname: '', href: '', protocol: '', port: '', 
 this.$locat() // {hash: '', host: '', hostname: '', href: '', protocol: '', port: '', origin: '', query: {...}, params: {...}, ...}
 ```
 
-### *./browse/cookie*
 #### cookie ( ) Cookie操作函数
 ```shell
 import { cookie } from 'xe-utils'
