@@ -1,7 +1,7 @@
 {
   "name": "xe-utils",
-  "version": "1.1.0",
-  "description": "XExtends Utils 提供一套实用函数式编程功能",
+  "version": "1.1.1",
+  "description": "XEUtils 是一个轻量级的函数库，提供一套实用丰富函数",
   "main": "index.js",
   "scripts": {
     "test": "make test"
