@@ -22,18 +22,6 @@ const dateStr = XEUtils.dateToString(new Date())
 const date = XEUtils.stringToDate(dateStr)
 ```
 
-### Vue全局安装
-``` shell
-import Vue from 'vue'
-import XEUtils from 'xe-utils'
-import VXEUtils from 'vxe-utils'
-
-Vue.use(VXEUtils, XEUtils)
-
-// 通过vue实例的调用方式
-var date = this.$utils.stringToDate('2017-12-20', 'yyyy-MM-dd')
-```
-
 ### 混合函数
 #### 文件 ./customs.js
 ``` shell
