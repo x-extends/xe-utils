@@ -10,37 +10,16 @@ npm install xe-utils --save
 ``` shell
 import { dateToString, stringToDate } from 'xe-utils'
 
-const dateStr = dateToString(new Date())
-const date = stringToDate(dateStr)
+const dateStr = dateToString(new Date(), 'yyyy-MM-dd')
+const date = stringToDate(dateStr, 'yyyy-MM-dd')
 ```
 
 ### 引入所有
 ``` shell
 import XEUtils from 'xe-utils'
 
-const dateStr = XEUtils.dateToString(new Date())
-const date = XEUtils.stringToDate(dateStr)
-```
-
-### 混合函数
-#### 文件 ./customs.js
-``` shell
-export function custom1 () {
-  console.log('自定义函数')
-} 
-```
-#### 代码
-``` shell
-import Vue from 'vue'
-import XEUtils from 'xe-utils'
-import VXEUtils from 'vxe-utils'
-import customs from './customs'
-
-XEUtils.mixin(customs)
-Vue.use(VXEUtils, XEUtils)
-
-// 调用自定义扩展函数
-this.$utils.custom1()
+const dateStr = XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
+const date = XEUtils.stringToDate(dateStr, 'yyyy-MM-dd')
 ```
 
 ## 'xe-utils' 函数库
@@ -358,11 +337,6 @@ each({a: 11, b: 22}, (item, key) => {
     result.push(item)
   }
 }) // [22]
-this.$utils.each({a: 11, b: 22}, (item, key) => {
-  if (key === 'b') {
-    result.push(item)
-  }
-}) // [22]
 ```
 #### groupBy ( obj, iteratee, context ) 集合分组,默认使用键值分组,如果有iteratee则使用结果进行分组
 ```shell
@@ -372,10 +346,6 @@ const result1 = groupBy([{type: 'a'}, {type: 'b'}]], 'type') // {a: [{a: 'a'}], 
 const result2 = groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: [{a: 'a'}], b: [{b: 'b'}]}
-
-var result3 = this.$utils.groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
-  return item.type
-}) // {a: [{a: 'a'}], b: [{b: 'b'}]}
 ```
 #### mapObject ( obj, iteratee, context ) 指定方法后的返回值组成的新对象
 ```shell
@@ -383,10 +353,6 @@ import { mapObject } from 'xe-utils'
 
 const result = []
 mapObject([{type: 'a'}, {type: 'b'}]], (item, key) => {
-  return item.type
-}) // {a: {type: 'a', b: {type: 'b'}}}
-
-this.$utils.mapObject([{type: 'a'}, {type: 'b'}]], (item, key) => {
   return item.type
 }) // {a: {type: 'a', b: {type: 'b'}}}
 ```
@@ -426,9 +392,6 @@ sort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => {
   return v1.a > v2.a ? 1 : -1
 }) // [{a: 4}, {a: 5}, {a: 9}]
 
-this.$utils.sort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => {
-  return v1.a > v2.a ? 1 : -1
-}) // [{a: 4}, {a: 5}, {a: 9}]
 ```
 #### shuffle ( array ) 将一个数组随机打乱，返回一个新的数组
 ```shell
@@ -452,10 +415,6 @@ some([{a: 11}, {a: 22}]], (item, key) => {
 some([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11
 }) // true
-
-this.$utils.some([{a: 11}, {a: 22}]], (item, key) => {
-  return item.a === 11
-}) // true
 ```
 #### every ( obj, iteratee, context ) 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
 ```shell
@@ -467,20 +426,12 @@ every([{a: 11}, {a: 22}]], (item, key) => {
 every([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11 || item.a === 22
 }) // true
-
-this.$utils.every([{a: 11}, {a: 22}]], (item, key) => {
-  return item.a === 11 || item.a === 22
-}) // true
 ```
 #### filter ( obj, iteratee, context ) 根据回调过滤数据
 ```shell
 import { filter } from 'xe-utils'
 
 filter([{a: 11}, {a: 22}]], (item, key) => {
-  return item.a > 11
-}) // [{a: 22}]
-
-this.$utils.filter([{a: 11}, {a: 22}]], (item, key) => {
   return item.a > 11
 }) // [{a: 22}]
 ```
@@ -494,20 +445,12 @@ find([{a: 11}, {a: 22}]], (item, key) => {
 find([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 22
 }) // {a: 22}
-
-this.$utils.find([{a: 11}, {a: 22}]], (item, key) => {
-  return item.a === 22
-}) // {a: 22}
 ```
 #### map ( obj, iteratee, context ) 指定方法后的返回值组成的新数组
 ```shell
 import { map } from 'xe-utils'
 
 map([{a: 11}, {a: 22}]], (item, key) => {
-  return item.a
-}) // [11, 22]
-
-this.$utils.map([{a: 11}, {a: 22}]], (item, key) => {
   return item.a
 }) // [11, 22]
 ```
@@ -608,10 +551,6 @@ min([{a: 11}, {a: 44}], 'a') // 11
 min([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 11}
-
-this.$utils.min([{a: 11}, {a: 44}], (item) => {
-  return item.a
-}) // {a: 11}
 ```
 #### max ( arr, iteratee ) 获取最大值
 ```shell
@@ -620,10 +559,6 @@ import { max } from 'xe-utils'
 max([22, 66, 77, 11]) // 77
 max([{a: 11}, {a: 44}], 'a') // 44
 max([{a: 11}, {a: 44}], (item) => {
-  return item.a
-}) // {a: 44}
-
-this.$utils.max([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 44}
 ```
