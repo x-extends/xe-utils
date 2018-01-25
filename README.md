@@ -581,7 +581,6 @@ unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
 import { browse } from 'xe-utils'
 
 browse() // {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: true}
-this.$browse // {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: true}
 ```
 
 #### locat ( ) 获取地址栏信息
@@ -589,7 +588,6 @@ this.$browse // {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: tru
 import { locat } from 'xe-utils'
 
 locat() // {hash: '', host: '', hostname: '', href: '', protocol: '', port: '', origin: '', query: {...}, params: {...}, ...}
-this.$locat() // {hash: '', host: '', hostname: '', href: '', protocol: '', port: '', origin: '', query: {...}, params: {...}, ...}
 ```
 
 #### cookie ( ) Cookie操作函数
