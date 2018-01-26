@@ -3,7 +3,6 @@
 XEUtils 是一个不依赖于任何框架的函数库，支持常用基础函数、支持任意格式的日期处理函数，cookie操作函数等...，任何使用ES6模块编程的项目都能使用。
 
 ## 通过NPM安装最新版本
-
 ``` shell
 npm install xe-utils --save
 ```
