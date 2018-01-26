@@ -42,7 +42,7 @@ XEUtils.mixin(customs)
 XEUtils.custom1()
 ```
 
-## 'xe-utils' 函数库
+## 'xe-utils' API
 #### isNaN (val) 判断是否非数值
 ```shell
 import { isNaN } from 'xe-utils'
