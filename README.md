@@ -23,6 +23,25 @@ const dateStr = XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
 const date = XEUtils.stringToDate(dateStr, 'yyyy-MM-dd')
 ```
 
+### 混合函数
+#### 文件 ./customs.js
+``` shell
+export function custom1 () {
+  console.log('自定义函数')
+} 
+```
+#### 示例
+``` shell
+import Vue from 'vue'
+import XEUtils from 'xe-utils'
+import customs from './customs'
+
+XEUtils.mixin(customs)
+
+// 调用自定义扩展函数
+XEUtils.custom1()
+```
+
 ## 'xe-utils' 函数库
 #### isNaN (val) 判断是否非数值
 ```shell
