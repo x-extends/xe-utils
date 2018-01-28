@@ -14,10 +14,10 @@ XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
 ``` shell
 require.config({
   paths: {
-    'XEUtils': './dist/xe-utils.min'
+    'xe-utils': './dist/xe-utils.min'
   }
 })
-require(['XEUtils'], function (XEUtils) {
+require(['xe-utils'], function (XEUtils) {
   XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
 })
 ```
