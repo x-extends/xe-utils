@@ -12,12 +12,16 @@ XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
 
 ### AMD 安装， 以 require.js 为例
 ``` shell
+// require 配置
 require.config({
   paths: {
+    // ...,
     'xe-utils': './dist/xe-utils.min'
   }
 })
-require(['xe-utils'], function (XEUtils) {
+
+// ./app.js 调用
+define(['xe-utils'], function (XEUtils) {
   XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
 })
 ```
