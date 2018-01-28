@@ -1,4 +1,4 @@
-const $locat = location
+var $locat = location
 
 function hash () {
   return ($locat.hash.split('#')[1] || '').split('?')[0] || ''
@@ -17,9 +17,9 @@ function parse (uri) {
 }
 
 /**
- * 获取地址栏信息
+  * 获取地址栏信息
   * @return Object
- */
+  */
 export function locat () {
   return {
     port: $locat.port,
