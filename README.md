@@ -31,7 +31,7 @@ define(['xe-utils'], function (XEUtils) {
 npm install xe-utils --save
 ```
 
-### 部分引入
+### 部分导入
 ``` shell
 import { dateToString, stringToDate } from 'xe-utils'
 
@@ -39,7 +39,7 @@ const dateStr = dateToString(new Date(), 'yyyy-MM-dd')
 const date = stringToDate('11/20/2017 10:10:30', 'MM/dd/yyyy HH:mm:ss')
 ```
 
-### 引入所有
+### 导入所有
 ``` shell
 import XEUtils from 'xe-utils'
 
