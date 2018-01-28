@@ -2,12 +2,27 @@
 
 XEUtils 是一个不依赖于任何框架的函数库，支持常用基础函数、支持任意格式的日期处理函数，cookie操作函数等...，任何使用ES6模块编程的项目都能使用。
 
-### 直接下载并用 script 引用
+### 直接引用 script 全局安装，XEUtils 会定义为全局变量
 ``` shell
-<script src="dist/xe-utils.min.js" type="text/javascript"></script>
+<script src="./dist/xe-utils.min.js" type="text/javascript"></script>
+
+// 全局调用
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
 ```
 
-### 通过NPM安装最新版本
+### AMD 安装， 以 require.js 为例
+``` shell
+require.config({
+  paths: {
+    'XEUtils': './dist/xe-utils.min'
+  }
+})
+require(['XEUtils'], function (XEUtils) {
+  XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
+})
+```
+
+### ES6 Module 安装方式
 ``` shell
 npm install xe-utils --save
 ```
