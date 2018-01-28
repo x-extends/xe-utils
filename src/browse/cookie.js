@@ -39,10 +39,27 @@ export function cookie (name, value, options) {
     })
   } else {
     var result = {}
-    document.cookie.split('; ').forEach(function (val) {
-      var items = val.split('=')
-      result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
-    })
+    if (document.cookie) {
+      document.cookie.split('; ').forEach(function (val) {
+        var items = val.split('=')
+        result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
+      })
+    }
     return arguments.length === 1 ? result[name] : result
   }
 }
+
+Object.assign(cookie, {
+  setItem: function (name, key) {
+    cookie(name, key)
+  },
+  getItem: function (name) {
+    return cookie(name)
+  },
+  removeItem: function (name) {
+    cookie(name, null, {expires: -1})
+  },
+  getJSON: function () {
+    return cookie()
+  }
+})

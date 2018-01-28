@@ -505,7 +505,7 @@ import XEUtils from 'xe-utils'
 
 XEUtils.now() // 1514096716800
 ```
-#### stringToDate ( str, format ) 字符串转为日期(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、SSS毫秒)
+#### stringToDate ( str, format ) 任意格式字符串转为日期(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、SSS毫秒)
 ```shell
 import XEUtils from 'xe-utils'
 
@@ -515,7 +515,7 @@ XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy') // Wed Dec 20 2017 00:00:00 GMT
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm') // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
-#### dateToString ( date, format ) 日期格式化为字符串(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
+#### dateToString ( date, format ) 日期化为任意格式字符串(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
 ```shell
 import XEUtils from 'xe-utils'
 
@@ -646,6 +646,11 @@ XEUtils.cookie('name', 'value') // 添加/修改
 XEUtils.cookie([{name: 'name', value: 'value'}]) // 批量添加/修改
 XEUtils.cookie('name', 'value', {domain: 'xxx.com', path: '/', expires: 7, secure: true}) // 添加并设置domain/path/secure/expires 7天后过期
 XEUtils.cookie([{name: 'name', value: 'value', domain: 'xxx.com', path: '/', expires: 7, secure: true}]) // 批量添加并设置domain/path/secure/expires 7天后过期
+
+XEUtils.cookie.getJSON() // 获取所有
+XEUtils.cookie.setItem('name', 'value') // 添加/修改
+XEUtils.cookie.getItem('name') // 根据name获取
+XEUtils.cookie.removeItem('name') // 删除
 ```
 
 ## License
