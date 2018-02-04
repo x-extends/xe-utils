@@ -15,7 +15,7 @@ function mixin (methods) {
 mixin(core)
 mixin(browse)
 XEUtils.mixin = mixin
-XEUtils.version = '1.4.1'
+XEUtils.version = '1.5.0'
 
 export * from './src/core'
 export * from './src/browse'
