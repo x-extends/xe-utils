@@ -1,4 +1,5 @@
-import { isArray, isObject, assign } from '../core/base'
+import { isArray, isObject, objectAssign, arrayEach } from '../core/base'
+import { dateNow } from '../core/date'
 
 /**
   * cookie操作函数
@@ -16,20 +17,20 @@ export function cookie (name, value, options) {
   if (isArray(name)) {
     inserts = name
   } else if (arguments.length > 1) {
-    inserts = [assign({name: name, value: value}, options)]
+    inserts = [objectAssign({name: name, value: value}, options)]
   } else if (isObject(name)) {
     inserts = [name]
   }
   if (inserts.length > 0) {
-    inserts.forEach(function (obj) {
-      var opts = assign({}, obj)
+    arrayEach(inserts, function (obj) {
+      var opts = objectAssign({}, obj)
       var values = []
       if (opts.name) {
         values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(JSON.stringify(opts.value)))
         if (opts.expires !== undefined) {
-          opts.expires = new Date(Date.now() + parseFloat(opts.expires) * 86400000).toUTCString()
+          opts.expires = new Date(dateNow() + parseFloat(opts.expires) * 86400000).toUTCString()
         }
-        ['expires', 'path', 'domain', 'secure'].forEach(function (key) {
+        arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
           if (opts[key] !== undefined) {
             values.push(key + '=' + opts[key])
           }
@@ -40,7 +41,7 @@ export function cookie (name, value, options) {
   } else {
     var result = {}
     if (document.cookie) {
-      document.cookie.split('; ').forEach(function (val) {
+      arrayEach(document.cookie.split('; '), function (val) {
         var items = val.split('=')
         result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
       })
@@ -49,7 +50,7 @@ export function cookie (name, value, options) {
   }
 }
 
-Object.assign(cookie, {
+objectAssign(cookie, {
   setItem: function (name, key) {
     cookie(name, key)
   },

@@ -1,3 +1,5 @@
+import { arrayEach } from '../core/base'
+
 var $locat = location
 
 function hash () {
@@ -8,7 +10,7 @@ function parse (uri) {
   var result = {}
   var params = uri.split('?')[1] || ''
   if (params) {
-    params.split('&').forEach(function (param) {
+    arrayEach(params.split('&'), function (param) {
       var items = param.split('=')
       result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
     })

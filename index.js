@@ -9,12 +9,13 @@ function XEUtils () {}
  * @param {Object} methods 扩展函数对象
  */
 function mixin (methods) {
-  return Object.assign(XEUtils, methods)
+  return core.objectAssign(XEUtils, methods)
 }
 
 mixin(core)
 mixin(browse)
 XEUtils.mixin = mixin
+XEUtils.version = '1.4.0'
 
 export * from './src/core'
 export * from './src/browse'

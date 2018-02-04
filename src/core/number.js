@@ -1,5 +1,5 @@
 import { isFunction } from './base'
-import { sort, map } from './array'
+import { arraySort, arrayMap } from './array'
 
 /**
   * 获取一个指定范围内随机数
@@ -8,12 +8,12 @@ import { sort, map } from './array'
   * @param {Number} max 最大值
   * @return {Number}
   */
-export function random (min, max) {
+export function getRandom (min, max) {
   return min >= max ? min : ((min = min >> 0) + Math.round(Math.random() * ((max || 9) - min)))
 }
 
 function sortData (arr, iteratee) {
-  return (isFunction(iteratee) ? sort(map(arr, iteratee, this)) : sort(arr, iteratee))
+  return (isFunction(iteratee) ? arraySort(arrayMap(arr, iteratee, this)) : arraySort(arr, iteratee))
 }
 
 /**
@@ -23,7 +23,7 @@ function sortData (arr, iteratee) {
   * @param {Function} iteratee(item, index, obj) 回调
   * @return {Number}
   */
-export function min () {
+export function arrayMin () {
   return sortData.apply(this, arguments)[0]
 }
 
@@ -34,6 +34,6 @@ export function min () {
   * @param {Function} iteratee(item, index, obj) 回调
   * @return {Number}
   */
-export function max () {
+export function arrayMax () {
   return sortData.apply(this, arguments).reverse()[0]
 }

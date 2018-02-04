@@ -1,5 +1,5 @@
-import { random } from './number'
-import { isFunction, isArray, each, values } from './base'
+import { getRandom } from './number'
+import { isFunction, isArray, each, arrayEach, objectValues } from './base'
 
 /**
   * 数组去重
@@ -7,10 +7,10 @@ import { isFunction, isArray, each, values } from './base'
   * @param {Array} array 数组
   * @return {Array}
   */
-export function uniq (array) {
+export function arrayUniq (array) {
   var result = []
   if (isArray(array)) {
-    array.forEach(function (value) {
+    arrayEach(array, function (value) {
       if (!result.includes(value)) {
         result.push(value)
       }
@@ -25,12 +25,12 @@ export function uniq (array) {
   * @param {...Array} 数组
   * @return {Array}
   */
-export function union () {
+export function arrayUnion () {
   var result = []
   for (var index = 0, len = arguments.length; index < len; index++) {
     result = result.concat(arguments[index])
   }
-  return uniq(result)
+  return arrayUniq(result)
 }
 
 /**
@@ -40,7 +40,7 @@ export function union () {
   * @param {Function, String} iteratee 方法或属性
   * @return {Array}
   */
-export function sort (arr, iteratee, context) {
+export function arraySort (arr, iteratee, context) {
   if (isArray(arr)) {
     return arr.sort(iteratee ? isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
       return v1[iteratee] > v2[iteratee] ? 1 : -1
@@ -57,10 +57,10 @@ export function sort (arr, iteratee, context) {
   * @param {Array} array 数组
   * @return {Array}
   */
-export function shuffle (array) {
+export function arrayShuffle (array) {
   var result = []
-  for (var list = values(array), len = list.length - 1; len >= 0; len--) {
-    var index = len > 0 ? random(0, len) : 0
+  for (var list = objectValues(array), len = list.length - 1; len >= 0; len--) {
+    var index = len > 0 ? getRandom(0, len) : 0
     result.push(list[index])
     list.splice(index, 1)
   }
@@ -74,8 +74,8 @@ export function shuffle (array) {
   * @param {Number} number 个数
   * @return {Array}
   */
-export function sample (array, number) {
-  var result = shuffle(array)
+export function arraySample (array, number) {
+  var result = arrayShuffle(array)
   if (arguments.length === 1) {
     return result[0]
   }
@@ -93,7 +93,7 @@ export function sample (array, number) {
   * @param {Object} context 上下文
   * @return {Boolean}
   */
-export function some (obj, iteratee, context) {
+export function arraySome (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
       return obj.some(iteratee, context)
@@ -118,7 +118,7 @@ export function some (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Boolean}
   */
-export function every (obj, iteratee, context) {
+export function arrayEvery (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
       return obj.every(iteratee, context)
@@ -143,7 +143,7 @@ export function every (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Object}
   */
-export function filter (obj, iteratee, context) {
+export function arrayFilter (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
       return obj.filter(iteratee, context)
@@ -168,7 +168,7 @@ export function filter (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Object}
   */
-export function find (obj, iteratee, context) {
+export function arrayFind (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
       return obj.find(iteratee, context)
@@ -192,14 +192,14 @@ export function find (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Array}
   */
-export function map (obj, iteratee, context) {
+export function arrayMap (obj, iteratee, context) {
   var result = []
   if (obj) {
     if (isArray(obj)) {
       return obj.map(iteratee, context)
     } else {
       each(obj, function () {
-        result.push(iteratee.call(context, arguments))
+        result.push(iteratee.apply(context, arguments))
       })
     }
   }

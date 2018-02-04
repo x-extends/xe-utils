@@ -1,3 +1,4 @@
+import { arrayMap } from './array'
 import { stringToDate } from './date'
 
 /**
@@ -280,7 +281,7 @@ export function uniqueId () {
   * @param {Object} obj 对象
   * @return {Number}
   */
-export function size (obj) {
+export function getSize (obj) {
   var len = 0
   if (isString(obj) || isArray(obj)) {
     return obj.length
@@ -363,18 +364,18 @@ export var contains = includes
   * @param {...Object}
   * @return {Boolean}
   */
-export var assign = Object.assign || function (target) {
+export var objectAssign = Object.assign || function (target) {
   if (target) {
     for (var source, index = 1, len = arguments.length; index < len; index++) {
       source = arguments[index]
-      keys(arguments[index]).forEach(function (key) {
+      arrayEach(objectKeys(arguments[index]), function (key) {
         target[key] = source[key]
       })
     }
   }
   return target
 }
-export var extend = assign
+export var extend = objectAssign
 
 /**
   * 字符串转JSON
@@ -418,13 +419,13 @@ export function jsonToString (obj) {
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-export function keys (obj) {
+export function objectKeys (obj) {
   var result = []
   if (obj) {
     if (Object.keys) {
       return Object.keys(obj)
     }
-    eachObj(obj, function (val, key) {
+    objectEach(obj, function (val, key) {
       result.push(key)
     })
   }
@@ -437,12 +438,12 @@ export function keys (obj) {
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-export function values (obj) {
+export function objectValues (obj) {
   if (Object.values) {
     return obj ? Object.values(obj) : []
   }
   var result = []
-  keys(obj).forEach(function (key) {
+  arrayEach(objectKeys(obj), function (key) {
     result.push(obj[key])
   })
   return result
@@ -454,12 +455,12 @@ export function values (obj) {
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-export function entries (obj) {
+export function objectEntries (obj) {
   if (Object.entries) {
     return obj ? Object.entries(obj) : []
   }
   var result = []
-  keys(obj).forEach(function (key) {
+  arrayEach(objectKeys(obj), function (key) {
     result.push([key, obj[key]])
   })
   return result
@@ -471,8 +472,8 @@ export function entries (obj) {
   * @param {Object} obj 对象/数组
   * @return {Object}
   */
-export function first (obj) {
-  return values(obj)[0]
+export function arrayFirst (obj) {
+  return objectValues(obj)[0]
 }
 
 /**
@@ -481,16 +482,22 @@ export function first (obj) {
   * @param {Object} obj 对象/数组
   * @return {Object}
   */
-export function last (obj) {
-  var list = values(obj)
+export function arrayLast (obj) {
+  var list = objectValues(obj)
   return list[list.length - 1]
 }
 
-function eachObj (obj, iteratee, context) {
+export function objectEach (obj, iteratee, context) {
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
       iteratee.call(context, obj[key], key, obj)
     }
+  }
+}
+
+export function arrayEach (obj, iteratee, context) {
+  for (var index = 0, len = obj.length || 0; index < len; index++) {
+    iteratee.call(context || global, obj[index], index, obj)
   }
 }
 
@@ -505,9 +512,12 @@ function eachObj (obj, iteratee, context) {
 export function each (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
-      return obj.forEach(iteratee, context)
+      if (isFunction(obj.forEach)) {
+        return obj.forEach(iteratee, context)
+      }
+      return arrayEach(obj, iteratee, context)
     }
-    eachObj(obj, iteratee, context)
+    return objectEach(obj, iteratee, context)
   }
   return obj
 }
@@ -552,7 +562,7 @@ export function groupBy (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Object}
   */
-export function mapObject (obj, iteratee, context) {
+export function objectMap (obj, iteratee, context) {
   var result = {}
   each(obj, function (val, index) {
     result[index] = iteratee.call(context, val, index, obj)
@@ -569,7 +579,7 @@ function cloneObj (obj) {
 }
 
 function cloneArr (arr) {
-  return arr.map(function (val, index) {
+  return arrayMap(arr, function (val, index) {
     return deepClone(val)
   })
 }
@@ -586,5 +596,5 @@ function deepClone (obj) {
   * @return {Object}
   */
 export function clone (obj, deep) {
-  return deep ? deepClone(obj) : assign(isPlainObject(obj) ? {} : [], obj)
+  return deep ? deepClone(obj) : objectAssign(isPlainObject(obj) ? {} : [], obj)
 }

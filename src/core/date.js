@@ -1,11 +1,11 @@
-import { isDate, isString, keys } from './base'
+import { isDate, isString, objectKeys, arrayEach } from './base'
 
 /**
  * 返回时间戳
  *
  * @returns Number
  */
-export var now = Date.now || function () {
+export var dateNow = Date.now || function () {
   return new Date().getTime()
 }
 
@@ -26,14 +26,14 @@ export function stringToDate (str, format) {
     }
     if (isString(str)) {
       format = format || 'yyyy-MM-dd HH:mm:ss.SSS'
-      var dates = [];
-      [{rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]]},
+      var dates = []
+      arrayEach([{rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]]},
       {rules: [['MM', 2], ['M', 1]], offset: -1},
       {rules: [['dd', 2], ['d', 1]]},
       {rules: [['HH', 2], ['H', 1]]},
       {rules: [['mm', 2], ['m', 1]]},
       {rules: [['ss', 2], ['s', 1]]},
-      {rules: [['SSS', 3], ['SS', 2], ['S', 1]]}].forEach(function (item) {
+      {rules: [['SSS', 3], ['SS', 2], ['S', 1]]}], function (item) {
         for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
           arr = rules[index]
           sIndex = format.indexOf(arr[0])
@@ -76,7 +76,7 @@ export function dateToString (date, format) {
     if (/(y+)/.test(result)) {
       result = result.replace(RegExp.$1, ('' + date.getFullYear()).substr(4 - RegExp.$1.length))
     }
-    keys(resDate).forEach(function (key) {
+    arrayEach(objectKeys(resDate), function (key) {
       if (new RegExp('(' + key + ')').test(result)) {
         var val = '' + resDate[key]
         result = result.replace(RegExp.$1, (key === 'q+' || key === 'E+') ? weeks[val] : (RegExp.$1.length === 1 ? val : ('00' + val).substr(val.length)))

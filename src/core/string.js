@@ -1,4 +1,4 @@
-import { keys } from './base'
+import { objectKeys, arrayEach } from './base'
 
 var escapeMap = {
   '&': '&amp;',
@@ -10,15 +10,15 @@ var escapeMap = {
 }
 
 var unescapeMap = {}
-keys(escapeMap).forEach(function (key) {
+arrayEach(objectKeys(escapeMap), function (key) {
   unescapeMap[escapeMap[key]] = key
 })
 
-function formatEscaper (map) {
-  var replaceRegexp = new RegExp('(?:' + keys(map).join('|') + ')', 'g')
+function formatEscaper (dataMap) {
+  var replaceRegexp = new RegExp('(?:' + objectKeys(dataMap).join('|') + ')', 'g')
   return function (str) {
     return String(str || '').replace(replaceRegexp, function (match) {
-      return map[match]
+      return dataMap[match]
     })
   }
 }
