@@ -497,7 +497,7 @@ export function objectEach (obj, iteratee, context) {
 
 export function arrayEach (obj, iteratee, context) {
   for (var index = 0, len = obj.length || 0; index < len; index++) {
-    iteratee.call(context || global, obj[index], index, obj)
+    iteratee.call(context, obj[index], index, obj)
   }
 }
 
