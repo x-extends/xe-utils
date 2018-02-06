@@ -5,10 +5,10 @@ import { isDate, isString, objectKeys, arrayEach } from './base'
  *
  * @returns Number
  */
-export var dateNow = Date.now || function () {
+export var timestamp = Date.now || function () {
   return new Date().getTime()
 }
-export var now = dateNow
+export var now = timestamp
 
 /**
   * 字符串转为日期

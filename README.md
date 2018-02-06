@@ -500,11 +500,11 @@ XEUtils.arrayMap([{a: 11}, {a: 22}]], (item, key) => {
 }) // [11, 22]
 ```
 
-#### now/dateNow ( ) 返回时间戳
+#### now/timestamp ( ) 返回时间戳
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.dateNow() // 1514096716800
+XEUtils.timestamp() // 1514096716800
 ```
 #### stringToDate ( str, format ) 任意格式字符串转为日期(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、SSS毫秒)
 ```shell
