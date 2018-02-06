@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "XEUtils 一个轻量级的函数库，提供一套实用丰富函数",
   "main": "index.js",
   "scripts": {

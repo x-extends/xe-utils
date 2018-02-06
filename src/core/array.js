@@ -18,6 +18,7 @@ export function arrayUniq (array) {
   }
   return result
 }
+export var uniq = arrayUniq
 
 /**
   * 将多个数的值返回唯一的并集数组
@@ -32,6 +33,7 @@ export function arrayUnion () {
   }
   return arrayUniq(result)
 }
+export var union = arrayUnion
 
 /**
   * 数组按属性值升序
@@ -50,6 +52,7 @@ export function arraySort (arr, iteratee, context) {
   }
   return arr
 }
+export var sort = arraySort
 
 /**
   * 将一个数组随机打乱，返回一个新的数组
@@ -66,6 +69,7 @@ export function arrayShuffle (array) {
   }
   return result
 }
+export var shuffle = arrayShuffle
 
 /**
   * 从一个数组中随机返回几个元素
@@ -84,6 +88,7 @@ export function arraySample (array, number) {
   }
   return result
 }
+export var sample = arraySample
 
 /**
   * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
@@ -109,6 +114,7 @@ export function arraySome (obj, iteratee, context) {
   }
   return false
 }
+export var some = arraySome
 
 /**
   * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
@@ -134,6 +140,7 @@ export function arrayEvery (obj, iteratee, context) {
   }
   return true
 }
+export var every = arrayEvery
 
 /**
   * 根据回调过滤数据
@@ -159,6 +166,7 @@ export function arrayFilter (obj, iteratee, context) {
   }
   return []
 }
+export var filter = arrayFilter
 
 /**
   * 查找匹配第一条数据
@@ -183,6 +191,7 @@ export function arrayFind (obj, iteratee, context) {
     }
   }
 }
+export var find = arrayFind
 
 /**
   * 指定方法后的返回值组成的新数组
@@ -205,3 +214,4 @@ export function arrayMap (obj, iteratee, context) {
   }
   return result
 }
+export var map = arrayMap

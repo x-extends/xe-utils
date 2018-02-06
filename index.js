@@ -12,10 +12,13 @@ function mixin (methods) {
   return core.objectAssign(XEUtils, methods)
 }
 
+var a = ''; core.each(core, function (c, k) { a += k + ': ' + k + ', ' }); console.log(a)
+var b = ''; core.each(browse, function (c, k) { b += k + ': ' + k + ', ' }); console.log(b)
+
 mixin(core)
 mixin(browse)
 XEUtils.mixin = mixin
-XEUtils.version = '1.5.0'
+XEUtils.version = '1.5.1'
 
 export * from './src/core'
 export * from './src/browse'

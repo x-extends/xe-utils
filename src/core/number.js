@@ -26,6 +26,7 @@ function sortData (arr, iteratee) {
 export function arrayMin () {
   return sortData.apply(this, arguments)[0]
 }
+export var min = arrayMin
 
 /**
   * 获取最大值
@@ -37,3 +38,4 @@ export function arrayMin () {
 export function arrayMax () {
   return sortData.apply(this, arguments).reverse()[0]
 }
+export var max = arrayMax

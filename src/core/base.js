@@ -375,6 +375,7 @@ export var objectAssign = Object.assign || function (target) {
   }
   return target
 }
+export var assign = objectAssign
 export var extend = objectAssign
 
 /**
@@ -431,6 +432,7 @@ export function objectKeys (obj) {
   }
   return result
 }
+export var keys = objectKeys
 
 /**
   * 获取对象所有值
@@ -448,6 +450,7 @@ export function objectValues (obj) {
   })
   return result
 }
+export var values = objectValues
 
 /**
   * 获取对象所有属性、值
@@ -465,6 +468,7 @@ export function objectEntries (obj) {
   })
   return result
 }
+export var entries = objectEntries
 
 /**
   * 获取对象第一个值
@@ -475,6 +479,7 @@ export function objectEntries (obj) {
 export function arrayFirst (obj) {
   return objectValues(obj)[0]
 }
+export var first = arrayFirst
 
 /**
   * 获取对象最后一个值
@@ -486,6 +491,7 @@ export function arrayLast (obj) {
   var list = objectValues(obj)
   return list[list.length - 1]
 }
+export var last = arrayLast
 
 export function objectEach (obj, iteratee, context) {
   for (var key in obj) {

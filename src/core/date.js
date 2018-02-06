@@ -8,6 +8,7 @@ import { isDate, isString, objectKeys, arrayEach } from './base'
 export var dateNow = Date.now || function () {
   return new Date().getTime()
 }
+export var now = dateNow
 
 /**
   * 字符串转为日期

@@ -1,5 +1,5 @@
 /*!
- * xe-utils.js v1.5.0
+ * xe-utils.js v1.5.1
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  */
@@ -382,6 +382,7 @@
     }
     return target
   }
+  var assign = objectAssign
   var extend = objectAssign
 
   /**
@@ -438,6 +439,7 @@
     }
     return result
   }
+  var keys = objectKeys
 
   /**
     * 获取对象所有值
@@ -455,6 +457,7 @@
     })
     return result
   }
+  var values = objectValues
 
   /**
     * 获取对象所有属性、值
@@ -472,6 +475,7 @@
     })
     return result
   }
+  var entries = objectEntries
 
   /**
     * 获取对象第一个值
@@ -482,6 +486,7 @@
   function arrayFirst (obj) {
     return objectValues(obj)[0]
   }
+  var first = arrayFirst
 
   /**
     * 获取对象最后一个值
@@ -493,6 +498,7 @@
     var list = objectValues(obj)
     return list[list.length - 1]
   }
+  var last = arrayLast
 
   function objectEach (obj, iteratee, context) {
     for (var key in obj) {
@@ -623,6 +629,7 @@
     }
     return result
   }
+  var uniq = arrayUniq
 
   /**
     * 将多个数的值返回唯一的并集数组
@@ -637,6 +644,7 @@
     }
     return arrayUniq(result)
   }
+  var union = arrayUnion
 
   /**
     * 数组按属性值升序
@@ -655,6 +663,7 @@
     }
     return arr
   }
+  var sort = arraySort
 
   /**
     * 将一个数组随机打乱，返回一个新的数组
@@ -671,6 +680,7 @@
     }
     return result
   }
+  var shuffle = arrayShuffle
 
   /**
     * 从一个数组中随机返回几个元素
@@ -689,6 +699,7 @@
     }
     return result
   }
+  var sample = arraySample
 
   /**
     * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
@@ -714,6 +725,7 @@
     }
     return false
   }
+  var some = arraySome
 
   /**
     * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
@@ -739,6 +751,7 @@
     }
     return true
   }
+  var every = arrayEvery
 
   /**
     * 根据回调过滤数据
@@ -764,6 +777,7 @@
     }
     return []
   }
+  var filter = arrayFilter
 
   /**
     * 查找匹配第一条数据
@@ -788,6 +802,7 @@
       }
     }
   }
+  var find = arrayFind
 
   /**
     * 指定方法后的返回值组成的新数组
@@ -810,6 +825,7 @@
     }
     return result
   }
+  var map = arrayMap
 
   /**
    * 返回时间戳
@@ -819,6 +835,7 @@
   var dateNow = Date.now || function () {
     return new Date().getTime()
   }
+  var now = dateNow
 
   /**
     * 字符串转为日期
@@ -1072,6 +1089,7 @@
   function arrayMin () {
     return sortData.apply(this, arguments)[0]
   }
+  var min = arrayMin
 
   /**
     * 获取最大值
@@ -1083,6 +1101,7 @@
   function arrayMax () {
     return sortData.apply(this, arguments).reverse()[0]
   }
+  var max = arrayMax
 
   /**
     * 获取浏览器内核
@@ -1209,13 +1228,13 @@
   }
 
   mixin({
-    isNaN: isNaN, isFinite: isFinite, isArray: isArray, isFloat: isFloat, isInteger: isInteger, isFunction: isFunction, isBoolean: isBoolean, isString: isString, isNumber: isNumber, isRegExp: isRegExp, isObject: isObject, isPlainObject: isPlainObject, isDate: isDate, isError: isError, isTypeError: isTypeError, isEmpty: isEmpty, isNull: isNull, isSymbol: isSymbol, isArguments: isArguments, isElement: isElement, isDocument: isDocument, isWindow: isWindow, isFormData: isFormData, isLeapYear: isLeapYear, getType: getType, uniqueId: uniqueId, getSize: getSize, indexOf: indexOf, lastIndexOf: lastIndexOf, includes: includes, contains: contains, objectAssign: objectAssign, extend: extend, stringToJson: stringToJson, jsonToString: jsonToString, objectKeys: objectKeys, objectValues: objectValues, objectEntries: objectEntries, arrayFirst: arrayFirst, arrayLast: arrayLast, objectEach: objectEach, arrayEach: arrayEach, each: each, groupBy: groupBy, objectMap: objectMap, clone: clone, arrayUniq: arrayUniq, arrayUnion: arrayUnion, arraySort: arraySort, arrayShuffle: arrayShuffle, arraySample: arraySample, arraySome: arraySome, arrayEvery: arrayEvery, arrayFilter: arrayFilter, arrayFind: arrayFind, arrayMap: arrayMap, dateNow: dateNow, stringToDate: stringToDate, dateToString: dateToString, getWhatMonth: getWhatMonth, getWhatWeek: getWhatWeek, getWhatDay: getWhatDay, getDaysOfMonth: getDaysOfMonth, getDateDiff: getDateDiff, escape: escape, unescape: unescape, getRandom: getRandom, arrayMin: arrayMin, arrayMax: arrayMax
+    isNaN: isNaN, isFinite: isFinite, isArray: isArray, isFloat: isFloat, isInteger: isInteger, isFunction: isFunction, isBoolean: isBoolean, isString: isString, isNumber: isNumber, isRegExp: isRegExp, isObject: isObject, isPlainObject: isPlainObject, isDate: isDate, isError: isError, isTypeError: isTypeError, isEmpty: isEmpty, isNull: isNull, isSymbol: isSymbol, isArguments: isArguments, isElement: isElement, isDocument: isDocument, isWindow: isWindow, isFormData: isFormData, isLeapYear: isLeapYear, getType: getType, uniqueId: uniqueId, getSize: getSize, indexOf: indexOf, lastIndexOf: lastIndexOf, includes: includes, contains: contains, objectAssign: objectAssign, assign: assign, extend: extend, stringToJson: stringToJson, jsonToString: jsonToString, objectKeys: objectKeys, keys: keys, objectValues: objectValues, values: values, objectEntries: objectEntries, entries: entries, arrayFirst: arrayFirst, first: first, arrayLast: arrayLast, last: last, objectEach: objectEach, arrayEach: arrayEach, each: each, groupBy: groupBy, objectMap: objectMap, clone: clone, arrayUniq: arrayUniq, uniq: uniq, arrayUnion: arrayUnion, union: union, arraySort: arraySort, sort: sort, arrayShuffle: arrayShuffle, shuffle: shuffle, arraySample: arraySample, sample: sample, arraySome: arraySome, some: some, arrayEvery: arrayEvery, every: every, arrayFilter: arrayFilter, filter: filter, arrayFind: arrayFind, find: find, arrayMap: arrayMap, map: map, dateNow: dateNow, now: now, stringToDate: stringToDate, dateToString: dateToString, getWhatMonth: getWhatMonth, getWhatWeek: getWhatWeek, getWhatDay: getWhatDay, getDaysOfMonth: getDaysOfMonth, getDateDiff: getDateDiff, escape: escape, unescape: unescape, getRandom: getRandom, arrayMin: arrayMin, min: min, arrayMax: arrayMax, max: max
   })
   mixin({
     browse: browse, cookie: cookie, locat: locat
   })
   XEUtils.mixin = mixin
-  XEUtils.version = '1.5.0'
+  XEUtils.version = '1.5.1'
 
   return XEUtils
 }))
