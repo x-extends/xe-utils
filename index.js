@@ -18,7 +18,7 @@ var b = ''; core.each(browse, function (c, k) { b += k + ': ' + k + ', ' }); con
 mixin(core)
 mixin(browse)
 XEUtils.mixin = mixin
-XEUtils.version = '1.5.1'
+XEUtils.version = '1.5.2'
 
 export * from './src/core'
 export * from './src/browse'

@@ -1,5 +1,4 @@
 import { isArray, isObject, objectAssign, arrayEach } from '../core/base'
-import { dateNow } from '../core/date'
 
 /**
   * cookie操作函数
@@ -28,7 +27,7 @@ export function cookie (name, value, options) {
       if (opts.name) {
         values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(JSON.stringify(opts.value)))
         if (opts.expires !== undefined) {
-          opts.expires = new Date(dateNow() + parseFloat(opts.expires) * 86400000).toUTCString()
+          opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
         }
         arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
           if (opts[key] !== undefined) {

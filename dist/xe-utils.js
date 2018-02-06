@@ -1,5 +1,5 @@
 /*!
- * xe-utils.js v1.5.1
+ * xe-utils.js v1.5.2
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  */
@@ -1234,7 +1234,7 @@
     browse: browse, cookie: cookie, locat: locat
   })
   XEUtils.mixin = mixin
-  XEUtils.version = '1.5.1'
+  XEUtils.version = '1.5.2'
 
   return XEUtils
 }))
