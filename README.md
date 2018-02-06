@@ -316,12 +316,12 @@ XEUtils.includes([11, 22], 22) // true
 ```
 #### assign/objectAssign (target, ...) 浅拷贝一个或者多个对象到目标对象中
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { objectAssign } from 'xe-utils'
 
 const obj1 = {a: null}
-XEUtils.objectAssign(obj1, {a: 11}) // {a: 11}
+XEUtils.assign(obj1, {a: 11}) // {a: 11}
 const obj2 = {c: null}
-XEUtils.objectAssign(obj2, {a: 11}, {b: 22}) // {a: 11, b: 22, c: null}
+objectAssign(obj2, {a: 11}, {b: 22}) // {a: 11, b: 22, c: null}
 ```
 #### stringToJson (str) 字符串转JSON
 ```shell
@@ -339,17 +339,17 @@ XEUtils.jsonToString([11, 22]) // '[11,22]'
 ```
 #### keys/objectKeys (obj) 获取对象所有属性
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { objectKeys } from 'xe-utils'
 
-XEUtils.objectKeys({a: 11}) // ['a']
-XEUtils.objectKeys([11, 22]) // [0, 1]
+XEUtils.keys({a: 11}) // ['a']
+objectKeys([11, 22]) // [0, 1]
 ```
 #### values/objectValues (obj) 获取对象所有值
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { objectValues } from 'xe-utils'
 
-XEUtils.objectValues({a: 11}) // [11]
-XEUtils.objectValues([11, 22]) // [11, 22]
+XEUtils.values({a: 11}) // [11]
+objectValues([11, 22]) // [11, 22]
 ```
 #### entries/objectEntries (obj) 获取对象所有属性、值
 ```shell
@@ -360,17 +360,17 @@ XEUtils.objectEntries([11, 22]) // [[0, 11], [1, 22]]
 ```
 #### first/arrayFirst (obj) 获取对象第一个值
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayFirst } from 'xe-utils'
 
-XEUtils.arrayFirst({a: 11, b : 22}) // 11
-XEUtils.arrayFirst([11, 22]) // 11
+XEUtils.first({a: 11, b : 22}) // 11
+arrayFirst([11, 22]) // 11
 ```
 #### last/arrayLast (obj) 获取对象最后一个值
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayLast } from 'xe-utils'
 
-XEUtils.arrayLast({a: 11, b: 22}) // 22
-XEUtils.arrayLast([11, 22]) // 22
+XEUtils.last({a: 11, b: 22}) // 22
+arrayLast([11, 22]) // 22
 ```
 #### each ( obj, iteratee, context ) 迭代器
 ```shell
@@ -418,93 +418,104 @@ if (v1.b === v3.b) {
 
 #### uniq/arrayUniq ( array ) 数组去重
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayUniq } from 'xe-utils'
 
-XEUtils.arrayUniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
+XEUtils.uniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
+arrayUniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
 ```
 #### union/arrayUnion ( ...array ) 将多个数的值返回唯一的并集数组
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayUnion } from 'xe-utils'
 
-XEUtils.arrayUnion([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
+XEUtils.union([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
+arrayUnion([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
 ```
 #### sort/arraySort ( arr, iteratee, context ) 数组按属性值升序
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arraySort } from 'xe-utils'
 
-XEUtils.arraySort([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
-XEUtils.arraySort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => {
+XEUtils.sort([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
+arraySort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => {
   return v1.a > v2.a ? 1 : -1
 }) // [{a: 4}, {a: 5}, {a: 9}]
 
 ```
 #### shuffle/arrayShuffle ( array ) 将一个数组随机打乱，返回一个新的数组
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayShuffle } from 'xe-utils'
 
-XEUtils.arrayShuffle([11, 22, 33, 44, 55]) // [22, 33, 55, 11, 44]
+XEUtils.shuffle([11, 22, 33, 44, 55]) // [22, 33, 55, 11, 44]
+arrayShuffle([11, 22, 33, 44, 55]) // [22, 33, 55, 11, 44]
 ```
 #### sample/arraySample ( array, number ) 从一个数组中随机返回几个元素
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arraySample } from 'xe-utils'
 
-XEUtils.arraySample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
+XEUtils.sample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
+arraySample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
 ```
 #### some/arraySome ( obj, iteratee, context ) 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arraySome } from 'xe-utils'
 
-XEUtils.arraySome([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.some([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 55
 }) // false
-XEUtils.arraySome([{a: 11}, {a: 22}]], (item, key) => {
+arraySome([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11
 }) // true
 ```
 #### every/arrayEvery ( obj, iteratee, context ) 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayEvery } from 'xe-utils'
 
-XEUtils.arrayEvery([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.every([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11
 }) // false
-XEUtils.arrayEvery([{a: 11}, {a: 22}]], (item, key) => {
+arrayEvery([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 11 || item.a === 22
 }) // true
 ```
 #### filter/arrayFilter ( obj, iteratee, context ) 根据回调过滤数据
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayFilter } from 'xe-utils'
 
-XEUtils.arrayFilter([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.filter([{a: 11}, {a: 22}]], (item, key) => {
+  return item.a > 11
+}) // [{a: 22}]
+arrayFilter([{a: 11}, {a: 22}]], (item, key) => {
   return item.a > 11
 }) // [{a: 22}]
 ```
 #### find/arrayFind ( obj, iteratee, context ) 查找匹配第一条数据
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayFind } from 'xe-utils'
 
-XEUtils.arrayFind([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.find([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 55
 }) // null
-XEUtils.arrayFind([{a: 11}, {a: 22}]], (item, key) => {
+arrayFind([{a: 11}, {a: 22}]], (item, key) => {
   return item.a === 22
 }) // {a: 22}
 ```
 #### map/arrayMap ( obj, iteratee, context ) 指定方法后的返回值组成的新数组
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayMap } from 'xe-utils'
 
-XEUtils.arrayMap([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.map([{a: 11}, {a: 22}]], (item, key) => {
+  return item.a
+}) // [11, 22]
+arrayMap([{a: 11}, {a: 22}]], (item, key) => {
   return item.a
 }) // [11, 22]
 ```
 
 #### now/timestamp ( ) 返回时间戳
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { timestamp } from 'xe-utils'
 
-XEUtils.timestamp() // 1514096716800
+XEUtils.now() // 1514096716800
+timestamp() // 1514096716800
 ```
 #### stringToDate ( str, format ) 任意格式字符串转为日期(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、SSS毫秒)
 ```shell
@@ -589,21 +600,21 @@ XEUtils.getRandom(10, 100) // 10 ~ 100
 ```
 #### min/arrayMin ( arr, iteratee ) 获取最小值
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayMin } from 'xe-utils'
 
-XEUtils.arrayMin([22, 66, 77, 11]) // 11
-XEUtils.arrayMin([{a: 11}, {a: 44}], 'a') // 11
-XEUtils.arrayMin([{a: 11}, {a: 44}], (item) => {
+XEUtils.min([22, 66, 77, 11]) // 11
+arrayMin([{a: 11}, {a: 44}], 'a') // 11
+arrayMin([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 11}
 ```
 #### max/arrayMax ( arr, iteratee ) 获取最大值
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { arrayMax } from 'xe-utils'
 
-XEUtils.arrayMax([22, 66, 77, 11]) // 77
-XEUtils.arrayMax([{a: 11}, {a: 44}], 'a') // 44
-XEUtils.arrayMax([{a: 11}, {a: 44}], (item) => {
+XEUtils.max([22, 66, 77, 11]) // 77
+arrayMax([{a: 11}, {a: 44}], 'a') // 44
+arrayMax([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 44}
 ```
