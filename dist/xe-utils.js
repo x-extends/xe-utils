@@ -832,10 +832,10 @@
    *
    * @returns Number
    */
-  var dateNow = Date.now || function () {
+  var timestamp = Date.now || function () {
     return new Date().getTime()
   }
-  var now = dateNow
+  var now = timestamp
 
   /**
     * 字符串转为日期
@@ -1143,7 +1143,7 @@
         if (opts.name) {
           values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(JSON.stringify(opts.value)))
           if (opts.expires !== undefined) {
-            opts.expires = new Date(dateNow() + parseFloat(opts.expires) * 86400000).toUTCString()
+            opts.expires = new Date(timestamp() + parseFloat(opts.expires) * 86400000).toUTCString()
           }
           arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
             if (opts[key] !== undefined) {
@@ -1228,7 +1228,7 @@
   }
 
   mixin({
-    isNaN: isNaN, isFinite: isFinite, isArray: isArray, isFloat: isFloat, isInteger: isInteger, isFunction: isFunction, isBoolean: isBoolean, isString: isString, isNumber: isNumber, isRegExp: isRegExp, isObject: isObject, isPlainObject: isPlainObject, isDate: isDate, isError: isError, isTypeError: isTypeError, isEmpty: isEmpty, isNull: isNull, isSymbol: isSymbol, isArguments: isArguments, isElement: isElement, isDocument: isDocument, isWindow: isWindow, isFormData: isFormData, isLeapYear: isLeapYear, getType: getType, uniqueId: uniqueId, getSize: getSize, indexOf: indexOf, lastIndexOf: lastIndexOf, includes: includes, contains: contains, objectAssign: objectAssign, assign: assign, extend: extend, stringToJson: stringToJson, jsonToString: jsonToString, objectKeys: objectKeys, keys: keys, objectValues: objectValues, values: values, objectEntries: objectEntries, entries: entries, arrayFirst: arrayFirst, first: first, arrayLast: arrayLast, last: last, objectEach: objectEach, arrayEach: arrayEach, each: each, groupBy: groupBy, objectMap: objectMap, clone: clone, arrayUniq: arrayUniq, uniq: uniq, arrayUnion: arrayUnion, union: union, arraySort: arraySort, sort: sort, arrayShuffle: arrayShuffle, shuffle: shuffle, arraySample: arraySample, sample: sample, arraySome: arraySome, some: some, arrayEvery: arrayEvery, every: every, arrayFilter: arrayFilter, filter: filter, arrayFind: arrayFind, find: find, arrayMap: arrayMap, map: map, dateNow: dateNow, now: now, stringToDate: stringToDate, dateToString: dateToString, getWhatMonth: getWhatMonth, getWhatWeek: getWhatWeek, getWhatDay: getWhatDay, getDaysOfMonth: getDaysOfMonth, getDateDiff: getDateDiff, escape: escape, unescape: unescape, getRandom: getRandom, arrayMin: arrayMin, min: min, arrayMax: arrayMax, max: max
+    isNaN: isNaN, isFinite: isFinite, isArray: isArray, isFloat: isFloat, isInteger: isInteger, isFunction: isFunction, isBoolean: isBoolean, isString: isString, isNumber: isNumber, isRegExp: isRegExp, isObject: isObject, isPlainObject: isPlainObject, isDate: isDate, isError: isError, isTypeError: isTypeError, isEmpty: isEmpty, isNull: isNull, isSymbol: isSymbol, isArguments: isArguments, isElement: isElement, isDocument: isDocument, isWindow: isWindow, isFormData: isFormData, isLeapYear: isLeapYear, getType: getType, uniqueId: uniqueId, getSize: getSize, indexOf: indexOf, lastIndexOf: lastIndexOf, includes: includes, contains: contains, objectAssign: objectAssign, assign: assign, extend: extend, stringToJson: stringToJson, jsonToString: jsonToString, objectKeys: objectKeys, keys: keys, objectValues: objectValues, values: values, objectEntries: objectEntries, entries: entries, arrayFirst: arrayFirst, first: first, arrayLast: arrayLast, last: last, objectEach: objectEach, arrayEach: arrayEach, each: each, groupBy: groupBy, objectMap: objectMap, clone: clone, arrayUniq: arrayUniq, uniq: uniq, arrayUnion: arrayUnion, union: union, arraySort: arraySort, sort: sort, arrayShuffle: arrayShuffle, shuffle: shuffle, arraySample: arraySample, sample: sample, arraySome: arraySome, some: some, arrayEvery: arrayEvery, every: every, arrayFilter: arrayFilter, filter: filter, arrayFind: arrayFind, find: find, arrayMap: arrayMap, map: map, timestamp: timestamp, now: now, stringToDate: stringToDate, dateToString: dateToString, getWhatMonth: getWhatMonth, getWhatWeek: getWhatWeek, getWhatDay: getWhatDay, getDaysOfMonth: getDaysOfMonth, getDateDiff: getDateDiff, escape: escape, unescape: unescape, getRandom: getRandom, arrayMin: arrayMin, min: min, arrayMax: arrayMax, max: max
   })
   mixin({
     browse: browse, cookie: cookie, locat: locat
