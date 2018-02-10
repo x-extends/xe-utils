@@ -15,7 +15,7 @@ XEUtils 一个不依赖于任何框架、开源的函数库，支持常用基础
 ``` shell
 <script src="https://cdn.jsdelivr.net/npm/xe-utils@1.5.4/dist/xe-utils.js" type="text/javascript"></script>
 ```
-#### unpkg 获取最新版本, [点击浏览](https://unpkg.com/xe-utils@3.0.15/)已发布的所有 npm 包的源代码
+#### unpkg 获取最新版本, [点击浏览](https://unpkg.com/xe-utils@1.5.4/)已发布的所有 npm 包的源代码
 ``` shell
 <script src="https://unpkg.com/xe-utils@1.5.4/dist/xe-utils.js" type="text/javascript"></script>
 ```
