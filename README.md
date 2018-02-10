@@ -1,5 +1,8 @@
 # XEUtils 轻量级的函数库，提供一套实用丰富函数
 
+[![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.org/package/xe-utils)
+[![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
+
 XEUtils 一个不依赖于任何框架、开源的函数库，支持常用基础函数、支持任意格式的日期处理函数，cookie操作函数等...
 
 ### 兼容性
