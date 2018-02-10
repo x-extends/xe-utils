@@ -13,11 +13,11 @@ XEUtils 一个不依赖于任何框架、开源的函数库，支持常用基础
 生产环境请使用 xe-utils.min.js，更小的压缩版本，可以带来更快的速度体验。
 #### cdnjs 获取最新版本, [点击浏览](https://cdn.jsdelivr.net/npm/xe-utils/)已发布的所有 npm 包的源代码。
 ``` shell
-<script src="https://cdn.jsdelivr.net/npm/xe-utils@1.5.4/dist/xe-utils.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/xe-utils@1.5.4/dist/xe-utils.js"></script>
 ```
 #### unpkg 获取最新版本, [点击浏览](https://unpkg.com/xe-utils@1.5.4/)已发布的所有 npm 包的源代码
 ``` shell
-<script src="https://unpkg.com/xe-utils@1.5.4/dist/xe-utils.js" type="text/javascript"></script>
+<script src="https://unpkg.com/xe-utils@1.5.4/dist/xe-utils.js"></script>
 ```
 
 ### AMD 安装， 以 require.js 为例
