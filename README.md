@@ -8,12 +8,16 @@ XEUtils 一个不依赖于任何框架、开源的函数库，支持常用基础
 ### 兼容性
 支持 IE8+、Edge、Chrome、Firefox、Opera、Safari等...
 
-### 直接引用 script 全局安装，XEUtils 会定义为全局变量
+### CDN 安装
+使用 script 方式安装，XEAjax 会定义为全局变量<br/>
+生产环境请使用 xe-utils.min.js，更小的压缩版本，可以带来更快的速度体验。
+#### cdnjs 获取最新版本, [点击浏览](https://cdn.jsdelivr.net/npm/xe-utils/)已发布的所有 npm 包的源代码。
 ``` shell
-<script src="./dist/xe-utils.min.js" type="text/javascript"></script>
-
-// 全局调用
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
+<script src="https://cdn.jsdelivr.net/npm/xe-utils@1.5.4/dist/xe-utils.js" type="text/javascript"></script>
+```
+#### unpkg 获取最新版本, [点击浏览](https://unpkg.com/xe-utils@3.0.15/)已发布的所有 npm 包的源代码
+``` shell
+<script src="https://unpkg.com/xe-utils@1.5.4/dist/xe-utils.js" type="text/javascript"></script>
 ```
 
 ### AMD 安装， 以 require.js 为例
