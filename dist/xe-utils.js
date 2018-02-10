@@ -1,5 +1,5 @@
 /*!
- * xe-utils.js v1.5.3
+ * xe-utils.js v1.5.4
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  */
@@ -503,14 +503,14 @@
   function objectEach (obj, iteratee, context) {
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
-        iteratee.call(context, obj[key], key, obj)
+        iteratee.call(context || this, obj[key], key, obj)
       }
     }
   }
 
   function arrayEach (obj, iteratee, context) {
     for (var index = 0, len = obj.length || 0; index < len; index++) {
-      iteratee.call(context, obj[index], index, obj)
+      iteratee.call(context || this, obj[index], index, obj)
     }
   }
 
@@ -526,11 +526,11 @@
     if (obj) {
       if (isArray(obj)) {
         if (isFunction(obj.forEach)) {
-          return obj.forEach(iteratee, context)
+          return obj.forEach(iteratee, context || this)
         }
-        return arrayEach(obj, iteratee, context)
+        return arrayEach(obj, iteratee, context || this)
       }
-      return objectEach(obj, iteratee, context)
+      return objectEach(obj, iteratee, context || this)
     }
     return obj
   }
@@ -551,7 +551,7 @@
         attr = iteratee
         iteratee = null
       } else if (isFunction(iteratee)) {
-        iteratee = iteratee.bind(context)
+        iteratee = iteratee.bind(context || this)
       } else {
         iteratee = attr = null
       }
@@ -578,7 +578,7 @@
   function objectMap (obj, iteratee, context) {
     var result = {}
     each(obj, function (val, index) {
-      result[index] = iteratee.call(context, val, index, obj)
+      result[index] = iteratee.call(context || this, val, index, obj)
     })
     return result
   }
@@ -712,11 +712,11 @@
   function arraySome (obj, iteratee, context) {
     if (obj) {
       if (isArray(obj)) {
-        return obj.some(iteratee, context)
+        return obj.some(iteratee, context || this)
       } else {
         for (var index in obj) {
           if (obj.hasOwnProperty(index)) {
-            if (iteratee.call(context, obj[index], index, obj)) {
+            if (iteratee.call(context || this, obj[index], index, obj)) {
               return true
             }
           }
@@ -738,11 +738,11 @@
   function arrayEvery (obj, iteratee, context) {
     if (obj) {
       if (isArray(obj)) {
-        return obj.every(iteratee, context)
+        return obj.every(iteratee, context || this)
       } else {
         for (var index in obj) {
           if (obj.hasOwnProperty(index)) {
-            if (!iteratee.call(context, obj[index], index, obj)) {
+            if (!iteratee.call(context || this, obj[index], index, obj)) {
               return false
             }
           }
@@ -764,11 +764,11 @@
   function arrayFilter (obj, iteratee, context) {
     if (obj) {
       if (isArray(obj)) {
-        return obj.filter(iteratee, context)
+        return obj.filter(iteratee, context || this)
       } else {
         var result = {}
         each(obj, function (val, key) {
-          if (iteratee.call(context, val, key, obj)) {
+          if (iteratee.call(context || this, val, key, obj)) {
             result[key] = val
           }
         })
@@ -790,11 +790,11 @@
   function arrayFind (obj, iteratee, context) {
     if (obj) {
       if (isArray(obj)) {
-        return obj.find(iteratee, context)
+        return obj.find(iteratee, context || this)
       } else {
         for (var key in obj) {
           if (obj.hasOwnProperty(key)) {
-            if (iteratee.call(context, obj[key], key, obj)) {
+            if (iteratee.call(context || this, obj[key], key, obj)) {
               return obj[key]
             }
           }
@@ -816,10 +816,10 @@
     var result = []
     if (obj) {
       if (isArray(obj)) {
-        return obj.map(iteratee, context)
+        return obj.map(iteratee, context || this)
       } else {
         each(obj, function () {
-          result.push(iteratee.apply(context, arguments))
+          result.push(iteratee.apply(context || this, arguments))
         })
       }
     }
@@ -1224,7 +1224,13 @@
    * @param {Object} methods 扩展函数对象
    */
   function mixin (methods) {
-    return objectAssign(XEUtils, methods)
+    objectEach(methods, function (fn, name) {
+      XEUtils[name] = isFunction(fn) ? function () {
+        var result = fn.apply(XEUtils.context, arguments)
+        XEUtils.context = null
+        return result
+      } : fn
+    })
   }
 
   mixin({
@@ -1234,7 +1240,7 @@
     browse: browse, cookie: cookie, locat: locat
   })
   XEUtils.mixin = mixin
-  XEUtils.version = '1.5.3'
+  XEUtils.version = '1.5.4'
 
   return XEUtils
 }))

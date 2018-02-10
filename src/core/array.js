@@ -101,11 +101,11 @@ export var sample = arraySample
 export function arraySome (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
-      return obj.some(iteratee, context)
+      return obj.some(iteratee, context || this)
     } else {
       for (var index in obj) {
         if (obj.hasOwnProperty(index)) {
-          if (iteratee.call(context, obj[index], index, obj)) {
+          if (iteratee.call(context || this, obj[index], index, obj)) {
             return true
           }
         }
@@ -127,11 +127,11 @@ export var some = arraySome
 export function arrayEvery (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
-      return obj.every(iteratee, context)
+      return obj.every(iteratee, context || this)
     } else {
       for (var index in obj) {
         if (obj.hasOwnProperty(index)) {
-          if (!iteratee.call(context, obj[index], index, obj)) {
+          if (!iteratee.call(context || this, obj[index], index, obj)) {
             return false
           }
         }
@@ -153,11 +153,11 @@ export var every = arrayEvery
 export function arrayFilter (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
-      return obj.filter(iteratee, context)
+      return obj.filter(iteratee, context || this)
     } else {
       var result = {}
       each(obj, function (val, key) {
-        if (iteratee.call(context, val, key, obj)) {
+        if (iteratee.call(context || this, val, key, obj)) {
           result[key] = val
         }
       })
@@ -179,11 +179,11 @@ export var filter = arrayFilter
 export function arrayFind (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
-      return obj.find(iteratee, context)
+      return obj.find(iteratee, context || this)
     } else {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-          if (iteratee.call(context, obj[key], key, obj)) {
+          if (iteratee.call(context || this, obj[key], key, obj)) {
             return obj[key]
           }
         }
@@ -205,10 +205,10 @@ export function arrayMap (obj, iteratee, context) {
   var result = []
   if (obj) {
     if (isArray(obj)) {
-      return obj.map(iteratee, context)
+      return obj.map(iteratee, context || this)
     } else {
       each(obj, function () {
-        result.push(iteratee.apply(context, arguments))
+        result.push(iteratee.apply(context || this, arguments))
       })
     }
   }

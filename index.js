@@ -9,13 +9,19 @@ function XEUtils () {}
  * @param {Object} methods 扩展函数对象
  */
 function mixin (methods) {
-  return core.objectAssign(XEUtils, methods)
+  core.objectEach(methods, function (fn, name) {
+    XEUtils[name] = core.isFunction(fn) ? function () {
+      var result = fn.apply(XEUtils.context, arguments)
+      XEUtils.context = null
+      return result
+    } : fn
+  })
 }
 
 mixin(core)
 mixin(browse)
 XEUtils.mixin = mixin
-XEUtils.version = '1.5.3'
+XEUtils.version = '1.5.4'
 
 export * from './src/core'
 export * from './src/browse'

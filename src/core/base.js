@@ -496,14 +496,14 @@ export var last = arrayLast
 export function objectEach (obj, iteratee, context) {
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
-      iteratee.call(context, obj[key], key, obj)
+      iteratee.call(context || this, obj[key], key, obj)
     }
   }
 }
 
 export function arrayEach (obj, iteratee, context) {
   for (var index = 0, len = obj.length || 0; index < len; index++) {
-    iteratee.call(context, obj[index], index, obj)
+    iteratee.call(context || this, obj[index], index, obj)
   }
 }
 
@@ -519,11 +519,11 @@ export function each (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
       if (isFunction(obj.forEach)) {
-        return obj.forEach(iteratee, context)
+        return obj.forEach(iteratee, context || this)
       }
-      return arrayEach(obj, iteratee, context)
+      return arrayEach(obj, iteratee, context || this)
     }
-    return objectEach(obj, iteratee, context)
+    return objectEach(obj, iteratee, context || this)
   }
   return obj
 }
@@ -544,7 +544,7 @@ export function groupBy (obj, iteratee, context) {
       attr = iteratee
       iteratee = null
     } else if (isFunction(iteratee)) {
-      iteratee = iteratee.bind(context)
+      iteratee = iteratee.bind(context || this)
     } else {
       iteratee = attr = null
     }
@@ -571,7 +571,7 @@ export function groupBy (obj, iteratee, context) {
 export function objectMap (obj, iteratee, context) {
   var result = {}
   each(obj, function (val, index) {
-    result[index] = iteratee.call(context, val, index, obj)
+    result[index] = iteratee.call(context || this, val, index, obj)
   })
   return result
 }
