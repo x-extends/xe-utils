@@ -1,10 +1,13 @@
-/*!
- * xe-utils.js v1.5.4
+/**
+ * xe-utils.js v1.5.5
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
+ * @preserve
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() : typeof define === 'function' && define.amd ? define(factory) : (global.XEUtils = factory())
+  typeof s === 'object' && typeof module !== 'undefined' ? module.s = factory()
+    : typeof define === 'function' && define.amd ? define(factory)
+      : (global.XEUtils = factory())
 }(this, function () {
   'use strict'
 
@@ -855,13 +858,13 @@
       if (isString(str)) {
         format = format || 'yyyy-MM-dd HH:mm:ss.SSS'
         var dates = []
-        arrayEach([{rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]]},
-        {rules: [['MM', 2], ['M', 1]], offset: -1},
-        {rules: [['dd', 2], ['d', 1]]},
-        {rules: [['HH', 2], ['H', 1]]},
-        {rules: [['mm', 2], ['m', 1]]},
-        {rules: [['ss', 2], ['s', 1]]},
-        {rules: [['SSS', 3], ['SS', 2], ['S', 1]]}], function (item) {
+        arrayEach([{ rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]] },
+        { rules: [['MM', 2], ['M', 1]], offset: -1 },
+        { rules: [['dd', 2], ['d', 1]] },
+        { rules: [['HH', 2], ['H', 1]] },
+        { rules: [['mm', 2], ['m', 1]] },
+        { rules: [['ss', 2], ['s', 1]] },
+        { rules: [['SSS', 3], ['SS', 2], ['S', 1]] }], function (item) {
           for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
             arr = rules[index]
             sIndex = format.indexOf(arr[0])
@@ -887,32 +890,35 @@
     * @return {String}
     */
   function dateToString (date, format) {
-    date = stringToDate(date)
-    if (isDate(date)) {
-      var result = format || 'yyyy-MM-dd HH:mm:ss'
-      var weeks = ['日', '一', '二', '三', '四', '五', '六']
-      var resDate = {
-        'q+': Math.floor((date.getMonth() + 3) / 3),
-        'M+': date.getMonth() + 1,
-        'E+': date.getDay(),
-        'd+': date.getDate(),
-        'H+': date.getHours(),
-        'm+': date.getMinutes(),
-        's+': date.getSeconds(),
-        'S': date.getMilliseconds()
-      }
-      if (/(y+)/.test(result)) {
-        result = result.replace(RegExp.$1, ('' + date.getFullYear()).substr(4 - RegExp.$1.length))
-      }
-      arrayEach(objectKeys(resDate), function (key) {
-        if (new RegExp('(' + key + ')').test(result)) {
-          var val = '' + resDate[key]
-          result = result.replace(RegExp.$1, (key === 'q+' || key === 'E+') ? weeks[val] : (RegExp.$1.length === 1 ? val : ('00' + val).substr(val.length)))
+    if (date) {
+      date = stringToDate(date)
+      if (isDate(date)) {
+        var result = format || 'yyyy-MM-dd HH:mm:ss'
+        var weeks = ['日', '一', '二', '三', '四', '五', '六']
+        var resDate = {
+          'q+': Math.floor((date.getMonth() + 3) / 3),
+          'M+': date.getMonth() + 1,
+          'E+': date.getDay(),
+          'd+': date.getDate(),
+          'H+': date.getHours(),
+          'm+': date.getMinutes(),
+          's+': date.getSeconds(),
+          'S': date.getMilliseconds()
         }
-      })
-      return result
+        if (/(y+)/.test(result)) {
+          result = result.replace(RegExp.$1, ('' + date.getFullYear()).substr(4 - RegExp.$1.length))
+        }
+        arrayEach(objectKeys(resDate), function (key) {
+          if (new RegExp('(' + key + ')').test(result)) {
+            var val = '' + resDate[key]
+            result = result.replace(RegExp.$1, (key === 'q+' || key === 'E+') ? weeks[val] : (RegExp.$1.length === 1 ? val : ('00' + val).substr(val.length)))
+          }
+        })
+        return result
+      }
+      return date
     }
-    return date
+    return ''
   }
 
   /**
@@ -1103,6 +1109,96 @@
   }
   var max = arrayMax
 
+  var coreMethods = {
+    isNaN: isNaN,
+    isFinite: isFinite,
+    isFloat: isFloat,
+    isInteger: isInteger,
+    isFunction: isFunction,
+    isBoolean: isBoolean,
+    isString: isString,
+    isRegExp: isRegExp,
+    isObject: isObject,
+    isError: isError,
+    isTypeError: isTypeError,
+    isEmpty: isEmpty,
+    isNull: isNull,
+    isSymbol: isSymbol,
+    isArguments: isArguments,
+    isElement: isElement,
+    isDocument: isDocument,
+    isWindow: isWindow,
+    isFormData: isFormData,
+    isLeapYear: isLeapYear,
+    getType: getType,
+    uniqueId: uniqueId,
+    getSize: getSize,
+    lastIndexOf: lastIndexOf,
+    includes: includes,
+    contains: contains,
+    objectAssign: objectAssign,
+    assign: assign,
+    extend: extend,
+    stringToJson: stringToJson,
+    jsonToString: jsonToString,
+    objectKeys: objectKeys,
+    keys: keys,
+    objectValues: objectValues,
+    values: values,
+    objectEntries: objectEntries,
+    entries: entries,
+    arrayFirst: arrayFirst,
+    first: first,
+    arrayLast: arrayLast,
+    last: last,
+    objectEach: objectEach,
+    arrayEach: arrayEach,
+    each: each,
+    groupBy: groupBy,
+    objectMap: objectMap,
+    clone: clone,
+
+    arrayUniq: arrayUniq,
+    uniq: uniq,
+    arrayUnion: arrayUnion,
+    union: union,
+    arraySort: arraySort,
+    sort: sort,
+    arrayShuffle: arrayShuffle,
+    shuffle: shuffle,
+    arraySample: arraySample,
+    sample: sample,
+    arraySome: arraySome,
+    some: some,
+    arrayEvery: arrayEvery,
+    every: every,
+    arrayFilter: arrayFilter,
+    filter: filter,
+    arrayFind: arrayFind,
+    find: find,
+    arrayMap: arrayMap,
+    map: map,
+
+    timestamp: timestamp,
+    now: now,
+    stringToDate: stringToDate,
+    dateToString: dateToString,
+    getWhatMonth: getWhatMonth,
+    getWhatWeek: getWhatWeek,
+    getWhatDay: getWhatDay,
+    getDaysOfMonth: getDaysOfMonth,
+    getDateDiff: getDateDiff,
+
+    escape: escape,
+    unescape: unescape,
+
+    getRandom: getRandom,
+    arrayMin: arrayMin,
+    min: min,
+    arrayMax: arrayMax,
+    max: max
+  }
+
   /**
     * 获取浏览器内核
     * @return Object
@@ -1132,7 +1228,7 @@
     if (isArray(name)) {
       inserts = name
     } else if (arguments.length > 1) {
-      inserts = [objectAssign({name: name, value: value}, options)]
+      inserts = [objectAssign({ name: name, value: value }, options)]
     } else if (isObject(name)) {
       inserts = [name]
     }
@@ -1143,7 +1239,7 @@
         if (opts.name) {
           values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(JSON.stringify(opts.value)))
           if (opts.expires !== undefined) {
-            opts.expires = new Date(timestamp() + parseFloat(opts.expires) * 86400000).toUTCString()
+            opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
           }
           arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
             if (opts[key] !== undefined) {
@@ -1173,7 +1269,7 @@
       return cookie(name)
     },
     removeItem: function (name) {
-      cookie(name, null, {expires: -1})
+      cookie(name, null, { expires: -1 })
     },
     getJSON: function () {
       return cookie()
@@ -1216,7 +1312,13 @@
     }
   }
 
-  function XEUtils () {}
+  var browseMethods = {
+    browse: browse,
+    cookie: cookie,
+    locat: locat
+  }
+
+  function XEUtils () { }
 
   /**
    * 函数扩展
@@ -1224,23 +1326,23 @@
    * @param {Object} methods 扩展函数对象
    */
   function mixin (methods) {
-    objectEach(methods, function (fn, name) {
-      XEUtils[name] = isFunction(fn) ? function () {
-        var result = fn.apply(XEUtils.context, arguments)
-        XEUtils.context = null
+    coreMethods.objectEach(methods, function (fn, name) {
+      XEUtils[name] = coreMethods.isFunction(fn) ? function () {
+        var result = fn.apply(XEUtils.$context, arguments)
+        XEUtils.$context = null
         return result
       } : fn
     })
   }
 
-  mixin({
-    isNaN: isNaN, isFinite: isFinite, isArray: isArray, isFloat: isFloat, isInteger: isInteger, isFunction: isFunction, isBoolean: isBoolean, isString: isString, isNumber: isNumber, isRegExp: isRegExp, isObject: isObject, isPlainObject: isPlainObject, isDate: isDate, isError: isError, isTypeError: isTypeError, isEmpty: isEmpty, isNull: isNull, isSymbol: isSymbol, isArguments: isArguments, isElement: isElement, isDocument: isDocument, isWindow: isWindow, isFormData: isFormData, isLeapYear: isLeapYear, getType: getType, uniqueId: uniqueId, getSize: getSize, indexOf: indexOf, lastIndexOf: lastIndexOf, includes: includes, contains: contains, objectAssign: objectAssign, assign: assign, extend: extend, stringToJson: stringToJson, jsonToString: jsonToString, objectKeys: objectKeys, keys: keys, objectValues: objectValues, values: values, objectEntries: objectEntries, entries: entries, arrayFirst: arrayFirst, first: first, arrayLast: arrayLast, last: last, objectEach: objectEach, arrayEach: arrayEach, each: each, groupBy: groupBy, objectMap: objectMap, clone: clone, arrayUniq: arrayUniq, uniq: uniq, arrayUnion: arrayUnion, union: union, arraySort: arraySort, sort: sort, arrayShuffle: arrayShuffle, shuffle: shuffle, arraySample: arraySample, sample: sample, arraySome: arraySome, some: some, arrayEvery: arrayEvery, every: every, arrayFilter: arrayFilter, filter: filter, arrayFind: arrayFind, find: find, arrayMap: arrayMap, map: map, timestamp: timestamp, now: now, stringToDate: stringToDate, dateToString: dateToString, getWhatMonth: getWhatMonth, getWhatWeek: getWhatWeek, getWhatDay: getWhatDay, getDaysOfMonth: getDaysOfMonth, getDateDiff: getDateDiff, escape: escape, unescape: unescape, getRandom: getRandom, arrayMin: arrayMin, min: min, arrayMax: arrayMax, max: max
+  coreMethods.objectAssign(XEUtils, {
+    mixin: mixin,
+    version: '1.5.5',
+    $name: 'XEUtils'
   })
-  mixin({
-    browse: browse, cookie: cookie, locat: locat
-  })
-  XEUtils.mixin = mixin
-  XEUtils.version = '1.5.4'
+
+  mixin(coreMethods)
+  mixin(browseMethods)
 
   return XEUtils
 }))

@@ -1,5 +1,5 @@
-import * as core from './src/core'
-import * as browse from './src/browse'
+import { coreMethods } from './src/core/methods'
+import { browseMethods } from './src/browse/methods'
 
 function XEUtils () {}
 
@@ -9,19 +9,23 @@ function XEUtils () {}
  * @param {Object} methods 扩展函数对象
  */
 function mixin (methods) {
-  core.objectEach(methods, function (fn, name) {
-    XEUtils[name] = core.isFunction(fn) ? function () {
-      var result = fn.apply(XEUtils.context, arguments)
-      XEUtils.context = null
+  coreMethods.objectEach(methods, function (fn, name) {
+    XEUtils[name] = coreMethods.isFunction(fn) ? function () {
+      var result = fn.apply(XEUtils.$context, arguments)
+      XEUtils.$context = null
       return result
     } : fn
   })
 }
 
-mixin(core)
-mixin(browse)
-XEUtils.mixin = mixin
-XEUtils.version = '1.5.4'
+coreMethods.objectAssign(XEUtils, {
+  mixin: mixin,
+  version: '1.5.5',
+  $name: 'XEUtils'
+})
+
+mixin(coreMethods)
+mixin(browseMethods)
 
 export * from './src/core'
 export * from './src/browse'
