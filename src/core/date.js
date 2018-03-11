@@ -172,6 +172,8 @@ export function getDaysOfMonth (date, month) {
   return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / 86400000) + 1
 }
 
+var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
+
 /**
   * 返回两个日期之间差距
   *
@@ -187,7 +189,7 @@ export function getDateDiff (startDate, endDate, rules) {
   if (startTime < endTime) {
     var item
     var diffTime = endTime - startTime
-    var rule = rules && rules.length > 0 ? rules : [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
+    var rule = rules && rules.length > 0 ? rules : dateDiffRules
     for (var index = 0, len = rule.length; index < len; index++) {
       item = rule[index]
       if (diffTime >= item[1]) {
