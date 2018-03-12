@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.5
+ * xe-utils.js v1.5.6
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -840,6 +840,16 @@
   }
   var now = timestamp
 
+  var dateFormatRules = [
+    { rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]] },
+    { rules: [['MM', 2], ['M', 1]], offset: -1 },
+    { rules: [['dd', 2], ['d', 1]] },
+    { rules: [['HH', 2], ['H', 1]] },
+    { rules: [['mm', 2], ['m', 1]] },
+    { rules: [['ss', 2], ['s', 1]] },
+    { rules: [['SSS', 3], ['SS', 2], ['S', 1]] }
+  ]
+
   /**
     * 字符串转为日期
     *
@@ -858,13 +868,7 @@
       if (isString(str)) {
         format = format || 'yyyy-MM-dd HH:mm:ss.SSS'
         var dates = []
-        arrayEach([{ rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]] },
-        { rules: [['MM', 2], ['M', 1]], offset: -1 },
-        { rules: [['dd', 2], ['d', 1]] },
-        { rules: [['HH', 2], ['H', 1]] },
-        { rules: [['mm', 2], ['m', 1]] },
-        { rules: [['ss', 2], ['s', 1]] },
-        { rules: [['SSS', 3], ['SS', 2], ['S', 1]] }], function (item) {
+        arrayEach(dateFormatRules, function (item) {
           for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
             arr = rules[index]
             sIndex = format.indexOf(arr[0])
@@ -998,6 +1002,8 @@
     return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / 86400000) + 1
   }
 
+  var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
+
   /**
     * 返回两个日期之间差距
     *
@@ -1013,7 +1019,7 @@
     if (startTime < endTime) {
       var item
       var diffTime = endTime - startTime
-      var rule = rules && rules.length > 0 ? rules : [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
+      var rule = rules && rules.length > 0 ? rules : dateDiffRules
       for (var index = 0, len = rule.length; index < len; index++) {
         item = rule[index]
         if (diffTime >= item[1]) {
@@ -1337,7 +1343,7 @@
 
   coreMethods.objectAssign(XEUtils, {
     mixin: mixin,
-    version: '1.5.5',
+    version: '1.5.6',
     $name: 'XEUtils'
   })
 
