@@ -1,9 +1,9 @@
-# XEUtils 函数库，提供一套实用丰富函数
+# XEUtils 函数库
 
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.org/package/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
 
-XEUtils 提供一套实用丰富函数，支持常用基础函数、支持任意格式的日期处理函数，cookie操作函数等...
+XEUtils 提供一套实用的函数，支持常用基础函数、支持任意格式的日期处理函数，cookie操作函数等...
 
 ## 兼容性
 支持 IE8+、Edge、Chrome、Firefox、Opera、Safari等...
