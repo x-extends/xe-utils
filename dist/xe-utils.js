@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.6
+ * xe-utils.js v1.5.7
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1343,7 +1343,7 @@
 
   coreMethods.objectAssign(XEUtils, {
     mixin: mixin,
-    version: '1.5.6',
+    version: '1.5.7',
     $name: 'XEUtils'
   })
 
