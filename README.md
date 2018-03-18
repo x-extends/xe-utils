@@ -664,8 +664,10 @@ XEUtils.cookie.removeItem('name') // 删除
 ## 混合函数
 ### 文件 ./customs.js
 ``` shell
-export function custom1 () {
-  console.log('自定义函数')
+import XEUtils from 'xe-utils'
+
+export function toDateStr (date) {
+  return XEUtils.dateToString(date, 'yyyy-MM-dd HH:mm')
 } 
 ```
 ### 示例 ./main.js
@@ -677,7 +679,7 @@ import customs from './customs'
 XEUtils.mixin(customs)
 
 // 调用自定义扩展函数
-XEUtils.custom1()
+XEUtils.toDateStr() // 2018-01-01 10:00
 ```
 
 ## License
