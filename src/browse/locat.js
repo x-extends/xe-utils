@@ -1,4 +1,4 @@
-import { arrayEach } from '../core/base'
+import { arrayEach, lastIndexOf } from '../core/base'
 
 var $locat = location
 
@@ -18,6 +18,16 @@ function parse (uri) {
   return result
 }
 
+function getLocatOrigin () {
+  return $locat.origin || ($locat.protocol + '//' + $locat.host)
+}
+
+export function getBaseURL () {
+  var pathname = $locat.pathname
+  var lastIndex = lastIndexOf(pathname, '/') + 1
+  return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
+}
+
 /**
   * 获取地址栏信息
   * @return Object
@@ -29,7 +39,7 @@ export function locat () {
     host: $locat.host,
     hostname: $locat.hostname,
     protocol: $locat.protocol,
-    origin: $locat.origin,
+    origin: getLocatOrigin(),
     hash: hash(),
     query: parse($locat.hash),
     params: parse($locat.search)

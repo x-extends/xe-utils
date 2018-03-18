@@ -635,6 +635,13 @@ import XEUtils from 'xe-utils'
 XEUtils.locat() // {hash: '', host: '', hostname: '', href: '', protocol: '', port: '', origin: '', query: {...}, params: {...}, ...}
 ```
 
+### getBaseURL ( ) 获取上下文路径
+```shell
+import XEUtils from 'xe-utils'
+
+XEUtils.getBaseURL() // http://xuliangzhan.com/demo/
+```
+
 ### cookie ( ) Cookie操作函数
 ```shell
 import XEUtils from 'xe-utils'

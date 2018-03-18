@@ -1300,6 +1300,16 @@
     return result
   }
 
+  function getLocatOrigin () {
+    return $locat.origin || ($locat.protocol + '//' + $locat.host)
+  }
+
+  function getBaseURL () {
+    var pathname = $locat.pathname
+    var lastIndex = lastIndexOf(pathname, '/') + 1
+    return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
+  }
+
   /**
     * 获取地址栏信息
     * @return Object
@@ -1311,7 +1321,7 @@
       host: $locat.host,
       hostname: $locat.hostname,
       protocol: $locat.protocol,
-      origin: $locat.origin,
+      origin: getLocatOrigin(),
       hash: hash(),
       query: parse($locat.hash),
       params: parse($locat.search)
@@ -1320,8 +1330,11 @@
 
   var browseMethods = {
     browse: browse,
+
     cookie: cookie,
-    locat: locat
+
+    locat: locat,
+    getBaseURL: getBaseURL
   }
 
   function XEUtils () { }
