@@ -41,8 +41,8 @@ export function cookie (name, value, options) {
     var result = {}
     if (document.cookie) {
       arrayEach(document.cookie.split('; '), function (val) {
-        var items = val.split('=')
-        result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
+        var keyIndex = val.indexOf('=')
+        result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
       })
     }
     return arguments.length === 1 ? result[name] : result

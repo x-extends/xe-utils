@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.8
+ * xe-utils.js v1.5.9
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1259,8 +1259,8 @@
       var result = {}
       if (document.cookie) {
         arrayEach(document.cookie.split('; '), function (val) {
-          var items = val.split('=')
-          result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
+          var keyIndex = val.indexOf('=')
+          result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
         })
       }
       return arguments.length === 1 ? result[name] : result
@@ -1356,7 +1356,7 @@
 
   coreMethods.objectAssign(XEUtils, {
     mixin: mixin,
-    version: '1.5.7',
+    version: '1.5.9',
     $name: 'XEUtils'
   })
 
