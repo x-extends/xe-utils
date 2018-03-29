@@ -25,7 +25,7 @@ export function cookie (name, value, options) {
       var opts = objectAssign({}, obj)
       var values = []
       if (opts.name) {
-        values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(JSON.stringify(opts.value)))
+        values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
         if (opts.expires !== undefined) {
           opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
         }

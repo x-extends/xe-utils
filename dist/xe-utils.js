@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.9
+ * xe-utils.js v1.5.10
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1243,7 +1243,7 @@
         var opts = objectAssign({}, obj)
         var values = []
         if (opts.name) {
-          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(JSON.stringify(opts.value)))
+          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
           if (opts.expires !== undefined) {
             opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
           }
@@ -1356,7 +1356,7 @@
 
   coreMethods.objectAssign(XEUtils, {
     mixin: mixin,
-    version: '1.5.9',
+    version: '1.5.10',
     $name: 'XEUtils'
   })
 

@@ -20,7 +20,7 @@ function mixin (methods) {
 
 coreMethods.objectAssign(XEUtils, {
   mixin: mixin,
-  version: '1.5.9',
+  version: '1.5.10',
   $name: 'XEUtils'
 })
 
