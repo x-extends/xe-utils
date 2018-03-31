@@ -1,4 +1,4 @@
-import { isDate, isString, objectKeys, arrayEach } from './base'
+import { isDate, isString, arrayEach } from './base'
 
 /**
  * 返回时间戳
@@ -82,12 +82,12 @@ export function dateToString (date, format) {
       if (/(y+)/.test(result)) {
         result = result.replace(RegExp.$1, ('' + date.getFullYear()).substr(4 - RegExp.$1.length))
       }
-      arrayEach(objectKeys(resDate), function (key) {
-        if (new RegExp('(' + key + ')').test(result)) {
+      for (var key in resDate) {
+        if (resDate.hasOwnProperty(key) && new RegExp('(' + key + ')').test(result)) {
           var val = '' + resDate[key]
           result = result.replace(RegExp.$1, (key === 'q+' || key === 'E+') ? weeks[val] : (RegExp.$1.length === 1 ? val : ('00' + val).substr(val.length)))
         }
-      })
+      }
       return result
     }
     return date
