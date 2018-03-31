@@ -1,6 +1,8 @@
 import { arrayMap } from './array'
 import { stringToDate } from './date'
 
+var objectToString = Object.prototype.toString
+
 /**
   * 判断是否非数值
   *
@@ -24,7 +26,7 @@ export var isFinite = window.isFinite
   * @return {Boolean}
   */
 export var isArray = Array.isArray || function (val) {
-  return Object.prototype.toString.call(val) === '[object Array]'
+  return objectToString.call(val) === '[object Array]'
 }
 
 /**
@@ -92,7 +94,7 @@ export function isNumber (val) {
   * @return {Boolean}
   */
 export function isRegExp (val) {
-  return val ? val.constructor === RegExp : false
+  return objectToString.call(val) === '[object RegExp]'
 }
 
 /**
@@ -122,7 +124,7 @@ export function isPlainObject (val) {
   * @return {Boolean}
   */
 export function isDate (val) {
-  return val ? val.constructor === Date : false
+  return objectToString.call(val) === '[object Date]'
 }
 
 /**
@@ -132,7 +134,7 @@ export function isDate (val) {
   * @return {Boolean}
   */
 export function isError (val) {
-  return val ? val.constructor === Error : false
+  return objectToString.call(val) === '[object Error]'
 }
 
 /**
@@ -188,7 +190,7 @@ export function isSymbol (val) {
   * @return {Boolean}
   */
 export function isArguments (val) {
-  return String(val) === '[object Arguments]'
+  return objectToString.call(val) === '[object Arguments]'
 }
 
 /**

@@ -1,4 +1,4 @@
-import { isNaN, isFinite, isFloat, isInteger, isFunction, isBoolean, isString, isRegExp, isObject, isError, isTypeError, isEmpty, isNull, isSymbol, isArguments, isElement, isDocument, isWindow, isFormData, isLeapYear, getType, uniqueId, getSize, lastIndexOf, includes, contains, objectAssign, assign, extend, stringToJson, jsonToString, objectKeys, keys, objectValues, values, objectEntries, entries, arrayFirst, first, arrayLast, last, objectEach, arrayEach, each, groupBy, objectMap, clone } from './base'
+import { isNaN, isFinite, isFloat, isInteger, isFunction, isBoolean, isString, isRegExp, isPlainObject, isObject, isDate, isError, isTypeError, isEmpty, isNull, isSymbol, isArguments, isElement, isDocument, isWindow, isFormData, isLeapYear, getType, uniqueId, getSize, lastIndexOf, includes, contains, objectAssign, assign, extend, stringToJson, jsonToString, objectKeys, keys, objectValues, values, objectEntries, entries, arrayFirst, first, arrayLast, last, objectEach, arrayEach, each, groupBy, objectMap, clone } from './base'
 import { arrayUniq, uniq, arrayUnion, union, arraySort, sort, arrayShuffle, shuffle, arraySample, sample, arraySome, some, arrayEvery, every, arrayFilter, filter, arrayFind, find, arrayMap, map } from './array'
 import { timestamp, now, stringToDate, dateToString, getWhatMonth, getWhatWeek, getWhatDay, getDaysOfMonth, getDateDiff } from './date'
 import { escape, unescape } from './string'
@@ -14,6 +14,8 @@ export var coreMethods = {
   isString: isString,
   isRegExp: isRegExp,
   isObject: isObject,
+  isPlainObject: isPlainObject,
+  isDate: isDate,
   isError: isError,
   isTypeError: isTypeError,
   isEmpty: isEmpty,

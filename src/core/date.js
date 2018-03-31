@@ -67,7 +67,6 @@ export function dateToString (date, format) {
   if (date) {
     date = stringToDate(date)
     if (isDate(date)) {
-      var result = format || 'yyyy-MM-dd HH:mm:ss'
       var weeks = ['日', '一', '二', '三', '四', '五', '六']
       var resDate = {
         'q+': Math.floor((date.getMonth() + 3) / 3),
@@ -79,13 +78,15 @@ export function dateToString (date, format) {
         's+': date.getSeconds(),
         'S': date.getMilliseconds()
       }
-      if (/(y+)/.test(result)) {
-        result = result.replace(RegExp.$1, ('' + date.getFullYear()).substr(4 - RegExp.$1.length))
-      }
+      var result = String(format || 'yyyy-MM-dd HH:mm:ss').replace(/(y+)/, function ($1) {
+        return ('' + date.getFullYear()).substr(4 - $1.length)
+      })
       for (var key in resDate) {
-        if (resDate.hasOwnProperty(key) && new RegExp('(' + key + ')').test(result)) {
+        if (resDate.hasOwnProperty(key)) {
           var val = '' + resDate[key]
-          result = result.replace(RegExp.$1, (key === 'q+' || key === 'E+') ? weeks[val] : (RegExp.$1.length === 1 ? val : ('00' + val).substr(val.length)))
+          result = result.replace(new RegExp('(' + key + ')'), function ($1) {
+            return (key === 'q+' || key === 'E+') ? weeks[val] : ($1.length === 1 ? val : ('00' + val).substr(val.length))
+          })
         }
       }
       return result

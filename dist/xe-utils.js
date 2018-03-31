@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.11
+ * xe-utils.js v1.5.12
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -10,6 +10,8 @@
       : (global.XEUtils = factory())
 }(this, function () {
   'use strict'
+
+  var objectToString = Object.prototype.toString
 
   /**
     * 判断是否非数值
@@ -34,7 +36,7 @@
     * @return {Boolean}
     */
   var isArray = Array.isArray || function (val) {
-    return Object.prototype.toString.call(val) === '[object Array]'
+    return objectToString.call(val) === '[object Array]'
   }
 
   /**
@@ -102,7 +104,7 @@
     * @return {Boolean}
     */
   function isRegExp (val) {
-    return val ? val.constructor === RegExp : false
+    return objectToString.call(val) === '[object RegExp]'
   }
 
   /**
@@ -132,7 +134,7 @@
     * @return {Boolean}
     */
   function isDate (val) {
-    return val ? val.constructor === Date : false
+    return objectToString.call(val) === '[object Date]'
   }
 
   /**
@@ -142,7 +144,7 @@
     * @return {Boolean}
     */
   function isError (val) {
-    return val ? val.constructor === Error : false
+    return objectToString.call(val) === '[object Error]'
   }
 
   /**
@@ -198,7 +200,7 @@
     * @return {Boolean}
     */
   function isArguments (val) {
-    return String(val) === '[object Arguments]'
+    return objectToString.call(val) === '[object Arguments]'
   }
 
   /**
@@ -897,7 +899,6 @@
     if (date) {
       date = stringToDate(date)
       if (isDate(date)) {
-        var result = format || 'yyyy-MM-dd HH:mm:ss'
         var weeks = ['日', '一', '二', '三', '四', '五', '六']
         var resDate = {
           'q+': Math.floor((date.getMonth() + 3) / 3),
@@ -909,13 +910,15 @@
           's+': date.getSeconds(),
           'S': date.getMilliseconds()
         }
-        if (/(y+)/.test(result)) {
-          result = result.replace(RegExp.$1, ('' + date.getFullYear()).substr(4 - RegExp.$1.length))
-        }
+        var result = String(format || 'yyyy-MM-dd HH:mm:ss').replace(/(y+)/, function ($1) {
+          return ('' + date.getFullYear()).substr(4 - $1.length)
+        })
         for (var key in resDate) {
-          if (resDate.hasOwnProperty(key) && new RegExp('(' + key + ')').test(result)) {
+          if (resDate.hasOwnProperty(key)) {
             var val = '' + resDate[key]
-            result = result.replace(RegExp.$1, (key === 'q+' || key === 'E+') ? weeks[val] : (RegExp.$1.length === 1 ? val : ('00' + val).substr(val.length)))
+            result = result.replace(new RegExp('(' + key + ')'), function ($1) {
+              return (key === 'q+' || key === 'E+') ? weeks[val] : ($1.length === 1 ? val : ('00' + val).substr(val.length))
+            })
           }
         }
         return result
@@ -1125,6 +1128,8 @@
     isString: isString,
     isRegExp: isRegExp,
     isObject: isObject,
+    isPlainObject: isPlainObject,
+    isDate: isDate,
     isError: isError,
     isTypeError: isTypeError,
     isEmpty: isEmpty,
@@ -1356,7 +1361,7 @@
 
   coreMethods.objectAssign(XEUtils, {
     mixin: mixin,
-    version: '1.5.11',
+    version: '1.5.12',
     $name: 'XEUtils'
   })
 
