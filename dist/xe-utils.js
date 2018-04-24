@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.15-beta.0
+ * xe-utils.js v1.5.15-beta.1
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.15-beta.0'
+  XEUtils.version = '1.5.15-beta.1'
   XEUtils.mixin = function (methods) {
     return Object.assign(XEUtils, methods)
   }
@@ -495,7 +495,7 @@
     * @return {Boolean}
     */
   function isLeapYear (date) {
-    var currentDate = date ? dateExports.stringToDate(date) : new Date()
+    var currentDate = date ? XEUtils.stringToDate(date) : new Date()
     var year = currentDate.getFullYear()
     return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
   }
@@ -842,11 +842,7 @@
   }
 
   function cloneArr (arr) {
-    var result = []
-    for (var index = 0, len = arr.length; index < len; index++) {
-      result.push(deepClone(arr[index]))
-    }
-    return result
+    return XEUtils.arrayMap(arr, deepClone)
   }
 
   function deepClone (obj) {

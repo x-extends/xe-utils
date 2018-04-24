@@ -1,6 +1,6 @@
 'use strict'
 
-var dateExports = require('./date')
+var XEUtils = require('../core/utils')
 
 var objectToString = Object.prototype.toString
 
@@ -241,7 +241,7 @@ function isFormData (val) {
   * @return {Boolean}
   */
 function isLeapYear (date) {
-  var currentDate = date ? dateExports.stringToDate(date) : new Date()
+  var currentDate = date ? XEUtils.stringToDate(date) : new Date()
   var year = currentDate.getFullYear()
   return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
 }
@@ -588,11 +588,7 @@ function cloneObj (obj) {
 }
 
 function cloneArr (arr) {
-  var result = []
-  for (var index = 0, len = arr.length; index < len; index++) {
-    result.push(deepClone(arr[index]))
-  }
-  return result
+  return XEUtils.arrayMap(arr, deepClone)
 }
 
 function deepClone (obj) {
