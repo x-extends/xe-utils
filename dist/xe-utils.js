@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.16-beta.1
+ * xe-utils.js v1.5.17
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.16-beta.1'
+  XEUtils.version = '1.5.17'
   XEUtils.mixin = function (methods) {
     return Object.assign(XEUtils, methods)
   }
