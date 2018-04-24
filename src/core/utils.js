@@ -2,7 +2,7 @@
 
 function XEUtils () {}
 
-XEUtils.version = '1.5.14'
+XEUtils.version = '1.5.15'
 XEUtils.mixin = function (methods) {
   return Object.assign(XEUtils, methods)
 }

@@ -615,6 +615,7 @@ function clone (obj, deep) {
 var baseExports = {
   isNaN: isNaN,
   isFinite: isFinite,
+  isArray: isArray,
   isFloat: isFloat,
   isInteger: isInteger,
   isFunction: isFunction,
