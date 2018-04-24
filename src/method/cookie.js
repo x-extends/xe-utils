@@ -66,7 +66,7 @@ baseExports.objectAssign(cookie, {
   }
 })
 
-var cookieExports = {
+var cookieExports = typeof document !== 'undefined' ? {} : {
   cookie: cookie
 }
 

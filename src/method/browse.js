@@ -15,7 +15,7 @@ function browse () {
   return result
 }
 
-var browseExports = {
+var browseExports = typeof document !== 'undefined' ? {} : {
   browse: browse
 }
 

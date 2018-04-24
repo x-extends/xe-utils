@@ -195,7 +195,7 @@ function isElement (val) {
   * @return {Boolean}
   */
 function isDocument (val) {
-  return val && val.nodeType === 9
+  return val && val.nodeType === 9 && typeof document !== 'undefined'
 }
 
 /**

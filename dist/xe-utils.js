@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.16-beta.0
+ * xe-utils.js v1.5.16-beta.1
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.16-beta.0'
+  XEUtils.version = '1.5.16-beta.1'
   XEUtils.mixin = function (methods) {
     return Object.assign(XEUtils, methods)
   }
@@ -449,7 +449,7 @@
     * @return {Boolean}
     */
   function isDocument (val) {
-    return val && val.nodeType === 9
+    return val && val.nodeType === 9 && typeof document !== 'undefined'
   }
 
   /**
@@ -913,7 +913,7 @@
     return result
   }
 
-  var browseExports = {
+  var browseExports = typeof document !== 'undefined' ? {} : {
     browse: browse
   }
 
@@ -981,7 +981,7 @@
     }
   })
 
-  var cookieExports = {
+  var cookieExports = typeof document !== 'undefined' ? {} : {
     cookie: cookie
   }
 
@@ -1205,7 +1205,11 @@
     getDateDiff: getDateDiff
   }
 
-  var $locat = location
+  var $locat = null
+
+  if (typeof location !== 'undefined') {
+    $locat = location
+  }
 
   function hash () {
     return ($locat.hash.split('#')[1] || '').split('?')[0] || ''
@@ -1251,10 +1255,10 @@
     }
   }
 
-  var locatExports = {
+  var locatExports = $locat ? {
     getBaseURL: getBaseURL,
     locat: locat
-  }
+  } : {}
 
   /**
     * 获取一个指定范围内随机数

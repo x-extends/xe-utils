@@ -2,7 +2,11 @@
 
 var baseExports = require('./base')
 
-var $locat = location
+var $locat = null
+
+if (typeof location !== 'undefined') {
+  $locat = location
+}
 
 function hash () {
   return ($locat.hash.split('#')[1] || '').split('?')[0] || ''
@@ -48,9 +52,9 @@ function locat () {
   }
 }
 
-var locatExports = {
+var locatExports = $locat ? {
   getBaseURL: getBaseURL,
   locat: locat
-}
+} : {}
 
 module.exports = locatExports
