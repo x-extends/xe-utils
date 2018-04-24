@@ -26,7 +26,7 @@ XEUtils 提供一套实用的函数，支持常用基础函数、支持任意格
 ```
 
 ## AMD 安装
-### require.js 安装示例
+### require.js
 ``` shell
 // require 配置
 require.config({
