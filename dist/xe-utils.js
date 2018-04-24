@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.13
+ * xe-utils.js v1.5.14
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.13'
+  XEUtils.version = '1.5.14'
   XEUtils.mixin = function (methods) {
     return Object.assign(XEUtils, methods)
   }
@@ -26,8 +26,8 @@
     */
   function arrayUniq (array) {
     var result = []
-    if (isArray(array)) {
-      arrayEach(array, function (value) {
+    if (baseExports.isArray(array)) {
+      baseExports.arrayEach(array, function (value) {
         if (!result.includes(value)) {
           result.push(value)
         }
@@ -60,8 +60,8 @@
     * @return {Array}
     */
   function arraySort (arr, iteratee, context) {
-    if (isArray(arr)) {
-      return arr.sort(iteratee ? isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
+    if (baseExports.isArray(arr)) {
+      return arr.sort(iteratee ? baseExports.isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
         return v1[iteratee] > v2[iteratee] ? 1 : -1
       } : function (v1, v2) {
         return v1 > v2 ? 1 : -1
@@ -79,8 +79,8 @@
     */
   function arrayShuffle (array) {
     var result = []
-    for (var list = objectValues(array), len = list.length - 1; len >= 0; len--) {
-      var index = len > 0 ? getRandom(0, len) : 0
+    for (var list = baseExports.objectValues(array), len = list.length - 1; len >= 0; len--) {
+      var index = len > 0 ? numberExports.getRandom(0, len) : 0
       result.push(list[index])
       list.splice(index, 1)
     }
@@ -117,7 +117,7 @@
     */
   function arraySome (obj, iteratee, context) {
     if (obj) {
-      if (isArray(obj)) {
+      if (baseExports.isArray(obj)) {
         return obj.some(iteratee, context || this)
       } else {
         for (var index in obj) {
@@ -143,7 +143,7 @@
     */
   function arrayEvery (obj, iteratee, context) {
     if (obj) {
-      if (isArray(obj)) {
+      if (baseExports.isArray(obj)) {
         return obj.every(iteratee, context || this)
       } else {
         for (var index in obj) {
@@ -169,11 +169,11 @@
     */
   function arrayFilter (obj, iteratee, context) {
     if (obj) {
-      if (isArray(obj)) {
+      if (baseExports.isArray(obj)) {
         return obj.filter(iteratee, context || this)
       } else {
         var result = {}
-        each(obj, function (val, key) {
+        baseExports.each(obj, function (val, key) {
           if (iteratee.call(context || this, val, key, obj)) {
             result[key] = val
           }
@@ -195,7 +195,7 @@
     */
   function arrayFind (obj, iteratee, context) {
     if (obj) {
-      if (isArray(obj)) {
+      if (baseExports.isArray(obj)) {
         return obj.find(iteratee, context || this)
       } else {
         for (var key in obj) {
@@ -221,10 +221,10 @@
   function arrayMap (obj, iteratee, context) {
     var result = []
     if (obj) {
-      if (isArray(obj)) {
+      if (baseExports.isArray(obj)) {
         return obj.map(iteratee, context || this)
       } else {
-        each(obj, function () {
+        baseExports.each(obj, function () {
           result.push(iteratee.apply(context || this, arguments))
         })
       }
@@ -495,7 +495,7 @@
     * @return {Boolean}
     */
   function isLeapYear (date) {
-    var currentDate = date ? stringToDate(date) : new Date()
+    var currentDate = date ? dateExports.stringToDate(date) : new Date()
     var year = currentDate.getFullYear()
     return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
   }
@@ -842,7 +842,7 @@
   }
 
   function cloneArr (arr) {
-    return arrayMap(arr, function (val, index) {
+    return arrayExports.arrayMap(arr, function (val, index) {
       return deepClone(val)
     })
   }
@@ -924,7 +924,7 @@
   function browse () {
     var result = {}
     var $body = document.body || document.documentElement
-    arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
+    baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
       result['-' + core] = !!$body[core + 'MatchesSelector']
     })
     return result
@@ -947,23 +947,23 @@
     */
   function cookie (name, value, options) {
     var inserts = []
-    if (isArray(name)) {
+    if (baseExports.isArray(name)) {
       inserts = name
     } else if (arguments.length > 1) {
-      inserts = [objectAssign({ name: name, value: value }, options)]
-    } else if (isObject(name)) {
+      inserts = [baseExports.objectAssign({ name: name, value: value }, options)]
+    } else if (baseExports.isObject(name)) {
       inserts = [name]
     }
     if (inserts.length > 0) {
-      arrayEach(inserts, function (obj) {
-        var opts = objectAssign({}, obj)
+      baseExports.arrayEach(inserts, function (obj) {
+        var opts = baseExports.objectAssign({}, obj)
         var values = []
         if (opts.name) {
-          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
           if (opts.expires !== undefined) {
             opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
           }
-          arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
+          baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
             if (opts[key] !== undefined) {
               values.push(key + '=' + opts[key])
             }
@@ -974,7 +974,7 @@
     } else {
       var result = {}
       if (document.cookie) {
-        arrayEach(document.cookie.split('; '), function (val) {
+        baseExports.arrayEach(document.cookie.split('; '), function (val) {
           var keyIndex = val.indexOf('=')
           result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
         })
@@ -983,7 +983,7 @@
     }
   }
 
-  objectAssign(cookie, {
+  baseExports.objectAssign(cookie, {
     setItem: function (name, key) {
       cookie(name, key)
     },
@@ -1031,16 +1031,16 @@
     */
   function stringToDate (str, format) {
     if (str) {
-      if (isDate(str)) {
+      if (baseExports.isDate(str)) {
         return str
       }
       if (!isNaN(str)) {
         return new Date(str)
       }
-      if (isString(str)) {
+      if (baseExports.isString(str)) {
         format = format || 'yyyy-MM-dd HH:mm:ss.SSS'
         var dates = []
-        arrayEach(dateFormatRules, function (item) {
+        baseExports.arrayEach(dateFormatRules, function (item) {
           for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
             arr = rules[index]
             sIndex = format.indexOf(arr[0])
@@ -1068,7 +1068,7 @@
   function dateToString (date, format) {
     if (date) {
       date = stringToDate(date)
-      if (isDate(date)) {
+      if (baseExports.isDate(date)) {
         var weeks = ['日', '一', '二', '三', '四', '五', '六']
         var resDate = {
           'q+': Math.floor((date.getMonth() + 3) / 3),
@@ -1232,7 +1232,7 @@
     var result = {}
     var params = uri.split('?')[1] || ''
     if (params) {
-      arrayEach(params.split('&'), function (param) {
+      baseExports.arrayEach(params.split('&'), function (param) {
         var items = param.split('=')
         result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
       })
@@ -1246,7 +1246,7 @@
 
   function getBaseURL () {
     var pathname = $locat.pathname
-    var lastIndex = lastIndexOf(pathname, '/') + 1
+    var lastIndex = baseExports.lastIndexOf(pathname, '/') + 1
     return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
   }
 
@@ -1285,7 +1285,7 @@
   }
 
   function sortData (arr, iteratee) {
-    return (isFunction(iteratee) ? arraySort(arrayMap(arr, iteratee, this)) : arraySort(arr, iteratee))
+    return (baseExports.isFunction(iteratee) ? arrayExports.arraySort(arrayExports.arrayMap(arr, iteratee, this)) : arrayExports.arraySort(arr, iteratee))
   }
 
   /**
@@ -1330,12 +1330,12 @@
   }
 
   var unescapeMap = {}
-  arrayEach(objectKeys(escapeMap), function (key) {
+  baseExports.arrayEach(baseExports.objectKeys(escapeMap), function (key) {
     unescapeMap[escapeMap[key]] = key
   })
 
   function formatEscaper (dataMap) {
-    var replaceRegexp = new RegExp('(?:' + objectKeys(dataMap).join('|') + ')', 'g')
+    var replaceRegexp = new RegExp('(?:' + baseExports.objectKeys(dataMap).join('|') + ')', 'g')
     return function (str) {
       return String(str || '').replace(replaceRegexp, function (match) {
         return dataMap[match]
@@ -1366,7 +1366,7 @@
 
   var methodExports = {}
 
-  objectAssign(
+  baseExports.objectAssign(
     methodExports,
     arrayExports,
     baseExports,

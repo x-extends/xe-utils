@@ -1,6 +1,6 @@
 'use strict'
 
-var { arrayEach, lastIndexOf } = require('./base')
+var baseExports = require('./base')
 
 var $locat = location
 
@@ -12,7 +12,7 @@ function parse (uri) {
   var result = {}
   var params = uri.split('?')[1] || ''
   if (params) {
-    arrayEach(params.split('&'), function (param) {
+    baseExports.arrayEach(params.split('&'), function (param) {
       var items = param.split('=')
       result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
     })
@@ -26,7 +26,7 @@ function getLocatOrigin () {
 
 function getBaseURL () {
   var pathname = $locat.pathname
-  var lastIndex = lastIndexOf(pathname, '/') + 1
+  var lastIndex = baseExports.lastIndexOf(pathname, '/') + 1
   return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
 }
 

@@ -1,7 +1,7 @@
 'use strict'
 
-var { getRandom } = require('./number')
-var { isFunction, isArray, each, arrayEach, objectValues } = require('./base')
+var numberExports = require('./number')
+var baseExports = require('./base')
 
 /**
   * 数组去重
@@ -11,8 +11,8 @@ var { isFunction, isArray, each, arrayEach, objectValues } = require('./base')
   */
 function arrayUniq (array) {
   var result = []
-  if (isArray(array)) {
-    arrayEach(array, function (value) {
+  if (baseExports.isArray(array)) {
+    baseExports.arrayEach(array, function (value) {
       if (!result.includes(value)) {
         result.push(value)
       }
@@ -45,8 +45,8 @@ var union = arrayUnion
   * @return {Array}
   */
 function arraySort (arr, iteratee, context) {
-  if (isArray(arr)) {
-    return arr.sort(iteratee ? isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
+  if (baseExports.isArray(arr)) {
+    return arr.sort(iteratee ? baseExports.isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
       return v1[iteratee] > v2[iteratee] ? 1 : -1
     } : function (v1, v2) {
       return v1 > v2 ? 1 : -1
@@ -64,8 +64,8 @@ var sort = arraySort
   */
 function arrayShuffle (array) {
   var result = []
-  for (var list = objectValues(array), len = list.length - 1; len >= 0; len--) {
-    var index = len > 0 ? getRandom(0, len) : 0
+  for (var list = baseExports.objectValues(array), len = list.length - 1; len >= 0; len--) {
+    var index = len > 0 ? numberExports.getRandom(0, len) : 0
     result.push(list[index])
     list.splice(index, 1)
   }
@@ -102,7 +102,7 @@ var sample = arraySample
   */
 function arraySome (obj, iteratee, context) {
   if (obj) {
-    if (isArray(obj)) {
+    if (baseExports.isArray(obj)) {
       return obj.some(iteratee, context || this)
     } else {
       for (var index in obj) {
@@ -128,7 +128,7 @@ var some = arraySome
   */
 function arrayEvery (obj, iteratee, context) {
   if (obj) {
-    if (isArray(obj)) {
+    if (baseExports.isArray(obj)) {
       return obj.every(iteratee, context || this)
     } else {
       for (var index in obj) {
@@ -154,11 +154,11 @@ var every = arrayEvery
   */
 function arrayFilter (obj, iteratee, context) {
   if (obj) {
-    if (isArray(obj)) {
+    if (baseExports.isArray(obj)) {
       return obj.filter(iteratee, context || this)
     } else {
       var result = {}
-      each(obj, function (val, key) {
+      baseExports.each(obj, function (val, key) {
         if (iteratee.call(context || this, val, key, obj)) {
           result[key] = val
         }
@@ -180,7 +180,7 @@ var filter = arrayFilter
   */
 function arrayFind (obj, iteratee, context) {
   if (obj) {
-    if (isArray(obj)) {
+    if (baseExports.isArray(obj)) {
       return obj.find(iteratee, context || this)
     } else {
       for (var key in obj) {
@@ -206,10 +206,10 @@ var find = arrayFind
 function arrayMap (obj, iteratee, context) {
   var result = []
   if (obj) {
-    if (isArray(obj)) {
+    if (baseExports.isArray(obj)) {
       return obj.map(iteratee, context || this)
     } else {
-      each(obj, function () {
+      baseExports.each(obj, function () {
         result.push(iteratee.apply(context || this, arguments))
       })
     }

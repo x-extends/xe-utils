@@ -1,6 +1,5 @@
 'use strict'
 
-var { objectAssign } = require('./base')
 var arrayExports = require('./array')
 var baseExports = require('./base')
 var browseExports = require('./browse')
@@ -11,7 +10,7 @@ var numberExports = require('./number')
 var stringExports = require('./string')
 var methodExports = {}
 
-objectAssign(
+baseExports.objectAssign(
   methodExports,
   arrayExports,
   baseExports,

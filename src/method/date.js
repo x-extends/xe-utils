@@ -1,6 +1,6 @@
 'use strict'
 
-var { isDate, isString, arrayEach } = require('./base')
+var baseExports = require('./base')
 
 /**
  * 返回时间戳
@@ -31,16 +31,16 @@ var dateFormatRules = [
   */
 function stringToDate (str, format) {
   if (str) {
-    if (isDate(str)) {
+    if (baseExports.isDate(str)) {
       return str
     }
     if (!isNaN(str)) {
       return new Date(str)
     }
-    if (isString(str)) {
+    if (baseExports.isString(str)) {
       format = format || 'yyyy-MM-dd HH:mm:ss.SSS'
       var dates = []
-      arrayEach(dateFormatRules, function (item) {
+      baseExports.arrayEach(dateFormatRules, function (item) {
         for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
           arr = rules[index]
           sIndex = format.indexOf(arr[0])
@@ -68,7 +68,7 @@ function stringToDate (str, format) {
 function dateToString (date, format) {
   if (date) {
     date = stringToDate(date)
-    if (isDate(date)) {
+    if (baseExports.isDate(date)) {
       var weeks = ['日', '一', '二', '三', '四', '五', '六']
       var resDate = {
         'q+': Math.floor((date.getMonth() + 3) / 3),

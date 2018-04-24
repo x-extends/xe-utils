@@ -1,7 +1,7 @@
 'use strict'
 
-var { isFunction } = require('./base')
-var { arraySort, arrayMap } = require('./array')
+var baseExports = require('./base')
+var arrayExports = require('./array')
 
 /**
   * 获取一个指定范围内随机数
@@ -15,7 +15,7 @@ function getRandom (min, max) {
 }
 
 function sortData (arr, iteratee) {
-  return (isFunction(iteratee) ? arraySort(arrayMap(arr, iteratee, this)) : arraySort(arr, iteratee))
+  return (baseExports.isFunction(iteratee) ? arrayExports.arraySort(arrayExports.arrayMap(arr, iteratee, this)) : arrayExports.arraySort(arr, iteratee))
 }
 
 /**

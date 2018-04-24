@@ -1,6 +1,6 @@
 'use strict'
 
-var { objectKeys, arrayEach } = require('./base')
+var baseExports = require('./base')
 
 var escapeMap = {
   '&': '&amp;',
@@ -12,12 +12,12 @@ var escapeMap = {
 }
 
 var unescapeMap = {}
-arrayEach(objectKeys(escapeMap), function (key) {
+baseExports.arrayEach(baseExports.objectKeys(escapeMap), function (key) {
   unescapeMap[escapeMap[key]] = key
 })
 
 function formatEscaper (dataMap) {
-  var replaceRegexp = new RegExp('(?:' + objectKeys(dataMap).join('|') + ')', 'g')
+  var replaceRegexp = new RegExp('(?:' + baseExports.objectKeys(dataMap).join('|') + ')', 'g')
   return function (str) {
     return String(str || '').replace(replaceRegexp, function (match) {
       return dataMap[match]

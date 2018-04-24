@@ -1,7 +1,7 @@
 'use strict'
 
-var { arrayMap } = require('./array')
-var { stringToDate } = require('./date')
+var arrayExports = require('./array')
+var dateExports = require('./date')
 
 var objectToString = Object.prototype.toString
 
@@ -242,7 +242,7 @@ function isFormData (val) {
   * @return {Boolean}
   */
 function isLeapYear (date) {
-  var currentDate = date ? stringToDate(date) : new Date()
+  var currentDate = date ? dateExports.stringToDate(date) : new Date()
   var year = currentDate.getFullYear()
   return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
 }
@@ -589,7 +589,7 @@ function cloneObj (obj) {
 }
 
 function cloneArr (arr) {
-  return arrayMap(arr, function (val, index) {
+  return arrayExports.arrayMap(arr, function (val, index) {
     return deepClone(val)
   })
 }

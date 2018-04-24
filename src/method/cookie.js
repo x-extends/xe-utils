@@ -1,6 +1,6 @@
 'use strict'
 
-var { isArray, isObject, objectAssign, arrayEach } = require('./base')
+var baseExports = require('./base')
 
 /**
   * cookie操作函数
@@ -15,23 +15,23 @@ var { isArray, isObject, objectAssign, arrayEach } = require('./base')
   */
 function cookie (name, value, options) {
   var inserts = []
-  if (isArray(name)) {
+  if (baseExports.isArray(name)) {
     inserts = name
   } else if (arguments.length > 1) {
-    inserts = [objectAssign({name: name, value: value}, options)]
-  } else if (isObject(name)) {
+    inserts = [baseExports.objectAssign({name: name, value: value}, options)]
+  } else if (baseExports.isObject(name)) {
     inserts = [name]
   }
   if (inserts.length > 0) {
-    arrayEach(inserts, function (obj) {
-      var opts = objectAssign({}, obj)
+    baseExports.arrayEach(inserts, function (obj) {
+      var opts = baseExports.objectAssign({}, obj)
       var values = []
       if (opts.name) {
-        values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+        values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
         if (opts.expires !== undefined) {
           opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
         }
-        arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
+        baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
           if (opts[key] !== undefined) {
             values.push(key + '=' + opts[key])
           }
@@ -42,7 +42,7 @@ function cookie (name, value, options) {
   } else {
     var result = {}
     if (document.cookie) {
-      arrayEach(document.cookie.split('; '), function (val) {
+      baseExports.arrayEach(document.cookie.split('; '), function (val) {
         var keyIndex = val.indexOf('=')
         result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
       })
@@ -51,7 +51,7 @@ function cookie (name, value, options) {
   }
 }
 
-objectAssign(cookie, {
+baseExports.objectAssign(cookie, {
   setItem: function (name, key) {
     cookie(name, key)
   },
