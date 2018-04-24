@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.15
+ * xe-utils.js v1.5.15-beta.0
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.15'
+  XEUtils.version = '1.5.15-beta.0'
   XEUtils.mixin = function (methods) {
     return Object.assign(XEUtils, methods)
   }
@@ -842,9 +842,11 @@
   }
 
   function cloneArr (arr) {
-    return arrayExports.arrayMap(arr, function (val, index) {
-      return deepClone(val)
-    })
+    var result = []
+    for (var index = 0, len = arr.length; index < len; index++) {
+      result.push(deepClone(arr[index]))
+    }
+    return result
   }
 
   function deepClone (obj) {

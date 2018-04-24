@@ -1,6 +1,5 @@
 'use strict'
 
-var arrayExports = require('./array')
 var dateExports = require('./date')
 
 var objectToString = Object.prototype.toString
@@ -589,9 +588,11 @@ function cloneObj (obj) {
 }
 
 function cloneArr (arr) {
-  return arrayExports.arrayMap(arr, function (val, index) {
-    return deepClone(val)
-  })
+  var result = []
+  for (var index = 0, len = arr.length; index < len; index++) {
+    result.push(deepClone(arr[index]))
+  }
+  return result
 }
 
 function deepClone (obj) {

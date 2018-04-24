@@ -1,7 +1,7 @@
 'use strict'
 
-var arrayExports = require('./array')
 var baseExports = require('./base')
+var arrayExports = require('./array')
 var browseExports = require('./browse')
 var cookieExports = require('./cookie')
 var dateExports = require('./date')

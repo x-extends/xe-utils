@@ -1,7 +1,7 @@
 'use strict'
 
-var numberExports = require('./number')
 var baseExports = require('./base')
+var numberExports = require('./number')
 
 /**
   * 数组去重
