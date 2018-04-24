@@ -1,10 +1,12 @@
-import { arrayEach } from '../core/base'
+'use strict'
+
+var { arrayEach } = require('./base')
 
 /**
   * 获取浏览器内核
   * @return Object
   */
-export function browse () {
+function browse () {
   var result = {}
   var $body = document.body || document.documentElement
   arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
@@ -12,3 +14,9 @@ export function browse () {
   })
   return result
 }
+
+var browseExports = {
+  browse: browse
+}
+
+module.exports = browseExports

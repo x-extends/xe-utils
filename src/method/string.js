@@ -1,4 +1,6 @@
-import { objectKeys, arrayEach } from './base'
+'use strict'
+
+var { objectKeys, arrayEach } = require('./base')
 
 var escapeMap = {
   '&': '&amp;',
@@ -29,7 +31,7 @@ function formatEscaper (dataMap) {
   * @param {String} str 字符串
   * @return {String}
   */
-export var escape = formatEscaper(escapeMap)
+var escape = formatEscaper(escapeMap)
 
 /**
   * 反转escape
@@ -37,4 +39,11 @@ export var escape = formatEscaper(escapeMap)
   * @param {String} str 字符串
   * @return {String}
   */
-export var unescape = formatEscaper(unescapeMap)
+var unescape = formatEscaper(unescapeMap)
+
+var stringExports = {
+  escape: escape,
+  unescape: unescape
+}
+
+module.exports = stringExports

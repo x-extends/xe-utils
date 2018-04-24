@@ -1,4 +1,6 @@
-import { arrayEach, lastIndexOf } from '../core/base'
+'use strict'
+
+var { arrayEach, lastIndexOf } = require('./base')
 
 var $locat = location
 
@@ -22,7 +24,7 @@ function getLocatOrigin () {
   return $locat.origin || ($locat.protocol + '//' + $locat.host)
 }
 
-export function getBaseURL () {
+function getBaseURL () {
   var pathname = $locat.pathname
   var lastIndex = lastIndexOf(pathname, '/') + 1
   return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
@@ -32,7 +34,7 @@ export function getBaseURL () {
   * 获取地址栏信息
   * @return Object
   */
-export function locat () {
+function locat () {
   return {
     port: $locat.port,
     href: $locat.href,
@@ -45,3 +47,10 @@ export function locat () {
     params: parse($locat.search)
   }
 }
+
+var locatExports = {
+  getBaseURL: getBaseURL,
+  locat: locat
+}
+
+module.exports = locatExports

@@ -1,5 +1,7 @@
-import { arrayMap } from './array'
-import { stringToDate } from './date'
+'use strict'
+
+var { arrayMap } = require('./array')
+var { stringToDate } = require('./date')
 
 var objectToString = Object.prototype.toString
 
@@ -9,7 +11,7 @@ var objectToString = Object.prototype.toString
   * @param {String, Number} val 数值
   * @return {Boolean}
   */
-export var isNaN = window.isNaN
+var isNaN = window.isNaN
 
 /**
   * 判断是否为有限数值
@@ -17,7 +19,7 @@ export var isNaN = window.isNaN
   * @param {Number} val 数值
   * @return {Boolean}
   */
-export var isFinite = window.isFinite
+var isFinite = window.isFinite
 
 /**
   * 判断是否数组
@@ -25,7 +27,7 @@ export var isFinite = window.isFinite
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export var isArray = Array.isArray || function (val) {
+var isArray = Array.isArray || function (val) {
   return objectToString.call(val) === '[object Array]'
 }
 
@@ -35,7 +37,7 @@ export var isArray = Array.isArray || function (val) {
   * @param {Number} val 数值
   * @return {Boolean}
   */
-export function isFloat (val) {
+function isFloat (val) {
   return val !== null && !isNaN(val) && !isInteger(val)
 }
 
@@ -45,7 +47,7 @@ export function isFloat (val) {
   * @param {Number, String} number 数值
   * @return {Boolean}
   */
-export var isInteger = Number.isInteger
+var isInteger = Number.isInteger
 
 /**
   * 判断是否方法
@@ -53,7 +55,7 @@ export var isInteger = Number.isInteger
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isFunction (val) {
+function isFunction (val) {
   return typeof val === 'function'
 }
 
@@ -63,7 +65,7 @@ export function isFunction (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isBoolean (val) {
+function isBoolean (val) {
   return typeof val === 'boolean'
 }
 
@@ -73,7 +75,7 @@ export function isBoolean (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isString (val) {
+function isString (val) {
   return typeof val === 'string'
 }
 
@@ -83,7 +85,7 @@ export function isString (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isNumber (val) {
+function isNumber (val) {
   return typeof val === 'number'
 }
 
@@ -93,7 +95,7 @@ export function isNumber (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isRegExp (val) {
+function isRegExp (val) {
   return objectToString.call(val) === '[object RegExp]'
 }
 
@@ -103,7 +105,7 @@ export function isRegExp (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isObject (val) {
+function isObject (val) {
   return typeof val === 'object'
 }
 
@@ -113,7 +115,7 @@ export function isObject (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isPlainObject (val) {
+function isPlainObject (val) {
   return val ? val.constructor === Object : false
 }
 
@@ -123,7 +125,7 @@ export function isPlainObject (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isDate (val) {
+function isDate (val) {
   return objectToString.call(val) === '[object Date]'
 }
 
@@ -133,7 +135,7 @@ export function isDate (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isError (val) {
+function isError (val) {
   return objectToString.call(val) === '[object Error]'
 }
 
@@ -143,7 +145,7 @@ export function isError (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isTypeError (val) {
+function isTypeError (val) {
   return val ? val.constructor === TypeError : false
 }
 
@@ -153,7 +155,7 @@ export function isTypeError (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isEmpty (val) {
+function isEmpty (val) {
   if (val === 0 || !isNumber(val)) {
     for (var key in val) {
       return false
@@ -169,7 +171,7 @@ export function isEmpty (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isNull (val) {
+function isNull (val) {
   return val === null
 }
 
@@ -179,7 +181,7 @@ export function isNull (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isSymbol (val) {
+function isSymbol (val) {
   return typeof Symbol !== 'undefined' && Symbol.isSymbol ? Symbol.isSymbol(val) : (typeof val === 'symbol')
 }
 
@@ -189,7 +191,7 @@ export function isSymbol (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isArguments (val) {
+function isArguments (val) {
   return objectToString.call(val) === '[object Arguments]'
 }
 
@@ -199,7 +201,7 @@ export function isArguments (val) {
   * @param {Number} num 数值
   * @return {Boolean}
   */
-export function isElement (val) {
+function isElement (val) {
   return val && isString(val.nodeName) && isNumber(val.nodeType)
 }
 
@@ -209,7 +211,7 @@ export function isElement (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isDocument (val) {
+function isDocument (val) {
   return val && val.nodeType === 9
 }
 
@@ -219,7 +221,7 @@ export function isDocument (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isWindow (val) {
+function isWindow (val) {
   return val && val === val.window
 }
 
@@ -229,7 +231,7 @@ export function isWindow (val) {
   * @param {Object} val 对象
   * @return {Boolean}
   */
-export function isFormData (val) {
+function isFormData (val) {
   return typeof FormData !== 'undefined' && val instanceof FormData
 }
 
@@ -239,7 +241,7 @@ export function isFormData (val) {
   * @param {Date} date 日期或数字
   * @return {Boolean}
   */
-export function isLeapYear (date) {
+function isLeapYear (date) {
   var currentDate = date ? stringToDate(date) : new Date()
   var year = currentDate.getFullYear()
   return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
@@ -251,7 +253,7 @@ export function isLeapYear (date) {
   * @param {Object} obj 对象
   * @return {String}
   */
-export function getType (obj) {
+function getType (obj) {
   if (obj === null) {
     return '' + obj
   }
@@ -273,7 +275,7 @@ export function getType (obj) {
   * @return {Number}
   */
 var __uniqueId = 0
-export function uniqueId () {
+function uniqueId () {
   return ++__uniqueId
 }
 
@@ -283,7 +285,7 @@ export function uniqueId () {
   * @param {Object} obj 对象
   * @return {Number}
   */
-export function getSize (obj) {
+function getSize (obj) {
   var len = 0
   if (isString(obj) || isArray(obj)) {
     return obj.length
@@ -317,7 +319,7 @@ function createIndexOf (callback) {
   * @param {Object} val 值
   * @return {Number}
   */
-export var indexOf = createIndexOf(function (obj, val) {
+var indexOf = createIndexOf(function (obj, val) {
   if (obj.indexOf) {
     return obj.indexOf(val)
   }
@@ -335,7 +337,7 @@ export var indexOf = createIndexOf(function (obj, val) {
   * @param {Object} val 值
   * @return {Number}
   */
-export var lastIndexOf = createIndexOf(function (obj, val) {
+var lastIndexOf = createIndexOf(function (obj, val) {
   if (obj.lastIndexOf) {
     return obj.lastIndexOf(val)
   }
@@ -354,10 +356,10 @@ export var lastIndexOf = createIndexOf(function (obj, val) {
   * @param {Object} val 值
   * @return {Boolean}
   */
-export function includes (obj, val) {
+function includes (obj, val) {
   return indexOf(obj, val) !== -1
 }
-export var contains = includes
+var contains = includes
 
 /**
   * 浅拷贝一个或者多个对象到目标对象中
@@ -366,7 +368,7 @@ export var contains = includes
   * @param {...Object}
   * @return {Boolean}
   */
-export var objectAssign = Object.assign || function (target) {
+var objectAssign = Object.assign || function (target) {
   if (target) {
     for (var source, index = 1, len = arguments.length; index < len; index++) {
       source = arguments[index]
@@ -377,8 +379,8 @@ export var objectAssign = Object.assign || function (target) {
   }
   return target
 }
-export var assign = objectAssign
-export var extend = objectAssign
+var assign = objectAssign
+var extend = objectAssign
 
 /**
   * 字符串转JSON
@@ -386,7 +388,7 @@ export var extend = objectAssign
   * @param {String} str 字符串
   * @return {Object} 返回转换后对象
   */
-export function stringToJson (str) {
+function stringToJson (str) {
   if (isObject(str)) {
     return str
   } else if (isString(str)) {
@@ -405,7 +407,7 @@ export function stringToJson (str) {
   * @param {Object} obj 对象
   * @return {String} 返回字符串
   */
-export function jsonToString (obj) {
+function jsonToString (obj) {
   if (isObject(obj)) {
     try {
       return JSON.stringify(obj)
@@ -422,7 +424,7 @@ export function jsonToString (obj) {
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-export function objectKeys (obj) {
+function objectKeys (obj) {
   var result = []
   if (obj) {
     if (Object.keys) {
@@ -434,7 +436,7 @@ export function objectKeys (obj) {
   }
   return result
 }
-export var keys = objectKeys
+var keys = objectKeys
 
 /**
   * 获取对象所有值
@@ -442,7 +444,7 @@ export var keys = objectKeys
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-export function objectValues (obj) {
+function objectValues (obj) {
   if (Object.values) {
     return obj ? Object.values(obj) : []
   }
@@ -452,7 +454,7 @@ export function objectValues (obj) {
   })
   return result
 }
-export var values = objectValues
+var values = objectValues
 
 /**
   * 获取对象所有属性、值
@@ -460,7 +462,7 @@ export var values = objectValues
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-export function objectEntries (obj) {
+function objectEntries (obj) {
   if (Object.entries) {
     return obj ? Object.entries(obj) : []
   }
@@ -470,7 +472,7 @@ export function objectEntries (obj) {
   })
   return result
 }
-export var entries = objectEntries
+var entries = objectEntries
 
 /**
   * 获取对象第一个值
@@ -478,10 +480,10 @@ export var entries = objectEntries
   * @param {Object} obj 对象/数组
   * @return {Object}
   */
-export function arrayFirst (obj) {
+function arrayFirst (obj) {
   return objectValues(obj)[0]
 }
-export var first = arrayFirst
+var first = arrayFirst
 
 /**
   * 获取对象最后一个值
@@ -489,13 +491,13 @@ export var first = arrayFirst
   * @param {Object} obj 对象/数组
   * @return {Object}
   */
-export function arrayLast (obj) {
+function arrayLast (obj) {
   var list = objectValues(obj)
   return list[list.length - 1]
 }
-export var last = arrayLast
+var last = arrayLast
 
-export function objectEach (obj, iteratee, context) {
+function objectEach (obj, iteratee, context) {
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
       iteratee.call(context || this, obj[key], key, obj)
@@ -503,7 +505,7 @@ export function objectEach (obj, iteratee, context) {
   }
 }
 
-export function arrayEach (obj, iteratee, context) {
+function arrayEach (obj, iteratee, context) {
   for (var index = 0, len = obj.length || 0; index < len; index++) {
     iteratee.call(context || this, obj[index], index, obj)
   }
@@ -517,7 +519,7 @@ export function arrayEach (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Object}
   */
-export function each (obj, iteratee, context) {
+function each (obj, iteratee, context) {
   if (obj) {
     if (isArray(obj)) {
       if (isFunction(obj.forEach)) {
@@ -538,7 +540,7 @@ export function each (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Object}
   */
-export function groupBy (obj, iteratee, context) {
+function groupBy (obj, iteratee, context) {
   var groupKey, attr
   var result = {}
   if (obj) {
@@ -570,7 +572,7 @@ export function groupBy (obj, iteratee, context) {
   * @param {Object} context 上下文
   * @return {Object}
   */
-export function objectMap (obj, iteratee, context) {
+function objectMap (obj, iteratee, context) {
   var result = {}
   each(obj, function (val, index) {
     result[index] = iteratee.call(context || this, val, index, obj)
@@ -603,6 +605,63 @@ function deepClone (obj) {
   * @param {Boolean} deep 是否深拷贝
   * @return {Object}
   */
-export function clone (obj, deep) {
-  return deep ? deepClone(obj) : objectAssign(isPlainObject(obj) ? {} : [], obj)
+function clone (obj, deep) {
+  if (obj) {
+    return deep ? deepClone(obj) : objectAssign(isPlainObject(obj) ? {} : [], obj)
+  }
+  return obj
 }
+
+var baseExports = {
+  isNaN: isNaN,
+  isFinite: isFinite,
+  isFloat: isFloat,
+  isInteger: isInteger,
+  isFunction: isFunction,
+  isBoolean: isBoolean,
+  isString: isString,
+  isRegExp: isRegExp,
+  isObject: isObject,
+  isPlainObject: isPlainObject,
+  isDate: isDate,
+  isError: isError,
+  isTypeError: isTypeError,
+  isEmpty: isEmpty,
+  isNull: isNull,
+  isSymbol: isSymbol,
+  isArguments: isArguments,
+  isElement: isElement,
+  isDocument: isDocument,
+  isWindow: isWindow,
+  isFormData: isFormData,
+  isLeapYear: isLeapYear,
+  getType: getType,
+  uniqueId: uniqueId,
+  getSize: getSize,
+  lastIndexOf: lastIndexOf,
+  includes: includes,
+  contains: contains,
+  objectAssign: objectAssign,
+  assign: assign,
+  extend: extend,
+  stringToJson: stringToJson,
+  jsonToString: jsonToString,
+  objectKeys: objectKeys,
+  keys: keys,
+  objectValues: objectValues,
+  values: values,
+  objectEntries: objectEntries,
+  entries: entries,
+  arrayFirst: arrayFirst,
+  first: first,
+  arrayLast: arrayLast,
+  last: last,
+  objectEach: objectEach,
+  arrayEach: arrayEach,
+  each: each,
+  groupBy: groupBy,
+  objectMap: objectMap,
+  clone: clone
+}
+
+module.exports = baseExports

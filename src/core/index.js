@@ -1,5 +1,9 @@
-export * from './base'
-export * from './array'
-export * from './date'
-export * from './string'
-export * from './number'
+'use strict'
+
+var XEUtils = require('./utils')
+var methodExports = require('../method')
+
+XEUtils.mixin(methodExports)
+
+module.exports = XEUtils
+module.exports.default = XEUtils

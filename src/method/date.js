@@ -1,14 +1,16 @@
-import { isDate, isString, arrayEach } from './base'
+'use strict'
+
+var { isDate, isString, arrayEach } = require('./base')
 
 /**
  * 返回时间戳
  *
  * @returns Number
  */
-export var timestamp = Date.now || function () {
+var timestamp = Date.now || function () {
   return new Date().getTime()
 }
-export var now = timestamp
+var now = timestamp
 
 var dateFormatRules = [
   {rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]]},
@@ -27,7 +29,7 @@ var dateFormatRules = [
   * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、SSS毫秒)
   * @return {String}
   */
-export function stringToDate (str, format) {
+function stringToDate (str, format) {
   if (str) {
     if (isDate(str)) {
       return str
@@ -63,7 +65,7 @@ export function stringToDate (str, format) {
   * @param {String} format 输出日期格式(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
   * @return {String}
   */
-export function dateToString (date, format) {
+function dateToString (date, format) {
   if (date) {
     date = stringToDate(date)
     if (isDate(date)) {
@@ -104,7 +106,7 @@ export function dateToString (date, format) {
   * @param {String} mode 获取哪天(默认null)、月初(first)、月末(last)
   * @return {Date}
   */
-export function getWhatMonth (date, month, mode) {
+function getWhatMonth (date, month, mode) {
   var currentDate = stringToDate(date)
   var number = month && !isNaN(month) ? month : 0
   var oldH = currentDate.getHours()
@@ -139,7 +141,7 @@ export function getWhatMonth (date, month, mode) {
   * @param {Number} mode 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
   * @return {Date}
   */
-export function getWhatWeek (date, week, mode) {
+function getWhatWeek (date, week, mode) {
   var customDay = Number(/^[0-7]$/.test(mode) ? mode : 0)
   var currentDate = stringToDate(date)
   var currentDay = currentDate.getDay()
@@ -158,7 +160,7 @@ export function getWhatWeek (date, week, mode) {
   * @param {String} day 天(默认0)、前几天(-数值)、后几天(数值)
   * @return {Date}
   */
-export function getWhatDay (date, day) {
+function getWhatDay (date, day) {
   return new Date(stringToDate(date).getTime() + (day && !isNaN(day) ? day * 86400000 : 0))
 }
 
@@ -169,7 +171,7 @@ export function getWhatDay (date, day) {
   * @param {String} month 月(默认0)、前几个月(-数值)、后几个月(数值)
   * @return {Number}
   */
-export function getDaysOfMonth (date, month) {
+function getDaysOfMonth (date, month) {
   return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / 86400000) + 1
 }
 
@@ -183,7 +185,7 @@ var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000]
   * @param {Date} rule 自定义计算规则
   * @return {Object}
   */
-export function getDateDiff (startDate, endDate, rules) {
+function getDateDiff (startDate, endDate, rules) {
   var result = {}
   var startTime = stringToDate(startDate).getTime()
   var endTime = endDate ? stringToDate(endDate).getTime() : new Date()
@@ -207,3 +209,17 @@ export function getDateDiff (startDate, endDate, rules) {
   }
   return result
 }
+
+var dateExports = {
+  timestamp: timestamp,
+  now: now,
+  stringToDate: stringToDate,
+  dateToString: dateToString,
+  getWhatMonth: getWhatMonth,
+  getWhatWeek: getWhatWeek,
+  getWhatDay: getWhatDay,
+  getDaysOfMonth: getDaysOfMonth,
+  getDateDiff: getDateDiff
+}
+
+module.exports = dateExports

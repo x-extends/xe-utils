@@ -1,4 +1,6 @@
-import { isArray, isObject, objectAssign, arrayEach } from '../core/base'
+'use strict'
+
+var { isArray, isObject, objectAssign, arrayEach } = require('./base')
 
 /**
   * cookie操作函数
@@ -11,7 +13,7 @@ import { isArray, isObject, objectAssign, arrayEach } from '../core/base'
   *   @param String domain: 作用域
   *   @param Number expires: 几天后过期
   */
-export function cookie (name, value, options) {
+function cookie (name, value, options) {
   var inserts = []
   if (isArray(name)) {
     inserts = name
@@ -63,3 +65,9 @@ objectAssign(cookie, {
     return cookie()
   }
 })
+
+var cookieExports = {
+  cookie: cookie
+}
+
+module.exports = cookieExports

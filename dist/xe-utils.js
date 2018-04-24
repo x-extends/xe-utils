@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.12
+ * xe-utils.js v1.5.13
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -10,6 +10,251 @@
       : (global.XEUtils = factory())
 }(this, function () {
   'use strict'
+
+  function XEUtils () { }
+
+  XEUtils.version = '1.5.13'
+  XEUtils.mixin = function (methods) {
+    return Object.assign(XEUtils, methods)
+  }
+
+  /**
+    * 数组去重
+    *
+    * @param {Array} array 数组
+    * @return {Array}
+    */
+  function arrayUniq (array) {
+    var result = []
+    if (isArray(array)) {
+      arrayEach(array, function (value) {
+        if (!result.includes(value)) {
+          result.push(value)
+        }
+      })
+    }
+    return result
+  }
+  var uniq = arrayUniq
+
+  /**
+    * 将多个数的值返回唯一的并集数组
+    *
+    * @param {...Array} 数组
+    * @return {Array}
+    */
+  function arrayUnion () {
+    var result = []
+    for (var index = 0, len = arguments.length; index < len; index++) {
+      result = result.concat(arguments[index])
+    }
+    return arrayUniq(result)
+  }
+  var union = arrayUnion
+
+  /**
+    * 数组按属性值升序
+    *
+    * @param {Array} arr 数组
+    * @param {Function, String} iteratee 方法或属性
+    * @return {Array}
+    */
+  function arraySort (arr, iteratee, context) {
+    if (isArray(arr)) {
+      return arr.sort(iteratee ? isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
+        return v1[iteratee] > v2[iteratee] ? 1 : -1
+      } : function (v1, v2) {
+        return v1 > v2 ? 1 : -1
+      })
+    }
+    return arr
+  }
+  var sort = arraySort
+
+  /**
+    * 将一个数组随机打乱，返回一个新的数组
+    *
+    * @param {Array} array 数组
+    * @return {Array}
+    */
+  function arrayShuffle (array) {
+    var result = []
+    for (var list = objectValues(array), len = list.length - 1; len >= 0; len--) {
+      var index = len > 0 ? getRandom(0, len) : 0
+      result.push(list[index])
+      list.splice(index, 1)
+    }
+    return result
+  }
+  var shuffle = arrayShuffle
+
+  /**
+    * 从一个数组中随机返回几个元素
+    *
+    * @param {Array} array 数组
+    * @param {Number} number 个数
+    * @return {Array}
+    */
+  function arraySample (array, number) {
+    var result = arrayShuffle(array)
+    if (arguments.length === 1) {
+      return result[0]
+    }
+    if (number < result.length) {
+      result.length = number || 0
+    }
+    return result
+  }
+  var sample = arraySample
+
+  /**
+    * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Boolean}
+    */
+  function arraySome (obj, iteratee, context) {
+    if (obj) {
+      if (isArray(obj)) {
+        return obj.some(iteratee, context || this)
+      } else {
+        for (var index in obj) {
+          if (obj.hasOwnProperty(index)) {
+            if (iteratee.call(context || this, obj[index], index, obj)) {
+              return true
+            }
+          }
+        }
+      }
+    }
+    return false
+  }
+  var some = arraySome
+
+  /**
+    * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Boolean}
+    */
+  function arrayEvery (obj, iteratee, context) {
+    if (obj) {
+      if (isArray(obj)) {
+        return obj.every(iteratee, context || this)
+      } else {
+        for (var index in obj) {
+          if (obj.hasOwnProperty(index)) {
+            if (!iteratee.call(context || this, obj[index], index, obj)) {
+              return false
+            }
+          }
+        }
+      }
+    }
+    return true
+  }
+  var every = arrayEvery
+
+  /**
+    * 根据回调过滤数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function arrayFilter (obj, iteratee, context) {
+    if (obj) {
+      if (isArray(obj)) {
+        return obj.filter(iteratee, context || this)
+      } else {
+        var result = {}
+        each(obj, function (val, key) {
+          if (iteratee.call(context || this, val, key, obj)) {
+            result[key] = val
+          }
+        })
+        return result
+      }
+    }
+    return []
+  }
+  var filter = arrayFilter
+
+  /**
+    * 查找匹配第一条数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function arrayFind (obj, iteratee, context) {
+    if (obj) {
+      if (isArray(obj)) {
+        return obj.find(iteratee, context || this)
+      } else {
+        for (var key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (iteratee.call(context || this, obj[key], key, obj)) {
+              return obj[key]
+            }
+          }
+        }
+      }
+    }
+  }
+  var find = arrayFind
+
+  /**
+    * 指定方法后的返回值组成的新数组
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Array}
+    */
+  function arrayMap (obj, iteratee, context) {
+    var result = []
+    if (obj) {
+      if (isArray(obj)) {
+        return obj.map(iteratee, context || this)
+      } else {
+        each(obj, function () {
+          result.push(iteratee.apply(context || this, arguments))
+        })
+      }
+    }
+    return result
+  }
+  var map = arrayMap
+
+  var arrayExports = {
+    arrayUniq: arrayUniq,
+    uniq: uniq,
+    arrayUnion: arrayUnion,
+    union: union,
+    arraySort: arraySort,
+    sort: sort,
+    arrayShuffle: arrayShuffle,
+    shuffle: shuffle,
+    arraySample: arraySample,
+    sample: sample,
+    arraySome: arraySome,
+    some: some,
+    arrayEvery: arrayEvery,
+    every: every,
+    arrayFilter: arrayFilter,
+    filter: filter,
+    arrayFind: arrayFind,
+    find: find,
+    arrayMap: arrayMap,
+    map: map
+  }
 
   var objectToString = Object.prototype.toString
 
@@ -614,223 +859,148 @@
     * @return {Object}
     */
   function clone (obj, deep) {
-    return deep ? deepClone(obj) : objectAssign(isPlainObject(obj) ? {} : [], obj)
+    if (obj) {
+      return deep ? deepClone(obj) : objectAssign(isPlainObject(obj) ? {} : [], obj)
+    }
+    return obj
+  }
+
+  var baseExports = {
+    isNaN: isNaN,
+    isFinite: isFinite,
+    isFloat: isFloat,
+    isInteger: isInteger,
+    isFunction: isFunction,
+    isBoolean: isBoolean,
+    isString: isString,
+    isRegExp: isRegExp,
+    isObject: isObject,
+    isPlainObject: isPlainObject,
+    isDate: isDate,
+    isError: isError,
+    isTypeError: isTypeError,
+    isEmpty: isEmpty,
+    isNull: isNull,
+    isSymbol: isSymbol,
+    isArguments: isArguments,
+    isElement: isElement,
+    isDocument: isDocument,
+    isWindow: isWindow,
+    isFormData: isFormData,
+    isLeapYear: isLeapYear,
+    getType: getType,
+    uniqueId: uniqueId,
+    getSize: getSize,
+    lastIndexOf: lastIndexOf,
+    includes: includes,
+    contains: contains,
+    objectAssign: objectAssign,
+    assign: assign,
+    extend: extend,
+    stringToJson: stringToJson,
+    jsonToString: jsonToString,
+    objectKeys: objectKeys,
+    keys: keys,
+    objectValues: objectValues,
+    values: values,
+    objectEntries: objectEntries,
+    entries: entries,
+    arrayFirst: arrayFirst,
+    first: first,
+    arrayLast: arrayLast,
+    last: last,
+    objectEach: objectEach,
+    arrayEach: arrayEach,
+    each: each,
+    groupBy: groupBy,
+    objectMap: objectMap,
+    clone: clone
   }
 
   /**
-    * 数组去重
-    *
-    * @param {Array} array 数组
-    * @return {Array}
+    * 获取浏览器内核
+    * @return Object
     */
-  function arrayUniq (array) {
-    var result = []
-    if (isArray(array)) {
-      arrayEach(array, function (value) {
-        if (!result.includes(value)) {
-          result.push(value)
+  function browse () {
+    var result = {}
+    var $body = document.body || document.documentElement
+    arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
+      result['-' + core] = !!$body[core + 'MatchesSelector']
+    })
+    return result
+  }
+
+  var browseExports = {
+    browse: browse
+  }
+
+  /**
+    * cookie操作函数
+    * @param String/Array/Object name 键/数组/对象
+    * @param String value 值
+    * @param Object options 参数
+    *   @param String name: 键
+    *   @param Object value: 值
+    *   @param String path: 路径
+    *   @param String domain: 作用域
+    *   @param Number expires: 几天后过期
+    */
+  function cookie (name, value, options) {
+    var inserts = []
+    if (isArray(name)) {
+      inserts = name
+    } else if (arguments.length > 1) {
+      inserts = [objectAssign({ name: name, value: value }, options)]
+    } else if (isObject(name)) {
+      inserts = [name]
+    }
+    if (inserts.length > 0) {
+      arrayEach(inserts, function (obj) {
+        var opts = objectAssign({}, obj)
+        var values = []
+        if (opts.name) {
+          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+          if (opts.expires !== undefined) {
+            opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
+          }
+          arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
+            if (opts[key] !== undefined) {
+              values.push(key + '=' + opts[key])
+            }
+          })
         }
+        document.cookie = values.join('; ')
       })
-    }
-    return result
-  }
-  var uniq = arrayUniq
-
-  /**
-    * 将多个数的值返回唯一的并集数组
-    *
-    * @param {...Array} 数组
-    * @return {Array}
-    */
-  function arrayUnion () {
-    var result = []
-    for (var index = 0, len = arguments.length; index < len; index++) {
-      result = result.concat(arguments[index])
-    }
-    return arrayUniq(result)
-  }
-  var union = arrayUnion
-
-  /**
-    * 数组按属性值升序
-    *
-    * @param {Array} arr 数组
-    * @param {Function, String} iteratee 方法或属性
-    * @return {Array}
-    */
-  function arraySort (arr, iteratee, context) {
-    if (isArray(arr)) {
-      return arr.sort(iteratee ? isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
-        return v1[iteratee] > v2[iteratee] ? 1 : -1
-      } : function (v1, v2) {
-        return v1 > v2 ? 1 : -1
-      })
-    }
-    return arr
-  }
-  var sort = arraySort
-
-  /**
-    * 将一个数组随机打乱，返回一个新的数组
-    *
-    * @param {Array} array 数组
-    * @return {Array}
-    */
-  function arrayShuffle (array) {
-    var result = []
-    for (var list = objectValues(array), len = list.length - 1; len >= 0; len--) {
-      var index = len > 0 ? getRandom(0, len) : 0
-      result.push(list[index])
-      list.splice(index, 1)
-    }
-    return result
-  }
-  var shuffle = arrayShuffle
-
-  /**
-    * 从一个数组中随机返回几个元素
-    *
-    * @param {Array} array 数组
-    * @param {Number} number 个数
-    * @return {Array}
-    */
-  function arraySample (array, number) {
-    var result = arrayShuffle(array)
-    if (arguments.length === 1) {
-      return result[0]
-    }
-    if (number < result.length) {
-      result.length = number || 0
-    }
-    return result
-  }
-  var sample = arraySample
-
-  /**
-    * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
-    *
-    * @param {Object} obj 对象/数组
-    * @param {Function} iteratee(item, index, obj) 回调
-    * @param {Object} context 上下文
-    * @return {Boolean}
-    */
-  function arraySome (obj, iteratee, context) {
-    if (obj) {
-      if (isArray(obj)) {
-        return obj.some(iteratee, context || this)
-      } else {
-        for (var index in obj) {
-          if (obj.hasOwnProperty(index)) {
-            if (iteratee.call(context || this, obj[index], index, obj)) {
-              return true
-            }
-          }
-        }
-      }
-    }
-    return false
-  }
-  var some = arraySome
-
-  /**
-    * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
-    *
-    * @param {Object} obj 对象/数组
-    * @param {Function} iteratee(item, index, obj) 回调
-    * @param {Object} context 上下文
-    * @return {Boolean}
-    */
-  function arrayEvery (obj, iteratee, context) {
-    if (obj) {
-      if (isArray(obj)) {
-        return obj.every(iteratee, context || this)
-      } else {
-        for (var index in obj) {
-          if (obj.hasOwnProperty(index)) {
-            if (!iteratee.call(context || this, obj[index], index, obj)) {
-              return false
-            }
-          }
-        }
-      }
-    }
-    return true
-  }
-  var every = arrayEvery
-
-  /**
-    * 根据回调过滤数据
-    *
-    * @param {Object} obj 对象/数组
-    * @param {Function} iteratee(item, index, obj) 回调
-    * @param {Object} context 上下文
-    * @return {Object}
-    */
-  function arrayFilter (obj, iteratee, context) {
-    if (obj) {
-      if (isArray(obj)) {
-        return obj.filter(iteratee, context || this)
-      } else {
-        var result = {}
-        each(obj, function (val, key) {
-          if (iteratee.call(context || this, val, key, obj)) {
-            result[key] = val
-          }
-        })
-        return result
-      }
-    }
-    return []
-  }
-  var filter = arrayFilter
-
-  /**
-    * 查找匹配第一条数据
-    *
-    * @param {Object} obj 对象/数组
-    * @param {Function} iteratee(item, index, obj) 回调
-    * @param {Object} context 上下文
-    * @return {Object}
-    */
-  function arrayFind (obj, iteratee, context) {
-    if (obj) {
-      if (isArray(obj)) {
-        return obj.find(iteratee, context || this)
-      } else {
-        for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
-            if (iteratee.call(context || this, obj[key], key, obj)) {
-              return obj[key]
-            }
-          }
-        }
-      }
-    }
-  }
-  var find = arrayFind
-
-  /**
-    * 指定方法后的返回值组成的新数组
-    *
-    * @param {Object} obj 对象/数组
-    * @param {Function} iteratee(item, index, obj) 回调
-    * @param {Object} context 上下文
-    * @return {Array}
-    */
-  function arrayMap (obj, iteratee, context) {
-    var result = []
-    if (obj) {
-      if (isArray(obj)) {
-        return obj.map(iteratee, context || this)
-      } else {
-        each(obj, function () {
-          result.push(iteratee.apply(context || this, arguments))
+    } else {
+      var result = {}
+      if (document.cookie) {
+        arrayEach(document.cookie.split('; '), function (val) {
+          var keyIndex = val.indexOf('=')
+          result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
         })
       }
+      return arguments.length === 1 ? result[name] : result
     }
-    return result
   }
-  var map = arrayMap
+
+  objectAssign(cookie, {
+    setItem: function (name, key) {
+      cookie(name, key)
+    },
+    getItem: function (name) {
+      return cookie(name)
+    },
+    removeItem: function (name) {
+      cookie(name, null, { expires: -1 })
+    },
+    getJSON: function () {
+      return cookie()
+    }
+  })
+
+  var cookieExports = {
+    cookie: cookie
+  }
 
   /**
    * 返回时间戳
@@ -1040,156 +1210,7 @@
     return result
   }
 
-  var escapeMap = {
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#x27;',
-    '`': '&#x60;'
-  }
-
-  var unescapeMap = {}
-  arrayEach(objectKeys(escapeMap), function (key) {
-    unescapeMap[escapeMap[key]] = key
-  })
-
-  function formatEscaper (dataMap) {
-    var replaceRegexp = new RegExp('(?:' + objectKeys(dataMap).join('|') + ')', 'g')
-    return function (str) {
-      return String(str || '').replace(replaceRegexp, function (match) {
-        return dataMap[match]
-      })
-    }
-  }
-
-  /**
-    * 转义HTML字符串，替换&, <, >, ", ', `字符
-    *
-    * @param {String} str 字符串
-    * @return {String}
-    */
-  var escape = formatEscaper(escapeMap)
-
-  /**
-    * 反转escape
-    *
-    * @param {String} str 字符串
-    * @return {String}
-    */
-  var unescape = formatEscaper(unescapeMap)
-
-  /**
-    * 获取一个指定范围内随机数
-    *
-    * @param {Number} min 最小值
-    * @param {Number} max 最大值
-    * @return {Number}
-    */
-  function getRandom (min, max) {
-    return min >= max ? min : ((min = min >> 0) + Math.round(Math.random() * ((max || 9) - min)))
-  }
-
-  function sortData (arr, iteratee) {
-    return (isFunction(iteratee) ? arraySort(arrayMap(arr, iteratee, this)) : arraySort(arr, iteratee))
-  }
-
-  /**
-    * 获取最小值
-    *
-    * @param {Array} arr 数组
-    * @param {Function} iteratee(item, index, obj) 回调
-    * @return {Number}
-    */
-  function arrayMin () {
-    return sortData.apply(this, arguments)[0]
-  }
-  var min = arrayMin
-
-  /**
-    * 获取最大值
-    *
-    * @param {Array} arr 数组
-    * @param {Function} iteratee(item, index, obj) 回调
-    * @return {Number}
-    */
-  function arrayMax () {
-    return sortData.apply(this, arguments).reverse()[0]
-  }
-  var max = arrayMax
-
-  var coreMethods = {
-    isNaN: isNaN,
-    isFinite: isFinite,
-    isFloat: isFloat,
-    isInteger: isInteger,
-    isFunction: isFunction,
-    isBoolean: isBoolean,
-    isString: isString,
-    isRegExp: isRegExp,
-    isObject: isObject,
-    isPlainObject: isPlainObject,
-    isDate: isDate,
-    isError: isError,
-    isTypeError: isTypeError,
-    isEmpty: isEmpty,
-    isNull: isNull,
-    isSymbol: isSymbol,
-    isArguments: isArguments,
-    isElement: isElement,
-    isDocument: isDocument,
-    isWindow: isWindow,
-    isFormData: isFormData,
-    isLeapYear: isLeapYear,
-    getType: getType,
-    uniqueId: uniqueId,
-    getSize: getSize,
-    lastIndexOf: lastIndexOf,
-    includes: includes,
-    contains: contains,
-    objectAssign: objectAssign,
-    assign: assign,
-    extend: extend,
-    stringToJson: stringToJson,
-    jsonToString: jsonToString,
-    objectKeys: objectKeys,
-    keys: keys,
-    objectValues: objectValues,
-    values: values,
-    objectEntries: objectEntries,
-    entries: entries,
-    arrayFirst: arrayFirst,
-    first: first,
-    arrayLast: arrayLast,
-    last: last,
-    objectEach: objectEach,
-    arrayEach: arrayEach,
-    each: each,
-    groupBy: groupBy,
-    objectMap: objectMap,
-    clone: clone,
-
-    arrayUniq: arrayUniq,
-    uniq: uniq,
-    arrayUnion: arrayUnion,
-    union: union,
-    arraySort: arraySort,
-    sort: sort,
-    arrayShuffle: arrayShuffle,
-    shuffle: shuffle,
-    arraySample: arraySample,
-    sample: sample,
-    arraySome: arraySome,
-    some: some,
-    arrayEvery: arrayEvery,
-    every: every,
-    arrayFilter: arrayFilter,
-    filter: filter,
-    arrayFind: arrayFind,
-    find: find,
-    arrayMap: arrayMap,
-    map: map,
-
+  var dateExports = {
     timestamp: timestamp,
     now: now,
     stringToDate: stringToDate,
@@ -1198,94 +1219,8 @@
     getWhatWeek: getWhatWeek,
     getWhatDay: getWhatDay,
     getDaysOfMonth: getDaysOfMonth,
-    getDateDiff: getDateDiff,
-
-    escape: escape,
-    unescape: unescape,
-
-    getRandom: getRandom,
-    arrayMin: arrayMin,
-    min: min,
-    arrayMax: arrayMax,
-    max: max
+    getDateDiff: getDateDiff
   }
-
-  /**
-    * 获取浏览器内核
-    * @return Object
-    */
-  function browse () {
-    var result = {}
-    var $body = document.body || document.documentElement
-    arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
-      result['-' + core] = !!$body[core + 'MatchesSelector']
-    })
-    return result
-  }
-
-  /**
-    * cookie操作函数
-    * @param String/Array/Object name 键/数组/对象
-    * @param String value 值
-    * @param Object options 参数
-    *   @param String name: 键
-    *   @param Object value: 值
-    *   @param String path: 路径
-    *   @param String domain: 作用域
-    *   @param Number expires: 几天后过期
-    */
-  function cookie (name, value, options) {
-    var inserts = []
-    if (isArray(name)) {
-      inserts = name
-    } else if (arguments.length > 1) {
-      inserts = [objectAssign({ name: name, value: value }, options)]
-    } else if (isObject(name)) {
-      inserts = [name]
-    }
-    if (inserts.length > 0) {
-      arrayEach(inserts, function (obj) {
-        var opts = objectAssign({}, obj)
-        var values = []
-        if (opts.name) {
-          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
-          if (opts.expires !== undefined) {
-            opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
-          }
-          arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
-            if (opts[key] !== undefined) {
-              values.push(key + '=' + opts[key])
-            }
-          })
-        }
-        document.cookie = values.join('; ')
-      })
-    } else {
-      var result = {}
-      if (document.cookie) {
-        arrayEach(document.cookie.split('; '), function (val) {
-          var keyIndex = val.indexOf('=')
-          result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
-        })
-      }
-      return arguments.length === 1 ? result[name] : result
-    }
-  }
-
-  objectAssign(cookie, {
-    setItem: function (name, key) {
-      cookie(name, key)
-    },
-    getItem: function (name) {
-      return cookie(name)
-    },
-    removeItem: function (name) {
-      cookie(name, null, { expires: -1 })
-    },
-    getJSON: function () {
-      return cookie()
-    }
-  })
 
   var $locat = location
 
@@ -1333,40 +1268,117 @@
     }
   }
 
-  var browseMethods = {
-    browse: browse,
-
-    cookie: cookie,
-
-    locat: locat,
-    getBaseURL: getBaseURL
+  var locatExports = {
+    getBaseURL: getBaseURL,
+    locat: locat
   }
-
-  function XEUtils () { }
 
   /**
-   * 函数扩展
-   *
-   * @param {Object} methods 扩展函数对象
-   */
-  function mixin (methods) {
-    coreMethods.objectEach(methods, function (fn, name) {
-      XEUtils[name] = coreMethods.isFunction(fn) ? function () {
-        var result = fn.apply(XEUtils.$context, arguments)
-        XEUtils.$context = null
-        return result
-      } : fn
-    })
+    * 获取一个指定范围内随机数
+    *
+    * @param {Number} min 最小值
+    * @param {Number} max 最大值
+    * @return {Number}
+    */
+  function getRandom (min, max) {
+    return min >= max ? min : ((min = min >> 0) + Math.round(Math.random() * ((max || 9) - min)))
   }
 
-  coreMethods.objectAssign(XEUtils, {
-    mixin: mixin,
-    version: '1.5.12',
-    $name: 'XEUtils'
+  function sortData (arr, iteratee) {
+    return (isFunction(iteratee) ? arraySort(arrayMap(arr, iteratee, this)) : arraySort(arr, iteratee))
+  }
+
+  /**
+    * 获取最小值
+    *
+    * @param {Array} arr 数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @return {Number}
+    */
+  function arrayMin () {
+    return sortData.apply(this, arguments)[0]
+  }
+  var min = arrayMin
+
+  /**
+    * 获取最大值
+    *
+    * @param {Array} arr 数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @return {Number}
+    */
+  function arrayMax () {
+    return sortData.apply(this, arguments).reverse()[0]
+  }
+  var max = arrayMax
+
+  var numberExports = {
+    getRandom: getRandom,
+    arrayMin: arrayMin,
+    min: min,
+    arrayMax: arrayMax,
+    max: max
+  }
+
+  var escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '`': '&#x60;'
+  }
+
+  var unescapeMap = {}
+  arrayEach(objectKeys(escapeMap), function (key) {
+    unescapeMap[escapeMap[key]] = key
   })
 
-  mixin(coreMethods)
-  mixin(browseMethods)
+  function formatEscaper (dataMap) {
+    var replaceRegexp = new RegExp('(?:' + objectKeys(dataMap).join('|') + ')', 'g')
+    return function (str) {
+      return String(str || '').replace(replaceRegexp, function (match) {
+        return dataMap[match]
+      })
+    }
+  }
+
+  /**
+    * 转义HTML字符串，替换&, <, >, ", ', `字符
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
+  var escape = formatEscaper(escapeMap)
+
+  /**
+    * 反转escape
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
+  var unescape = formatEscaper(unescapeMap)
+
+  var stringExports = {
+    escape: escape,
+    unescape: unescape
+  }
+
+  var methodExports = {}
+
+  objectAssign(
+    methodExports,
+    arrayExports,
+    baseExports,
+    browseExports,
+    cookieExports,
+    dateExports,
+    locatExports,
+    numberExports,
+    stringExports
+  )
+
+  XEUtils.mixin(methodExports)
 
   return XEUtils
 }))

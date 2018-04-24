@@ -1,5 +1,7 @@
-import { isFunction } from './base'
-import { arraySort, arrayMap } from './array'
+'use strict'
+
+var { isFunction } = require('./base')
+var { arraySort, arrayMap } = require('./array')
 
 /**
   * 获取一个指定范围内随机数
@@ -8,7 +10,7 @@ import { arraySort, arrayMap } from './array'
   * @param {Number} max 最大值
   * @return {Number}
   */
-export function getRandom (min, max) {
+function getRandom (min, max) {
   return min >= max ? min : ((min = min >> 0) + Math.round(Math.random() * ((max || 9) - min)))
 }
 
@@ -23,10 +25,10 @@ function sortData (arr, iteratee) {
   * @param {Function} iteratee(item, index, obj) 回调
   * @return {Number}
   */
-export function arrayMin () {
+function arrayMin () {
   return sortData.apply(this, arguments)[0]
 }
-export var min = arrayMin
+var min = arrayMin
 
 /**
   * 获取最大值
@@ -35,7 +37,17 @@ export var min = arrayMin
   * @param {Function} iteratee(item, index, obj) 回调
   * @return {Number}
   */
-export function arrayMax () {
+function arrayMax () {
   return sortData.apply(this, arguments).reverse()[0]
 }
-export var max = arrayMax
+var max = arrayMax
+
+var numberExports = {
+  getRandom: getRandom,
+  arrayMin: arrayMin,
+  min: min,
+  arrayMax: arrayMax,
+  max: max
+}
+
+module.exports = numberExports
