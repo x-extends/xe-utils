@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "1.5.15-beta.1",
+  "version": "1.5.16",
   "description": "XEUtils 函数库",
   "main": "index.js",
   "scripts": {

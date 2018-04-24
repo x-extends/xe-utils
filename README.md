@@ -37,12 +37,17 @@ require.config({
 })
 ```
 
-## ES6 Module 安装方式
+## NPM 安装
 ``` shell
 npm install xe-utils --save
 ```
 
-### import 部分导入
+### NodeJS 导入
+``` shell
+var XEUtils = require('xe-utils')
+```
+
+### ES6 Module import 部分导入
 ``` shell
 import { dateToString, stringToDate } from 'xe-utils'
 
@@ -50,7 +55,7 @@ const dateStr = dateToString(new Date(), 'yyyy-MM-dd')
 const date = stringToDate('11/20/2017 10:10:30', 'MM/dd/yyyy HH:mm:ss')
 ```
 
-### import 导入所有
+### ES6 Module import 导入所有
 ``` shell
 import XEUtils from 'xe-utils'
 
