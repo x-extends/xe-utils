@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.16
+ * xe-utils.js v1.5.16-beta.0
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.16'
+  XEUtils.version = '1.5.16-beta.0'
   XEUtils.mixin = function (methods) {
     return Object.assign(XEUtils, methods)
   }
@@ -259,22 +259,6 @@
   var objectToString = Object.prototype.toString
 
   /**
-    * 判断是否非数值
-    *
-    * @param {String, Number} val 数值
-    * @return {Boolean}
-    */
-  var isNaN = window.isNaN
-
-  /**
-    * 判断是否为有限数值
-    *
-    * @param {Number} val 数值
-    * @return {Boolean}
-    */
-  var isFinite = window.isFinite
-
-  /**
     * 判断是否数组
     *
     * @param {Object} val 对象
@@ -475,7 +459,7 @@
     * @return {Boolean}
     */
   function isWindow (val) {
-    return val && val === val.window
+    return val && val === val.window && typeof window !== 'undefined'
   }
 
   /**
