@@ -15,6 +15,7 @@ var baseExports = require('./base')
   */
 function cookie (name, value, options) {
   var inserts = []
+  var isDoc = typeof document !== 'undefined'
   if (baseExports.isArray(name)) {
     inserts = name
   } else if (arguments.length > 1) {
@@ -23,25 +24,27 @@ function cookie (name, value, options) {
     inserts = [name]
   }
   if (inserts.length > 0) {
-    baseExports.arrayEach(inserts, function (obj) {
-      var opts = baseExports.objectAssign({}, obj)
-      var values = []
-      if (opts.name) {
-        values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
-        if (opts.expires !== undefined) {
-          opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
-        }
-        baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
-          if (opts[key] !== undefined) {
-            values.push(key + '=' + opts[key])
+    if (isDoc) {
+      baseExports.arrayEach(inserts, function (obj) {
+        var opts = baseExports.objectAssign({}, obj)
+        var values = []
+        if (opts.name) {
+          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+          if (opts.expires !== undefined) {
+            opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
           }
-        })
-      }
-      document.cookie = values.join('; ')
-    })
+          baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
+            if (opts[key] !== undefined) {
+              values.push(key + '=' + opts[key])
+            }
+          })
+        }
+        document.cookie = values.join('; ')
+      })
+    }
   } else {
     var result = {}
-    if (document.cookie) {
+    if (isDoc && document.cookie) {
       baseExports.arrayEach(document.cookie.split('; '), function (val) {
         var keyIndex = val.indexOf('=')
         result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
@@ -66,7 +69,7 @@ baseExports.objectAssign(cookie, {
   }
 })
 
-var cookieExports = typeof document !== 'undefined' ? {} : {
+var cookieExports = {
   cookie: cookie
 }
 

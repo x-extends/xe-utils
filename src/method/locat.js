@@ -39,7 +39,7 @@ function getBaseURL () {
   * @return Object
   */
 function locat () {
-  return {
+  return $locat ? {
     port: $locat.port,
     href: $locat.href,
     host: $locat.host,
@@ -49,12 +49,12 @@ function locat () {
     hash: hash(),
     query: parse($locat.hash),
     params: parse($locat.search)
-  }
+  } : {}
 }
 
-var locatExports = $locat ? {
+var locatExports = {
   getBaseURL: getBaseURL,
   locat: locat
-} : {}
+}
 
 module.exports = locatExports

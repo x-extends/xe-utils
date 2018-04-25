@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.17
+ * xe-utils.js v1.5.18
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,10 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.17'
-  XEUtils.mixin = function (methods) {
-    return Object.assign(XEUtils, methods)
-  }
+  XEUtils.version = '1.5.18'
 
   /**
     * 数组去重
@@ -906,14 +903,16 @@
     */
   function browse () {
     var result = {}
-    var $body = document.body || document.documentElement
-    baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
-      result['-' + core] = !!$body[core + 'MatchesSelector']
-    })
+    if (typeof document !== 'undefined') {
+      var $body = document.body || document.documentElement
+      baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
+        result['-' + core] = !!$body[core + 'MatchesSelector']
+      })
+    }
     return result
   }
 
-  var browseExports = typeof document !== 'undefined' ? {} : {
+  var browseExports = {
     browse: browse
   }
 
@@ -930,6 +929,7 @@
     */
   function cookie (name, value, options) {
     var inserts = []
+    var isDoc = typeof document !== 'undefined'
     if (baseExports.isArray(name)) {
       inserts = name
     } else if (arguments.length > 1) {
@@ -938,25 +938,27 @@
       inserts = [name]
     }
     if (inserts.length > 0) {
-      baseExports.arrayEach(inserts, function (obj) {
-        var opts = baseExports.objectAssign({}, obj)
-        var values = []
-        if (opts.name) {
-          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
-          if (opts.expires !== undefined) {
-            opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
-          }
-          baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
-            if (opts[key] !== undefined) {
-              values.push(key + '=' + opts[key])
+      if (isDoc) {
+        baseExports.arrayEach(inserts, function (obj) {
+          var opts = baseExports.objectAssign({}, obj)
+          var values = []
+          if (opts.name) {
+            values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+            if (opts.expires !== undefined) {
+              opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
             }
-          })
-        }
-        document.cookie = values.join('; ')
-      })
+            baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
+              if (opts[key] !== undefined) {
+                values.push(key + '=' + opts[key])
+              }
+            })
+          }
+          document.cookie = values.join('; ')
+        })
+      }
     } else {
       var result = {}
-      if (document.cookie) {
+      if (isDoc && document.cookie) {
         baseExports.arrayEach(document.cookie.split('; '), function (val) {
           var keyIndex = val.indexOf('=')
           result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
@@ -981,7 +983,7 @@
     }
   })
 
-  var cookieExports = typeof document !== 'undefined' ? {} : {
+  var cookieExports = {
     cookie: cookie
   }
 
@@ -1242,7 +1244,7 @@
     * @return Object
     */
   function locat () {
-    return {
+    return $locat ? {
       port: $locat.port,
       href: $locat.href,
       host: $locat.host,
@@ -1252,13 +1254,13 @@
       hash: hash(),
       query: parse($locat.hash),
       params: parse($locat.search)
-    }
+    } : {}
   }
 
-  var locatExports = $locat ? {
+  var locatExports = {
     getBaseURL: getBaseURL,
     locat: locat
-  } : {}
+  }
 
   /**
     * 获取一个指定范围内随机数
@@ -1364,6 +1366,21 @@
     numberExports,
     stringExports
   )
+
+  /**
+   * functions of mixing
+   *
+   * @param {Object} methods
+   */
+  XEUtils.mixin = function (methods) {
+    methodExports.objectEach(methods, function (fn, name) {
+      XEUtils[name] = methodExports.isFunction(fn) ? function () {
+        var result = fn.apply(XEUtils.$context, arguments)
+        XEUtils.$context = null
+        return result
+      } : fn
+    })
+  }
 
   XEUtils.mixin(methodExports)
 

@@ -8,14 +8,16 @@ var baseExports = require('./base')
   */
 function browse () {
   var result = {}
-  var $body = document.body || document.documentElement
-  baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
-    result['-' + core] = !!$body[core + 'MatchesSelector']
-  })
+  if (typeof document !== 'undefined') {
+    var $body = document.body || document.documentElement
+    baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
+      result['-' + core] = !!$body[core + 'MatchesSelector']
+    })
+  }
   return result
 }
 
-var browseExports = typeof document !== 'undefined' ? {} : {
+var browseExports = {
   browse: browse
 }
 
