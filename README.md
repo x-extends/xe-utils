@@ -302,7 +302,7 @@ import XEUtils from 'xe-utils'
 XEUtils.includes([11], 22) // false
 XEUtils.includes([11, 22], 22) // true
 ```
-### assign/objectAssign (target, ...) 浅拷贝一个或者多个对象到目标对象中
+### assign/objectAssign/extend (target, ...) 浅拷贝一个或者多个对象到目标对象中
 ```shell
 import XEUtils, { objectAssign } from 'xe-utils'
 
@@ -360,7 +360,7 @@ import XEUtils, { arrayLast } from 'xe-utils'
 XEUtils.last({a: 11, b: 22}) // 22
 arrayLast([11, 22]) // 22
 ```
-### each ( obj, iteratee, context ) 迭代器
+### each/objectEach/arrayEach ( obj, iteratee, context ) 迭代器
 ```shell
 import XEUtils from 'xe-utils'
 
