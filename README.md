@@ -302,14 +302,24 @@ import XEUtils from 'xe-utils'
 XEUtils.includes([11], 22) // false
 XEUtils.includes([11, 22], 22) // true
 ```
-### assign/objectAssign/extend (target, ...) 浅拷贝一个或者多个对象到目标对象中
+### assign/objectAssign/extend ([deep], target, ...) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
 ```shell
 import XEUtils, { objectAssign } from 'xe-utils'
 
 const obj1 = {a: null}
 XEUtils.assign(obj1, {a: 11}) // {a: 11}
-const obj2 = {c: null}
-objectAssign(obj2, {a: 11}, {b: 22}) // {a: 11, b: 22, c: null}
+
+// 浅拷贝
+const obj2 = {a: null}
+const obj3 = {bb: {b: 11}}
+const obj4 = objectAssign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
+obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 22}}
+
+// 深拷贝
+const obj2 = {a: null}
+const obj3 = {bb: {b: 11}}
+const obj4 = XEUtils.extend(true, obj3, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
+obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 11}}
 ```
 ### stringToJson (str) 字符串转JSON
 ```shell
@@ -362,14 +372,17 @@ arrayLast([11, 22]) // 22
 ```
 ### each/objectEach/arrayEach ( obj, iteratee, context ) 迭代器
 ```shell
-import XEUtils from 'xe-utils'
+import XEUtils, { objectEach, arrayEach } from 'xe-utils'
 
-const result = []
 XEUtils.each({a: 11, b: 22}, (item, key) => {
-  if (key === 'b') {
-    result.push(item)
-  }
-}) // [22]
+  // 通用迭代器
+})
+objectEach({a: 11, b: 22}, (item, key) => {
+  // 对象迭代器
+})
+arrayEach([11, 22, 33], (item, key) => {
+  // 数组迭代器
+})
 ```
 ### groupBy ( obj, iteratee, context ) 集合分组,默认使用键值分组,如果有iteratee则使用结果进行分组
 ```shell
@@ -512,7 +525,7 @@ import XEUtils from 'xe-utils'
 XEUtils.stringToDate('2017-12-20') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('2017-12-20 10:10:30') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm') // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
 ### dateToString ( date, format ) 日期化为任意格式字符串(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
@@ -605,6 +618,15 @@ arrayMax([{a: 11}, {a: 44}], 'a') // 44
 arrayMax([{a: 11}, {a: 44}], (item) => {
   return item.a
 }) // {a: 44}
+```
+
+### commafy ( num, options ) 数值千分位分隔符、小数点
+```shell
+import XEUtils from 'xe-utils'
+
+XEUtils.commafy(1000000) // 千分位格式化 1,000,000
+XEUtils.commafy(1000000, {fixed: 2}) // 格式化金额 1,000,000.00
+XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0}) // 格式化银行卡 1234 1234 1234 1234
 ```
 
 ### escape ( str ) 转义HTML字符串，替换&, <, >, ", ', `字符

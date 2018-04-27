@@ -344,6 +344,16 @@ function includes (obj, val) {
 }
 var contains = includes
 
+function extend (target, args, isClone) {
+  for (var source, index = 1, len = args.length; index < len; index++) {
+    source = args[index]
+    arrayEach(objectKeys(args[index]), function (key) {
+      target[key] = isClone ? clone(source[key], isClone) : source[key]
+    })
+  }
+  return target
+}
+
 /**
   * 浅拷贝一个或者多个对象到目标对象中
   *
@@ -351,19 +361,20 @@ var contains = includes
   * @param {...Object}
   * @return {Boolean}
   */
-var objectAssign = Object.assign || function (target) {
+var objectAssign = function (target) {
   if (target) {
-    for (var source, index = 1, len = arguments.length; index < len; index++) {
-      source = arguments[index]
-      arrayEach(objectKeys(arguments[index]), function (key) {
-        target[key] = source[key]
-      })
+    var args = arguments
+    if (target === true) {
+      if (args.length > 1) {
+        target = isArray(target[1]) ? [] : {}
+        return extend(target, args, true)
+      }
+    } else {
+      return Object.assign ? Object.assign.apply(Object, args) : extend(target, args)
     }
   }
   return target
 }
-var assign = objectAssign
-var extend = objectAssign
 
 /**
   * 字符串转JSON
@@ -602,6 +613,7 @@ var baseExports = {
   isFunction: isFunction,
   isBoolean: isBoolean,
   isString: isString,
+  isNumber: isNumber,
   isRegExp: isRegExp,
   isObject: isObject,
   isPlainObject: isPlainObject,
@@ -624,8 +636,8 @@ var baseExports = {
   includes: includes,
   contains: contains,
   objectAssign: objectAssign,
-  assign: assign,
-  extend: extend,
+  assign: objectAssign,
+  extend: objectAssign,
   stringToJson: stringToJson,
   jsonToString: jsonToString,
   objectKeys: objectKeys,

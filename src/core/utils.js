@@ -2,6 +2,6 @@
 
 function XEUtils () {}
 
-XEUtils.version = '1.5.18'
+XEUtils.version = '1.5.19'
 
 module.exports = XEUtils

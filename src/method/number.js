@@ -42,12 +42,26 @@ function arrayMax () {
 }
 var max = arrayMax
 
+/**
+  * 千分位分隔符、小数点
+  *
+  * @param {String/Number} num 数值
+  * @param {Object} 参数 {separator: 分隔符, fixed: 小数位数}
+  * @return {String}
+ */
+function commafy (num, options) {
+  var opts = baseExports.objectAssign({spaceNumber: 3, separator: ',', fixed: 0}, options)
+  var result = parseFloat(('' + num).replace(/,/g, '') || 0).toFixed(opts.fixed).split('.')
+  return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
+}
+
 var numberExports = {
   getRandom: getRandom,
   arrayMin: arrayMin,
   min: min,
   arrayMax: arrayMax,
-  max: max
+  max: max,
+  commafy: commafy
 }
 
 module.exports = numberExports

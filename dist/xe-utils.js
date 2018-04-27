@@ -595,6 +595,16 @@
   }
   var contains = includes
 
+  function extend (target, args, isClone) {
+    for (var source, index = 1, len = args.length; index < len; index++) {
+      source = args[index]
+      arrayEach(objectKeys(args[index]), function (key) {
+        target[key] = isClone ? clone(source[key], isClone) : source[key]
+      })
+    }
+    return target
+  }
+
   /**
     * 浅拷贝一个或者多个对象到目标对象中
     *
@@ -602,19 +612,20 @@
     * @param {...Object}
     * @return {Boolean}
     */
-  var objectAssign = Object.assign || function (target) {
+  var objectAssign = function (target) {
     if (target) {
-      for (var source, index = 1, len = arguments.length; index < len; index++) {
-        source = arguments[index]
-        arrayEach(objectKeys(arguments[index]), function (key) {
-          target[key] = source[key]
-        })
+      var args = arguments
+      if (target === true) {
+        if (args.length > 1) {
+          target = isArray(target[1]) ? [] : {}
+          return extend(target, args, true)
+        }
+      } else {
+        return Object.assign ? Object.assign.apply(Object, args) : extend(target, args)
       }
     }
     return target
   }
-  var assign = objectAssign
-  var extend = objectAssign
 
   /**
     * 字符串转JSON
@@ -853,6 +864,7 @@
     isFunction: isFunction,
     isBoolean: isBoolean,
     isString: isString,
+    isNumber: isNumber,
     isRegExp: isRegExp,
     isObject: isObject,
     isPlainObject: isPlainObject,
@@ -875,8 +887,8 @@
     includes: includes,
     contains: contains,
     objectAssign: objectAssign,
-    assign: assign,
-    extend: extend,
+    assign: objectAssign,
+    extend: objectAssign,
     stringToJson: stringToJson,
     jsonToString: jsonToString,
     objectKeys: objectKeys,
@@ -1301,12 +1313,26 @@
   }
   var max = arrayMax
 
+  /**
+    * 千分位分隔符、小数点
+    *
+    * @param {String/Number} num 数值
+    * @param {Object} 参数 {separator: 分隔符, fixed: 小数位数}
+    * @return {String}
+   */
+  function commafy (num, options) {
+    var opts = baseExports.objectAssign({ spaceNumber: 3, separator: ',', fixed: 0 }, options)
+    var result = parseFloat(('' + num).replace(/,/g, '') || 0).toFixed(opts.fixed).split('.')
+    return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
+  }
+
   var numberExports = {
     getRandom: getRandom,
     arrayMin: arrayMin,
     min: min,
     arrayMax: arrayMax,
-    max: max
+    max: max,
+    commafy: commafy
   }
 
   var escapeMap = {
