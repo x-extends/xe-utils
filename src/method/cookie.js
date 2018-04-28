@@ -2,6 +2,9 @@
 
 var baseExports = require('./base')
 
+var decode = decodeURIComponent
+var encode = encodeURIComponent
+
 /**
   * cookie操作函数
   * @param String/Array/Object name 键/数组/对象
@@ -16,6 +19,9 @@ var baseExports = require('./base')
 function cookie (name, value, options) {
   var inserts = []
   var isDoc = typeof document !== 'undefined'
+  if (this && this.$context) {
+    this.$context = null
+  }
   if (baseExports.isArray(name)) {
     inserts = name
   } else if (arguments.length > 1) {
@@ -29,7 +35,7 @@ function cookie (name, value, options) {
         var opts = baseExports.objectAssign({}, obj)
         var values = []
         if (opts.name) {
-          values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+          values.push(encode(opts.name) + '=' + encode(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
           if (opts.expires !== undefined) {
             opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
           }
@@ -47,7 +53,7 @@ function cookie (name, value, options) {
     if (isDoc && document.cookie) {
       baseExports.arrayEach(document.cookie.split('; '), function (val) {
         var keyIndex = val.indexOf('=')
-        result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
+        result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
       })
     }
     return arguments.length === 1 ? result[name] : result

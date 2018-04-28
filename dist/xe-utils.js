@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.20
+ * xe-utils.js v1.5.21
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.20'
+  XEUtils.version = '1.5.21'
 
   /**
     * 数组去重
@@ -928,6 +928,9 @@
     browse: browse
   }
 
+  var decode = decodeURIComponent
+  var encode = encodeURIComponent
+
   /**
     * cookie操作函数
     * @param String/Array/Object name 键/数组/对象
@@ -942,6 +945,9 @@
   function cookie (name, value, options) {
     var inserts = []
     var isDoc = typeof document !== 'undefined'
+    if (this && this.$context) {
+      this.$context = null
+    }
     if (baseExports.isArray(name)) {
       inserts = name
     } else if (arguments.length > 1) {
@@ -955,7 +961,7 @@
           var opts = baseExports.objectAssign({}, obj)
           var values = []
           if (opts.name) {
-            values.push(encodeURIComponent(opts.name) + '=' + encodeURIComponent(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+            values.push(encode(opts.name) + '=' + encode(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
             if (opts.expires !== undefined) {
               opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
             }
@@ -973,7 +979,7 @@
       if (isDoc && document.cookie) {
         baseExports.arrayEach(document.cookie.split('; '), function (val) {
           var keyIndex = val.indexOf('=')
-          result[decodeURIComponent(val.substring(0, keyIndex))] = decodeURIComponent(val.substring(keyIndex + 1) || '')
+          result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
         })
       }
       return arguments.length === 1 ? result[name] : result
@@ -1424,7 +1430,7 @@
    */
   XEUtils.mixin = function (methods) {
     methodExports.objectEach(methods, function (fn, name) {
-      XEUtils[name] = methodExports.isFunction(fn) ? function () {
+      XEUtils[name] = 'cookie'.indexOf(name) === -1 && methodExports.isFunction(fn) ? function () {
         var result = fn.apply(XEUtils.$context, arguments)
         XEUtils.$context = null
         return result
