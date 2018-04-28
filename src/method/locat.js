@@ -21,13 +21,16 @@ function parseParams (uri) {
 }
 
 function getLocatOrigin () {
-  return $locat.origin || ($locat.protocol + '//' + $locat.host)
+  return $locat ? ($locat.origin || ($locat.protocol + '//' + $locat.host)) : ''
 }
 
 function getBaseURL () {
-  var pathname = $locat.pathname
-  var lastIndex = baseExports.lastIndexOf(pathname, '/') + 1
-  return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
+  if ($locat) {
+    var pathname = $locat.pathname
+    var lastIndex = baseExports.lastIndexOf(pathname, '/') + 1
+    return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
+  }
+  return ''
 }
 
 function parseUrl (url) {
