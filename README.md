@@ -653,7 +653,14 @@ XEUtils.browse() // {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit:
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.locat() // {hash: '', host: '', hostname: '', href: '', protocol: '', port: '', origin: '', query: {...}, params: {...}, ...}
+XEUtils.locat() // {hash: '', hostname: '', protocol: '', port: '', origin: '', ...}
+```
+
+### parseUrl ( url ) 解析 URL 参数
+```shell
+import XEUtils from 'xe-utils'
+
+XEUtils.parseUrl('http://xuliangzhan.com:8080/demo/') // {hostname: 'xuliangzhan.com', protocol: 'http:', port: '8080', ...}
 ```
 
 ### getBaseURL ( ) 获取上下文路径

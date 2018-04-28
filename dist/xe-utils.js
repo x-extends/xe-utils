@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.18
+ * xe-utils.js v1.5.20
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.18'
+  XEUtils.version = '1.5.20'
 
   /**
     * 数组去重
@@ -1225,11 +1225,7 @@
     $locat = location
   }
 
-  function hash () {
-    return ($locat.hash.split('#')[1] || '').split('?')[0] || ''
-  }
-
-  function parse (uri) {
+  function parseParams (uri) {
     var result = {}
     var params = uri.split('?')[1] || ''
     if (params) {
@@ -1251,25 +1247,53 @@
     return getLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
   }
 
+  function parseUrl (url) {
+    var href = '' + url
+    if (href.indexOf('/') === 0) {
+      href = getLocatOrigin() + href
+    }
+    var searchs = href.replace(/#.*/, '').match(/(\?.*)/)
+    var parsed = {
+      href: href,
+      hash: '',
+      host: '',
+      hostname: '',
+      protocol: '',
+      port: '',
+      search: searchs ? searchs[1] : ''
+    }
+    parsed.path = href.replace(/^([a-z0-9.+-]*:)\/\//, function (text, protocol) {
+      parsed.protocol = protocol
+      return ''
+    }).replace(/^([a-z0-9.+-]*)(:\d+)?\//, function (text, hostname, port) {
+      var portText = port || ''
+      parsed.port = portText.replace(':', '')
+      parsed.hostname = hostname
+      parsed.host = hostname + portText
+      return '/'
+    }).replace(/(#.*)/, function (text, hash) {
+      parsed.hash = hash
+      return ''
+    })
+    var hashs = location.hash.match(/#((.*)\?|(.*))/)
+    parsed.pathname = parsed.path.replace(/(\?|#.*).*/, '')
+    parsed.origin = parsed.protocol + '//' + parsed.host
+    parsed.hashKey = hashs ? hashs[2] : ''
+    parsed.hashQuery = parseParams(parsed.hash)
+    parsed.searchQuery = parseParams(parsed.search)
+    return parsed
+  }
+
   /**
     * 获取地址栏信息
     * @return Object
     */
   function locat () {
-    return $locat ? {
-      port: $locat.port,
-      href: $locat.href,
-      host: $locat.host,
-      hostname: $locat.hostname,
-      protocol: $locat.protocol,
-      origin: getLocatOrigin(),
-      hash: hash(),
-      query: parse($locat.hash),
-      params: parse($locat.search)
-    } : {}
+    return $locat ? parseUrl($locat.href) : {}
   }
 
   var locatExports = {
+    parseUrl: parseUrl,
     getBaseURL: getBaseURL,
     locat: locat
   }
