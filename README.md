@@ -646,7 +646,8 @@ XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.browse() // {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: true}
+XEUtils.browse()
+// {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: true, isMobile: false, isNode: false, isPC: true}
 ```
 
 ### locat ( ) 获取地址栏信息
