@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.21
+ * xe-utils.js v1.5.22
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.21'
+  XEUtils.version = '1.5.22'
 
   /**
     * 数组去重
@@ -1304,7 +1304,7 @@
       parsed.hash = hash
       return ''
     })
-    var hashs = location.hash.match(/#((.*)\?|(.*))/)
+    var hashs = parsed.hash.match(/#((.*)\?|(.*))/)
     parsed.pathname = parsed.path.replace(/(\?|#.*).*/, '')
     parsed.origin = parsed.protocol + '//' + parsed.host
     parsed.hashKey = hashs ? hashs[2] : ''

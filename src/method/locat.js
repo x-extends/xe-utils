@@ -61,7 +61,7 @@ function parseUrl (url) {
     parsed.hash = hash
     return ''
   })
-  var hashs = location.hash.match(/#((.*)\?|(.*))/)
+  var hashs = parsed.hash.match(/#((.*)\?|(.*))/)
   parsed.pathname = parsed.path.replace(/(\?|#.*).*/, '')
   parsed.origin = parsed.protocol + '//' + parsed.host
   parsed.hashKey = hashs ? hashs[2] : ''
