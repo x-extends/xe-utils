@@ -629,6 +629,15 @@ XEUtils.commafy(1000000, {fixed: 2}) // 格式化金额 1,000,000.00
 XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0}) // 格式化银行卡 1234 1234 1234 1234
 ```
 
+### toNumber/stringToNumber ( num ) 转数值
+```shell
+import XEUtils from 'xe-utils'
+
+XEUtils.toNumber(123) // 123
+XEUtils.toNumber('12.3'}) // 12.3
+XEUtils.toNumber('abc') // 0
+```
+
 ### escape ( str ) 转义HTML字符串，替换&, <, >, ", ', `字符
 ```shell
 import XEUtils from 'xe-utils'

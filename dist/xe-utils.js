@@ -1379,13 +1379,27 @@
     return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
   }
 
+  /**
+   * 转数值
+   * @param { String/Number } str 数值
+   */
+  function stringToNumber (str) {
+    if (str) {
+      var num = parseFloat(str)
+      return isNaN(num) ? 0 : num
+    }
+    return 0
+  }
+
   var numberExports = {
     getRandom: getRandom,
     arrayMin: arrayMin,
     min: min,
     arrayMax: arrayMax,
     max: max,
-    commafy: commafy
+    commafy: commafy,
+    toNumber: stringToNumber,
+    stringToNumber: stringToNumber
   }
 
   var escapeMap = {
