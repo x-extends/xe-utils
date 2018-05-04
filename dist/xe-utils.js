@@ -988,7 +988,7 @@
             }
             baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
               if (opts[key] !== undefined) {
-                values.push(opts[key] && key === 'secure' ? 'secure' : (key + '=' + opts[key]))
+                values.push(opts[key] && key === 'secure' ? key : (key + '=' + opts[key]))
               }
             })
           }
