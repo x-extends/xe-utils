@@ -53,7 +53,7 @@
     * 数组按属性值升序
     *
     * @param {Array} arr 数组
-    * @param {Function, String} iteratee 方法或属性
+    * @param {Function/String} iteratee 方法或属性
     * @return {Array}
     */
   function arraySort (arr, iteratee, context) {
@@ -114,12 +114,13 @@
     */
   function arraySome (obj, iteratee, context) {
     if (obj) {
+      context = context || this
       if (baseExports.isArray(obj)) {
-        return obj.some(iteratee, context || this)
+        return obj.some(iteratee, context)
       } else {
         for (var index in obj) {
           if (obj.hasOwnProperty(index)) {
-            if (iteratee.call(context || this, obj[index], index, obj)) {
+            if (iteratee.call(context, obj[index], index, obj)) {
               return true
             }
           }
@@ -140,12 +141,13 @@
     */
   function arrayEvery (obj, iteratee, context) {
     if (obj) {
+      context = context || this
       if (baseExports.isArray(obj)) {
-        return obj.every(iteratee, context || this)
+        return obj.every(iteratee, context)
       } else {
         for (var index in obj) {
           if (obj.hasOwnProperty(index)) {
-            if (!iteratee.call(context || this, obj[index], index, obj)) {
+            if (!iteratee.call(context, obj[index], index, obj)) {
               return false
             }
           }
@@ -166,12 +168,13 @@
     */
   function arrayFilter (obj, iteratee, context) {
     if (obj) {
+      context = context || this
       if (baseExports.isArray(obj)) {
-        return obj.filter(iteratee, context || this)
+        return obj.filter(iteratee, context)
       } else {
         var result = {}
         baseExports.each(obj, function (val, key) {
-          if (iteratee.call(context || this, val, key, obj)) {
+          if (iteratee.call(context, val, key, obj)) {
             result[key] = val
           }
         })
@@ -192,12 +195,13 @@
     */
   function arrayFind (obj, iteratee, context) {
     if (obj) {
+      context = context || this
       if (baseExports.isArray(obj)) {
-        return obj.find(iteratee, context || this)
+        return obj.find(iteratee, context)
       } else {
         for (var key in obj) {
           if (obj.hasOwnProperty(key)) {
-            if (iteratee.call(context || this, obj[key], key, obj)) {
+            if (iteratee.call(context, obj[key], key, obj)) {
               return obj[key]
             }
           }
@@ -218,17 +222,39 @@
   function arrayMap (obj, iteratee, context) {
     var result = []
     if (obj) {
+      context = context || this
       if (baseExports.isArray(obj)) {
-        return obj.map(iteratee, context || this)
+        return obj.map(iteratee, context)
       } else {
         baseExports.each(obj, function () {
-          result.push(iteratee.apply(context || this, arguments))
+          result.push(iteratee.apply(context, arguments))
         })
       }
     }
     return result
   }
   var map = arrayMap
+
+  /**
+   * 求和函数，将数值相加
+    * @param {Array} array 数组
+    * @param {Function/String} iteratee 方法或属性
+    * @param {Object} context 上下文
+    * @return {Number}
+   */
+  function arraySum (array, iteratee, context) {
+    var result = 0
+    context = context || this
+    baseExports.each(array, iteratee ? baseExports.isFunction(iteratee) ? function () {
+      result += iteratee.apply(context, arguments)
+    } : function (val, key) {
+      result += val[iteratee]
+    } : function (val, key) {
+      result += val
+    })
+    return result
+  }
+  var sum = arraySum
 
   var arrayExports = {
     arrayUniq: arrayUniq,
@@ -250,7 +276,9 @@
     arrayFind: arrayFind,
     find: find,
     arrayMap: arrayMap,
-    map: map
+    map: map,
+    arraySum: arraySum,
+    sum: sum
   }
 
   var objectToString = Object.prototype.toString

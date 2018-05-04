@@ -388,8 +388,8 @@ arrayEach([11, 22, 33], (item, key) => {
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const result1 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}]], 'type') // {a: [{a: 'a'}], b: [{b: 'b'}]}
-const result2 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
+const result1 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{a: 'a'}], b: [{b: 'b'}]}
+const result2 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}], (item, key) => {
   return item.type
 }) // {a: [{a: 'a'}], b: [{b: 'b'}]}
 ```
@@ -398,7 +398,7 @@ const result2 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}]], (item, key) => {
 import XEUtils from 'xe-utils'
 
 const result = []
-XEUtils.objectMap([{type: 'a'}, {type: 'b'}]], (item, key) => {
+XEUtils.objectMap([{type: 'a'}, {type: 'b'}], (item, key) => {
   return item.type
 }) // {a: {type: 'a', b: {type: 'b'}}}
 ```
@@ -459,10 +459,10 @@ arraySample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
 ```JavaScript
 import XEUtils, { arraySome } from 'xe-utils'
 
-XEUtils.some([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.some([{a: 11}, {a: 22}], (item, key) => {
   return item.a === 55
 }) // false
-arraySome([{a: 11}, {a: 22}]], (item, key) => {
+arraySome([{a: 11}, {a: 22}], (item, key) => {
   return item.a === 11
 }) // true
 ```
@@ -470,7 +470,7 @@ arraySome([{a: 11}, {a: 22}]], (item, key) => {
 ```JavaScript
 import XEUtils, { arrayEvery } from 'xe-utils'
 
-XEUtils.every([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.every([{a: 11}, {a: 22}], (item, key) => {
   return item.a === 11
 }) // false
 arrayEvery([{a: 11}, {a: 22}]], (item, key) => {
@@ -481,10 +481,10 @@ arrayEvery([{a: 11}, {a: 22}]], (item, key) => {
 ```JavaScript
 import XEUtils, { arrayFilter } from 'xe-utils'
 
-XEUtils.filter([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.filter([{a: 11}, {a: 22}], (item, key) => {
   return item.a > 11
 }) // [{a: 22}]
-arrayFilter([{a: 11}, {a: 22}]], (item, key) => {
+arrayFilter([{a: 11}, {a: 22}], (item, key) => {
   return item.a > 11
 }) // [{a: 22}]
 ```
@@ -492,10 +492,10 @@ arrayFilter([{a: 11}, {a: 22}]], (item, key) => {
 ```JavaScript
 import XEUtils, { arrayFind } from 'xe-utils'
 
-XEUtils.find([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.find([{a: 11}, {a: 22}], (item, key) => {
   return item.a === 55
 }) // null
-arrayFind([{a: 11}, {a: 22}]], (item, key) => {
+arrayFind([{a: 11}, {a: 22}], (item, key) => {
   return item.a === 22
 }) // {a: 22}
 ```
@@ -503,12 +503,23 @@ arrayFind([{a: 11}, {a: 22}]], (item, key) => {
 ```JavaScript
 import XEUtils, { arrayMap } from 'xe-utils'
 
-XEUtils.map([{a: 11}, {a: 22}]], (item, key) => {
+XEUtils.map([{a: 11}, {a: 22}], (item, key) => {
   return item.a
 }) // [11, 22]
-arrayMap([{a: 11}, {a: 22}]], (item, key) => {
+arrayMap([{a: 11}, {a: 22}], (item, key) => {
   return item.a
 }) // [11, 22]
+```
+
+### sum/arraySum ( obj, iteratee, context ) 求和函数，将数值相加
+```JavaScript
+import XEUtils, { arraySum } from 'xe-utils'
+
+XEUtils.sum([22, 66, 88]) // 176
+XEUtils.sum([{aa: 11}, {aa: 22}, {aa: 66}], 'aa') // 99
+arraySum([{aa: 11}, {aa: 22}, {aa: 66}], (item, key) => {
+  return item.aa * 2
+}) // 198
 ```
 
 ### now/timestamp ( ) 返回时间戳
