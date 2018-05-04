@@ -960,6 +960,7 @@
     *   @param {Object} value: 值
     *   @param {String} path: 路径
     *   @param {String} domain: 作用域
+    *   @param {Boolean} secure: 安全的，如果设置为true只能用https协议
     *   @param {Number} expires: 几天后过期
     */
   function cookie (name, value, options) {

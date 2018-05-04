@@ -685,19 +685,23 @@ XEUtils.getBaseURL() // http://xuliangzhan.com/demo/
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.cookie() // 获取所有
-XEUtils.cookie('name') // 根据name获取
-XEUtils.cookie('name', null, {expires: -1}) // 删除
-XEUtils.cookie([{name: 'name', expires: -1}]) // 批量删除
-XEUtils.cookie('name', 'value') // 添加/修改
-XEUtils.cookie([{name: 'name', value: 'value'}]) // 批量添加/修改
-XEUtils.cookie('name', 'value', {domain: 'xxx.com', path: '/', expires: 7, secure: true}) // 添加并设置domain/path/secure/expires 7天后过期
-XEUtils.cookie([{name: 'name', value: 'value', domain: 'xxx.com', path: '/', expires: 7, secure: true}]) // 批量添加并设置domain/path/secure/expires 7天后过期
+// 获取所有
+XEUtils.cookie()
+// 根据name获取
+XEUtils.cookie('name')
+// 删除
+XEUtils.cookie('name', null, {expires: -1})
+// 添加/修改
+XEUtils.cookie('name', 'value')
+// 添加并设置domain/path/secure/expires 7天后过期
+XEUtils.cookie('name', 'value', {domain: 'xxx.com', path: '/', expires: 7, secure: true})
 
-XEUtils.cookie.getJSON() // 获取所有
-XEUtils.cookie.setItem('name', 'value') // 添加/修改
-XEUtils.cookie.getItem('name') // 根据name获取
-XEUtils.cookie.removeItem('name') // 删除
+// 批量删除
+XEUtils.cookie([{name: 'name', expires: -1}])
+// 批量添加/修改
+XEUtils.cookie([{name: 'name', value: 'value'}])
+// 批量添加并设置domain/path/secure/expires 7天后过期
+XEUtils.cookie([{name: 'name', value: 'value', domain: 'xxx.com', path: '/', expires: 7, secure: true}])
 ```
 
 ## 混合函数
