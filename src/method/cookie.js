@@ -14,6 +14,7 @@ var encode = encodeURIComponent
   *   @param {Object} value: 值
   *   @param {String} path: 路径
   *   @param {String} domain: 作用域
+  *   @param {Boolean} secure: 设置为安全的,只能用https协议
   *   @param {Number} expires: 几天后过期
   */
 function cookie (name, value, options) {
@@ -41,7 +42,7 @@ function cookie (name, value, options) {
           }
           baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
             if (opts[key] !== undefined) {
-              values.push(key === 'secure' ? 'secure' : (key + '=' + opts[key]))
+              values.push(opts[key] && key === 'secure' ? 'secure' : (key + '=' + opts[key]))
             }
           })
         }
