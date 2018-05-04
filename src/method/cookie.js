@@ -41,7 +41,7 @@ function cookie (name, value, options) {
           }
           baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
             if (opts[key] !== undefined) {
-              values.push(key + '=' + opts[key])
+              values.push(key === 'secure' ? 'secure' : (key + '=' + opts[key]))
             }
           })
         }
