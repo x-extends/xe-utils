@@ -580,13 +580,14 @@ XEUtils.getDaysOfMonth('2017-12-20') // 31
 XEUtils.getDaysOfMonth('2017-12-20', -1) // 30
 XEUtils.getDaysOfMonth('2017-12-20', 1) // 31
 ```
-### getDateDiff ( startDate, endDate, rules ) 返回两个日期之间差距
+### getDateDiff ( startDate, endDate, rules ) 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
 ```shell
 import XEUtils from 'xe-utils'
 
 XEUtils.getDateDiff('2017-11-20', '2017-12-21') // {MM: 1, dd: 1}
 XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1}
 XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1, ss: 30}
+XEUtils.getDateDiff('2018-01-01', '2017-12-21') // {done: false}
 const dateDiff = XEUtils.getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
 const content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
 ```

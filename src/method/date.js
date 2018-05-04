@@ -142,8 +142,8 @@ function getWhatMonth (date, month, mode) {
   * @return {Date}
   */
 function getWhatWeek (date, week, mode) {
-  var customDay = Number(/^[0-7]$/.test(mode) ? mode : 0)
   var currentDate = stringToDate(date)
+  var customDay = Number(/^[0-7]$/.test(mode) ? mode : currentDate.getDay())
   var currentDay = currentDate.getDay()
   var time = currentDate.getTime()
   var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * 86400000
@@ -178,7 +178,7 @@ function getDaysOfMonth (date, month) {
 var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
 
 /**
-  * 返回两个日期之间差距
+  * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
   *
   * @param {Date} startDate 开始日期
   * @param {Date} endDate 结束日期或当期日期
@@ -186,24 +186,25 @@ var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000]
   * @return {Object}
   */
 function getDateDiff (startDate, endDate, rules) {
-  var result = {}
+  var result = {done: false}
   var startTime = stringToDate(startDate).getTime()
   var endTime = endDate ? stringToDate(endDate).getTime() : new Date()
   if (startTime < endTime) {
     var item
     var diffTime = endTime - startTime
     var rule = rules && rules.length > 0 ? rules : dateDiffRules
+    result.done = true
     for (var index = 0, len = rule.length; index < len; index++) {
       item = rule[index]
       if (diffTime >= item[1]) {
         if (index === len - 1) {
-          if (diffTime) {
-            result[item[0]] = diffTime
-          }
+          result[item[0]] = diffTime || 0
         } else {
           result[item[0]] = Math.floor(diffTime / item[1])
           diffTime -= result[item[0]] * item[1]
         }
+      } else {
+        result[item[0]] = 0
       }
     }
   }

@@ -1165,8 +1165,8 @@
     * @return {Date}
     */
   function getWhatWeek (date, week, mode) {
-    var customDay = Number(/^[0-7]$/.test(mode) ? mode : 0)
     var currentDate = stringToDate(date)
+    var customDay = Number(/^[0-7]$/.test(mode) ? mode : currentDate.getDay())
     var currentDay = currentDate.getDay()
     var time = currentDate.getTime()
     var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * 86400000
@@ -1220,13 +1220,13 @@
         item = rule[index]
         if (diffTime >= item[1]) {
           if (index === len - 1) {
-            if (diffTime) {
-              result[item[0]] = diffTime
-            }
+            result[item[0]] = diffTime || 0
           } else {
             result[item[0]] = Math.floor(diffTime / item[1])
             diffTime -= result[item[0]] * item[1]
           }
+        } else {
+          result[item[0]] = 0
         }
       }
     }
