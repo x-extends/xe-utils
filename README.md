@@ -522,33 +522,50 @@ timestamp() // 1514096716800
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.stringToDate('2017-12-20') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('2017-12-20 10:10:30') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('2017-12-20') 
+// Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('2017-12-20 10:10:30') 
+// Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy') 
+// Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') 
+// Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') 
+// Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
 ### dateToString ( date, format ) 日期化为任意格式字符串(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.dateToString(1513735830000) // '2017-12-20 10:10:30'
-XEUtils.dateToString(new Date()) // '2017-12-20 10:10:30'
-XEUtils.dateToString('2017-12-20 10:10:30', 'MM/dd/yyyy') // '12/20/2017'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-12-20'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.S') // '2017-12-20 10:10:30.100'
-XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年12月20日 10时10分30秒100毫秒,星期三 第四季度'
+XEUtils.dateToString(1513735830000) 
+// '2017-12-20 10:10:30'
+XEUtils.dateToString(new Date()) 
+// '2017-12-20 10:10:30'
+XEUtils.dateToString('2017-12-20 10:10:30', 'MM/dd/yyyy') 
+// '12/20/2017'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd') 
+// '2017-12-20'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.S')
+// '2017-12-20 10:10:30.100'
+XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
+// '2017年12月20日 10时10分30秒100毫秒,星期三 第四季度'
 ```
 ### getWhatMonth ( date, mode, month ) 返回前几个月或后几个月的日期,可以指定月初或月末，默认当前
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.getWhatMonth(new Date(), -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.getWhatMonth(1513735830000, -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.getWhatMonth('2017-12-20', -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.getWhatMonth('2017-12-20', 1) // Sat Jan 20 2018 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.getWhatMonth('2017-12-20', -1, 'first') // Wed Nov 01 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.getWhatMonth('2017-12-20', 1, 'last') // Wed Jan 31 2018 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatMonth(new Date(), -1) 
+// Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatMonth(1513735830000, -1) 
+// Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatMonth('2017-12-20', -1) 
+// Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatMonth('2017-12-20', 1) 
+// Sat Jan 20 2018 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatMonth('2017-12-20', -1, 'first') 
+// Wed Nov 01 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatMonth('2017-12-20', 1, 'last') 
+// Wed Jan 31 2018 00:00:00 GMT+0800 (中国标准时间)
 ```
 ### getWhatWeek ( date, mode, week ) 返回前几周或后几周的日期,可以指定星期几，默认当前
 ```shell
@@ -625,9 +642,12 @@ arrayMax([{a: 11}, {a: 44}], (item) => {
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.commafy(1000000) // 千分位格式化 1,000,000
-XEUtils.commafy(1000000, {fixed: 2}) // 格式化金额 1,000,000.00
-XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0}) // 格式化银行卡 1234 1234 1234 1234
+// 千分位格式化 1,000,000
+XEUtils.commafy(1000000)
+// 格式化金额 1,000,000.00
+XEUtils.commafy(1000000, {fixed: 2})
+// 格式化银行卡 1234 1234 1234 1234
+XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0})
 ```
 
 ### toNumber/stringToNumber ( num ) 转数值
@@ -643,13 +663,17 @@ XEUtils.toNumber('abc') // 0
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.escape('<a>link</a>') // '&lt;a&gt;link&lt;/a&gt;'
+// 转义
+XEUtils.escape('<a>link</a>') 
+// '&lt;a&gt;link&lt;/a&gt;'
 ```
 ### unescape ( str ) 反转escape
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
+// 反转
+XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') 
+// '<a>link</a>'
 ```
 
 ### browse ( ) 获取浏览器内核
@@ -657,21 +681,44 @@ XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
 import XEUtils from 'xe-utils'
 
 XEUtils.browse()
-// {-khtml: false, -moz: false, -ms: fasle, -o: false, -webkit: true, isMobile: false, isNode: false, isPC: true}
+// {
+//   "-khtml": false, 
+//   "-moz": false, 
+//   "-ms": fasle, 
+//   "-o": false, 
+//   "-webkit": true, 
+//   isMobile: false, 
+//   isNode: false,
+//   isPC: true
+// }
 ```
 
 ### locat ( ) 获取地址栏信息
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.locat() // {hash: '', hostname: '', protocol: '', port: '', origin: '', ...}
+XEUtils.locat()
+// {
+//   hash: '', 
+//   hostname: '', 
+//   protocol: '', 
+//   port: '', 
+//   origin: '', 
+//   ...
+// }
 ```
 
 ### parseUrl ( url ) 解析 URL 参数
 ```shell
 import XEUtils from 'xe-utils'
 
-XEUtils.parseUrl('http://xuliangzhan.com:8080/demo/') // {hostname: 'xuliangzhan.com', protocol: 'http:', port: '8080', ...}
+XEUtils.parseUrl('http://xuliangzhan.com:8080/demo/')
+// {
+//   hostname: 'xuliangzhan.com', 
+//   protocol: 'http:', 
+//   port: '8080', 
+//   ...
+// }
 ```
 
 ### getBaseURL ( ) 获取上下文路径
