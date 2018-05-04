@@ -953,14 +953,14 @@
 
   /**
     * cookie操作函数
-    * @param String/Array/Object name 键/数组/对象
-    * @param String value 值
-    * @param Object options 参数
-    *   @param String name: 键
-    *   @param Object value: 值
-    *   @param String path: 路径
-    *   @param String domain: 作用域
-    *   @param Number expires: 几天后过期
+    * @param {String/Array/Object} name 键/数组/对象
+    * @param {String} value 值
+    * @param {Object} options 参数
+    *   @param {String} name: 键
+    *   @param {Object} value: 值
+    *   @param {String} path: 路径
+    *   @param {String} domain: 作用域
+    *   @param {Number} expires: 几天后过期
     */
   function cookie (name, value, options) {
     var inserts = []
@@ -1201,7 +1201,7 @@
   var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
 
   /**
-    * 返回两个日期之间差距
+    * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
     *
     * @param {Date} startDate 开始日期
     * @param {Date} endDate 结束日期或当期日期
@@ -1209,13 +1209,14 @@
     * @return {Object}
     */
   function getDateDiff (startDate, endDate, rules) {
-    var result = {}
+    var result = { done: false }
     var startTime = stringToDate(startDate).getTime()
     var endTime = endDate ? stringToDate(endDate).getTime() : new Date()
     if (startTime < endTime) {
       var item
       var diffTime = endTime - startTime
       var rule = rules && rules.length > 0 ? rules : dateDiffRules
+      result.done = true
       for (var index = 0, len = rule.length; index < len; index++) {
         item = rule[index]
         if (diffTime >= item[1]) {

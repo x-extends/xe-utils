@@ -7,14 +7,14 @@ var encode = encodeURIComponent
 
 /**
   * cookie操作函数
-  * @param String/Array/Object name 键/数组/对象
-  * @param String value 值
-  * @param Object options 参数
-  *   @param String name: 键
-  *   @param Object value: 值
-  *   @param String path: 路径
-  *   @param String domain: 作用域
-  *   @param Number expires: 几天后过期
+  * @param {String/Array/Object} name 键/数组/对象
+  * @param {String} value 值
+  * @param {Object} options 参数
+  *   @param {String} name: 键
+  *   @param {Object} value: 值
+  *   @param {String} path: 路径
+  *   @param {String} domain: 作用域
+  *   @param {Number} expires: 几天后过期
   */
 function cookie (name, value, options) {
   var inserts = []
