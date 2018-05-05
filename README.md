@@ -734,6 +734,14 @@ XEUtils.cookie('name')
 XEUtils.cookie('name', null, {expires: -1})
 // 添加/修改
 XEUtils.cookie('name', 'value')
+// 指定时间戳 10 秒后过期
+XEUtils.cookie('name', 'value', {expires: Date.now() + 10000})
+// 指定日期过期
+XEUtils.cookie('name', 'value', {expires: new Date(2018, 6, 1)})
+// 指定 UTCString 格式日期
+XEUtils.cookie('name', 'value', {expires: new Date(2018, 6, 1).toUTCString()})
+// 指定数值 1 天后过期
+XEUtils.cookie('name', 'value', {expires: 1})
 // 添加并设置domain/path/secure/expires 7天后过期
 XEUtils.cookie('name', 'value', {domain: 'xxx.com', path: '/', expires: 7, secure: true})
 
