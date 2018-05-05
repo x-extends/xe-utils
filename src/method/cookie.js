@@ -15,7 +15,7 @@ var encode = encodeURIComponent
   *   @param {String} path: 路径
   *   @param {String} domain: 作用域
   *   @param {Boolean} secure: 设置为安全的,只能用https协议
-  *   @param {Number} expires: 几天后过期
+  *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
   */
 function cookie (name, value, options) {
   var inserts = []
@@ -37,8 +37,20 @@ function cookie (name, value, options) {
         var values = []
         if (opts.name) {
           values.push(encode(opts.name) + '=' + encode(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
-          if (opts.expires !== undefined) {
-            opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
+          if (opts.expires) {
+            if (isNaN(opts.expires)) {
+              // UTCString
+              opts.expires = opts.expires
+            } else if (/^[0-9]{11,13}$/.test(opts.expires)) {
+              // now
+              opts.expires = new Date(opts.expires).toUTCString()
+            } else if (baseExports.isDate(opts.expires)) {
+              // Date
+              opts.expires = opts.expires.toUTCString()
+            } else {
+              // day
+              opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
+            }
           }
           baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
             if (opts[key] !== undefined) {
