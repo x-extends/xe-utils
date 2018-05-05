@@ -550,7 +550,16 @@ XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-12-20'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.S') // '2017-12-20 10:10:30.100'
 XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年12月20日 10时10分30秒100毫秒,星期三 第四季度'
 ```
-### getWhatMonth ( date, mode, month ) 返回前几个月或后几个月的日期,可以指定月初或月末，默认当前
+### getWhatYear ( date, year ) 返回前几年或后几年的日期
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.getWhatYear(new Date(), -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatYear(1513735830000, -1) // Tue Dec 20 2016 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.getWhatYear('2017-12-20', -1) // Tue Dec 20 2016 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatYear('2017-12-20', 1) // Thu Dec 20 2018 00:00:00 GMT+0800 (中国标准时间)
+```
+### getWhatMonth ( date, mode, month ) 返回前几月或后几月的日期,可以指定月初或月末，默认当前
 ```JavaScript
 import XEUtils from 'xe-utils'
 
@@ -735,14 +744,26 @@ XEUtils.cookie('name', null, {expires: -1})
 // 添加/修改
 XEUtils.cookie('name', 'value')
 // 指定时间戳 10 秒后过期
-XEUtils.cookie('name', 'value', {expires: Date.now() + 10000})
+XEUtils.cookie('name', 'value', {expires: '10s'})
+// 指定时间戳 1 分钟后过期
+XEUtils.cookie('name', 'value', {expires: '1m'})
+// 指定时间戳 1 小时后过期
+XEUtils.cookie('name', 'value', {expires: '1H'})
+// 指定时间戳 1 天后过期
+XEUtils.cookie('name', 'value', {expires: '1d'})
+// 指定时间戳 1 月后过期
+XEUtils.cookie('name', 'value', {expires: '1M'})
+// 指定时间戳 1 年后过期
+XEUtils.cookie('name', 'value', {expires: '1y'})
+// 指定时间戳后过期
+XEUtils.cookie('name', 'value', {expires: 1525541938031})
 // 指定日期过期
-XEUtils.cookie('name', 'value', {expires: new Date(2018, 6, 1)})
+XEUtils.cookie('name', 'value', {expires: new Date()})
 // 指定 UTCString 格式日期
-XEUtils.cookie('name', 'value', {expires: new Date(2018, 6, 1).toUTCString()})
+XEUtils.cookie('name', 'value', {expires: new Date().toUTCString()})
 // 指定数值 1 天后过期
 XEUtils.cookie('name', 'value', {expires: 1})
-// 添加并设置domain/path/secure/expires 7天后过期
+// 完整设置domain/path/secure/expires
 XEUtils.cookie('name', 'value', {domain: 'xxx.com', path: '/', expires: 7, secure: true})
 
 // 批量删除

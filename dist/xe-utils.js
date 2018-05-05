@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.25
+ * xe-utils.js v1.5.26
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.25'
+  XEUtils.version = '1.5.26'
 
   /**
     * 数组去重
@@ -979,6 +979,25 @@
   var decode = decodeURIComponent
   var encode = encodeURIComponent
 
+  function toCookieUnitTime (unit, expires) {
+    var num = parseFloat(expires)
+    var nowdate = new Date()
+    var time = nowdate.getTime()
+    switch (unit) {
+      case 'y': return dateExports.getWhatYear(nowdate, num).getTime()
+      case 'M': return dateExports.getWhatMonth(nowdate, num).getTime()
+      case 'd': return dateExports.getWhatDay(nowdate, num).getTime()
+      case 'H': return time + num * 60 * 60 * 1000
+      case 'm': return time + num * 60 * 1000
+      case 's': return time + num * 1000
+    }
+    return time
+  }
+
+  function toCookieUTCString (date) {
+    return (baseExports.isDate(date) ? date : new Date(date)).toUTCString()
+  }
+
   /**
     * cookie操作函数
     * @param {String/Array/Object} name 键/数组/对象
@@ -1010,20 +1029,20 @@
           var opts = baseExports.objectAssign({}, obj)
           var values = []
           if (opts.name) {
+            var expires = opts.expires
             values.push(encode(opts.name) + '=' + encode(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
-            if (opts.expires) {
-              if (isNaN(opts.expires)) {
-                // UTCString
-                opts.expires = opts.expires
-              } else if (/^[0-9]{11,13}$/.test(opts.expires)) {
-                // now
-                opts.expires = new Date(opts.expires).toUTCString()
-              } else if (baseExports.isDate(opts.expires)) {
-                // Date
-                opts.expires = opts.expires.toUTCString()
+            if (expires) {
+              if (isNaN(expires)) {
+                // UTCString || Unit
+                opts.expires = expires.replace(/^([0-9]+)(y|M|d|H|m|s)$/, function (text, num, unit) {
+                  return toCookieUTCString(toCookieUnitTime(unit, num))
+                })
+              } else if (/^[0-9]{11,13}$/.test(expires) || baseExports.isDate(expires)) {
+                // Date || now
+                opts.expires = toCookieUTCString(expires)
               } else {
                 // day
-                opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
+                opts.expires = toCookieUTCString(toCookieUnitTime('d', expires))
               }
             }
             baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
@@ -1048,8 +1067,8 @@
   }
 
   baseExports.objectAssign(cookie, {
-    setItem: function (name, key) {
-      cookie(name, key)
+    setItem: function (name, key, options) {
+      cookie(name, key, options)
     },
     getItem: function (name) {
       return cookie(name)
@@ -1163,11 +1182,27 @@
   }
 
   /**
-    * 返回前几个月或后几个月的日期
+    * 返回前几年或后几年的日期
     *
     * @param {Date} date 日期或数字
-    * @param {String} month 月(默认0)、前几个月(-数值)、后几个月(数值)
-    * @param {String} mode 获取哪天(默认null)、月初(first)、月末(last)
+    * @param {String} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
+    * @return {Date}
+    */
+  function getWhatYear (date, year) {
+    var currentDate = stringToDate(date)
+    if (year) {
+      var number = year && !isNaN(year) ? year : 0
+      currentDate.setFullYear(currentDate.getFullYear() + number)
+    }
+    return currentDate
+  }
+
+  /**
+    * 返回前几月或后几月的日期
+    *
+    * @param {Date} date 日期或数字
+    * @param {Number} month 月(默认当前月)、前几个月、后几个月
+    * @param {String} mode 获取哪天(默认当前天)、月初(first)、月末(last)
     * @return {Date}
     */
   function getWhatMonth (date, month, mode) {
@@ -1201,7 +1236,7 @@
     * 返回前几周或后几周的星期几
     *
     * @param {Date} date 日期
-    * @param {String} week 周(默认0)、前几周(-数值)、后几周(数值)
+    * @param {Number} week 周(默认当前周)、前几周、后几周
     * @param {Number} mode 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
     * @return {Date}
     */
@@ -1221,18 +1256,22 @@
     * 返回前几天或后几天的日期
     *
     * @param {Date} date 日期或数字
-    * @param {String} day 天(默认0)、前几天(-数值)、后几天(数值)
+    * @param {Number} day 天(默认当天)、前几天、后几天
     * @return {Date}
     */
   function getWhatDay (date, day) {
-    return new Date(stringToDate(date).getTime() + (day && !isNaN(day) ? day * 86400000 : 0))
+    var currentDate = stringToDate(date)
+    if (day) {
+      return new Date(currentDate.getTime() + (day && !isNaN(day) ? day * 86400000 : 0))
+    }
+    return currentDate
   }
 
   /**
     * 返回当前日期月份的天数
     *
     * @param {Date} date 日期或数字
-    * @param {String} month 月(默认0)、前几个月(-数值)、后几个月(数值)
+    * @param {Number} month 月(默认当月)、前几个月、后几个月
     * @return {Number}
     */
   function getDaysOfMonth (date, month) {
@@ -1280,6 +1319,7 @@
     now: now,
     stringToDate: stringToDate,
     dateToString: dateToString,
+    getWhatYear: getWhatYear,
     getWhatMonth: getWhatMonth,
     getWhatWeek: getWhatWeek,
     getWhatDay: getWhatDay,

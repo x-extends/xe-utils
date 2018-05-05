@@ -1,9 +1,29 @@
 'use strict'
 
 var baseExports = require('./base')
+var dateExports = require('./date')
 
 var decode = decodeURIComponent
 var encode = encodeURIComponent
+
+function toCookieUnitTime (unit, expires) {
+  var num = parseFloat(expires)
+  var nowdate = new Date()
+  var time = nowdate.getTime()
+  switch (unit) {
+    case 'y': return dateExports.getWhatYear(nowdate, num).getTime()
+    case 'M': return dateExports.getWhatMonth(nowdate, num).getTime()
+    case 'd': return dateExports.getWhatDay(nowdate, num).getTime()
+    case 'H': return time + num * 60 * 60 * 1000
+    case 'm': return time + num * 60 * 1000
+    case 's': return time + num * 1000
+  }
+  return time
+}
+
+function toCookieUTCString (date) {
+  return (baseExports.isDate(date) ? date : new Date(date)).toUTCString()
+}
 
 /**
   * cookie操作函数
@@ -36,20 +56,20 @@ function cookie (name, value, options) {
         var opts = baseExports.objectAssign({}, obj)
         var values = []
         if (opts.name) {
+          var expires = opts.expires
           values.push(encode(opts.name) + '=' + encode(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
-          if (opts.expires) {
-            if (isNaN(opts.expires)) {
-              // UTCString
-              opts.expires = opts.expires
-            } else if (/^[0-9]{11,13}$/.test(opts.expires)) {
-              // now
-              opts.expires = new Date(opts.expires).toUTCString()
-            } else if (baseExports.isDate(opts.expires)) {
-              // Date
-              opts.expires = opts.expires.toUTCString()
+          if (expires) {
+            if (isNaN(expires)) {
+              // UTCString || Unit
+              opts.expires = expires.replace(/^([0-9]+)(y|M|d|H|m|s)$/, function (text, num, unit) {
+                return toCookieUTCString(toCookieUnitTime(unit, num))
+              })
+            } else if (/^[0-9]{11,13}$/.test(expires) || baseExports.isDate(expires)) {
+              // Date || now
+              opts.expires = toCookieUTCString(expires)
             } else {
               // day
-              opts.expires = new Date(new Date().getTime() + parseFloat(opts.expires) * 86400000).toUTCString()
+              opts.expires = toCookieUTCString(toCookieUnitTime('d', expires))
             }
           }
           baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
@@ -74,8 +94,8 @@ function cookie (name, value, options) {
 }
 
 baseExports.objectAssign(cookie, {
-  setItem: function (name, key) {
-    cookie(name, key)
+  setItem: function (name, key, options) {
+    cookie(name, key, options)
   },
   getItem: function (name) {
     return cookie(name)
