@@ -743,17 +743,17 @@ XEUtils.cookie('name')
 XEUtils.cookie('name', null, {expires: -1})
 // 添加/修改
 XEUtils.cookie('name', 'value')
-// 指定时间戳 10 秒后过期
+// 指定 10 秒后过期
 XEUtils.cookie('name', 'value', {expires: '10s'})
-// 指定时间戳 1 分钟后过期
+// 指定 1 分钟后过期
 XEUtils.cookie('name', 'value', {expires: '1m'})
-// 指定时间戳 1 小时后过期
+// 指定 1 小时后过期
 XEUtils.cookie('name', 'value', {expires: '1H'})
-// 指定时间戳 1 天后过期
+// 指定 1 天后过期
 XEUtils.cookie('name', 'value', {expires: '1d'})
-// 指定时间戳 1 月后过期
+// 指定 1 月后过期
 XEUtils.cookie('name', 'value', {expires: '1M'})
-// 指定时间戳 1 年后过期
+// 指定 1 年后过期
 XEUtils.cookie('name', 'value', {expires: '1y'})
 // 指定时间戳后过期
 XEUtils.cookie('name', 'value', {expires: 1525541938031})
