@@ -7,21 +7,21 @@ var objectToString = Object.prototype.toString
 /**
   * 判断是否数组
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-var isArray = Array.isArray || function (val) {
-  return objectToString.call(val) === '[object Array]'
+var isArray = Array.isArray || function (obj) {
+  return objectToString.call(obj) === '[object Array]'
 }
 
 /**
   * 判断是否小数
   *
-  * @param {Number} val 数值
+  * @param {Number} obj 数值
   * @return {Boolean}
   */
-function isFloat (val) {
-  return val !== null && !isNaN(val) && !isInteger(val)
+function isFloat (obj) {
+  return obj !== null && !isNaN(obj) && !isInteger(obj)
 }
 
 /**
@@ -35,112 +35,112 @@ var isInteger = Number.isInteger
 /**
   * 判断是否方法
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isFunction (val) {
-  return typeof val === 'function'
+function isFunction (obj) {
+  return typeof obj === 'function'
 }
 
 /**
   * 判断是否Boolean对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isBoolean (val) {
-  return typeof val === 'boolean'
+function isBoolean (obj) {
+  return typeof obj === 'boolean'
 }
 
 /**
   * 判断是否String对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isString (val) {
-  return typeof val === 'string'
+function isString (obj) {
+  return typeof obj === 'string'
 }
 
 /**
   * 判断是否Number对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isNumber (val) {
-  return typeof val === 'number'
+function isNumber (obj) {
+  return typeof obj === 'number'
 }
 
 /**
   * 判断是否RegExp对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isRegExp (val) {
-  return objectToString.call(val) === '[object RegExp]'
+function isRegExp (obj) {
+  return objectToString.call(obj) === '[object RegExp]'
 }
 
 /**
   * 判断是否Object对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isObject (val) {
-  return typeof val === 'object'
+function isObject (obj) {
+  return typeof obj === 'object'
 }
 
 /**
   * 判断是否对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isPlainObject (val) {
-  return val ? val.constructor === Object : false
+function isPlainObject (obj) {
+  return obj ? obj.constructor === Object : false
 }
 
 /**
   * 判断是否Date对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isDate (val) {
-  return objectToString.call(val) === '[object Date]'
+function isDate (obj) {
+  return objectToString.call(obj) === '[object Date]'
 }
 
 /**
   * 判断是否Error对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isError (val) {
-  return objectToString.call(val) === '[object Error]'
+function isError (obj) {
+  return objectToString.call(obj) === '[object Error]'
 }
 
 /**
   * 判断是否TypeError对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isTypeError (val) {
-  return val ? val.constructor === TypeError : false
+function isTypeError (obj) {
+  return obj ? obj.constructor === TypeError : false
 }
 
 /**
   * 判断是否为空,包括空对象、空数值、空字符串
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isEmpty (val) {
-  if (val === 0 || !isNumber(val)) {
-    for (var key in val) {
+function isEmpty (obj) {
+  if (obj === 0 || !isNumber(obj)) {
+    for (var key in obj) {
       return false
     }
     return true
@@ -151,71 +151,111 @@ function isEmpty (val) {
 /**
   * 判断是否为Null
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isNull (val) {
-  return val === null
+function isNull (obj) {
+  return obj === null
 }
 
 /**
   * 判断是否Symbol对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isSymbol (val) {
-  return typeof Symbol !== 'undefined' && Symbol.isSymbol ? Symbol.isSymbol(val) : (typeof val === 'symbol')
+function isSymbol (obj) {
+  return typeof Symbol !== 'undefined' && Symbol.isSymbol ? Symbol.isSymbol(obj) : (typeof obj === 'symbol')
 }
 
 /**
   * 判断是否Arguments对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isArguments (val) {
-  return objectToString.call(val) === '[object Arguments]'
+function isArguments (obj) {
+  return objectToString.call(obj) === '[object Arguments]'
 }
 
 /**
   * 判断是否Element对象
   *
-  * @param {Number} num 数值
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isElement (val) {
-  return val && isString(val.nodeName) && isNumber(val.nodeType)
+function isElement (obj) {
+  return obj && isString(obj.nodeName) && isNumber(obj.nodeType)
 }
 
 /**
   * 判断是否Document对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isDocument (val) {
-  return val && val.nodeType === 9 && typeof document !== 'undefined'
+function isDocument (obj) {
+  return obj && obj.nodeType === 9 && typeof document !== 'undefined'
 }
 
 /**
   * 判断是否Window对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isWindow (val) {
-  return val && val === val.window && typeof window !== 'undefined'
+function isWindow (obj) {
+  return obj && obj === obj.window && typeof window !== 'undefined'
 }
 
 /**
   * 判断是否FormData对象
   *
-  * @param {Object} val 对象
+  * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isFormData (val) {
-  return typeof FormData !== 'undefined' && val instanceof FormData
+function isFormData (obj) {
+  return typeof FormData !== 'undefined' && obj instanceof FormData
+}
+
+/**
+  * 判断是否Map对象
+  *
+  * @param {Object} obj 对象
+  * @return {Boolean}
+ */
+function isMap (obj) {
+  return typeof Map !== 'undefined' && obj instanceof Map
+}
+
+/**
+  * 判断是否WeakMap对象
+  *
+  * @param {Object} obj 对象
+  * @return {Boolean}
+ */
+function isWeakMap (obj) {
+  return typeof WeakMap !== 'undefined' && obj instanceof WeakMap
+}
+
+/**
+  * 判断是否Set对象
+  *
+  * @param {Object} obj 对象
+  * @return {Boolean}
+ */
+function isSet (obj) {
+  return typeof Set !== 'undefined' && obj instanceof Set
+}
+
+/**
+  * 判断是否WeakSet对象
+  *
+  * @param {Object} obj 对象
+  * @return {Boolean}
+ */
+function isWeakSet (obj) {
+  return typeof WeakSet !== 'undefined' && obj instanceof WeakSet
 }
 
 /**
@@ -628,6 +668,10 @@ var baseExports = {
   isDocument: isDocument,
   isWindow: isWindow,
   isFormData: isFormData,
+  isMap: isMap,
+  isWeakMap: isWeakMap,
+  isSet: isSet,
+  isWeakSet: isWeakSet,
   isLeapYear: isLeapYear,
   getType: getType,
   uniqueId: uniqueId,

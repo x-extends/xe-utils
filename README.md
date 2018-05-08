@@ -241,10 +241,38 @@ XEUtils.isWindow(window) // true
 ```
 ### isFormData (val) 判断是否FormData对象
 ```JavaScript
-import { isFormData } from 'xe-utils'
+import XEUtils from 'xe-utils'
 
-isFormData({}) // false
-isFormData(new FormData()) // true
+XEUtils.isFormData({}) // false
+XEUtils.isFormData(new FormData()) // true
+```
+### isMap (val) 判断是否Map对象
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.isMap({}) // false
+XEUtils.isMap(new Map()) // true
+```
+### isWeakMap (val) 判断是否WeakMap对象
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.isWeakMap({}) // false
+XEUtils.isWeakMap(new WeakMap()) // true
+```
+### isSet (val) 判断是否Set对象
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.isSet({}) // false
+XEUtils.isSet(new Set()) // true
+```
+### isWeakSet (val) 判断是否WeakSet对象
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.isWeakSet({}) // false
+XEUtils.isWeakSet(new WeakSet()) // true
 ```
 ### isLeapYear (date) 判断是否闰年
 ```JavaScript
@@ -517,9 +545,15 @@ import XEUtils, { arraySum } from 'xe-utils'
 
 XEUtils.sum([22, 66, 88]) // 176
 XEUtils.sum([{aa: 11}, {aa: 22}, {aa: 66}], 'aa') // 99
-arraySum([{aa: 11}, {aa: 22}, {aa: 66}], (item, key) => {
-  return item.aa * 2
-}) // 198
+arraySum([{aa: 11}, {aa: 22}, {aa: 66}], (item, key) => item.aa * 2) // 198
+```
+
+### reduce/arrayReduce ( array, callback, initialValue ) 接收一个函数作为累加器（accumulator），数组中的每个值（从左到右）开始合并，最终为一个值
+```JavaScript
+import XEUtils, { arrayReduce } from 'xe-utils'
+
+XEUtils.reduce([22, 66, 88], (previous, item, index) => previous + item) // 176
+arrayReduce([22, 66, 88], (previous, item, index) => (previous + item) * 2) // 528
 ```
 
 ### now/timestamp ( ) 返回时间戳
@@ -655,28 +689,112 @@ XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0})
 
 ### toNumber/stringToNumber ( num ) 转数值
 ```JavaScript
-import XEUtils from 'xe-utils'
+import XEUtils, { stringToNumber } from 'xe-utils'
 
 XEUtils.toNumber(123) // 123
 XEUtils.toNumber('12.3'}) // 12.3
-XEUtils.toNumber('abc') // 0
+stringToNumber('abc') // 0
+```
+
+### toInteger/stringToInteger ( num ) 转整数
+```JavaScript
+import XEUtils, { stringToInteger } from 'xe-utils'
+
+XEUtils.toInteger(123) // 123
+XEUtils.toInteger('12.3'}) // 12
+stringToInteger('abc') // 0
+```
+
+### trim/stringTrim ( str ) 去除字符串左右两边的空格
+```JavaScript
+import XEUtils, { stringTrim } from 'xe-utils'
+
+XEUtils.stringTrim(' abc ') // 'abc'
+stringTrim(' abc ') // 'abc'
+```
+
+### trimLeft/stringTrimLeft ( str ) 去除字符串左边的空格
+```JavaScript
+import XEUtils, { stringTrimLeft } from 'xe-utils'
+
+XEUtils.stringTrimLeft(' abc ') // 'abc '
+stringTrimLeft(' abc ')  // 'abc '
+```
+
+### trimRight/stringTrimRight ( str ) 去除字符串右边的空格
+```JavaScript
+import XEUtils, { stringTrimRight } from 'xe-utils'
+
+XEUtils.stringTrimRight(' abc ') // ' aa'
+stringTrimRight(' abc ') // ' aa'
 ```
 
 ### escape ( str ) 转义HTML字符串，替换&, <, >, ", ', `字符
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-// 转义
-XEUtils.escape('<a>link</a>') 
-// '&lt;a&gt;link&lt;/a&gt;'
+XEUtils.escape('<a>link</a>') // '&lt;a&gt;link&lt;/a&gt;'
 ```
+
 ### unescape ( str ) 反转escape
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-// 反转
-XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') 
-// '<a>link</a>'
+XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
+```
+
+### camelCase ( str ) 将字符串转成驼峰字符串
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.camelCase('projectName') // 'project-name'
+```
+
+### kebabCase ( str ) 将带驼峰字符串转成字符串
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.kebabCase('project-name') // 'projectName'
+```
+
+### stringRepeat ( str, count ) 将字符串重复 n次
+```JavaScript
+import XEUtils, { stringRepeat } from 'xe-utils'
+
+XEUtils.repeat('a', 5) // aaaaa
+stringRepeat('a', 5) // aaaaa
+```
+
+### padStart/stringPadStart ( str, targetLength, padString ) 用指定字符从前面开始补全字符串
+```JavaScript
+import XEUtils, { stringPadStart } from 'xe-utils'
+
+XEUtils.padStart('a', 5, 'b') // bbbba
+stringPadStart('a', 5, 'b') // bbbba
+```
+
+### padEnd/stringPadEnd ( str, targetLength, padString ) 用指定字符从后面开始补全字符串
+```JavaScript
+import XEUtils, { stringPadEnd } from 'xe-utils'
+
+XEUtils.padEnd('a', 5, 'b') // abbbb
+stringPadEnd('a', 5, 'b') // abbbb
+```
+
+### startsWith/stringStartsWith ( str, val, startIndex ) 判断字符串是否在源字符串的头部
+```JavaScript
+import XEUtils, { stringStartsWith } from 'xe-utils'
+
+XEUtils.startsWith('abc', 'b') // false
+stringStartsWith('abc', 'a') // true
+```
+
+### endsWith/stringEndsWith ( str, val, startIndex ) 判断字符串是否在源字符串的尾部
+```JavaScript
+import XEUtils, { stringEndsWith } from 'xe-utils'
+
+XEUtils.endsWith('abc', 5, 'a') // false
+stringEndsWith('abc', 5, 'c') // true
 ```
 
 ### browse ( ) 获取浏览器内核

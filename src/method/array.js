@@ -224,12 +224,13 @@ function arrayMap (obj, iteratee, context) {
 var map = arrayMap
 
 /**
- * 求和函数，将数值相加
+  * 求和函数，将数值相加
+  *
   * @param {Array} array 数组
   * @param {Function/String} iteratee 方法或属性
   * @param {Object} context 上下文
   * @return {Number}
- */
+  */
 function arraySum (array, iteratee, context) {
   var result = 0
   context = context || this
@@ -243,6 +244,28 @@ function arraySum (array, iteratee, context) {
   return result
 }
 var sum = arraySum
+
+/**
+  * 接收一个函数作为累加器（accumulator），数组中的每个值（从左到右）开始合并，最终为一个值。
+  *
+  * @param {Array} array 数组
+  * @param {Function} callback 方法
+  * @param {Object} initialValue 初始值
+  * @return {Number}
+  */
+function arrayReduce (array, callback, initialValue) {
+  var previous = initialValue
+  var index = 0
+  var len = array.length
+  if (typeof initialValue === 'undefined') {
+    previous = array[0]
+    index = 1
+  }
+  for (; index < len; index++) {
+    previous = callback.call(global, previous, array[index], index, array)
+  }
+  return previous
+}
 
 var arrayExports = {
   arrayUniq: arrayUniq,
@@ -266,7 +289,9 @@ var arrayExports = {
   arrayMap: arrayMap,
   map: map,
   arraySum: arraySum,
-  sum: sum
+  sum: sum,
+  arrayReduce: arrayReduce,
+  reduce: arrayReduce
 }
 
 module.exports = arrayExports

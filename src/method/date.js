@@ -34,7 +34,7 @@ function stringToDate (str, format) {
     if (baseExports.isDate(str)) {
       return str
     }
-    if (!isNaN(str)) {
+    if (/^[0-9]{11,13}$/.test(str)) {
       return new Date(str)
     }
     if (baseExports.isString(str)) {

@@ -58,6 +58,7 @@ function commafy (num, options) {
 /**
  * 转数值
  * @param { String/Number } str 数值
+ * @return {Number}
  */
 function stringToNumber (str) {
   if (str) {
@@ -65,6 +66,15 @@ function stringToNumber (str) {
     return isNaN(num) ? 0 : num
   }
   return 0
+}
+
+/**
+ * 转整数
+ * @param { String/Number } str 数值
+ * @return {Number}
+ */
+function stringToInteger (str) {
+  return parseInt(stringToNumber(str))
 }
 
 var numberExports = {
@@ -75,7 +85,9 @@ var numberExports = {
   max: max,
   commafy: commafy,
   toNumber: stringToNumber,
-  stringToNumber: stringToNumber
+  stringToNumber: stringToNumber,
+  toInteger: stringToInteger,
+  stringToInteger: stringToInteger
 }
 
 module.exports = numberExports

@@ -2,6 +2,36 @@
 
 var baseExports = require('./base')
 
+/**
+  * 去除字符串左右两边的空格
+  *
+  * @param {String} str 字符串
+  * @return {String}
+  */
+function stringTrim (str) {
+  return str && str.trim ? str.trim() : stringTrimRight(stringTrimLeft(str))
+}
+
+/**
+  * 去除字符串左边的空格
+  *
+  * @param {String} str 字符串
+  * @return {String}
+  */
+function stringTrimLeft (str) {
+  return str && str.trimLeft ? str.trimLeft() : ('' + str).replace(/^[\s\uFEFF\xA0]+/g, '')
+}
+
+/**
+  * 去除字符串右边的空格
+  *
+  * @param {String} str 字符串
+  * @return {String}
+  */
+function stringTrimRight (str) {
+  return str && str.trimRight ? str.trimRight() : ('' + str).replace(/[\s\uFEFF\xA0]+$/g, '')
+}
+
 var escapeMap = {
   '&': '&amp;',
   '<': '&lt;',
@@ -19,7 +49,7 @@ baseExports.arrayEach(baseExports.objectKeys(escapeMap), function (key) {
 function formatEscaper (dataMap) {
   var replaceRegexp = new RegExp('(?:' + baseExports.objectKeys(dataMap).join('|') + ')', 'g')
   return function (str) {
-    return String(str || '').replace(replaceRegexp, function (match) {
+    return ('' + str).replace(replaceRegexp, function (match) {
       return dataMap[match]
     })
   }
@@ -41,9 +71,137 @@ var escape = formatEscaper(escapeMap)
   */
 var unescape = formatEscaper(unescapeMap)
 
+/**
+  * 将带字符串转成驼峰字符串,例如 project-name => projectName
+  *
+  * @param {String} str 字符串
+  * @return {String}
+  */
+function camelCase (str) {
+  return ('' + str).replace(/(-[a-zA-Z])/g, function (text, u) { return u.substring(1).toLocaleUpperCase() })
+}
+
+/**
+  * 将带驼峰字符串转成字符串,例如 projectName => project-name
+  *
+  * @param {String} str 字符串
+  * @return {String}
+  */
+function kebabCase (str) {
+  return ('' + str).replace(/([A-Z])/g, function (text, u) { return '-' + u.toLowerCase() })
+}
+
+/**
+  * 将字符串重复 n次
+  *
+  * @param {String} str 字符串
+  * @param {Number} count 次数
+  * @return {String}
+  */
+function stringRepeat (str, count) {
+  var rest = '' + str
+  if (str.repeat) {
+    return str.repeat(count)
+  }
+  var list = isNaN(count) ? [] : new Array(parseInt(count))
+  return list.join(rest) + (list.length > 0 ? rest : '')
+}
+
+/**
+  * 用指定字符从前面开始补全字符串
+  *
+  * @param {String} str 字符串
+  * @param {Number} targetLength 结果长度
+  * @param {Number} padString 补全字符
+  * @return {String}
+  */
+function stringPadStart (str, targetLength, padString) {
+  var rest = '' + str
+  if (rest.padStart) {
+    return rest.padStart(targetLength, padString)
+  }
+  if ((targetLength >> 0) > rest.length) {
+    padString = String(padString || ' ')
+    targetLength -= rest.length
+    if (targetLength > padString.length) {
+      padString += stringRepeat(padString, targetLength / padString.length)
+    }
+    return padString.slice(0, targetLength) + rest
+  }
+  return rest
+}
+
+/**
+  * 用指定字符从后面开始补全字符串
+  *
+  * @param {String} str 字符串
+  * @param {Number} targetLength 结果长度
+  * @param {Number} padString 补全字符
+  * @return {String}
+  */
+function stringPadEnd (str, targetLength, padString) {
+  var rest = '' + str
+  if (rest.padEnd) {
+    return rest.padEnd(targetLength, padString)
+  }
+  if ((targetLength >> 0) > rest.length) {
+    padString = String(padString || ' ')
+    targetLength -= rest.length
+    if (targetLength > padString.length) {
+      padString += stringRepeat(padString, targetLength / padString.length)
+    }
+    return rest + padString.slice(0, targetLength)
+  }
+  return rest
+}
+
+/**
+  * 判断字符串是否在源字符串的头部
+  *
+  * @param {String} str 字符串
+  * @param {String/Number} val 值
+  * @param {Number} startIndex 开始索引
+  * @return {String}
+  */
+function stringStartsWith (str, val, startIndex) {
+  var rest = '' + str
+  return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
+}
+
+/**
+  * 判断字符串是否在源字符串的尾部
+  *
+  * @param {String} str 字符串
+  * @param {String/Number} val 值
+  * @param {Number} startIndex 开始索引
+  * @return {String}
+  */
+function stringEndsWith (str, val, startIndex) {
+  var rest = '' + str
+  return arguments.length === 1 ? rest.indexOf(val) === rest.length - 1 : rest.substring(0, startIndex).indexOf(val) === startIndex - 1
+}
+
 var stringExports = {
+  trim: stringTrim,
+  stringTrim: stringTrim,
+  trimLeft: stringTrimLeft,
+  stringTrimLeft: stringTrimLeft,
+  trimRight: stringTrimRight,
+  stringTrimRight: stringTrimRight,
   escape: escape,
-  unescape: unescape
+  unescape: unescape,
+  camelCase: camelCase,
+  kebabCase: kebabCase,
+  repeat: stringRepeat,
+  stringRepeat: stringRepeat,
+  padStart: stringPadStart,
+  stringPadStart: stringPadStart,
+  padEnd: stringPadEnd,
+  stringPadEnd: stringPadEnd,
+  startsWith: stringStartsWith,
+  stringStartsWith: stringStartsWith,
+  endsWith: stringEndsWith,
+  stringEndsWith: stringEndsWith
 }
 
 module.exports = stringExports

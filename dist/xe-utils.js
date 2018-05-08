@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.26
+ * xe-utils.js v1.5.27
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.26'
+  XEUtils.version = '1.5.27'
 
   /**
     * 数组去重
@@ -236,12 +236,13 @@
   var map = arrayMap
 
   /**
-   * 求和函数，将数值相加
+    * 求和函数，将数值相加
+    *
     * @param {Array} array 数组
     * @param {Function/String} iteratee 方法或属性
     * @param {Object} context 上下文
     * @return {Number}
-   */
+    */
   function arraySum (array, iteratee, context) {
     var result = 0
     context = context || this
@@ -255,6 +256,28 @@
     return result
   }
   var sum = arraySum
+
+  /**
+    * 接收一个函数作为累加器（accumulator），数组中的每个值（从左到右）开始合并，最终为一个值。
+    *
+    * @param {Array} array 数组
+    * @param {Function} callback 方法
+    * @param {Object} initialValue 初始值
+    * @return {Number}
+    */
+  function arrayReduce (array, callback, initialValue) {
+    var previous = initialValue
+    var index = 0
+    var len = array.length
+    if (typeof initialValue === 'undefined') {
+      previous = array[0]
+      index = 1
+    }
+    for (; index < len; index++) {
+      previous = callback.call(global, previous, array[index], index, array)
+    }
+    return previous
+  }
 
   var arrayExports = {
     arrayUniq: arrayUniq,
@@ -278,7 +301,9 @@
     arrayMap: arrayMap,
     map: map,
     arraySum: arraySum,
-    sum: sum
+    sum: sum,
+    arrayReduce: arrayReduce,
+    reduce: arrayReduce
   }
 
   var objectToString = Object.prototype.toString
@@ -286,21 +311,21 @@
   /**
     * 判断是否数组
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  var isArray = Array.isArray || function (val) {
-    return objectToString.call(val) === '[object Array]'
+  var isArray = Array.isArray || function (obj) {
+    return objectToString.call(obj) === '[object Array]'
   }
 
   /**
     * 判断是否小数
     *
-    * @param {Number} val 数值
+    * @param {Number} obj 数值
     * @return {Boolean}
     */
-  function isFloat (val) {
-    return val !== null && !isNaN(val) && !isInteger(val)
+  function isFloat (obj) {
+    return obj !== null && !isNaN(obj) && !isInteger(obj)
   }
 
   /**
@@ -314,112 +339,112 @@
   /**
     * 判断是否方法
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isFunction (val) {
-    return typeof val === 'function'
+  function isFunction (obj) {
+    return typeof obj === 'function'
   }
 
   /**
     * 判断是否Boolean对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isBoolean (val) {
-    return typeof val === 'boolean'
+  function isBoolean (obj) {
+    return typeof obj === 'boolean'
   }
 
   /**
     * 判断是否String对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isString (val) {
-    return typeof val === 'string'
+  function isString (obj) {
+    return typeof obj === 'string'
   }
 
   /**
     * 判断是否Number对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isNumber (val) {
-    return typeof val === 'number'
+  function isNumber (obj) {
+    return typeof obj === 'number'
   }
 
   /**
     * 判断是否RegExp对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isRegExp (val) {
-    return objectToString.call(val) === '[object RegExp]'
+  function isRegExp (obj) {
+    return objectToString.call(obj) === '[object RegExp]'
   }
 
   /**
     * 判断是否Object对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isObject (val) {
-    return typeof val === 'object'
+  function isObject (obj) {
+    return typeof obj === 'object'
   }
 
   /**
     * 判断是否对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isPlainObject (val) {
-    return val ? val.constructor === Object : false
+  function isPlainObject (obj) {
+    return obj ? obj.constructor === Object : false
   }
 
   /**
     * 判断是否Date对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isDate (val) {
-    return objectToString.call(val) === '[object Date]'
+  function isDate (obj) {
+    return objectToString.call(obj) === '[object Date]'
   }
 
   /**
     * 判断是否Error对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isError (val) {
-    return objectToString.call(val) === '[object Error]'
+  function isError (obj) {
+    return objectToString.call(obj) === '[object Error]'
   }
 
   /**
     * 判断是否TypeError对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isTypeError (val) {
-    return val ? val.constructor === TypeError : false
+  function isTypeError (obj) {
+    return obj ? obj.constructor === TypeError : false
   }
 
   /**
     * 判断是否为空,包括空对象、空数值、空字符串
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isEmpty (val) {
-    if (val === 0 || !isNumber(val)) {
-      for (var key in val) {
+  function isEmpty (obj) {
+    if (obj === 0 || !isNumber(obj)) {
+      for (var key in obj) {
         return false
       }
       return true
@@ -430,71 +455,111 @@
   /**
     * 判断是否为Null
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isNull (val) {
-    return val === null
+  function isNull (obj) {
+    return obj === null
   }
 
   /**
     * 判断是否Symbol对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isSymbol (val) {
-    return typeof Symbol !== 'undefined' && Symbol.isSymbol ? Symbol.isSymbol(val) : (typeof val === 'symbol')
+  function isSymbol (obj) {
+    return typeof Symbol !== 'undefined' && Symbol.isSymbol ? Symbol.isSymbol(obj) : (typeof obj === 'symbol')
   }
 
   /**
     * 判断是否Arguments对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isArguments (val) {
-    return objectToString.call(val) === '[object Arguments]'
+  function isArguments (obj) {
+    return objectToString.call(obj) === '[object Arguments]'
   }
 
   /**
     * 判断是否Element对象
     *
-    * @param {Number} num 数值
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isElement (val) {
-    return val && isString(val.nodeName) && isNumber(val.nodeType)
+  function isElement (obj) {
+    return obj && isString(obj.nodeName) && isNumber(obj.nodeType)
   }
 
   /**
     * 判断是否Document对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isDocument (val) {
-    return val && val.nodeType === 9 && typeof document !== 'undefined'
+  function isDocument (obj) {
+    return obj && obj.nodeType === 9 && typeof document !== 'undefined'
   }
 
   /**
     * 判断是否Window对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isWindow (val) {
-    return val && val === val.window && typeof window !== 'undefined'
+  function isWindow (obj) {
+    return obj && obj === obj.window && typeof window !== 'undefined'
   }
 
   /**
     * 判断是否FormData对象
     *
-    * @param {Object} val 对象
+    * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isFormData (val) {
-    return typeof FormData !== 'undefined' && val instanceof FormData
+  function isFormData (obj) {
+    return typeof FormData !== 'undefined' && obj instanceof FormData
+  }
+
+  /**
+    * 判断是否Map对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
+  function isMap (obj) {
+    return typeof Map !== 'undefined' && obj instanceof Map
+  }
+
+  /**
+    * 判断是否WeakMap对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
+  function isWeakMap (obj) {
+    return typeof WeakMap !== 'undefined' && obj instanceof WeakMap
+  }
+
+  /**
+    * 判断是否Set对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
+  function isSet (obj) {
+    return typeof Set !== 'undefined' && obj instanceof Set
+  }
+
+  /**
+    * 判断是否WeakSet对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
+  function isWeakSet (obj) {
+    return typeof WeakSet !== 'undefined' && obj instanceof WeakSet
   }
 
   /**
@@ -907,6 +972,10 @@
     isDocument: isDocument,
     isWindow: isWindow,
     isFormData: isFormData,
+    isMap: isMap,
+    isWeakMap: isWeakMap,
+    isSet: isSet,
+    isWeakSet: isWeakSet,
     isLeapYear: isLeapYear,
     getType: getType,
     uniqueId: uniqueId,
@@ -1117,7 +1186,7 @@
       if (baseExports.isDate(str)) {
         return str
       }
-      if (!isNaN(str)) {
+      if (/^[0-9]{11,13}$/.test(str)) {
         return new Date(str)
       }
       if (baseExports.isString(str)) {
@@ -1464,6 +1533,7 @@
   /**
    * 转数值
    * @param { String/Number } str 数值
+   * @return {Number}
    */
   function stringToNumber (str) {
     if (str) {
@@ -1471,6 +1541,15 @@
       return isNaN(num) ? 0 : num
     }
     return 0
+  }
+
+  /**
+   * 转整数
+   * @param { String/Number } str 数值
+   * @return {Number}
+   */
+  function stringToInteger (str) {
+    return parseInt(stringToNumber(str))
   }
 
   var numberExports = {
@@ -1481,7 +1560,39 @@
     max: max,
     commafy: commafy,
     toNumber: stringToNumber,
-    stringToNumber: stringToNumber
+    stringToNumber: stringToNumber,
+    toInteger: stringToInteger,
+    stringToInteger: stringToInteger
+  }
+
+  /**
+    * 去除字符串左右两边的空格
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
+  function stringTrim (str) {
+    return str && str.trim ? str.trim() : stringTrimRight(stringTrimLeft(str))
+  }
+
+  /**
+    * 去除字符串左边的空格
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
+  function stringTrimLeft (str) {
+    return str && str.trimLeft ? str.trimLeft() : ('' + str).replace(/^[\s\uFEFF\xA0]+/g, '')
+  }
+
+  /**
+    * 去除字符串右边的空格
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
+  function stringTrimRight (str) {
+    return str && str.trimRight ? str.trimRight() : ('' + str).replace(/[\s\uFEFF\xA0]+$/g, '')
   }
 
   var escapeMap = {
@@ -1501,7 +1612,7 @@
   function formatEscaper (dataMap) {
     var replaceRegexp = new RegExp('(?:' + baseExports.objectKeys(dataMap).join('|') + ')', 'g')
     return function (str) {
-      return String(str || '').replace(replaceRegexp, function (match) {
+      return ('' + str).replace(replaceRegexp, function (match) {
         return dataMap[match]
       })
     }
@@ -1523,9 +1634,137 @@
     */
   var unescape = formatEscaper(unescapeMap)
 
+  /**
+    * 将带字符串转成驼峰字符串,例如 project-name => projectName
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
+  function camelCase (str) {
+    return ('' + str).replace(/(-[a-zA-Z])/g, function (text, u) { return u.substring(1).toLocaleUpperCase() })
+  }
+
+  /**
+    * 将带驼峰字符串转成字符串,例如 projectName => project-name
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
+  function kebabCase (str) {
+    return ('' + str).replace(/([A-Z])/g, function (text, u) { return '-' + u.toLowerCase() })
+  }
+
+  /**
+    * 将字符串重复 n次
+    *
+    * @param {String} str 字符串
+    * @param {Number} count 次数
+    * @return {String}
+    */
+  function stringRepeat (str, count) {
+    var rest = '' + str
+    if (str.repeat) {
+      return str.repeat(count)
+    }
+    var list = isNaN(count) ? [] : new Array(parseInt(count))
+    return list.join(rest) + (list.length > 0 ? rest : '')
+  }
+
+  /**
+    * 用指定字符从前面开始补全字符串
+    *
+    * @param {String} str 字符串
+    * @param {Number} targetLength 结果长度
+    * @param {Number} padString 补全字符
+    * @return {String}
+    */
+  function stringPadStart (str, targetLength, padString) {
+    var rest = '' + str
+    if (rest.padStart) {
+      return rest.padStart(targetLength, padString)
+    }
+    if ((targetLength >> 0) > rest.length) {
+      padString = String(padString || ' ')
+      targetLength -= rest.length
+      if (targetLength > padString.length) {
+        padString += stringRepeat(padString, targetLength / padString.length)
+      }
+      return padString.slice(0, targetLength) + rest
+    }
+    return rest
+  }
+
+  /**
+    * 用指定字符从后面开始补全字符串
+    *
+    * @param {String} str 字符串
+    * @param {Number} targetLength 结果长度
+    * @param {Number} padString 补全字符
+    * @return {String}
+    */
+  function stringPadEnd (str, targetLength, padString) {
+    var rest = '' + str
+    if (rest.padEnd) {
+      return rest.padEnd(targetLength, padString)
+    }
+    if ((targetLength >> 0) > rest.length) {
+      padString = String(padString || ' ')
+      targetLength -= rest.length
+      if (targetLength > padString.length) {
+        padString += stringRepeat(padString, targetLength / padString.length)
+      }
+      return rest + padString.slice(0, targetLength)
+    }
+    return rest
+  }
+
+  /**
+    * 判断字符串是否在源字符串的头部
+    *
+    * @param {String} str 字符串
+    * @param {String/Number} val 值
+    * @param {Number} startIndex 开始索引
+    * @return {String}
+    */
+  function stringStartsWith (str, val, startIndex) {
+    var rest = '' + str
+    return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
+  }
+
+  /**
+    * 判断字符串是否在源字符串的尾部
+    *
+    * @param {String} str 字符串
+    * @param {String/Number} val 值
+    * @param {Number} startIndex 开始索引
+    * @return {String}
+    */
+  function stringEndsWith (str, val, startIndex) {
+    var rest = '' + str
+    return arguments.length === 1 ? rest.indexOf(val) === rest.length - 1 : rest.substring(0, startIndex).indexOf(val) === startIndex - 1
+  }
+
   var stringExports = {
+    trim: stringTrim,
+    stringTrim: stringTrim,
+    trimLeft: stringTrimLeft,
+    stringTrimLeft: stringTrimLeft,
+    trimRight: stringTrimRight,
+    stringTrimRight: stringTrimRight,
     escape: escape,
-    unescape: unescape
+    unescape: unescape,
+    camelCase: camelCase,
+    kebabCase: kebabCase,
+    repeat: stringRepeat,
+    stringRepeat: stringRepeat,
+    padStart: stringPadStart,
+    stringPadStart: stringPadStart,
+    padEnd: stringPadEnd,
+    stringPadEnd: stringPadEnd,
+    startsWith: stringStartsWith,
+    stringStartsWith: stringStartsWith,
+    endsWith: stringEndsWith,
+    stringEndsWith: stringEndsWith
   }
 
   var methodExports = {}
