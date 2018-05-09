@@ -103,7 +103,7 @@ var sample = arraySample
 function arraySome (obj, iteratee, context) {
   if (obj) {
     context = context || this
-    if (baseExports.isArray(obj)) {
+    if (baseExports.isArray(obj) && obj.some) {
       return obj.some(iteratee, context)
     } else {
       for (var index in obj) {
@@ -130,7 +130,7 @@ var some = arraySome
 function arrayEvery (obj, iteratee, context) {
   if (obj) {
     context = context || this
-    if (baseExports.isArray(obj)) {
+    if (baseExports.isArray(obj) && obj.every) {
       return obj.every(iteratee, context)
     } else {
       for (var index in obj) {
@@ -157,7 +157,7 @@ var every = arrayEvery
 function arrayFilter (obj, iteratee, context) {
   if (obj) {
     context = context || this
-    if (baseExports.isArray(obj)) {
+    if (baseExports.isArray(obj) && obj.filter) {
       return obj.filter(iteratee, context)
     } else {
       var result = {}
@@ -184,7 +184,7 @@ var filter = arrayFilter
 function arrayFind (obj, iteratee, context) {
   if (obj) {
     context = context || this
-    if (baseExports.isArray(obj)) {
+    if (baseExports.isArray(obj) && obj.find) {
       return obj.find(iteratee, context)
     } else {
       for (var key in obj) {
@@ -257,12 +257,23 @@ function arrayReduce (array, callback, initialValue) {
   var previous = initialValue
   var index = 0
   var len = array.length
-  if (typeof initialValue === 'undefined') {
-    previous = array[0]
-    index = 1
-  }
-  for (; index < len; index++) {
-    previous = callback.call(global, previous, array[index], index, array)
+  var context = this
+  if (baseExports.isArray(array)) {
+    if (typeof initialValue === 'undefined') {
+      previous = array[0]
+      index = 1
+    }
+    if (array.reduce) {
+      return array.reduce(callback, initialValue)
+    } else {
+      for (; index < len; index++) {
+        previous = callback.call(context, previous, array[index], index, array)
+      }
+    }
+  } else {
+    baseExports.each(array, function (val, key) {
+      previous = callback.call(context, previous, val, key, array)
+    })
   }
   return previous
 }
@@ -276,7 +287,10 @@ function arrayReduce (array, callback, initialValue) {
   * @param {Number} end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
   * @return {Array}
   */
-function copyWithin (array, target, start, end) {
+function arrayCopyWithin (array, target, start, end) {
+  if (baseExports.isArray(array) && array.copyWithin) {
+    return array.copyWithin(target, start, end)
+  }
   var targetIndex = target >> 0
   var startIndex = start >> 0
   var len = array.length
@@ -324,8 +338,8 @@ var arrayExports = {
   sum: sum,
   arrayReduce: arrayReduce,
   reduce: arrayReduce,
-  arrayCopyWithin: copyWithin,
-  copyWithin: copyWithin
+  arrayCopyWithin: arrayCopyWithin,
+  copyWithin: arrayCopyWithin
 }
 
 module.exports = arrayExports
