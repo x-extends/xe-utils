@@ -548,7 +548,7 @@ XEUtils.sum([{aa: 11}, {aa: 22}, {aa: 66}], 'aa') // 99
 arraySum([{aa: 11}, {aa: 22}, {aa: 66}], (item, key) => item.aa * 2) // 198
 ```
 
-### reduce/arrayReduce ( array, callback, initialValue ) 接收一个函数作为累加器（accumulator），数组中的每个值（从左到右）开始合并，最终为一个值
+### reduce/arrayReduce ( array, callback, initialValue ) 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
 ```JavaScript
 import XEUtils, { arrayReduce } from 'xe-utils'
 
@@ -709,7 +709,7 @@ stringToInteger('abc') // 0
 ```JavaScript
 import XEUtils, { stringTrim } from 'xe-utils'
 
-XEUtils.stringTrim(' abc ') // 'abc'
+XEUtils.trim(' abc ') // 'abc'
 stringTrim(' abc ') // 'abc'
 ```
 
@@ -717,7 +717,7 @@ stringTrim(' abc ') // 'abc'
 ```JavaScript
 import XEUtils, { stringTrimLeft } from 'xe-utils'
 
-XEUtils.stringTrimLeft(' abc ') // 'abc '
+XEUtils.trimLeft(' abc ') // 'abc '
 stringTrimLeft(' abc ')  // 'abc '
 ```
 
@@ -725,7 +725,7 @@ stringTrimLeft(' abc ')  // 'abc '
 ```JavaScript
 import XEUtils, { stringTrimRight } from 'xe-utils'
 
-XEUtils.stringTrimRight(' abc ') // ' aa'
+XEUtils.trimRight(' abc ') // ' aa'
 stringTrimRight(' abc ') // ' aa'
 ```
 
@@ -743,21 +743,21 @@ import XEUtils from 'xe-utils'
 XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
 ```
 
-### camelCase ( str ) 将字符串转成驼峰字符串
+### camelCase ( str ) 将带驼峰字符串转成字符串
 ```JavaScript
 import XEUtils from 'xe-utils'
 
 XEUtils.camelCase('projectName') // 'project-name'
 ```
 
-### kebabCase ( str ) 将带驼峰字符串转成字符串
+### kebabCase ( str ) 将字符串转成驼峰字符串
 ```JavaScript
 import XEUtils from 'xe-utils'
 
 XEUtils.kebabCase('project-name') // 'projectName'
 ```
 
-### stringRepeat ( str, count ) 将字符串重复 n次
+### stringRepeat ( str, count ) 将字符串重复 n 次
 ```JavaScript
 import XEUtils, { stringRepeat } from 'xe-utils'
 

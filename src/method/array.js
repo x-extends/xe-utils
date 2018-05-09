@@ -246,7 +246,7 @@ function arraySum (array, iteratee, context) {
 var sum = arraySum
 
 /**
-  * 接收一个函数作为累加器（accumulator），数组中的每个值（从左到右）开始合并，最终为一个值。
+  * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值。
   *
   * @param {Array} array 数组
   * @param {Function} callback 方法
