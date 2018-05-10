@@ -666,6 +666,15 @@ XEUtils.reduce([22, 66, 88], (previous, item) => previous + item) // 176
 arrayReduce([22, 66, 88], (previous, item) => (previous + item) * 2) // 528
 ```
 
+### chunk ( array, size ) 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.chunk(['a', 'b', 'c', 'd'], 2) // [['a', 'b'], ['c', 'd']]
+XEUtils.chunk(['a', 'b', 'c', 'd'], 3) // [['a', 'b', 'c'], ['d']]
+```
+
 ### now/timestamp ( ) 返回时间戳
 
 ```JavaScript
