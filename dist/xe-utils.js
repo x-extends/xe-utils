@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.31
+ * xe-utils.js v1.5.32
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.31'
+  XEUtils.version = '1.5.32'
 
   /**
     * 数组去重
@@ -343,7 +343,7 @@
           index += arrLen
         }
       } else {
-        result = [array]
+        result = array.length ? [array] : array
       }
     }
     return result

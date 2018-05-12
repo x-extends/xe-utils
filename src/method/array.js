@@ -331,7 +331,7 @@ function chunk (array, size) {
         index += arrLen
       }
     } else {
-      result = [array]
+      result = array.length ? [array] : array
     }
   }
   return result
