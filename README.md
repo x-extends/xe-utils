@@ -412,6 +412,29 @@ XEUtils.includes([11], 22) // false
 XEUtils.includes([11, 22], 22) // true
 ```
 
+### bind (callback, context) 创建一个绑定上下文的函数
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+var rest = XEUtils.bind(function (val) {
+  return this.name + ' = ' + val
+}, {name: 'test'})
+rest(222) // 'test = 222'
+```
+
+### once (callback, context) 创建一个只能调用一次的函数,只会返回第一次执行后的结果
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+var rest = XEUtils.once(function (val) {
+  return this.name + ' = ' + val
+}, {name: 'test'})
+rest(222) // 'test = 222'
+rest(333) // 'test = 222'
+```
+
 ### assign/objectAssign/extend ([deep], target, ...) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
 
 ```JavaScript
@@ -658,6 +681,15 @@ import XEUtils, { arraySum } from 'xe-utils'
 XEUtils.sum([22, 66, 88]) // 176
 XEUtils.sum([{aa: 11}, {aa: 22}, {aa: 66}], 'aa') // 99
 arraySum([{aa: 11}, {aa: 22}, {aa: 66}], item => item.aa * 2) // 198
+```
+
+### from ( array, callback, context ) 根据数组或可迭代对象中创建一个新的数组
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.from([]) // []
+XEUtils.from(arguments) // [...]
 ```
 
 ### reduce/arrayReduce ( array, callback, initialValue ) 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值

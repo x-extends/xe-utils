@@ -376,6 +376,31 @@
     return result
   }
 
+  /**
+   * 根据数组或可迭代对象中创建一个新的数组
+   *
+   * @param {Array} obj 数组
+   * @param {Function} callback(item, index, array) 回调
+   * @param {Object} context 上下文
+   * @return {Array}
+   */
+  function from (array, callback, context) {
+    if (baseExports.isArray(array)) {
+      return array
+    }
+    if (array === null || array === undefined) {
+      return []
+    }
+    var result = []
+    context = context || this
+    if (array.length) {
+      for (var index = 0, len = parseInt(array.length); index < len; index++) {
+        result.push(array[index])
+      }
+    }
+    return arguments.length < 2 ? result : arrayMap(result, callback, context)
+  }
+
   var arrayExports = {
     arrayUniq: arrayUniq,
     uniq: uniq,
@@ -405,7 +430,8 @@
     copyWithin: arrayCopyWithin,
     chunk: chunk,
     zip: zip,
-    unzip: unzip
+    unzip: unzip,
+    from: from
   }
 
   var objectToString = Object.prototype.toString
@@ -1050,6 +1076,45 @@
     return obj
   }
 
+  /**
+    * 创建一个绑定上下文的函数
+    *
+    * @param {Function} callback 函数
+    * @param {Object} context 上下文
+    * @param {*} amgs 额外的参数
+    * @return {Object}
+    */
+  function bind (callback, context) {
+    var amgs = XEUtils.from(arguments).slice(2)
+    context = context || this
+    return function () {
+      return callback.apply(context, XEUtils.from(arguments).concat(amgs))
+    }
+  }
+
+  /**
+    * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
+    *
+    * @param {Function} callback 函数
+    * @param {Object} context 上下文
+    * @param {*} amgs 额外的参数
+    * @return {Object}
+    */
+  function once (callback, context) {
+    var done = false
+    var rest = null
+    var amgs = XEUtils.from(arguments).slice(2)
+    context = context || this
+    return function () {
+      if (done) {
+        return rest
+      }
+      rest = callback.apply(context, XEUtils.from(arguments).concat(amgs))
+      done = true
+      return rest
+    }
+  }
+
   var baseExports = {
     isNaN: isNaN,
     isFinite: isFinite,
@@ -1106,7 +1171,9 @@
     each: each,
     groupBy: groupBy,
     objectMap: objectMap,
-    clone: clone
+    clone: clone,
+    bind: bind,
+    once: once
   }
 
   function isMobile () {

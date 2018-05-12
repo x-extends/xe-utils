@@ -364,6 +364,31 @@ function unzip (arrays) {
   return result
 }
 
+/**
+ * 根据数组或可迭代对象中创建一个新的数组
+ *
+ * @param {Array} obj 数组
+ * @param {Function} callback(item, index, array) 回调
+ * @param {Object} context 上下文
+ * @return {Array}
+ */
+function from (array, callback, context) {
+  if (baseExports.isArray(array)) {
+    return array
+  }
+  if (array === null || array === undefined) {
+    return []
+  }
+  var result = []
+  context = context || this
+  if (array.length) {
+    for (var index = 0, len = parseInt(array.length); index < len; index++) {
+      result.push(array[index])
+    }
+  }
+  return arguments.length < 2 ? result : arrayMap(result, callback, context)
+}
+
 var arrayExports = {
   arrayUniq: arrayUniq,
   uniq: uniq,
@@ -393,7 +418,8 @@ var arrayExports = {
   copyWithin: arrayCopyWithin,
   chunk: chunk,
   zip: zip,
-  unzip: unzip
+  unzip: unzip,
+  from: from
 }
 
 module.exports = arrayExports

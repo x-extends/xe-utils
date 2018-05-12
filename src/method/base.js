@@ -644,6 +644,45 @@ function clone (obj, deep) {
   return obj
 }
 
+/**
+  * 创建一个绑定上下文的函数
+  *
+  * @param {Function} callback 函数
+  * @param {Object} context 上下文
+  * @param {*} amgs 额外的参数
+  * @return {Object}
+  */
+function bind (callback, context) {
+  var amgs = XEUtils.from(arguments).slice(2)
+  context = context || this
+  return function () {
+    return callback.apply(context, XEUtils.from(arguments).concat(amgs))
+  }
+}
+
+/**
+  * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
+  *
+  * @param {Function} callback 函数
+  * @param {Object} context 上下文
+  * @param {*} amgs 额外的参数
+  * @return {Object}
+  */
+function once (callback, context) {
+  var done = false
+  var rest = null
+  var amgs = XEUtils.from(arguments).slice(2)
+  context = context || this
+  return function () {
+    if (done) {
+      return rest
+    }
+    rest = callback.apply(context, XEUtils.from(arguments).concat(amgs))
+    done = true
+    return rest
+  }
+}
+
 var baseExports = {
   isNaN: isNaN,
   isFinite: isFinite,
@@ -700,7 +739,9 @@ var baseExports = {
   each: each,
   groupBy: groupBy,
   objectMap: objectMap,
-  clone: clone
+  clone: clone,
+  bind: bind,
+  once: once
 }
 
 module.exports = baseExports
