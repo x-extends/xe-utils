@@ -1,7 +1,7 @@
 'use strict'
 
+var XEUtils = require('../core/utils')
 var baseExports = require('./base')
-var numberExports = require('./number')
 
 /**
   * 数组去重
@@ -65,7 +65,7 @@ var sort = arraySort
 function arrayShuffle (array) {
   var result = []
   for (var list = baseExports.objectValues(array), len = list.length - 1; len >= 0; len--) {
-    var index = len > 0 ? numberExports.getRandom(0, len) : 0
+    var index = len > 0 ? XEUtils.getRandom(0, len) : 0
     result.push(list[index])
     list.splice(index, 1)
   }
@@ -331,8 +331,35 @@ function chunk (array, size) {
         index += arrLen
       }
     } else {
-      result = array
+      result = [array]
     }
+  }
+  return result
+}
+
+/**
+ * 将每个数组中相应位置的值合并在一起
+ *
+ * @param {Array*} array 数组
+ */
+function zip () {
+  return unzip(arguments)
+}
+
+/**
+ * 与 zip 相反
+ *
+ * @param {Array} arrays 数组集合
+ */
+function unzip (arrays) {
+  var result = []
+  var len = XEUtils.max(arrays, function (item) {
+    return item.length || 0
+  })
+  for (var index = 0; index < len; index++) {
+    result.push(arrayMap(arrays, function (item) {
+      return item ? item[index] : null
+    }))
   }
   return result
 }
@@ -364,7 +391,9 @@ var arrayExports = {
   reduce: arrayReduce,
   arrayCopyWithin: arrayCopyWithin,
   copyWithin: arrayCopyWithin,
-  chunk: chunk
+  chunk: chunk,
+  zip: zip,
+  unzip: unzip
 }
 
 module.exports = arrayExports

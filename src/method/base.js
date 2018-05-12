@@ -696,6 +696,7 @@ var baseExports = {
   last: last,
   objectEach: objectEach,
   arrayEach: arrayEach,
+  forEach: arrayEach,
   each: each,
   groupBy: groupBy,
   objectMap: objectMap,

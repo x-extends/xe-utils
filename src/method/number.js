@@ -1,7 +1,7 @@
 'use strict'
 
+var XEUtils = require('../core/utils')
 var baseExports = require('./base')
-var arrayExports = require('./array')
 
 /**
   * 获取一个指定范围内随机数
@@ -15,7 +15,7 @@ function getRandom (min, max) {
 }
 
 function sortData (arr, iteratee) {
-  return (baseExports.isFunction(iteratee) ? arrayExports.arraySort(arrayExports.arrayMap(arr, iteratee, this)) : arrayExports.arraySort(arr, iteratee))
+  return (baseExports.isFunction(iteratee) ? XEUtils.arraySort(XEUtils.arrayMap(arr, iteratee, this)) : XEUtils.arraySort(arr, iteratee))
 }
 
 /**

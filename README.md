@@ -496,7 +496,7 @@ XEUtils.last({a: 11, b: 22}) // 22
 arrayLast([11, 22]) // 22
 ```
 
-### each/objectEach/arrayEach ( obj, iteratee, context ) 迭代器
+### each/forEach/objectEach/arrayEach ( obj, iteratee, context ) 迭代器
 
 ```JavaScript
 import XEUtils, { objectEach, arrayEach } from 'xe-utils'
@@ -504,10 +504,13 @@ import XEUtils, { objectEach, arrayEach } from 'xe-utils'
 XEUtils.each({a: 11, b: 22}, (item, key) => {
   // 通用迭代器
 })
+XEUtils.forEach([11, 22, 33], (item, index) => {
+  // 数组迭代器
+})
 objectEach({a: 11, b: 22}, (item, key) => {
   // 对象迭代器
 })
-arrayEach([11, 22, 33], (item, key) => {
+arrayEach([11, 22, 33], (item, index) => {
   // 数组迭代器
 })
 ```
@@ -664,6 +667,24 @@ import XEUtils, { arrayReduce } from 'xe-utils'
 
 XEUtils.reduce([22, 66, 88], (previous, item) => previous + item) // 176
 arrayReduce([22, 66, 88], (previous, item) => (previous + item) * 2) // 528
+```
+
+### zip ( ) 将每个数组中相应位置的值合并在一起
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.zip(['name1', 'name2', 'name3'], [true, true, false], [30, 40, 20])
+// [['name1', true, 30], ['name2', true, 40], ['name3', false, 20]]
+```
+
+### unzip ( arrays ) 与 zip 相反
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.unzip([['name1', true, 30], ['name2', true, 40], ['name3', false, 20]])
+// [['name1', 'name2', 'name3'], [true, true, false], [30, 40, 20]]
 ```
 
 ### chunk ( array, size ) 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
