@@ -412,7 +412,7 @@ XEUtils.includes([11], 22) // false
 XEUtils.includes([11, 22], 22) // true
 ```
 
-### bind (callback, context) 创建一个绑定上下文的函数
+### bind (callback, context[, ...arguments]) 创建一个绑定上下文的函数
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -423,7 +423,7 @@ var rest = XEUtils.bind(function (val) {
 rest(222) // 'test = 222'
 ```
 
-### once (callback, context) 创建一个只能调用一次的函数,只会返回第一次执行后的结果
+### once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -561,8 +561,8 @@ XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const v1 = {a: 11, b: {b1: 22}
-const v2 = XEUtils.clone({a: 11, b: 22})
+const v1 = {a: 11, b: {b1: 22}}
+const v2 = XEUtils.clone(v1)
 if (v1.b === v2.b) {
   // true
 }
