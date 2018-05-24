@@ -32,7 +32,6 @@
     }
     return result
   }
-  var uniq = arrayUniq
 
   /**
     * 将多个数的值返回唯一的并集数组
@@ -47,7 +46,6 @@
     }
     return arrayUniq(result)
   }
-  var union = arrayUnion
 
   /**
     * 数组按属性值升序
@@ -66,7 +64,6 @@
     }
     return arr
   }
-  var sort = arraySort
 
   /**
     * 将一个数组随机打乱，返回一个新的数组
@@ -83,7 +80,6 @@
     }
     return result
   }
-  var shuffle = arrayShuffle
 
   /**
     * 从一个数组中随机返回几个元素
@@ -102,7 +98,6 @@
     }
     return result
   }
-  var sample = arraySample
 
   /**
     * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
@@ -129,7 +124,6 @@
     }
     return false
   }
-  var some = arraySome
 
   /**
     * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
@@ -156,7 +150,6 @@
     }
     return true
   }
-  var every = arrayEvery
 
   /**
     * 根据回调过滤数据
@@ -183,7 +176,6 @@
     }
     return []
   }
-  var filter = arrayFilter
 
   /**
     * 查找匹配第一条数据
@@ -209,7 +201,6 @@
       }
     }
   }
-  var find = arrayFind
 
   /**
     * 指定方法后的返回值组成的新数组
@@ -233,7 +224,6 @@
     }
     return result
   }
-  var map = arrayMap
 
   /**
     * 求和函数，将数值相加
@@ -255,7 +245,18 @@
     })
     return result
   }
-  var sum = arraySum
+
+  /**
+    * 求平均值函数
+    *
+    * @param {Array} array 数组
+    * @param {Function/String} iteratee 方法或属性
+    * @param {Object} context 上下文
+    * @return {Number}
+    */
+  function arrayMean (array, iteratee, context) {
+    return arraySum(array, iteratee, context || this) / baseExports.getSize(array)
+  }
 
   /**
     * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值。
@@ -403,27 +404,29 @@
 
   var arrayExports = {
     arrayUniq: arrayUniq,
-    uniq: uniq,
+    uniq: arrayUniq,
     arrayUnion: arrayUnion,
-    union: union,
+    union: arrayUnion,
     arraySort: arraySort,
-    sort: sort,
+    sort: arraySort,
     arrayShuffle: arrayShuffle,
-    shuffle: shuffle,
+    shuffle: arrayShuffle,
     arraySample: arraySample,
-    sample: sample,
+    sample: arraySample,
     arraySome: arraySome,
-    some: some,
+    some: arraySome,
     arrayEvery: arrayEvery,
-    every: every,
+    every: arrayEvery,
     arrayFilter: arrayFilter,
-    filter: filter,
+    filter: arrayFilter,
     arrayFind: arrayFind,
-    find: find,
+    find: arrayFind,
     arrayMap: arrayMap,
-    map: map,
+    map: arrayMap,
     arraySum: arraySum,
-    sum: sum,
+    sum: arraySum,
+    arrayMean: arrayMean,
+    mean: arrayMean,
     arrayReduce: arrayReduce,
     reduce: arrayReduce,
     arrayCopyWithin: arrayCopyWithin,
@@ -431,7 +434,8 @@
     chunk: chunk,
     zip: zip,
     unzip: unzip,
-    from: from
+    from: from,
+    toArray: from
   }
 
   var objectToString = Object.prototype.toString
@@ -727,11 +731,12 @@
   /**
     * 获取一个全局唯一标识
     *
+    * @param {String} prefix 前缀
     * @return {Number}
     */
   var __uniqueId = 0
-  function uniqueId () {
-    return ++__uniqueId
+  function uniqueId (prefix) {
+    return (prefix ? '' + prefix : 0) + ++__uniqueId
   }
 
   /**
@@ -814,7 +819,6 @@
   function includes (obj, val) {
     return indexOf(obj, val) !== -1
   }
-  var contains = includes
 
   function extend (target, args, isClone) {
     for (var source, index = 1, len = args.length; index < len; index++) {
@@ -902,7 +906,6 @@
     }
     return result
   }
-  var keys = objectKeys
 
   /**
     * 获取对象所有值
@@ -920,7 +923,6 @@
     })
     return result
   }
-  var values = objectValues
 
   /**
     * 获取对象所有属性、值
@@ -938,7 +940,6 @@
     })
     return result
   }
-  var entries = objectEntries
 
   /**
     * 获取对象第一个值
@@ -949,7 +950,6 @@
   function arrayFirst (obj) {
     return objectValues(obj)[0]
   }
-  var first = arrayFirst
 
   /**
     * 获取对象最后一个值
@@ -961,7 +961,6 @@
     var list = objectValues(obj)
     return list[list.length - 1]
   }
-  var last = arrayLast
 
   function objectEach (obj, iteratee, context) {
     for (var key in obj) {
@@ -1149,22 +1148,22 @@
     getSize: getSize,
     lastIndexOf: lastIndexOf,
     includes: includes,
-    contains: contains,
+    contains: includes,
     objectAssign: objectAssign,
     assign: objectAssign,
     extend: objectAssign,
     stringToJson: stringToJson,
     jsonToString: jsonToString,
     objectKeys: objectKeys,
-    keys: keys,
+    keys: objectKeys,
     objectValues: objectValues,
-    values: values,
+    values: objectValues,
     objectEntries: objectEntries,
-    entries: entries,
+    entries: objectEntries,
     arrayFirst: arrayFirst,
-    first: first,
+    first: arrayFirst,
     arrayLast: arrayLast,
-    last: last,
+    last: arrayLast,
     objectEach: objectEach,
     arrayEach: arrayEach,
     forEach: arrayEach,
@@ -1332,7 +1331,6 @@
   var timestamp = Date.now || function () {
     return new Date().getTime()
   }
-  var now = timestamp
 
   var dateFormatRules = [
     { rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]] },
@@ -1555,7 +1553,7 @@
 
   var dateExports = {
     timestamp: timestamp,
-    now: now,
+    now: timestamp,
     stringToDate: stringToDate,
     dateToString: dateToString,
     getWhatYear: getWhatYear,
@@ -1673,7 +1671,6 @@
   function arrayMin () {
     return sortData.apply(this, arguments)[0]
   }
-  var min = arrayMin
 
   /**
     * 获取最大值
@@ -1685,7 +1682,6 @@
   function arrayMax () {
     return sortData.apply(this, arguments).reverse()[0]
   }
-  var max = arrayMax
 
   /**
     * 千分位分隔符、小数点
@@ -1725,9 +1721,9 @@
   var numberExports = {
     getRandom: getRandom,
     arrayMin: arrayMin,
-    min: min,
+    min: arrayMin,
     arrayMax: arrayMax,
-    max: max,
+    max: arrayMax,
     commafy: commafy,
     toNumber: stringToNumber,
     stringToNumber: stringToNumber,

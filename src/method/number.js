@@ -28,7 +28,6 @@ function sortData (arr, iteratee) {
 function arrayMin () {
   return sortData.apply(this, arguments)[0]
 }
-var min = arrayMin
 
 /**
   * 获取最大值
@@ -40,7 +39,6 @@ var min = arrayMin
 function arrayMax () {
   return sortData.apply(this, arguments).reverse()[0]
 }
-var max = arrayMax
 
 /**
   * 千分位分隔符、小数点
@@ -80,9 +78,9 @@ function stringToInteger (str) {
 var numberExports = {
   getRandom: getRandom,
   arrayMin: arrayMin,
-  min: min,
+  min: arrayMin,
   arrayMax: arrayMax,
-  max: max,
+  max: arrayMax,
   commafy: commafy,
   toNumber: stringToNumber,
   stringToNumber: stringToNumber,

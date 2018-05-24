@@ -295,11 +295,12 @@ function getType (obj) {
 /**
   * 获取一个全局唯一标识
   *
+  * @param {String} prefix 前缀
   * @return {Number}
   */
 var __uniqueId = 0
-function uniqueId () {
-  return ++__uniqueId
+function uniqueId (prefix) {
+  return (prefix ? '' + prefix : 0) + ++__uniqueId
 }
 
 /**
@@ -382,7 +383,6 @@ var lastIndexOf = createIndexOf(function (obj, val) {
 function includes (obj, val) {
   return indexOf(obj, val) !== -1
 }
-var contains = includes
 
 function extend (target, args, isClone) {
   for (var source, index = 1, len = args.length; index < len; index++) {
@@ -470,7 +470,6 @@ function objectKeys (obj) {
   }
   return result
 }
-var keys = objectKeys
 
 /**
   * 获取对象所有值
@@ -488,7 +487,6 @@ function objectValues (obj) {
   })
   return result
 }
-var values = objectValues
 
 /**
   * 获取对象所有属性、值
@@ -506,7 +504,6 @@ function objectEntries (obj) {
   })
   return result
 }
-var entries = objectEntries
 
 /**
   * 获取对象第一个值
@@ -517,7 +514,6 @@ var entries = objectEntries
 function arrayFirst (obj) {
   return objectValues(obj)[0]
 }
-var first = arrayFirst
 
 /**
   * 获取对象最后一个值
@@ -529,7 +525,6 @@ function arrayLast (obj) {
   var list = objectValues(obj)
   return list[list.length - 1]
 }
-var last = arrayLast
 
 function objectEach (obj, iteratee, context) {
   for (var key in obj) {
@@ -717,22 +712,22 @@ var baseExports = {
   getSize: getSize,
   lastIndexOf: lastIndexOf,
   includes: includes,
-  contains: contains,
+  contains: includes,
   objectAssign: objectAssign,
   assign: objectAssign,
   extend: objectAssign,
   stringToJson: stringToJson,
   jsonToString: jsonToString,
   objectKeys: objectKeys,
-  keys: keys,
+  keys: objectKeys,
   objectValues: objectValues,
-  values: values,
+  values: objectValues,
   objectEntries: objectEntries,
-  entries: entries,
+  entries: objectEntries,
   arrayFirst: arrayFirst,
-  first: first,
+  first: arrayFirst,
   arrayLast: arrayLast,
-  last: last,
+  last: arrayLast,
   objectEach: objectEach,
   arrayEach: arrayEach,
   forEach: arrayEach,

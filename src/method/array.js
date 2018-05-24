@@ -20,7 +20,6 @@ function arrayUniq (array) {
   }
   return result
 }
-var uniq = arrayUniq
 
 /**
   * 将多个数的值返回唯一的并集数组
@@ -35,7 +34,6 @@ function arrayUnion () {
   }
   return arrayUniq(result)
 }
-var union = arrayUnion
 
 /**
   * 数组按属性值升序
@@ -54,7 +52,6 @@ function arraySort (arr, iteratee, context) {
   }
   return arr
 }
-var sort = arraySort
 
 /**
   * 将一个数组随机打乱，返回一个新的数组
@@ -71,7 +68,6 @@ function arrayShuffle (array) {
   }
   return result
 }
-var shuffle = arrayShuffle
 
 /**
   * 从一个数组中随机返回几个元素
@@ -90,7 +86,6 @@ function arraySample (array, number) {
   }
   return result
 }
-var sample = arraySample
 
 /**
   * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
@@ -117,7 +112,6 @@ function arraySome (obj, iteratee, context) {
   }
   return false
 }
-var some = arraySome
 
 /**
   * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
@@ -144,7 +138,6 @@ function arrayEvery (obj, iteratee, context) {
   }
   return true
 }
-var every = arrayEvery
 
 /**
   * 根据回调过滤数据
@@ -171,7 +164,6 @@ function arrayFilter (obj, iteratee, context) {
   }
   return []
 }
-var filter = arrayFilter
 
 /**
   * 查找匹配第一条数据
@@ -197,7 +189,6 @@ function arrayFind (obj, iteratee, context) {
     }
   }
 }
-var find = arrayFind
 
 /**
   * 指定方法后的返回值组成的新数组
@@ -221,7 +212,6 @@ function arrayMap (obj, iteratee, context) {
   }
   return result
 }
-var map = arrayMap
 
 /**
   * 求和函数，将数值相加
@@ -243,7 +233,18 @@ function arraySum (array, iteratee, context) {
   })
   return result
 }
-var sum = arraySum
+
+/**
+  * 求平均值函数
+  *
+  * @param {Array} array 数组
+  * @param {Function/String} iteratee 方法或属性
+  * @param {Object} context 上下文
+  * @return {Number}
+  */
+function arrayMean (array, iteratee, context) {
+  return arraySum(array, iteratee, context || this) / baseExports.getSize(array)
+}
 
 /**
   * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值。
@@ -391,27 +392,29 @@ function from (array, callback, context) {
 
 var arrayExports = {
   arrayUniq: arrayUniq,
-  uniq: uniq,
+  uniq: arrayUniq,
   arrayUnion: arrayUnion,
-  union: union,
+  union: arrayUnion,
   arraySort: arraySort,
-  sort: sort,
+  sort: arraySort,
   arrayShuffle: arrayShuffle,
-  shuffle: shuffle,
+  shuffle: arrayShuffle,
   arraySample: arraySample,
-  sample: sample,
+  sample: arraySample,
   arraySome: arraySome,
-  some: some,
+  some: arraySome,
   arrayEvery: arrayEvery,
-  every: every,
+  every: arrayEvery,
   arrayFilter: arrayFilter,
-  filter: filter,
+  filter: arrayFilter,
   arrayFind: arrayFind,
-  find: find,
+  find: arrayFind,
   arrayMap: arrayMap,
-  map: map,
+  map: arrayMap,
   arraySum: arraySum,
-  sum: sum,
+  sum: arraySum,
+  arrayMean: arrayMean,
+  mean: arrayMean,
   arrayReduce: arrayReduce,
   reduce: arrayReduce,
   arrayCopyWithin: arrayCopyWithin,
@@ -419,7 +422,8 @@ var arrayExports = {
   chunk: chunk,
   zip: zip,
   unzip: unzip,
-  from: from
+  from: from,
+  toArray: from
 }
 
 module.exports = arrayExports

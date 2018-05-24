@@ -10,7 +10,6 @@ var baseExports = require('./base')
 var timestamp = Date.now || function () {
   return new Date().getTime()
 }
-var now = timestamp
 
 var dateFormatRules = [
   {rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]]},
@@ -233,7 +232,7 @@ function getDateDiff (startDate, endDate, rules) {
 
 var dateExports = {
   timestamp: timestamp,
-  now: now,
+  now: timestamp,
   stringToDate: stringToDate,
   dateToString: dateToString,
   getWhatYear: getWhatYear,

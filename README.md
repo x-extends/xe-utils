@@ -3,7 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.org/package/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
 
-XEUtils 提供一套实用的函数，支持常用基础函数、支持任意格式的日期处理函数，cookie操作函数等...
+XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，浏览器相关操作函数等...
 
 ## 兼容性
 
@@ -44,6 +44,9 @@ require.config({
     'xe-utils': './dist/xe-utils.min'
   }
 })
+define('xe-utils', function (XEUtils) {
+  XEUtils.dateToString(new Date()) // 2018-01-01 10:30:00
+})
 ```
 
 ## NPM 安装
@@ -62,6 +65,9 @@ const XEUtils = require('xe-utils')
 
 ```JavaScript
 import { dateToString, stringToDate } from 'xe-utils'
+
+dateToString(new Date()) // 2018-01-01 10:30:00
+stringToDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
 ```
 
 ### ES6 Module import 导入所有
@@ -366,13 +372,14 @@ XEUtils.getType({}) // 'object'
 XEUtils.getType(function(){}) // 'function'
 ```
 
-### uniqueId (  ) 获取一个全局唯一标识
+### uniqueId ( prefix ) 获取一个全局唯一标识
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
 XEUtils.uniqueId() // 1
 XEUtils.uniqueId() // 2
+XEUtils.uniqueId('prefix_') // 'prefix_3'
 ```
 
 ### getSize ( obj ) 返回对象的长度
@@ -622,8 +629,8 @@ arraySample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
 ```JavaScript
 import XEUtils, { arraySome } from 'xe-utils'
 
-XEUtils.some([{a: 11}, {a: 22}], item => item.a === 55) // false
-arraySome([{a: 11}, {a: 22}], item => item.a === 11) // true
+XEUtils.some([{value: 11}, {value: 22}], item => item.value === 55) // false
+arraySome([{value: 11}, {value: 22}], item => item.value === 11) // true
 ```
 
 ### every/arrayEvery ( obj, iteratee, context ) 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
@@ -631,8 +638,8 @@ arraySome([{a: 11}, {a: 22}], item => item.a === 11) // true
 ```JavaScript
 import XEUtils, { arrayEvery } from 'xe-utils'
 
-XEUtils.every([{a: 11}, {a: 22}], item => item.a === 11) // false
-arrayEvery([{a: 11}, {a: 22}]], item => item.a === 11 || item.a === 22) // true
+XEUtils.every([{value: 11}, {value: 22}], item => item.value === 11) // false
+arrayEvery([{value: 11}, {value: 22}]], item => item.value === 11 || item.value === 22) // true
 ```
 
 ### filter/arrayFilter ( obj, iteratee, context ) 根据回调过滤数据
@@ -640,8 +647,8 @@ arrayEvery([{a: 11}, {a: 22}]], item => item.a === 11 || item.a === 22) // true
 ```JavaScript
 import XEUtils, { arrayFilter } from 'xe-utils'
 
-XEUtils.filter([{a: 11}, {a: 22}], item => item.a > 11) // [{a: 22}]
-arrayFilter([{a: 11}, {a: 22}], item => item.a > 11) // [{a: 22}]
+XEUtils.filter([{value: 11}, {value: 22}], item => item.value > 11) // [{a: 22}]
+arrayFilter([{value: 11}, {value: 22}], item => item.value > 11) // [{a: 22}]
 ```
 
 ### find/arrayFind ( obj, iteratee, context ) 查找匹配第一条数据
@@ -649,8 +656,8 @@ arrayFilter([{a: 11}, {a: 22}], item => item.a > 11) // [{a: 22}]
 ```JavaScript
 import XEUtils, { arrayFind } from 'xe-utils'
 
-XEUtils.find([{a: 11}, {a: 22}], item => item.a === 55) // null
-arrayFind([{a: 11}, {a: 22}], item => item.a === 22) // {a: 22}
+XEUtils.find([{value: 11}, {value: 22}], item => item.value === 55) // null
+arrayFind([{value: 11}, {value: 22}], item => item.value === 22) // {a: 22}
 ```
 
 ### map/arrayMap ( obj, iteratee, context ) 指定方法后的返回值组成的新数组
@@ -658,8 +665,8 @@ arrayFind([{a: 11}, {a: 22}], item => item.a === 22) // {a: 22}
 ```JavaScript
 import XEUtils, { arrayMap } from 'xe-utils'
 
-XEUtils.map([{a: 11}, {a: 22}], item => item.a) // [11, 22]
-arrayMap([{a: 11}, {a: 22}], item => item.a) // [11, 22]
+XEUtils.map([{value: 11}, {value: 22}], item => item.value) // [11, 22]
+arrayMap([{value: 11}, {value: 22}], item => item.value) // [11, 22]
 ```
 
 ### copyWithin/arrayCopyWithin ( array, target, start, end ) 浅复制数组的一部分到同一数组中的另一个位置,数组大小不变
@@ -679,8 +686,18 @@ arrayCopyWithin([11, 22, 33, 44], 0, -1) // [44, 22, 33, 44]
 import XEUtils, { arraySum } from 'xe-utils'
 
 XEUtils.sum([22, 66, 88]) // 176
-XEUtils.sum([{aa: 11}, {aa: 22}, {aa: 66}], 'aa') // 99
-arraySum([{aa: 11}, {aa: 22}, {aa: 66}], item => item.aa * 2) // 198
+XEUtils.sum([{value: 11}, {value: 22}, {value: 66}], 'value') // 99
+arraySum([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 198
+```
+
+### mean/arrayMean ( obj, iteratee, context ) 求平均值函数
+
+```JavaScript
+import XEUtils, { arrayMean } from 'xe-utils'
+
+XEUtils.mean([22, 66, 60, 60]) // 52
+XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
+arrayMean([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 66
 ```
 
 ### from ( array, callback, context ) 根据数组或可迭代对象中创建一个新的数组
@@ -689,6 +706,7 @@ arraySum([{aa: 11}, {aa: 22}, {aa: 66}], item => item.aa * 2) // 198
 import XEUtils from 'xe-utils'
 
 XEUtils.from([]) // []
+XEUtils.from({}) // []
 XEUtils.from(arguments) // [...]
 ```
 
