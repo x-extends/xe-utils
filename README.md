@@ -828,7 +828,19 @@ XEUtils.getWhatDay('2017-12-20', -1) // Tue Dec 19 2017 00:00:00 GMT+0800 (中�
 XEUtils.getWhatDay('2017-12-20', 1) // Tue Dec 21 2017 00:00:00 GMT+0800 (中国标准时间)
 ```
 
-### getDaysOfMonth ( date, month ) 返回当前日期月份的天数,可以指定前几个月或后几个月，默认当前
+### getDaysOfYear ( date, month ) 返回当前年份的天数,可以指定前几个年或后几个年，默认当前
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.getDaysOfYear(new Date()) // 365
+XEUtils.getDaysOfYear(1513735830000) // 365
+XEUtils.getDaysOfYear('2017-12-20') // 365
+XEUtils.getDaysOfYear('2019-12-20', 1) // 366
+XEUtils.getDaysOfYear('2020-12-20') // 366
+```
+
+### getDaysOfMonth ( date, month ) 返回当前月份的天数,可以指定前几个月或后几个月，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'

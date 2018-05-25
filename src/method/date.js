@@ -184,7 +184,18 @@ function getWhatDay (date, day) {
 }
 
 /**
-  * 返回当前日期月份的天数
+  * 返回当前年份的天数
+  *
+  * @param {Date} date 日期或数字
+  * @param {Number} month 年(默认当年)、前几个年、后几个年
+  * @return {Number}
+  */
+function getDaysOfYear (date, month) {
+  return baseExports.isLeapYear(getWhatYear(date, month)) ? 366 : 365
+}
+
+/**
+  * 返回当前月份的天数
   *
   * @param {Date} date 日期或数字
   * @param {Number} month 月(默认当月)、前几个月、后几个月
@@ -239,6 +250,7 @@ var dateExports = {
   getWhatMonth: getWhatMonth,
   getWhatWeek: getWhatWeek,
   getWhatDay: getWhatDay,
+  getDaysOfYear: getDaysOfYear,
   getDaysOfMonth: getDaysOfMonth,
   getDateDiff: getDateDiff
 }
