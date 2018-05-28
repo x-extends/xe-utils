@@ -391,6 +391,26 @@ function from (array, callback, context) {
   return arguments.length < 2 ? result : arrayMap(result, callback, context)
 }
 
+/**
+  * 判断数组是否包含另一数组
+  *
+  * @param {Array} array1 数组
+  * @param {Array} array2 被包含数组
+  * @return {Boolean}
+  */
+function includeArrays (array1, array2) {
+  if (baseExports.isArray(array2)) {
+    for (var index = 0, len = array2.length; index < len; index++) {
+      if (!baseExports.includes(array1, array2[index])) {
+        return false
+      }
+    }
+  } else {
+    return baseExports.includes(array1, array2)
+  }
+  return true
+}
+
 var arrayExports = {
   arrayUniq: arrayUniq,
   uniq: arrayUniq,
@@ -424,7 +444,8 @@ var arrayExports = {
   zip: zip,
   unzip: unzip,
   from: from,
-  toArray: from
+  toArray: from,
+  includeArrays: includeArrays
 }
 
 module.exports = arrayExports

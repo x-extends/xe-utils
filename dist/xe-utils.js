@@ -403,6 +403,26 @@
     return arguments.length < 2 ? result : arrayMap(result, callback, context)
   }
 
+  /**
+    * 判断数组是否包含另一数组
+    *
+    * @param {Array} array1 数组
+    * @param {Array} array2 被包含数组
+    * @return {Boolean}
+    */
+  function includeArrays (array1, array2) {
+    if (baseExports.isArray(array2)) {
+      for (var index = 0, len = array2.length; index < len; index++) {
+        if (!baseExports.includes(array1, array2[index])) {
+          return false
+        }
+      }
+    } else {
+      return baseExports.includes(array1, array2)
+    }
+    return true
+  }
+
   var arrayExports = {
     arrayUniq: arrayUniq,
     uniq: arrayUniq,
@@ -436,7 +456,8 @@
     zip: zip,
     unzip: unzip,
     from: from,
-    toArray: from
+    toArray: from,
+    includeArrays: includeArrays
   }
 
   var STRING_UNDEFINED = 'undefined'
@@ -1125,6 +1146,22 @@
     return result
   }
 
+  /**
+    * 集合分组统计,返回各组中对象的数量统计
+    *
+    * @param {Array} obj 对象
+    * @param {Function} iteratee 回调/对象属性
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function countBy (obj, iteratee, context) {
+    var result = groupBy(obj, iteratee, context || this)
+    objectEach(result, function (item, key) {
+      result[key] = item.length
+    })
+    return result
+  }
+
   var baseExports = {
     isNaN: isNaN,
     isFinite: isFinite,
@@ -1158,6 +1195,7 @@
     getType: getType,
     uniqueId: uniqueId,
     getSize: getSize,
+    indexOf: indexOf,
     lastIndexOf: lastIndexOf,
     includes: includes,
     contains: includes,
@@ -1181,6 +1219,7 @@
     forEach: arrayEach,
     each: each,
     groupBy: groupBy,
+    countBy: countBy,
     objectMap: objectMap,
     clone: clone,
     bind: bind,

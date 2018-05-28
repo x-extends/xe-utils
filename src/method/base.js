@@ -688,6 +688,22 @@ function groupBy (obj, iteratee, context) {
   return result
 }
 
+/**
+  * 集合分组统计,返回各组中对象的数量统计
+  *
+  * @param {Array} obj 对象
+  * @param {Function} iteratee 回调/对象属性
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+function countBy (obj, iteratee, context) {
+  var result = groupBy(obj, iteratee, context || this)
+  objectEach(result, function (item, key) {
+    result[key] = item.length
+  })
+  return result
+}
+
 var baseExports = {
   isNaN: isNaN,
   isFinite: isFinite,
@@ -721,6 +737,7 @@ var baseExports = {
   getType: getType,
   uniqueId: uniqueId,
   getSize: getSize,
+  indexOf: indexOf,
   lastIndexOf: lastIndexOf,
   includes: includes,
   contains: includes,
@@ -744,6 +761,7 @@ var baseExports = {
   forEach: arrayEach,
   each: each,
   groupBy: groupBy,
+  countBy: countBy,
   objectMap: objectMap,
   clone: clone,
   bind: bind,

@@ -429,6 +429,17 @@ XEUtils.includes([11], 22) // false
 XEUtils.includes([11, 22], 22) // true
 ```
 
+### includeArrays (array1, array2) 判断数组是否包含另一数组
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.includeArrays([11, 22, 33], []) // true
+XEUtils.includeArrays([11, 22, 33], [11]) // true
+XEUtils.includeArrays([11, 22, 33], [22, 33]) // true
+XEUtils.includeArrays([11, 22, 33], [22, 44]) // false
+```
+
 ### bind (callback, context[, ...arguments]) 创建一个绑定上下文的函数
 
 ```JavaScript
@@ -792,6 +803,7 @@ XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-01-01'
 XEUtils.dateToString(new Date(), 'yy-M-d') // '17-1-1'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS') // '2017-01-01 14:05:30.099'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS') // '2017-01-01 02:05:30.099'
+XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S') // '2017-11-20 2:5:30.99'
 XEUtils.dateToString(new Date(), 'yy-M-d H:m:s.S') // '2017-1-1 14:5:30.99'
 XEUtils.dateToString(new Date(), 'yy-M-d h:m:s.S') // '2017-1-1 2:5:30.99'
 XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年01月01日 14时05分30秒99毫秒,星期三 第四季度'
