@@ -2,7 +2,114 @@
 
 var XEUtils = require('../core/utils')
 
+var STRING_UNDEFINED = 'undefined'
 var objectToString = Object.prototype.toString
+
+/* eslint-disable valid-typeof */
+function createInTypeof (type) {
+  return function (obj) {
+    return typeof obj === type
+  }
+}
+
+function createInInObjectString (type) {
+  return function (obj) {
+    return '[object ' + type + ']' === objectToString.call(obj)
+  }
+}
+
+/**
+  * 指定方法后的返回值组成的新对象
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+function objectMap (obj, iteratee, context) {
+  var result = {}
+  each(obj, function (val, index) {
+    result[index] = iteratee.call(context || this, val, index, obj)
+  })
+  return result
+}
+
+function cloneObj (obj) {
+  var result = {}
+  each(obj, function (val, key) {
+    result[key] = deepClone(val)
+  })
+  return result
+}
+
+function cloneArr (arr) {
+  return XEUtils.arrayMap(arr, deepClone)
+}
+
+function deepClone (obj) {
+  return isPlainObject(obj) ? cloneObj(obj) : isArray(obj) ? cloneArr(obj) : obj
+}
+
+/**
+  * 浅拷贝/深拷贝
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Boolean} deep 是否深拷贝
+  * @return {Object}
+  */
+function clone (obj, deep) {
+  if (obj) {
+    return deep ? deepClone(obj) : objectAssign(isPlainObject(obj) ? {} : [], obj)
+  }
+  return obj
+}
+
+/**
+  * 创建一个绑定上下文的函数
+  *
+  * @param {Function} callback 函数
+  * @param {Object} context 上下文
+  * @param {*} amgs 额外的参数
+  * @return {Object}
+  */
+function bind (callback, context) {
+  var amgs = XEUtils.from(arguments).slice(2)
+  context = context || this
+  return function () {
+    return callback.apply(context, XEUtils.from(arguments).concat(amgs))
+  }
+}
+
+/**
+  * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
+  *
+  * @param {Function} callback 函数
+  * @param {Object} context 上下文
+  * @param {*} amgs 额外的参数
+  * @return {Object}
+  */
+function once (callback, context) {
+  var done = false
+  var rest = null
+  var amgs = XEUtils.from(arguments).slice(2)
+  context = context || this
+  return function () {
+    if (done) {
+      return rest
+    }
+    rest = callback.apply(context, XEUtils.from(arguments).concat(amgs))
+    done = true
+    return rest
+  }
+}
+
+/**
+  * 判断是否Undefined
+  *
+  * @param {Object} obj 对象
+  * @return {Boolean}
+  */
+var isUndefined = createInTypeof(STRING_UNDEFINED)
 
 /**
   * 判断是否数组
@@ -10,9 +117,7 @@ var objectToString = Object.prototype.toString
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-var isArray = Array.isArray || function (obj) {
-  return objectToString.call(obj) === '[object Array]'
-}
+var isArray = Array.isArray || createInInObjectString('Array')
 
 /**
   * 判断是否小数
@@ -38,9 +143,7 @@ var isInteger = Number.isInteger
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isFunction (obj) {
-  return typeof obj === 'function'
-}
+var isFunction = createInTypeof('function')
 
 /**
   * 判断是否Boolean对象
@@ -48,9 +151,7 @@ function isFunction (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isBoolean (obj) {
-  return typeof obj === 'boolean'
-}
+var isBoolean = createInTypeof('boolean')
 
 /**
   * 判断是否String对象
@@ -58,9 +159,7 @@ function isBoolean (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isString (obj) {
-  return typeof obj === 'string'
-}
+var isString = createInTypeof('string')
 
 /**
   * 判断是否Number对象
@@ -68,9 +167,7 @@ function isString (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isNumber (obj) {
-  return typeof obj === 'number'
-}
+var isNumber = createInTypeof('number')
 
 /**
   * 判断是否RegExp对象
@@ -78,9 +175,7 @@ function isNumber (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isRegExp (obj) {
-  return objectToString.call(obj) === '[object RegExp]'
-}
+var isRegExp = createInInObjectString('RegExp')
 
 /**
   * 判断是否Object对象
@@ -88,9 +183,7 @@ function isRegExp (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isObject (obj) {
-  return typeof obj === 'object'
-}
+var isObject = createInTypeof('object')
 
 /**
   * 判断是否对象
@@ -108,9 +201,7 @@ function isPlainObject (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isDate (obj) {
-  return objectToString.call(obj) === '[object Date]'
-}
+var isDate = createInInObjectString('Date')
 
 /**
   * 判断是否Error对象
@@ -118,9 +209,7 @@ function isDate (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isError (obj) {
-  return objectToString.call(obj) === '[object Error]'
-}
+var isError = createInInObjectString('Error')
 
 /**
   * 判断是否TypeError对象
@@ -164,8 +253,9 @@ function isNull (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
+var supportSymbol = typeof Symbol !== STRING_UNDEFINED
 function isSymbol (obj) {
-  return typeof Symbol !== 'undefined' && Symbol.isSymbol ? Symbol.isSymbol(obj) : (typeof obj === 'symbol')
+  return supportSymbol && Symbol.isSymbol ? Symbol.isSymbol(obj) : (typeof obj === 'symbol')
 }
 
 /**
@@ -174,9 +264,7 @@ function isSymbol (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-function isArguments (obj) {
-  return objectToString.call(obj) === '[object Arguments]'
-}
+var isArguments = createInInObjectString('Arguments')
 
 /**
   * 判断是否Element对象
@@ -194,8 +282,9 @@ function isElement (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
+var supportDocument = typeof document !== STRING_UNDEFINED
 function isDocument (obj) {
-  return obj && obj.nodeType === 9 && typeof document !== 'undefined'
+  return obj && obj.nodeType === 9 && supportDocument
 }
 
 /**
@@ -204,8 +293,9 @@ function isDocument (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
+var supportWindow = typeof window !== STRING_UNDEFINED
 function isWindow (obj) {
-  return obj && obj === obj.window && typeof window !== 'undefined'
+  return obj && obj === obj.window && supportWindow
 }
 
 /**
@@ -214,8 +304,9 @@ function isWindow (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
   */
+var supportFormData = typeof FormData !== STRING_UNDEFINED
 function isFormData (obj) {
-  return typeof FormData !== 'undefined' && obj instanceof FormData
+  return supportFormData && obj instanceof FormData
 }
 
 /**
@@ -224,8 +315,9 @@ function isFormData (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
  */
+var supportMap = typeof Map !== STRING_UNDEFINED
 function isMap (obj) {
-  return typeof Map !== 'undefined' && obj instanceof Map
+  return supportMap && obj instanceof Map
 }
 
 /**
@@ -234,8 +326,9 @@ function isMap (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
  */
+var supportWeakMap = typeof WeakMap !== STRING_UNDEFINED
 function isWeakMap (obj) {
-  return typeof WeakMap !== 'undefined' && obj instanceof WeakMap
+  return supportWeakMap && obj instanceof WeakMap
 }
 
 /**
@@ -244,8 +337,9 @@ function isWeakMap (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
  */
+var supportSet = typeof Set !== STRING_UNDEFINED
 function isSet (obj) {
-  return typeof Set !== 'undefined' && obj instanceof Set
+  return supportSet && obj instanceof Set
 }
 
 /**
@@ -254,8 +348,9 @@ function isSet (obj) {
   * @param {Object} obj 对象
   * @return {Boolean}
  */
+var supportWeakSet = typeof WeakSet !== STRING_UNDEFINED
 function isWeakSet (obj) {
-  return typeof WeakSet !== 'undefined' && obj instanceof WeakSet
+  return supportWeakSet && obj instanceof WeakSet
 }
 
 /**
@@ -593,94 +688,10 @@ function groupBy (obj, iteratee, context) {
   return result
 }
 
-/**
-  * 指定方法后的返回值组成的新对象
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
-function objectMap (obj, iteratee, context) {
-  var result = {}
-  each(obj, function (val, index) {
-    result[index] = iteratee.call(context || this, val, index, obj)
-  })
-  return result
-}
-
-function cloneObj (obj) {
-  var result = {}
-  each(obj, function (val, key) {
-    result[key] = deepClone(val)
-  })
-  return result
-}
-
-function cloneArr (arr) {
-  return XEUtils.arrayMap(arr, deepClone)
-}
-
-function deepClone (obj) {
-  return isPlainObject(obj) ? cloneObj(obj) : isArray(obj) ? cloneArr(obj) : obj
-}
-
-/**
-  * 浅拷贝/深拷贝
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Boolean} deep 是否深拷贝
-  * @return {Object}
-  */
-function clone (obj, deep) {
-  if (obj) {
-    return deep ? deepClone(obj) : objectAssign(isPlainObject(obj) ? {} : [], obj)
-  }
-  return obj
-}
-
-/**
-  * 创建一个绑定上下文的函数
-  *
-  * @param {Function} callback 函数
-  * @param {Object} context 上下文
-  * @param {*} amgs 额外的参数
-  * @return {Object}
-  */
-function bind (callback, context) {
-  var amgs = XEUtils.from(arguments).slice(2)
-  context = context || this
-  return function () {
-    return callback.apply(context, XEUtils.from(arguments).concat(amgs))
-  }
-}
-
-/**
-  * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
-  *
-  * @param {Function} callback 函数
-  * @param {Object} context 上下文
-  * @param {*} amgs 额外的参数
-  * @return {Object}
-  */
-function once (callback, context) {
-  var done = false
-  var rest = null
-  var amgs = XEUtils.from(arguments).slice(2)
-  context = context || this
-  return function () {
-    if (done) {
-      return rest
-    }
-    rest = callback.apply(context, XEUtils.from(arguments).concat(amgs))
-    done = true
-    return rest
-  }
-}
-
 var baseExports = {
   isNaN: isNaN,
   isFinite: isFinite,
+  isUndefined: isUndefined,
   isArray: isArray,
   isFloat: isFloat,
   isInteger: isInteger,

@@ -28,9 +28,10 @@ function arrayUniq (array) {
   * @return {Array}
   */
 function arrayUnion () {
+  var args = arguments
   var result = []
-  for (var index = 0, len = arguments.length; index < len; index++) {
-    result = result.concat(arguments[index])
+  for (var index = 0, len = args.length; index < len; index++) {
+    result = result.concat(args[index])
   }
   return arrayUniq(result)
 }

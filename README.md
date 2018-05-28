@@ -353,6 +353,7 @@ XEUtils.isWeakSet(new WeakSet()) // true
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.isLeapYear() // 判断当前年 true
 XEUtils.isLeapYear('2018-12-01') // false
 XEUtils.isLeapYear('2020-12-01') // true
 XEUtils.isLeapYear(new Date('2020/12/01')) // true
@@ -1071,7 +1072,7 @@ XEUtils.locat()
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.parseUrl('http://xuliangzhan.com:8080/demo/')
+XEUtils.parseUrl('http://xuliangzhan.com:8080/demo?id=123')
 // {
 //   hostname: 'xuliangzhan.com',
 //   protocol: 'http:',
