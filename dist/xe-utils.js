@@ -1358,7 +1358,7 @@
     * 字符串转为日期
     *
     * @param {String} str 日期或数字
-    * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、SSS毫秒)
+    * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、hh(12)HH(24)小时、mm分钟、ss秒、SSS毫秒)
     * @return {String}
     */
   function stringToDate (str, format) {
@@ -1390,36 +1390,43 @@
     return 'Invalid Date'
   }
 
+  var dateEQRules = ['日', '一', '二', '三', '四', '五', '六']
+
   /**
     * 日期格式化为字符串
     *
     * @param {Date} date 日期或数字
-    * @param {String} format 输出日期格式(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
+    * @param {String} format 输出日期格式(年份(yy|yyyy+自动补0)、月份(M|MM+自动补0)、天(d|d+自动补0)、小时(h|hh+|H|HH+自动补0)、分钟(m|mm+自动补0)、秒(s|ss+自动补0)、毫秒(S|SSS+自动补0)、E星期几、q季度)
+    * @param {Object} options {eqRules: ['日', '一', '二', '三', '四', '五', '六']} 周期和季度匹配值
     * @return {String}
     */
-  function dateToString (date, format) {
+  function dateToString (date, format, options) {
     if (date) {
       date = stringToDate(date)
       if (baseExports.isDate(date)) {
-        var weeks = ['日', '一', '二', '三', '四', '五', '六']
+        var hours = date.getHours()
+        var eqs = options && options.eqRules ? options.eqRules : dateEQRules
         var resDate = {
           'q+': Math.floor((date.getMonth() + 3) / 3),
           'M+': date.getMonth() + 1,
           'E+': date.getDay(),
           'd+': date.getDate(),
-          'H+': date.getHours(),
+          'H+': hours,
+          'h+': hours <= 12 ? hours : hours - 12,
           'm+': date.getMinutes(),
           's+': date.getSeconds(),
-          'S': date.getMilliseconds()
+          'S+': date.getMilliseconds()
         }
         var result = String(format || 'yyyy-MM-dd HH:mm:ss').replace(/(y+)/, function ($1) {
-          return ('' + date.getFullYear()).substr(4 - $1.length)
+          var len = $1.length
+          var fullYear = '' + date.getFullYear()
+          return len > 4 ? XEUtils.padStart(fullYear, len, 0) : fullYear.substr(4 - len)
         })
         for (var key in resDate) {
           if (resDate.hasOwnProperty(key)) {
             var val = '' + resDate[key]
             result = result.replace(new RegExp('(' + key + ')'), function ($1) {
-              return (key === 'q+' || key === 'E+') ? weeks[val] : ($1.length === 1 ? val : ('00' + val).substr(val.length))
+              return (key === 'q+' || key === 'E+') ? eqs[val] : XEUtils.padStart(val, $1.length, 0)
             })
           }
         }

@@ -777,17 +777,26 @@ XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') // Wed Dec 20 20
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
 
-### dateToString ( date, format ) 日期化为任意格式字符串(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
+### dateToString ( date[, format, options] ) 日期化为任意格式字符串(yyyy年份、MM月份、dd天、(hh|HH)小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
+
+(年份(yy|yyyy+自动补0)、月份(M|MM+自动补0)、天(d|d+自动补0)、小时(h|hh+|H|HH+自动补0)、分钟(m|mm+自动补0)、秒(s|ss+自动补0)、毫秒(S|SS+自动补0)、E星期几、q季度)
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.dateToString(1513735830000) // '2017-12-20 10:10:30'
-XEUtils.dateToString(new Date()) // '2017-12-20 10:10:30'
-XEUtils.dateToString('2017-12-20 10:10:30', 'MM/dd/yyyy') // '12/20/2017'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-12-20'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.S') // '2017-12-20 10:10:30.100'
-XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年12月20日 10时10分30秒100毫秒,星期三 第四季度'
+XEUtils.dateToString(1513735830000) // '2017-01-01 14:05:30'
+XEUtils.dateToString(new Date()) // '2017-01-01 14:05:30'
+XEUtils.dateToString('2017-01-01 10:05:30', 'MM/dd/yyyy') // '01/01/2017'
+XEUtils.dateToString('2017-01-01 10:05:30', 'M/d/yyyy') // '1/1/2017'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-01-01'
+XEUtils.dateToString(new Date(), 'yy-M-d') // '17-1-1'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS') // '2017-01-01 14:05:30.099'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS') // '2017-01-01 02:05:30.099'
+XEUtils.dateToString(new Date(), 'yy-M-d H:m:s.S') // '2017-1-1 14:5:30.99'
+XEUtils.dateToString(new Date(), 'yy-M-d h:m:s.S') // '2017-1-1 2:5:30.99'
+XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年01月01日 14时05分30秒99毫秒,星期三 第四季度'
+XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度') // '17年1月1日 14时5分30秒99毫秒,星期三 第四季度'
+XEUtils.dateToString(new Date(), 'yy年M月d日 hh时m分s秒S毫秒,星期E 第q季度') // '17年1月1日 2时5分30秒99毫秒,星期三 第四季度'
 ```
 
 ### getWhatYear ( date, year ) 返回前几年或后几年的日期
