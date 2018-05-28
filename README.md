@@ -101,6 +101,15 @@ XEUtils.isFinite(0) // true
 XEUtils.isFinite(2e64) // true
 ```
 
+### isUndefined (val) 判断Undefined
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.isUndefined(0) // false
+XEUtils.isUndefined() // true
+```
+
 ### isArray (val) 判断是否数组
 
 ```JavaScript
