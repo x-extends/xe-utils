@@ -811,7 +811,7 @@ XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') // Wed Dec 20 20
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
 
-### dateToString ( date[, format, options] ) 日期化为任意格式字符串
+### dateToString ( date[, format, options] ) 日期格式化为任意格式字符串
 
 | 属性 | 描述 | 备注 |
 |------|------|------|
