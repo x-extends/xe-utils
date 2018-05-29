@@ -847,13 +847,15 @@ XEUtils.dateToString('2017-01-01 10:05:30', 'M/d/yyyy') // '1/1/2017'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-01-01'
 XEUtils.dateToString(new Date(), 'yy-M-d') // '17-1-1'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS') // '2017-01-01 14:05:30.099'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS') // '2017-01-01 02:05:30.099'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSSZ') // '2017-01-01 02:05:30.099+0800'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZ') // '2017-01-01 02:05:30.099 GMT+0800'
 XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S') // '2017-11-20 2:5:30.99'
 XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S') // '2017-1-1 14:5:30.99'
 XEUtils.dateToString(new Date(), 'yyyy-M-d h:m:s.S') // '2017-1-1 2:5:30.99'
 XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年01月01日 14时05分30秒99毫秒,星期3 第4季度'
 XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度') // '17年1月1日 14时5分30秒99毫秒,星期3 第4季度'
-XEUtils.dateToString(new Date(), 'M月d日yyyy年 hh时m分s秒S毫秒,星期E 第q季度') // '1月1日2017年 2时5分30秒99毫秒,星期3 第4季度'
+XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E 第q季度 今年第D天 今年第w周 当月第W周 时区zZ')
+// 2018年05月29日 09时44分46秒647毫秒 星期2 第2季度 今年第149天 今年第22周 当月第4周 时区GMT+0800
 ```
 
 ### getWhatYear ( date, year, month ) 返回前几年或后几年的日期,可以指定年初或年末，默认当前
