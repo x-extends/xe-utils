@@ -76,6 +76,19 @@ stringToDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国
 import XEUtils from 'xe-utils'
 ```
 
+## 全局参数设置
+
+```JavaScript
+import XEUtils from 'xe-ajax'
+
+XEUtils.setup({
+  formats : {
+    W: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+    q: ['第一季度', '第二季度', '第三季度', '第四季度']
+  }
+})
+```
+
 ## API
 
 ### isNaN (val) 判断是否非数值
@@ -776,7 +789,17 @@ XEUtils.now() // 1514096716800
 timestamp() // 1514096716800
 ```
 
-### stringToDate ( str, format ) 任意格式字符串转为日期(yyyy年份、MM月份、dd天、HH小时、mm分钟、ss秒、SSS毫秒)
+### stringToDate ( str, format ) 任意格式字符串转为日期
+
+| 属性 | 描述 |
+|------|------|
+| yyyy | 年份 |
+| MM | 月份 |
+| dd | 日 |
+| HH | 小时 |
+| mm | 分钟 |
+| ss | 秒 |
+| SSS | 毫秒 |
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -788,9 +811,31 @@ XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') // Wed Dec 20 20
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
 
-### dateToString ( date[, format, options] ) 日期化为任意格式字符串(yyyy年份、MM月份、dd天、(hh|HH)小时、mm分钟、ss秒、S毫秒、E星期几、q季度)
+### dateToString ( date[, format, options] ) 日期化为任意格式字符串
 
-(年份(yy|yyyy+自动补0)、月份(M|MM+自动补0)、天(d|d+自动补0)、小时(h|hh+|H|HH+自动补0)、分钟(m|mm+自动补0)、秒(s|ss+自动补0)、毫秒(S|SS+自动补0)、E星期几、q季度)
+| 属性 | 描述 | 备注 |
+|------|------|------|
+| yy | 年份 | 自动截取后两位 |
+| yyyy | 年份 |  |
+| M | 月份 |  |
+| MM | 月份 | 自动补0 |
+| d | 日 |  |
+| dd | 日 | 自动补0 |
+| H | 小时 |  |
+| HH | 小时 | 自动补0 |
+| m | 分钟 |  |
+| mm | 分钟 | 自动补0 |
+| s | 秒 |  |
+| ss | 秒 | 自动补0 |
+| S | 毫秒 |  |
+| SSS | 毫秒 | 自动补0 |
+| D | 年份的第几天 |  |
+| E | 星期几 |  |
+| q | 季度 |  |
+| w | 年份的第几周 |  |
+| W | 月份的第几周 |  |
+| z | 时区 |  |
+| Z | 时区值 |  |
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -804,14 +849,14 @@ XEUtils.dateToString(new Date(), 'yy-M-d') // '17-1-1'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS') // '2017-01-01 14:05:30.099'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS') // '2017-01-01 02:05:30.099'
 XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S') // '2017-11-20 2:5:30.99'
-XEUtils.dateToString(new Date(), 'yy-M-d H:m:s.S') // '2017-1-1 14:5:30.99'
-XEUtils.dateToString(new Date(), 'yy-M-d h:m:s.S') // '2017-1-1 2:5:30.99'
-XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年01月01日 14时05分30秒99毫秒,星期三 第四季度'
-XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度') // '17年1月1日 14时5分30秒99毫秒,星期三 第四季度'
-XEUtils.dateToString(new Date(), 'yy年M月d日 hh时m分s秒S毫秒,星期E 第q季度') // '17年1月1日 2时5分30秒99毫秒,星期三 第四季度'
+XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S') // '2017-1-1 14:5:30.99'
+XEUtils.dateToString(new Date(), 'yyyy-M-d h:m:s.S') // '2017-1-1 2:5:30.99'
+XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年01月01日 14时05分30秒99毫秒,星期3 第4季度'
+XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度') // '17年1月1日 14时5分30秒99毫秒,星期3 第4季度'
+XEUtils.dateToString(new Date(), 'M月d日yyyy年 hh时m分s秒S毫秒,星期E 第q季度') // '1月1日2017年 2时5分30秒99毫秒,星期3 第4季度'
 ```
 
-### getWhatYear ( date, year ) 返回前几年或后几年的日期
+### getWhatYear ( date, year, month ) 返回前几年或后几年的日期,可以指定年初或年末，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -869,6 +914,36 @@ XEUtils.getDaysOfYear(1513735830000) // 365
 XEUtils.getDaysOfYear('2017-12-20') // 365
 XEUtils.getDaysOfYear('2019-12-20', 1) // 366
 XEUtils.getDaysOfYear('2020-12-20') // 366
+```
+
+### getYearDay ( date ) 返回当前年的第几天
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.getYearDay(new Date()) // 149
+XEUtils.getYearDay('2017-01-20') // 20
+XEUtils.getYearDay('2018-05-20') // 140
+```
+
+### getYearWeek ( date ) 返回当前年的第几周
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.getYearWeek(new Date()) // 22
+XEUtils.getYearWeek('2017-01-20') // 3
+XEUtils.getYearWeek('2018-05-20') // 20
+```
+
+### getMonthWeek ( date ) 返回当前月的第几周
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.getMonthWeek(new Date()) // 4
+XEUtils.getMonthWeek('2017-01-20') // 3
+XEUtils.getMonthWeek('2018-05-20') // 2
 ```
 
 ### getDaysOfMonth ( date, month ) 返回当前月份的天数,可以指定前几个月或后几个月，默认当前

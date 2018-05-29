@@ -1,7 +1,11 @@
 'use strict'
 
 var XEUtils = require('../core/utils')
+var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
+
+var DAY_TIME = 86400000
+var WEEK_TIME = DAY_TIME * 7
 
 /**
  * 返回时间戳
@@ -32,7 +36,7 @@ var dateFormatRules = [
 function stringToDate (str, format) {
   if (str) {
     if (baseExports.isDate(str)) {
-      return str
+      return new Date(str.getTime())
     }
     if (/^[0-9]{11,13}$/.test(str)) {
       return new Date(str)
@@ -58,45 +62,58 @@ function stringToDate (str, format) {
   return 'Invalid Date'
 }
 
-var dateEQRules = ['日', '一', '二', '三', '四', '五', '六']
+function handleCustomTemplate (date, formats, match, value) {
+  var format = formats[match]
+  if (format) {
+    if (baseExports.isFunction(format)) {
+      return format(value, match, date)
+    } else {
+      return format[value]
+    }
+  }
+  return value
+}
 
 /**
   * 日期格式化为字符串
   *
   * @param {Date} date 日期或数字
-  * @param {String} format 输出日期格式(年份(yy|yyyy+自动补0)、月份(M|MM+自动补0)、天(d|d+自动补0)、小时(h|hh+|H|HH+自动补0)、分钟(m|mm+自动补0)、秒(s|ss+自动补0)、毫秒(S|SSS+自动补0)、E星期几、q季度)
-  * @param {Object} options {eqRules: ['日', '一', '二', '三', '四', '五', '六']} 周期和季度匹配值
+  * @param {String} format 输出日期格式(年份(yy|yyyy)、月份(M|MM自动补0)、天(d|dd自动补0)、12小时制(h|hh自动补0)、24小时制(H|HH自动补0)、分钟(m|mm自动补0)、秒(s|ss自动补0)、毫秒(S|SSS自动补0)、D当年的第几天、E星期几、w当年的第几周、W当月的第几周、q当年第几个季度、z时区、Z时区值)
+  * @param {Object} options {formats: {q: ['日', '一', '二', '三', '四', '五', '六'], E: function (value, match, date) {return '三'}, }} 自定义格式化模板
   * @return {String}
   */
 function dateToString (date, format, options) {
   if (date) {
     date = stringToDate(date)
     if (baseExports.isDate(date)) {
+      var empty = ''
+      var result = empty + (format || 'yyyy-MM-dd HH:mm:ss')
       var hours = date.getHours()
-      var eqs = options && options.eqRules ? options.eqRules : dateEQRules
-      var resDate = {
-        'q+': Math.floor((date.getMonth() + 3) / 3),
-        'M+': date.getMonth() + 1,
-        'E+': date.getDay(),
-        'd+': date.getDate(),
-        'H+': hours,
-        'h+': hours <= 12 ? hours : hours - 12,
-        'm+': date.getMinutes(),
-        's+': date.getSeconds(),
-        'S+': date.getMilliseconds()
-      }
-      var result = String(format || 'yyyy-MM-dd HH:mm:ss').replace(/(y+)/, function ($1) {
-        var len = $1.length
-        var fullYear = '' + date.getFullYear()
-        return len > 4 ? XEUtils.padStart(fullYear, len, 0) : fullYear.substr(4 - len)
-      })
-      for (var key in resDate) {
-        if (resDate.hasOwnProperty(key)) {
-          var val = '' + resDate[key]
-          result = result.replace(new RegExp('(' + key + ')'), function ($1) {
-            return (key === 'q+' || key === 'E+') ? eqs[val] : XEUtils.padStart(val, $1.length, 0)
-          })
-        }
+      var fullYear = empty + date.getFullYear()
+      var zoneHours = date.getTimezoneOffset() / 60 * -1
+      var formats = baseExports.objectAssign({}, setupDefaults.formats, options && options.formats ? options.formats : null)
+      var timeRules = [
+        [/y{2,4}/g, fullYear, function (match) { return fullYear.substr(4 - match.length) }],
+        [/M{1,2}/g, date.getMonth() + 1],
+        [/d{1,2}/g, date.getDate()],
+        [/H{1,2}/g, hours],
+        [/h{1,2}/g, hours <= 12 ? hours : hours - 12],
+        [/m{1,2}/g, date.getMinutes()],
+        [/s{1,2}/g, date.getSeconds()],
+        [/S{1,3}/g, date.getMilliseconds()],
+        [/z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
+        [/E/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
+        [/q/g, empty, function (match) { return handleCustomTemplate(date, formats, match, Math.floor((date.getMonth() + 3) / 3)) }],
+        [/Z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + XEUtils.padStart(zoneHours, 2, 0) + '00') }],
+        [/W/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
+        [/w/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
+        [/D/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearDay(date)) }]
+      ]
+      for (var index = 0; index < timeRules.length; index++) {
+        var item = timeRules[index]
+        result = result.replace(item[0], item[2] || function (match) {
+          return XEUtils.padStart(item[1], match.length, 0)
+        })
       }
       return result
     }
@@ -110,13 +127,21 @@ function dateToString (date, format, options) {
   *
   * @param {Date} date 日期或数字
   * @param {String} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
+  * @param {String} mode 获取哪月(默认当前年)、年初(first)、年末(last)
   * @return {Date}
   */
-function getWhatYear (date, year) {
+function getWhatYear (date, year, mode) {
   var currentDate = stringToDate(date)
   if (year) {
     var number = year && !isNaN(year) ? year : 0
     currentDate.setFullYear(currentDate.getFullYear() + number)
+  }
+  if (mode === 'first') {
+    currentDate.setMonth(0)
+    currentDate.setDate(1)
+  } else if (mode === 'last') {
+    currentDate.setMonth(11)
+    return getWhatMonth(currentDate, 0, 'last')
   }
   return currentDate
 }
@@ -144,7 +169,7 @@ function getWhatMonth (date, month, mode) {
     }
     return new Date(oldY + Math.floor(oldM / 12), oldM % 12, 1, oldH, oldm, olds, oldS)
   } else if (mode === 'last') {
-    return new Date(getWhatMonth(currentDate, number + 1, 'first').getTime() - 86400000)
+    return new Date(getWhatMonth(currentDate, number + 1, 'first').getTime() - DAY_TIME)
   }
   var oldD = currentDate.getDate()
   var dateTime = getWhatMonth(currentDate, number, 'first')
@@ -169,9 +194,9 @@ function getWhatWeek (date, week, mode) {
   var customDay = Number(/^[0-7]$/.test(mode) ? mode : currentDate.getDay())
   var currentDay = currentDate.getDay()
   var time = currentDate.getTime()
-  var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * 86400000
+  var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
   if (week && !isNaN(week)) {
-    whatDayTime += week * 604800000
+    whatDayTime += week * WEEK_TIME
   }
   return new Date(whatDayTime)
 }
@@ -186,9 +211,61 @@ function getWhatWeek (date, week, mode) {
 function getWhatDay (date, day) {
   var currentDate = stringToDate(date)
   if (day) {
-    return new Date(currentDate.getTime() + (day && !isNaN(day) ? day * 86400000 : 0))
+    return new Date(currentDate.getTime() + (day && !isNaN(day) ? day * DAY_TIME : 0))
   }
   return currentDate
+}
+
+function calculateTime (startDate, endDate, timeGap) {
+  return Math.floor((new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()).getTime() - new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime()) / timeGap) + 1
+}
+
+/**
+  * 返回当月的第几周
+  *
+  * @param {Date} date 日期或数字
+  * @return {Number}
+  */
+function getMonthWeek (date) {
+  var currentDate = stringToDate(date)
+  var monthFirst = getWhatMonth(date, 0, 'first')
+  var monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
+  if (monthFirstWeek < monthFirst) {
+    monthFirstWeek = getWhatWeek(monthFirst, 1, 1)
+  }
+  if (currentDate >= monthFirstWeek) {
+    return calculateTime(monthFirstWeek, currentDate, WEEK_TIME)
+  }
+  return 0
+}
+
+/**
+  * 返回当前年的第几天
+  *
+  * @param {Date} date 日期或数字
+  * @return {Number}
+  */
+function getYearDay (date) {
+  return calculateTime(getWhatYear(date, 0, 'first'), stringToDate(date), DAY_TIME)
+}
+
+/**
+  * 返回当前年的第几周
+  *
+  * @param {Date} date 日期或数字
+  * @return {Number}
+  */
+function getYearWeek (date) {
+  var currentDate = stringToDate(date)
+  var yearFirst = getWhatYear(date, 0, 'first')
+  var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
+  if (yearFirstWeek < yearFirst) {
+    yearFirstWeek = getWhatWeek(yearFirst, 1, 1)
+  }
+  if (currentDate >= yearFirstWeek) {
+    return calculateTime(yearFirstWeek, currentDate, WEEK_TIME)
+  }
+  return 0
 }
 
 /**
@@ -210,10 +287,10 @@ function getDaysOfYear (date, month) {
   * @return {Number}
   */
 function getDaysOfMonth (date, month) {
-  return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / 86400000) + 1
+  return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / DAY_TIME) + 1
 }
 
-var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
+var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', DAY_TIME], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
 
 /**
   * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
@@ -258,6 +335,9 @@ var dateExports = {
   getWhatMonth: getWhatMonth,
   getWhatWeek: getWhatWeek,
   getWhatDay: getWhatDay,
+  getYearDay: getYearDay,
+  getYearWeek: getYearWeek,
+  getMonthWeek: getMonthWeek,
   getDaysOfYear: getDaysOfYear,
   getDaysOfMonth: getDaysOfMonth,
   getDateDiff: getDateDiff

@@ -1,6 +1,7 @@
 'use strict'
 
 var XEUtils = require('./utils')
+var setupDefaults = require('./setup')
 var methodExports = require('../method')
 
 /**
@@ -16,6 +17,10 @@ XEUtils.mixin = function (methods) {
       return result
     } : fn
   })
+}
+
+XEUtils.setup = function (options) {
+  methodExports.objectAssign(setupDefaults, options)
 }
 
 XEUtils.mixin(methodExports)
