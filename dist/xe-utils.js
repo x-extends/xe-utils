@@ -1601,14 +1601,16 @@
     * @return {Number}
     */
   function getMonthWeek (date) {
-    var currentDate = stringToDate(date)
-    var monthFirst = getWhatMonth(date, 0, 'first')
-    var monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
-    if (monthFirstWeek < monthFirst) {
-      monthFirstWeek = getWhatWeek(monthFirst, 1, 1)
-    }
-    if (currentDate >= monthFirstWeek) {
-      return calculateTime(monthFirstWeek, currentDate, WEEK_TIME)
+    if (date) {
+      var currentDate = stringToDate(date)
+      var monthFirst = getWhatMonth(date, 0, 'first')
+      var monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
+      if (monthFirstWeek < monthFirst) {
+        monthFirstWeek = getWhatWeek(monthFirst, 1, 1)
+      }
+      if (currentDate >= monthFirstWeek) {
+        return calculateTime(monthFirstWeek, currentDate, WEEK_TIME)
+      }
     }
     return 0
   }
@@ -1620,7 +1622,10 @@
     * @return {Number}
     */
   function getYearDay (date) {
-    return calculateTime(getWhatYear(date, 0, 'first'), stringToDate(date), DAY_TIME)
+    if (date) {
+      return calculateTime(getWhatYear(date, 0, 'first'), stringToDate(date), DAY_TIME)
+    }
+    return 0
   }
 
   /**
@@ -1630,14 +1635,16 @@
     * @return {Number}
     */
   function getYearWeek (date) {
-    var currentDate = stringToDate(date)
-    var yearFirst = getWhatYear(date, 0, 'first')
-    var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
-    if (yearFirstWeek < yearFirst) {
-      yearFirstWeek = getWhatWeek(yearFirst, 1, 1)
-    }
-    if (currentDate >= yearFirstWeek) {
-      return calculateTime(yearFirstWeek, currentDate, WEEK_TIME)
+    if (date) {
+      var currentDate = stringToDate(date)
+      var yearFirst = getWhatYear(date, 0, 'first')
+      var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
+      if (yearFirstWeek < yearFirst) {
+        yearFirstWeek = getWhatWeek(yearFirst, 1, 1)
+      }
+      if (currentDate >= yearFirstWeek) {
+        return calculateTime(yearFirstWeek, currentDate, WEEK_TIME)
+      }
     }
     return 0
   }
@@ -1650,7 +1657,10 @@
     * @return {Number}
     */
   function getDaysOfYear (date, month) {
-    return baseExports.isLeapYear(getWhatYear(date, month)) ? 366 : 365
+    if (date) {
+      return baseExports.isLeapYear(getWhatYear(date, month)) ? 366 : 365
+    }
+    return 0
   }
 
   /**
@@ -1661,7 +1671,10 @@
     * @return {Number}
     */
   function getDaysOfMonth (date, month) {
-    return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / DAY_TIME) + 1
+    if (date) {
+      return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / DAY_TIME) + 1
+    }
+    return 0
   }
 
   var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', DAY_TIME], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
