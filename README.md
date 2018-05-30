@@ -892,7 +892,7 @@ XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星
 // 2018年05月29日 09时44分46秒647毫秒 星期2 1 第2季度 今年第149天 今年第22周 当月第4周 am AM 时区GMT+0800
 ```
 
-### getWhatYear ( date, year, month ) 返回前几年或后几年的日期,可以指定年初或年末，默认当前
+### getWhatYear ( date, year, month ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -903,7 +903,7 @@ XEUtils.getWhatYear('2017-12-20', -1) // Tue Dec 20 2016 00:00:00 GMT+0800 (中�
 XEUtils.getWhatYear('2017-12-20', 1) // Thu Dec 20 2018 00:00:00 GMT+0800 (中国标准时间)
 ```
 
-### getWhatMonth ( date, mode, month ) 返回前几月或后几月的日期,可以指定月初或月末，默认当前
+### getWhatMonth ( date, mode, month ) 返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -916,7 +916,7 @@ XEUtils.getWhatMonth('2017-12-20', -1, 'first') // Wed Nov 01 2017 00:00:00 GMT+
 XEUtils.getWhatMonth('2017-12-20', 1, 'last') // Wed Jan 31 2018 00:00:00 GMT+0800 (中国标准时间)
 ```
 
-### getWhatWeek ( date, mode, week ) 返回前几周或后几周的日期,可以指定星期几，默认当前
+### getWhatWeek ( date, mode, week ) 返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'
