@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.5.35
+ * xe-utils.js v1.6.0
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,10 +13,14 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.5.35'
+  XEUtils.version = '1.6.0'
 
+  var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
-    formats: null
+    formatDate: formatString + '.SSS',
+    formatString: formatString,
+    formatStringMatchs: null,
+    dateDiffRules: [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
   }
 
   /**
@@ -1010,6 +1014,32 @@
   }
 
   /**
+    * 清空对象
+    *
+    * @param {Object} obj 对象
+    * @param {Object} defs 默认值
+    * @return {Object}
+    */
+  function clearObject (obj, defs) {
+    if (obj) {
+      if (isPlainObject(obj)) {
+        objectEach(obj, function (val, key) {
+          try {
+            delete obj[key]
+          } catch (e) {
+            obj[key] = undefined
+          }
+        })
+        objectAssign(obj, defs)
+      } else if (isArray(obj)) {
+        obj.length = 0
+        obj.push.apply(obj, defs)
+      }
+    }
+    return obj
+  }
+
+  /**
     * 获取对象所有属性
     *
     * @param {Object} obj 对象/数组
@@ -1227,7 +1257,8 @@
     objectMap: objectMap,
     clone: clone,
     bind: bind,
-    once: once
+    once: once,
+    clearObject: clearObject
   }
 
   function isMobile () {
@@ -1391,7 +1422,7 @@
   }
 
   var dateFormatRules = [
-    { rules: [['yyyy', 4], ['yyy', 3], ['yy', 2]] },
+    { rules: [['yyyy', 4], ['yy', 2]] },
     { rules: [['MM', 2], ['M', 1]], offset: -1 },
     { rules: [['dd', 2], ['d', 1]] },
     { rules: [['HH', 2], ['H', 1]] },
@@ -1399,6 +1430,20 @@
     { rules: [['ss', 2], ['s', 1]] },
     { rules: [['SSS', 3], ['SS', 2], ['S', 1]] }
   ]
+
+  /**
+   * 比较两个日期
+   *
+   * @param {Number/String/Date} date1 日期
+   * @param {Number/String/Date} date2 日期
+   * @param {String} format 格式化
+   */
+  function isDateSame (date1, date2, format) {
+    if (date1 && date2) {
+      return dateToString(date1, format) === dateToString(date2, format)
+    }
+    return false
+  }
 
   /**
     * 字符串转为日期
@@ -1416,7 +1461,7 @@
         return new Date(str)
       }
       if (baseExports.isString(str)) {
-        format = format || 'yyyy-MM-dd HH:mm:ss.SSS'
+        format = format || setupDefaults.formatDate
         var dates = []
         baseExports.arrayEach(dateFormatRules, function (item) {
           for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
@@ -1452,7 +1497,7 @@
     * 日期格式化为字符串
     *
     * @param {Date} date 日期或数字
-    * @param {String} format 输出日期格式(年份(yy|yyyy)、月份(M|MM自动补0)、天(d|dd自动补0)、12小时制(h|hh自动补0)、24小时制(H|HH自动补0)、分钟(m|mm自动补0)、秒(s|ss自动补0)、毫秒(S|SSS自动补0)、D当年的第几天、E星期几、w当年的第几周、W当月的第几周、q当年第几个季度、z时区、Z时区值)
+    * @param {String} format 输出日期格式(年份(yy|yyyy)、月份(M|MM自动补0)、天(d|dd自动补0)、12小时制(h|hh自动补0)、24小时制(H|HH自动补0)、分钟(m|mm自动补0)、秒(s|ss自动补0)、毫秒(S|SSS自动补0)、D当年的第几天、a/A上午下午、e/E星期几、w当年的第几周、W当月的第几周、q当年第几个季度、z时区、Z时区值)
     * @param {Object} options {formats: {q: ['日', '一', '二', '三', '四', '五', '六'], E: function (value, match, date) {return '三'}, }} 自定义格式化模板
     * @return {String}
     */
@@ -1461,13 +1506,13 @@
       date = stringToDate(date)
       if (baseExports.isDate(date)) {
         var empty = ''
-        var result = empty + (format || 'yyyy-MM-dd HH:mm:ss')
+        var result = format || setupDefaults.formatString
         var hours = date.getHours()
-        var fullYear = empty + date.getFullYear()
+        var apm = hours < 12 ? 'am' : 'pm'
         var zoneHours = date.getTimezoneOffset() / 60 * -1
-        var formats = baseExports.objectAssign({}, setupDefaults.formats, options && options.formats ? options.formats : null)
+        var formats = baseExports.objectAssign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
         var timeRules = [
-          [/y{2,4}/g, fullYear, function (match) { return fullYear.substr(4 - match.length) }],
+          [/y{2,4}/g, empty, function (match) { return (empty + date.getFullYear()).substr(4 - match.length) }],
           [/M{1,2}/g, date.getMonth() + 1],
           [/d{1,2}/g, date.getDate()],
           [/H{1,2}/g, hours],
@@ -1475,7 +1520,10 @@
           [/m{1,2}/g, date.getMinutes()],
           [/s{1,2}/g, date.getSeconds()],
           [/S{1,3}/g, date.getMilliseconds()],
+          [/a/g, empty, function (match) { return handleCustomTemplate(date, formats, match, apm) }],
+          [/A/g, empty, function (match) { return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase()) }],
           [/z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
+          [/e/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
           [/E/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
           [/q/g, empty, function (match) { return handleCustomTemplate(date, formats, match, Math.floor((date.getMonth() + 3) / 3)) }],
           [/Z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + XEUtils.padStart(zoneHours, 2, 0) + '00') }],
@@ -1656,7 +1704,7 @@
     * @param {Number} month 年(默认当年)、前几个年、后几个年
     * @return {Number}
     */
-  function getDaysOfYear (date, month) {
+  function getDayOfYear (date, month) {
     if (date) {
       return baseExports.isLeapYear(getWhatYear(date, month)) ? 366 : 365
     }
@@ -1670,14 +1718,12 @@
     * @param {Number} month 月(默认当月)、前几个月、后几个月
     * @return {Number}
     */
-  function getDaysOfMonth (date, month) {
+  function getDayOfMonth (date, month) {
     if (date) {
       return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / DAY_TIME) + 1
     }
     return 0
   }
-
-  var dateDiffRules = [['yyyy', 31536000000], ['MM', 2592000000], ['dd', DAY_TIME], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
 
   /**
     * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
@@ -1694,7 +1740,7 @@
     if (startTime < endTime) {
       var item
       var diffTime = endTime - startTime
-      var rule = rules && rules.length > 0 ? rules : dateDiffRules
+      var rule = rules && rules.length > 0 ? rules : setupDefaults.dateDiffRules
       result.done = true
       for (var index = 0, len = rule.length; index < len; index++) {
         item = rule[index]
@@ -1716,6 +1762,7 @@
   var dateExports = {
     timestamp: timestamp,
     now: timestamp,
+    isDateSame: isDateSame,
     stringToDate: stringToDate,
     dateToString: dateToString,
     getWhatYear: getWhatYear,
@@ -1725,8 +1772,8 @@
     getYearDay: getYearDay,
     getYearWeek: getYearWeek,
     getMonthWeek: getMonthWeek,
-    getDaysOfYear: getDaysOfYear,
-    getDaysOfMonth: getDaysOfMonth,
+    getDayOfYear: getDayOfYear,
+    getDayOfMonth: getDayOfMonth,
     getDateDiff: getDateDiff
   }
 

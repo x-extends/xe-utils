@@ -548,6 +548,32 @@ function jsonToString (obj) {
 }
 
 /**
+  * 清空对象
+  *
+  * @param {Object} obj 对象
+  * @param {Object} defs 默认值
+  * @return {Object}
+  */
+function clearObject (obj, defs) {
+  if (obj) {
+    if (isPlainObject(obj)) {
+      objectEach(obj, function (val, key) {
+        try {
+          delete obj[key]
+        } catch (e) {
+          obj[key] = undefined
+        }
+      })
+      objectAssign(obj, defs)
+    } else if (isArray(obj)) {
+      obj.length = 0
+      obj.push.apply(obj, defs)
+    }
+  }
+  return obj
+}
+
+/**
   * 获取对象所有属性
   *
   * @param {Object} obj 对象/数组
@@ -765,7 +791,8 @@ var baseExports = {
   objectMap: objectMap,
   clone: clone,
   bind: bind,
-  once: once
+  once: once,
+  clearObject: clearObject
 }
 
 module.exports = baseExports

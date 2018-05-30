@@ -82,10 +82,13 @@ import XEUtils from 'xe-utils'
 import XEUtils from 'xe-ajax'
 
 XEUtils.setup({
-  formats : {
+  formatDate: 'yyyy-MM-dd HH:mm:ss.SSS',
+  formatString: 'yyyy-MM-dd HH:mm:ss',
+  formatStringMatchs : {
     W: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     q: ['第一季度', '第二季度', '第三季度', '第四季度']
-  }
+  },
+  commafys: {spaceNumber: 3, separator: ',', fixed: 0}
 })
 ```
 
@@ -381,6 +384,19 @@ XEUtils.isLeapYear('2020-12-01') // true
 XEUtils.isLeapYear(new Date('2020/12/01')) // true
 ```
 
+### isDateSame (date1, date2, format) 判断两个日期是否相同
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+// 例如：new Date() => 2018-12-01
+XEUtils.isDateSame('2018-12-01', '2018-12-01') // true
+XEUtils.isDateSame(new Date(), '2018-12-01', 'yyyy') // 判断是否同一年 true
+XEUtils.isDateSame(new Date(), XEUtils.stringToDate('12/30/2018', 'MM/dd/yyyy'), 'MM') // 判断是否同一月 true
+XEUtils.isDateSame(new Date(), new Date(), 'dd') // 判断是否同一日 true
+XEUtils.isDateSame(new Date(), new Date(), 'yyyyMMdd') // 判断是否同年同月同日 true
+```
+
 ### getType (obj) 获取对象类型
 
 ```JavaScript
@@ -474,6 +490,19 @@ var rest = XEUtils.once(function (val) {
 }, {name: 'test'})
 rest(222) // 'test = 222'
 rest(333) // 'test = 222'
+```
+
+### clearObject (obj, defs) 清空对象,支持默认值
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+var a = [11, 22, 33, 33]
+XEUtils.clearObject(a) // []
+XEUtils.clearObject(a, [11]) // [11]
+var b = {b1: 11, b2: 22}
+XEUtils.clearObject(b) // {}
+XEUtils.clearObject(b, {b1: 11}) // {b1: 11}
 ```
 
 ### assign/objectAssign/extend ([deep], target, ...) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
@@ -571,11 +600,11 @@ XEUtils.each({a: 11, b: 22}, (item, key) => {
 XEUtils.forEach([11, 22, 33], (item, index) => {
   // 数组迭代器
 })
-objectEach({a: 11, b: 22}, (item, key) => {
-  // 对象迭代器
-})
 arrayEach([11, 22, 33], (item, index) => {
   // 数组迭代器
+})
+objectEach({a: 11, b: 22}, (item, key) => {
+  // 对象迭代器
 })
 ```
 
@@ -813,29 +842,34 @@ XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // We
 
 ### dateToString ( date[, format, options] ) 日期格式化为任意格式字符串
 
-| 属性 | 描述 | 备注 |
-|------|------|------|
-| yy | 年份 | 自动截取后两位 |
+| 属性 | 描述 | 备注 | 值 |
+|------|------|------|------|
+| yy | 年份 | 自动截取后两位 |  |
 | yyyy | 年份 |  |
-| M | 月份 |  |
-| MM | 月份 | 自动补0 |
-| d | 日 |  |
-| dd | 日 | 自动补0 |
-| H | 小时 |  |
-| HH | 小时 | 自动补0 |
-| m | 分钟 |  |
-| mm | 分钟 | 自动补0 |
-| s | 秒 |  |
-| ss | 秒 | 自动补0 |
-| S | 毫秒 |  |
-| SSS | 毫秒 | 自动补0 |
-| D | 年份的第几天 |  |
-| E | 星期几 |  |
-| q | 季度 |  |
-| w | 年份的第几周 |  |
-| W | 月份的第几周 |  |
-| z | 时区 |  |
-| Z | 时区值 |  |
+| M | 月份 |  | 1~12 |
+| MM | 月份 | 自动补0 | 1~12 |
+| d | 日 |  | 1~31 |
+| dd | 日 | 自动补0 | 1~31 |
+| h | 12小时制 |  | 1~12 |
+| hh | 12小时制 | 自动补0 | 1~12 |
+| H | 24小时制 |  | 0~23 |
+| HH | 24小时制 | 自动补0 | 0~23 |
+| m | 分钟 |  | 1~59 |
+| mm | 分钟 | 自动补0 | 1~59 |
+| s | 秒 |  | 1~59 |
+| ss | 秒 | 自动补0 | 1~59 |
+| S | 毫秒 |  | 1~999 |
+| SSS | 毫秒 | 自动补0 | 1~999 |
+| a | 上午,下午 |  | am/pm |
+| A | 上午,下午 |  | AM/PM |
+| D | 年份的第几天 |  | 1~366 |
+| e | 星期几 |  |  | 0~6 |
+| E | 星期几 |  |  | 1~7 |
+| q | 季度 |  | 1~4 |
+| w | 年份的第几周 | 1~53 |
+| W | 月份的第几周 | 1~5 |
+| z | 时区 |  | GMT |
+| Z | 时区值 |  | [+-]HHmm |
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -854,8 +888,8 @@ XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S') // '2017-1-1 14:5:30.99'
 XEUtils.dateToString(new Date(), 'yyyy-M-d h:m:s.S') // '2017-1-1 2:5:30.99'
 XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度') // '2017年01月01日 14时05分30秒99毫秒,星期3 第4季度'
 XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度') // '17年1月1日 14时5分30秒99毫秒,星期3 第4季度'
-XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E 第q季度 今年第D天 今年第w周 当月第W周 时区zZ')
-// 2018年05月29日 09时44分46秒647毫秒 星期2 第2季度 今年第149天 今年第22周 当月第4周 时区GMT+0800
+XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E e 第q季度 今年第D天 今年第w周 当月第W周 a A 时区zZ')
+// 2018年05月29日 09时44分46秒647毫秒 星期2 1 第2季度 今年第149天 今年第22周 当月第4周 am AM 时区GMT+0800
 ```
 
 ### getWhatYear ( date, year, month ) 返回前几年或后几年的日期,可以指定年初或年末，默认当前
@@ -906,16 +940,16 @@ XEUtils.getWhatDay('2017-12-20', -1) // Tue Dec 19 2017 00:00:00 GMT+0800 (中�
 XEUtils.getWhatDay('2017-12-20', 1) // Tue Dec 21 2017 00:00:00 GMT+0800 (中国标准时间)
 ```
 
-### getDaysOfYear ( date, month ) 返回当前年份的天数,可以指定前几个年或后几个年，默认当前
+### getDayOfYear ( date, month ) 返回当前年份的天数,可以指定前几个年或后几个年，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.getDaysOfYear(new Date()) // 365
-XEUtils.getDaysOfYear(1513735830000) // 365
-XEUtils.getDaysOfYear('2017-12-20') // 365
-XEUtils.getDaysOfYear('2019-12-20', 1) // 366
-XEUtils.getDaysOfYear('2020-12-20') // 366
+XEUtils.getDayOfYear(new Date()) // 365
+XEUtils.getDayOfYear(1513735830000) // 365
+XEUtils.getDayOfYear('2017-12-20') // 365
+XEUtils.getDayOfYear('2019-12-20', 1) // 366
+XEUtils.getDayOfYear('2020-12-20') // 366
 ```
 
 ### getYearDay ( date ) 返回当前年的第几天
@@ -948,16 +982,16 @@ XEUtils.getMonthWeek('2017-01-20') // 3
 XEUtils.getMonthWeek('2018-05-20') // 2
 ```
 
-### getDaysOfMonth ( date, month ) 返回当前月份的天数,可以指定前几个月或后几个月，默认当前
+### getDayOfMonth ( date, month ) 返回当前月份的天数,可以指定前几个月或后几个月，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.getDaysOfMonth(new Date()) // 31
-XEUtils.getDaysOfMonth(1513735830000) // 31
-XEUtils.getDaysOfMonth('2017-12-20') // 31
-XEUtils.getDaysOfMonth('2017-12-20', -1) // 30
-XEUtils.getDaysOfMonth('2017-12-20', 1) // 31
+XEUtils.getDayOfMonth(new Date()) // 31
+XEUtils.getDayOfMonth(1513735830000) // 31
+XEUtils.getDayOfMonth('2017-12-20') // 31
+XEUtils.getDayOfMonth('2017-12-20', -1) // 30
+XEUtils.getDayOfMonth('2017-12-20', 1) // 31
 ```
 
 ### getDateDiff ( startDate, endDate, rules ) 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
