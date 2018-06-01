@@ -809,6 +809,15 @@ XEUtils.chunk(['a', 'b', 'c', 'd'], 2) // [['a', 'b'], ['c', 'd']]
 XEUtils.chunk(['a', 'b', 'c', 'd'], 3) // [['a', 'b', 'c'], ['d']]
 ```
 
+### pluck ( array, key ) 获取数组对象中某属性值，返回一个数组
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.pluck([{a: 11, b: 22}, {a: 33, b: 44}], 'a') // [11, 33]
+XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
+```
+
 ### now/timestamp ( ) 返回时间戳
 
 ```JavaScript

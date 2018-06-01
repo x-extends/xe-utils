@@ -411,6 +411,19 @@ function includeArrays (array1, array2) {
   return true
 }
 
+/**
+  * 获取数组对象中某属性值，返回一个数组
+  *
+  * @param {Array} array 数组
+  * @param {String} key 属性值
+  * @return {Array}
+  */
+function pluck (obj, key) {
+  return arrayMap(obj, function (item) {
+    return item[key]
+  })
+}
+
 var arrayExports = {
   arrayUniq: arrayUniq,
   uniq: arrayUniq,
@@ -445,7 +458,8 @@ var arrayExports = {
   unzip: unzip,
   from: from,
   toArray: from,
-  includeArrays: includeArrays
+  includeArrays: includeArrays,
+  pluck: pluck
 }
 
 module.exports = arrayExports
