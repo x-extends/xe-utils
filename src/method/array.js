@@ -228,9 +228,9 @@ function arraySum (array, iteratee, context) {
   baseExports.each(array, iteratee ? baseExports.isFunction(iteratee) ? function () {
     result += iteratee.apply(context, arguments)
   } : function (val, key) {
-    result += val[iteratee]
+    result += parseFloat(val[iteratee])
   } : function (val, key) {
-    result += val
+    result += parseFloat(val)
   })
   return result
 }
@@ -431,6 +431,7 @@ var arrayExports = {
   union: arrayUnion,
   arraySort: arraySort,
   sort: arraySort,
+  sortBy: arraySort,
   arrayShuffle: arrayShuffle,
   shuffle: arrayShuffle,
   arraySample: arraySample,

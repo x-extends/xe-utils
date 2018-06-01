@@ -248,9 +248,9 @@
     baseExports.each(array, iteratee ? baseExports.isFunction(iteratee) ? function () {
       result += iteratee.apply(context, arguments)
     } : function (val, key) {
-      result += val[iteratee]
+      result += parseFloat(val[iteratee])
     } : function (val, key) {
-      result += val
+      result += parseFloat(val)
     })
     return result
   }
@@ -451,6 +451,7 @@
     union: arrayUnion,
     arraySort: arraySort,
     sort: arraySort,
+    sortBy: arraySort,
     arrayShuffle: arrayShuffle,
     shuffle: arrayShuffle,
     arraySample: arraySample,
@@ -1210,6 +1211,31 @@
     return result
   }
 
+  /**
+    * 序号列表生成函数
+    *
+    * @param {Number} start 起始值
+    * @param {Number} stop 结束值
+    * @param {Number} step 自增值
+    * @return {Object}
+    */
+  function range (start, stop, step) {
+    var result = []
+    if (arguments.length < 2) {
+      stop = arguments[0]
+      start = 0
+    }
+    var index = start >> 0
+    var len = stop >> 0
+    if (index < stop) {
+      step = step >> 0 || 1
+      for (; index < len; index += step) {
+        result.push(index)
+      }
+    }
+    return result
+  }
+
   var baseExports = {
     isNaN: isNaN,
     isFinite: isFinite,
@@ -1272,7 +1298,8 @@
     clone: clone,
     bind: bind,
     once: once,
-    clearObject: clearObject
+    clearObject: clearObject,
+    range: range
   }
 
   function isMobile () {
@@ -1572,14 +1599,13 @@
       var number = year && !isNaN(year) ? year : 0
       currentDate.setFullYear(currentDate.getFullYear() + number)
     }
-    if (mode) {
+    if (mode || !isNaN(mode)) {
       if (mode === 'first') {
-        currentDate.setMonth(0)
-        currentDate.setDate(1)
+        return new Date(currentDate.getFullYear(), 0, 1)
       } else if (mode === 'last') {
         currentDate.setMonth(11)
         return getWhatMonth(currentDate, 0, 'last')
-      } else if (!isNaN(mode)) {
+      } else {
         currentDate.setMonth(mode)
       }
     }
@@ -1597,34 +1623,19 @@
   function getWhatMonth (date, month, mode) {
     var currentDate = stringToDate(date)
     var monthOffset = month && !isNaN(month) ? month : 0
-    var oldH = currentDate.getHours()
-    var oldm = currentDate.getMinutes()
-    var olds = currentDate.getSeconds()
-    var oldS = currentDate.getMilliseconds()
-    if (mode) {
+    if (mode || !isNaN(mode)) {
       if (mode === 'first') {
-        var oldY = currentDate.getFullYear()
-        var oldM = currentDate.getMonth()
-        if ((oldM += monthOffset) < 0) {
-          return new Date(oldY - Math.ceil((oldM = Math.abs(oldM)) / 12), 12 - (oldM % 12 || 1), 1, oldH, oldm, olds, oldS)
-        }
-        return new Date(oldY + Math.floor(oldM / 12), oldM % 12, 1, oldH, oldm, olds, oldS)
+        return new Date(currentDate.getFullYear(), currentDate.getMonth() + monthOffset, 1)
       } else if (mode === 'last') {
-        return new Date(getWhatMonth(currentDate, monthOffset + 1, 'first').getTime() - DAY_TIME)
-      } else if (!isNaN(mode)) {
-        var monthFirst = getWhatMonth(currentDate, 0, 'first')
-        monthFirst.setDate(mode)
-        return monthFirst
+        return new Date(getWhatMonth(currentDate, monthOffset + 1, 'first').getTime() - 1)
+      } else {
+        currentDate.setDate(mode)
       }
     }
-    var oldD = currentDate.getDate()
-    var dateTime = getWhatMonth(currentDate, monthOffset, 'first')
-    var newM = dateTime.getMonth()
-    dateTime.setDate(oldD)
-    while (newM < dateTime.getMonth()) {
-      dateTime.setDate(--oldD)
+    if (monthOffset) {
+      currentDate.setMonth(currentDate.getMonth() + monthOffset)
     }
-    return dateTime
+    return currentDate
   }
 
   /**
@@ -1652,12 +1663,18 @@
     *
     * @param {Date} date 日期或数字
     * @param {Number} day 天(默认当天)、前几天、后几天
+    * @param {String} mode 获取时分秒(null默认当前时分秒)、日初(first)、日末(last)
     * @return {Date}
     */
-  function getWhatDay (date, day) {
+  function getWhatDay (date, day, mode) {
     var currentDate = stringToDate(date)
-    if (day) {
-      return new Date(currentDate.getTime() + (day && !isNaN(day) ? day * DAY_TIME : 0))
+    if (!isNaN(day)) {
+      currentDate.setDate(currentDate.getDate() + Number(day))
+      if (mode === 'first') {
+        return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
+      } else if (mode === 'last') {
+        return new Date(getWhatDay(currentDate, 1, 'first').getTime() - 1)
+      }
     }
     return currentDate
   }

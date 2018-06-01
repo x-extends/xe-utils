@@ -614,7 +614,27 @@ objectEach({a: 11, b: 22}, (item, key) => {
 import XEUtils from 'xe-utils'
 
 const result1 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
-const result2 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}], item => item.type) // {a: [{a: 'a'}], b: [{b: 'b'}]}
+const result2 = XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
+```
+
+### countBy ( obj, iteratee, context ) 集合分组统计,返回各组中对象的数量统计
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+const result1 = XEUtils.countBy([{type: 'a'}, {type: 'b'}], 'type') // {a: 1, b: 1}
+const result2 = XEUtils.countBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: 2, b: 1}
+```
+
+### range ( start, stop, step ) 序号列表生成函数
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+const result1 = XEUtils.range(0) // []
+const result1 = XEUtils.range(10) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const result2 = XEUtils.range(-5, 5) // [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+const result2 = XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
 ```
 
 ### objectMap ( obj, iteratee, context ) 指定方法后的返回值组成的新对象
@@ -660,12 +680,13 @@ XEUtils.union([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
 arrayUnion([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
 ```
 
-### sort/arraySort ( arr, iteratee, context ) 数组按属性值升序
+### sort/arraySort/sortBy ( arr, iteratee, context ) 数组按属性值升序
 
 ```JavaScript
 import XEUtils, { arraySort } from 'xe-utils'
 
 XEUtils.sort([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
+XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
 arraySort([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => v1.a > v2.a ? 1 : -1) // [{a: 4}, {a: 5}, {a: 9}]
 ```
 
@@ -910,6 +931,8 @@ XEUtils.getWhatYear(new Date(), -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国
 XEUtils.getWhatYear(1513735830000, -1) // Tue Dec 20 2016 10:10:30 GMT+0800 (中国标准时间)
 XEUtils.getWhatYear('2017-12-20', -1) // Tue Dec 20 2016 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.getWhatYear('2017-12-20', 1) // Thu Dec 20 2018 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatYear('2017-12-20', 0, 'first') // Sun Jan 01 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatYear('2017-12-20', 0, 'last') // Sun Dec 31 2017 23:59:59 GMT+0800 (中国标准时间)
 ```
 
 ### getWhatMonth ( date, mode, month ) 返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前
@@ -922,7 +945,7 @@ XEUtils.getWhatMonth(1513735830000, -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (�
 XEUtils.getWhatMonth('2017-12-20', -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.getWhatMonth('2017-12-20', 1) // Sat Jan 20 2018 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.getWhatMonth('2017-12-20', -1, 'first') // Wed Nov 01 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.getWhatMonth('2017-12-20', 1, 'last') // Wed Jan 31 2018 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatMonth('2017-12-20', 1, 'last') // Wed Jan 31 2018 23:59:59 GMT+0800 (中国标准时间)
 ```
 
 ### getWhatWeek ( date, mode, week ) 返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前
@@ -947,6 +970,8 @@ XEUtils.getWhatDay(new Date(), -1) // Tue Dec 19 2017 00:00:00 GMT+0800 (中国�
 XEUtils.getWhatDay(1513735830000, -1) // Tue Dec 19 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.getWhatDay('2017-12-20', -1) // Tue Dec 19 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.getWhatDay('2017-12-20', 1) // Tue Dec 21 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatDay('2017-12-20', 0, 'first') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.getWhatDay('2017-12-20', 0, 'last') // Wed Dec 20 2017 23:59:59 GMT+0800 (中国标准时间)
 ```
 
 ### getDayOfYear ( date, month ) 返回当前年份的天数,可以指定前几个年或后几个年，默认当前
