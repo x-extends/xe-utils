@@ -82,6 +82,7 @@ import XEUtils from 'xe-utils'
 import XEUtils from 'xe-ajax'
 
 XEUtils.setup({
+  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'},
   formatDate: 'yyyy-MM-dd HH:mm:ss.SSS',
   formatString: 'yyyy-MM-dd HH:mm:ss',
   formatStringMatchs : {
