@@ -97,7 +97,7 @@ function arraySample (array, number) {
   * @return {Boolean}
   */
 function arraySome (obj, iteratee, context) {
-  if (obj) {
+  if (obj && iteratee) {
     context = context || this
     if (baseExports.isArray(obj) && obj.some) {
       return obj.some(iteratee, context)
@@ -123,7 +123,7 @@ function arraySome (obj, iteratee, context) {
   * @return {Boolean}
   */
 function arrayEvery (obj, iteratee, context) {
-  if (obj) {
+  if (obj && iteratee) {
     context = context || this
     if (baseExports.isArray(obj) && obj.every) {
       return obj.every(iteratee, context)
@@ -149,7 +149,7 @@ function arrayEvery (obj, iteratee, context) {
   * @return {Object}
   */
 function arrayFilter (obj, iteratee, context) {
-  if (obj) {
+  if (obj && iteratee) {
     context = context || this
     if (baseExports.isArray(obj) && obj.filter) {
       return obj.filter(iteratee, context)
@@ -175,7 +175,7 @@ function arrayFilter (obj, iteratee, context) {
   * @return {Object}
   */
 function arrayFind (obj, iteratee, context) {
-  if (obj) {
+  if (obj && iteratee) {
     context = context || this
     if (baseExports.isArray(obj) && obj.find) {
       return obj.find(iteratee, context)
@@ -185,6 +185,27 @@ function arrayFind (obj, iteratee, context) {
           if (iteratee.call(context, obj[key], key, obj)) {
             return obj[key]
           }
+        }
+      }
+    }
+  }
+}
+
+/**
+  * 查找匹配第一条数据的键
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+function findKey (obj, iteratee, context) {
+  if (obj && iteratee) {
+    context = context || this
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        if (iteratee.call(context, obj[key], key, obj)) {
+          return key
         }
       }
     }
@@ -202,13 +223,20 @@ function arrayFind (obj, iteratee, context) {
 function arrayMap (obj, iteratee, context) {
   var result = []
   if (obj) {
-    context = context || this
-    if (baseExports.isArray(obj)) {
-      return obj.map(iteratee, context)
+    if (iteratee) {
+      context = context || this
+      if (!baseExports.isFunction(iteratee)) {
+        iteratee = baseExports.property(iteratee)
+      }
+      if (baseExports.isArray(obj)) {
+        return obj.map(iteratee, context)
+      } else {
+        baseExports.each(obj, function () {
+          result.push(iteratee.apply(context, arguments))
+        })
+      }
     } else {
-      baseExports.each(obj, function () {
-        result.push(iteratee.apply(context, arguments))
-      })
+      return obj
     }
   }
   return result
@@ -359,9 +387,7 @@ function unzip (arrays) {
     return item.length || 0
   })
   for (var index = 0; index < len; index++) {
-    result.push(arrayMap(arrays, function (item) {
-      return item ? item[index] : null
-    }))
+    result.push(arrayMap(arrays, index))
   }
   return result
 }
@@ -370,11 +396,11 @@ function unzip (arrays) {
  * 根据数组或可迭代对象中创建一个新的数组
  *
  * @param {Array} obj 数组
- * @param {Function} callback(item, index, array) 回调
+ * @param {Function} iteratee(item, index, array) 回调
  * @param {Object} context 上下文
  * @return {Array}
  */
-function from (array, callback, context) {
+function from (array, iteratee, context) {
   if (baseExports.isArray(array)) {
     return array
   }
@@ -382,13 +408,10 @@ function from (array, callback, context) {
     return []
   }
   var result = []
-  context = context || this
-  if (array.length) {
-    for (var index = 0, len = parseInt(array.length); index < len; index++) {
-      result.push(array[index])
-    }
+  for (var index = 0, len = array.length; index < len; index++) {
+    result.push(array[index])
   }
-  return arguments.length < 2 ? result : arrayMap(result, callback, context)
+  return arguments.length < 2 ? result : arrayMap(result, iteratee, context || this)
 }
 
 /**
@@ -419,9 +442,7 @@ function includeArrays (array1, array2) {
   * @return {Array}
   */
 function pluck (obj, key) {
-  return arrayMap(obj, function (item) {
-    return item[key]
-  })
+  return arrayMap(obj, key)
 }
 
 var arrayExports = {
@@ -444,6 +465,7 @@ var arrayExports = {
   filter: arrayFilter,
   arrayFind: arrayFind,
   find: arrayFind,
+  findKey: findKey,
   arrayMap: arrayMap,
   map: arrayMap,
   arraySum: arraySum,

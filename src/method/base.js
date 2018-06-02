@@ -366,6 +366,18 @@ function isLeapYear (date) {
 }
 
 /**
+ * 返回一个获取对象属性的函数
+ *
+ * @param {String} name 属性名
+ * @param {Object} defs 空值
+ */
+function property (name, defs) {
+  return function (obj) {
+    return obj === null ? defs : obj[name]
+  }
+}
+
+/**
   * 获取对象类型
   *
   * @param {Object} obj 对象
@@ -422,8 +434,10 @@ function createIndexOf (callback) {
         return callback(obj, val)
       }
       for (var key in obj) {
-        if (val === obj[key]) {
-          return key
+        if (obj.hasOwnProperty(key)) {
+          if (val === obj[key]) {
+            return key
+          }
         }
       }
     }
@@ -462,6 +476,59 @@ var lastIndexOf = createIndexOf(function (obj, val) {
   }
   for (var len = obj.length - 1; len >= 0; len--) {
     if (val === obj[len]) {
+      return len
+    }
+  }
+  return -1
+})
+
+function createIterateeIndexOf (callback) {
+  return function (obj, iteratee, context) {
+    if (obj && iteratee) {
+      context = this || context
+      if (isString(obj) || isArray(obj)) {
+        return callback(obj, iteratee, context)
+      }
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          if (obj[key] === iteratee.call(context, obj[key], key, obj)) {
+            return key
+          }
+        }
+      }
+    }
+    return -1
+  }
+}
+
+/**
+  * 返回对象第一个索引值
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+var findIndexOf = createIterateeIndexOf(function (obj, iteratee, context) {
+  for (var index = 0, len = obj.length; index < len; index++) {
+    if (iteratee.call(context, obj[index], index, obj)) {
+      return index
+    }
+  }
+  return -1
+})
+
+/**
+  * 从最后开始的索引值,返回对象第一个索引值
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+var findLastIndexOf = createIterateeIndexOf(function (obj, iteratee, context) {
+  for (var len = obj.length - 1; len >= 0; len--) {
+    if (iteratee.call(context, obj[len], len, obj)) {
       return len
     }
   }
@@ -655,9 +722,21 @@ function objectEach (obj, iteratee, context) {
   }
 }
 
+function objectLastEach (obj, iteratee, context) {
+  arrayLastEach(objectKeys(obj), function (key) {
+    iteratee.call(context || this, obj[key], key, obj)
+  })
+}
+
 function arrayEach (obj, iteratee, context) {
   for (var index = 0, len = obj.length || 0; index < len; index++) {
     iteratee.call(context || this, obj[index], index, obj)
+  }
+}
+
+function arrayLastEach (obj, iteratee, context) {
+  for (var len = obj.length - 1; len >= 0; len--) {
+    iteratee.call(context || this, obj[len], len, obj)
   }
 }
 
@@ -683,6 +762,31 @@ function each (obj, iteratee, context) {
 }
 
 /**
+  * 迭代器,从最后开始迭代
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+function lastEach (obj, iteratee, context) {
+  if (obj) {
+    if (isArray(obj)) {
+      return arrayLastEach(obj, iteratee, context || this)
+    }
+    return objectLastEach(obj, iteratee, context || this)
+  }
+  return obj
+}
+
+function createIterateeEmpty (iteratee) {
+  var isEmpty = baseExports.isEmpty(iteratee)
+  return function () {
+    return isEmpty
+  }
+}
+
+/**
   * 集合分组,默认使用键值分组,如果有iteratee则使用结果进行分组
   *
   * @param {Array} obj 对象
@@ -691,19 +795,18 @@ function each (obj, iteratee, context) {
   * @return {Object}
   */
 function groupBy (obj, iteratee, context) {
-  var groupKey, attr
   var result = {}
   if (obj) {
-    if (isString(iteratee)) {
-      attr = iteratee
-      iteratee = null
-    } else if (isFunction(iteratee)) {
-      iteratee = iteratee.bind(context || this)
-    } else {
-      iteratee = attr = null
+    context = this || context
+    if (iteratee !== null && iteratee !== undefined) {
+      if (isObject(iteratee)) {
+        iteratee = createIterateeEmpty(iteratee)
+      } else if (!isFunction(iteratee)) {
+        iteratee = baseExports.property(iteratee)
+      }
     }
     each(obj, function (val, key) {
-      groupKey = iteratee ? iteratee(val, key, obj) : (attr ? val[attr] : val)
+      var groupKey = iteratee ? iteratee.call(context, val, key, obj) : val
       if (result[groupKey]) {
         result[groupKey].push(val)
       } else {
@@ -785,11 +888,14 @@ var baseExports = {
   isSet: isSet,
   isWeakSet: isWeakSet,
   isLeapYear: isLeapYear,
+  property: property,
   getType: getType,
   uniqueId: uniqueId,
   getSize: getSize,
   indexOf: indexOf,
   lastIndexOf: lastIndexOf,
+  findIndexOf: findIndexOf,
+  findLastIndexOf: findLastIndexOf,
   includes: includes,
   contains: includes,
   objectAssign: objectAssign,
@@ -808,9 +914,13 @@ var baseExports = {
   arrayLast: arrayLast,
   last: arrayLast,
   objectEach: objectEach,
+  objectLastEach: objectLastEach,
   arrayEach: arrayEach,
   forEach: arrayEach,
+  forLastEach: arrayLastEach,
+  arrayLastEach: arrayLastEach,
   each: each,
+  lastEach: lastEach,
   groupBy: groupBy,
   countBy: countBy,
   objectMap: objectMap,

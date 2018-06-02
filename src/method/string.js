@@ -121,7 +121,7 @@ function stringPadStart (str, targetLength, padString) {
     return rest.padStart(targetLength, padString)
   }
   if ((targetLength >> 0) > rest.length) {
-    padString = '' + padString
+    padString = padString === undefined ? ' ' : '' + padString
     targetLength -= rest.length
     if (targetLength > padString.length) {
       padString += stringRepeat(padString, targetLength / padString.length)
@@ -145,7 +145,7 @@ function stringPadEnd (str, targetLength, padString) {
     return rest.padEnd(targetLength, padString)
   }
   if ((targetLength >> 0) > rest.length) {
-    padString = '' + padString
+    padString = padString === undefined ? ' ' : '' + padString
     targetLength -= rest.length
     if (targetLength > padString.length) {
       padString += stringRepeat(padString, targetLength / padString.length)

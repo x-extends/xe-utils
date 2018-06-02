@@ -76,6 +76,7 @@ function stringToInteger (str) {
 }
 
 var numberExports = {
+  random: getRandom,
   getRandom: getRandom,
   arrayMin: arrayMin,
   min: arrayMin,

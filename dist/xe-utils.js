@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.1
+ * xe-utils.js v1.6.2
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.1'
+  XEUtils.version = '1.6.2'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -117,7 +117,7 @@
     * @return {Boolean}
     */
   function arraySome (obj, iteratee, context) {
-    if (obj) {
+    if (obj && iteratee) {
       context = context || this
       if (baseExports.isArray(obj) && obj.some) {
         return obj.some(iteratee, context)
@@ -143,7 +143,7 @@
     * @return {Boolean}
     */
   function arrayEvery (obj, iteratee, context) {
-    if (obj) {
+    if (obj && iteratee) {
       context = context || this
       if (baseExports.isArray(obj) && obj.every) {
         return obj.every(iteratee, context)
@@ -169,7 +169,7 @@
     * @return {Object}
     */
   function arrayFilter (obj, iteratee, context) {
-    if (obj) {
+    if (obj && iteratee) {
       context = context || this
       if (baseExports.isArray(obj) && obj.filter) {
         return obj.filter(iteratee, context)
@@ -195,7 +195,7 @@
     * @return {Object}
     */
   function arrayFind (obj, iteratee, context) {
-    if (obj) {
+    if (obj && iteratee) {
       context = context || this
       if (baseExports.isArray(obj) && obj.find) {
         return obj.find(iteratee, context)
@@ -205,6 +205,27 @@
             if (iteratee.call(context, obj[key], key, obj)) {
               return obj[key]
             }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+    * 查找匹配第一条数据的键
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function findKey (obj, iteratee, context) {
+    if (obj && iteratee) {
+      context = context || this
+      for (var key in obj) {
+        if (obj.hasOwnProperty(key)) {
+          if (iteratee.call(context, obj[key], key, obj)) {
+            return key
           }
         }
       }
@@ -222,13 +243,20 @@
   function arrayMap (obj, iteratee, context) {
     var result = []
     if (obj) {
-      context = context || this
-      if (baseExports.isArray(obj)) {
-        return obj.map(iteratee, context)
+      if (iteratee) {
+        context = context || this
+        if (!baseExports.isFunction(iteratee)) {
+          iteratee = baseExports.property(iteratee)
+        }
+        if (baseExports.isArray(obj)) {
+          return obj.map(iteratee, context)
+        } else {
+          baseExports.each(obj, function () {
+            result.push(iteratee.apply(context, arguments))
+          })
+        }
       } else {
-        baseExports.each(obj, function () {
-          result.push(iteratee.apply(context, arguments))
-        })
+        return obj
       }
     }
     return result
@@ -379,9 +407,7 @@
       return item.length || 0
     })
     for (var index = 0; index < len; index++) {
-      result.push(arrayMap(arrays, function (item) {
-        return item ? item[index] : null
-      }))
+      result.push(arrayMap(arrays, index))
     }
     return result
   }
@@ -390,11 +416,11 @@
    * 根据数组或可迭代对象中创建一个新的数组
    *
    * @param {Array} obj 数组
-   * @param {Function} callback(item, index, array) 回调
+   * @param {Function} iteratee(item, index, array) 回调
    * @param {Object} context 上下文
    * @return {Array}
    */
-  function from (array, callback, context) {
+  function from (array, iteratee, context) {
     if (baseExports.isArray(array)) {
       return array
     }
@@ -402,13 +428,10 @@
       return []
     }
     var result = []
-    context = context || this
-    if (array.length) {
-      for (var index = 0, len = parseInt(array.length); index < len; index++) {
-        result.push(array[index])
-      }
+    for (var index = 0, len = array.length; index < len; index++) {
+      result.push(array[index])
     }
-    return arguments.length < 2 ? result : arrayMap(result, callback, context)
+    return arguments.length < 2 ? result : arrayMap(result, iteratee, context || this)
   }
 
   /**
@@ -439,9 +462,7 @@
     * @return {Array}
     */
   function pluck (obj, key) {
-    return arrayMap(obj, function (item) {
-      return item[key]
-    })
+    return arrayMap(obj, key)
   }
 
   var arrayExports = {
@@ -464,6 +485,7 @@
     filter: arrayFilter,
     arrayFind: arrayFind,
     find: arrayFind,
+    findKey: findKey,
     arrayMap: arrayMap,
     map: arrayMap,
     arraySum: arraySum,
@@ -847,6 +869,18 @@
   }
 
   /**
+   * 返回一个获取对象属性的函数
+   *
+   * @param {String} name 属性名
+   * @param {Object} defs 空值
+   */
+  function property (name, defs) {
+    return function (obj) {
+      return obj === null ? defs : obj[name]
+    }
+  }
+
+  /**
     * 获取对象类型
     *
     * @param {Object} obj 对象
@@ -903,8 +937,10 @@
           return callback(obj, val)
         }
         for (var key in obj) {
-          if (val === obj[key]) {
-            return key
+          if (obj.hasOwnProperty(key)) {
+            if (val === obj[key]) {
+              return key
+            }
           }
         }
       }
@@ -943,6 +979,59 @@
     }
     for (var len = obj.length - 1; len >= 0; len--) {
       if (val === obj[len]) {
+        return len
+      }
+    }
+    return -1
+  })
+
+  function createIterateeIndexOf (callback) {
+    return function (obj, iteratee, context) {
+      if (obj && iteratee) {
+        context = this || context
+        if (isString(obj) || isArray(obj)) {
+          return callback(obj, iteratee, context)
+        }
+        for (var key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (obj[key] === iteratee.call(context, obj[key], key, obj)) {
+              return key
+            }
+          }
+        }
+      }
+      return -1
+    }
+  }
+
+  /**
+    * 返回对象第一个索引值
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  var findIndexOf = createIterateeIndexOf(function (obj, iteratee, context) {
+    for (var index = 0, len = obj.length; index < len; index++) {
+      if (iteratee.call(context, obj[index], index, obj)) {
+        return index
+      }
+    }
+    return -1
+  })
+
+  /**
+    * 从最后开始的索引值,返回对象第一个索引值
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  var findLastIndexOf = createIterateeIndexOf(function (obj, iteratee, context) {
+    for (var len = obj.length - 1; len >= 0; len--) {
+      if (iteratee.call(context, obj[len], len, obj)) {
         return len
       }
     }
@@ -1136,9 +1225,21 @@
     }
   }
 
+  function objectLastEach (obj, iteratee, context) {
+    arrayLastEach(objectKeys(obj), function (key) {
+      iteratee.call(context || this, obj[key], key, obj)
+    })
+  }
+
   function arrayEach (obj, iteratee, context) {
     for (var index = 0, len = obj.length || 0; index < len; index++) {
       iteratee.call(context || this, obj[index], index, obj)
+    }
+  }
+
+  function arrayLastEach (obj, iteratee, context) {
+    for (var len = obj.length - 1; len >= 0; len--) {
+      iteratee.call(context || this, obj[len], len, obj)
     }
   }
 
@@ -1164,6 +1265,31 @@
   }
 
   /**
+    * 迭代器,从最后开始迭代
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function lastEach (obj, iteratee, context) {
+    if (obj) {
+      if (isArray(obj)) {
+        return arrayLastEach(obj, iteratee, context || this)
+      }
+      return objectLastEach(obj, iteratee, context || this)
+    }
+    return obj
+  }
+
+  function createIterateeEmpty (iteratee) {
+    var isEmpty = baseExports.isEmpty(iteratee)
+    return function () {
+      return isEmpty
+    }
+  }
+
+  /**
     * 集合分组,默认使用键值分组,如果有iteratee则使用结果进行分组
     *
     * @param {Array} obj 对象
@@ -1172,19 +1298,18 @@
     * @return {Object}
     */
   function groupBy (obj, iteratee, context) {
-    var groupKey, attr
     var result = {}
     if (obj) {
-      if (isString(iteratee)) {
-        attr = iteratee
-        iteratee = null
-      } else if (isFunction(iteratee)) {
-        iteratee = iteratee.bind(context || this)
-      } else {
-        iteratee = attr = null
+      context = this || context
+      if (iteratee !== null && iteratee !== undefined) {
+        if (isObject(iteratee)) {
+          iteratee = createIterateeEmpty(iteratee)
+        } else if (!isFunction(iteratee)) {
+          iteratee = baseExports.property(iteratee)
+        }
       }
       each(obj, function (val, key) {
-        groupKey = iteratee ? iteratee(val, key, obj) : (attr ? val[attr] : val)
+        var groupKey = iteratee ? iteratee.call(context, val, key, obj) : val
         if (result[groupKey]) {
           result[groupKey].push(val)
         } else {
@@ -1266,11 +1391,14 @@
     isSet: isSet,
     isWeakSet: isWeakSet,
     isLeapYear: isLeapYear,
+    property: property,
     getType: getType,
     uniqueId: uniqueId,
     getSize: getSize,
     indexOf: indexOf,
     lastIndexOf: lastIndexOf,
+    findIndexOf: findIndexOf,
+    findLastIndexOf: findLastIndexOf,
     includes: includes,
     contains: includes,
     objectAssign: objectAssign,
@@ -1289,9 +1417,13 @@
     arrayLast: arrayLast,
     last: arrayLast,
     objectEach: objectEach,
+    objectLastEach: objectLastEach,
     arrayEach: arrayEach,
     forEach: arrayEach,
+    forLastEach: arrayLastEach,
+    arrayLastEach: arrayLastEach,
     each: each,
+    lastEach: lastEach,
     groupBy: groupBy,
     countBy: countBy,
     objectMap: objectMap,
@@ -1589,24 +1721,24 @@
     * 返回前几年或后几年的日期
     *
     * @param {Date} date 日期或数字
-    * @param {String} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
-    * @param {String} mode 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
+    * @param {Number} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
+    * @param {Number/String} month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
     * @return {Date}
     */
-  function getWhatYear (date, year, mode) {
+  function getWhatYear (date, year, month) {
     var currentDate = stringToDate(date)
     if (year) {
       var number = year && !isNaN(year) ? year : 0
       currentDate.setFullYear(currentDate.getFullYear() + number)
     }
-    if (mode || !isNaN(mode)) {
-      if (mode === 'first') {
+    if (month || !isNaN(month)) {
+      if (month === 'first') {
         return new Date(currentDate.getFullYear(), 0, 1)
-      } else if (mode === 'last') {
+      } else if (month === 'last') {
         currentDate.setMonth(11)
         return getWhatMonth(currentDate, 0, 'last')
       } else {
-        currentDate.setMonth(mode)
+        currentDate.setMonth(month)
       }
     }
     return currentDate
@@ -1617,19 +1749,19 @@
     *
     * @param {Date} date 日期或数字
     * @param {Number} month 月(默认当前月)、前几个月、后几个月
-    * @param {String} mode 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
+    * @param {Number/String} day 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
     * @return {Date}
     */
-  function getWhatMonth (date, month, mode) {
+  function getWhatMonth (date, month, day) {
     var currentDate = stringToDate(date)
     var monthOffset = month && !isNaN(month) ? month : 0
-    if (mode || !isNaN(mode)) {
-      if (mode === 'first') {
+    if (day || !isNaN(day)) {
+      if (day === 'first') {
         return new Date(currentDate.getFullYear(), currentDate.getMonth() + monthOffset, 1)
-      } else if (mode === 'last') {
+      } else if (day === 'last') {
         return new Date(getWhatMonth(currentDate, monthOffset + 1, 'first').getTime() - 1)
       } else {
-        currentDate.setDate(mode)
+        currentDate.setDate(day)
       }
     }
     if (monthOffset) {
@@ -1643,12 +1775,12 @@
     *
     * @param {Date} date 日期
     * @param {Number} week 周(默认当前周)、前几周、后几周
-    * @param {Number} mode 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
+    * @param {Number} day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
     * @return {Date}
     */
-  function getWhatWeek (date, week, mode) {
+  function getWhatWeek (date, week, day) {
     var currentDate = stringToDate(date)
-    var customDay = Number(/^[0-7]$/.test(mode) ? mode : currentDate.getDay())
+    var customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
     var currentDay = currentDate.getDay()
     var time = currentDate.getTime()
     var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
@@ -1684,7 +1816,7 @@
   }
 
   /**
-    * 返回当月的第几周
+    * 返回某个月的第几周
     *
     * @param {Date} date 日期或数字
     * @return {Number}
@@ -1705,7 +1837,7 @@
   }
 
   /**
-    * 返回当前年的第几天
+    * 返回某个年份的第几天
     *
     * @param {Date} date 日期或数字
     * @return {Number}
@@ -1718,7 +1850,7 @@
   }
 
   /**
-    * 返回当前年的第几周
+    * 返回某个年份的第几周
     *
     * @param {Date} date 日期或数字
     * @return {Number}
@@ -1739,21 +1871,21 @@
   }
 
   /**
-    * 返回当前年份的天数
+    * 返回某个年份的天数
     *
     * @param {Date} date 日期或数字
-    * @param {Number} month 年(默认当年)、前几个年、后几个年
+    * @param {Number} year 年(默认当年)、前几个年、后几个年
     * @return {Number}
     */
-  function getDayOfYear (date, month) {
+  function getDayOfYear (date, year) {
     if (date) {
-      return baseExports.isLeapYear(getWhatYear(date, month)) ? 366 : 365
+      return baseExports.isLeapYear(getWhatYear(date, year)) ? 366 : 365
     }
     return 0
   }
 
   /**
-    * 返回当前月份的天数
+    * 返回某个月份的天数
     *
     * @param {Date} date 日期或数字
     * @param {Number} month 月(默认当月)、前几个月、后几个月
@@ -1973,6 +2105,7 @@
   }
 
   var numberExports = {
+    random: getRandom,
     getRandom: getRandom,
     arrayMin: arrayMin,
     min: arrayMin,
@@ -2104,7 +2237,7 @@
       return rest.padStart(targetLength, padString)
     }
     if ((targetLength >> 0) > rest.length) {
-      padString = '' + padString
+      padString = padString === undefined ? ' ' : '' + padString
       targetLength -= rest.length
       if (targetLength > padString.length) {
         padString += stringRepeat(padString, targetLength / padString.length)
@@ -2128,7 +2261,7 @@
       return rest.padEnd(targetLength, padString)
     }
     if ((targetLength >> 0) > rest.length) {
-      padString = '' + padString
+      padString = padString === undefined ? ' ' : '' + padString
       targetLength -= rest.length
       if (targetLength > padString.length) {
         padString += stringRepeat(padString, targetLength / padString.length)

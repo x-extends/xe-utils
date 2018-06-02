@@ -143,24 +143,24 @@ function dateToString (date, format, options) {
   * 返回前几年或后几年的日期
   *
   * @param {Date} date 日期或数字
-  * @param {String} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
-  * @param {String} mode 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
+  * @param {Number} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
+  * @param {Number/String} month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
   * @return {Date}
   */
-function getWhatYear (date, year, mode) {
+function getWhatYear (date, year, month) {
   var currentDate = stringToDate(date)
   if (year) {
     var number = year && !isNaN(year) ? year : 0
     currentDate.setFullYear(currentDate.getFullYear() + number)
   }
-  if (mode || !isNaN(mode)) {
-    if (mode === 'first') {
+  if (month || !isNaN(month)) {
+    if (month === 'first') {
       return new Date(currentDate.getFullYear(), 0, 1)
-    } else if (mode === 'last') {
+    } else if (month === 'last') {
       currentDate.setMonth(11)
       return getWhatMonth(currentDate, 0, 'last')
     } else {
-      currentDate.setMonth(mode)
+      currentDate.setMonth(month)
     }
   }
   return currentDate
@@ -171,19 +171,19 @@ function getWhatYear (date, year, mode) {
   *
   * @param {Date} date 日期或数字
   * @param {Number} month 月(默认当前月)、前几个月、后几个月
-  * @param {String} mode 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
+  * @param {Number/String} day 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
   * @return {Date}
   */
-function getWhatMonth (date, month, mode) {
+function getWhatMonth (date, month, day) {
   var currentDate = stringToDate(date)
   var monthOffset = month && !isNaN(month) ? month : 0
-  if (mode || !isNaN(mode)) {
-    if (mode === 'first') {
+  if (day || !isNaN(day)) {
+    if (day === 'first') {
       return new Date(currentDate.getFullYear(), currentDate.getMonth() + monthOffset, 1)
-    } else if (mode === 'last') {
+    } else if (day === 'last') {
       return new Date(getWhatMonth(currentDate, monthOffset + 1, 'first').getTime() - 1)
     } else {
-      currentDate.setDate(mode)
+      currentDate.setDate(day)
     }
   }
   if (monthOffset) {
@@ -197,12 +197,12 @@ function getWhatMonth (date, month, mode) {
   *
   * @param {Date} date 日期
   * @param {Number} week 周(默认当前周)、前几周、后几周
-  * @param {Number} mode 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
+  * @param {Number} day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
   * @return {Date}
   */
-function getWhatWeek (date, week, mode) {
+function getWhatWeek (date, week, day) {
   var currentDate = stringToDate(date)
-  var customDay = Number(/^[0-7]$/.test(mode) ? mode : currentDate.getDay())
+  var customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
   var currentDay = currentDate.getDay()
   var time = currentDate.getTime()
   var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
@@ -238,7 +238,7 @@ function calculateTime (startDate, endDate, timeGap) {
 }
 
 /**
-  * 返回当月的第几周
+  * 返回某个月的第几周
   *
   * @param {Date} date 日期或数字
   * @return {Number}
@@ -259,7 +259,7 @@ function getMonthWeek (date) {
 }
 
 /**
-  * 返回当前年的第几天
+  * 返回某个年份的第几天
   *
   * @param {Date} date 日期或数字
   * @return {Number}
@@ -272,7 +272,7 @@ function getYearDay (date) {
 }
 
 /**
-  * 返回当前年的第几周
+  * 返回某个年份的第几周
   *
   * @param {Date} date 日期或数字
   * @return {Number}
@@ -293,21 +293,21 @@ function getYearWeek (date) {
 }
 
 /**
-  * 返回当前年份的天数
+  * 返回某个年份的天数
   *
   * @param {Date} date 日期或数字
-  * @param {Number} month 年(默认当年)、前几个年、后几个年
+  * @param {Number} year 年(默认当年)、前几个年、后几个年
   * @return {Number}
   */
-function getDayOfYear (date, month) {
+function getDayOfYear (date, year) {
   if (date) {
-    return baseExports.isLeapYear(getWhatYear(date, month)) ? 366 : 365
+    return baseExports.isLeapYear(getWhatYear(date, year)) ? 366 : 365
   }
   return 0
 }
 
 /**
-  * 返回当前月份的天数
+  * 返回某个月份的天数
   *
   * @param {Date} date 日期或数字
   * @param {Number} month 月(默认当月)、前几个月、后几个月
