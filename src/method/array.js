@@ -506,7 +506,7 @@ function unTreeList (result, array, opts) {
   * 将一个树结构转成数组列表
   *
   * @param {Array} array 数组
-  * @param {Object} options {parent: 'parentId', key: 'id', children: 'children', data: 'data'}
+  * @param {Object} options {children: 'children', data: 'data'}
   * @return {Array}
   */
 function treeToArray (array, options) {
