@@ -86,7 +86,7 @@ XEUtils.setup({
   formatDate: 'yyyy-MM-dd HH:mm:ss.SSS',
   formatString: 'yyyy-MM-dd HH:mm:ss',
   formatStringMatchs : {
-    W: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+    E: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
     q: [null, '第一季度', '第二季度', '第三季度', '第四季度']
   },
   commafys: {spaceNumber: 3, separator: ',', fixed: 0}
