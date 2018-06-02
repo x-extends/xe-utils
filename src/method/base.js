@@ -28,9 +28,19 @@ function createInInObjectString (type) {
   */
 function objectMap (obj, iteratee, context) {
   var result = {}
-  each(obj, function (val, index) {
-    result[index] = iteratee.call(context || this, val, index, obj)
-  })
+  if (obj) {
+    if (iteratee) {
+      context = context || this
+      if (!baseExports.isFunction(iteratee)) {
+        iteratee = baseExports.property(iteratee)
+      }
+      each(obj, function (val, index) {
+        result[index] = iteratee.call(context, val, index, obj)
+      })
+    } else {
+      return obj
+    }
+  }
   return result
 }
 
@@ -729,7 +739,7 @@ function objectLastEach (obj, iteratee, context) {
 }
 
 function arrayEach (obj, iteratee, context) {
-  for (var index = 0, len = obj.length || 0; index < len; index++) {
+  for (var index = 0, len = obj.length; index < len; index++) {
     iteratee.call(context || this, obj[index], index, obj)
   }
 }

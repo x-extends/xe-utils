@@ -883,6 +883,49 @@ XEUtils.pluck([{a: 11, b: 22}, {a: 33, b: 44}], 'a') // [11, 33]
 XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
 ```
 
+### arrayToTree ( array, options ) 将一个带层级的数据列表转成树结构
+
+| 属性 | 描述 | 默认值 |
+|------|------|------|
+| strict | 严格模式，启用后会忽略错误数据 | false |
+| key | 节点键值 | 'id' |
+| parentKey | 父节点键值 | 'parentId' |
+| children | 子节点属性 | 'children' |
+| data | 数据存放属性 | 'data' |
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+const list1 = [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
+XEUtils.arrayToTree(list1)
+// [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+const list2 = [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}, {id: 5, parentId: 22}]
+XEUtils.arrayToTree(list2)
+// [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}, {id: 5, data: {}}]
+const list3 = [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}, {id: 5, parentId: 22}]
+// 如果设置为严格模式strict=true，错误的数据会被忽略
+XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
+// [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+```
+
+### treeToArray ( array, options ) 将一个树结构转成数组列表
+
+| 属性 | 描述 | 默认值 |
+|------|------|------|
+| children | 子节点属性 | 'children' |
+| data | 数据存放属性 | 'data' |
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+const list1 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+XEUtils.treeToArray(list1)
+// [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
+const list2 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+XEUtils.treeToArray(list2, {data: null})
+// [{id: 1}, {id: 2, data: {}, parentId: 1}, {id: 3, data: {}}, {id: 4, data: {}, parentId: 2}]
+```
+
 ### now/timestamp ( ) 返回时间戳
 
 ```JavaScript

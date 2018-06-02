@@ -2,6 +2,7 @@
 
 var formatString = 'yyyy-MM-dd HH:mm:ss'
 var setupDefaults = {
+  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'},
   formatDate: formatString + '.SSS',
   formatString: formatString,
   formatStringMatchs: null,

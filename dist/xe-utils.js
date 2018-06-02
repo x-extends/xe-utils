@@ -17,6 +17,7 @@
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
+    treeOptions: { strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data' },
     formatDate: formatString + '.SSS',
     formatString: formatString,
     formatStringMatchs: null,
@@ -465,6 +466,74 @@
     return arrayMap(obj, key)
   }
 
+  /**
+    * 将一个带层级的数据列表转成树结构
+    *
+    * @param {Array} array 数组
+    * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
+    * @return {Array}
+    */
+  function arrayToTree (array, options) {
+    var opts = baseExports.objectAssign({}, setupDefaults.treeOptions, options)
+    var optStrict = opts.strict
+    var optKey = opts.key
+    var optParentKey = opts.parentKey
+    var optChildren = opts.children
+    var optData = opts.data
+    var result = []
+    var treeMap = {}
+    var ids = arrayMap(array, function (item) {
+      return item[optKey]
+    })
+    for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
+      treeData = {}
+      item = array[index]
+      id = item[optKey]
+      parentId = item[optParentKey]
+      treeMap[id] = treeMap[id] || []
+      treeMap[parentId] = treeMap[parentId] || []
+      treeMap[parentId].push(treeData)
+
+      treeData[optKey] = id
+      treeData[optParentKey] = parentId
+      treeData[optChildren] = treeMap[id]
+      treeData[optData] = optData === null ? optData : item
+
+      if (!optStrict || (optStrict && !parentId)) {
+        if (baseExports.indexOf(ids, parentId) === -1) {
+          result.push(treeData)
+        }
+      }
+    };
+
+    return result
+  }
+
+  function unTreeList (result, array, opts) {
+    var optChildren = opts.children
+    var optData = opts.data
+    for (var item, index = 0, len = array.length; index < len; index++) {
+      item = array[index]
+      result.push(optData === null ? item : item[optData])
+      if (item[optChildren]) {
+        unTreeList(result, item[optChildren], opts)
+      }
+    }
+    return result
+  }
+
+  /**
+    * 将一个树结构转成数组列表
+    *
+    * @param {Array} array 数组
+    * @param {Object} options {parent: 'parentId', key: 'id', children: 'children', data: 'data'}
+    * @return {Array}
+    */
+  function treeToArray (array, options) {
+    var opts = baseExports.objectAssign({}, setupDefaults.treeOptions, options)
+    return unTreeList([], array, opts)
+  }
+
   var arrayExports = {
     arrayUniq: arrayUniq,
     uniq: arrayUniq,
@@ -502,7 +571,9 @@
     from: from,
     toArray: from,
     includeArrays: includeArrays,
-    pluck: pluck
+    pluck: pluck,
+    arrayToTree: arrayToTree,
+    treeToArray: treeToArray
   }
 
   var STRING_UNDEFINED = 'undefined'
@@ -531,9 +602,19 @@
     */
   function objectMap (obj, iteratee, context) {
     var result = {}
-    each(obj, function (val, index) {
-      result[index] = iteratee.call(context || this, val, index, obj)
-    })
+    if (obj) {
+      if (iteratee) {
+        context = context || this
+        if (!baseExports.isFunction(iteratee)) {
+          iteratee = baseExports.property(iteratee)
+        }
+        each(obj, function (val, index) {
+          result[index] = iteratee.call(context, val, index, obj)
+        })
+      } else {
+        return obj
+      }
+    }
     return result
   }
 
@@ -1232,7 +1313,7 @@
   }
 
   function arrayEach (obj, iteratee, context) {
-    for (var index = 0, len = obj.length || 0; index < len; index++) {
+    for (var index = 0, len = obj.length; index < len; index++) {
       iteratee.call(context || this, obj[index], index, obj)
     }
   }
