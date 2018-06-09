@@ -275,11 +275,11 @@
     var result = 0
     context = context || this
     baseExports.each(array, iteratee ? baseExports.isFunction(iteratee) ? function () {
-      result += iteratee.apply(context, arguments)
-    } : function (val, key) {
-      result += parseFloat(val[iteratee])
-    } : function (val, key) {
-      result += parseFloat(val)
+      result += iteratee.apply(context, arguments) || 0
+    } : function (val) {
+      result += parseFloat(val[iteratee] || 0)
+    } : function (val) {
+      result += parseFloat(val || 0)
     })
     return result
   }
@@ -526,7 +526,7 @@
     * 将一个树结构转成数组列表
     *
     * @param {Array} array 数组
-    * @param {Object} options {parent: 'parentId', key: 'id', children: 'children', data: 'data'}
+    * @param {Object} options {children: 'children', data: 'data'}
     * @return {Array}
     */
   function treeToArray (array, options) {

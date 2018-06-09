@@ -255,11 +255,11 @@ function arraySum (array, iteratee, context) {
   var result = 0
   context = context || this
   baseExports.each(array, iteratee ? baseExports.isFunction(iteratee) ? function () {
-    result += iteratee.apply(context, arguments)
-  } : function (val, key) {
-    result += parseFloat(val[iteratee])
-  } : function (val, key) {
-    result += parseFloat(val)
+    result += iteratee.apply(context, arguments) || 0
+  } : function (val) {
+    result += parseFloat(val[iteratee] || 0)
+  } : function (val) {
+    result += parseFloat(val || 0)
   })
   return result
 }
