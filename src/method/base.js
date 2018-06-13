@@ -641,10 +641,10 @@ function clearObject (obj, defs) {
           obj[key] = undefined
         }
       })
-      objectAssign(obj, defs)
+      defs && objectAssign(obj, defs)
     } else if (isArray(obj)) {
       obj.length = 0
-      obj.push.apply(obj, defs)
+      defs && obj.push.apply(obj, defs)
     }
   }
   return obj

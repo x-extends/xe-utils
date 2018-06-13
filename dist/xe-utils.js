@@ -1215,10 +1215,10 @@
             obj[key] = undefined
           }
         })
-        objectAssign(obj, defs)
+        defs && objectAssign(obj, defs)
       } else if (isArray(obj)) {
         obj.length = 0
-        obj.push.apply(obj, defs)
+        defs && obj.push.apply(obj, defs)
       }
     }
     return obj
@@ -1554,9 +1554,6 @@
     browse: browse
   }
 
-  var decode = decodeURIComponent
-  var encode = encodeURIComponent
-
   function toCookieUnitTime (unit, expires) {
     var num = parseFloat(expires)
     var nowdate = new Date()
@@ -1590,6 +1587,8 @@
     */
   function cookie (name, value, options) {
     var inserts = []
+    var decode = decodeURIComponent
+    var encode = encodeURIComponent
     var isDoc = typeof document !== 'undefined'
     if (this && this.$context) {
       this.$context = null
@@ -2039,11 +2038,12 @@
 
   function parseParams (uri) {
     var result = {}
+    var decode = decodeURIComponent
     var params = uri.split('?')[1] || ''
     if (params) {
       baseExports.arrayEach(params.split('&'), function (param) {
         var items = param.split('=')
-        result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
+        result[decode(items[0])] = decode(items[1] || '')
       })
     }
     return result

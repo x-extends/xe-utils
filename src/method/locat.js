@@ -10,11 +10,12 @@ if (typeof location !== 'undefined') {
 
 function parseParams (uri) {
   var result = {}
+  var decode = decodeURIComponent
   var params = uri.split('?')[1] || ''
   if (params) {
     baseExports.arrayEach(params.split('&'), function (param) {
       var items = param.split('=')
-      result[decodeURIComponent(items[0])] = decodeURIComponent(items[1] || '')
+      result[decode(items[0])] = decode(items[1] || '')
     })
   }
   return result

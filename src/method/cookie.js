@@ -3,9 +3,6 @@
 var baseExports = require('./base')
 var dateExports = require('./date')
 
-var decode = decodeURIComponent
-var encode = encodeURIComponent
-
 function toCookieUnitTime (unit, expires) {
   var num = parseFloat(expires)
   var nowdate = new Date()
@@ -39,6 +36,8 @@ function toCookieUTCString (date) {
   */
 function cookie (name, value, options) {
   var inserts = []
+  var decode = decodeURIComponent
+  var encode = encodeURIComponent
   var isDoc = typeof document !== 'undefined'
   if (this && this.$context) {
     this.$context = null
