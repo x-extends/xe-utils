@@ -516,9 +516,11 @@ import XEUtils from 'xe-utils'
 
 var a = [11, 22, 33, 33]
 XEUtils.clearObject(a) // []
+XEUtils.clearObject(a, false) // [undefined, undefined, undefined, undefined]
 XEUtils.clearObject(a, [11]) // [11]
 var b = {b1: 11, b2: 22}
 XEUtils.clearObject(b) // {}
+XEUtils.clearObject(b, false) // {b1: undefined, b2: undefined}
 XEUtils.clearObject(b, {b1: 11}) // {b1: 11}
 ```
 
