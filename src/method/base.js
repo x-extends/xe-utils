@@ -628,31 +628,31 @@ function jsonToString (obj) {
   * 清空对象
   *
   * @param {Object} obj 对象
-  * @param {Object} defs 默认值,如果为false，则所有值等于undefined
-  * @param {Object} assigns 默认值
+  * @param {*} defs 默认值,如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
+  * @param {Object/Array} assigns 默认值
   * @return {Object}
   */
 function clearObject (obj, defs, assigns) {
   if (obj) {
-    var isUnde = defs === false
-    var extds = isUnde ? assigns : defs
+    var isDefs = arguments.length > 1 && (defs === null || !baseExports.isObject(defs))
+    var extds = isDefs ? assigns : defs
     if (isPlainObject(obj)) {
-      objectEach(obj, isUnde ? function (val, key) {
-        obj[key] = undefined
+      objectEach(obj, isDefs ? function (val, key) {
+        obj[key] = defs
       } : function (val, key) {
         try {
           delete obj[key]
         } catch (e) {
-          obj[key] = undefined
+          obj[key] = defs
         }
       })
       extds && objectAssign(obj, extds)
     } else if (isArray(obj)) {
-      if (isUnde) {
+      if (isDefs) {
         var len = obj.length
         while (len > 0) {
           len--
-          obj[len] = undefined
+          obj[len] = defs
         }
       } else {
         obj.length = 0

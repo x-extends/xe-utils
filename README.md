@@ -509,19 +509,23 @@ rest(222) // 'test = 222'
 rest(333) // 'test = 222'
 ```
 
-### clearObject (obj, defs) 清空对象,支持默认值
+### clearObject (obj[, defs, assigns]) 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
 var a = [11, 22, 33, 33]
 XEUtils.clearObject(a) // []
-XEUtils.clearObject(a, false) // [undefined, undefined, undefined, undefined]
-XEUtils.clearObject(a, [11]) // [11]
+XEUtils.clearObject(a, undefined) // [undefined, undefined, undefined, undefined]
+XEUtils.clearObject(a, null) // [null, null, null, null]
+XEUtils.clearObject(a, null, [444]) // [null, null, null, null, 444]
+XEUtils.clearObject(a, [444]) // [444]
 var b = {b1: 11, b2: 22}
 XEUtils.clearObject(b) // {}
-XEUtils.clearObject(b, false) // {b1: undefined, b2: undefined}
-XEUtils.clearObject(b, {b1: 11}) // {b1: 11}
+XEUtils.clearObject(b, undefined) // {b1: undefined, b2: undefined}
+XEUtils.clearObject(b, null) // {b1: null, b2: null}
+XEUtils.clearObject(b, null, {b1: 555}) // {b1: 555, b2: null}
+XEUtils.clearObject(b, {b1: 555}) // {b1: 555}
 ```
 
 ### assign/objectAssign/extend ([deep], target, ...) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
