@@ -1424,7 +1424,7 @@
       } else {
         var list = objectKeys(obj)
         for (len = list.length - 1; len >= 0; len--) {
-          if (iteratee.call(context || this, obj[list[len]], len, obj) === false) {
+          if (iteratee.call(context || this, obj[list[len]], list[len], obj) === false) {
             break
           }
         }
