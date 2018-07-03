@@ -1345,6 +1345,34 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
+  function forOf (obj, iteratee, context) {
+    if (obj) {
+      if (isArray(obj)) {
+        for (var index = 0, len = obj.length; index < len; index++) {
+          if (iteratee.call(context || this, obj[index], index, obj) === false) {
+            break
+          }
+        }
+      } else {
+        for (var key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            if (iteratee.call(context || this, obj[key], key, obj) === false) {
+              break
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+    * 迭代器
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function each (obj, iteratee, context) {
     if (obj) {
       if (isArray(obj)) {
@@ -1374,6 +1402,34 @@
       return objectLastEach(obj, iteratee, context || this)
     }
     return obj
+  }
+
+  /**
+    * 迭代器,从最后开始迭代
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iteratee(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function lastForOf (obj, iteratee, context) {
+    if (obj) {
+      var len
+      if (isArray(obj)) {
+        for (len = obj.length - 1; len >= 0; len--) {
+          if (iteratee.call(context || this, obj[len], len, obj) === false) {
+            break
+          }
+        }
+      } else {
+        var list = objectKeys(obj)
+        for (len = list.length - 1; len >= 0; len--) {
+          if (iteratee.call(context || this, obj[list[len]], len, obj) === false) {
+            break
+          }
+        }
+      }
+    }
   }
 
   function createIterateeEmpty (iteratee) {
@@ -1516,7 +1572,9 @@
     forEach: arrayEach,
     forLastEach: arrayLastEach,
     arrayLastEach: arrayLastEach,
+    forOf: forOf,
     each: each,
+    lastForOf: lastForOf,
     lastEach: lastEach,
     groupBy: groupBy,
     countBy: countBy,

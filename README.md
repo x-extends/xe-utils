@@ -617,11 +617,11 @@ arrayLast([11, 22]) // 22
 ```JavaScript
 import XEUtils, { objectEach, arrayEach } from 'xe-utils'
 
+XEUtils.forOf([11, 22, 33], (item, key) => {
+  // 通用迭代器,支持return false跳出循环
+})
 XEUtils.each([11, 22, 33], (item, key) => {
   // 通用迭代器
-})
-XEUtils.forEach([11, 22, 33], (item, index) => {
-  // 数组迭代器
 })
 arrayEach([11, 22, 33], (item, index) => {
   // 数组迭代器
@@ -636,11 +636,11 @@ objectEach({a: 11, b: 22}, (item, key) => {
 ```JavaScript
 import XEUtils, { objectEach, arrayEach } from 'xe-utils'
 
+XEUtils.forOfLast([11, 22, 33], (item, key) => {
+  // 通用迭代器,支持return false跳出循环
+})
 XEUtils.lastEach([11, 22, 33], (item, key) => {
   // 通用迭代器
-})
-XEUtils.forLastEach([11, 22, 33], (item, index) => {
-  // 数组迭代器
 })
 arrayLastEach([11, 22, 33], (item, index) => {
   // 数组迭代器
