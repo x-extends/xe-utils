@@ -2230,7 +2230,7 @@
    */
   function commafy (num, options) {
     var opts = baseExports.objectAssign({ spaceNumber: 3, separator: ',', fixed: 0 }, options)
-    var result = parseFloat(('' + num).replace(/,/g, '') || 0).toFixed(opts.fixed).split('.')
+    var result = opts.fixed === null ? [num.replace(/,/g, '')] : (parseFloat(('' + num).replace(/,/g, '') || 0).toFixed(opts.fixed)).split('.')
     return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
   }
 
