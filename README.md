@@ -1179,6 +1179,8 @@ XEUtils.commafy(1000000)
 XEUtils.commafy(1000000, {fixed: 2})
 // 格式化银行卡 1234 1234 1234 1234
 XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0})
+// 字符串每隔3位分割 111,111,111,111,111,111,111,111,111
+XEUtils.commafy('111111111111111111111111111', {spaceNumber: 3, fixed: null})
 ```
 
 ### toNumber/stringToNumber ( num ) 转数值
