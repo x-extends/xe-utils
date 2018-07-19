@@ -224,7 +224,7 @@ function findKey (obj, iteratee, context) {
 function arrayMap (obj, iteratee, context) {
   var result = []
   if (obj) {
-    if (iteratee) {
+    if (arguments.length > 1) {
       context = context || this
       if (!baseExports.isFunction(iteratee)) {
         iteratee = baseExports.property(iteratee)

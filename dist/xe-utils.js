@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.6
+ * xe-utils.js v1.6.7
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.6'
+  XEUtils.version = '1.6.7'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -244,7 +244,7 @@
   function arrayMap (obj, iteratee, context) {
     var result = []
     if (obj) {
-      if (iteratee) {
+      if (arguments.length > 1) {
         context = context || this
         if (!baseExports.isFunction(iteratee)) {
           iteratee = baseExports.property(iteratee)
