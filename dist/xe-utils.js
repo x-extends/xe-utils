@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.7
+ * xe-utils.js v1.6.8
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.7'
+  XEUtils.version = '1.6.8'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -486,9 +486,16 @@
       return item[optKey]
     })
     for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
-      treeData = {}
       item = array[index]
       id = item[optKey]
+
+      if (optData === null) {
+        treeData = item
+      } else {
+        treeData = {}
+        treeData[optData] = item
+      }
+
       parentId = item[optParentKey]
       treeMap[id] = treeMap[id] || []
       treeMap[parentId] = treeMap[parentId] || []
@@ -497,7 +504,6 @@
       treeData[optKey] = id
       treeData[optParentKey] = parentId
       treeData[optChildren] = treeMap[id]
-      treeData[optData] = optData === null ? optData : item
 
       if (!optStrict || (optStrict && !parentId)) {
         if (baseExports.indexOf(ids, parentId) === -1) {

@@ -466,9 +466,17 @@ function arrayToTree (array, options) {
     return item[optKey]
   })
   for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
-    treeData = {}
+
     item = array[index]
     id = item[optKey]
+
+    if (optData === null) {
+      treeData = item
+    } else {
+      treeData = {}
+      treeData[optData] = item
+    }
+
     parentId = item[optParentKey]
     treeMap[id] = treeMap[id] || []
     treeMap[parentId] = treeMap[parentId] || []
@@ -477,7 +485,6 @@ function arrayToTree (array, options) {
     treeData[optKey] = id
     treeData[optParentKey] = parentId
     treeData[optChildren] = treeMap[id]
-    treeData[optData] = optData === null ? optData : item
 
     if (!optStrict || (optStrict && !parentId)) {
       if (baseExports.indexOf(ids, parentId) === -1) {

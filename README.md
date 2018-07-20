@@ -894,11 +894,11 @@ XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
 
 | 属性 | 描述 | 默认值 |
 |------|------|------|
-| strict | 严格模式，启用后会忽略错误数据 | false |
+| strict | 是否严格模式，启用后会忽略错误数据 | false |
 | key | 节点键值 | 'id' |
 | parentKey | 父节点键值 | 'parentId' |
 | children | 子节点属性 | 'children' |
-| data | 数据存放属性 | 'data' |
+| data | 数据存放属性;如果为null，则返回原始数据结构 | 'data' |
 
 ```JavaScript
 import XEUtils from 'xe-utils'
