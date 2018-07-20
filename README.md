@@ -903,16 +903,20 @@ XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const list1 = [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
+// 默认结构
+const list1 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
 XEUtils.arrayToTree(list1)
-// [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
-const list2 = [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}, {id: 5, parentId: 22}]
-XEUtils.arrayToTree(list2)
-// [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}, {id: 5, data: {}}]
-const list3 = [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}, {id: 5, parentId: 22}]
-// 如果设置为严格模式strict=true，错误的数据会被忽略
+// [{id: 1, data: {...}, children: [{id: 2, data: {...}, children: [{id: 4, data: {...}}]}]}, {id: 3, data: {...}}, {id: 5, data: {...}}]
+
+// 返回原始数据结构
+const list2 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}]
+XEUtils.arrayToTree(list2, {data: null})
+// [{id: 1, name: '111', children: [{id: 2, name: '222', children: [{id: 4, name: '444'}]}]}, {id: 3, name: '333'}]
+
+// 如果设置为严格模式，（非父子关联及冗余)的数据会被忽略
+const list3 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
 XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
-// [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+// [{id: 1, data: {...}, children: [{id: 2, data: {...}, children: [{id: 4, data: {...}}]}]}, {id: 3, data: {...}}]
 ```
 
 ### treeToArray ( array, options ) 将一个树结构转成数组列表
