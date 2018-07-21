@@ -11,7 +11,7 @@ var methodExports = require('../method')
  */
 XEUtils.mixin = function (methods) {
   methodExports.objectEach(methods, function (fn, name) {
-    XEUtils[name] = 'cookie'.indexOf(name) === -1 && methodExports.isFunction(fn) ? function () {
+    XEUtils[name] = methodExports.isFunction(fn) && fn._c !== false ? function () {
       var result = fn.apply(XEUtils.$context, arguments)
       XEUtils.$context = null
       return result

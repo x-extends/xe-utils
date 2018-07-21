@@ -6,6 +6,8 @@ var baseExports = require('./base')
 
 var DAY_TIME = 86400000
 var WEEK_TIME = DAY_TIME * 7
+var STRING_FIRST = 'first'
+var STRING_LAST = 'last'
 
 /**
  * 返回时间戳
@@ -154,11 +156,11 @@ function getWhatYear (date, year, month) {
     currentDate.setFullYear(currentDate.getFullYear() + number)
   }
   if (month || !isNaN(month)) {
-    if (month === 'first') {
+    if (month === STRING_FIRST) {
       return new Date(currentDate.getFullYear(), 0, 1)
-    } else if (month === 'last') {
+    } else if (month === STRING_LAST) {
       currentDate.setMonth(11)
-      return getWhatMonth(currentDate, 0, 'last')
+      return getWhatMonth(currentDate, 0, STRING_LAST)
     } else {
       currentDate.setMonth(month)
     }
@@ -178,10 +180,10 @@ function getWhatMonth (date, month, day) {
   var currentDate = stringToDate(date)
   var monthOffset = month && !isNaN(month) ? month : 0
   if (day || !isNaN(day)) {
-    if (day === 'first') {
+    if (day === STRING_FIRST) {
       return new Date(currentDate.getFullYear(), currentDate.getMonth() + monthOffset, 1)
-    } else if (day === 'last') {
-      return new Date(getWhatMonth(currentDate, monthOffset + 1, 'first').getTime() - 1)
+    } else if (day === STRING_LAST) {
+      return new Date(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST).getTime() - 1)
     } else {
       currentDate.setDate(day)
     }
@@ -224,10 +226,10 @@ function getWhatDay (date, day, mode) {
   var currentDate = stringToDate(date)
   if (!isNaN(day)) {
     currentDate.setDate(currentDate.getDate() + Number(day))
-    if (mode === 'first') {
+    if (mode === STRING_FIRST) {
       return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
-    } else if (mode === 'last') {
-      return new Date(getWhatDay(currentDate, 1, 'first').getTime() - 1)
+    } else if (mode === STRING_LAST) {
+      return new Date(getWhatDay(currentDate, 1, STRING_FIRST).getTime() - 1)
     }
   }
   return currentDate
@@ -246,7 +248,7 @@ function calculateTime (startDate, endDate, timeGap) {
 function getMonthWeek (date) {
   if (date) {
     var currentDate = stringToDate(date)
-    var monthFirst = getWhatMonth(date, 0, 'first')
+    var monthFirst = getWhatMonth(date, 0, STRING_FIRST)
     var monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
     if (monthFirstWeek < monthFirst) {
       monthFirstWeek = getWhatWeek(monthFirst, 1, 1)
@@ -266,7 +268,7 @@ function getMonthWeek (date) {
   */
 function getYearDay (date) {
   if (date) {
-    return calculateTime(getWhatYear(date, 0, 'first'), stringToDate(date), DAY_TIME)
+    return calculateTime(getWhatYear(date, 0, STRING_FIRST), stringToDate(date), DAY_TIME)
   }
   return 0
 }
@@ -280,7 +282,7 @@ function getYearDay (date) {
 function getYearWeek (date) {
   if (date) {
     var currentDate = stringToDate(date)
-    var yearFirst = getWhatYear(date, 0, 'first')
+    var yearFirst = getWhatYear(date, 0, STRING_FIRST)
     var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
     if (yearFirstWeek < yearFirst) {
       yearFirstWeek = getWhatWeek(yearFirst, 1, 1)
@@ -315,7 +317,7 @@ function getDayOfYear (date, year) {
   */
 function getDayOfMonth (date, month) {
   if (date) {
-    return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / DAY_TIME) + 1
+    return Math.floor((getWhatMonth(date, month, STRING_LAST).getTime() - getWhatMonth(date, month, STRING_FIRST).getTime()) / DAY_TIME) + 1
   }
   return 0
 }

@@ -28,7 +28,8 @@ function browse () {
     result.isMobile = isMobile()
     result.isPC = !result.isMobile
     if (typeof document !== 'undefined') {
-      var $body = document.body || document.documentElement
+      var $dom = document
+      var $body = $dom.body || $dom.documentElement
       baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
         result['-' + core] = !!$body[core + 'MatchesSelector']
       })

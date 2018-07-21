@@ -39,51 +39,57 @@ function cookie (name, value, options) {
   var decode = decodeURIComponent
   var encode = encodeURIComponent
   var isDoc = typeof document !== 'undefined'
+  var $dom = isDoc ? document : null
+  var arrayEach = baseExports.arrayEach
+  var objectAssign = baseExports.objectAssign
+  var isObject = baseExports.isObject
   if (this && this.$context) {
     this.$context = null
   }
   if (baseExports.isArray(name)) {
     inserts = name
   } else if (arguments.length > 1) {
-    inserts = [baseExports.objectAssign({name: name, value: value}, options)]
-  } else if (baseExports.isObject(name)) {
+    inserts = [objectAssign({name: name, value: value}, options)]
+  } else if (isObject(name)) {
     inserts = [name]
   }
   if (inserts.length > 0) {
     if (isDoc) {
-      baseExports.arrayEach(inserts, function (obj) {
-        var opts = baseExports.objectAssign({}, obj)
+      arrayEach(inserts, function (obj) {
+        var opts = objectAssign({}, obj)
         var values = []
         if (opts.name) {
           var expires = opts.expires
-          values.push(encode(opts.name) + '=' + encode(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+          values.push(encode(opts.name) + '=' + encode(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
           if (expires) {
             if (isNaN(expires)) {
               // UTCString || Unit
-              opts.expires = expires.replace(/^([0-9]+)(y|M|d|H|m|s)$/, function (text, num, unit) {
+              expires = expires.replace(/^([0-9]+)(y|M|d|H|m|s)$/, function (text, num, unit) {
                 return toCookieUTCString(toCookieUnitTime(unit, num))
               })
             } else if (/^[0-9]{11,13}$/.test(expires) || baseExports.isDate(expires)) {
               // Date || now
-              opts.expires = toCookieUTCString(expires)
+              expires = toCookieUTCString(expires)
             } else {
               // day
-              opts.expires = toCookieUTCString(toCookieUnitTime('d', expires))
+              expires = toCookieUTCString(toCookieUnitTime('d', expires))
             }
+            opts.expires = expires
           }
-          baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
+          arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
             if (opts[key] !== undefined) {
               values.push(opts[key] && key === 'secure' ? key : (key + '=' + opts[key]))
             }
           })
         }
-        document.cookie = values.join('; ')
+        $dom.cookie = values.join('; ')
       })
     }
   } else {
     var result = {}
-    if (isDoc && document.cookie) {
-      baseExports.arrayEach(document.cookie.split('; '), function (val) {
+    var cookies = $dom.cookie
+    if (isDoc && cookies) {
+      arrayEach(cookies.split('; '), function (val) {
         var keyIndex = val.indexOf('=')
         result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
       })
@@ -114,6 +120,7 @@ function cookieKeys () {
 }
 
 baseExports.objectAssign(cookie, {
+  _c: false,
   isKey: isCookieKey,
   set: setCookieItem,
   setItem: setCookieItem,

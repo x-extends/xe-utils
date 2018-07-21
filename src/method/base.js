@@ -4,6 +4,7 @@ var XEUtils = require('../core/utils')
 
 var STRING_UNDEFINED = 'undefined'
 var objectToString = Object.prototype.toString
+var objectAssignFns = Object.assign
 
 /* eslint-disable valid-typeof */
 function createInTypeof (type) {
@@ -31,8 +32,8 @@ function objectMap (obj, iterate, context) {
   if (obj) {
     if (iterate) {
       context = context || this
-      if (!baseExports.isFunction(iterate)) {
-        iterate = baseExports.property(iterate)
+      if (!isFunction(iterate)) {
+        iterate = property(iterate)
       }
       each(obj, function (val, index) {
         result[index] = iterate.call(context, val, index, obj)
@@ -83,10 +84,11 @@ function clone (obj, deep) {
   * @return {Object}
   */
 function bind (callback, context) {
-  var amgs = XEUtils.from(arguments).slice(2)
+  var arrayFrom = XEUtils.from
+  var amgs = arrayFrom(arguments).slice(2)
   context = context || this
   return function () {
-    return callback.apply(context, XEUtils.from(arguments).concat(amgs))
+    return callback.apply(context, arrayFrom(arguments).concat(amgs))
   }
 }
 
@@ -101,13 +103,14 @@ function bind (callback, context) {
 function once (callback, context) {
   var done = false
   var rest = null
-  var amgs = XEUtils.from(arguments).slice(2)
+  var arrayFrom = XEUtils.from
+  var amgs = arrayFrom(arguments).slice(2)
   context = context || this
   return function () {
     if (done) {
       return rest
     }
-    rest = callback.apply(context, XEUtils.from(arguments).concat(amgs))
+    rest = callback.apply(context, arrayFrom(arguments).concat(amgs))
     done = true
     return rest
   }
@@ -585,10 +588,14 @@ var objectAssign = function (target) {
         return extend(target, args, true)
       }
     } else {
-      return Object.assign ? Object.assign.apply(Object, args) : extend(target, args)
+      return objectAssignFns ? objectAssignFns.apply(Object, args) : extend(target, args)
     }
   }
   return target
+}
+
+function outError (e) {
+  console && console.error(e)
 }
 
 /**
@@ -604,7 +611,7 @@ function stringToJson (str) {
     try {
       return JSON.parse(str)
     } catch (e) {
-      console.error(e)
+      outError(e)
     }
   }
   return {}
@@ -617,14 +624,7 @@ function stringToJson (str) {
   * @return {String} 返回字符串
   */
 function jsonToString (obj) {
-  if (isObject(obj)) {
-    try {
-      return JSON.stringify(obj)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-  return obj ? '' + obj : ''
+  return JSON.stringify(obj) || ''
 }
 
 /**
@@ -637,7 +637,7 @@ function jsonToString (obj) {
   */
 function clearObject (obj, defs, assigns) {
   if (obj) {
-    var isDefs = arguments.length > 1 && (defs === null || !baseExports.isObject(defs))
+    var isDefs = arguments.length > 1 && (defs === null || !isObject(defs))
     var extds = isDefs ? assigns : defs
     if (isPlainObject(obj)) {
       objectEach(obj, isDefs ? function (val, key) {
@@ -910,9 +910,8 @@ function lastForOf (obj, iterate, context) {
 }
 
 function createiterateEmpty (iterate) {
-  var isEmpty = baseExports.isEmpty(iterate)
   return function () {
-    return isEmpty
+    return isEmpty(iterate)
   }
 }
 
@@ -932,7 +931,7 @@ function groupBy (obj, iterate, context) {
       if (isObject(iterate)) {
         iterate = createiterateEmpty(iterate)
       } else if (!isFunction(iterate)) {
-        iterate = baseExports.property(iterate)
+        iterate = property(iterate)
       }
     }
     each(obj, function (val, key) {

@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.10
+ * xe-utils.js v1.6.11
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.10'
+  XEUtils.version = '1.6.11'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -594,6 +594,7 @@
 
   var STRING_UNDEFINED = 'undefined'
   var objectToString = Object.prototype.toString
+  var objectAssignFns = Object.assign
 
   /* eslint-disable valid-typeof */
   function createInTypeof (type) {
@@ -621,8 +622,8 @@
     if (obj) {
       if (iterate) {
         context = context || this
-        if (!baseExports.isFunction(iterate)) {
-          iterate = baseExports.property(iterate)
+        if (!isFunction(iterate)) {
+          iterate = property(iterate)
         }
         each(obj, function (val, index) {
           result[index] = iterate.call(context, val, index, obj)
@@ -673,10 +674,11 @@
     * @return {Object}
     */
   function bind (callback, context) {
-    var amgs = XEUtils.from(arguments).slice(2)
+    var arrayFrom = XEUtils.from
+    var amgs = arrayFrom(arguments).slice(2)
     context = context || this
     return function () {
-      return callback.apply(context, XEUtils.from(arguments).concat(amgs))
+      return callback.apply(context, arrayFrom(arguments).concat(amgs))
     }
   }
 
@@ -691,13 +693,14 @@
   function once (callback, context) {
     var done = false
     var rest = null
-    var amgs = XEUtils.from(arguments).slice(2)
+    var arrayFrom = XEUtils.from
+    var amgs = arrayFrom(arguments).slice(2)
     context = context || this
     return function () {
       if (done) {
         return rest
       }
-      rest = callback.apply(context, XEUtils.from(arguments).concat(amgs))
+      rest = callback.apply(context, arrayFrom(arguments).concat(amgs))
       done = true
       return rest
     }
@@ -1175,10 +1178,14 @@
           return extend(target, args, true)
         }
       } else {
-        return Object.assign ? Object.assign.apply(Object, args) : extend(target, args)
+        return objectAssignFns ? objectAssignFns.apply(Object, args) : extend(target, args)
       }
     }
     return target
+  }
+
+  function outError (e) {
+    console && console.error(e)
   }
 
   /**
@@ -1194,7 +1201,7 @@
       try {
         return JSON.parse(str)
       } catch (e) {
-        console.error(e)
+        outError(e)
       }
     }
     return {}
@@ -1207,14 +1214,7 @@
     * @return {String} 返回字符串
     */
   function jsonToString (obj) {
-    if (isObject(obj)) {
-      try {
-        return JSON.stringify(obj)
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    return obj ? '' + obj : ''
+    return JSON.stringify(obj) || ''
   }
 
   /**
@@ -1227,7 +1227,7 @@
     */
   function clearObject (obj, defs, assigns) {
     if (obj) {
-      var isDefs = arguments.length > 1 && (defs === null || !baseExports.isObject(defs))
+      var isDefs = arguments.length > 1 && (defs === null || !isObject(defs))
       var extds = isDefs ? assigns : defs
       if (isPlainObject(obj)) {
         objectEach(obj, isDefs ? function (val, key) {
@@ -1500,9 +1500,8 @@
   }
 
   function createiterateEmpty (iterate) {
-    var isEmpty = baseExports.isEmpty(iterate)
     return function () {
-      return isEmpty
+      return isEmpty(iterate)
     }
   }
 
@@ -1522,7 +1521,7 @@
         if (isObject(iterate)) {
           iterate = createiterateEmpty(iterate)
         } else if (!isFunction(iterate)) {
-          iterate = baseExports.property(iterate)
+          iterate = property(iterate)
         }
       }
       each(obj, function (val, key) {
@@ -1682,7 +1681,8 @@
       result.isMobile = isMobile()
       result.isPC = !result.isMobile
       if (typeof document !== 'undefined') {
-        var $body = document.body || document.documentElement
+        var $dom = document
+        var $body = $dom.body || $dom.documentElement
         baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
           result['-' + core] = !!$body[core + 'MatchesSelector']
         })
@@ -1731,51 +1731,57 @@
     var decode = decodeURIComponent
     var encode = encodeURIComponent
     var isDoc = typeof document !== 'undefined'
+    var $dom = isDoc ? document : null
+    var arrayEach = baseExports.arrayEach
+    var objectAssign = baseExports.objectAssign
+    var isObject = baseExports.isObject
     if (this && this.$context) {
       this.$context = null
     }
     if (baseExports.isArray(name)) {
       inserts = name
     } else if (arguments.length > 1) {
-      inserts = [baseExports.objectAssign({ name: name, value: value }, options)]
-    } else if (baseExports.isObject(name)) {
+      inserts = [objectAssign({ name: name, value: value }, options)]
+    } else if (isObject(name)) {
       inserts = [name]
     }
     if (inserts.length > 0) {
       if (isDoc) {
-        baseExports.arrayEach(inserts, function (obj) {
-          var opts = baseExports.objectAssign({}, obj)
+        arrayEach(inserts, function (obj) {
+          var opts = objectAssign({}, obj)
           var values = []
           if (opts.name) {
             var expires = opts.expires
-            values.push(encode(opts.name) + '=' + encode(baseExports.isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+            values.push(encode(opts.name) + '=' + encode(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
             if (expires) {
               if (isNaN(expires)) {
                 // UTCString || Unit
-                opts.expires = expires.replace(/^([0-9]+)(y|M|d|H|m|s)$/, function (text, num, unit) {
+                expires = expires.replace(/^([0-9]+)(y|M|d|H|m|s)$/, function (text, num, unit) {
                   return toCookieUTCString(toCookieUnitTime(unit, num))
                 })
               } else if (/^[0-9]{11,13}$/.test(expires) || baseExports.isDate(expires)) {
                 // Date || now
-                opts.expires = toCookieUTCString(expires)
+                expires = toCookieUTCString(expires)
               } else {
                 // day
-                opts.expires = toCookieUTCString(toCookieUnitTime('d', expires))
+                expires = toCookieUTCString(toCookieUnitTime('d', expires))
               }
+              opts.expires = expires
             }
-            baseExports.arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
+            arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
               if (opts[key] !== undefined) {
                 values.push(opts[key] && key === 'secure' ? key : (key + '=' + opts[key]))
               }
             })
           }
-          document.cookie = values.join('; ')
+          $dom.cookie = values.join('; ')
         })
       }
     } else {
       var result = {}
-      if (isDoc && document.cookie) {
-        baseExports.arrayEach(document.cookie.split('; '), function (val) {
+      var cookies = $dom.cookie
+      if (isDoc && cookies) {
+        arrayEach(cookies.split('; '), function (val) {
           var keyIndex = val.indexOf('=')
           result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
         })
@@ -1806,6 +1812,7 @@
   }
 
   baseExports.objectAssign(cookie, {
+    _c: false,
     isKey: isCookieKey,
     set: setCookieItem,
     setItem: setCookieItem,
@@ -1823,6 +1830,8 @@
 
   var DAY_TIME = 86400000
   var WEEK_TIME = DAY_TIME * 7
+  var STRING_FIRST = 'first'
+  var STRING_LAST = 'last'
 
   /**
    * 返回时间戳
@@ -1971,11 +1980,11 @@
       currentDate.setFullYear(currentDate.getFullYear() + number)
     }
     if (month || !isNaN(month)) {
-      if (month === 'first') {
+      if (month === STRING_FIRST) {
         return new Date(currentDate.getFullYear(), 0, 1)
-      } else if (month === 'last') {
+      } else if (month === STRING_LAST) {
         currentDate.setMonth(11)
-        return getWhatMonth(currentDate, 0, 'last')
+        return getWhatMonth(currentDate, 0, STRING_LAST)
       } else {
         currentDate.setMonth(month)
       }
@@ -1995,10 +2004,10 @@
     var currentDate = stringToDate(date)
     var monthOffset = month && !isNaN(month) ? month : 0
     if (day || !isNaN(day)) {
-      if (day === 'first') {
+      if (day === STRING_FIRST) {
         return new Date(currentDate.getFullYear(), currentDate.getMonth() + monthOffset, 1)
-      } else if (day === 'last') {
-        return new Date(getWhatMonth(currentDate, monthOffset + 1, 'first').getTime() - 1)
+      } else if (day === STRING_LAST) {
+        return new Date(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST).getTime() - 1)
       } else {
         currentDate.setDate(day)
       }
@@ -2041,10 +2050,10 @@
     var currentDate = stringToDate(date)
     if (!isNaN(day)) {
       currentDate.setDate(currentDate.getDate() + Number(day))
-      if (mode === 'first') {
+      if (mode === STRING_FIRST) {
         return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
-      } else if (mode === 'last') {
-        return new Date(getWhatDay(currentDate, 1, 'first').getTime() - 1)
+      } else if (mode === STRING_LAST) {
+        return new Date(getWhatDay(currentDate, 1, STRING_FIRST).getTime() - 1)
       }
     }
     return currentDate
@@ -2063,7 +2072,7 @@
   function getMonthWeek (date) {
     if (date) {
       var currentDate = stringToDate(date)
-      var monthFirst = getWhatMonth(date, 0, 'first')
+      var monthFirst = getWhatMonth(date, 0, STRING_FIRST)
       var monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
       if (monthFirstWeek < monthFirst) {
         monthFirstWeek = getWhatWeek(monthFirst, 1, 1)
@@ -2083,7 +2092,7 @@
     */
   function getYearDay (date) {
     if (date) {
-      return calculateTime(getWhatYear(date, 0, 'first'), stringToDate(date), DAY_TIME)
+      return calculateTime(getWhatYear(date, 0, STRING_FIRST), stringToDate(date), DAY_TIME)
     }
     return 0
   }
@@ -2097,7 +2106,7 @@
   function getYearWeek (date) {
     if (date) {
       var currentDate = stringToDate(date)
-      var yearFirst = getWhatYear(date, 0, 'first')
+      var yearFirst = getWhatYear(date, 0, STRING_FIRST)
       var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
       if (yearFirstWeek < yearFirst) {
         yearFirstWeek = getWhatWeek(yearFirst, 1, 1)
@@ -2132,7 +2141,7 @@
     */
   function getDayOfMonth (date, month) {
     if (date) {
-      return Math.floor((getWhatMonth(date, month, 'last').getTime() - getWhatMonth(date, month, 'first').getTime()) / DAY_TIME) + 1
+      return Math.floor((getWhatMonth(date, month, STRING_LAST).getTime() - getWhatMonth(date, month, STRING_FIRST).getTime()) / DAY_TIME) + 1
     }
     return 0
   }
@@ -2582,7 +2591,7 @@
    */
   XEUtils.mixin = function (methods) {
     methodExports.objectEach(methods, function (fn, name) {
-      XEUtils[name] = 'cookie'.indexOf(name) === -1 && methodExports.isFunction(fn) ? function () {
+      XEUtils[name] = methodExports.isFunction(fn) && fn._c !== false ? function () {
         var result = fn.apply(XEUtils.$context, arguments)
         XEUtils.$context = null
         return result
