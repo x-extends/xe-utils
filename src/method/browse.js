@@ -23,7 +23,7 @@ function browse () {
     isPC: false
   }
   if (typeof window === 'undefined' && typeof process !== 'undefined') {
-    result.nodeJS = true
+    result.isNode = true
   } else {
     result.isMobile = isMobile()
     result.isPC = !result.isMobile

@@ -1410,14 +1410,23 @@ XEUtils.cookie([{name: 'name', value: 'value'}])
 // 批量添加并设置domain/path/secure/expires 7天后过期
 XEUtils.cookie([{name: 'name', value: 'value', domain: 'xxx.com', path: '/', expires: 7, secure: true}])
 
+// 判断name是否存在
+XEUtils.cookie.isKey('name')
 // 添加
 XEUtils.cookie.setItem('name', 'value')
 // 根据name获取
 XEUtils.cookie.getItem('name')
 // 删除
 XEUtils.cookie.removeItem('name')
+// 获取所有name
+XEUtils.cookie.keys()
 // 获取所有
 XEUtils.cookie.getJSON()
+
+// 兼容函数
+XEUtils.cookie.set(name, value)
+XEUtils.cookie.get(name)
+XEUtils.cookie.remove(name)
 ```
 
 ## 混合函数

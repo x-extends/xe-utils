@@ -92,16 +92,36 @@ function cookie (name, value, options) {
   }
 }
 
+function isCookieKey (key) {
+  return baseExports.includes(cookieKeys, key)
+}
+
+function setCookieItem (name, key, options) {
+  cookie(name, key, options)
+  return cookie
+}
+
+function getCookieItem (name) {
+  return cookie(name)
+}
+
+function removeCookieItem (name) {
+  cookie(name, null, {expires: -1})
+}
+
+function cookieKeys () {
+  return baseExports.keys(baseExports)
+}
+
 baseExports.objectAssign(cookie, {
-  setItem: function (name, key, options) {
-    cookie(name, key, options)
-  },
-  getItem: function (name) {
-    return cookie(name)
-  },
-  removeItem: function (name) {
-    cookie(name, null, {expires: -1})
-  },
+  isKey: isCookieKey,
+  set: setCookieItem,
+  setItem: setCookieItem,
+  get: getCookieItem,
+  getItem: getCookieItem,
+  remove: removeCookieItem,
+  removeItem: removeCookieItem,
+  keys: cookieKeys,
   getJSON: function () {
     return cookie()
   }
