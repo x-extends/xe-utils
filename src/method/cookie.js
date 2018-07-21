@@ -110,7 +110,7 @@ function removeCookieItem (name) {
 }
 
 function cookieKeys () {
-  return baseExports.keys(baseExports)
+  return baseExports.keys(cookie())
 }
 
 baseExports.objectAssign(cookie, {
@@ -122,9 +122,7 @@ baseExports.objectAssign(cookie, {
   remove: removeCookieItem,
   removeItem: removeCookieItem,
   keys: cookieKeys,
-  getJSON: function () {
-    return cookie()
-  }
+  getJSON: cookie
 })
 
 var cookieExports = {
