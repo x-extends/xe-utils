@@ -499,11 +499,21 @@ function arrayToTree (array, options) {
 function unTreeList (result, array, opts) {
   var optChildren = opts.children
   var optData = opts.data
-  for (var item, index = 0, len = array.length; index < len; index++) {
+  for (var item, children, index = 0, len = array.length; index < len; index++) {
     item = array[index]
-    result.push(optData === null ? item : item[optData])
-    if (item[optChildren]) {
-      unTreeList(result, item[optChildren], opts)
+    children = item[optChildren]
+    if (optData === null) {
+      try {
+        delete item[optChildren]
+      } catch (e) {
+        item[optChildren] = undefined
+      }
+    } else {
+      item = item[optData]
+    }
+    result.push(item)
+    if (children) {
+      unTreeList(result, children, opts)
     }
   }
   return result
