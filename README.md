@@ -509,23 +509,34 @@ rest(222) // 'test = 222'
 rest(333) // 'test = 222'
 ```
 
-### clearObject (obj[, defs, assigns]) 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
+### clear/clearObject (obj[, defs, assigns]) 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
 
 ```JavaScript
-import XEUtils from 'xe-utils'
+import XEUtils, { clearObject } from 'xe-utils'
 
 var a = [11, 22, 33, 33]
-XEUtils.clearObject(a) // []
-XEUtils.clearObject(a, undefined) // [undefined, undefined, undefined, undefined]
-XEUtils.clearObject(a, null) // [null, null, null, null]
-XEUtils.clearObject(a, null, [444]) // [null, null, null, null, 444]
-XEUtils.clearObject(a, [444]) // [444]
+XEUtils.clear(a) // []
+XEUtils.clear(a, undefined) // [undefined, undefined, undefined, undefined]
+XEUtils.clear(a, null) // [null, null, null, null]
+clearObject(a, null, [444]) // [null, null, null, null, 444]
+clearObject(a, [444]) // [444]
 var b = {b1: 11, b2: 22}
-XEUtils.clearObject(b) // {}
-XEUtils.clearObject(b, undefined) // {b1: undefined, b2: undefined}
-XEUtils.clearObject(b, null) // {b1: null, b2: null}
-XEUtils.clearObject(b, null, {b1: 555}) // {b1: 555, b2: null}
-XEUtils.clearObject(b, {b1: 555}) // {b1: 555}
+XEUtils.clear(b) // {}
+XEUtils.clear(b, undefined) // {b1: undefined, b2: undefined}
+XEUtils.clear(b, null) // {b1: null, b2: null}
+clearObject(b, null, {b1: 555}) // {b1: 555, b2: null}
+clearObject(b, {b1: 555}) // {b1: 555}
+```
+
+### remove/removeObject (obj, iteratee) 移除对象属性
+
+```JavaScript
+import XEUtils, { removeObject } from 'xe-utils'
+
+var list = [11, 22, 33, 44]
+XEUtils.remove(list, item => item === 22) // list = [11, 33, 44]
+var obj = {a1: 11, a2: 22, a3: 33}
+removeObject(obj, item => item === 22) // obj = {a1: 11, a3: 33}
 ```
 
 ### assign/objectAssign/extend ([deep], target, ...) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
@@ -1367,7 +1378,7 @@ import XEUtils from 'xe-utils'
 XEUtils.getBaseURL() // http://xuliangzhan.com/demo/
 ```
 
-### cookie ( ) Cookie 操作函数
+### cookie ( [name, value, options] ) Cookie 操作函数
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -1411,13 +1422,14 @@ XEUtils.cookie([{name: 'name', value: 'value'}])
 XEUtils.cookie([{name: 'name', value: 'value', domain: 'xxx.com', path: '/', expires: 7, secure: true}])
 
 // 判断name是否存在
-XEUtils.cookie.isKey('name')
+XEUtils.cookie.isKey(name)
 // 添加
-XEUtils.cookie.setItem('name', 'value')
+XEUtils.cookie.setItem(name, value, option)
+XEUtils.cookie.setItem(name, value, option).setItem(name, value, option)
 // 根据name获取
-XEUtils.cookie.getItem('name')
+XEUtils.cookie.getItem(name)
 // 删除
-XEUtils.cookie.removeItem('name')
+XEUtils.cookie.removeItem(name)
 // 获取所有name
 XEUtils.cookie.keys()
 // 获取所有

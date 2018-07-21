@@ -41,13 +41,13 @@ function arrayUnion () {
   * 数组按属性值升序
   *
   * @param {Array} arr 数组
-  * @param {Function/String} iteratee 方法或属性
+  * @param {Function/String} iterate 方法或属性
   * @return {Array}
   */
-function arraySort (arr, iteratee, context) {
+function arraySort (arr, iterate, context) {
   if (baseExports.isArray(arr)) {
-    return arr.sort(iteratee ? baseExports.isFunction(iteratee) ? iteratee.bind(context || this) : function (v1, v2) {
-      return v1[iteratee] > v2[iteratee] ? 1 : -1
+    return arr.sort(iterate ? baseExports.isFunction(iterate) ? iterate.bind(context || this) : function (v1, v2) {
+      return v1[iterate] > v2[iterate] ? 1 : -1
     } : function (v1, v2) {
       return v1 > v2 ? 1 : -1
     })
@@ -93,19 +93,19 @@ function arraySample (array, number) {
   * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Boolean}
   */
-function arraySome (obj, iteratee, context) {
-  if (obj && iteratee) {
+function arraySome (obj, iterate, context) {
+  if (obj && iterate) {
     context = context || this
     if (baseExports.isArray(obj) && obj.some) {
-      return obj.some(iteratee, context)
+      return obj.some(iterate, context)
     } else {
       for (var index in obj) {
         if (obj.hasOwnProperty(index)) {
-          if (iteratee.call(context, obj[index], index, obj)) {
+          if (iterate.call(context, obj[index], index, obj)) {
             return true
           }
         }
@@ -119,19 +119,19 @@ function arraySome (obj, iteratee, context) {
   * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Boolean}
   */
-function arrayEvery (obj, iteratee, context) {
-  if (obj && iteratee) {
+function arrayEvery (obj, iterate, context) {
+  if (obj && iterate) {
     context = context || this
     if (baseExports.isArray(obj) && obj.every) {
-      return obj.every(iteratee, context)
+      return obj.every(iterate, context)
     } else {
       for (var index in obj) {
         if (obj.hasOwnProperty(index)) {
-          if (!iteratee.call(context, obj[index], index, obj)) {
+          if (!iterate.call(context, obj[index], index, obj)) {
             return false
           }
         }
@@ -145,19 +145,19 @@ function arrayEvery (obj, iteratee, context) {
   * 根据回调过滤数据
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function arrayFilter (obj, iteratee, context) {
-  if (obj && iteratee) {
+function arrayFilter (obj, iterate, context) {
+  if (obj && iterate) {
     context = context || this
     if (baseExports.isArray(obj) && obj.filter) {
-      return obj.filter(iteratee, context)
+      return obj.filter(iterate, context)
     } else {
       var result = {}
       baseExports.each(obj, function (val, key) {
-        if (iteratee.call(context, val, key, obj)) {
+        if (iterate.call(context, val, key, obj)) {
           result[key] = val
         }
       })
@@ -171,19 +171,19 @@ function arrayFilter (obj, iteratee, context) {
   * 查找匹配第一条数据
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function arrayFind (obj, iteratee, context) {
-  if (obj && iteratee) {
+function arrayFind (obj, iterate, context) {
+  if (obj && iterate) {
     context = context || this
     if (baseExports.isArray(obj) && obj.find) {
-      return obj.find(iteratee, context)
+      return obj.find(iterate, context)
     } else {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-          if (iteratee.call(context, obj[key], key, obj)) {
+          if (iterate.call(context, obj[key], key, obj)) {
             return obj[key]
           }
         }
@@ -196,16 +196,16 @@ function arrayFind (obj, iteratee, context) {
   * 查找匹配第一条数据的键
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function findKey (obj, iteratee, context) {
-  if (obj && iteratee) {
+function findKey (obj, iterate, context) {
+  if (obj && iterate) {
     context = context || this
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
-        if (iteratee.call(context, obj[key], key, obj)) {
+        if (iterate.call(context, obj[key], key, obj)) {
           return key
         }
       }
@@ -217,23 +217,23 @@ function findKey (obj, iteratee, context) {
   * 指定方法后的返回值组成的新数组
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Array}
   */
-function arrayMap (obj, iteratee, context) {
+function arrayMap (obj, iterate, context) {
   var result = []
   if (obj) {
     if (arguments.length > 1) {
       context = context || this
-      if (!baseExports.isFunction(iteratee)) {
-        iteratee = baseExports.property(iteratee)
+      if (!baseExports.isFunction(iterate)) {
+        iterate = baseExports.property(iterate)
       }
       if (baseExports.isArray(obj)) {
-        return obj.map(iteratee, context)
+        return obj.map(iterate, context)
       } else {
         baseExports.each(obj, function () {
-          result.push(iteratee.apply(context, arguments))
+          result.push(iterate.apply(context, arguments))
         })
       }
     } else {
@@ -247,17 +247,17 @@ function arrayMap (obj, iteratee, context) {
   * 求和函数，将数值相加
   *
   * @param {Array} array 数组
-  * @param {Function/String} iteratee 方法或属性
+  * @param {Function/String} iterate 方法或属性
   * @param {Object} context 上下文
   * @return {Number}
   */
-function arraySum (array, iteratee, context) {
+function arraySum (array, iterate, context) {
   var result = 0
   context = context || this
-  baseExports.each(array, iteratee ? baseExports.isFunction(iteratee) ? function () {
-    result += iteratee.apply(context, arguments) || 0
+  baseExports.each(array, iterate ? baseExports.isFunction(iterate) ? function () {
+    result += iterate.apply(context, arguments) || 0
   } : function (val) {
-    result += parseFloat(val[iteratee] || 0)
+    result += parseFloat(val[iterate] || 0)
   } : function (val) {
     result += parseFloat(val || 0)
   })
@@ -268,12 +268,12 @@ function arraySum (array, iteratee, context) {
   * 求平均值函数
   *
   * @param {Array} array 数组
-  * @param {Function/String} iteratee 方法或属性
+  * @param {Function/String} iterate 方法或属性
   * @param {Object} context 上下文
   * @return {Number}
   */
-function arrayMean (array, iteratee, context) {
-  return arraySum(array, iteratee, context || this) / baseExports.getSize(array)
+function arrayMean (array, iterate, context) {
+  return arraySum(array, iterate, context || this) / baseExports.getSize(array)
 }
 
 /**
@@ -397,11 +397,11 @@ function unzip (arrays) {
  * 根据数组或可迭代对象中创建一个新的数组
  *
  * @param {Array} obj 数组
- * @param {Function} iteratee(item, index, array) 回调
+ * @param {Function} iterate(item, index, array) 回调
  * @param {Object} context 上下文
  * @return {Array}
  */
-function from (array, iteratee, context) {
+function from (array, iterate, context) {
   if (baseExports.isArray(array)) {
     return array
   }
@@ -412,7 +412,7 @@ function from (array, iteratee, context) {
   for (var index = 0, len = array.length; index < len; index++) {
     result.push(array[index])
   }
-  return arguments.length < 2 ? result : arrayMap(result, iteratee, context || this)
+  return arguments.length < 2 ? result : arrayMap(result, iterate, context || this)
 }
 
 /**
@@ -466,7 +466,6 @@ function arrayToTree (array, options) {
     return item[optKey]
   })
   for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
-
     item = array[index]
     id = item[optKey]
 

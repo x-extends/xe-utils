@@ -14,15 +14,15 @@ function getRandom (min, max) {
   return min >= max ? min : ((min = min >> 0) + Math.round(Math.random() * ((max || 9) - min)))
 }
 
-function sortData (arr, iteratee) {
-  return (baseExports.isFunction(iteratee) ? XEUtils.arraySort(XEUtils.arrayMap(arr, iteratee, this)) : XEUtils.arraySort(arr, iteratee))
+function sortData (arr, iterate) {
+  return (baseExports.isFunction(iterate) ? XEUtils.arraySort(XEUtils.arrayMap(arr, iterate, this)) : XEUtils.arraySort(arr, iterate))
 }
 
 /**
   * 获取最小值
   *
   * @param {Array} arr 数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @return {Number}
   */
 function arrayMin () {
@@ -33,7 +33,7 @@ function arrayMin () {
   * 获取最大值
   *
   * @param {Array} arr 数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @return {Number}
   */
 function arrayMax () {

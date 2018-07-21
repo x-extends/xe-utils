@@ -22,20 +22,20 @@ function createInInObjectString (type) {
   * 指定方法后的返回值组成的新对象
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function objectMap (obj, iteratee, context) {
+function objectMap (obj, iterate, context) {
   var result = {}
   if (obj) {
-    if (iteratee) {
+    if (iterate) {
       context = context || this
-      if (!baseExports.isFunction(iteratee)) {
-        iteratee = baseExports.property(iteratee)
+      if (!baseExports.isFunction(iterate)) {
+        iterate = baseExports.property(iterate)
       }
       each(obj, function (val, index) {
-        result[index] = iteratee.call(context, val, index, obj)
+        result[index] = iterate.call(context, val, index, obj)
       })
     } else {
       return obj
@@ -466,7 +466,8 @@ var indexOf = createIndexOf(function (obj, val) {
   if (obj.indexOf) {
     return obj.indexOf(val)
   }
-  for (var index = 0, len = obj.length; index < len; index++) {
+  var len = obj.length
+  for (var index = 0; index < len; index++) {
     if (val === obj[index]) {
       return index
     }
@@ -492,16 +493,16 @@ var lastIndexOf = createIndexOf(function (obj, val) {
   return -1
 })
 
-function createIterateeIndexOf (callback) {
-  return function (obj, iteratee, context) {
-    if (obj && iteratee) {
+function createiterateIndexOf (callback) {
+  return function (obj, iterate, context) {
+    if (obj && iterate) {
       context = this || context
       if (isString(obj) || isArray(obj)) {
-        return callback(obj, iteratee, context)
+        return callback(obj, iterate, context)
       }
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-          if (obj[key] === iteratee.call(context, obj[key], key, obj)) {
+          if (obj[key] === iterate.call(context, obj[key], key, obj)) {
             return key
           }
         }
@@ -515,13 +516,14 @@ function createIterateeIndexOf (callback) {
   * 返回对象第一个索引值
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-var findIndexOf = createIterateeIndexOf(function (obj, iteratee, context) {
-  for (var index = 0, len = obj.length; index < len; index++) {
-    if (iteratee.call(context, obj[index], index, obj)) {
+var findIndexOf = createiterateIndexOf(function (obj, iterate, context) {
+  var len = obj.length
+  for (var index = 0; index < len; index++) {
+    if (iterate.call(context, obj[index], index, obj)) {
       return index
     }
   }
@@ -532,13 +534,13 @@ var findIndexOf = createIterateeIndexOf(function (obj, iteratee, context) {
   * 从最后开始的索引值,返回对象第一个索引值
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-var findLastIndexOf = createIterateeIndexOf(function (obj, iteratee, context) {
+var findLastIndexOf = createiterateIndexOf(function (obj, iterate, context) {
   for (var len = obj.length - 1; len >= 0; len--) {
-    if (iteratee.call(context, obj[len], len, obj)) {
+    if (iterate.call(context, obj[len], len, obj)) {
       return len
     }
   }
@@ -557,7 +559,8 @@ function includes (obj, val) {
 }
 
 function extend (target, args, isClone) {
-  for (var source, index = 1, len = args.length; index < len; index++) {
+  var len = args.length
+  for (var source, index = 1; index < len; index++) {
     source = args[index]
     arrayEach(objectKeys(args[index]), function (key) {
       target[key] = isClone ? clone(source[key], isClone) : source[key]
@@ -663,6 +666,54 @@ function clearObject (obj, defs, assigns) {
   return obj
 }
 
+function pluckRemove (iterate) {
+  return function (item, index) {
+    return index === iterate
+  }
+}
+
+/**
+  * 移除对象属性
+  *
+  * @param {Object/Array} obj 对象/数组
+  * @param {Function/String} iterate 方法或属性
+  * @param {Object} context 上下文
+  * @return {Object/Array}
+  */
+function removeObject (obj, iterate, context) {
+  if (obj) {
+    var removeKeys = []
+    var rest = []
+    context = context || this
+    if (!isFunction(iterate)) {
+      iterate = pluckRemove(iterate)
+    }
+    each(obj, function (item, index, rest) {
+      if (iterate.call(context, item, index, rest)) {
+        removeKeys.push(index)
+      }
+    })
+    if (isArray(obj)) {
+      lastEach(removeKeys, function (item, key) {
+        rest.push(obj[item])
+        obj.splice(item, 1)
+      })
+    } else {
+      rest = {}
+      arrayEach(removeKeys, function (key) {
+        try {
+          rest[key] = obj[key]
+          delete obj[key]
+        } catch (e) {
+          obj[key] = undefined
+        }
+      })
+    }
+    return rest
+  }
+  return obj
+}
+
 /**
   * 获取对象所有属性
   *
@@ -737,29 +788,29 @@ function arrayLast (obj) {
   return list[list.length - 1]
 }
 
-function objectEach (obj, iteratee, context) {
+function objectEach (obj, iterate, context) {
   for (var key in obj) {
     if (obj.hasOwnProperty(key)) {
-      iteratee.call(context || this, obj[key], key, obj)
+      iterate.call(context || this, obj[key], key, obj)
     }
   }
 }
 
-function objectLastEach (obj, iteratee, context) {
+function objectLastEach (obj, iterate, context) {
   arrayLastEach(objectKeys(obj), function (key) {
-    iteratee.call(context || this, obj[key], key, obj)
+    iterate.call(context || this, obj[key], key, obj)
   })
 }
 
-function arrayEach (obj, iteratee, context) {
+function arrayEach (obj, iterate, context) {
   for (var index = 0, len = obj.length; index < len; index++) {
-    iteratee.call(context || this, obj[index], index, obj)
+    iterate.call(context || this, obj[index], index, obj)
   }
 }
 
-function arrayLastEach (obj, iteratee, context) {
+function arrayLastEach (obj, iterate, context) {
   for (var len = obj.length - 1; len >= 0; len--) {
-    iteratee.call(context || this, obj[len], len, obj)
+    iterate.call(context || this, obj[len], len, obj)
   }
 }
 
@@ -767,22 +818,22 @@ function arrayLastEach (obj, iteratee, context) {
   * 迭代器
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function forOf (obj, iteratee, context) {
+function forOf (obj, iterate, context) {
   if (obj) {
     if (isArray(obj)) {
       for (var index = 0, len = obj.length; index < len; index++) {
-        if (iteratee.call(context || this, obj[index], index, obj) === false) {
+        if (iterate.call(context || this, obj[index], index, obj) === false) {
           break
         }
       }
     } else {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-          if (iteratee.call(context || this, obj[key], key, obj) === false) {
+          if (iterate.call(context || this, obj[key], key, obj) === false) {
             break
           }
         }
@@ -795,19 +846,19 @@ function forOf (obj, iteratee, context) {
   * 迭代器
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function each (obj, iteratee, context) {
+function each (obj, iterate, context) {
   if (obj) {
     if (isArray(obj)) {
       if (isFunction(obj.forEach)) {
-        return obj.forEach(iteratee, context || this)
+        return obj.forEach(iterate, context || this)
       }
-      return arrayEach(obj, iteratee, context || this)
+      return arrayEach(obj, iterate, context || this)
     }
-    return objectEach(obj, iteratee, context || this)
+    return objectEach(obj, iterate, context || this)
   }
   return obj
 }
@@ -816,16 +867,16 @@ function each (obj, iteratee, context) {
   * 迭代器,从最后开始迭代
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function lastEach (obj, iteratee, context) {
+function lastEach (obj, iterate, context) {
   if (obj) {
     if (isArray(obj)) {
-      return arrayLastEach(obj, iteratee, context || this)
+      return arrayLastEach(obj, iterate, context || this)
     }
-    return objectLastEach(obj, iteratee, context || this)
+    return objectLastEach(obj, iterate, context || this)
   }
   return obj
 }
@@ -834,23 +885,23 @@ function lastEach (obj, iteratee, context) {
   * 迭代器,从最后开始迭代
   *
   * @param {Object} obj 对象/数组
-  * @param {Function} iteratee(item, index, obj) 回调
+  * @param {Function} iterate(item, index, obj) 回调
   * @param {Object} context 上下文
   * @return {Object}
   */
-function lastForOf (obj, iteratee, context) {
+function lastForOf (obj, iterate, context) {
   if (obj) {
     var len
     if (isArray(obj)) {
       for (len = obj.length - 1; len >= 0; len--) {
-        if (iteratee.call(context || this, obj[len], len, obj) === false) {
+        if (iterate.call(context || this, obj[len], len, obj) === false) {
           break
         }
       }
     } else {
       var list = objectKeys(obj)
       for (len = list.length - 1; len >= 0; len--) {
-        if (iteratee.call(context || this, obj[list[len]], list[len], obj) === false) {
+        if (iterate.call(context || this, obj[list[len]], list[len], obj) === false) {
           break
         }
       }
@@ -858,34 +909,34 @@ function lastForOf (obj, iteratee, context) {
   }
 }
 
-function createIterateeEmpty (iteratee) {
-  var isEmpty = baseExports.isEmpty(iteratee)
+function createiterateEmpty (iterate) {
+  var isEmpty = baseExports.isEmpty(iterate)
   return function () {
     return isEmpty
   }
 }
 
 /**
-  * 集合分组,默认使用键值分组,如果有iteratee则使用结果进行分组
+  * 集合分组,默认使用键值分组,如果有iterate则使用结果进行分组
   *
   * @param {Array} obj 对象
-  * @param {Function} iteratee 回调/对象属性
+  * @param {Function} iterate 回调/对象属性
   * @param {Object} context 上下文
   * @return {Object}
   */
-function groupBy (obj, iteratee, context) {
+function groupBy (obj, iterate, context) {
   var result = {}
   if (obj) {
     context = this || context
-    if (iteratee !== null && iteratee !== undefined) {
-      if (isObject(iteratee)) {
-        iteratee = createIterateeEmpty(iteratee)
-      } else if (!isFunction(iteratee)) {
-        iteratee = baseExports.property(iteratee)
+    if (iterate !== null && iterate !== undefined) {
+      if (isObject(iterate)) {
+        iterate = createiterateEmpty(iterate)
+      } else if (!isFunction(iterate)) {
+        iterate = baseExports.property(iterate)
       }
     }
     each(obj, function (val, key) {
-      var groupKey = iteratee ? iteratee.call(context, val, key, obj) : val
+      var groupKey = iterate ? iterate.call(context, val, key, obj) : val
       if (result[groupKey]) {
         result[groupKey].push(val)
       } else {
@@ -900,12 +951,12 @@ function groupBy (obj, iteratee, context) {
   * 集合分组统计,返回各组中对象的数量统计
   *
   * @param {Array} obj 对象
-  * @param {Function} iteratee 回调/对象属性
+  * @param {Function} iterate 回调/对象属性
   * @param {Object} context 上下文
   * @return {Object}
   */
-function countBy (obj, iteratee, context) {
-  var result = groupBy(obj, iteratee, context || this)
+function countBy (obj, iterate, context) {
+  var result = groupBy(obj, iterate, context || this)
   objectEach(result, function (item, key) {
     result[key] = item.length
   })
@@ -1008,7 +1059,10 @@ var baseExports = {
   clone: clone,
   bind: bind,
   once: once,
+  clear: removeObject,
   clearObject: clearObject,
+  remove: removeObject,
+  removeObject: removeObject,
   range: range
 }
 

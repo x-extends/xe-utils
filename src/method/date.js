@@ -336,8 +336,9 @@ function getDateDiff (startDate, endDate, rules) {
     var item
     var diffTime = endTime - startTime
     var rule = rules && rules.length > 0 ? rules : setupDefaults.dateDiffRules
+    var len = rule.length
     result.done = true
-    for (var index = 0, len = rule.length; index < len; index++) {
+    for (var index = 0; index < len; index++) {
       item = rule[index]
       if (diffTime >= item[1]) {
         if (index === len - 1) {
