@@ -515,17 +515,17 @@ rest(333) // 'test = 222'
 import XEUtils from 'xe-utils'
 
 function scrollEvent (evnt) {
-  console.log('至少每隔200秒毫秒之内只会调用一次')
+  console.log('至少每隔wait秒毫秒之内只会调用一次')
 }
 
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200)) // 在计时结束之前执行
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200), {leading: true, trailing: false}) // 在计时结束之前执行
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200), {leading: false, trailing: true}) // 在计时结束之后执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100)) // 在计时结束之前执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: true, trailing: false}) // 在计时结束之前执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: false, trailing: true}) // 在计时结束之后执行
 
 // 取消
 var func = XEUtils.throttle(function (msg) {
   console.log(msg)
-}, 200)
+}, 300)
 func('执行一次')
 func.cancel()
 func('取消后中断计时，再次调用会马上执行')
@@ -537,18 +537,18 @@ func('取消后中断计时，再次调用会马上执行')
 import XEUtils from 'xe-utils'
 
 function resizeEvent (evnt) {
-  console.log('如果200毫秒内重复调用则会重新计时，在函数最后一次调用200毫秒之后才会执行回调')
+  console.log('如果wait毫秒内重复调用则会重新计时，在函数最后一次调用wait毫秒之后才会执行回调')
 }
 
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200)) // // 在计时结束之后执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), true) // 在计时结束之前执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), {leading: true, trailing: false}) // 在计时结束之前执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), {leading: false, trailing: true}) // 在计时结束之后执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100)) // // 在计时结束之后执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), true) // 在计时结束之前执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: true, trailing: false}) // 在计时结束之前执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: false, trailing: true}) // 在计时结束之后执行
 
 // 取消
 var func = XEUtils.debounce(function (msg) {
   console.log(msg)
-}, 200)
+}, 300)
 func('计时结束之前执行一次')
 func.cancel()
 func('取消后中重新计时，在计时结束之前执行')
