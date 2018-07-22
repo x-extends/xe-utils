@@ -521,6 +521,14 @@ function scrollEvent (evnt) {
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200)) // 在计时结束之前执行
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200), {leading: true, trailing: false}) // 在计时结束之前执行
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200), {leading: false, trailing: true}) // 在计时结束之后执行
+
+// 取消
+var func = XEUtils.throttle(function (msg) {
+  console.log(msg)
+}, 200)
+func('执行一次')
+func.cancel()
+func('取消后中断计时，再次调用会马上执行')
 ```
 
 ### debounce (callback, wait[, options]) 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟
@@ -536,6 +544,14 @@ document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200)) // // �
 document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), true) // 在计时结束之前执行
 document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), {leading: true, trailing: false}) // 在计时结束之前执行
 document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), {leading: false, trailing: true}) // 在计时结束之后执行
+
+// 取消
+var func = XEUtils.debounce(function (msg) {
+  console.log(msg)
+}, 200)
+func('计时结束之前执行一次')
+func.cancel()
+func('取消后中重新计时，在计时结束之前执行')
 ```
 
 ### clear/clearObject (obj[, defs, assigns]) 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
