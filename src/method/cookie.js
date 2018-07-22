@@ -100,7 +100,7 @@ function cookie (name, value, options) {
 }
 
 function isCookieKey (key) {
-  return baseExports.includes(cookieKeys, key)
+  return baseExports.includes(cookieKeys(), key)
 }
 
 function setCookieItem (name, key, options) {
