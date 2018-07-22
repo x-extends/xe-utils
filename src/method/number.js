@@ -49,13 +49,14 @@ function arrayMax () {
   * @return {String}
  */
 function commafy (num, options) {
+  num = ('' + num).replace(/,/g, '')
   if (num) {
     var opts = baseExports.assign({}, options)
-    var optFixed = opts.fixed || 0
-    var result = optFixed === null ? [num.replace(/,/g, '')] : (parseFloat(('' + num).replace(/,/g, '') || 0).toFixed(optFixed)).split('.')
+    var optFixed = opts.fixed
+    var result = optFixed === null ? [num] : (parseFloat(num).toFixed(optFixed || 0)).split('.')
     return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (result[1] ? '.' + result[1] : '')
   }
-  return ''
+  return num
 }
 
 /**
