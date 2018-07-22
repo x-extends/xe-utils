@@ -36,6 +36,7 @@ function toCookieUTCString (date) {
   */
 function cookie (name, value, options) {
   var inserts = []
+  var args = arguments
   var decode = decodeURIComponent
   var encode = encodeURIComponent
   var isDoc = typeof document !== 'undefined'
@@ -48,7 +49,7 @@ function cookie (name, value, options) {
   }
   if (baseExports.isArray(name)) {
     inserts = name
-  } else if (arguments.length > 1) {
+  } else if (args.length > 1) {
     inserts = [objectAssign({name: name, value: value}, options)]
   } else if (isObject(name)) {
     inserts = [name]
@@ -94,7 +95,7 @@ function cookie (name, value, options) {
         result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
       })
     }
-    return arguments.length === 1 ? result[name] : result
+    return args.length === 1 ? result[name] : result
   }
 }
 
@@ -112,7 +113,7 @@ function getCookieItem (name) {
 }
 
 function removeCookieItem (name) {
-  cookie(name, null, {expires: -1})
+  cookie(name, 0, {expires: -1})
 }
 
 function cookieKeys () {

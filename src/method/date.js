@@ -15,7 +15,7 @@ var STRING_LAST = 'last'
  * @returns Number
  */
 var timestamp = Date.now || function () {
-  return new Date().getTime()
+  return _dateTime(new Date())
 }
 
 var dateFormatRules = [
@@ -27,6 +27,18 @@ var dateFormatRules = [
   {rules: [['ss', 2], ['s', 1]]},
   {rules: [['SSS', 3], ['SS', 2], ['S', 1]]}
 ]
+
+function _dateTime (date) {
+  return date.getTime()
+}
+
+function _dateFullYear (date) {
+  return date.getFullYear()
+}
+
+function _dateMonth (date) {
+  return date.getMonth()
+}
 
 /**
  * 比较两个日期
@@ -51,11 +63,9 @@ function isDateSame (date1, date2, format) {
   */
 function stringToDate (str, format) {
   if (str) {
-    if (baseExports.isDate(str)) {
-      return new Date(str.getTime())
-    }
-    if (/^[0-9]{11,13}$/.test(str)) {
-      return new Date(str)
+    var isDate = baseExports.isDate(str)
+    if (isDate || /^[0-9]{11,13}$/.test(str)) {
+      return new Date(isDate ? _dateTime(str) : str)
     }
     if (baseExports.isString(str)) {
       format = format || setupDefaults.formatDate
@@ -109,8 +119,8 @@ function dateToString (date, format, options) {
       var zoneHours = date.getTimezoneOffset() / 60 * -1
       var formats = baseExports.objectAssign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
       var timeRules = [
-        [/y{2,4}/g, empty, function (match) { return (empty + date.getFullYear()).substr(4 - match.length) }],
-        [/M{1,2}/g, date.getMonth() + 1],
+        [/y{2,4}/g, empty, function (match) { return (empty + _dateFullYear(date)).substr(4 - match.length) }],
+        [/M{1,2}/g, _dateMonth(date) + 1],
         [/d{1,2}/g, date.getDate()],
         [/H{1,2}/g, hours],
         [/h{1,2}/g, hours <= 12 ? hours : hours - 12],
@@ -122,7 +132,7 @@ function dateToString (date, format, options) {
         [/z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
         [/e/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
         [/E/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
-        [/q/g, empty, function (match) { return handleCustomTemplate(date, formats, match, Math.floor((date.getMonth() + 3) / 3)) }],
+        [/q/g, empty, function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
         [/Z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + XEUtils.padStart(zoneHours, 2, 0) + '00') }],
         [/W/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
         [/w/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
@@ -153,11 +163,11 @@ function getWhatYear (date, year, month) {
   var currentDate = stringToDate(date)
   if (year) {
     var number = year && !isNaN(year) ? year : 0
-    currentDate.setFullYear(currentDate.getFullYear() + number)
+    currentDate.setFullYear(_dateFullYear(currentDate) + number)
   }
   if (month || !isNaN(month)) {
     if (month === STRING_FIRST) {
-      return new Date(currentDate.getFullYear(), 0, 1)
+      return new Date(_dateFullYear(currentDate), 0, 1)
     } else if (month === STRING_LAST) {
       currentDate.setMonth(11)
       return getWhatMonth(currentDate, 0, STRING_LAST)
@@ -181,15 +191,15 @@ function getWhatMonth (date, month, day) {
   var monthOffset = month && !isNaN(month) ? month : 0
   if (day || !isNaN(day)) {
     if (day === STRING_FIRST) {
-      return new Date(currentDate.getFullYear(), currentDate.getMonth() + monthOffset, 1)
+      return new Date(_dateFullYear(currentDate), _dateMonth(currentDate) + monthOffset, 1)
     } else if (day === STRING_LAST) {
-      return new Date(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST).getTime() - 1)
+      return new Date(_dateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
     } else {
       currentDate.setDate(day)
     }
   }
   if (monthOffset) {
-    currentDate.setMonth(currentDate.getMonth() + monthOffset)
+    currentDate.setMonth(_dateMonth(currentDate) + monthOffset)
   }
   return currentDate
 }
@@ -206,7 +216,7 @@ function getWhatWeek (date, week, day) {
   var currentDate = stringToDate(date)
   var customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
   var currentDay = currentDate.getDay()
-  var time = currentDate.getTime()
+  var time = _dateTime(currentDate)
   var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
   if (week && !isNaN(week)) {
     whatDayTime += week * WEEK_TIME
@@ -227,16 +237,16 @@ function getWhatDay (date, day, mode) {
   if (!isNaN(day)) {
     currentDate.setDate(currentDate.getDate() + Number(day))
     if (mode === STRING_FIRST) {
-      return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
+      return new Date(_dateFullYear(currentDate), _dateMonth(currentDate), currentDate.getDate())
     } else if (mode === STRING_LAST) {
-      return new Date(getWhatDay(currentDate, 1, STRING_FIRST).getTime() - 1)
+      return new Date(_dateTime(getWhatDay(currentDate, 1, STRING_FIRST)) - 1)
     }
   }
   return currentDate
 }
 
 function calculateTime (startDate, endDate, timeGap) {
-  return Math.floor((new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()).getTime() - new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()).getTime()) / timeGap) + 1
+  return Math.floor((_dateTime(new Date(_dateFullYear(endDate), _dateMonth(endDate), endDate.getDate())) - _dateTime(new Date(_dateFullYear(startDate), _dateMonth(startDate), startDate.getDate()))) / timeGap) + 1
 }
 
 /**
@@ -317,7 +327,7 @@ function getDayOfYear (date, year) {
   */
 function getDayOfMonth (date, month) {
   if (date) {
-    return Math.floor((getWhatMonth(date, month, STRING_LAST).getTime() - getWhatMonth(date, month, STRING_FIRST).getTime()) / DAY_TIME) + 1
+    return Math.floor((_dateTime(getWhatMonth(date, month, STRING_LAST)) - _dateTime(getWhatMonth(date, month, STRING_FIRST))) / DAY_TIME) + 1
   }
   return 0
 }
@@ -332,8 +342,8 @@ function getDayOfMonth (date, month) {
   */
 function getDateDiff (startDate, endDate, rules) {
   var result = {done: false}
-  var startTime = stringToDate(startDate).getTime()
-  var endTime = endDate ? stringToDate(endDate).getTime() : new Date()
+  var startTime = _dateTime(stringToDate(startDate))
+  var endTime = _dateTime(endDate ? stringToDate(endDate) : new Date())
   if (startTime < endTime) {
     var item
     var diffTime = endTime - startTime

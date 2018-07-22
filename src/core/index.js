@@ -17,6 +17,7 @@ XEUtils.mixin = function (methods) {
       return result
     } : fn
   })
+  return XEUtils
 }
 
 XEUtils.setup = function (options) {

@@ -723,8 +723,9 @@ function removeObject (obj, iterate, context) {
 function objectKeys (obj) {
   var result = []
   if (obj) {
-    if (Object.keys) {
-      return Object.keys(obj)
+    var objectKeysFn = Object.keys
+    if (objectKeysFn) {
+      return objectKeysFn(obj)
     }
     objectEach(obj, function (val, key) {
       result.push(key)
@@ -740,13 +741,16 @@ function objectKeys (obj) {
   * @return {Array}
   */
 function objectValues (obj) {
-  if (Object.values) {
-    return obj ? Object.values(obj) : []
+  if (obj) {
+    var objectValuesFn = Object.values
+    if (objectValuesFn) {
+      return objectValuesFn(obj)
+    }
+    var result = []
+    arrayEach(objectKeys(obj), function (key) {
+      result.push(obj[key])
+    })
   }
-  var result = []
-  arrayEach(objectKeys(obj), function (key) {
-    result.push(obj[key])
-  })
   return result
 }
 
@@ -757,13 +761,16 @@ function objectValues (obj) {
   * @return {Array}
   */
 function objectEntries (obj) {
-  if (Object.entries) {
-    return obj ? Object.entries(obj) : []
+  if (obj) {
+    var objectEntriesFn = Object.entries
+    if (objectEntriesFn) {
+      return objectEntriesFn(obj)
+    }
+    var result = []
+    arrayEach(objectKeys(obj), function (key) {
+      result.push([key, obj[key]])
+    })
   }
-  var result = []
-  arrayEach(objectKeys(obj), function (key) {
-    result.push([key, obj[key]])
-  })
   return result
 }
 
@@ -873,10 +880,7 @@ function each (obj, iterate, context) {
   */
 function lastEach (obj, iterate, context) {
   if (obj) {
-    if (isArray(obj)) {
-      return arrayLastEach(obj, iterate, context || this)
-    }
-    return objectLastEach(obj, iterate, context || this)
+    return (isArray(obj) ? arrayLastEach : objectLastEach)(obj, iterate, context || this)
   }
   return obj
 }
@@ -972,8 +976,9 @@ function countBy (obj, iterate, context) {
   */
 function range (start, stop, step) {
   var result = []
-  if (arguments.length < 2) {
-    stop = arguments[0]
+  var args = arguments
+  if (args.length < 2) {
+    stop = args[0]
     start = 0
   }
   var index = start >> 0

@@ -462,7 +462,7 @@ function arrayToTree (array, options) {
   var optData = opts.data
   var result = []
   var treeMap = {}
-  var ids = arrayMap(array, function (item) {
+  var idList = arrayMap(array, function (item) {
     return item[optKey]
   })
   for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
@@ -486,7 +486,7 @@ function arrayToTree (array, options) {
     treeData[optChildren] = treeMap[id]
 
     if (!optStrict || (optStrict && !parentId)) {
-      if (baseExports.indexOf(ids, parentId) === -1) {
+      if (baseExports.indexOf(idList, parentId) === -1) {
         result.push(treeData)
       }
     }
