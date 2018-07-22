@@ -1608,12 +1608,13 @@
     * @return {Function}
     */
   function throttle (callback, wait, options) {
-    var opts = objectAssign({ leading: true }, options)
+    var opts = options || {}
     var runFlag = false
     var args = null
     var context = this
     var timeout = null
-    var optTrailing = opts.trailing
+    var optLeading = 'leading' in opts ? opts.leading : true
+    var optTrailing = 'trailing' in opts ? opts.trailing : false
     var runFn = function () {
       runFlag = true
       callback.apply(context, args)
@@ -1637,7 +1638,7 @@
       context = context || this
       runFlag = false
       if (timeout === null) {
-        if (opts.leading === true) {
+        if (optLeading === true) {
           runFn()
         } else if (optTrailing === true) {
           timeout = setTimeout(endFn, wait)
@@ -1657,12 +1658,14 @@
     * @return {Function}
     */
   function debounce (callback, wait, options) {
-    var opts = objectAssign({ trailing: true }, typeof options === 'boolean' ? { leading: options } : options)
+    var opts = options || {}
     var runFlag = false
     var args = null
     var context = this
     var timeout = null
-    var optLeading = opts.leading
+    var isLeading = typeof options === 'boolean'
+    var optLeading = 'leading' in opts ? opts.leading : isLeading
+    var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
     var runFn = function () {
       runFlag = true
       timeout = null
@@ -1672,7 +1675,7 @@
       if (optLeading === true) {
         timeout = null
       }
-      if (!runFlag && opts.trailing === true) {
+      if (!runFlag && optTrailing === true) {
         runFn()
       }
     }
