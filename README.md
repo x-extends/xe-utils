@@ -509,6 +509,35 @@ rest(222) // 'test = 222'
 rest(333) // 'test = 222'
 ```
 
+### throttle (callback, wait[, options]) 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+function scrollEvent (evnt) {
+  console.log('至少每隔200秒毫秒之内只会调用一次')
+}
+
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200)) // 在计时结束之前执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200), {leading: true, trailing: false}) // 在计时结束之前执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 200), {leading: false, trailing: true}) // 在计时结束之后执行
+```
+
+### debounce (callback, wait[, options]) 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+function resizeEvent (evnt) {
+  console.log('如果200毫秒内重复调用则会重新计时，在函数最后一次调用200毫秒之后才会执行回调')
+}
+
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200)) // // 在计时结束之后执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), true) // 在计时结束之前执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), {leading: true, trailing: false}) // 在计时结束之前执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 200), {leading: false, trailing: true}) // 在计时结束之后执行
+```
+
 ### clear/clearObject (obj[, defs, assigns]) 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
 
 ```JavaScript

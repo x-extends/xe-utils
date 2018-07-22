@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.12
+ * xe-utils.js v1.6.13
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.12'
+  XEUtils.version = '1.6.13'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -1599,6 +1599,106 @@
     return result
   }
 
+  /**
+    * 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数
+    *
+    * @param {Function} callback 回调
+    * @param {Number} wait 多少秒毫
+    * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
+    * @return {Function}
+    */
+  function throttle (callback, wait, options) {
+    var opts = objectAssign({ leading: true }, options)
+    var runFlag = false
+    var args = null
+    var context = this
+    var timeout = null
+    var optTrailing = opts.trailing
+    var runFn = function () {
+      runFlag = true
+      callback.apply(context, args)
+      timeout = setTimeout(endFn, wait)
+    }
+    var endFn = function () {
+      timeout = null
+      if (!runFlag && optTrailing === true) {
+        runFn()
+      }
+    }
+    var cancelFn = function () {
+      var rest = timeout !== null
+      clearTimeout(timeout)
+      runFlag = false
+      timeout = null
+      return rest
+    }
+    var throttled = function () {
+      args = arguments
+      context = context || this
+      runFlag = false
+      if (timeout === null) {
+        if (opts.leading === true) {
+          runFn()
+        } else if (optTrailing === true) {
+          timeout = setTimeout(endFn, wait)
+        }
+      }
+    }
+    throttled.cancel = cancelFn
+    return throttled
+  }
+
+  /**
+    * 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟
+    *
+    * @param {Function} callback 回调
+    * @param {Number} wait 多少秒毫
+    * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
+    * @return {Function}
+    */
+  function debounce (callback, wait, options) {
+    var opts = objectAssign({ trailing: true }, typeof options === 'boolean' ? { leading: options } : options)
+    var runFlag = false
+    var args = null
+    var context = this
+    var timeout = null
+    var optLeading = opts.leading
+    var runFn = function () {
+      runFlag = true
+      timeout = null
+      callback.apply(context, args)
+    }
+    var endFn = function () {
+      if (optLeading === true) {
+        timeout = null
+      }
+      if (!runFlag && opts.trailing === true) {
+        runFn()
+      }
+    }
+    var cancelFn = function () {
+      var rest = timeout !== null
+      clearTimeout(timeout)
+      timeout = null
+      return rest
+    }
+    var debounced = function () {
+      runFlag = false
+      args = arguments
+      context = context || this
+      if (timeout === null) {
+        if (optLeading === true) {
+          runFn()
+        }
+      } else {
+        clearTimeout(timeout)
+      }
+      timeout = setTimeout(endFn, wait)
+    }
+    debounced.cancel = cancelFn
+    return debounced
+  }
+
   var baseExports = {
     isNaN: isNaN,
     isFinite: isFinite,
@@ -1674,7 +1774,9 @@
     clearObject: clearObject,
     remove: removeObject,
     removeObject: removeObject,
-    range: range
+    range: range,
+    throttle: throttle,
+    debounce: debounce
   }
 
   function isMobile () {
