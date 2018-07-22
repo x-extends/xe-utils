@@ -42,12 +42,12 @@ var escapeMap = {
 }
 
 var unescapeMap = {}
-baseExports.arrayEach(baseExports.objectKeys(escapeMap), function (key) {
+baseExports.each(escapeMap, function (item, key) {
   unescapeMap[escapeMap[key]] = key
 })
 
 function formatEscaper (dataMap) {
-  var replaceRegexp = new RegExp('(?:' + baseExports.objectKeys(dataMap).join('|') + ')', 'g')
+  var replaceRegexp = new RegExp('(?:' + baseExports.keys(dataMap).join('|') + ')', 'g')
   return function (str) {
     return ('' + str).replace(replaceRegexp, function (match) {
       return dataMap[match]
@@ -78,7 +78,9 @@ var unescape = formatEscaper(unescapeMap)
   * @return {String}
   */
 function camelCase (str) {
-  return ('' + str).replace(/(-[a-zA-Z])/g, function (text, u) { return u.substring(1).toLocaleUpperCase() })
+  return ('' + str).replace(/(-[a-zA-Z])/g, function (text, u) {
+    return u.substring(1).toLocaleUpperCase()
+  })
 }
 
 /**
@@ -88,7 +90,9 @@ function camelCase (str) {
   * @return {String}
   */
 function kebabCase (str) {
-  return ('' + str).replace(/([A-Z])/g, function (text, u) { return '-' + u.toLowerCase() })
+  return ('' + str).replace(/([A-Z])/g, function (text, u) {
+    return '-' + u.toLowerCase()
+  })
 }
 
 /**

@@ -70,7 +70,7 @@ function stringToDate (str, format) {
     if (baseExports.isString(str)) {
       format = format || setupDefaults.formatDate
       var dates = []
-      baseExports.arrayEach(dateFormatRules, function (item) {
+      baseExports.each(dateFormatRules, function (item) {
         for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
           arr = rules[index]
           sIndex = format.indexOf(arr[0])
@@ -117,7 +117,7 @@ function dateToString (date, format, options) {
       var hours = date.getHours()
       var apm = hours < 12 ? 'am' : 'pm'
       var zoneHours = date.getTimezoneOffset() / 60 * -1
-      var formats = baseExports.objectAssign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
+      var formats = baseExports.assign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
       var timeRules = [
         [/y{2,4}/g, empty, function (match) { return (empty + _dateFullYear(date)).substr(4 - match.length) }],
         [/M{1,2}/g, _dateMonth(date) + 1],

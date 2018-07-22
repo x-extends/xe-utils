@@ -595,7 +595,8 @@ var objectAssign = function (target) {
 }
 
 function outError (e) {
-  console && console.error(e)
+  var _console = console
+  _console && _console.error(e)
 }
 
 /**

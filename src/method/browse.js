@@ -30,7 +30,7 @@ function browse () {
     if (typeof document !== 'undefined') {
       var $dom = document
       var $body = $dom.body || $dom.documentElement
-      baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
+      baseExports.each(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
         result['-' + core] = !!$body[core + 'MatchesSelector']
       })
     }

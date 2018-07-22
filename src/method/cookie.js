@@ -41,8 +41,8 @@ function cookie (name, value, options) {
   var encode = encodeURIComponent
   var isDoc = typeof document !== 'undefined'
   var $dom = isDoc ? document : null
-  var arrayEach = baseExports.arrayEach
-  var objectAssign = baseExports.objectAssign
+  var arrayEach = baseExports.each
+  var objectAssign = baseExports.assign
   var isObject = baseExports.isObject
   if (this && this.$context) {
     this.$context = null
@@ -120,7 +120,7 @@ function cookieKeys () {
   return baseExports.keys(cookie())
 }
 
-baseExports.objectAssign(cookie, {
+baseExports.assign(cookie, {
   _c: false,
   isKey: isCookieKey,
   set: setCookieItem,

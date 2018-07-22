@@ -10,7 +10,7 @@ var methodExports = require('../method')
  * @param {Object} methods
  */
 XEUtils.mixin = function (methods) {
-  methodExports.objectEach(methods, function (fn, name) {
+  methodExports.each(methods, function (fn, name) {
     XEUtils[name] = methodExports.isFunction(fn) && fn._c !== false ? function () {
       var result = fn.apply(XEUtils.$context, arguments)
       XEUtils.$context = null
@@ -21,7 +21,7 @@ XEUtils.mixin = function (methods) {
 }
 
 XEUtils.setup = function (options) {
-  methodExports.objectAssign(setupDefaults, options)
+  methodExports.assign(setupDefaults, options)
 }
 
 XEUtils.mixin(methodExports)

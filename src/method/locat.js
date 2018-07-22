@@ -13,7 +13,7 @@ function parseParams (uri) {
   var decode = decodeURIComponent
   var params = uri.split('?')[1] || ''
   if (params) {
-    baseExports.arrayEach(params.split('&'), function (param) {
+    baseExports.each(params.split('&'), function (param) {
       var items = param.split('=')
       result[decode(items[0])] = decode(items[1] || '')
     })

@@ -24,6 +24,10 @@
     dateDiffRules: [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
   }
 
+  function _objectHasOwnProperty (obj, key) {
+    return obj.hasOwnProperty(key)
+  }
+
   /**
     * 数组去重
     *
@@ -83,7 +87,7 @@
     */
   function arrayShuffle (array) {
     var result = []
-    for (var list = baseExports.objectValues(array), len = list.length - 1; len >= 0; len--) {
+    for (var list = baseExports.values(array), len = list.length - 1; len >= 0; len--) {
       var index = len > 0 ? XEUtils.getRandom(0, len) : 0
       result.push(list[index])
       list.splice(index, 1)
@@ -109,6 +113,10 @@
     return result
   }
 
+  function isArrayPro (array, pro) {
+    return baseExports.isArray(array) && array[pro]
+  }
+
   /**
     * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
     *
@@ -119,13 +127,14 @@
     */
   function arraySome (obj, iterate, context) {
     if (obj && iterate) {
+      var pro = 'some'
       context = context || this
-      if (baseExports.isArray(obj) && obj.some) {
-        return obj.some(iterate, context)
+      if (isArrayPro(pro)) {
+        return obj[pro](iterate, context)
       } else {
-        for (var index in obj) {
-          if (obj.hasOwnProperty(index)) {
-            if (iterate.call(context, obj[index], index, obj)) {
+        for (var key in obj) {
+          if (_objectHasOwnProperty(obj, key)) {
+            if (iterate.call(context, obj[key], key, obj)) {
               return true
             }
           }
@@ -145,13 +154,14 @@
     */
   function arrayEvery (obj, iterate, context) {
     if (obj && iterate) {
+      var pro = 'every'
       context = context || this
-      if (baseExports.isArray(obj) && obj.every) {
-        return obj.every(iterate, context)
+      if (isArrayPro(pro)) {
+        return obj[pro](iterate, context)
       } else {
-        for (var index in obj) {
-          if (obj.hasOwnProperty(index)) {
-            if (!iterate.call(context, obj[index], index, obj)) {
+        for (var key in obj) {
+          if (_objectHasOwnProperty(obj, key)) {
+            if (!iterate.call(context, obj[key], key, obj)) {
               return false
             }
           }
@@ -171,9 +181,10 @@
     */
   function arrayFilter (obj, iterate, context) {
     if (obj && iterate) {
+      var pro = 'filter'
       context = context || this
-      if (baseExports.isArray(obj) && obj.filter) {
-        return obj.filter(iterate, context)
+      if (isArrayPro(pro)) {
+        return obj[pro](iterate, context)
       } else {
         var result = {}
         baseExports.each(obj, function (val, key) {
@@ -197,12 +208,13 @@
     */
   function arrayFind (obj, iterate, context) {
     if (obj && iterate) {
+      var pro = 'find'
       context = context || this
-      if (baseExports.isArray(obj) && obj.find) {
-        return obj.find(iterate, context)
+      if (isArrayPro(pro)) {
+        return obj[pro](iterate, context)
       } else {
         for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
+          if (_objectHasOwnProperty(obj, key)) {
             if (iterate.call(context, obj[key], key, obj)) {
               return obj[key]
             }
@@ -224,7 +236,7 @@
     if (obj && iterate) {
       context = context || this
       for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if (_objectHasOwnProperty(obj, key)) {
           if (iterate.call(context, obj[key], key, obj)) {
             return key
           }
@@ -245,12 +257,13 @@
     var result = []
     if (obj) {
       if (arguments.length > 1) {
+        var pro = 'map'
         context = context || this
         if (!baseExports.isFunction(iterate)) {
           iterate = baseExports.property(iterate)
         }
-        if (baseExports.isArray(obj)) {
-          return obj.map(iterate, context)
+        if (isArrayPro(pro)) {
+          return obj[pro](iterate, context)
         } else {
           baseExports.each(obj, function () {
             result.push(iterate.apply(context, arguments))
@@ -273,13 +286,14 @@
     */
   function arraySum (array, iterate, context) {
     var result = 0
+    var parseFloatFn = parseFloat
     context = context || this
     baseExports.each(array, iterate ? baseExports.isFunction(iterate) ? function () {
       result += iterate.apply(context, arguments) || 0
     } : function (val) {
-      result += parseFloat(val[iterate] || 0)
+      result += parseFloatFn(val[iterate] || 0)
     } : function (val) {
-      result += parseFloat(val || 0)
+      result += parseFloatFn(val || 0)
     })
     return result
   }
@@ -307,7 +321,6 @@
   function arrayReduce (array, callback, initialValue) {
     var previous = initialValue
     var index = 0
-    var len = array.length
     var context = this
     if (baseExports.isArray(array)) {
       if (typeof initialValue === 'undefined') {
@@ -315,9 +328,11 @@
         index = 1
       }
       if (array.reduce) {
-        return array.reduce(callback, initialValue)
+        return array.reduce(function () {
+          return callback.apply(context, arguments)
+        }, initialValue)
       } else {
-        for (; index < len; index++) {
+        for (var len = array.length; index < len; index++) {
           previous = callback.call(context, previous, array[index], index, array)
         }
       }
@@ -443,14 +458,15 @@
     * @return {Boolean}
     */
   function includeArrays (array1, array2) {
+    var includes = baseExports.includes
     if (baseExports.isArray(array2)) {
       for (var index = 0, len = array2.length; index < len; index++) {
-        if (!baseExports.includes(array1, array2[index])) {
+        if (!includes(array1, array2[index])) {
           return false
         }
       }
     } else {
-      return baseExports.includes(array1, array2)
+      return includes(array1, array2)
     }
     return true
   }
@@ -474,7 +490,7 @@
     * @return {Array}
     */
   function arrayToTree (array, options) {
-    var opts = baseExports.objectAssign({}, setupDefaults.treeOptions, options)
+    var opts = baseExports.assign({}, setupDefaults.treeOptions, options)
     var optStrict = opts.strict
     var optKey = opts.key
     var optParentKey = opts.parentKey
@@ -506,7 +522,7 @@
       treeData[optChildren] = treeMap[id]
 
       if (!optStrict || (optStrict && !parentId)) {
-        if (baseExports.indexOf(idList, parentId) === -1) {
+        if (!baseExports.includes(idList, parentId)) {
           result.push(treeData)
         }
       }
@@ -546,7 +562,7 @@
     * @return {Array}
     */
   function treeToArray (array, options) {
-    var opts = baseExports.objectAssign({}, setupDefaults.treeOptions, options)
+    var opts = baseExports.assign({}, setupDefaults.treeOptions, options)
     return unTreeList([], array, opts)
   }
 
@@ -1185,7 +1201,8 @@
   }
 
   function outError (e) {
-    console && console.error(e)
+    var _console = console
+    _console && _console.error(e)
   }
 
   /**
@@ -1688,7 +1705,7 @@
       if (typeof document !== 'undefined') {
         var $dom = document
         var $body = $dom.body || $dom.documentElement
-        baseExports.arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
+        baseExports.each(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
           result['-' + core] = !!$body[core + 'MatchesSelector']
         })
       }
@@ -1738,8 +1755,8 @@
     var encode = encodeURIComponent
     var isDoc = typeof document !== 'undefined'
     var $dom = isDoc ? document : null
-    var arrayEach = baseExports.arrayEach
-    var objectAssign = baseExports.objectAssign
+    var arrayEach = baseExports.each
+    var objectAssign = baseExports.assign
     var isObject = baseExports.isObject
     if (this && this.$context) {
       this.$context = null
@@ -1817,7 +1834,7 @@
     return baseExports.keys(cookie())
   }
 
-  baseExports.objectAssign(cookie, {
+  baseExports.assign(cookie, {
     _c: false,
     isKey: isCookieKey,
     set: setCookieItem,
@@ -1900,7 +1917,7 @@
       if (baseExports.isString(str)) {
         format = format || setupDefaults.formatDate
         var dates = []
-        baseExports.arrayEach(dateFormatRules, function (item) {
+        baseExports.each(dateFormatRules, function (item) {
           for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
             arr = rules[index]
             sIndex = format.indexOf(arr[0])
@@ -1947,7 +1964,7 @@
         var hours = date.getHours()
         var apm = hours < 12 ? 'am' : 'pm'
         var zoneHours = date.getTimezoneOffset() / 60 * -1
-        var formats = baseExports.objectAssign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
+        var formats = baseExports.assign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
         var timeRules = [
           [/y{2,4}/g, empty, function (match) { return (empty + _dateFullYear(date)).substr(4 - match.length) }],
           [/M{1,2}/g, _dateMonth(date) + 1],
@@ -2226,7 +2243,7 @@
     var decode = decodeURIComponent
     var params = uri.split('?')[1] || ''
     if (params) {
-      baseExports.arrayEach(params.split('&'), function (param) {
+      baseExports.each(params.split('&'), function (param) {
         var items = param.split('=')
         result[decode(items[0])] = decode(items[1] || '')
       })
@@ -2310,7 +2327,8 @@
   }
 
   function sortData (arr, iterate) {
-    return (baseExports.isFunction(iterate) ? XEUtils.arraySort(XEUtils.arrayMap(arr, iterate, this)) : XEUtils.arraySort(arr, iterate))
+    var arraySort = XEUtils.arraySort
+    return (baseExports.isFunction(iterate) ? arraySort(XEUtils.arrayMap(arr, iterate, this)) : arraySort(arr, iterate))
   }
 
   /**
@@ -2339,13 +2357,17 @@
     * 千分位分隔符、小数点
     *
     * @param {String/Number} num 数值
-    * @param {Object} 参数 {separator: 分隔符, fixed: 小数位数}
+    * @param {Object} 参数 {spaceNumber: 分割位数(默认3), separator: 分隔符(默认,), fixed: 小数位数(默认0)}
     * @return {String}
    */
   function commafy (num, options) {
-    var opts = baseExports.objectAssign({ spaceNumber: 3, separator: ',', fixed: 0 }, options)
-    var result = opts.fixed === null ? [num.replace(/,/g, '')] : (parseFloat(('' + num).replace(/,/g, '') || 0).toFixed(opts.fixed)).split('.')
-    return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
+    if (num) {
+      var opts = baseExports.assign({}, options)
+      var optFixed = opts.fixed || 0
+      var result = optFixed === null ? [num.replace(/,/g, '')] : (parseFloat(('' + num).replace(/,/g, '') || 0).toFixed(optFixed)).split('.')
+      return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (result[1] ? '.' + result[1] : '')
+    }
+    return ''
   }
 
   /**
@@ -2424,12 +2446,12 @@
   }
 
   var unescapeMap = {}
-  baseExports.arrayEach(baseExports.objectKeys(escapeMap), function (key) {
+  baseExports.each(escapeMap, function (item, key) {
     unescapeMap[escapeMap[key]] = key
   })
 
   function formatEscaper (dataMap) {
-    var replaceRegexp = new RegExp('(?:' + baseExports.objectKeys(dataMap).join('|') + ')', 'g')
+    var replaceRegexp = new RegExp('(?:' + baseExports.keys(dataMap).join('|') + ')', 'g')
     return function (str) {
       return ('' + str).replace(replaceRegexp, function (match) {
         return dataMap[match]
@@ -2460,7 +2482,9 @@
     * @return {String}
     */
   function camelCase (str) {
-    return ('' + str).replace(/(-[a-zA-Z])/g, function (text, u) { return u.substring(1).toLocaleUpperCase() })
+    return ('' + str).replace(/(-[a-zA-Z])/g, function (text, u) {
+      return u.substring(1).toLocaleUpperCase()
+    })
   }
 
   /**
@@ -2470,7 +2494,9 @@
     * @return {String}
     */
   function kebabCase (str) {
-    return ('' + str).replace(/([A-Z])/g, function (text, u) { return '-' + u.toLowerCase() })
+    return ('' + str).replace(/([A-Z])/g, function (text, u) {
+      return '-' + u.toLowerCase()
+    })
   }
 
   /**
@@ -2588,7 +2614,7 @@
 
   var methodExports = {}
 
-  baseExports.objectAssign(
+  baseExports.assign(
     methodExports,
     arrayExports,
     baseExports,
@@ -2606,7 +2632,7 @@
    * @param {Object} methods
    */
   XEUtils.mixin = function (methods) {
-    methodExports.objectEach(methods, function (fn, name) {
+    methodExports.each(methods, function (fn, name) {
       XEUtils[name] = methodExports.isFunction(fn) && fn._c !== false ? function () {
         var result = fn.apply(XEUtils.$context, arguments)
         XEUtils.$context = null
@@ -2617,7 +2643,7 @@
   }
 
   XEUtils.setup = function (options) {
-    methodExports.objectAssign(setupDefaults, options)
+    methodExports.assign(setupDefaults, options)
   }
 
   XEUtils.mixin(methodExports)

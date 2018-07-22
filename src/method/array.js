@@ -4,6 +4,10 @@ var XEUtils = require('../core/utils')
 var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
 
+function _objectHasOwnProperty (obj, key) {
+  return obj.hasOwnProperty(key)
+}
+
 /**
   * 数组去重
   *
@@ -63,7 +67,7 @@ function arraySort (arr, iterate, context) {
   */
 function arrayShuffle (array) {
   var result = []
-  for (var list = baseExports.objectValues(array), len = list.length - 1; len >= 0; len--) {
+  for (var list = baseExports.values(array), len = list.length - 1; len >= 0; len--) {
     var index = len > 0 ? XEUtils.getRandom(0, len) : 0
     result.push(list[index])
     list.splice(index, 1)
@@ -89,6 +93,10 @@ function arraySample (array, number) {
   return result
 }
 
+function isArrayPro (array, pro) {
+  return baseExports.isArray(array) && array[pro]
+}
+
 /**
   * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
   *
@@ -99,13 +107,14 @@ function arraySample (array, number) {
   */
 function arraySome (obj, iterate, context) {
   if (obj && iterate) {
+    var pro = 'some'
     context = context || this
-    if (baseExports.isArray(obj) && obj.some) {
-      return obj.some(iterate, context)
+    if (isArrayPro(pro)) {
+      return obj[pro](iterate, context)
     } else {
-      for (var index in obj) {
-        if (obj.hasOwnProperty(index)) {
-          if (iterate.call(context, obj[index], index, obj)) {
+      for (var key in obj) {
+        if (_objectHasOwnProperty(obj, key)) {
+          if (iterate.call(context, obj[key], key, obj)) {
             return true
           }
         }
@@ -125,13 +134,14 @@ function arraySome (obj, iterate, context) {
   */
 function arrayEvery (obj, iterate, context) {
   if (obj && iterate) {
+    var pro = 'every'
     context = context || this
-    if (baseExports.isArray(obj) && obj.every) {
-      return obj.every(iterate, context)
+    if (isArrayPro(pro)) {
+      return obj[pro](iterate, context)
     } else {
-      for (var index in obj) {
-        if (obj.hasOwnProperty(index)) {
-          if (!iterate.call(context, obj[index], index, obj)) {
+      for (var key in obj) {
+        if (_objectHasOwnProperty(obj, key)) {
+          if (!iterate.call(context, obj[key], key, obj)) {
             return false
           }
         }
@@ -151,9 +161,10 @@ function arrayEvery (obj, iterate, context) {
   */
 function arrayFilter (obj, iterate, context) {
   if (obj && iterate) {
+    var pro = 'filter'
     context = context || this
-    if (baseExports.isArray(obj) && obj.filter) {
-      return obj.filter(iterate, context)
+    if (isArrayPro(pro)) {
+      return obj[pro](iterate, context)
     } else {
       var result = {}
       baseExports.each(obj, function (val, key) {
@@ -177,12 +188,13 @@ function arrayFilter (obj, iterate, context) {
   */
 function arrayFind (obj, iterate, context) {
   if (obj && iterate) {
+    var pro = 'find'
     context = context || this
-    if (baseExports.isArray(obj) && obj.find) {
-      return obj.find(iterate, context)
+    if (isArrayPro(pro)) {
+      return obj[pro](iterate, context)
     } else {
       for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
+        if (_objectHasOwnProperty(obj, key)) {
           if (iterate.call(context, obj[key], key, obj)) {
             return obj[key]
           }
@@ -204,7 +216,7 @@ function findKey (obj, iterate, context) {
   if (obj && iterate) {
     context = context || this
     for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (_objectHasOwnProperty(obj, key)) {
         if (iterate.call(context, obj[key], key, obj)) {
           return key
         }
@@ -225,12 +237,13 @@ function arrayMap (obj, iterate, context) {
   var result = []
   if (obj) {
     if (arguments.length > 1) {
+      var pro = 'map'
       context = context || this
       if (!baseExports.isFunction(iterate)) {
         iterate = baseExports.property(iterate)
       }
-      if (baseExports.isArray(obj)) {
-        return obj.map(iterate, context)
+      if (isArrayPro(pro)) {
+        return obj[pro](iterate, context)
       } else {
         baseExports.each(obj, function () {
           result.push(iterate.apply(context, arguments))
@@ -253,13 +266,14 @@ function arrayMap (obj, iterate, context) {
   */
 function arraySum (array, iterate, context) {
   var result = 0
+  var parseFloatFn = parseFloat
   context = context || this
   baseExports.each(array, iterate ? baseExports.isFunction(iterate) ? function () {
     result += iterate.apply(context, arguments) || 0
   } : function (val) {
-    result += parseFloat(val[iterate] || 0)
+    result += parseFloatFn(val[iterate] || 0)
   } : function (val) {
-    result += parseFloat(val || 0)
+    result += parseFloatFn(val || 0)
   })
   return result
 }
@@ -287,7 +301,6 @@ function arrayMean (array, iterate, context) {
 function arrayReduce (array, callback, initialValue) {
   var previous = initialValue
   var index = 0
-  var len = array.length
   var context = this
   if (baseExports.isArray(array)) {
     if (typeof initialValue === 'undefined') {
@@ -295,9 +308,11 @@ function arrayReduce (array, callback, initialValue) {
       index = 1
     }
     if (array.reduce) {
-      return array.reduce(callback, initialValue)
+      return array.reduce(function () {
+        return callback.apply(context, arguments)
+      }, initialValue)
     } else {
-      for (; index < len; index++) {
+      for (var len = array.length; index < len; index++) {
         previous = callback.call(context, previous, array[index], index, array)
       }
     }
@@ -423,14 +438,15 @@ function from (array, iterate, context) {
   * @return {Boolean}
   */
 function includeArrays (array1, array2) {
+  var includes = baseExports.includes
   if (baseExports.isArray(array2)) {
     for (var index = 0, len = array2.length; index < len; index++) {
-      if (!baseExports.includes(array1, array2[index])) {
+      if (!includes(array1, array2[index])) {
         return false
       }
     }
   } else {
-    return baseExports.includes(array1, array2)
+    return includes(array1, array2)
   }
   return true
 }
@@ -454,7 +470,7 @@ function pluck (obj, key) {
   * @return {Array}
   */
 function arrayToTree (array, options) {
-  var opts = baseExports.objectAssign({}, setupDefaults.treeOptions, options)
+  var opts = baseExports.assign({}, setupDefaults.treeOptions, options)
   var optStrict = opts.strict
   var optKey = opts.key
   var optParentKey = opts.parentKey
@@ -486,7 +502,7 @@ function arrayToTree (array, options) {
     treeData[optChildren] = treeMap[id]
 
     if (!optStrict || (optStrict && !parentId)) {
-      if (baseExports.indexOf(idList, parentId) === -1) {
+      if (!baseExports.includes(idList, parentId)) {
         result.push(treeData)
       }
     }
@@ -526,7 +542,7 @@ function unTreeList (result, array, opts) {
   * @return {Array}
   */
 function treeToArray (array, options) {
-  var opts = baseExports.objectAssign({}, setupDefaults.treeOptions, options)
+  var opts = baseExports.assign({}, setupDefaults.treeOptions, options)
   return unTreeList([], array, opts)
 }
 

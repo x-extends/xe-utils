@@ -10,7 +10,7 @@ var numberExports = require('./number')
 var stringExports = require('./string')
 var methodExports = {}
 
-baseExports.objectAssign(
+baseExports.assign(
   methodExports,
   arrayExports,
   baseExports,
