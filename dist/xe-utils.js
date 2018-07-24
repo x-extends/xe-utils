@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.13
+ * xe-utils.js v1.6.14
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.13'
+  XEUtils.version = '1.6.14'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -2382,7 +2382,7 @@
       hostname: '',
       protocol: '',
       port: '',
-      search: searchs ? searchs[1] : ''
+      search: searchs && searchs[1] && searchs[1].length > 1 ? searchs[1] : ''
     }
     parsed.path = href.replace(/^([a-z0-9.+-]*:)\/\//, function (text, protocol) {
       parsed.protocol = protocol
@@ -2394,7 +2394,7 @@
       parsed.host = hostname + portText
       return '/'
     }).replace(/(#.*)/, function (text, hash) {
-      parsed.hash = hash
+      parsed.hash = hash.length > 1 ? hash : ''
       return ''
     })
     var hashs = parsed.hash.match(/#((.*)\?|(.*))/)

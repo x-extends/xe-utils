@@ -47,7 +47,7 @@ function parseUrl (url) {
     hostname: '',
     protocol: '',
     port: '',
-    search: searchs ? searchs[1] : ''
+    search: searchs && searchs[1] && searchs[1].length > 1 ? searchs[1] : ''
   }
   parsed.path = href.replace(/^([a-z0-9.+-]*:)\/\//, function (text, protocol) {
     parsed.protocol = protocol
@@ -59,7 +59,7 @@ function parseUrl (url) {
     parsed.host = hostname + portText
     return '/'
   }).replace(/(#.*)/, function (text, hash) {
-    parsed.hash = hash
+    parsed.hash = hash.length > 1 ? hash : ''
     return ''
   })
   var hashs = parsed.hash.match(/#((.*)\?|(.*))/)
