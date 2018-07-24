@@ -36,7 +36,9 @@ function getBaseURL () {
 
 function parseUrl (url) {
   var href = '' + url
-  if (href.indexOf('/') === 0) {
+  if (href.indexOf('//') === 0) {
+    href = ($locat ? $locat.protocol : '') + href
+  } else if (href.indexOf('/') === 0) {
     href = getLocatOrigin() + href
   }
   var searchs = href.replace(/#.*/, '').match(/(\?.*)/)
