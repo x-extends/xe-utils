@@ -891,14 +891,16 @@ XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
 arrayMean([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 66
 ```
 
-### from ( array, callback [, context] ) 根据数组或可迭代对象中创建一个新的数组
+### toArray/from ( array, callback [, context] ) 根据数组或可迭代对象中创建一个新的数组
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
 XEUtils.from([]) // []
-XEUtils.from({}) // []
 XEUtils.from(arguments) // [...]
+XEUtils.toArray([]) // []
+XEUtils.toArray({}) // []
+XEUtils.toArray(arguments) // [...]
 ```
 
 ### reduce/arrayReduce ( array, callback [, initialValue] ) 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
@@ -1236,7 +1238,7 @@ import XEUtils from 'xe-utils'
 // 千分位格式化 1,000,000
 XEUtils.commafy(1000000)
 // 格式化金额 1,000,000.00
-XEUtils.commafy(1000000, {fixed: 2})
+XEUtils.commafy('1000000', {fixed: 2})
 // 格式化银行卡 1234 1234 1234 1234
 XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0})
 // 字符串每隔3位分割 111,111,111,111,111,111,111,111,111
