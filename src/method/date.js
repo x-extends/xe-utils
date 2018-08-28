@@ -100,6 +100,16 @@ function handleCustomTemplate (date, formats, match, value) {
   return value
 }
 
+function formatPadStart (str, len, padStr) {
+  str = '' + str
+  var index = str.length
+  while (index < len) {
+    str = padStr + str
+    index++
+  }
+  return str
+}
+
 /**
   * 日期格式化为字符串
   *
@@ -133,7 +143,7 @@ function dateToString (date, format, options) {
         [/e/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
         [/E/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
         [/q/g, empty, function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
-        [/Z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + XEUtils.padStart(zoneHours, 2, 0) + '00') }],
+        [/Z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, 0) + '00') }],
         [/W/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
         [/w/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
         [/D/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearDay(date)) }]
@@ -141,7 +151,7 @@ function dateToString (date, format, options) {
       for (var index = 0; index < timeRules.length; index++) {
         var item = timeRules[index]
         result = result.replace(item[0], item[2] || function (match) {
-          return XEUtils.padStart(item[1], match.length, 0)
+          return formatPadStart(item[1], match.length, '0')
         })
       }
       return result
