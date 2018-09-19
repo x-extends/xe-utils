@@ -589,20 +589,30 @@ removeObject(obj, item => item === 22) // obj = {a1: 11, a3: 33}
 ```JavaScript
 import XEUtils, { objectAssign } from 'xe-utils'
 
-const obj1 = {a: null}
+let obj1 = {a: null}
 XEUtils.assign(obj1, {a: 11}) // {a: 11}
 
 // 浅拷贝
-const obj2 = {a: null}
-const obj3 = {bb: {b: 11}}
-const obj4 = objectAssign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
+let obj2 = {a: null}
+let obj3 = {bb: {b: 11}}
+let obj4 = objectAssign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
 obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 22}}
 
 // 深拷贝
-const obj2 = {a: null}
-const obj3 = {bb: {b: 11}}
-const obj4 = XEUtils.extend(true, obj3, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
+let obj2 = {a: null}
+let obj3 = {bb: {b: 11}}
+let obj4 = XEUtils.extend(true, obj3, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
 obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 11}}
+```
+
+### destructuring (target, ...) 将一个或者多个对象值解构到目标对象
+
+```JavaScript
+import XEUtils, { destructuring } from 'xe-utils'
+
+XEUtils.destructuring({a: null}, {a: 11, b: 22, c: 33}) // {a: 11}
+destructuring({a: 11, d: 44}, {a: 11, b: 22, c: 33}) // {a: 11, d: 44}
+destructuring({a: 11, c: 33, d: 44}, {a: 11, b: 22, c: null, e: 55, f: 66}) // {a: 11, c: null, d: 44}
 ```
 
 ### stringToJson (str) 字符串转JSON

@@ -573,6 +573,31 @@ function extend (target, args, isClone) {
 }
 
 /**
+  * 将一个或者多个对象值解构到目标对象
+  *
+  * @param {Object} obj 目标对象
+  * @param {...Object}
+  * @return {Boolean}
+  */
+function destructuring (target, source) {
+  var args = arguments
+  if (target && source) {
+    var result = [{}]
+    for (var index = 1, len = args.length; index < len; index++) {
+      result.push(args[index])
+    }
+    var rest = objectAssign.apply(this, result)
+    var restKeys = objectKeys(rest)
+    arrayEach(objectKeys(target), function (key) {
+      if (includes(restKeys, key)) {
+        target[key] = rest[key]
+      }
+    })
+  }
+  return target
+}
+
+/**
   * 浅拷贝一个或者多个对象到目标对象中
   *
   * @param {Object} obj 目标对象
@@ -1173,7 +1198,8 @@ var baseExports = {
   removeObject: removeObject,
   range: range,
   throttle: throttle,
-  debounce: debounce
+  debounce: debounce,
+  destructuring: destructuring
 }
 
 module.exports = baseExports
