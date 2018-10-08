@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.16
+ * xe-utils.js v1.6.17
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,10 +13,11 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.16'
+  XEUtils.version = '1.6.17'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
+    cookies: null,
     treeOptions: { strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data' },
     formatDate: formatString + '.SSS',
     formatString: formatString,
@@ -1902,7 +1903,7 @@
     if (inserts.length > 0) {
       if (isDoc) {
         arrayEach(inserts, function (obj) {
-          var opts = objectAssign({}, obj)
+          var opts = objectAssign({}, setupDefaults.cookies, obj)
           var values = []
           if (opts.name) {
             var expires = opts.expires
@@ -1957,8 +1958,8 @@
     return cookie(name)
   }
 
-  function removeCookieItem (name) {
-    cookie(name, 0, { expires: -1 })
+  function removeCookieItem (name, options) {
+    cookie(name, 0, baseExports.assign({ expires: -1 }, setupDefaults.cookies, options))
   }
 
   function cookieKeys () {

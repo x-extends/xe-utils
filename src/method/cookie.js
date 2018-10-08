@@ -1,5 +1,6 @@
 'use strict'
 
+var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
 var dateExports = require('./date')
 
@@ -57,7 +58,7 @@ function cookie (name, value, options) {
   if (inserts.length > 0) {
     if (isDoc) {
       arrayEach(inserts, function (obj) {
-        var opts = objectAssign({}, obj)
+        var opts = objectAssign({}, setupDefaults.cookies, obj)
         var values = []
         if (opts.name) {
           var expires = opts.expires
@@ -112,8 +113,8 @@ function getCookieItem (name) {
   return cookie(name)
 }
 
-function removeCookieItem (name) {
-  cookie(name, 0, {expires: -1})
+function removeCookieItem (name, options) {
+  cookie(name, 0, baseExports.assign({expires: -1}, setupDefaults.cookies, options))
 }
 
 function cookieKeys () {
