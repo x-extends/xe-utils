@@ -1811,14 +1811,13 @@
 
   function isBrowseStorage (storage) {
     try {
-      if (storage && storage.getItem) {
-        var testKey = '_xe_t'
-        storage.setItem(testKey, 1)
-        storage.removeItem(testKey)
-        return true
-      }
-    } catch (e) { }
-    return false
+      var testKey = '_xe_t'
+      storage.setItem(testKey, 1)
+      storage.removeItem(testKey)
+      return true
+    } catch (e) {
+      return false
+    }
   }
 
   /**
