@@ -1859,6 +1859,7 @@
       case 'y': return dateExports.getWhatYear(nowdate, num).getTime()
       case 'M': return dateExports.getWhatMonth(nowdate, num).getTime()
       case 'd': return dateExports.getWhatDay(nowdate, num).getTime()
+      case 'h':
       case 'H': return time + num * 60 * 60 * 1000
       case 'm': return time + num * 60 * 1000
       case 's': return time + num * 1000
@@ -1913,7 +1914,7 @@
             if (expires) {
               if (isNaN(expires)) {
                 // UTCString || Unit
-                expires = expires.replace(/^([0-9]+)(y|M|d|H|m|s)$/, function (text, num, unit) {
+                expires = expires.replace(/^([0-9]+)(y|M|d|H|h|m|s)$/, function (text, num, unit) {
                   return toCookieUTCString(toCookieUnitTime(unit, num))
                 })
               } else if (/^[0-9]{11,13}$/.test(expires) || baseExports.isDate(expires)) {
