@@ -2,16 +2,6 @@
 
 var baseExports = require('./base')
 
-function isMobile () {
-  var agents = ['Android', 'webOS', 'iPhone', 'iPad', 'iPod', 'SymbianOS', 'BlackBerry', 'Windows Phone']
-  for (var userAgentInfo = navigator.userAgent, i = 0; i < agents.length; i++) {
-    if (userAgentInfo.indexOf(agents[i]) > 0) {
-      return true
-    }
-  }
-  return false
-}
-
 /**
   * 获取浏览器内核
   * @return Object
@@ -19,13 +9,12 @@ function isMobile () {
 function browse () {
   var result = {
     isNode: false,
-    isMobile: false,
+    isMobile: /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent),
     isPC: false
   }
   if (typeof window === 'undefined' && typeof process !== 'undefined') {
     result.isNode = true
   } else {
-    result.isMobile = isMobile()
     result.isPC = !result.isMobile
     if (typeof document !== 'undefined') {
       var $dom = document

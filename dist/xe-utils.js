@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.17
+ * xe-utils.js v1.6.18
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.17'
+  XEUtils.version = '1.6.18'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -1809,16 +1809,6 @@
     destructuring: destructuring
   }
 
-  function isMobile () {
-    var agents = ['Android', 'webOS', 'iPhone', 'iPad', 'iPod', 'SymbianOS', 'BlackBerry', 'Windows Phone']
-    for (var userAgentInfo = navigator.userAgent, i = 0; i < agents.length; i++) {
-      if (userAgentInfo.indexOf(agents[i]) > 0) {
-        return true
-      }
-    }
-    return false
-  }
-
   /**
     * 获取浏览器内核
     * @return Object
@@ -1826,13 +1816,12 @@
   function browse () {
     var result = {
       isNode: false,
-      isMobile: false,
+      isMobile: /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent),
       isPC: false
     }
     if (typeof window === 'undefined' && typeof process !== 'undefined') {
       result.isNode = true
     } else {
-      result.isMobile = isMobile()
       result.isPC = !result.isMobile
       if (typeof document !== 'undefined') {
         var $dom = document
