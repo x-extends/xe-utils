@@ -1,6 +1,5 @@
 'use strict'
 
-var XEUtils = require('../core/utils')
 var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
 
