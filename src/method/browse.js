@@ -4,7 +4,7 @@ var baseExports = require('./base')
 
 function isBrowseStorage (storage) {
   try {
-    var testKey = '_xe_t'
+    var testKey = '__xe_t'
     storage.setItem(testKey, 1)
     storage.removeItem(testKey)
     return true
@@ -20,12 +20,15 @@ function isBrowseStorage (storage) {
 function browse () {
   var result = {
     isNode: false,
-    isMobile: /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent),
-    isPC: false
+    isMobile: false,
+    isPC: false,
+    isLocalStorage: false,
+    isSessionStorage: false
   }
   if (typeof window === 'undefined' && typeof process !== 'undefined') {
     result.isNode = true
   } else {
+    result.isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
     result.isPC = !result.isMobile
     result.isLocalStorage = isBrowseStorage(window.localStorage)
     result.isSessionStorage = isBrowseStorage(window.sessionStorage)
