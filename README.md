@@ -1382,7 +1382,7 @@ XEUtils.endsWith('abc', 5, 'a') // false
 stringEndsWith('abc', 5, 'c') // true
 ```
 
-### browse ( ) 获取浏览器内核
+### browse ( ) 获取浏览器信息
 
 ```JavaScript
 import XEUtils from 'xe-utils'
