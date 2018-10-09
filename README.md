@@ -507,7 +507,9 @@ rest(222) // 'test = 222'
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-var rest = XEUtils.once(function (val) { return this.name + ' = ' + val }, {name: 'test'})
+var rest = XEUtils.once(function (val) {
+  return this.name + ' = ' + val
+}, {name: 'test'})
 rest(222) // 'test = 222'
 rest(333) // 'test = 222'
 ```
@@ -525,7 +527,6 @@ document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100)) // 
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: true, trailing: false}) // 在计时结束之前执行
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: false, trailing: true}) // 在计时结束之后执行
 
-// 取消
 var func = XEUtils.throttle(function (msg) {
   console.log(msg)
 }, 300)
@@ -548,7 +549,6 @@ document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), true) /
 document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: true, trailing: false}) // 在计时结束之前执行
 document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: false, trailing: true}) // 在计时结束之后执行
 
-// 取消
 var func = XEUtils.debounce(function (msg) {
   console.log(msg)
 }, 300)
@@ -1449,6 +1449,7 @@ XEUtils.cookie()
 XEUtils.cookie('name')
 // 删除
 XEUtils.cookie('name', null, {expires: -1})
+XEUtils.cookie('name', null, {expires: -1, path: '/'})
 // 添加/修改
 XEUtils.cookie('name', 'value')
 // 指定 10 秒后过期
@@ -1504,7 +1505,7 @@ XEUtils.cookie.remove(name)
 
 ## 混合函数
 
-### 文件 ./customs.js
+### 文件 ./util.js
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -1519,12 +1520,12 @@ export function toDateStr (date) {
 ```JavaScript
 import Vue from 'vue'
 import XEUtils from 'xe-utils'
-import customs from './customs'
+import util from './util'
 
-XEUtils.mixin(customs)
+XEUtils.mixin(util)
 
 // 调用自定义扩展函数
-XEUtils.toDateStr() // 2018-01-01 10:00
+XEUtils.toDateStr(new Date()) // 2018-01-01 10:00
 ```
 
 ## License

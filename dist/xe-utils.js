@@ -1809,6 +1809,18 @@
     destructuring: destructuring
   }
 
+  function isBrowseStorage (storage) {
+    try {
+      if (storage && storage.getItem) {
+        var testKey = '_xe_t'
+        storage.setItem(testKey, 1)
+        storage.removeItem(testKey)
+        return true
+      }
+    } catch (e) { }
+    return false
+  }
+
   /**
     * 获取浏览器内核
     * @return Object
@@ -1823,6 +1835,8 @@
       result.isNode = true
     } else {
       result.isPC = !result.isMobile
+      result.isLocalStorage = isBrowseStorage(window.localStorage)
+      result.isSessionStorage = isBrowseStorage(window.sessionStorage)
       if (typeof document !== 'undefined') {
         var $dom = document
         var $body = $dom.body || $dom.documentElement
