@@ -1396,7 +1396,9 @@ XEUtils.browse()
 //   "-webkit": true,
 //   isMobile: false,
 //   isNode: false,
-//   isPC: true
+//   isPC: true,
+//   isLocalStorage: true,
+//   isSessionStorage: true
 // }
 ```
 
