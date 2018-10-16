@@ -3,7 +3,7 @@
 var formatString = 'yyyy-MM-dd HH:mm:ss'
 var setupDefaults = {
   cookies: null,
-  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'},
+  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children'},
   formatDate: formatString + '.SSS',
   formatString: formatString,
   formatStringMatchs: null,

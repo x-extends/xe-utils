@@ -475,28 +475,38 @@ function arrayToTree (array, options) {
   var optKey = opts.key
   var optParentKey = opts.parentKey
   var optChildren = opts.children
+  var optSortKey = opts.sortKey
+  var optReverse = opts.reverse
   var optData = opts.data
   var result = []
   var treeMap = {}
+
+  if (optSortKey) {
+    array = arraySort(baseExports.clone(array), optSortKey)
+    if (optReverse) {
+      array = array.reverse()
+    }
+  }
+
   var idList = arrayMap(array, function (item) {
     return item[optKey]
   })
+
   for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
     item = array[index]
     id = item[optKey]
 
-    if (optData === null) {
-      treeData = item
-    } else {
+    if (optData) {
       treeData = {}
       treeData[optData] = item
+    } else {
+      treeData = item
     }
 
     parentId = item[optParentKey]
     treeMap[id] = treeMap[id] || []
     treeMap[parentId] = treeMap[parentId] || []
     treeMap[parentId].push(treeData)
-
     treeData[optKey] = id
     treeData[optParentKey] = parentId
     treeData[optChildren] = treeMap[id]
