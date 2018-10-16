@@ -1513,7 +1513,9 @@ XEUtils.cookie.get(name)
 XEUtils.cookie.remove(name)
 ```
 
-## 混合函数
+## 扩展函数
+
+允许用您自己的实用程序函数扩展到XEUtils
 
 ### 文件 ./util.js
 
