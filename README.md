@@ -85,7 +85,7 @@ XEUtils.setup({
   cookies: {
     path: '/'
   },
-  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'},
+  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: null},
   formatDate: 'yyyy-MM-dd HH:mm:ss.SSS',
   formatString: 'yyyy-MM-dd HH:mm:ss',
   formatStringMatchs : {
