@@ -1515,7 +1515,7 @@ XEUtils.cookie.remove(name)
 
 ## 扩展函数
 
-允许用您自己的实用程序函数扩展到XEUtils
+允许用您自己的实用函数扩展到XEUtils
 
 ### 文件 ./util.js
 
