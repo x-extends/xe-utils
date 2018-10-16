@@ -977,22 +977,22 @@ XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
 import XEUtils from 'xe-utils'
 
 // 默认树结构
-const list1 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}]
+let list1 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}]
 XEUtils.arrayToTree(list1)
 // [{"id":1,"name":"111","children":[{"id":2,"parentId":1,"name":"222","children":[{"id":4,"parentId":2,"name":"444","children":[]}]}]},{"id":3,"name":"333","children":[]}]
 
 // 返回带排序的树结构
-const list1 = [{id: 1, name: '111', seq: 5}, {id: 2, parentId: 1, name: '222', seq: 3}, {id: 3, name: '333', seq: 6}, {id: 4, parentId: 2, name: '444', seq: 2}, {id: 5, parentId: 1, name: '555', seq: 1}]
+let list1 = [{id: 1, name: '111', seq: 5}, {id: 2, parentId: 1, name: '222', seq: 3}, {id: 3, name: '333', seq: 6}, {id: 4, parentId: 2, name: '444', seq: 2}, {id: 5, parentId: 1, name: '555', seq: 1}]
 XEUtils.arrayToTree(list1, {sortKey: 'seq'})
 // [{"id":1,"name":"111","seq":5,"children":[{"id":5,"parentId":1,"name":"555","seq":1,"children":[]},{"id":2,"parentId":1,"name":"222","seq":3,"children":[{"id":4,"parentId":2,"name":"444","seq":2,"children":[]}]}]},{"id":3,"name":"333","seq":6,"children":[]}]
 
 // 自定义数据存放属性
-const list2 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
+let list2 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
 XEUtils.arrayToTree(list2, {data: 'data'})
 // [{"data":{"id":1,"name":"111"},"id":1,"children":[{"data":{"id":2,"parentId":1,"name":"222"},"id":2,"parentId":1,"children":[{"data":{"id":4,"parentId":2,"name":"444"},"id":4,"parentId":2,"children":[]}]}]},{"data":{"id":3,"name":"333"},"id":3,"children":[]},{"data":{"id":5,"parentId":22,"name":"555"},"id":5,"parentId":22,"children":[]}]
 
 // 如果设置为严格模式，（非父子关联及冗余)的数据会被忽略
-const list3 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
+let list3 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
 XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
 // [{"data":{"id":1,"name":"111"},"id":1,"children":[{"data":{"id":2,"parentId":1,"name":"222"},"id":2,"parentId":1,"children":[{"data":{"id":4,"parentId":2,"name":"444"},"id":4,"parentId":2,"children":[]}]}]},{"data":{"id":3,"name":"333"},"id":3,"children":[]}]
 ```
@@ -1002,17 +1002,18 @@ XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', chil
 | 属性 | 描述 | 默认值 |
 |------|------|------|
 | children | 子节点属性 | 'children' |
-| data | 数据存放属性 | 'data' |
+| data | 数据存放属性 | null |
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const list1 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+let list1 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
 XEUtils.treeToArray(list1)
-// [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
-const list2 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
-XEUtils.treeToArray(list2, {data: null})
 // [{id: 1}, {id: 2, data: {}, parentId: 1}, {id: 3, data: {}}, {id: 4, data: {}, parentId: 2}]
+
+let list2 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+XEUtils.treeToArray(list2, {data: 'data'})
+// [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
 ```
 
 ### now/timestamp ( ) 返回时间戳
