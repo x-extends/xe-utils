@@ -15,8 +15,9 @@ function getRandom (min, max) {
 }
 
 function sortData (arr, iterate) {
+  var list = baseExports.clone(arr)
   var arraySort = XEUtils.arraySort
-  return (baseExports.isFunction(iterate) ? arraySort(XEUtils.arrayMap(arr, iterate, this)) : arraySort(arr, iterate))
+  return (baseExports.isFunction(iterate) ? arraySort(XEUtils.arrayMap(list, iterate, this)) : arraySort(list, iterate))
 }
 
 /**

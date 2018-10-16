@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.18
+ * xe-utils.js v1.6.19
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.18'
+  XEUtils.version = '1.6.19'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -2477,8 +2477,9 @@
   }
 
   function sortData (arr, iterate) {
+    var list = baseExports.clone(arr)
     var arraySort = XEUtils.arraySort
-    return (baseExports.isFunction(iterate) ? arraySort(XEUtils.arrayMap(arr, iterate, this)) : arraySort(arr, iterate))
+    return (baseExports.isFunction(iterate) ? arraySort(XEUtils.arrayMap(list, iterate, this)) : arraySort(list, iterate))
   }
 
   /**
