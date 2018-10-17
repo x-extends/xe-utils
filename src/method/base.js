@@ -1030,7 +1030,7 @@ function throttle (callback, wait, options) {
   var opts = options || {}
   var runFlag = false
   var args = null
-  var context = this
+  var context = null
   var timeout = null
   var optLeading = 'leading' in opts ? opts.leading : true
   var optTrailing = 'trailing' in opts ? opts.trailing : false
@@ -1054,7 +1054,7 @@ function throttle (callback, wait, options) {
   }
   var throttled = function () {
     args = arguments
-    context = context || this
+    context = this
     runFlag = false
     if (timeout === null) {
       if (optLeading === true) {
@@ -1080,7 +1080,7 @@ function debounce (callback, wait, options) {
   var opts = options || {}
   var runFlag = false
   var args = null
-  var context = this
+  var context = null
   var timeout = null
   var isLeading = typeof options === 'boolean'
   var optLeading = 'leading' in opts ? opts.leading : isLeading
@@ -1107,7 +1107,7 @@ function debounce (callback, wait, options) {
   var debounced = function () {
     runFlag = false
     args = arguments
-    context = context || this
+    context = this
     if (timeout === null) {
       if (optLeading === true) {
         runFn()

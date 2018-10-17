@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.20
+ * xe-utils.js v1.6.21
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.20'
+  XEUtils.version = '1.6.21'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -1647,7 +1647,7 @@
     var opts = options || {}
     var runFlag = false
     var args = null
-    var context = this
+    var context = null
     var timeout = null
     var optLeading = 'leading' in opts ? opts.leading : true
     var optTrailing = 'trailing' in opts ? opts.trailing : false
@@ -1671,7 +1671,7 @@
     }
     var throttled = function () {
       args = arguments
-      context = context || this
+      context = this
       runFlag = false
       if (timeout === null) {
         if (optLeading === true) {
@@ -1697,7 +1697,7 @@
     var opts = options || {}
     var runFlag = false
     var args = null
-    var context = this
+    var context = null
     var timeout = null
     var isLeading = typeof options === 'boolean'
     var optLeading = 'leading' in opts ? opts.leading : isLeading
@@ -1724,7 +1724,7 @@
     var debounced = function () {
       runFlag = false
       args = arguments
-      context = context || this
+      context = this
       if (timeout === null) {
         if (optLeading === true) {
           runFn()
