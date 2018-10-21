@@ -334,6 +334,23 @@ export interface XEUtilsMethods {
    * @param callback 回调
    * @param wait 毫秒
    * @param options 可选参数
+   * @example
+    ```JavaScript
+    function scrollEvent (evnt) {
+      console.log('至少每隔wait秒毫秒之内只会调用一次')
+    }
+
+    document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100)) // 在计时结束之前执行
+    document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: true, trailing: false}) // 在计时结束之前执行
+    document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: false, trailing: true}) // 在计时结束之后执行
+
+    var func = XEUtils.throttle(function (msg) {
+      console.log(msg)
+    }, 300)
+    func('执行一次')
+    func.cancel()
+    func('取消后中断计时，再次调用会马上执行')
+    ```
    */
   throttle(callback: Function, wait: number, options?: object): Function;
 
@@ -342,6 +359,24 @@ export interface XEUtilsMethods {
    * @param callback 回调
    * @param wait 毫秒
    * @param options 可选参数
+   * @example
+    ```JavaScript
+    function resizeEvent (evnt) {
+      console.log('如果wait毫秒内重复调用则会重新计时，在函数最后一次调用wait毫秒之后才会执行回调')
+    }
+
+    document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100)) // // 在计时结束之后执行
+    document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), true) // 在计时结束之前执行
+    document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: true, trailing: false}) // 在计时结束之前执行
+    document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: false, trailing: true}) // 在计时结束之后执行
+
+    var func = XEUtils.debounce(function (msg) {
+      console.log(msg)
+    }, 300)
+    func('计时结束之前执行一次')
+    func.cancel()
+    func('取消后中重新计时，在计时结束之前执行')
+    ```
    */
   debounce(callback: Function, wait: number, options?: object): Function;
 
@@ -357,27 +392,60 @@ export interface XEUtilsMethods {
    * 移除对象属性
    * @param obj 对象
    * @param iteratee 迭代器/值
+   * @example
+    ```JavaScript
+    var list = [11, 22, 33, 44]
+    XEUtils.remove(list, item => item === 22) // list = [11, 33, 44]
+    var obj = {a1: 11, a2: 22, a3: 33}
+    XEUtils.remove(obj, item => item === 22) // obj = {a1: 11, a3: 33}
+    ```
    */
   remove(obj: object | Array<any>, iteratee?: any): object;
 
   /**
-   * 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
-   * @param deep 是否深拷贝
-   * @param target 目标
+   * 浅拷贝一个或者多个对象到目标对象中
+   * @param destination 目标对象
+   * @param sources 多个对象
+   * @example
+    ```JavaScript
+    let obj2 = {a: null}
+    let obj3 = {bb: {b: 11}}
+    let obj4 = XEUtils.assign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
+    obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 22}}
+    ```
    */
-  assign(deep: object | boolean, ...target: object[]): object;
+  assign(destination: object, ...sources: object[]): object;
 
   /**
-   * 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
-   * @param deep 是否深拷贝
-   * @param target 目标
+   * 浅拷贝或深拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
+   * @param destination 目标对象
+   * @param sources 多个对象
+   * @example
+    ```JavaScript
+    // 浅拷贝
+    let obj2 = {a: null}
+    let obj3 = {bb: {b: 11}}
+    let obj4 = XEUtils.extend(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
+    obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 22}}
+
+    // 深拷贝
+    let obj2 = {a: null}
+    let obj3 = {bb: {b: 11}}
+    let obj4 = XEUtils.extend(true, obj3, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
+    obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 11}}
+    ```
    */
-  extend(deep: object | boolean, ...target: object[]): object;
+  extend(destination: object | boolean, ...sources: object[]): object;
 
   /**
    * 将一个或者多个对象值解构到目标对象
    * @param obj 对象
    * @param target 目标
+   * @example
+    ```JavaScript
+    XEUtils.destructuring({a: null}, {a: 11, b: 22, c: 33}) // {a: 11}
+    XEUtils.destructuring({a: 11, d: 44}, {a: 11, b: 22, c: 33}) // {a: 11, d: 44}
+    ```
    */
   destructuring(obj: object, ...target: object[]): object;
 
@@ -428,6 +496,15 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.forOf([11, 22, 33], (item, index) => {
+      if (index > 1) {
+        // 结束循环
+        return false
+      }
+    })
+    ```
    */
   forOf(obj: any, iteratee: Function, context?: any): void;
 
@@ -436,6 +513,12 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.each({a: 11, b: 22}, (item, key) => {
+      console.log(item)
+    })
+    ```
    */
   each(obj: any, iteratee: Function, context?: any): void;
 
@@ -444,6 +527,12 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.arrayEach([11, 22, 33], (item, index) => {
+      console.log(item)
+    })
+    ```
    */
   arrayEach(obj: any, iteratee: Function, context?: any): void;
 
@@ -452,6 +541,12 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.objectEach({a: 11, b: 22}, (item, key) => {
+      console.log(item)
+    })
+    ```
    */
   objectEach(obj: any, iteratee: Function, context?: any): void;
 
@@ -460,6 +555,15 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.forOfLast([11, 22, 33], (item, index) => {
+      if (index < 1) {
+        // 结束循环
+        return false
+      }
+    })
+    ```
    */
   forOfLast(obj: any, iteratee: Function, context?: any): void;
 
@@ -468,6 +572,12 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.lastEach({a: 11, b: 22}, (item, key) => {
+      console.log(item)
+    })
+    ```
    */
   lastEach(obj: any, iteratee: Function, context?: any): void;
 
@@ -476,6 +586,12 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.arrayLastEach([11, 22, 33], (item, index) => {
+      console.log(item)
+    })
+    ```
    */
   arrayLastEach(obj: any, iteratee: Function, context?: any): void;
 
@@ -484,6 +600,12 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.objectLastEach({a: 11, b: 22}, (item, key) => {
+      console.log(item)
+    })
+    ```
    */
   objectLastEach(obj: any, iteratee: Function, context?: any): void;
 
@@ -697,6 +819,16 @@ export interface XEUtilsMethods {
    * 任意格式字符串转为日期
    * @param str 字符串/日期/时间戳
    * @param format 解析格式 yyyy MM dd HH mm ss SSS
+   * @example 
+    ```javascript
+    XEUtils.stringToDate(1540130494594)
+    XEUtils.stringToDate(new Date())
+    XEUtils.stringToDate('2017-12-20 10:10:30')
+    XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy')
+    XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm')
+    XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
+    XEUtils.stringToDate('20171220201030', 'yyyyMMddHHmmss')
+    ```
    */
   stringToDate(str: string | Date | number, format?: string): Date;
 
@@ -705,6 +837,16 @@ export interface XEUtilsMethods {
    * @param date 字符串/日期/时间戳
    * @param format 格式化 默认：yyyy-MM-dd HH:mm:ss.SSS
    * @param options 可选参数
+   * @example 
+    ```javascript
+    XEUtils.dateToString(1513735830000)
+    XEUtils.dateToString(new Date())
+    XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
+    XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S')
+    XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
+    XEUtils.dateToString('2017-01-01 10:05:30', 'MM/dd/yyyy')
+    XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S')
+    ```
    */
   dateToString(date: string | Date | number, format?: string, options?: object): string;
 
@@ -713,6 +855,14 @@ export interface XEUtilsMethods {
    * @param date 字符串/日期/时间戳
    * @param year 年(默认当前年)、前几个年(数值)、后几个年(数值)
    * @param month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
+   * @example 
+    ```javascript
+    XEUtils.getWhatYear(new Date(), -3)
+    XEUtils.getWhatYear(1513735830000, -1)
+    XEUtils.getWhatYear('2017-12-20', 2)
+    XEUtils.getWhatYear('2017-12-20', 0, 'first')
+    XEUtils.getWhatYear('2017-12-20', -2, 'last')
+    ```
    */
   getWhatYear(date: string | Date | number, year?: number | string, month?: number | string): Date;
 
@@ -721,6 +871,14 @@ export interface XEUtilsMethods {
    * @param date 字符串/日期/时间戳
    * @param month 月(默认当前月)、前几个月、后几个月
    * @param day 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
+   * @example 
+    ```javascript
+    XEUtils.getWhatMonth(new Date(), 0)
+    XEUtils.getWhatMonth(1513735830000, -1)
+    XEUtils.getWhatMonth('2017-12-20', -3)
+    XEUtils.getWhatMonth('2017-12-20', -2, 'first')
+    XEUtils.getWhatMonth('2017-12-20', 1, 'last')
+    ```
    */
   getWhatMonth(date: string | Date | number, month?: number | string, day?: number | string): Date;
 
@@ -729,6 +887,14 @@ export interface XEUtilsMethods {
    * @param date 字符串/日期/时间戳
    * @param month 周(默认当前周)、前几周、后几周
    * @param day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
+   * @example 
+    ```javascript
+    XEUtils.getWhatWeek(new Date(), -2)
+    XEUtils.getWhatWeek(1513735830000, -1)
+    XEUtils.getWhatWeek('2017-12-20', 2)
+    XEUtils.getWhatWeek('2017-12-20', -1, 5)
+    XEUtils.getWhatWeek('2017-12-20', 0, 0)
+    ```
    */
   getWhatWeek(date: string | Date | number, week?: number | string, day?: number | string): Date;
 
@@ -737,6 +903,14 @@ export interface XEUtilsMethods {
    * @param date 字符串/日期/时间戳
    * @param day 天(默认当天)、前几天、后几天
    * @param mode 获取时分秒(null默认当前时分秒)、日初(first)、日末(last)
+   * @example 
+    ```javascript
+    XEUtils.getWhatDay(new Date(), -1)
+    XEUtils.getWhatDay(1513735830000, -1)
+    XEUtils.getWhatDay('2017-12-20', 1)
+    XEUtils.getWhatDay('2017-12-20', 0, 'first')
+    XEUtils.getWhatDay('2017-12-20', -2, 'last')
+    ```
    */
   getWhatDay(date: string | Date | number, day?: number, mode?: number | string): Date;
 
@@ -744,24 +918,50 @@ export interface XEUtilsMethods {
    * 返回某个年份的天数,可以指定前几个年或后几个年，默认当前
    * @param date 字符串/日期/时间戳
    * @param year 年(默认当年)、前几个年、后几个年
+   * @example 
+    ```javascript
+    XEUtils.getDayOfYear(new Date()) // 365
+    XEUtils.getDayOfYear(1513735830000) // 365
+    XEUtils.getDayOfYear('2017-12-20') // 365
+    XEUtils.getDayOfYear('2019-12-20', 1) // 366
+    XEUtils.getDayOfYear('2020-12-20') // 366
+    ```
    */
   getDayOfYear(date: string | Date | number, year?: number): Date;
 
   /**
    * 返回某个年份的第几天
    * @param date 字符串/日期/时间戳
+   * @example 
+    ```javascript
+    XEUtils.getYearDay(new Date()) // 149
+    XEUtils.getYearDay('2017-01-20') // 20
+    XEUtils.getYearDay('2018-05-20') // 140
+    ```
    */
   getYearDay(date: string | Date | number): number;
 
   /**
    * 返回某个年份的第几周
    * @param date 字符串/日期/时间戳
+   * @example 
+    ```javascript
+    XEUtils.getYearWeek(new Date()) // 22
+    XEUtils.getYearWeek('2017-01-20') // 3
+    XEUtils.getYearWeek('2018-05-20') // 20
+    ```
    */
   getYearWeek(date: string | Date | number): number;
 
   /**
    * 返回某个月份的第几周
    * @param date 字符串/日期/时间戳
+   * @example 
+    ```javascript
+    XEUtils.getMonthWeek(new Date()) // 4
+    XEUtils.getMonthWeek('2017-01-20') // 3
+    XEUtils.getMonthWeek('2018-05-20') // 2
+    ```
    */
   getMonthWeek(date: string | Date | number): number;
 
@@ -769,6 +969,14 @@ export interface XEUtilsMethods {
    * 返回某个月份的天数,可以指定前几个月或后几个月，默认当前
    * @param date 字符串/日期/时间戳
    * @param month 月(默认当月)、前几个月、后几个月
+   * @example 
+    ```javascript
+    XEUtils.getDayOfMonth(new Date()) // 31
+    XEUtils.getDayOfMonth(1513735830000) // 31
+    XEUtils.getDayOfMonth('2017-12-20') // 31
+    XEUtils.getDayOfMonth('2017-12-20', -1) // 30
+    XEUtils.getDayOfMonth('2017-12-20', 1) // 31
+        ```
    */
   getDayOfMonth(date: string | Date | number, month: number): number;
 
@@ -777,6 +985,15 @@ export interface XEUtilsMethods {
    * @param startDate 开始日期
    * @param endDate 结束日期或当期日期
    * @param rules 自定义计算规则
+   * @example 
+    ```javascript
+    XEUtils.getDateDiff('2017-11-20', '2017-12-21') // {MM: 1, dd: 1}
+    XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1}
+    XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1, ss: 30}
+    XEUtils.getDateDiff('2018-01-01', '2017-12-21') // {done: false}
+    let dateDiff = XEUtils.getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
+    let content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
+    ```
    */
   getDateDiff(startDate: string | Date | number, endDate: string | Date | number, rules?: object): object;
 
@@ -784,6 +1001,11 @@ export interface XEUtilsMethods {
    * 获取一个指定范围内随机数
    * @param min 最小值
    * @param max 最大值
+   * @example 
+    ```javascript
+    XEUtils.random() // 0 ~ 9
+    XEUtils.random(3, 6) // 3 ~ 6
+    ```
    */
   random(min: number, max: number): number;
 
@@ -805,6 +1027,15 @@ export interface XEUtilsMethods {
    * 数值千分位分隔符、小数点
    * @param num 数值/字符串
    * @param options 可选参数
+   * @example 
+    ```javascript
+    XEUtils.commafy(1000000) // 千分位格式化 1,000,000
+    XEUtils.commafy('1000000', {fixed: 2}) // 格式化金额 1,000,000.00
+    // 格式化银行卡 1234 1234 1234 1234
+    XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0})
+    // 字符串每隔3位分割 111,111,111,111,111,111,111,111,111
+    XEUtils.commafy('111111111111111111111111111', {spaceNumber: 3, fixed: null})
+    ```
    */
   commafy(num: string | number, options?: object): string;
 

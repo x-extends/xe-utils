@@ -584,7 +584,7 @@ var obj = {a1: 11, a2: 22, a3: 33}
 removeObject(obj, item => item === 22) // obj = {a1: 11, a3: 33}
 ```
 
-### assign/objectAssign/extend ([deep], ...target) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
+### assign/objectAssign/extend (destination, ...sources) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
 
 ```JavaScript
 import XEUtils, { objectAssign } from 'xe-utils'
@@ -1215,8 +1215,8 @@ XEUtils.getDateDiff('2017-11-20', '2017-12-21') // {MM: 1, dd: 1}
 XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1}
 XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1, ss: 30}
 XEUtils.getDateDiff('2018-01-01', '2017-12-21') // {done: false}
-const dateDiff = XEUtils.getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
-const content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
+let dateDiff = XEUtils.getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
+let content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
 ```
 
 ### random/getRandom ( min, max ) 获取一个指定范围内随机数

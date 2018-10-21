@@ -561,40 +561,40 @@ function includes (obj, val) {
   return indexOf(obj, val) !== -1
 }
 
-function extend (target, args, isClone) {
+function extend (destination, args, isClone) {
   var len = args.length
   for (var source, index = 1; index < len; index++) {
     source = args[index]
     arrayEach(objectKeys(args[index]), function (key) {
-      target[key] = isClone ? clone(source[key], isClone) : source[key]
+      destination[key] = isClone ? clone(source[key], isClone) : source[key]
     })
   }
-  return target
+  return destination
 }
 
 /**
   * 将一个或者多个对象值解构到目标对象
   *
-  * @param {Object} obj 目标对象
+  * @param {Object} destination 目标对象
   * @param {...Object}
   * @return {Boolean}
   */
-function destructuring (target, source) {
+function destructuring (destination, sources) {
   var args = arguments
-  if (target && source) {
+  if (destination && sources) {
     var result = [{}]
     for (var index = 1, len = args.length; index < len; index++) {
       result.push(args[index])
     }
     var rest = objectAssign.apply(this, result)
     var restKeys = objectKeys(rest)
-    arrayEach(objectKeys(target), function (key) {
+    arrayEach(objectKeys(destination), function (key) {
       if (includes(restKeys, key)) {
-        target[key] = rest[key]
+        destination[key] = rest[key]
       }
     })
   }
-  return target
+  return destination
 }
 
 /**
