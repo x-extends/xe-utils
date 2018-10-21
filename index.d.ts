@@ -335,7 +335,7 @@ export interface XEUtilsMethods {
    * @param wait 毫秒
    * @param options 可选参数
    * @example
-    ```JavaScript
+    ```javascript
     function scrollEvent (evnt) {
       console.log('至少每隔wait秒毫秒之内只会调用一次')
     }
@@ -360,7 +360,7 @@ export interface XEUtilsMethods {
    * @param wait 毫秒
    * @param options 可选参数
    * @example
-    ```JavaScript
+    ```javascript
     function resizeEvent (evnt) {
       console.log('如果wait毫秒内重复调用则会重新计时，在函数最后一次调用wait毫秒之后才会执行回调')
     }
@@ -393,7 +393,7 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 迭代器/值
    * @example
-    ```JavaScript
+    ```javascript
     var list = [11, 22, 33, 44]
     XEUtils.remove(list, item => item === 22) // list = [11, 33, 44]
     var obj = {a1: 11, a2: 22, a3: 33}
@@ -407,7 +407,7 @@ export interface XEUtilsMethods {
    * @param destination 目标对象
    * @param sources 多个对象
    * @example
-    ```JavaScript
+    ```javascript
     let obj2 = {a: null}
     let obj3 = {bb: {b: 11}}
     let obj4 = XEUtils.assign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
@@ -421,7 +421,7 @@ export interface XEUtilsMethods {
    * @param destination 目标对象
    * @param sources 多个对象
    * @example
-    ```JavaScript
+    ```javascript
     // 浅拷贝
     let obj2 = {a: null}
     let obj3 = {bb: {b: 11}}
@@ -442,7 +442,7 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param target 目标
    * @example
-    ```JavaScript
+    ```javascript
     XEUtils.destructuring({a: null}, {a: 11, b: 22, c: 33}) // {a: 11}
     XEUtils.destructuring({a: 11, d: 44}, {a: 11, b: 22, c: 33}) // {a: 11, d: 44}
     ```
