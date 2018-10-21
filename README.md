@@ -1,4 +1,4 @@
-# XEUtils 函数库
+# javascript 函数库、工具类
 
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.org/package/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
@@ -13,12 +13,9 @@ XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，
 
 ## CDN 安装
 
-使用 script 方式安装，XEUtils 会定义为全局变量
-生产环境请使用 xe-utils.min.js，更小的压缩版本，可以带来更快的速度体验。
-
 ### cdnjs 获取最新版本
 
-[点击浏览](https://cdn.jsdelivr.net/npm/xe-utils/)已发布的所有 npm 包源码
+[点击浏览](https://cdn.jsdelivr.net/npm/xe-utils/)
 
 ```HTML
 <script src="https://cdn.jsdelivr.net/npm/xe-utils/dist/xe-utils.js"></script>
@@ -26,7 +23,7 @@ XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，
 
 ### unpkg 获取最新版本
 
-[点击浏览](https://unpkg.com/xe-utils/)已发布的所有 npm 包源码
+[点击浏览](https://unpkg.com/xe-utils/)
 
 ```HTML
 <script src="https://unpkg.com/xe-utils/dist/xe-utils.js"></script>
@@ -121,7 +118,7 @@ XEUtils.isFinite(0) // true
 XEUtils.isFinite(2e64) // true
 ```
 
-### isUndefined (val) 判断Undefined
+### isUndefined (val) 判断 Undefined
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -171,7 +168,7 @@ XEUtils.isFunction({}) // false
 XEUtils.isFunction(function(){}) // true
 ```
 
-### isBoolean (val) 判断是否Boolean对象
+### isBoolean (val) 判断是否 Boolean 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -180,7 +177,7 @@ XEUtils.isBoolean('false') // false
 XEUtils.isBoolean(true) // true
 ```
 
-### isString (val) 判断是否String对象
+### isString (val) 判断是否 String 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -191,7 +188,7 @@ XEUtils.isString('') // true
 XEUtils.isString('abc') // true
 ```
 
-### isNumber (val) 判断是否Number对象
+### isNumber (val) 判断是否 Number 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -201,7 +198,7 @@ XEUtils.isNumber('1') // false
 XEUtils.isNumber(1) // true
 ```
 
-### isRegExp (val) 判断是否RegExp对象
+### isRegExp (val) 判断是否 RegExp 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -212,7 +209,7 @@ XEUtils.isRegExp(new RegExp('a')) // true
 XEUtils.isRegExp(/\a/) // true
 ```
 
-### isObject (val) 判断是否Object对象
+### isObject (val) 判断是否 Object 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -234,7 +231,7 @@ XEUtils.isPlainObject(123) // false
 XEUtils.isPlainObject({}) // true
 ```
 
-### isDate (val) 判断是否Date对象
+### isDate (val) 判断是否 Date 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -245,7 +242,7 @@ XEUtils.isDate(1514096716800) // false
 XEUtils.isDate(new Date()) // true
 ```
 
-### isError (val) 判断是否Error对象
+### isError (val) 判断是否 Error 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -255,7 +252,7 @@ XEUtils.isError({}) // false
 XEUtils.isError(new Error('error')) // true
 ```
 
-### isTypeError (val) 判断是否TypeError对象
+### isTypeError (val) 判断是否 TypeError 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -277,7 +274,7 @@ XEUtils.isEmpty({}) // true
 XEUtils.isEmpty([]]) // true
 ```
 
-### isNull (val) 判断是否为Null
+### isNull (val) 判断是否为 Null
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -287,7 +284,7 @@ XEUtils.isNull('') // false
 XEUtils.isNull(null) // true
 ```
 
-### isSymbol (val) 判断是否Symbol对象
+### isSymbol (val) 判断是否 Symbol 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -296,7 +293,7 @@ XEUtils.isSymbol('a') // false
 XEUtils.isSymbol(Symbol('a')) // true
 ```
 
-### isArguments (val) 判断是否Arguments对象
+### isArguments (val) 判断是否 Arguments 对象
 
 ```JavaScript
 import { isArguments } from 'xe-utils'
@@ -305,7 +302,7 @@ isArguments([]) // false
 isArguments(arguments) // true
 ```
 
-### isElement (val) 判断是否Element对象
+### isElement (val) 判断是否 Element 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -314,7 +311,7 @@ XEUtils.isElement({}) // false
 XEUtils.isElement(document.createElement('div')) // true
 ```
 
-### isDocument (val) 判断是否Document对象
+### isDocument (val) 判断是否 Document 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -323,7 +320,7 @@ XEUtils.isDocument(document.createElement('div')) // false
 XEUtils.isDocument(document) // true
 ```
 
-### isWindow (val) 判断是否Window对象
+### isWindow (val) 判断是否 Window 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -332,7 +329,7 @@ XEUtils.isWindow(document) // false
 XEUtils.isWindow(window) // true
 ```
 
-### isFormData (val) 判断是否FormData对象
+### isFormData (val) 判断是否 FormData 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -341,7 +338,7 @@ XEUtils.isFormData({}) // false
 XEUtils.isFormData(new FormData()) // true
 ```
 
-### isMap (val) 判断是否Map对象
+### isMap (val) 判断是否 Map 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -350,7 +347,7 @@ XEUtils.isMap({}) // false
 XEUtils.isMap(new Map()) // true
 ```
 
-### isWeakMap (val) 判断是否WeakMap对象
+### isWeakMap (val) 判断是否 WeakMap 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -359,7 +356,7 @@ XEUtils.isWeakMap({}) // false
 XEUtils.isWeakMap(new WeakMap()) // true
 ```
 
-### isSet (val) 判断是否Set对象
+### isSet (val) 判断是否 Set 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -368,7 +365,7 @@ XEUtils.isSet({}) // false
 XEUtils.isSet(new Set()) // true
 ```
 
-### isWeakSet (val) 判断是否WeakSet对象
+### isWeakSet (val) 判断是否 WeakSet 对象
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -471,7 +468,7 @@ XEUtils.findLastIndexOf([11, 22, 33, 22], function (item){ return item === 55 })
 XEUtils.findLastIndexOf([11, 22, 33, 22], function (item){ return item === 22 }) // 3
 ```
 
-### includes (obj, val) 判断对象是否包含该值,成功返回true否则false
+### includes (obj, val) 判断对象是否包含该值,成功返回 true 否则 false
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -587,7 +584,7 @@ var obj = {a1: 11, a2: 22, a3: 33}
 removeObject(obj, item => item === 22) // obj = {a1: 11, a3: 33}
 ```
 
-### assign/objectAssign/extend ([deep], target, ...) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
+### assign/objectAssign/extend ([deep], ...target) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
 
 ```JavaScript
 import XEUtils, { objectAssign } from 'xe-utils'
@@ -608,7 +605,7 @@ let obj4 = XEUtils.extend(true, obj3, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
 obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 11}}
 ```
 
-### destructuring (target, ...) 将一个或者多个对象值解构到目标对象
+### destructuring (obj, ...target) 将一个或者多个对象值解构到目标对象
 
 ```JavaScript
 import XEUtils, { destructuring } from 'xe-utils'
@@ -618,7 +615,7 @@ destructuring({a: 11, d: 44}, {a: 11, b: 22, c: 33}) // {a: 11, d: 44}
 destructuring({a: 11, c: 33, d: 44}, {a: 11, b: 22, c: null, e: 55, f: 66}) // {a: 11, c: null, d: 44}
 ```
 
-### stringToJson (str) 字符串转JSON
+### stringToJson (str) 字符串转 JSON
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -627,7 +624,7 @@ XEUtils.stringToJson('{"a":1}') // {a: 1}
 XEUtils.stringToJson('[11,22]') // [11, 22]
 ```
 
-### jsonToString (obj) JSON转字符串
+### jsonToString (obj) JSON 转字符串
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -687,7 +684,8 @@ arrayLast([11, 22]) // 22
 import XEUtils, { objectEach, arrayEach } from 'xe-utils'
 
 XEUtils.forOf([11, 22, 33], (item, key) => {
-  // 通用迭代器,支持return false跳出循环
+  // 通用迭代器,支持 return false 跳出循环
+  return false
 })
 XEUtils.each([11, 22, 33], (item, key) => {
   // 通用迭代器
@@ -707,6 +705,7 @@ import XEUtils, { objectEach, arrayEach } from 'xe-utils'
 
 XEUtils.forOfLast([11, 22, 33], (item, key) => {
   // 通用迭代器,支持return false跳出循环
+  return false
 })
 XEUtils.lastEach([11, 22, 33], (item, key) => {
   // 通用迭代器
@@ -719,7 +718,7 @@ objectLastEach({a: 11, b: 22}, (item, key) => {
 })
 ```
 
-### groupBy ( obj, iteratee [, context] ) 集合分组,默认使用键值分组,如果有iteratee则使用结果进行分组
+### groupBy ( obj, iteratee [, context] ) 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -819,7 +818,7 @@ XEUtils.sample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
 arraySample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
 ```
 
-### some/arraySome ( obj, iteratee [, context] ) 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
+### some/arraySome ( obj, iteratee [, context] ) 对象中的值中的每一项运行给定函数,如果函数对任一项返回 true,则返回 true,否则返回 false
 
 ```JavaScript
 import XEUtils, { arraySome } from 'xe-utils'
@@ -828,7 +827,7 @@ XEUtils.some([{value: 11}, {value: 22}], item => item.value === 55) // false
 arraySome([{value: 11}, {value: 22}], item => item.value === 11) // true
 ```
 
-### every/arrayEvery ( obj, iteratee [, context] ) 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
+### every/arrayEvery ( obj, iteratee [, context] ) 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回 true,则返回 true,否则返回 false
 
 ```JavaScript
 import XEUtils, { arrayEvery } from 'xe-utils'
@@ -904,7 +903,7 @@ XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
 arrayMean([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 66
 ```
 
-### toArray/from ( array, callback [, context] ) 根据数组或可迭代对象中创建一个新的数组
+### toArray/from ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -916,7 +915,7 @@ XEUtils.toArray({}) // []
 XEUtils.toArray(arguments) // [...]
 ```
 
-### reduce/arrayReduce ( array, callback [, initialValue] ) 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
+### reduce/arrayReduce ( array, iteratee [, initialValue] ) 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
 
 ```JavaScript
 import XEUtils, { arrayReduce } from 'xe-utils'
@@ -1016,7 +1015,7 @@ XEUtils.treeToArray(list2, {data: 'data'})
 // [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
 ```
 
-### now/timestamp ( ) 返回时间戳
+### now/timestamp ( ) 返回当前时间戳
 
 ```JavaScript
 import XEUtils, { timestamp } from 'xe-utils'
@@ -1207,7 +1206,7 @@ XEUtils.getDayOfMonth('2017-12-20', -1) // 30
 XEUtils.getDayOfMonth('2017-12-20', 1) // 31
 ```
 
-### getDateDiff ( startDate, endDate [, rules] ) 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
+### getDateDiff ( startDate, endDate [, rules] ) 返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -1321,7 +1320,7 @@ import XEUtils from 'xe-utils'
 XEUtils.escape('<a>link</a>') // '&lt;a&gt;link&lt;/a&gt;'
 ```
 
-### unescape ( str ) 反转escape
+### unescape ( str ) 反转 escape
 
 ```JavaScript
 import XEUtils from 'xe-utils'
