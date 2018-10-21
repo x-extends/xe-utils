@@ -11,7 +11,7 @@ export interface XECookie {
    * @param value 值
    * @param options 可选参数
    */
-  setItem(name: string, value: any, options: ?object): this;
+  setItem(name: string, value: any, options?: object): this;
 
   /**
    * 根据 name 获取 Cookie
@@ -24,12 +24,12 @@ export interface XECookie {
    * @param name 键
    * @param options 可选参数
    */
-  removeItem(name: string, options: ?object): number;
+  removeItem(name: string, options?: object): number;
 
   /**
    * 获取 Cookie 所有键
    */
-  keys(): Array;
+  keys(): Array<object>;
 
   /**
    * 获取所有 Cookie
@@ -241,7 +241,7 @@ export interface XEUtilsMethods {
    * 判断是否闰年
    * @param date 日期
    */
-  isLeapYear(date: ?Date | number | string): boolean;
+  isLeapYear(date?: Date | number | string): boolean;
 
   /**
    * 判断两个日期是否相同
@@ -249,7 +249,7 @@ export interface XEUtilsMethods {
    * @param date2 日期
    * @param format 格式化
    */
-  isDateSame(date1: Date | number | string, date2: Date | number | string, format: ?string): boolean;
+  isDateSame(date1: Date | number | string, date2: Date | number | string, format?: string): boolean;
 
   /**
    * 获取对象类型
@@ -261,7 +261,7 @@ export interface XEUtilsMethods {
    * 获取一个全局唯一标识
    * @param prefix 自定义前缀
    */
-  uniqueId(prefix: ?string): string;
+  uniqueId(prefix?: string): string;
 
   /**
    * 返回对象的长度
@@ -274,7 +274,7 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param val 值
    */
-  indexOf(obj: object | Array, val: any): number;
+  indexOf(obj: object | Array<any>, val: any): number;
 
   /**
    * 返回对象第一个索引值
@@ -282,14 +282,14 @@ export interface XEUtilsMethods {
    * @param iteratee 迭代器/属性
    * @param context 上下文
    */
-  findIndexOf(obj: object | Array, iteratee: any, context: ?any): number;
+  findIndexOf(obj: object | Array<any>, iteratee: any, context?: any): number;
 
   /**
    * 从最后开始的索引值,返回对象第一个索引值
    * @param obj 对象
    * @param val 值
    */
-  lastIndexOf(obj: object | Array, val: any): number;
+  lastIndexOf(obj: object | Array<any>, val: any): number;
 
   /**
    * 从最后开始的索引值,返回对象第一个索引值
@@ -297,7 +297,7 @@ export interface XEUtilsMethods {
    * @param iteratee 迭代器/属性
    * @param context 上下文
    */
-  findLastIndexOf(obj: object | Array, iteratee: any, context: ?any): number;
+  findLastIndexOf(obj: object | Array<any>, iteratee: any, context?: any): number;
 
   /**
    * 判断对象是否包含该值,成功返回 true 否则 false
@@ -311,7 +311,7 @@ export interface XEUtilsMethods {
    * @param array1 数组
    * @param array2 数组
    */
-  includeArrays(array1: Array, array2: Array): boolean;
+  includeArrays(array1: Array<any>, array2: Array<any>): boolean;
 
   /**
    * 创建一个绑定上下文的函数
@@ -319,7 +319,7 @@ export interface XEUtilsMethods {
    * @param context 上下文
    * @param params 额外的参数
    */
-  bind(callback: Function, context: any, ...params?: any[]): Function;
+  bind(callback: Function, context: any, ...params: any[]): Function;
 
   /**
    * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
@@ -327,7 +327,7 @@ export interface XEUtilsMethods {
    * @param context 上下文
    * @param params 额外的参数
    */
-  once(callback: Function, context: any, ...params?: any[]): Function;
+  once(callback: Function, context: any, ...params: any[]): Function;
 
   /**
    * 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数
@@ -335,7 +335,7 @@ export interface XEUtilsMethods {
    * @param wait 毫秒
    * @param options 可选参数
    */
-  throttle(callback: Function, wait: number, options: ?object): Function;
+  throttle(callback: Function, wait: number, options?: object): Function;
 
   /**
    * 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复
@@ -343,7 +343,7 @@ export interface XEUtilsMethods {
    * @param wait 毫秒
    * @param options 可选参数
    */
-  debounce(callback: Function, wait: number, options: ?object): Function;
+  debounce(callback: Function, wait: number, options?: object): Function;
 
   /**
    * 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
@@ -351,35 +351,35 @@ export interface XEUtilsMethods {
    * @param defs 默认值
    * @param assigns 值
    */
-  clear(obj: object | Array, defs: ?object, assigns: ?object): object;
+  clear(obj: object | Array<any>, defs?: object, assigns?: object): object;
 
   /**
    * 移除对象属性
    * @param obj 对象
    * @param iteratee 迭代器/值
    */
-  remove(obj: object | Array, iteratee: ?any): object;
+  remove(obj: object | Array<any>, iteratee?: any): object;
 
   /**
    * 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
    * @param deep 是否深拷贝
    * @param target 目标
    */
-  assign(deep: object | boolean, ...target?: object[]): object;
+  assign(deep: object | boolean, ...target: object[]): object;
 
   /**
    * 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
    * @param deep 是否深拷贝
    * @param target 目标
    */
-  extend(deep: object | boolean, ...target?: object[]): object;
+  extend(deep: object | boolean, ...target: object[]): object;
 
   /**
    * 将一个或者多个对象值解构到目标对象
    * @param obj 对象
    * @param target 目标
    */
-  destructuring(obj: object, ...target?: object[]): object;
+  destructuring(obj: object, ...target: object[]): object;
 
   /**
    * 字符串转 JSON
@@ -397,31 +397,31 @@ export interface XEUtilsMethods {
    * 获取对象所有属性
    * @param obj 对象
    */
-  keys(obj: any): Array;
+  keys(obj: any): Array<any>;
 
   /**
    * 获取对象所有值
    * @param obj 对象
    */
-  values(obj: any): Array;
+  values(obj: any): Array<any>;
 
   /**
    * 获取对象所有属性、值
    * @param obj 对象
    */
-  entries(obj: any): Array;
+  entries(obj: any): Array<any>;
 
   /**
    * 获取对象第一个值
    * @param obj 对象
    */
-  first(obj: object | Array): any;
+  first(obj: object | Array<any>): any;
 
   /**
    * 获取对象最后一个值
    * @param obj 对象
    */
-  last(obj: object | Array): any;
+  last(obj: object | Array<any>): any;
 
   /**
    * 迭代器,支持 return false 跳出循环
@@ -429,7 +429,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  forOf(obj: any, iteratee: Function, context: ?any): void;
+  forOf(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 通用迭代器
@@ -437,7 +437,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  each(obj: any, iteratee: Function, context: ?any): void;
+  each(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 数组迭代器
@@ -445,7 +445,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  arrayEach(obj: any, iteratee: Function, context: ?any): void;
+  arrayEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 对象迭代器
@@ -453,7 +453,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  objectEach(obj: any, iteratee: Function, context: ?any): void;
+  objectEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 迭代器,从最后开始迭代,支持 return false 跳出循环
@@ -461,7 +461,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  forOfLast(obj: any, iteratee: Function, context: ?any): void;
+  forOfLast(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 通用迭代器,从最后开始迭代
@@ -469,7 +469,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  lastEach(obj: any, iteratee: Function, context: ?any): void;
+  lastEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 数组迭代器,从最后开始迭代
@@ -477,7 +477,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  arrayLastEach(obj: any, iteratee: Function, context: ?any): void;
+  arrayLastEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 对象迭代器,从最后开始迭代
@@ -485,7 +485,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调 
    * @param context 上下文
    */
-  objectLastEach(obj: any, iteratee: Function, context: ?any): void;
+  objectLastEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组
@@ -493,7 +493,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调/属性
    * @param context 上下文
    */
-  groupBy(obj: any, iteratee: Function, context: ?any): object;
+  groupBy(obj: any, iteratee: Function, context?: any): object;
 
   /**
    * 集合分组统计,返回各组中对象的数量统计
@@ -501,7 +501,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调/属性
    * @param context 上下文
    */
-  countBy(obj: any, iteratee: Function, context: ?any): object;
+  countBy(obj: any, iteratee: Function, context?: any): object;
 
   /**
    * 序号列表生成函数
@@ -509,7 +509,7 @@ export interface XEUtilsMethods {
    * @param stop 结束值
    * @param step 自增值
    */
-  range(start: number, stop: number, step: ?number): Array;
+  range(start: number, stop: number, step?: number): Array<any>;
 
   /**
    * 指定方法后的返回值组成的新对象
@@ -517,26 +517,26 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  objectMap(obj: any, iteratee: Function, context: ?any): object;
+  objectMap(obj: any, iteratee: Function, context?: any): object;
 
   /**
    * 浅拷贝/深拷贝
    * @param obj 对象
    * @param deep 是否深拷贝
    */
-  clone(obj: object | Array, deep: boolean): object | Array;
+  clone(obj: object | Array<any>, deep: boolean): object | Array<any>;
 
   /**
    * 数组去重
    * @param array 数组
    */
-  uniq(array: Array): Array;
+  uniq(array: Array<any>): Array<any>;
 
   /**
    * 将多个数的值返回唯一的并集数组
    * @param array 数组
    */
-  union(...array: any[]): Array;
+  union(...array: any[]): Array<any>;
 
   /**
    * 数组按属性值升序
@@ -544,7 +544,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调/属性
    * @param context 上下文
    */
-  sort(array: Array, iteratee: Function, context: ?any): Array;
+  sort(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
   /**
    * 数组按属性值升序
@@ -552,20 +552,20 @@ export interface XEUtilsMethods {
    * @param iteratee 回调/属性
    * @param context 上下文
    */
-  sortBy(array: Array, iteratee: Function, context: ?any): Array;
+  sortBy(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
   /**
    * 将一个数组随机打乱，返回一个新的数组
    * @param array 数组
    */
-  shuffle(array: Array): Array;
+  shuffle(array: Array<any>): Array<any>;
 
   /**
    * 从一个数组中随机返回几个元素
    * @param array 数组
    * @param number 返回个数
    */
-  sample(array: Array, number: number): Array;
+  sample(array: Array<any>, number: number): Array<any>;
 
   /**
    * 对象中的值中的每一项运行给定函数,如果函数对任一项返回 true,则返回 true,否则返回 false
@@ -573,7 +573,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  some(array: Array, iteratee: Function, context: ?any): Array;
+  some(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
   /**
    * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回 true,则返回 true,否则返回 false
@@ -581,7 +581,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  every(array: Array, iteratee: Function, context: ?any): Array;
+  every(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
   /**
    * 查找匹配第一条数据
@@ -589,7 +589,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  filter(array: Array, iteratee: Function, context: ?any): any;
+  filter(array: Array<any>, iteratee: Function, context?: any): any;
 
   /**
    * 查找匹配第一条数据的键
@@ -597,7 +597,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  findKey(array: Array, iteratee: Function, context: ?any): string | number;
+  findKey(array: Array<any>, iteratee: Function, context?: any): string | number;
 
   /**
    * 指定方法后的返回值组成的新数组
@@ -605,7 +605,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  map(array: Array, iteratee: Function, context: ?any): Array;
+  map(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
   /**
    * 复制数组的一部分到同一数组中的另一个位置,数组大小不变
@@ -614,7 +614,7 @@ export interface XEUtilsMethods {
    * @param start 从该位置开始读取数据，默认为 0 。如果为负值，表示倒数
    * @param end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
    */
-  copyWithin(array: Array, target: number, start: ?Number, end: ?number): Array;
+  copyWithin(array: Array<any>, target: number, start?: Number, end?: number): Array<any>;
 
   /**
    * 求和函数，将数值相加
@@ -622,7 +622,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  sum(obj: object | Array, iteratee: ?Function, context: ?any): number;
+  sum(obj: object | Array<any>, iteratee?: Function, context?: any): number;
 
   /**
    * 求平均值函数
@@ -630,7 +630,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  mean(obj: object | Array, iteratee: ?Function, context: ?any): number;
+  mean(obj: object | Array<any>, iteratee?: Function, context?: any): number;
 
   /**
    * 根据数组或可迭代对象中创建一个新的数组
@@ -638,7 +638,7 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  toArray(obj: object | Array, iteratee: ?Function, context: ?any): Array;
+  toArray(obj: object | Array<any>, iteratee?: Function, context?: any): Array<any>;
 
   /**
    * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
@@ -646,47 +646,47 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param initialValue 默认值
    */
-  reduce(array: Array, iteratee: ?Function, initialValue: ?any): any;
+  reduce(array: Array<any>, iteratee?: Function, initialValue?: any): any;
 
   /**
    * 将每个数组中相应位置的值合并在一起
    * @param arrays 多个数组
    */
-  zip(...arrays: Array[]): Array;
+  zip(...arrays: Array<any>): Array<any>;
 
   /**
    * 与 zip 相反
    * @param arrays 数组
    */
-  unzip(arrays: Array): Array;
+  unzip(arrays: Array<any>): Array<any>;
 
   /**
    * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
    * @param array 数组
    * @param size 每组大小
    */
-  chunk(array: Array, size: number): Array;
+  chunk(array: Array<any>, size: number): Array<any>;
 
   /**
    * 获取数组对象中某属性值，返回一个数组
    * @param array 数组
    * @param key 键
    */
-  pluck(array: Array, key: string): Array
+  pluck(array: Array<any>, key: string): Array<any>
 
   /**
    * 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
    * @param array 数组
    * @param options 可选参数
    */
-  arrayToTree(array: Array, options: ?object): Array;
+  arrayToTree(array: Array<any>, options?: object): Array<any>;
 
   /**
    * 将一个树结构转成数组列表
    * @param array 数组
    * @param options 可选参数
    */
-  treeToArray(array: Array, options: ?object): Array;
+  treeToArray(array: Array<any>, options?: object): Array<any>;
 
   /**
    * 返回当前时间戳
@@ -698,7 +698,7 @@ export interface XEUtilsMethods {
    * @param str 字符串/日期/时间戳
    * @param format 解析格式 yyyy MM dd HH mm ss SSS
    */
-  stringToDate(str: string | Date | number, format: ?string): Date;
+  stringToDate(str: string | Date | number, format?: string): Date;
 
   /**
    * 日期格式化为任意格式字符串
@@ -706,7 +706,7 @@ export interface XEUtilsMethods {
    * @param format 格式化 默认：yyyy-MM-dd HH:mm:ss.SSS
    * @param options 可选参数
    */
-  dateToString(date: string | Date | number, format: ?string, options: ?object): string;
+  dateToString(date: string | Date | number, format?: string, options?: object): string;
 
   /**
    * 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前
@@ -714,7 +714,7 @@ export interface XEUtilsMethods {
    * @param year 年(默认当前年)、前几个年(数值)、后几个年(数值)
    * @param month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
    */
-  getWhatYear(date: string | Date | number, year: ?number | string, month: ?number | string): Date;
+  getWhatYear(date: string | Date | number, year?: number | string, month?: number | string): Date;
 
   /**
    * 返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前
@@ -722,7 +722,7 @@ export interface XEUtilsMethods {
    * @param month 月(默认当前月)、前几个月、后几个月
    * @param day 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
    */
-  getWhatMonth(date: string | Date | number, month: ?number | string, day: ?number | string): Date;
+  getWhatMonth(date: string | Date | number, month?: number | string, day?: number | string): Date;
 
   /**
    * 返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前
@@ -730,7 +730,7 @@ export interface XEUtilsMethods {
    * @param month 周(默认当前周)、前几周、后几周
    * @param day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
    */
-  getWhatWeek(date: string | Date | number, week: ?number | string, day: ?number | string): Date;
+  getWhatWeek(date: string | Date | number, week?: number | string, day?: number | string): Date;
 
   /**
    * 返回前几天或后几天的日期
@@ -738,14 +738,14 @@ export interface XEUtilsMethods {
    * @param day 天(默认当天)、前几天、后几天
    * @param mode 获取时分秒(null默认当前时分秒)、日初(first)、日末(last)
    */
-  getWhatDay(date: string | Date | number, day: ?number, mode: ?number | string): Date;
+  getWhatDay(date: string | Date | number, day?: number, mode?: number | string): Date;
 
   /**
    * 返回某个年份的天数,可以指定前几个年或后几个年，默认当前
    * @param date 字符串/日期/时间戳
    * @param year 年(默认当年)、前几个年、后几个年
    */
-  getDayOfYear(date: string | Date | number, year: ?number): Date;
+  getDayOfYear(date: string | Date | number, year?: number): Date;
 
   /**
    * 返回某个年份的第几天
@@ -778,7 +778,7 @@ export interface XEUtilsMethods {
    * @param endDate 结束日期或当期日期
    * @param rules 自定义计算规则
    */
-  getDateDiff(startDate: string | Date | number, endDate: string | Date | number, rules: ?object): object;
+  getDateDiff(startDate: string | Date | number, endDate: string | Date | number, rules?: object): object;
 
   /**
    * 获取一个指定范围内随机数
@@ -792,21 +792,21 @@ export interface XEUtilsMethods {
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  min(array: Array, iteratee: string | Function): number;
+  min(array: Array<any>, iteratee: string | Function): number;
 
   /**
    * 获取最大值
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  min(array: Array, iteratee: string | Function): number;
+  min(array: Array<any>, iteratee: string | Function): number;
 
   /**
    * 数值千分位分隔符、小数点
    * @param num 数值/字符串
    * @param options 可选参数
    */
-  commafy(num: string | number, options: ?object): string;
+  commafy(num: string | number, options?: object): string;
 
   /**
    * 转数值
