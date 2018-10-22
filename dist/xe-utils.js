@@ -2346,12 +2346,12 @@
     * @return {Object}
     */
   function getDateDiff (startDate, endDate, rules) {
-    var result = { done: false }
+    var result = { done: false, time: 0 }
     var startTime = _dateTime(stringToDate(startDate))
     var endTime = _dateTime(endDate ? stringToDate(endDate) : new Date())
     if (startTime < endTime) {
       var item
-      var diffTime = endTime - startTime
+      var diffTime = result.time = endTime - startTime
       var rule = rules && rules.length > 0 ? rules : setupDefaults.dateDiffRules
       var len = rule.length
       result.done = true
