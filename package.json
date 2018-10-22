@@ -1,7 +1,7 @@
 {
   "name": "xe-utils",
   "version": "1.6.22",
-  "description": "javascript 函数库、工具类",
+  "description": "A JavaScript tools library.",
   "main": "index.js",
   "typing": "index.d.ts",
   "scripts": {
