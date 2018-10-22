@@ -723,8 +723,8 @@ objectLastEach({a: 11, b: 22}, (item, key) => {
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const result1 = XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
-const result2 = XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
+XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
+XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
 ```
 
 ### countBy ( obj, iteratee [, context] ) 集合分组统计,返回各组中对象的数量统计
@@ -732,8 +732,8 @@ const result2 = XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type')
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const result1 = XEUtils.countBy([{type: 'a'}, {type: 'b'}], 'type') // {a: 1, b: 1}
-const result2 = XEUtils.countBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: 2, b: 1}
+XEUtils.countBy([{type: 'a'}, {type: 'b'}], 'type') // {a: 1, b: 1}
+XEUtils.countBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: 2, b: 1}
 ```
 
 ### range ( start, stop, step ) 序号列表生成函数
@@ -741,10 +741,10 @@ const result2 = XEUtils.countBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type')
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const result1 = XEUtils.range(0) // []
-const result1 = XEUtils.range(10) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-const result2 = XEUtils.range(-5, 5) // [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
-const result2 = XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
+XEUtils.range(0) // []
+XEUtils.range(10) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+XEUtils.range(-5, 5) // [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
 ```
 
 ### objectMap ( obj, iteratee [, context] ) 指定方法后的返回值组成的新对象
@@ -752,7 +752,7 @@ const result2 = XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const result = []
+let result = []
 XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a", b: "b"}
 ```
 
@@ -761,12 +761,12 @@ XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-const v1 = {a: 11, b: {b1: 22}}
-const v2 = XEUtils.clone(v1)
+let v1 = {a: 11, b: {b1: 22}}
+let v2 = XEUtils.clone(v1)
 if (v1.b === v2.b) {
   // true
 }
-const v3 = XEUtils.clone(v1, true)
+let v3 = XEUtils.clone(v1, true)
 if (v1.b === v3.b) {
   // false
 }

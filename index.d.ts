@@ -614,6 +614,11 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调/属性
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type')
+    // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
+    ```
    */
   groupBy(obj: any, iteratee: Function, context?: any): object;
 
@@ -622,6 +627,11 @@ export interface XEUtilsMethods {
    * @param obj 对象
    * @param iteratee 回调/属性
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.countBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type')
+    // {a: 2, b: 1}
+    ```
    */
   countBy(obj: any, iteratee: Function, context?: any): object;
 
@@ -630,6 +640,12 @@ export interface XEUtilsMethods {
    * @param start 起始值
    * @param stop 结束值
    * @param step 自增值
+   * @example 
+    ```javascript
+    XEUtils.range(5) // [0, 1, 2, 3, 4]
+    XEUtils.range(-5, 5) // [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+    XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
+    ```
    */
   range(start: number, stop: number, step?: number): Array<any>;
 
@@ -645,6 +661,18 @@ export interface XEUtilsMethods {
    * 浅拷贝/深拷贝
    * @param obj 对象
    * @param deep 是否深拷贝
+   * @example 
+    ```javascript
+    let v1 = {a: 11, b: {b1: 22}}
+    let v2 = XEUtils.clone(v1)
+    if (v1.b === v2.b) {
+      // true
+    }
+    let v3 = XEUtils.clone(v1, true)
+    if (v1.b === v3.b) {
+      // false
+    }
+    ```
    */
   clone(obj: object | Array<any>, deep: boolean): object | Array<any>;
 
@@ -665,6 +693,10 @@ export interface XEUtilsMethods {
    * @param array 数组
    * @param iteratee 回调/属性
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.sort([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
+    ```
    */
   sort(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
@@ -673,12 +705,20 @@ export interface XEUtilsMethods {
    * @param array 数组
    * @param iteratee 回调/属性
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
+    ```
    */
   sortBy(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
   /**
    * 将一个数组随机打乱，返回一个新的数组
    * @param array 数组
+   * @example 
+    ```javascript
+    XEUtils.shuffle([11, 22, 33, 44, 55]) // [22, 33, 55, 11, 44]
+    ```
    */
   shuffle(array: Array<any>): Array<any>;
 
@@ -686,6 +726,10 @@ export interface XEUtilsMethods {
    * 从一个数组中随机返回几个元素
    * @param array 数组
    * @param number 返回个数
+   * @example 
+    ```javascript
+    XEUtils.sample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
+    ```
    */
   sample(array: Array<any>, number: number): Array<any>;
 
@@ -743,6 +787,11 @@ export interface XEUtilsMethods {
    * @param obj 对象/数组
    * @param iteratee 回调
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.sum([22, 66, 88]) // 176
+    XEUtils.sum([{value: 11}, {value: 22}, {value: 66}], 'value') // 99
+    ```
    */
   sum(obj: object | Array<any>, iteratee?: Function, context?: any): number;
 
@@ -751,6 +800,11 @@ export interface XEUtilsMethods {
    * @param array 对象/数组
    * @param iteratee 回调
    * @param context 上下文
+   * @example 
+    ```javascript
+    XEUtils.mean([22, 66, 60, 60]) // 52
+    XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
+    ```
    */
   mean(obj: object | Array<any>, iteratee?: Function, context?: any): number;
 
@@ -767,18 +821,32 @@ export interface XEUtilsMethods {
    * @param array 数组
    * @param iteratee 回调
    * @param initialValue 默认值
+   * @example 
+    ```javascript
+    XEUtils.reduce([22, 66, 88], (previous, item) => previous + item) // 176
+    ```
    */
   reduce(array: Array<any>, iteratee?: Function, initialValue?: any): any;
 
   /**
    * 将每个数组中相应位置的值合并在一起
    * @param arrays 多个数组
+   * @example 
+    ```javascript
+    XEUtils.zip(['name1', 'name2', 'name3'], [true, true, false], [30, 40, 20])
+    // [['name1', true, 30], ['name2', true, 40], ['name3', false, 20]]
+    ```
    */
   zip(...arrays: Array<any>): Array<any>;
 
   /**
    * 与 zip 相反
    * @param arrays 数组
+   * @example 
+    ```javascript
+    XEUtils.unzip([['name1', true, 30], ['name2', true, 40], ['name3', false, 20]])
+    // [['name1', 'name2', 'name3'], [true, true, false], [30, 40, 20]]
+    ```
    */
   unzip(arrays: Array<any>): Array<any>;
 
@@ -786,6 +854,11 @@ export interface XEUtilsMethods {
    * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
    * @param array 数组
    * @param size 每组大小
+   * @example 
+    ```javascript
+    XEUtils.chunk(['a', 'b', 'c', 'd'], 2) // [['a', 'b'], ['c', 'd']]
+    XEUtils.chunk(['a', 'b', 'c', 'd'], 3) // [['a', 'b', 'c'], ['d']]
+    ```
    */
   chunk(array: Array<any>, size: number): Array<any>;
 
@@ -793,6 +866,11 @@ export interface XEUtilsMethods {
    * 获取数组对象中某属性值，返回一个数组
    * @param array 数组
    * @param key 键
+   * @example 
+    ```javascript
+    XEUtils.pluck([{a: 11, b: 22}, {a: 33, b: 44}], 'a') // [11, 33]
+    XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
+    ```
    */
   pluck(array: Array<any>, key: string): Array<any>
 
@@ -800,6 +878,18 @@ export interface XEUtilsMethods {
    * 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
    * @param array 数组
    * @param options 可选参数
+   * @example 
+    ```javascript
+    // 默认树结构
+    let list1 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}]
+    XEUtils.arrayToTree(list1)
+    // [{"id":1,"name":"111","children":[{"id":2,"parentId":1,"name":"222","children":[{"id":4,"parentId":2,"name":"444","children":[]}]}]},{"id":3,"name":"333","children":[]}]
+    
+    // 返回带排序的树结构
+    let list1 = [{id: 1, name: '111', seq: 5}, {id: 2, parentId: 1, name: '222', seq: 3}, {id: 3, name: '333', seq: 6}, {id: 4, parentId: 2, name: '444', seq: 2}, {id: 5, parentId: 1, name: '555', seq: 1}]
+    XEUtils.arrayToTree(list1, {sortKey: 'seq'})
+    // [{"id":1,"name":"111","seq":5,"children":[{"id":5,"parentId":1,"name":"555","seq":1,"children":[]},{"id":2,"parentId":1,"name":"222","seq":3,"children":[{"id":4,"parentId":2,"name":"444","seq":2,"children":[]}]}]},{"id":3,"name":"333","seq":6,"children":[]}]
+    ```
    */
   arrayToTree(array: Array<any>, options?: object): Array<any>;
 
@@ -807,6 +897,12 @@ export interface XEUtilsMethods {
    * 将一个树结构转成数组列表
    * @param array 数组
    * @param options 可选参数
+   * @example 
+    ```javascript
+    let list1 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+    XEUtils.treeToArray(list1)
+    // [{id: 1}, {id: 2, data: {}, parentId: 1}, {id: 3, data: {}}, {id: 4, data: {}, parentId: 2}]
+    ```
    */
   treeToArray(array: Array<any>, options?: object): Array<any>;
 
@@ -1225,6 +1321,7 @@ export interface XEUtilsMethods {
     // 获取所有name
     XEUtils.cookie.keys()
     // 获取所有
+    XEUtils.cookie.getJSON()
     ```
    */
   cookie: XECookie;
