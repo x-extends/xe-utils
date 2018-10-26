@@ -518,7 +518,24 @@ function arrayToTree (array, options) {
     }
   };
 
+  if (optStrict) {
+    strictTree(array, optChildren)
+  }
+
   return result
+}
+
+function strictTree (array, optChildren) {
+  for (var item, index = 0, len = array.length; index < len; index++) {
+    item = array[index]
+    if (!item.children.length) {
+      try {
+        delete item[optChildren]
+      } catch (e) {
+        item[optChildren] = undefined
+      }
+    }
+  }
 }
 
 function unTreeList (result, array, opts) {

@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.23
+ * xe-utils.js v1.6.24
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.22'
+  XEUtils.version = '1.6.24'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -539,7 +539,24 @@
       }
     };
 
+    if (optStrict) {
+      strictTree(array, optChildren)
+    }
+
     return result
+  }
+
+  function strictTree (array, optChildren) {
+    for (var item, index = 0, len = array.length; index < len; index++) {
+      item = array[index]
+      if (!item.children.length) {
+        try {
+          delete item[optChildren]
+        } catch (e) {
+          item[optChildren] = undefined
+        }
+      }
+    }
   }
 
   function unTreeList (result, array, opts) {
