@@ -2415,7 +2415,7 @@
     $locat = location
   }
 
-  function parseURLParams (uri) {
+  function parseURLQuery (uri) {
     return parseParams(uri.split('?')[1] || '')
   }
 
@@ -2495,8 +2495,8 @@
     parsed.pathname = parsed.path.replace(/(\?|#.*).*/, '')
     parsed.origin = parsed.protocol + '//' + parsed.host
     parsed.hashKey = hashs ? (hashs[2] || hashs[1] || '') : ''
-    parsed.hashQuery = parseURLParams(parsed.hash)
-    parsed.searchQuery = parseURLParams(parsed.search)
+    parsed.hashQuery = parseURLQuery(parsed.hash)
+    parsed.searchQuery = parseURLQuery(parsed.search)
     return parsed
   }
 
