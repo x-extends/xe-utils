@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.24
+ * xe-utils.js v1.6.25
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.24'
+  XEUtils.version = '1.6.25'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -2408,21 +2408,43 @@
   }
 
   var $locat = null
+  var decode = decodeURIComponent
+  var encode = encodeURIComponent
 
   if (typeof location !== 'undefined') {
     $locat = location
   }
 
-  function parseParams (uri) {
+  function parseURLParams (uri) {
+    return parseParams(uri.split('?')[1] || '')
+  }
+
+  /**
+   * 查询参数序列化
+   *
+   * @param {String} query 反序列化的字符串
+   */
+  function parseParams (str) {
     var result = {}
-    var decode = decodeURIComponent
-    var params = uri.split('?')[1] || ''
-    if (params) {
-      baseExports.each(params.split('&'), function (param) {
+    if (str) {
+      baseExports.each(str.split('&'), function (param) {
         var items = param.split('=')
         result[decode(items[0])] = decode(items[1] || '')
       })
     }
+    return result
+  }
+
+  function stringifyParams (resultVal, resultKey, isArr) {
+    var result = []
+    baseExports.each(resultVal, function (item, key) {
+      var _arr = baseExports.isArray(item)
+      if (baseExports.isPlainObject(item) || _arr) {
+        result = result.concat(stringifyParams(item, resultKey + '[' + key + ']', _arr))
+      } else {
+        result.push(encode(resultKey + '[' + (isArr ? '' : key) + ']') + '=' + encode(item === null ? '' : item))
+      }
+    })
     return result
   }
 
@@ -2473,23 +2495,46 @@
     parsed.pathname = parsed.path.replace(/(\?|#.*).*/, '')
     parsed.origin = parsed.protocol + '//' + parsed.host
     parsed.hashKey = hashs ? (hashs[2] || hashs[1] || '') : ''
-    parsed.hashQuery = parseParams(parsed.hash)
-    parsed.searchQuery = parseParams(parsed.search)
+    parsed.hashQuery = parseURLParams(parsed.hash)
+    parsed.searchQuery = parseURLParams(parsed.search)
     return parsed
   }
 
   /**
     * 获取地址栏信息
+    *
     * @return Object
     */
   function locat () {
     return $locat ? parseUrl($locat.href) : {}
   }
 
+  /**
+   * 查询参数序列化
+   *
+   * @param {Object} query 序列化的对象
+   */
+  function serialize (query) {
+    var params = []
+    baseExports.each(query, function (item, key) {
+      if (item !== undefined) {
+        var _arr = baseExports.isArray(item)
+        if (baseExports.isPlainObject(item) || _arr) {
+          params = params.concat(stringifyParams(item, key, _arr))
+        } else {
+          params.push(encode(key) + '=' + encode(item === null ? '' : item))
+        }
+      }
+    })
+    return params.join('&').replace(/%20/g, '+')
+  }
+
   var locatExports = {
     parseUrl: parseUrl,
     getBaseURL: getBaseURL,
-    locat: locat
+    locat: locat,
+    serialize: serialize,
+    unserialize: parseParams
   }
 
   /**
@@ -2535,16 +2580,16 @@
     * 千分位分隔符、小数点
     *
     * @param {String/Number} num 数值
-    * @param {Object} 参数 {spaceNumber: 分割位数(默认3), separator: 分隔符(默认,), fixed: 小数位数(默认0)}
+    * @param {Object} 参数 {spaceNumber: 分割位数(默认3), separator: 分隔符(默认,), fixed: 小数位数(默认null)}
     * @return {String}
    */
   function commafy (num, options) {
     num = ('' + num).replace(/,/g, '')
     if (num) {
-      var opts = baseExports.assign({}, options)
+      var opts = baseExports.assign({ spaceNumber: 3, separator: ',' }, options)
       var optFixed = opts.fixed
-      var result = optFixed === null ? [num] : (parseFloat(num).toFixed(optFixed || 0)).split('.')
-      return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (result[1] ? '.' + result[1] : '')
+      var result = (optFixed ? parseFloat(num).toFixed(optFixed) : num).split('.')
+      return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
     }
     return num
   }

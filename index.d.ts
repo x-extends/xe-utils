@@ -1125,12 +1125,14 @@ export interface XEUtilsMethods {
    * @param options 可选参数
    * @example 
     ```javascript
-    XEUtils.commafy(1000000) // 千分位格式化 1,000,000
-    XEUtils.commafy('1000000', {fixed: 2}) // 格式化金额 1,000,000.00
-    // 格式化银行卡 1234 1234 1234 1234
-    XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0})
-    // 字符串每隔3位分割 111,111,111,111,111,111,111,111,111
-    XEUtils.commafy('111111111111111111111111111', {spaceNumber: 3, fixed: null})
+    // 千分位格式化 1,000,000
+    XEUtils.commafy(1000000)
+    // 格式化金额 1,000,000.00
+    XEUtils.commafy('1000000', {fixed: 2})
+    // 格式化银行卡 6660 0000 0000 0001
+    XEUtils.commafy(6660000000000001, {spaceNumber: 4, separator: ' '})
+    // 字符串每隔3位分割 111,111,111,111,111,111,111,111,111,111,111
+    XEUtils.commafy('111111111111111111111111111111111')
     ```
    */
   commafy(num: string | number, options?: object): string;
@@ -1227,6 +1229,18 @@ export interface XEUtilsMethods {
    * @param startIndex 开始索引
    */
   endsWith(str: string, val: string, startIndex: number): string;
+
+  /**
+   * 判断字符串是否在源字符串的头部
+   * @param query 序列化的对象
+   */
+  serialize(query: object): string;
+
+  /**
+   * 判断字符串是否在源字符串的头部
+   * @param str 反序列化的字符串
+   */
+  unserialize(str: string): object;
 
   /**
    * 获取浏览器信息

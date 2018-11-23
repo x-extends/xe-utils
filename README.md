@@ -1220,10 +1220,10 @@ import XEUtils from 'xe-utils'
 XEUtils.commafy(1000000)
 // 格式化金额 1,000,000.00
 XEUtils.commafy('1000000', {fixed: 2})
-// 格式化银行卡 1234 1234 1234 1234
-XEUtils.commafy(1234123412341234, {spaceNumber: 4, separator: ' ', fixed: 0})
-// 字符串每隔3位分割 111,111,111,111,111,111,111,111,111
-XEUtils.commafy('111111111111111111111111111', {spaceNumber: 3, fixed: null})
+// 格式化银行卡 6660 0000 0000 0001
+XEUtils.commafy(6660000000000001, {spaceNumber: 4, separator: ' '})
+// 字符串每隔3位分割 111,111,111,111,111,111,111,111,111,111,111
+XEUtils.commafy('111111111111111111111111111111111')
 ```
 
 ### toNumber ( num ) 转数值
@@ -1341,6 +1341,22 @@ XEUtils.startsWith('abc', 'b') // false
 import XEUtils from 'xe-utils'
 
 XEUtils.endsWith('abc', 5, 'a') // false
+```
+
+### serialize ( query ) 序列化查询参数
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.serialize({id: 123, name: 'n1'}) // id=123&name=n1
+```
+
+### unserialize ( str ) 反转序列化查询参数
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.unserialize('id=123&name=n1') // {id: 123, name: 'n1'}
 ```
 
 ### browse ( ) 获取浏览器信息
