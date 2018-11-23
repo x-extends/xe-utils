@@ -998,6 +998,7 @@ import XEUtils from 'xe-utils'
 XEUtils.stringToDate('2017-12-20') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('2017-12-20 10:10:30') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('20171220101030', 'yyyyMMddHHmmss') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
@@ -1040,6 +1041,7 @@ XEUtils.dateToString(1513735830000) // '2017-01-01 14:05:30'
 XEUtils.dateToString(new Date()) // '2017-01-01 14:05:30'
 XEUtils.dateToString('2017-01-01 10:05:30', 'MM/dd/yyyy') // '01/01/2017'
 XEUtils.dateToString('2017-01-01 10:05:30', 'M/d/yyyy') // '1/1/2017'
+XEUtils.dateToString(new Date(), 'yyyyMMddHHmmssSSS') // '20170101140530099'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-01-01'
 XEUtils.dateToString(new Date(), 'yy-M-d') // '17-1-1'
 XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS') // '2017-01-01 14:05:30.099'
