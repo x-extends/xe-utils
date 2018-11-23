@@ -247,6 +247,7 @@ XEUtils.isTypeError(new TypeError('error')) // true
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.isEmpty() // true
 XEUtils.isEmpty(0) // true
 XEUtils.isEmpty('') // true
 XEUtils.isEmpty(null) // true
@@ -276,10 +277,10 @@ XEUtils.isSymbol(Symbol('a')) // true
 ### isArguments (val) 判断是否 Arguments 对象
 
 ```JavaScript
-import { isArguments } from 'xe-utils'
+import XEUtils from 'xe-utils'
 
-isArguments([]) // false
-isArguments(arguments) // true
+XEUtils.isArguments([]) // false
+XEUtils.isArguments(arguments) // true
 ```
 
 ### isElement (val) 判断是否 Element 对象
@@ -296,6 +297,7 @@ XEUtils.isElement(document.createElement('div')) // true
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.isDocument({}) // false
 XEUtils.isDocument(document.createElement('div')) // false
 XEUtils.isDocument(document) // true
 ```
@@ -305,6 +307,7 @@ XEUtils.isDocument(document) // true
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.isWindow({}) // false
 XEUtils.isWindow(document) // false
 XEUtils.isWindow(window) // true
 ```
@@ -359,7 +362,7 @@ XEUtils.isWeakSet(new WeakSet()) // true
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.isLeapYear() // 判断当前年 true
+XEUtils.isLeapYear(1606752000000)  // true
 XEUtils.isLeapYear('2018-12-01') // false
 XEUtils.isLeapYear('2020-12-01') // true
 XEUtils.isLeapYear(new Date('2020/12/01')) // true
