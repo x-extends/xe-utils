@@ -476,7 +476,7 @@ XEUtils.includeArrays([11, 22, 33], [22, 44]) // false
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-var rest = XEUtils.bind(function (val) {
+let rest = XEUtils.bind(function (val) {
   return this.name + ' = ' + val
 }, {name: 'test'})
 rest(222) // 'test = 222'
@@ -487,7 +487,7 @@ rest(222) // 'test = 222'
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-var rest = XEUtils.once(function (val) {
+let rest = XEUtils.once(function (val) {
   return this.name + ' = ' + val
 }, {name: 'test'})
 rest(222) // 'test = 222'
@@ -507,7 +507,7 @@ document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100)) // 
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: true, trailing: false}) // 在计时结束之前执行
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: false, trailing: true}) // 在计时结束之后执行
 
-var func = XEUtils.throttle(function (msg) {
+let func = XEUtils.throttle(function (msg) {
   console.log(msg)
 }, 300)
 func('执行一次')
@@ -529,7 +529,7 @@ document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), true) /
 document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: true, trailing: false}) // 在计时结束之前执行
 document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: false, trailing: true}) // 在计时结束之后执行
 
-var func = XEUtils.debounce(function (msg) {
+let func = XEUtils.debounce(function (msg) {
   console.log(msg)
 }, 300)
 func('计时结束之前执行一次')
@@ -542,11 +542,11 @@ func('取消后中重新计时，在计时结束之前执行')
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-var a = [11, 22, 33, 33]
+let a = [11, 22, 33, 33]
 XEUtils.clear(a) // []
 XEUtils.clear(a, undefined) // [undefined, undefined, undefined, undefined]
 XEUtils.clear(a, null) // [null, null, null, null]
-var b = {b1: 11, b2: 22}
+let b = {b1: 11, b2: 22}
 XEUtils.clear(b) // {}
 XEUtils.clear(b, undefined) // {b1: undefined, b2: undefined}
 XEUtils.clear(b, null) // {b1: null, b2: null}
@@ -557,7 +557,7 @@ XEUtils.clear(b, null) // {b1: null, b2: null}
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-var list = [11, 22, 33, 44]
+let list = [11, 22, 33, 44]
 XEUtils.remove(list, item => item === 22) // list = [11, 33, 44]
 ```
 
