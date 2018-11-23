@@ -760,12 +760,12 @@ import XEUtils from 'xe-utils'
 XEUtils.union([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
 ```
 
-### sort/sortBy ( arr, iteratee [, context] ) 数组按属性值升序
+### sortBy ( arr, iteratee [, context] ) 数组按属性值升序
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.sort([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
+XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
 XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
 XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => v1.a > v2.a ? 1 : -1) // [{a: 4}, {a: 5}, {a: 9}]
 ```
@@ -1180,15 +1180,15 @@ let dateDiff = XEUtils.getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
 let content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
 ```
 
-### random/getRandom ( min, max ) 获取一个指定范围内随机数
+### random ( min, max ) 获取一个指定范围内随机数
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
 XEUtils.random() // 0 ~ 9
 XEUtils.random(3, 6) // 3 ~ 6
-XEUtils.getRandom(0, 5) // 0 ~ 5
-XEUtils.getRandom(10, 100) // 10 ~ 100
+XEUtils.random(0, 5) // 0 ~ 5
+XEUtils.random(10, 100) // 10 ~ 100
 ```
 
 ### min ( arrb[, iteratee] ) 获取最小值
