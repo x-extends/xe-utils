@@ -75,6 +75,10 @@ import XEUtils from 'xe-utils'
 
 ## API
 
+* [isNaN (val) 判断是否非数值](#isNaN-(val)-判断是否非数值)
+* [isFinite (val) 判断是否为有限数值](#isFinite-(val)-判断是否为有限数值)
+* [isUndefined (val) 判断 Undefined](#isUndefined-(val)-判断-Undefined)
+
 ### isNaN (val) 判断是否非数值
 
 ```JavaScript
