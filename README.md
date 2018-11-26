@@ -75,9 +75,13 @@ import XEUtils from 'xe-utils'
 
 ## API
 
+<!-- vim-markdown-toc GFM -->
+
 * [isNaN (val) 判断是否非数值](#isNaN-(val)-判断是否非数值)
 * [isFinite (val) 判断是否为有限数值](#isFinite-(val)-判断是否为有限数值)
 * [isUndefined (val) 判断 Undefined](#isUndefined-(val)-判断-Undefined)
+
+<!-- vim-markdown-toc -->
 
 ### isNaN (val) 判断是否非数值
 
