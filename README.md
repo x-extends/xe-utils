@@ -1097,24 +1097,172 @@ XEUtils.invoke([{a: {b: [2, 0, 1]}}, {a: {b: [2, 1]}}, {a: {b: [4, 8, 1]}}], ['a
 import XEUtils from 'xe-utils'
 
 // 默认树结构
-let list1 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}]
+let list1 = [
+  {id: 1, name: '111'},
+  {id: 2, parentId: 1, name: '222'},
+  {id: 3, name: '333'},
+  {id: 4, parentId: 2, name: '444'}
+]
 XEUtils.arrayToTree(list1)
-// [{"id":1,"name":"111","children":[{"id":2,"parentId":1,"name":"222","children":[{"id":4,"parentId":2,"name":"444","children":[]}]}]},{"id":3,"name":"333","children":[]}]
+/*
+[
+  {
+    "id":1,
+    "name":"111",
+    "children":[
+      {
+        "id":2,
+        "parentId":1,
+        "name":"222",
+        "children":[
+          {
+            "id":4,
+            "parentId":2,
+            "name":"444",
+            "children":[]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id":3,
+    "name":"333",
+    "children":[]
+  }
+]
+*/
 
 // 返回带排序的树结构
-let list1 = [{id: 1, name: '111', seq: 5}, {id: 2, parentId: 1, name: '222', seq: 3}, {id: 3, name: '333', seq: 6}, {id: 4, parentId: 2, name: '444', seq: 2}, {id: 5, parentId: 1, name: '555', seq: 1}]
+let list1 = [
+  {id: 1, name: '111', seq: 5},
+  {id: 2, parentId: 1, name: '222', seq: 3},
+  {id: 3, name: '333', seq: 6},
+  {id: 4, parentId: 2, name: '444', seq: 2},
+  {id: 5, parentId: 1, name: '555', seq: 1}
+]
 XEUtils.arrayToTree(list1, {sortKey: 'seq'})
-// [{"id":1,"name":"111","seq":5,"children":[{"id":5,"parentId":1,"name":"555","seq":1,"children":[]},{"id":2,"parentId":1,"name":"222","seq":3,"children":[{"id":4,"parentId":2,"name":"444","seq":2,"children":[]}]}]},{"id":3,"name":"333","seq":6,"children":[]}]
+/*
+[
+  {
+    "id":1,
+    "name":"111",
+    "seq":5,
+    "children":[
+      {
+        "id":5,
+        "parentId":1,
+        "name":"555",
+        "seq":1,
+        "children":[]
+      },
+      {
+        "id":2,
+        "parentId":1,
+        "name":"222",
+        "seq":3,
+        "children":[
+          {
+            "id":4,
+            "parentId":2
+            ,"name":"444",
+            "seq":2,
+            "children":[]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id":3,
+    "name":"333",
+    "seq":6,
+    "children":[]
+  }
+]
+*/
 
 // 自定义数据存放属性
-let list2 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
+let list2 = [
+  {id: 1, name: '111'},
+  {id: 2, parentId: 1, name: '222'},
+  {id: 3, name: '333'},
+  {id: 4, parentId: 2, name: '444'},
+  {id: 5, parentId: 22, name: '555'}
+]
 XEUtils.arrayToTree(list2, {data: 'data'})
-// [{"data":{"id":1,"name":"111"},"id":1,"children":[{"data":{"id":2,"parentId":1,"name":"222"},"id":2,"parentId":1,"children":[{"data":{"id":4,"parentId":2,"name":"444"},"id":4,"parentId":2,"children":[]}]}]},{"data":{"id":3,"name":"333"},"id":3,"children":[]},{"data":{"id":5,"parentId":22,"name":"555"},"id":5,"parentId":22,"children":[]}]
+/*
+[
+  {
+    "data":{"id":1,"name":"111"},
+    "id":1,
+    "children":[
+      {
+        "data":{"id":2,"parentId":1,"name":"222"},
+        "id":2,
+        "parentId":1,
+        "children":[
+          {
+            "data":{"id":4,"parentId":2,"name":"444"},
+            "id":4,
+            "parentId":2,
+            "children":[]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data":{"id":3,"name":"333"},
+    "id":3,
+    "children":[]
+  },
+  {
+    "data":{"id":5,"parentId":22,"name":"555"},
+    "id":5,
+    "parentId":22,
+    "children":[]
+  }
+]
+*/
 
 // 如果设置为严格模式，（非父子关联及冗余)的数据会被忽略
-let list3 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}, {id: 5, parentId: 22, name: '555'}]
+let list3 = [
+  {id: 1, name: '111'},
+  {id: 2, parentId: 1, name: '222'},
+  {id: 3, name: '333'},
+  {id: 4, parentId: 2, name: '444'},
+  {id: 5, parentId: 22, name: '555'}
+]
 XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
-// [{"data":{"id":1,"name":"111"},"id":1,"children":[{"data":{"id":2,"parentId":1,"name":"222"},"id":2,"parentId":1,"children":[{"data":{"id":4,"parentId":2,"name":"444"},"id":4,"parentId":2,"children":[]}]}]},{"data":{"id":3,"name":"333"},"id":3,"children":[]}]
+/*
+[
+  {
+    "data":{"id":1,"name":"111"},
+    "id":1,
+    "children":[
+      {
+        "data":{"id":2,"parentId":1,"name":"222"},
+        "id":2,
+        "parentId":1,
+        "children":[
+          {
+            "data":{"id":4,"parentId":2,"name":"444"},
+            "id":4,
+            "parentId":2,
+            "children":[]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data":{"id":3,"name":"333"},
+    "id":3,
+    "children":[]
+  }
+]
+*/
 ```
 
 ### treeToArray ( array, options ) 将一个树结构转成数组列表
