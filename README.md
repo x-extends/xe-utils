@@ -1238,8 +1238,8 @@ XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星�
 // '2017年01月01日 14时05分30秒99毫秒,星期3 第4季度'
 XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度')
 // '17年1月1日 14时5分30秒99毫秒,星期3 第4季度'
-XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒zZ 星期E e 第q季度 今年第D天 今年第w周 当月第W周 a A')
-// '2018年05月29日 09时44分46秒647毫秒GMT+0800 星期2 1 第2季度 今年第149天 今年第22周 当月第4周 am AM'
+XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒zZ 星期E e 第q季 今年第D天 今年第w周 当月第W周 a A')
+// '2018年05月29日 09时44分46秒647毫秒GMT+0800 星期2 1 第2季 今年第149天 今年第22周 当月第4周 am AM'
 ```
 
 ### getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前
