@@ -633,9 +633,18 @@ function scrollEvent (evnt) {
   console.log('至少每隔wait秒毫秒之内只会调用一次')
 }
 
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100)) // 在计时结束之前执行
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: true, trailing: false}) // 在计时结束之前执行
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {leading: false, trailing: true}) // 在计时结束之后执行
+// 在计时结束之前执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100))
+// 在计时结束之前执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {
+  leading: true,
+  trailing: false
+})
+// 在计时结束之后执行
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {
+  leading: false,
+  trailing: true
+})
 
 let func = XEUtils.throttle(function (msg) {
   console.log(msg)
@@ -654,10 +663,20 @@ function resizeEvent (evnt) {
   console.log('如果wait毫秒内重复调用则会重新计时，在函数最后一次调用wait毫秒之后才会执行回调')
 }
 
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100)) // // 在计时结束之后执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), true) // 在计时结束之前执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: true, trailing: false}) // 在计时结束之前执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {leading: false, trailing: true}) // 在计时结束之后执行
+// 在计时结束之后执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100))
+// 在计时结束之前执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), true)
+// 在计时结束之前执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {
+  leading: true,
+  trailing: false
+})
+// 在计时结束之后执行
+document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {
+  leading: false,
+  trailing: true
+})
 
 let func = XEUtils.debounce(function (msg) {
   console.log(msg)
@@ -826,7 +845,8 @@ XEUtils.objectLastEach({a: 11, b: 22}, (item, key) => {
 import XEUtils from 'xe-utils'
 
 XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
-XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
+XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') 
+// {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
 ```
 
 ### countBy ( obj, iteratee [, context] ) 集合分组统计,返回各组中对象的数量统计
@@ -1057,7 +1077,8 @@ import XEUtils from 'xe-utils'
 XEUtils.invoke([[3, 1, 6, 7], [3, 2, 1, 8]], 'sort') // [[1, 3, 6, 7], [1, 2, 3, 8]]
 XEUtils.invoke(['123', '456'], 'split') // [['123'], ['456']]
 XEUtils.invoke([123, 456], String.prototype.split, '') // [['1', '2', '3'], ['4', '5', '6']]
-XEUtils.invoke([{a: {b: [2, 0, 1]}}, {a: {b: [2, 1]}}, {a: {b: [4, 8, 1]}}], ['a', 'b', 'sort']) // [[0, 1, 2], [1, 2], [1, 4, 8]]
+XEUtils.invoke([{a: {b: [2, 0, 1]}}, {a: {b: [2, 1]}}, {a: {b: [4, 8, 1]}}], ['a', 'b', 'sort'])
+// [[0, 1, 2], [1, 2], [1, 4, 8]]
 ```
 
 ### arrayToTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
@@ -1139,12 +1160,18 @@ XEUtils.timestamp() // 1514096716800
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.stringToDate('2017-12-20') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('2017-12-20 10:10:30') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy') // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('20171220101030', 'yyyyMMddHHmmss') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm') // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('2017-12-20')
+// Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('2017-12-20 10:10:30')
+// Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy')
+// Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('20171220101030', 'yyyyMMddHHmmss')
+// Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm')
+// Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
+XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
+// Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
 
 ### dateToString ( date [, format, options] ) 日期格式化为任意格式字符串
@@ -1181,19 +1208,32 @@ XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS') // We
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.dateToString(1513735830000) // '2017-01-01 14:05:30'
-XEUtils.dateToString(new Date()) // '2017-01-01 14:05:30'
-XEUtils.dateToString('2017-01-01 10:05:30', 'MM/dd/yyyy') // '01/01/2017'
-XEUtils.dateToString('2017-01-01 10:05:30', 'M/d/yyyy') // '1/1/2017'
-XEUtils.dateToString(new Date(), 'yyyyMMddHHmmssSSS') // '20170101140530099'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd') // '2017-01-01'
-XEUtils.dateToString(new Date(), 'yy-M-d') // '17-1-1'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS') // '2017-01-01 14:05:30.099'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSSZ') // '2017-01-01 02:05:30.099+0800'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZ') // '2017-01-01 02:05:30.099 GMT+0800'
-XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S') // '2017-11-20 2:5:30.99'
-XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S') // '2017-1-1 14:5:30.99'
-XEUtils.dateToString(new Date(), 'yyyy-M-d h:m:s.S') // '2017-1-1 2:5:30.99'
+XEUtils.dateToString(1513735830000)
+// '2017-01-01 14:05:30'
+XEUtils.dateToString(new Date())
+// '2017-01-01 14:05:30'
+XEUtils.dateToString('2017-01-01 10:05:30', 'MM/dd/yyyy')
+// '01/01/2017'
+XEUtils.dateToString('2017-01-01 10:05:30', 'M/d/yyyy')
+// '1/1/2017'
+XEUtils.dateToString(new Date(), 'yyyyMMddHHmmssSSS')
+// '20170101140530099'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
+// '2017-01-01'
+XEUtils.dateToString(new Date(), 'yy-M-d')
+// '17-1-1'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
+// '2017-01-01 14:05:30.099'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSSZ')
+// '2017-01-01 02:05:30.099+0800'
+XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZ')
+// '2017-01-01 02:05:30.099 GMT+0800'
+XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S')
+// '2017-11-20 2:5:30.99'
+XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S')
+// '2017-1-1 14:5:30.99'
+XEUtils.dateToString(new Date(), 'yyyy-M-d h:m:s.S')
+// '2017-1-1 2:5:30.99'
 XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
 // '2017年01月01日 14时05分30秒99毫秒,星期3 第4季度'
 XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度')
