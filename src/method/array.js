@@ -462,6 +462,52 @@ function pluck (obj, key) {
   return arrayMap(obj, key)
 }
 
+function deepGetObj (obj, path) {
+  var index = 0
+  var len = path.length
+  while (obj && index < len) {
+    obj = obj[path[index++]]
+  }
+  return len && obj ? obj : 0
+}
+
+/**
+ * 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它
+ *
+ * @param {Array} list
+ * @param {Array/String/Function} path
+ * @param {...Object} arguments
+ */
+function invokeMap (list, path) {
+  var context
+  var func
+  var rest = []
+  var args = arguments
+  var params = []
+  var paths = []
+  var index = 2
+  var len = args.length
+  for (; index < len; index++) {
+    params.push(args[index])
+  }
+  if (baseExports.isArray(path)) {
+    len = path.length - 1
+    for (index = 0; index < len; index++) {
+      paths.push(path[index])
+    }
+    path = path[len]
+  }
+  for (index = 0, len = list.length; index < len; index++) {
+    context = list[index]
+    if (paths.length) {
+      context = deepGetObj(context, paths)
+    }
+    func = context[path] || path
+    rest.push(func && func.apply ? func.apply(context, params) : undefined)
+  }
+  return rest
+}
+
 /**
   * 将一个带层级的数据列表转成树结构
   *
@@ -611,6 +657,8 @@ var arrayExports = {
   toArray: from,
   includeArrays: includeArrays,
   pluck: pluck,
+  invoke: invokeMap,
+  invokeMap: invokeMap,
   arrayToTree: arrayToTree,
   treeToArray: treeToArray
 }

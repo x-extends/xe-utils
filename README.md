@@ -163,6 +163,7 @@ import XEUtils from 'xe-utils'
 * [chunk ( array, size ) 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素](#chunk--array-size--将一个数组分割成大小的组如果数组不能被平均分配那么最后一块将是剩下的元素)
 * [pluck ( array, key ) 获取数组对象中某属性值，返回一个数组](#pluck--array-key--获取数组对象中某属性值返回一个数组)
 * [arrayToTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#arraytotree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
+* [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments-)-在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它)
 * [treeToArray ( array, options ) 将一个树结构转成数组列表](#treetoarray--array-options--将一个树结构转成数组列表)
 * [timestamp ( ) 返回当前时间戳](#nowtimestamp---返回当前时间戳)
 * [stringToDate ( str, format ) 任意格式字符串转为日期](#stringtodate--str-format--任意格式字符串转为日期)
@@ -1046,6 +1047,17 @@ import XEUtils from 'xe-utils'
 
 XEUtils.pluck([{a: 11, b: 22}, {a: 33, b: 44}], 'a') // [11, 33]
 XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
+```
+
+### invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.invoke([[3, 1, 6, 7], [3, 2, 1, 8]], 'sort') // [[1, 3, 6, 7], [1, 2, 3, 8]]
+XEUtils.invoke(['123', '456'], 'split') // [['123'], ['456']]
+XEUtils.invoke([123, 456], String.prototype.split, '') // [['1', '2', '3'], ['4', '5', '6']]
+XEUtils.invoke([{a: {b: [2, 0, 1]}}, {a: {b: [2, 1]}}, {a: {b: [4, 8, 1]}}], ['a', 'b', 'sort']) // [[0, 1, 2], [1, 2], [1, 4, 8]]
 ```
 
 ### arrayToTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
