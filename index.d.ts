@@ -875,6 +875,18 @@ export interface XEUtilsMethods {
   pluck(array: Array<any>, key: string): Array<any>
 
   /**
+   * 获取数组对象中某属性值，返回一个数组
+   * @param array 数组
+   * @param key 键
+   * @example 
+    ```javascript
+    XEUtils.pluck([{a: 11, b: 22}, {a: 33, b: 44}], 'a') // [11, 33]
+    XEUtils.pluck([[11, 22, 33], [44, 55, 66]], 1) // [22, 55]
+    ```
+   */
+  invoke(list: Array<any>, path: Array<string> | string | Function): Array<any>
+
+  /**
    * 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
    * @param array 数组
    * @param options 可选参数

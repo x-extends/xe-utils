@@ -498,6 +498,7 @@
    * @param {Array} list
    * @param {Array/String/Function} path
    * @param {...Object} arguments
+   * @return {Array}
    */
   function invokeMap (list, path) {
     var context
