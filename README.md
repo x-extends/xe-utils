@@ -75,6 +75,7 @@ import XEUtils from 'xe-utils'
 
 ## API
 
+* [setup ( options ) 全局参数设置](#全局参数设置)
 * [isNaN (val) 判断是否非数值](#isnan-val-判断是否非数值)
 * [isFinite (val) 判断是否为有限数值](#isfinite-val-判断是否为有限数值)
 * [isUndefined (val) 判断 Undefined](#isundefined-val-判断-undefined)
@@ -104,13 +105,11 @@ import XEUtils from 'xe-utils'
 * [isWeakSet (val) 判断是否 WeakSet 对象](#isweakset-val-判断是否-weakset-对象)
 * [isLeapYear (date) 判断是否闰年](#isleapyear-date-判断是否闰年)
 * [isDateSame (date1, date2, format) 判断两个日期是否相同](#isdatesame-date1-date2-format-判断两个日期是否相同)
-
 * [toNumber ( num ) 转数值](#tonumber--num--转数值)
 * [toInteger ( num ) 转整数](#tointeger--num--转整数)
 * [toArray ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组](#toarrayfrom--array-iteratee--context--根据数组或可迭代对象中创建一个新的数组)
 * [stringToJson (str) 字符串转 JSON](#stringtojson-str-字符串转-json)
 * [jsonToString (obj) JSON 转字符串](#jsontostring-obj-json-转字符串)
-
 * [getType (obj) 获取对象类型](#gettype-obj-获取对象类型)
 * [getSize ( obj ) 返回对象的长度](#getsize--obj--返回对象的长度)
 * [uniqueId ( prefix ) 获取一个全局唯一标识](#uniqueid--prefix--获取一个全局唯一标识)
@@ -205,7 +204,6 @@ import XEUtils from 'xe-utils'
 * [parseUrl ( url ) 解析 URL 参数](#parseurl--url--解析-url-参数)
 * [getBaseURL ( ) 获取上下文路径](#getbaseurl---获取上下文路径)
 * [cookie ( name, value, options ) Cookie 操作函数](#cookie--name-value-options--cookie-操作函数)
-* [setup ( options ) 全局参数设置](#全局参数设置)
 
 ### isNaN (val) 判断是否非数值
 
