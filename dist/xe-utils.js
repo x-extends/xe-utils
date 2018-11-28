@@ -101,7 +101,7 @@
     var list = baseExports.values(array)
     var len = list.length - 1
     for (; len >= 0; len--) {
-      index = len > 0 ? XEUtils.getRandom(0, len) : 0
+      index = len > 0 ? XEUtils.random(0, len) : 0
       result.push(list[index])
       list.splice(index, 1)
     }
