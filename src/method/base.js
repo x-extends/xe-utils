@@ -54,7 +54,7 @@ function cloneObj (obj) {
 }
 
 function cloneArr (arr) {
-  return XEUtils.arrayMap(arr, deepClone)
+  return XEUtils.map(arr, deepClone)
 }
 
 function deepClone (obj) {

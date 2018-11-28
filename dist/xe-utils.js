@@ -717,7 +717,7 @@
   }
 
   function cloneArr (arr) {
-    return XEUtils.arrayMap(arr, deepClone)
+    return XEUtils.map(arr, deepClone)
   }
 
   function deepClone (obj) {
@@ -2557,8 +2557,8 @@
 
   function sortData (arr, iterate) {
     var list = baseExports.clone(arr)
-    var arraySort = XEUtils.arraySort
-    return (baseExports.isFunction(iterate) ? arraySort(XEUtils.arrayMap(list, iterate, this)) : arraySort(list, iterate))
+    var arraySort = XEUtils.sortBy
+    return (baseExports.isFunction(iterate) ? arraySort(XEUtils.map(list, iterate, this)) : arraySort(list, iterate))
   }
 
   /**
