@@ -75,8 +75,7 @@ import XEUtils from 'xe-utils'
 
 ## API
 
-* [setup ( options ) 全局参数设置](#全局参数设置)
-
+* [全局参数设置](#全局参数设置)
 * *判断函数*
   * [isNaN (val) 判断是否非数值](#isnan-val-判断是否非数值)
   * [isFinite (val) 判断是否为有限数值](#isfinite-val-判断是否为有限数值)
@@ -107,7 +106,6 @@ import XEUtils from 'xe-utils'
   * [isWeakSet (val) 判断是否 WeakSet 对象](#isweakset-val-判断是否-weakset-对象)
   * [isLeapYear (date) 判断是否闰年](#isleapyear-date-判断是否闰年)
   * [isDateSame (date1, date2, format) 判断两个日期是否相同](#isdatesame-date1-date2-format-判断两个日期是否相同)
-
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
   * [toInteger ( num ) 转整数](#tointeger--num--转整数)
@@ -178,7 +176,6 @@ import XEUtils from 'xe-utils'
   * [min ( arrb[, iteratee] ) 获取最小值](#min--arrb-iteratee--获取最小值)
   * [max ( arr [, iteratee] ) 获取最大值](#max--arr--iteratee--获取最大值)
   * [commafy ( num [, options] ) 数值千分位分隔符、小数点](#commafy--num--options--数值千分位分隔符小数点)
-
 * *日期函数*
   * [timestamp ( ) 返回当前时间戳](#nowtimestamp---返回当前时间戳)
   * [stringToDate ( str, format ) 任意格式字符串转为日期](#stringtodate--str-format--任意格式字符串转为日期)
@@ -193,7 +190,6 @@ import XEUtils from 'xe-utils'
   * [getMonthWeek ( date ) 返回某个月份的第几周](#getmonthweek--date--返回某个月份的第几周)
   * [getDayOfMonth ( date [, month] ) 返回某个月份的天数,可以指定前几个月或后几个月，默认当前](#getdayofmonth--date--month--返回某个月份的天数可以指定前几个月或后几个月默认当前)
   * [getDateDiff ( startDate, endDate [, rules] ) 返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle](#getdatediff--startdate-enddate--rules--返回两个日期之间差距如果结束日期小于开始日期-done-为-fasle)
-
 * *高级函数*
   * [arrayToTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#arraytotree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
   * [treeToArray ( array, options ) 将一个树结构转成数组列表](#treetoarray--array-options--将一个树结构转成数组列表)
@@ -207,7 +203,6 @@ import XEUtils from 'xe-utils'
   * [once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果](#once-callback-context-arguments-创建一个只能调用一次的函数只会返回第一次执行后的结果)
   * [throttle (callback, wait[, options]) 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数](#throttle-callback-wait-options-创建一个策略函数当被重复调用函数的时候至少每隔多少秒毫秒调用一次该函数)
   * [debounce (callback, wait[, options]) 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟](#debounce-callback-wait-options-创建一个防反跳策略函数在函数最后一次调用多少毫秒之后才会再次执行如果在期间内重复调用会重新计算延迟)
-  
 * *浏览器函数*
   * [browse ( ) 获取浏览器信息](#browse---获取浏览器信息)
   * [locat ( ) 获取地址栏信息](#locat---获取地址栏信息)
