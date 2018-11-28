@@ -850,7 +850,7 @@ XEUtils.objectLastEach({a: 11, b: 22}, (item, key) => {
 import XEUtils from 'xe-utils'
 
 XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
-XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') 
+XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type')
 // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
 ```
 
