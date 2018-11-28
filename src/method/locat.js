@@ -2,7 +2,7 @@
 
 var baseExports = require('./base')
 
-var $locat = null
+var $locat = 0
 var decode = decodeURIComponent
 var encode = encodeURIComponent
 

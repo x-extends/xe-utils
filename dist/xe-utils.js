@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.6.26
+ * xe-utils.js v1.7.0
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.6.26'
+  XEUtils.version = '1.7.0'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -24,6 +24,13 @@
     formatStringMatchs: null,
     dateDiffRules: [['yyyy', 31536000000], ['MM', 2592000000], ['dd', 86400000], ['HH', 3600000], ['mm', 60000], ['ss', 1000], ['S', 0]]
   }
+
+  var FIND_PRO = 'find'
+  var MAP_PRO = 'map'
+  var FILTER_PRO = 'filter'
+  var EVERY_PRO = 'every'
+  var SOME_PRO = 'some'
+  var REDUCE_PRO = 'reduce'
 
   function _objectHasOwnProperty (obj, key) {
     return obj.hasOwnProperty(key)
@@ -38,7 +45,7 @@
   function arrayUniq (array) {
     var result = []
     if (baseExports.isArray(array)) {
-      baseExports.arrayEach(array, function (value) {
+      baseExports.each(array, function (value) {
         if (!result.includes(value)) {
           result.push(value)
         }
@@ -56,7 +63,9 @@
   function arrayUnion () {
     var args = arguments
     var result = []
-    for (var index = 0, len = args.length; index < len; index++) {
+    var index = 0
+    var len = args.length
+    for (; index < len; index++) {
       result = result.concat(args[index])
     }
     return arrayUniq(result)
@@ -87,9 +96,12 @@
     * @return {Array}
     */
   function arrayShuffle (array) {
+    var index
     var result = []
-    for (var list = baseExports.values(array), len = list.length - 1; len >= 0; len--) {
-      var index = len > 0 ? XEUtils.getRandom(0, len) : 0
+    var list = baseExports.values(array)
+    var len = list.length - 1
+    for (; len >= 0; len--) {
+      index = len > 0 ? XEUtils.getRandom(0, len) : 0
       result.push(list[index])
       list.splice(index, 1)
     }
@@ -128,10 +140,9 @@
     */
   function arraySome (obj, iterate, context) {
     if (obj && iterate) {
-      var pro = 'some'
       context = context || this
-      if (isArrayPro(pro)) {
-        return obj[pro](iterate, context)
+      if (isArrayPro(SOME_PRO)) {
+        return obj[SOME_PRO](iterate, context)
       } else {
         for (var key in obj) {
           if (_objectHasOwnProperty(obj, key)) {
@@ -155,10 +166,9 @@
     */
   function arrayEvery (obj, iterate, context) {
     if (obj && iterate) {
-      var pro = 'every'
       context = context || this
-      if (isArrayPro(pro)) {
-        return obj[pro](iterate, context)
+      if (isArrayPro(EVERY_PRO)) {
+        return obj[EVERY_PRO](iterate, context)
       } else {
         for (var key in obj) {
           if (_objectHasOwnProperty(obj, key)) {
@@ -182,10 +192,9 @@
     */
   function arrayFilter (obj, iterate, context) {
     if (obj && iterate) {
-      var pro = 'filter'
       context = context || this
-      if (isArrayPro(pro)) {
-        return obj[pro](iterate, context)
+      if (isArrayPro(FILTER_PRO)) {
+        return obj[FILTER_PRO](iterate, context)
       } else {
         var result = {}
         baseExports.each(obj, function (val, key) {
@@ -209,10 +218,9 @@
     */
   function arrayFind (obj, iterate, context) {
     if (obj && iterate) {
-      var pro = 'find'
       context = context || this
-      if (isArrayPro(pro)) {
-        return obj[pro](iterate, context)
+      if (isArrayPro(FIND_PRO)) {
+        return obj[FIND_PRO](iterate, context)
       } else {
         for (var key in obj) {
           if (_objectHasOwnProperty(obj, key)) {
@@ -258,13 +266,12 @@
     var result = []
     if (obj) {
       if (arguments.length > 1) {
-        var pro = 'map'
         context = context || this
         if (!baseExports.isFunction(iterate)) {
           iterate = baseExports.property(iterate)
         }
-        if (isArrayPro(pro)) {
-          return obj[pro](iterate, context)
+        if (isArrayPro(MAP_PRO)) {
+          return obj[MAP_PRO](iterate, context)
         } else {
           baseExports.each(obj, function () {
             result.push(iterate.apply(context, arguments))
@@ -320,27 +327,22 @@
     * @return {Number}
     */
   function arrayReduce (array, callback, initialValue) {
-    var previous = initialValue
+    var len
     var index = 0
     var context = this
-    if (baseExports.isArray(array)) {
-      if (typeof initialValue === 'undefined') {
-        previous = array[0]
-        index = 1
-      }
-      if (array.reduce) {
-        return array.reduce(function () {
-          return callback.apply(context, arguments)
-        }, initialValue)
-      } else {
-        for (var len = array.length; index < len; index++) {
-          previous = callback.call(context, previous, array[index], index, array)
-        }
-      }
-    } else {
-      baseExports.each(array, function (val, key) {
-        previous = callback.call(context, previous, val, key, array)
-      })
+    var previous = initialValue
+    var keyList = baseExports.keys(array)
+    if (isArrayPro(REDUCE_PRO)) {
+      return array.reduce(function () {
+        return callback.apply(context, arguments)
+      }, initialValue)
+    }
+    if (typeof initialValue === 'undefined') {
+      previous = array[keyList[0]]
+      index = 1
+    }
+    for (len = keyList.length; index < len; index++) {
+      previous = callback.call(context, previous, array[keyList[index]], index, array)
     }
     return previous
   }
@@ -388,11 +390,12 @@
     * @return {Array}
     */
   function chunk (array, size) {
+    var index
     var result = []
     var arrLen = size >> 0 || 1
     if (baseExports.isArray(array)) {
       if (arrLen >= 0 && array.length > arrLen) {
-        var index = 0
+        index = 0
         while (index < array.length) {
           result.push(array.slice(index, index + arrLen))
           index += arrLen
@@ -420,10 +423,11 @@
    */
   function unzip (arrays) {
     var result = []
+    var index = 0
     var len = XEUtils.max(arrays, function (item) {
       return item.length || 0
     })
-    for (var index = 0; index < len; index++) {
+    for (; index < len; index++) {
       result.push(arrayMap(arrays, index))
     }
     return result
@@ -437,7 +441,7 @@
    * @param {Object} context 上下文
    * @return {Array}
    */
-  function from (array, iterate, context) {
+  function toArray (array, iterate, context) {
     if (baseExports.isArray(array)) {
       return array
     }
@@ -445,7 +449,9 @@
       return []
     }
     var result = []
-    for (var index = 0, len = array.length; index < len; index++) {
+    var index = 0
+    var len = array.length
+    for (; index < len; index++) {
       result.push(array[index])
     }
     return arguments.length < 2 ? result : arrayMap(result, iterate, context || this)
@@ -459,9 +465,11 @@
     * @return {Boolean}
     */
   function includeArrays (array1, array2) {
+    var len
+    var index = 0
     var includes = baseExports.includes
     if (baseExports.isArray(array2)) {
-      for (var index = 0, len = array2.length; index < len; index++) {
+      for (len = array2.length; index < len; index++) {
         if (!includes(array1, array2[index])) {
           return false
         }
@@ -501,9 +509,7 @@
    * @return {Array}
    */
   function invokeMap (list, path) {
-    var context
     var func
-    var rest = []
     var args = arguments
     var params = []
     var paths = []
@@ -519,15 +525,15 @@
       }
       path = path[len]
     }
-    for (index = 0, len = list.length; index < len; index++) {
-      context = list[index]
+    return baseExports.map(list, function (context) {
       if (paths.length) {
         context = deepGetObj(context, paths)
       }
       func = context[path] || path
-      rest.push(func && func.apply ? func.apply(context, params) : undefined)
-    }
-    return rest
+      if (func && func.apply) {
+        return func.apply(context, params)
+      }
+    })
   }
 
   /**
@@ -548,6 +554,7 @@
     var optData = opts.data
     var result = []
     var treeMap = {}
+    var idList, id, treeData, parentId
 
     if (optSortKey) {
       array = arraySort(baseExports.clone(array), optSortKey)
@@ -556,12 +563,11 @@
       }
     }
 
-    var idList = arrayMap(array, function (item) {
+    idList = arrayMap(array, function (item) {
       return item[optKey]
     })
 
-    for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
-      item = array[index]
+    baseExports.each(array, function (item) {
       id = item[optKey]
 
       if (optData) {
@@ -584,7 +590,7 @@
           result.push(treeData)
         }
       }
-    };
+    })
 
     if (optStrict) {
       strictTree(array, optChildren)
@@ -594,30 +600,21 @@
   }
 
   function strictTree (array, optChildren) {
-    for (var item, index = 0, len = array.length; index < len; index++) {
-      item = array[index]
+    baseExports.each(array, function (item) {
       if (!item.children.length) {
-        try {
-          delete item[optChildren]
-        } catch (e) {
-          item[optChildren] = undefined
-        }
+        baseExports.deleteProperty(item, optChildren)
       }
-    }
+    })
   }
 
   function unTreeList (result, array, opts) {
+    var children
     var optChildren = opts.children
     var optData = opts.data
-    for (var item, children, index = 0, len = array.length; index < len; index++) {
-      item = array[index]
+    baseExports.each(array, function (item) {
       children = item[optChildren]
       if (optData === null) {
-        try {
-          delete item[optChildren]
-        } catch (e) {
-          item[optChildren] = undefined
-        }
+        baseExports.deleteProperty(item, optChildren)
       } else {
         item = item[optData]
       }
@@ -625,7 +622,7 @@
       if (children) {
         unTreeList(result, children, opts)
       }
-    }
+    })
     return result
   }
 
@@ -637,46 +634,29 @@
     * @return {Array}
     */
   function treeToArray (array, options) {
-    var opts = baseExports.assign({}, setupDefaults.treeOptions, options)
-    return unTreeList([], array, opts)
+    return unTreeList([], array, baseExports.assign({}, setupDefaults.treeOptions, options))
   }
 
   var arrayExports = {
-    arrayUniq: arrayUniq,
     uniq: arrayUniq,
-    arrayUnion: arrayUnion,
     union: arrayUnion,
-    arraySort: arraySort,
-    sort: arraySort,
     sortBy: arraySort,
-    arrayShuffle: arrayShuffle,
     shuffle: arrayShuffle,
-    arraySample: arraySample,
     sample: arraySample,
-    arraySome: arraySome,
     some: arraySome,
-    arrayEvery: arrayEvery,
     every: arrayEvery,
-    arrayFilter: arrayFilter,
     filter: arrayFilter,
-    arrayFind: arrayFind,
     find: arrayFind,
     findKey: findKey,
-    arrayMap: arrayMap,
     map: arrayMap,
-    arraySum: arraySum,
     sum: arraySum,
-    arrayMean: arrayMean,
     mean: arrayMean,
-    arrayReduce: arrayReduce,
     reduce: arrayReduce,
-    arrayCopyWithin: arrayCopyWithin,
     copyWithin: arrayCopyWithin,
     chunk: chunk,
     zip: zip,
     unzip: unzip,
-    from: from,
-    toArray: from,
+    toArray: toArray,
     includeArrays: includeArrays,
     pluck: pluck,
     invoke: invokeMap,
@@ -767,11 +747,11 @@
     * @return {Object}
     */
   function bind (callback, context) {
-    var arrayFrom = XEUtils.from
-    var amgs = arrayFrom(arguments).slice(2)
+    var toArray = XEUtils.toArray
+    var amgs = toArray(arguments).slice(2)
     context = context || this
     return function () {
-      return callback.apply(context, arrayFrom(arguments).concat(amgs))
+      return callback.apply(context, toArray(arguments).concat(amgs))
     }
   }
 
@@ -786,14 +766,14 @@
   function once (callback, context) {
     var done = false
     var rest = null
-    var arrayFrom = XEUtils.from
-    var amgs = arrayFrom(arguments).slice(2)
+    var toArray = XEUtils.toArray
+    var amgs = toArray(arguments).slice(2)
     context = context || this
     return function () {
       if (done) {
         return rest
       }
-      rest = callback.apply(context, arrayFrom(arguments).concat(amgs))
+      rest = callback.apply(context, toArray(arguments).concat(amgs))
       done = true
       return rest
     }
@@ -1152,8 +1132,7 @@
     if (obj.indexOf) {
       return obj.indexOf(val)
     }
-    var len = obj.length
-    for (var index = 0; index < len; index++) {
+    for (var index = 0, len = obj.length; index < len; index++) {
       if (val === obj[index]) {
         return index
       }
@@ -1302,11 +1281,6 @@
     return target
   }
 
-  function outError (e) {
-    var _console = console
-    _console && _console.error(e)
-  }
-
   /**
     * 字符串转JSON
     *
@@ -1319,9 +1293,7 @@
     } else if (isString(str)) {
       try {
         return JSON.parse(str)
-      } catch (e) {
-        outError(e)
-      }
+      } catch (e) { }
     }
     return {}
   }
@@ -1334,6 +1306,14 @@
     */
   function jsonToString (obj) {
     return JSON.stringify(obj) || ''
+  }
+
+  function deleteProperty (obj, property) {
+    try {
+      delete obj[property]
+    } catch (e) {
+      obj[property] = undefined
+    }
   }
 
   /**
@@ -1352,11 +1332,7 @@
         objectEach(obj, isDefs ? function (val, key) {
           obj[key] = defs
         } : function (val, key) {
-          try {
-            delete obj[key]
-          } catch (e) {
-            obj[key] = defs
-          }
+          deleteProperty(obj, key)
         })
         extds && objectAssign(obj, extds)
       } else if (isArray(obj)) {
@@ -1410,17 +1386,31 @@
       } else {
         rest = {}
         arrayEach(removeKeys, function (key) {
-          try {
-            rest[key] = obj[key]
-            delete obj[key]
-          } catch (e) {
-            obj[key] = undefined
-          }
+          rest[key] = obj[key]
+          deleteProperty(obj, key)
         })
       }
       return rest
     }
     return obj
+  }
+
+  function createGetObjects (name, getIndex) {
+    return function (obj) {
+      var result = []
+      if (obj) {
+        var objectKeysFn = Object[name]
+        if (objectKeysFn) {
+          return objectKeysFn(obj)
+        }
+        each(obj, getIndex > 1 ? function (key) {
+          result.push([key, obj[key]])
+        } : function () {
+          result.push(arguments[getIndex])
+        })
+      }
+      return result
+    }
   }
 
   /**
@@ -1429,19 +1419,7 @@
     * @param {Object} obj 对象/数组
     * @return {Array}
     */
-  function objectKeys (obj) {
-    var result = []
-    if (obj) {
-      var objectKeysFn = Object.keys
-      if (objectKeysFn) {
-        return objectKeysFn(obj)
-      }
-      objectEach(obj, function (val, key) {
-        result.push(key)
-      })
-    }
-    return result
-  }
+  var objectKeys = createGetObjects('keys', 0)
 
   /**
     * 获取对象所有值
@@ -1449,19 +1427,7 @@
     * @param {Object} obj 对象/数组
     * @return {Array}
     */
-  function objectValues (obj) {
-    if (obj) {
-      var objectValuesFn = Object.values
-      if (objectValuesFn) {
-        return objectValuesFn(obj)
-      }
-      var result = []
-      arrayEach(objectKeys(obj), function (key) {
-        result.push(obj[key])
-      })
-    }
-    return result
-  }
+  var objectValues = createGetObjects('values', 1)
 
   /**
     * 获取对象所有属性、值
@@ -1469,19 +1435,7 @@
     * @param {Object} obj 对象/数组
     * @return {Array}
     */
-  function objectEntries (obj) {
-    if (obj) {
-      var objectEntriesFn = Object.entries
-      if (objectEntriesFn) {
-        return objectEntriesFn(obj)
-      }
-      var result = []
-      arrayEach(objectKeys(obj), function (key) {
-        result.push([key, obj[key]])
-      })
-    }
-    return result
-  }
+  var objectEntries = createGetObjects('entries', 2)
 
   /**
     * 获取对象第一个值
@@ -1489,7 +1443,7 @@
     * @param {Object} obj 对象/数组
     * @return {Object}
     */
-  function arrayFirst (obj) {
+  function getFirst (obj) {
     return objectValues(obj)[0]
   }
 
@@ -1499,9 +1453,15 @@
     * @param {Object} obj 对象/数组
     * @return {Object}
     */
-  function arrayLast (obj) {
+  function getLast (obj) {
     var list = objectValues(obj)
     return list[list.length - 1]
+  }
+
+  function arrayEach (obj, iterate, context) {
+    for (var index = 0, len = obj.length; index < len; index++) {
+      iterate.call(context || this, obj[index], index, obj)
+    }
   }
 
   function objectEach (obj, iterate, context) {
@@ -1512,19 +1472,13 @@
     }
   }
 
-  function objectLastEach (obj, iterate, context) {
-    arrayLastEach(objectKeys(obj), function (key) {
+  function lastObjectEach (obj, iterate, context) {
+    lastArrayEach(objectKeys(obj), function (key) {
       iterate.call(context || this, obj[key], key, obj)
     })
   }
 
-  function arrayEach (obj, iterate, context) {
-    for (var index = 0, len = obj.length; index < len; index++) {
-      iterate.call(context || this, obj[index], index, obj)
-    }
-  }
-
-  function arrayLastEach (obj, iterate, context) {
+  function lastArrayEach (obj, iterate, context) {
     for (var len = obj.length - 1; len >= 0; len--) {
       iterate.call(context || this, obj[len], len, obj)
     }
@@ -1540,16 +1494,17 @@
     */
   function forOf (obj, iterate, context) {
     if (obj) {
+      context = context || this
       if (isArray(obj)) {
         for (var index = 0, len = obj.length; index < len; index++) {
-          if (iterate.call(context || this, obj[index], index, obj) === false) {
+          if (iterate.call(context, obj[index], index, obj) === false) {
             break
           }
         }
       } else {
         for (var key in obj) {
           if (obj.hasOwnProperty(key)) {
-            if (iterate.call(context || this, obj[key], key, obj) === false) {
+            if (iterate.call(context, obj[key], key, obj) === false) {
               break
             }
           }
@@ -1568,13 +1523,14 @@
     */
   function each (obj, iterate, context) {
     if (obj) {
+      context = context || this
       if (isArray(obj)) {
         if (isFunction(obj.forEach)) {
-          return obj.forEach(iterate, context || this)
+          return obj.forEach(iterate, context)
         }
-        return arrayEach(obj, iterate, context || this)
+        return arrayEach(obj, iterate, context)
       }
-      return objectEach(obj, iterate, context || this)
+      return objectEach(obj, iterate, context)
     }
     return obj
   }
@@ -1589,7 +1545,7 @@
     */
   function lastEach (obj, iterate, context) {
     if (obj) {
-      return (isArray(obj) ? arrayLastEach : objectLastEach)(obj, iterate, context || this)
+      return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context || this)
     }
     return obj
   }
@@ -1605,16 +1561,18 @@
   function lastForOf (obj, iterate, context) {
     if (obj) {
       var len
+      var list
+      context = context || this
       if (isArray(obj)) {
         for (len = obj.length - 1; len >= 0; len--) {
-          if (iterate.call(context || this, obj[len], len, obj) === false) {
+          if (iterate.call(context, obj[len], len, obj) === false) {
             break
           }
         }
       } else {
-        var list = objectKeys(obj)
+        list = objectKeys(obj)
         for (len = list.length - 1; len >= 0; len--) {
-          if (iterate.call(context || this, obj[list[len]], list[len], obj) === false) {
+          if (iterate.call(context, obj[list[len]], list[len], obj) === false) {
             break
           }
         }
@@ -1637,6 +1595,7 @@
     * @return {Object}
     */
   function groupBy (obj, iterate, context) {
+    var groupKey
     var result = {}
     if (obj) {
       context = this || context
@@ -1648,7 +1607,7 @@
         }
       }
       each(obj, function (val, key) {
-        var groupKey = iterate ? iterate.call(context, val, key, obj) : val
+        groupKey = iterate ? iterate.call(context, val, key, obj) : val
         if (result[groupKey]) {
           result[groupKey].push(val)
         } else {
@@ -1684,14 +1643,16 @@
     * @return {Object}
     */
   function range (start, stop, step) {
+    var index
+    var len
     var result = []
     var args = arguments
     if (args.length < 2) {
       stop = args[0]
       start = 0
     }
-    var index = start >> 0
-    var len = stop >> 0
+    index = start >> 0
+    len = stop >> 0
     if (index < stop) {
       step = step >> 0 || 1
       for (; index < len; index += step) {
@@ -1768,6 +1729,7 @@
     var isLeading = typeof options === 'boolean'
     var optLeading = 'leading' in opts ? opts.leading : isLeading
     var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
+    var clearTimeoutFn = clearTimeout
     var runFn = function () {
       runFlag = true
       timeout = null
@@ -1783,7 +1745,7 @@
     }
     var cancelFn = function () {
       var rest = timeout !== null
-      clearTimeout(timeout)
+      clearTimeoutFn(timeout)
       timeout = null
       return rest
     }
@@ -1796,7 +1758,7 @@
           runFn()
         }
       } else {
-        clearTimeout(timeout)
+        clearTimeoutFn(timeout)
       }
       timeout = setTimeout(endFn, wait)
     }
@@ -1844,47 +1806,41 @@
     findLastIndexOf: findLastIndexOf,
     includes: includes,
     contains: includes,
-    objectAssign: objectAssign,
     assign: objectAssign,
     extend: objectAssign,
     stringToJson: stringToJson,
     jsonToString: jsonToString,
-    objectKeys: objectKeys,
     keys: objectKeys,
-    objectValues: objectValues,
     values: objectValues,
-    objectEntries: objectEntries,
     entries: objectEntries,
-    arrayFirst: arrayFirst,
-    first: arrayFirst,
-    arrayLast: arrayLast,
-    last: arrayLast,
-    objectEach: objectEach,
-    objectLastEach: objectLastEach,
+    first: getFirst,
+    last: getLast,
+    each: each,
+    forOf: forOf,
     arrayEach: arrayEach,
     forEach: arrayEach,
-    forLastEach: arrayLastEach,
-    arrayLastEach: arrayLastEach,
-    forOf: forOf,
-    each: each,
+    objectEach: objectEach,
     lastForOf: lastForOf,
     lastEach: lastEach,
+    lastForEach: lastArrayEach,
+    lastArrayEach: lastArrayEach,
+    lastObjectEach: lastObjectEach,
     groupBy: groupBy,
     countBy: countBy,
     objectMap: objectMap,
     clone: clone,
     bind: bind,
     once: once,
-    clear: removeObject,
-    clearObject: clearObject,
+    clear: clearObject,
     remove: removeObject,
-    removeObject: removeObject,
+    deleteProperty: deleteProperty,
     range: range,
     throttle: throttle,
     debounce: debounce,
     destructuring: destructuring
   }
 
+  /* eslint-disable valid-typeof */
   function isBrowseStorage (storage) {
     try {
       var testKey = '__xe_t'
@@ -1901,6 +1857,7 @@
     * @return Object
     */
   function browse () {
+    var undef = 'undefined'
     var result = {
       isNode: false,
       isMobile: false,
@@ -1908,14 +1865,14 @@
       isLocalStorage: false,
       isSessionStorage: false
     }
-    if (typeof window === 'undefined' && typeof process !== 'undefined') {
+    if (typeof window === undef && typeof process !== undef) {
       result.isNode = true
     } else {
       result.isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
       result.isPC = !result.isMobile
       result.isLocalStorage = isBrowseStorage(window.localStorage)
       result.isSessionStorage = isBrowseStorage(window.sessionStorage)
-      if (typeof document !== 'undefined') {
+      if (typeof document !== undef) {
         var $dom = document
         var $body = $dom.body || $dom.documentElement
         baseExports.each(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
@@ -2036,10 +1993,6 @@
     return cookie
   }
 
-  function getCookieItem (name) {
-    return cookie(name)
-  }
-
   function removeCookieItem (name, options) {
     cookie(name, 0, baseExports.assign({ expires: -1 }, setupDefaults.cookies, options))
   }
@@ -2053,8 +2006,8 @@
     isKey: isCookieKey,
     set: setCookieItem,
     setItem: setCookieItem,
-    get: getCookieItem,
-    getItem: getCookieItem,
+    get: cookie,
+    getItem: cookie,
     remove: removeCookieItem,
     removeItem: removeCookieItem,
     keys: cookieKeys,
@@ -2076,7 +2029,7 @@
    * @returns Number
    */
   var timestamp = Date.now || function () {
-    return _dateTime(new Date())
+    return getDateTime(new Date())
   }
 
   var dateFormatRules = [
@@ -2089,7 +2042,7 @@
     { rules: [['SSS', 3], ['SS', 2], ['S', 1]] }
   ]
 
-  function _dateTime (date) {
+  function getDateTime (date) {
     return date.getTime()
   }
 
@@ -2124,15 +2077,16 @@
     */
   function stringToDate (str, format) {
     if (str) {
+      var arr, sIndex, index, rules, len
+      var dates = []
       var isDate = baseExports.isDate(str)
       if (isDate || /^[0-9]{11,13}$/.test(str)) {
-        return new Date(isDate ? _dateTime(str) : str)
+        return new Date(isDate ? getDateTime(str) : str)
       }
       if (baseExports.isString(str)) {
         format = format || setupDefaults.formatDate
-        var dates = []
         baseExports.each(dateFormatRules, function (item) {
-          for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
+          for (index = 0, rules = item.rules, len = rules.length; index < len; index++) {
             arr = rules[index]
             sIndex = format.indexOf(arr[0])
             if (sIndex > -1) {
@@ -2183,14 +2137,13 @@
     if (date) {
       date = stringToDate(date)
       if (baseExports.isDate(date)) {
-        var empty = ''
         var result = format || setupDefaults.formatString
         var hours = date.getHours()
         var apm = hours < 12 ? 'am' : 'pm'
         var zoneHours = date.getTimezoneOffset() / 60 * -1
-        var formats = baseExports.assign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
+        var formats = baseExports.assign({}, setupDefaults.formatStringMatchs, options ? options.formats : null)
         var timeRules = [
-          [/y{2,4}/g, empty, function (match) { return (empty + _dateFullYear(date)).substr(4 - match.length) }],
+          [/y{2,4}/g, '', function (match) { return ('' + _dateFullYear(date)).substr(4 - match.length) }],
           [/M{1,2}/g, _dateMonth(date) + 1],
           [/d{1,2}/g, date.getDate()],
           [/H{1,2}/g, hours],
@@ -2198,19 +2151,22 @@
           [/m{1,2}/g, date.getMinutes()],
           [/s{1,2}/g, date.getSeconds()],
           [/S{1,3}/g, date.getMilliseconds()],
-          [/a/g, empty, function (match) { return handleCustomTemplate(date, formats, match, apm) }],
-          [/A/g, empty, function (match) { return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase()) }],
-          [/z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
-          [/e/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
-          [/E/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
-          [/q/g, empty, function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
-          [/Z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, 0) + '00') }],
-          [/W/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
-          [/w/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
-          [/D/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearDay(date)) }]
+          [/a/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm) }],
+          [/A/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase()) }],
+          [/z/g, '', function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
+          [/e/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
+          [/E/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
+          [/q/g, '', function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
+          [/Z/g, '', function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, 0) + '00') }],
+          [/W/g, '', function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
+          [/w/g, '', function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
+          [/D/g, '', function (match) { return handleCustomTemplate(date, formats, match, getYearDay(date)) }]
         ]
-        for (var index = 0; index < timeRules.length; index++) {
-          var item = timeRules[index]
+        var item
+        var index = 0
+        var len = timeRules.length
+        for (; index < len; index++) {
+          item = timeRules[index]
           result = result.replace(item[0], item[2] || function (match) {
             return formatPadStart(item[1], match.length, '0')
           })
@@ -2231,9 +2187,10 @@
     * @return {Date}
     */
   function getWhatYear (date, year, month) {
+    var number
     var currentDate = stringToDate(date)
     if (year) {
-      var number = year && !isNaN(year) ? year : 0
+      number = year && !isNaN(year) ? year : 0
       currentDate.setFullYear(_dateFullYear(currentDate) + number)
     }
     if (month || !isNaN(month)) {
@@ -2264,7 +2221,7 @@
       if (day === STRING_FIRST) {
         return new Date(_dateFullYear(currentDate), _dateMonth(currentDate) + monthOffset, 1)
       } else if (day === STRING_LAST) {
-        return new Date(_dateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
+        return new Date(getDateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
       } else {
         currentDate.setDate(day)
       }
@@ -2287,7 +2244,7 @@
     var currentDate = stringToDate(date)
     var customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
     var currentDay = currentDate.getDay()
-    var time = _dateTime(currentDate)
+    var time = getDateTime(currentDate)
     var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
     if (week && !isNaN(week)) {
       whatDayTime += week * WEEK_TIME
@@ -2310,14 +2267,14 @@
       if (mode === STRING_FIRST) {
         return new Date(_dateFullYear(currentDate), _dateMonth(currentDate), currentDate.getDate())
       } else if (mode === STRING_LAST) {
-        return new Date(_dateTime(getWhatDay(currentDate, 1, STRING_FIRST)) - 1)
+        return new Date(getDateTime(getWhatDay(currentDate, 1, STRING_FIRST)) - 1)
       }
     }
     return currentDate
   }
 
   function calculateTime (startDate, endDate, timeGap) {
-    return Math.floor((_dateTime(new Date(_dateFullYear(endDate), _dateMonth(endDate), endDate.getDate())) - _dateTime(new Date(_dateFullYear(startDate), _dateMonth(startDate), startDate.getDate()))) / timeGap) + 1
+    return Math.floor((getDateTime(new Date(_dateFullYear(endDate), _dateMonth(endDate), endDate.getDate())) - getDateTime(new Date(_dateFullYear(startDate), _dateMonth(startDate), startDate.getDate()))) / timeGap) + 1
   }
 
   /**
@@ -2398,7 +2355,7 @@
     */
   function getDayOfMonth (date, month) {
     if (date) {
-      return Math.floor((_dateTime(getWhatMonth(date, month, STRING_LAST)) - _dateTime(getWhatMonth(date, month, STRING_FIRST))) / DAY_TIME) + 1
+      return Math.floor((getDateTime(getWhatMonth(date, month, STRING_LAST)) - getDateTime(getWhatMonth(date, month, STRING_FIRST))) / DAY_TIME) + 1
     }
     return 0
   }
@@ -2413,15 +2370,16 @@
     */
   function getDateDiff (startDate, endDate, rules) {
     var result = { done: false, time: 0 }
-    var startTime = _dateTime(stringToDate(startDate))
-    var endTime = _dateTime(endDate ? stringToDate(endDate) : new Date())
+    var startTime = getDateTime(stringToDate(startDate))
+    var endTime = getDateTime(endDate ? stringToDate(endDate) : new Date())
     if (startTime < endTime) {
       var item
       var diffTime = result.time = endTime - startTime
       var rule = rules && rules.length > 0 ? rules : setupDefaults.dateDiffRules
       var len = rule.length
+      var index = 0
       result.done = true
-      for (var index = 0; index < len; index++) {
+      for (; index < len; index++) {
         item = rule[index]
         if (diffTime >= item[1]) {
           if (index === len - 1) {
@@ -2456,7 +2414,7 @@
     getDateDiff: getDateDiff
   }
 
-  var $locat = null
+  var $locat = 0
   var decode = decodeURIComponent
   var encode = encodeURIComponent
 
@@ -2667,16 +2625,11 @@
 
   var numberExports = {
     random: getRandom,
-    getRandom: getRandom,
-    arrayMin: arrayMin,
     min: arrayMin,
-    arrayMax: arrayMax,
     max: arrayMax,
     commafy: commafy,
     toNumber: stringToNumber,
-    stringToNumber: stringToNumber,
-    toInteger: stringToInteger,
-    stringToInteger: stringToInteger
+    toInteger: stringToInteger
   }
 
   /**
@@ -2864,25 +2817,17 @@
 
   var stringExports = {
     trim: stringTrim,
-    stringTrim: stringTrim,
     trimLeft: stringTrimLeft,
-    stringTrimLeft: stringTrimLeft,
     trimRight: stringTrimRight,
-    stringTrimRight: stringTrimRight,
     escape: escape,
     unescape: unescape,
     camelCase: camelCase,
     kebabCase: kebabCase,
     repeat: stringRepeat,
-    stringRepeat: stringRepeat,
     padStart: stringPadStart,
-    stringPadStart: stringPadStart,
     padEnd: stringPadEnd,
-    stringPadEnd: stringPadEnd,
     startsWith: stringStartsWith,
-    stringStartsWith: stringStartsWith,
-    endsWith: stringEndsWith,
-    stringEndsWith: stringEndsWith
+    endsWith: stringEndsWith
   }
 
   var methodExports = {}

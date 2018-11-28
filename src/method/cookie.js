@@ -110,10 +110,6 @@ function setCookieItem (name, key, options) {
   return cookie
 }
 
-function getCookieItem (name) {
-  return cookie(name)
-}
-
 function removeCookieItem (name, options) {
   cookie(name, 0, baseExports.assign({expires: -1}, setupDefaults.cookies, options))
 }
@@ -127,8 +123,8 @@ baseExports.assign(cookie, {
   isKey: isCookieKey,
   set: setCookieItem,
   setItem: setCookieItem,
-  get: getCookieItem,
-  getItem: getCookieItem,
+  get: cookie,
+  getItem: cookie,
   remove: removeCookieItem,
   removeItem: removeCookieItem,
   keys: cookieKeys,

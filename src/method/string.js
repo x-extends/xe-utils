@@ -187,25 +187,17 @@ function stringEndsWith (str, val, startIndex) {
 
 var stringExports = {
   trim: stringTrim,
-  stringTrim: stringTrim,
   trimLeft: stringTrimLeft,
-  stringTrimLeft: stringTrimLeft,
   trimRight: stringTrimRight,
-  stringTrimRight: stringTrimRight,
   escape: escape,
   unescape: unescape,
   camelCase: camelCase,
   kebabCase: kebabCase,
   repeat: stringRepeat,
-  stringRepeat: stringRepeat,
   padStart: stringPadStart,
-  stringPadStart: stringPadStart,
   padEnd: stringPadEnd,
-  stringPadEnd: stringPadEnd,
   startsWith: stringStartsWith,
-  stringStartsWith: stringStartsWith,
-  endsWith: stringEndsWith,
-  stringEndsWith: stringEndsWith
+  endsWith: stringEndsWith
 }
 
 module.exports = stringExports

@@ -84,11 +84,11 @@ function clone (obj, deep) {
   * @return {Object}
   */
 function bind (callback, context) {
-  var arrayFrom = XEUtils.from
-  var amgs = arrayFrom(arguments).slice(2)
+  var toArray = XEUtils.toArray
+  var amgs = toArray(arguments).slice(2)
   context = context || this
   return function () {
-    return callback.apply(context, arrayFrom(arguments).concat(amgs))
+    return callback.apply(context, toArray(arguments).concat(amgs))
   }
 }
 
@@ -103,14 +103,14 @@ function bind (callback, context) {
 function once (callback, context) {
   var done = false
   var rest = null
-  var arrayFrom = XEUtils.from
-  var amgs = arrayFrom(arguments).slice(2)
+  var toArray = XEUtils.toArray
+  var amgs = toArray(arguments).slice(2)
   context = context || this
   return function () {
     if (done) {
       return rest
     }
-    rest = callback.apply(context, arrayFrom(arguments).concat(amgs))
+    rest = callback.apply(context, toArray(arguments).concat(amgs))
     done = true
     return rest
   }
@@ -469,8 +469,7 @@ var indexOf = createIndexOf(function (obj, val) {
   if (obj.indexOf) {
     return obj.indexOf(val)
   }
-  var len = obj.length
-  for (var index = 0; index < len; index++) {
+  for (var index = 0, len = obj.length; index < len; index++) {
     if (val === obj[index]) {
       return index
     }
@@ -619,11 +618,6 @@ var objectAssign = function (target) {
   return target
 }
 
-function outError (e) {
-  var _console = console
-  _console && _console.error(e)
-}
-
 /**
   * 字符串转JSON
   *
@@ -636,9 +630,7 @@ function stringToJson (str) {
   } else if (isString(str)) {
     try {
       return JSON.parse(str)
-    } catch (e) {
-      outError(e)
-    }
+    } catch (e) {}
   }
   return {}
 }
@@ -651,6 +643,14 @@ function stringToJson (str) {
   */
 function jsonToString (obj) {
   return JSON.stringify(obj) || ''
+}
+
+function deleteProperty (obj, property) {
+  try {
+    delete obj[property]
+  } catch (e) {
+    obj[property] = undefined
+  }
 }
 
 /**
@@ -669,11 +669,7 @@ function clearObject (obj, defs, assigns) {
       objectEach(obj, isDefs ? function (val, key) {
         obj[key] = defs
       } : function (val, key) {
-        try {
-          delete obj[key]
-        } catch (e) {
-          obj[key] = defs
-        }
+        deleteProperty(obj, key)
       })
       extds && objectAssign(obj, extds)
     } else if (isArray(obj)) {
@@ -727,17 +723,31 @@ function removeObject (obj, iterate, context) {
     } else {
       rest = {}
       arrayEach(removeKeys, function (key) {
-        try {
-          rest[key] = obj[key]
-          delete obj[key]
-        } catch (e) {
-          obj[key] = undefined
-        }
+        rest[key] = obj[key]
+        deleteProperty(obj, key)
       })
     }
     return rest
   }
   return obj
+}
+
+function createGetObjects (name, getIndex) {
+  return function (obj) {
+    var result = []
+    if (obj) {
+      var objectKeysFn = Object[name]
+      if (objectKeysFn) {
+        return objectKeysFn(obj)
+      }
+      each(obj, getIndex > 1 ? function (key) {
+        result.push([key, obj[key]])
+      } : function () {
+        result.push(arguments[getIndex])
+      })
+    }
+    return result
+  }
 }
 
 /**
@@ -746,19 +756,7 @@ function removeObject (obj, iterate, context) {
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-function objectKeys (obj) {
-  var result = []
-  if (obj) {
-    var objectKeysFn = Object.keys
-    if (objectKeysFn) {
-      return objectKeysFn(obj)
-    }
-    objectEach(obj, function (val, key) {
-      result.push(key)
-    })
-  }
-  return result
-}
+var objectKeys = createGetObjects('keys', 0)
 
 /**
   * 获取对象所有值
@@ -766,19 +764,7 @@ function objectKeys (obj) {
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-function objectValues (obj) {
-  if (obj) {
-    var objectValuesFn = Object.values
-    if (objectValuesFn) {
-      return objectValuesFn(obj)
-    }
-    var result = []
-    arrayEach(objectKeys(obj), function (key) {
-      result.push(obj[key])
-    })
-  }
-  return result
-}
+var objectValues = createGetObjects('values', 1)
 
 /**
   * 获取对象所有属性、值
@@ -786,19 +772,7 @@ function objectValues (obj) {
   * @param {Object} obj 对象/数组
   * @return {Array}
   */
-function objectEntries (obj) {
-  if (obj) {
-    var objectEntriesFn = Object.entries
-    if (objectEntriesFn) {
-      return objectEntriesFn(obj)
-    }
-    var result = []
-    arrayEach(objectKeys(obj), function (key) {
-      result.push([key, obj[key]])
-    })
-  }
-  return result
-}
+var objectEntries = createGetObjects('entries', 2)
 
 /**
   * 获取对象第一个值
@@ -806,7 +780,7 @@ function objectEntries (obj) {
   * @param {Object} obj 对象/数组
   * @return {Object}
   */
-function arrayFirst (obj) {
+function getFirst (obj) {
   return objectValues(obj)[0]
 }
 
@@ -816,9 +790,15 @@ function arrayFirst (obj) {
   * @param {Object} obj 对象/数组
   * @return {Object}
   */
-function arrayLast (obj) {
+function getLast (obj) {
   var list = objectValues(obj)
   return list[list.length - 1]
+}
+
+function arrayEach (obj, iterate, context) {
+  for (var index = 0, len = obj.length; index < len; index++) {
+    iterate.call(context || this, obj[index], index, obj)
+  }
 }
 
 function objectEach (obj, iterate, context) {
@@ -829,19 +809,13 @@ function objectEach (obj, iterate, context) {
   }
 }
 
-function objectLastEach (obj, iterate, context) {
-  arrayLastEach(objectKeys(obj), function (key) {
+function lastObjectEach (obj, iterate, context) {
+  lastArrayEach(objectKeys(obj), function (key) {
     iterate.call(context || this, obj[key], key, obj)
   })
 }
 
-function arrayEach (obj, iterate, context) {
-  for (var index = 0, len = obj.length; index < len; index++) {
-    iterate.call(context || this, obj[index], index, obj)
-  }
-}
-
-function arrayLastEach (obj, iterate, context) {
+function lastArrayEach (obj, iterate, context) {
   for (var len = obj.length - 1; len >= 0; len--) {
     iterate.call(context || this, obj[len], len, obj)
   }
@@ -857,16 +831,17 @@ function arrayLastEach (obj, iterate, context) {
   */
 function forOf (obj, iterate, context) {
   if (obj) {
+    context = context || this
     if (isArray(obj)) {
       for (var index = 0, len = obj.length; index < len; index++) {
-        if (iterate.call(context || this, obj[index], index, obj) === false) {
+        if (iterate.call(context, obj[index], index, obj) === false) {
           break
         }
       }
     } else {
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-          if (iterate.call(context || this, obj[key], key, obj) === false) {
+          if (iterate.call(context, obj[key], key, obj) === false) {
             break
           }
         }
@@ -885,13 +860,14 @@ function forOf (obj, iterate, context) {
   */
 function each (obj, iterate, context) {
   if (obj) {
+    context = context || this
     if (isArray(obj)) {
       if (isFunction(obj.forEach)) {
-        return obj.forEach(iterate, context || this)
+        return obj.forEach(iterate, context)
       }
-      return arrayEach(obj, iterate, context || this)
+      return arrayEach(obj, iterate, context)
     }
-    return objectEach(obj, iterate, context || this)
+    return objectEach(obj, iterate, context)
   }
   return obj
 }
@@ -906,7 +882,7 @@ function each (obj, iterate, context) {
   */
 function lastEach (obj, iterate, context) {
   if (obj) {
-    return (isArray(obj) ? arrayLastEach : objectLastEach)(obj, iterate, context || this)
+    return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context || this)
   }
   return obj
 }
@@ -922,16 +898,18 @@ function lastEach (obj, iterate, context) {
 function lastForOf (obj, iterate, context) {
   if (obj) {
     var len
+    var list
+    context = context || this
     if (isArray(obj)) {
       for (len = obj.length - 1; len >= 0; len--) {
-        if (iterate.call(context || this, obj[len], len, obj) === false) {
+        if (iterate.call(context, obj[len], len, obj) === false) {
           break
         }
       }
     } else {
-      var list = objectKeys(obj)
+      list = objectKeys(obj)
       for (len = list.length - 1; len >= 0; len--) {
-        if (iterate.call(context || this, obj[list[len]], list[len], obj) === false) {
+        if (iterate.call(context, obj[list[len]], list[len], obj) === false) {
           break
         }
       }
@@ -954,6 +932,7 @@ function createiterateEmpty (iterate) {
   * @return {Object}
   */
 function groupBy (obj, iterate, context) {
+  var groupKey
   var result = {}
   if (obj) {
     context = this || context
@@ -965,7 +944,7 @@ function groupBy (obj, iterate, context) {
       }
     }
     each(obj, function (val, key) {
-      var groupKey = iterate ? iterate.call(context, val, key, obj) : val
+      groupKey = iterate ? iterate.call(context, val, key, obj) : val
       if (result[groupKey]) {
         result[groupKey].push(val)
       } else {
@@ -1001,14 +980,16 @@ function countBy (obj, iterate, context) {
   * @return {Object}
   */
 function range (start, stop, step) {
+  var index
+  var len
   var result = []
   var args = arguments
   if (args.length < 2) {
     stop = args[0]
     start = 0
   }
-  var index = start >> 0
-  var len = stop >> 0
+  index = start >> 0
+  len = stop >> 0
   if (index < stop) {
     step = step >> 0 || 1
     for (; index < len; index += step) {
@@ -1085,6 +1066,7 @@ function debounce (callback, wait, options) {
   var isLeading = typeof options === 'boolean'
   var optLeading = 'leading' in opts ? opts.leading : isLeading
   var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
+  var clearTimeoutFn = clearTimeout
   var runFn = function () {
     runFlag = true
     timeout = null
@@ -1100,7 +1082,7 @@ function debounce (callback, wait, options) {
   }
   var cancelFn = function () {
     var rest = timeout !== null
-    clearTimeout(timeout)
+    clearTimeoutFn(timeout)
     timeout = null
     return rest
   }
@@ -1113,7 +1095,7 @@ function debounce (callback, wait, options) {
         runFn()
       }
     } else {
-      clearTimeout(timeout)
+      clearTimeoutFn(timeout)
     }
     timeout = setTimeout(endFn, wait)
   }
@@ -1161,41 +1143,34 @@ var baseExports = {
   findLastIndexOf: findLastIndexOf,
   includes: includes,
   contains: includes,
-  objectAssign: objectAssign,
   assign: objectAssign,
   extend: objectAssign,
   stringToJson: stringToJson,
   jsonToString: jsonToString,
-  objectKeys: objectKeys,
   keys: objectKeys,
-  objectValues: objectValues,
   values: objectValues,
-  objectEntries: objectEntries,
   entries: objectEntries,
-  arrayFirst: arrayFirst,
-  first: arrayFirst,
-  arrayLast: arrayLast,
-  last: arrayLast,
-  objectEach: objectEach,
-  objectLastEach: objectLastEach,
+  first: getFirst,
+  last: getLast,
+  each: each,
+  forOf: forOf,
   arrayEach: arrayEach,
   forEach: arrayEach,
-  forLastEach: arrayLastEach,
-  arrayLastEach: arrayLastEach,
-  forOf: forOf,
-  each: each,
+  objectEach: objectEach,
   lastForOf: lastForOf,
   lastEach: lastEach,
+  lastForEach: lastArrayEach,
+  lastArrayEach: lastArrayEach,
+  lastObjectEach: lastObjectEach,
   groupBy: groupBy,
   countBy: countBy,
   objectMap: objectMap,
   clone: clone,
   bind: bind,
   once: once,
-  clear: removeObject,
-  clearObject: clearObject,
+  clear: clearObject,
   remove: removeObject,
-  removeObject: removeObject,
+  deleteProperty: deleteProperty,
   range: range,
   throttle: throttle,
   debounce: debounce,

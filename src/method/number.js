@@ -84,16 +84,11 @@ function stringToInteger (str) {
 
 var numberExports = {
   random: getRandom,
-  getRandom: getRandom,
-  arrayMin: arrayMin,
   min: arrayMin,
-  arrayMax: arrayMax,
   max: arrayMax,
   commafy: commafy,
   toNumber: stringToNumber,
-  stringToNumber: stringToNumber,
-  toInteger: stringToInteger,
-  stringToInteger: stringToInteger
+  toInteger: stringToInteger
 }
 
 module.exports = numberExports

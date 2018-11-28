@@ -14,7 +14,7 @@ var STRING_LAST = 'last'
  * @returns Number
  */
 var timestamp = Date.now || function () {
-  return _dateTime(new Date())
+  return getDateTime(new Date())
 }
 
 var dateFormatRules = [
@@ -27,7 +27,7 @@ var dateFormatRules = [
   {rules: [['SSS', 3], ['SS', 2], ['S', 1]]}
 ]
 
-function _dateTime (date) {
+function getDateTime (date) {
   return date.getTime()
 }
 
@@ -62,15 +62,16 @@ function isDateSame (date1, date2, format) {
   */
 function stringToDate (str, format) {
   if (str) {
+    var arr, sIndex, index, rules, len
+    var dates = []
     var isDate = baseExports.isDate(str)
     if (isDate || /^[0-9]{11,13}$/.test(str)) {
-      return new Date(isDate ? _dateTime(str) : str)
+      return new Date(isDate ? getDateTime(str) : str)
     }
     if (baseExports.isString(str)) {
       format = format || setupDefaults.formatDate
-      var dates = []
       baseExports.each(dateFormatRules, function (item) {
-        for (var arr, sIndex, index = 0, rules = item.rules, len = rules.length; index < len; index++) {
+        for (index = 0, rules = item.rules, len = rules.length; index < len; index++) {
           arr = rules[index]
           sIndex = format.indexOf(arr[0])
           if (sIndex > -1) {
@@ -121,14 +122,13 @@ function dateToString (date, format, options) {
   if (date) {
     date = stringToDate(date)
     if (baseExports.isDate(date)) {
-      var empty = ''
       var result = format || setupDefaults.formatString
       var hours = date.getHours()
       var apm = hours < 12 ? 'am' : 'pm'
       var zoneHours = date.getTimezoneOffset() / 60 * -1
-      var formats = baseExports.assign({}, setupDefaults.formatStringMatchs, options && options.formats ? options.formats : null)
+      var formats = baseExports.assign({}, setupDefaults.formatStringMatchs, options ? options.formats : null)
       var timeRules = [
-        [/y{2,4}/g, empty, function (match) { return (empty + _dateFullYear(date)).substr(4 - match.length) }],
+        [/y{2,4}/g, '', function (match) { return ('' + _dateFullYear(date)).substr(4 - match.length) }],
         [/M{1,2}/g, _dateMonth(date) + 1],
         [/d{1,2}/g, date.getDate()],
         [/H{1,2}/g, hours],
@@ -136,19 +136,22 @@ function dateToString (date, format, options) {
         [/m{1,2}/g, date.getMinutes()],
         [/s{1,2}/g, date.getSeconds()],
         [/S{1,3}/g, date.getMilliseconds()],
-        [/a/g, empty, function (match) { return handleCustomTemplate(date, formats, match, apm) }],
-        [/A/g, empty, function (match) { return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase()) }],
-        [/z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
-        [/e/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
-        [/E/g, empty, function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
-        [/q/g, empty, function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
-        [/Z/g, empty, function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, 0) + '00') }],
-        [/W/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
-        [/w/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
-        [/D/g, empty, function (match) { return handleCustomTemplate(date, formats, match, getYearDay(date)) }]
+        [/a/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm) }],
+        [/A/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase()) }],
+        [/z/g, '', function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
+        [/e/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
+        [/E/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
+        [/q/g, '', function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
+        [/Z/g, '', function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, 0) + '00') }],
+        [/W/g, '', function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
+        [/w/g, '', function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
+        [/D/g, '', function (match) { return handleCustomTemplate(date, formats, match, getYearDay(date)) }]
       ]
-      for (var index = 0; index < timeRules.length; index++) {
-        var item = timeRules[index]
+      var item
+      var index = 0
+      var len = timeRules.length
+      for (; index < len; index++) {
+        item = timeRules[index]
         result = result.replace(item[0], item[2] || function (match) {
           return formatPadStart(item[1], match.length, '0')
         })
@@ -169,9 +172,10 @@ function dateToString (date, format, options) {
   * @return {Date}
   */
 function getWhatYear (date, year, month) {
+  var number
   var currentDate = stringToDate(date)
   if (year) {
-    var number = year && !isNaN(year) ? year : 0
+    number = year && !isNaN(year) ? year : 0
     currentDate.setFullYear(_dateFullYear(currentDate) + number)
   }
   if (month || !isNaN(month)) {
@@ -202,7 +206,7 @@ function getWhatMonth (date, month, day) {
     if (day === STRING_FIRST) {
       return new Date(_dateFullYear(currentDate), _dateMonth(currentDate) + monthOffset, 1)
     } else if (day === STRING_LAST) {
-      return new Date(_dateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
+      return new Date(getDateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
     } else {
       currentDate.setDate(day)
     }
@@ -225,7 +229,7 @@ function getWhatWeek (date, week, day) {
   var currentDate = stringToDate(date)
   var customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
   var currentDay = currentDate.getDay()
-  var time = _dateTime(currentDate)
+  var time = getDateTime(currentDate)
   var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
   if (week && !isNaN(week)) {
     whatDayTime += week * WEEK_TIME
@@ -248,14 +252,14 @@ function getWhatDay (date, day, mode) {
     if (mode === STRING_FIRST) {
       return new Date(_dateFullYear(currentDate), _dateMonth(currentDate), currentDate.getDate())
     } else if (mode === STRING_LAST) {
-      return new Date(_dateTime(getWhatDay(currentDate, 1, STRING_FIRST)) - 1)
+      return new Date(getDateTime(getWhatDay(currentDate, 1, STRING_FIRST)) - 1)
     }
   }
   return currentDate
 }
 
 function calculateTime (startDate, endDate, timeGap) {
-  return Math.floor((_dateTime(new Date(_dateFullYear(endDate), _dateMonth(endDate), endDate.getDate())) - _dateTime(new Date(_dateFullYear(startDate), _dateMonth(startDate), startDate.getDate()))) / timeGap) + 1
+  return Math.floor((getDateTime(new Date(_dateFullYear(endDate), _dateMonth(endDate), endDate.getDate())) - getDateTime(new Date(_dateFullYear(startDate), _dateMonth(startDate), startDate.getDate()))) / timeGap) + 1
 }
 
 /**
@@ -336,7 +340,7 @@ function getDayOfYear (date, year) {
   */
 function getDayOfMonth (date, month) {
   if (date) {
-    return Math.floor((_dateTime(getWhatMonth(date, month, STRING_LAST)) - _dateTime(getWhatMonth(date, month, STRING_FIRST))) / DAY_TIME) + 1
+    return Math.floor((getDateTime(getWhatMonth(date, month, STRING_LAST)) - getDateTime(getWhatMonth(date, month, STRING_FIRST))) / DAY_TIME) + 1
   }
   return 0
 }
@@ -351,15 +355,16 @@ function getDayOfMonth (date, month) {
   */
 function getDateDiff (startDate, endDate, rules) {
   var result = {done: false, time: 0}
-  var startTime = _dateTime(stringToDate(startDate))
-  var endTime = _dateTime(endDate ? stringToDate(endDate) : new Date())
+  var startTime = getDateTime(stringToDate(startDate))
+  var endTime = getDateTime(endDate ? stringToDate(endDate) : new Date())
   if (startTime < endTime) {
     var item
     var diffTime = result.time = endTime - startTime
     var rule = rules && rules.length > 0 ? rules : setupDefaults.dateDiffRules
     var len = rule.length
+    var index = 0
     result.done = true
-    for (var index = 0; index < len; index++) {
+    for (; index < len; index++) {
       item = rule[index]
       if (diffTime >= item[1]) {
         if (index === len - 1) {

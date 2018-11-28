@@ -4,6 +4,13 @@ var XEUtils = require('../core/utils')
 var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
 
+var FIND_PRO = 'find'
+var MAP_PRO = 'map'
+var FILTER_PRO = 'filter'
+var EVERY_PRO = 'every'
+var SOME_PRO = 'some'
+var REDUCE_PRO = 'reduce'
+
 function _objectHasOwnProperty (obj, key) {
   return obj.hasOwnProperty(key)
 }
@@ -17,7 +24,7 @@ function _objectHasOwnProperty (obj, key) {
 function arrayUniq (array) {
   var result = []
   if (baseExports.isArray(array)) {
-    baseExports.arrayEach(array, function (value) {
+    baseExports.each(array, function (value) {
       if (!result.includes(value)) {
         result.push(value)
       }
@@ -35,7 +42,9 @@ function arrayUniq (array) {
 function arrayUnion () {
   var args = arguments
   var result = []
-  for (var index = 0, len = args.length; index < len; index++) {
+  var index = 0
+  var len = args.length
+  for (; index < len; index++) {
     result = result.concat(args[index])
   }
   return arrayUniq(result)
@@ -66,9 +75,12 @@ function arraySort (arr, iterate, context) {
   * @return {Array}
   */
 function arrayShuffle (array) {
+  var index
   var result = []
-  for (var list = baseExports.values(array), len = list.length - 1; len >= 0; len--) {
-    var index = len > 0 ? XEUtils.getRandom(0, len) : 0
+  var list = baseExports.values(array)
+  var len = list.length - 1
+  for (; len >= 0; len--) {
+    index = len > 0 ? XEUtils.getRandom(0, len) : 0
     result.push(list[index])
     list.splice(index, 1)
   }
@@ -107,10 +119,9 @@ function isArrayPro (array, pro) {
   */
 function arraySome (obj, iterate, context) {
   if (obj && iterate) {
-    var pro = 'some'
     context = context || this
-    if (isArrayPro(pro)) {
-      return obj[pro](iterate, context)
+    if (isArrayPro(SOME_PRO)) {
+      return obj[SOME_PRO](iterate, context)
     } else {
       for (var key in obj) {
         if (_objectHasOwnProperty(obj, key)) {
@@ -134,10 +145,9 @@ function arraySome (obj, iterate, context) {
   */
 function arrayEvery (obj, iterate, context) {
   if (obj && iterate) {
-    var pro = 'every'
     context = context || this
-    if (isArrayPro(pro)) {
-      return obj[pro](iterate, context)
+    if (isArrayPro(EVERY_PRO)) {
+      return obj[EVERY_PRO](iterate, context)
     } else {
       for (var key in obj) {
         if (_objectHasOwnProperty(obj, key)) {
@@ -161,10 +171,9 @@ function arrayEvery (obj, iterate, context) {
   */
 function arrayFilter (obj, iterate, context) {
   if (obj && iterate) {
-    var pro = 'filter'
     context = context || this
-    if (isArrayPro(pro)) {
-      return obj[pro](iterate, context)
+    if (isArrayPro(FILTER_PRO)) {
+      return obj[FILTER_PRO](iterate, context)
     } else {
       var result = {}
       baseExports.each(obj, function (val, key) {
@@ -188,10 +197,9 @@ function arrayFilter (obj, iterate, context) {
   */
 function arrayFind (obj, iterate, context) {
   if (obj && iterate) {
-    var pro = 'find'
     context = context || this
-    if (isArrayPro(pro)) {
-      return obj[pro](iterate, context)
+    if (isArrayPro(FIND_PRO)) {
+      return obj[FIND_PRO](iterate, context)
     } else {
       for (var key in obj) {
         if (_objectHasOwnProperty(obj, key)) {
@@ -237,13 +245,12 @@ function arrayMap (obj, iterate, context) {
   var result = []
   if (obj) {
     if (arguments.length > 1) {
-      var pro = 'map'
       context = context || this
       if (!baseExports.isFunction(iterate)) {
         iterate = baseExports.property(iterate)
       }
-      if (isArrayPro(pro)) {
-        return obj[pro](iterate, context)
+      if (isArrayPro(MAP_PRO)) {
+        return obj[MAP_PRO](iterate, context)
       } else {
         baseExports.each(obj, function () {
           result.push(iterate.apply(context, arguments))
@@ -299,27 +306,22 @@ function arrayMean (array, iterate, context) {
   * @return {Number}
   */
 function arrayReduce (array, callback, initialValue) {
-  var previous = initialValue
+  var len
   var index = 0
   var context = this
-  if (baseExports.isArray(array)) {
-    if (typeof initialValue === 'undefined') {
-      previous = array[0]
-      index = 1
-    }
-    if (array.reduce) {
-      return array.reduce(function () {
-        return callback.apply(context, arguments)
-      }, initialValue)
-    } else {
-      for (var len = array.length; index < len; index++) {
-        previous = callback.call(context, previous, array[index], index, array)
-      }
-    }
-  } else {
-    baseExports.each(array, function (val, key) {
-      previous = callback.call(context, previous, val, key, array)
-    })
+  var previous = initialValue
+  var keyList = baseExports.keys(array)
+  if (isArrayPro(REDUCE_PRO)) {
+    return array.reduce(function () {
+      return callback.apply(context, arguments)
+    }, initialValue)
+  }
+  if (typeof initialValue === 'undefined') {
+    previous = array[keyList[0]]
+    index = 1
+  }
+  for (len = keyList.length; index < len; index++) {
+    previous = callback.call(context, previous, array[keyList[index]], index, array)
   }
   return previous
 }
@@ -367,11 +369,12 @@ function arrayCopyWithin (array, target, start, end) {
   * @return {Array}
   */
 function chunk (array, size) {
+  var index
   var result = []
   var arrLen = size >> 0 || 1
   if (baseExports.isArray(array)) {
     if (arrLen >= 0 && array.length > arrLen) {
-      var index = 0
+      index = 0
       while (index < array.length) {
         result.push(array.slice(index, index + arrLen))
         index += arrLen
@@ -399,10 +402,11 @@ function zip () {
  */
 function unzip (arrays) {
   var result = []
+  var index = 0
   var len = XEUtils.max(arrays, function (item) {
     return item.length || 0
   })
-  for (var index = 0; index < len; index++) {
+  for (; index < len; index++) {
     result.push(arrayMap(arrays, index))
   }
   return result
@@ -416,7 +420,7 @@ function unzip (arrays) {
  * @param {Object} context 上下文
  * @return {Array}
  */
-function from (array, iterate, context) {
+function toArray (array, iterate, context) {
   if (baseExports.isArray(array)) {
     return array
   }
@@ -424,7 +428,9 @@ function from (array, iterate, context) {
     return []
   }
   var result = []
-  for (var index = 0, len = array.length; index < len; index++) {
+  var index = 0
+  var len = array.length
+  for (; index < len; index++) {
     result.push(array[index])
   }
   return arguments.length < 2 ? result : arrayMap(result, iterate, context || this)
@@ -438,9 +444,11 @@ function from (array, iterate, context) {
   * @return {Boolean}
   */
 function includeArrays (array1, array2) {
+  var len
+  var index = 0
   var includes = baseExports.includes
   if (baseExports.isArray(array2)) {
-    for (var index = 0, len = array2.length; index < len; index++) {
+    for (len = array2.length; index < len; index++) {
       if (!includes(array1, array2[index])) {
         return false
       }
@@ -480,9 +488,7 @@ function deepGetObj (obj, path) {
  * @return {Array}
  */
 function invokeMap (list, path) {
-  var context
   var func
-  var rest = []
   var args = arguments
   var params = []
   var paths = []
@@ -498,15 +504,15 @@ function invokeMap (list, path) {
     }
     path = path[len]
   }
-  for (index = 0, len = list.length; index < len; index++) {
-    context = list[index]
+  return baseExports.map(list, function (context) {
     if (paths.length) {
       context = deepGetObj(context, paths)
     }
     func = context[path] || path
-    rest.push(func && func.apply ? func.apply(context, params) : undefined)
-  }
-  return rest
+    if (func && func.apply) {
+      return func.apply(context, params)
+    }
+  })
 }
 
 /**
@@ -527,6 +533,7 @@ function arrayToTree (array, options) {
   var optData = opts.data
   var result = []
   var treeMap = {}
+  var idList, id, treeData, parentId
 
   if (optSortKey) {
     array = arraySort(baseExports.clone(array), optSortKey)
@@ -535,12 +542,11 @@ function arrayToTree (array, options) {
     }
   }
 
-  var idList = arrayMap(array, function (item) {
+  idList = arrayMap(array, function (item) {
     return item[optKey]
   })
 
-  for (var item, id, parentId, treeData, index = 0, len = array.length; index < len; index++) {
-    item = array[index]
+  baseExports.each(array, function (item) {
     id = item[optKey]
 
     if (optData) {
@@ -563,7 +569,7 @@ function arrayToTree (array, options) {
         result.push(treeData)
       }
     }
-  };
+  })
 
   if (optStrict) {
     strictTree(array, optChildren)
@@ -573,30 +579,21 @@ function arrayToTree (array, options) {
 }
 
 function strictTree (array, optChildren) {
-  for (var item, index = 0, len = array.length; index < len; index++) {
-    item = array[index]
+  baseExports.each(array, function (item) {
     if (!item.children.length) {
-      try {
-        delete item[optChildren]
-      } catch (e) {
-        item[optChildren] = undefined
-      }
+      baseExports.deleteProperty(item, optChildren)
     }
-  }
+  })
 }
 
 function unTreeList (result, array, opts) {
+  var children
   var optChildren = opts.children
   var optData = opts.data
-  for (var item, children, index = 0, len = array.length; index < len; index++) {
-    item = array[index]
+  baseExports.each(array, function (item) {
     children = item[optChildren]
     if (optData === null) {
-      try {
-        delete item[optChildren]
-      } catch (e) {
-        item[optChildren] = undefined
-      }
+      baseExports.deleteProperty(item, optChildren)
     } else {
       item = item[optData]
     }
@@ -604,7 +601,7 @@ function unTreeList (result, array, opts) {
     if (children) {
       unTreeList(result, children, opts)
     }
-  }
+  })
   return result
 }
 
@@ -616,46 +613,29 @@ function unTreeList (result, array, opts) {
   * @return {Array}
   */
 function treeToArray (array, options) {
-  var opts = baseExports.assign({}, setupDefaults.treeOptions, options)
-  return unTreeList([], array, opts)
+  return unTreeList([], array, baseExports.assign({}, setupDefaults.treeOptions, options))
 }
 
 var arrayExports = {
-  arrayUniq: arrayUniq,
   uniq: arrayUniq,
-  arrayUnion: arrayUnion,
   union: arrayUnion,
-  arraySort: arraySort,
-  sort: arraySort,
   sortBy: arraySort,
-  arrayShuffle: arrayShuffle,
   shuffle: arrayShuffle,
-  arraySample: arraySample,
   sample: arraySample,
-  arraySome: arraySome,
   some: arraySome,
-  arrayEvery: arrayEvery,
   every: arrayEvery,
-  arrayFilter: arrayFilter,
   filter: arrayFilter,
-  arrayFind: arrayFind,
   find: arrayFind,
   findKey: findKey,
-  arrayMap: arrayMap,
   map: arrayMap,
-  arraySum: arraySum,
   sum: arraySum,
-  arrayMean: arrayMean,
   mean: arrayMean,
-  arrayReduce: arrayReduce,
   reduce: arrayReduce,
-  arrayCopyWithin: arrayCopyWithin,
   copyWithin: arrayCopyWithin,
   chunk: chunk,
   zip: zip,
   unzip: unzip,
-  from: from,
-  toArray: from,
+  toArray: toArray,
   includeArrays: includeArrays,
   pluck: pluck,
   invoke: invokeMap,

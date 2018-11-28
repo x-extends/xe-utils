@@ -804,17 +804,17 @@ XEUtils.last({a: 11, b: 22}) // 22
 XEUtils.last([11, 22]) // 22
 ```
 
-### each/forEach/arrayEach/objectEach ( obj, iteratee [, context] ) 迭代器
+### each/forOf/arrayEach/objectEach ( obj, iteratee [, context] ) 迭代器
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.forOf([11, 22, 33], (item, key) => {
-  // 通用迭代器,支持 return false 跳出循环
-  return false
-})
 XEUtils.each([11, 22, 33], (item, key) => {
   // 通用迭代器
+})
+XEUtils.forOf([11, 22, 33], (item, key) => {
+  // 通用迭代器,支持 return false 跳出循环 break
+  return false
 })
 XEUtils.arrayEach([11, 22, 33], (item, index) => {
   // 数组迭代器
@@ -824,22 +824,22 @@ XEUtils.objectEach({a: 11, b: 22}, (item, key) => {
 })
 ```
 
-### lastEach/forLastEach/arrayLastEach/objectLastEach ( obj, iteratee [, context] ) 迭代器,从最后开始迭代
+### lastEach/lastForOf/lastArrayEach/lastObjectEach ( obj, iteratee [, context] ) 迭代器,从最后开始迭代
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.forOfLast([11, 22, 33], (item, key) => {
-  // 通用迭代器,支持return false跳出循环
-  return false
-})
 XEUtils.lastEach([11, 22, 33], (item, key) => {
   // 通用迭代器
 })
-XEUtils.arrayLastEach([11, 22, 33], (item, index) => {
+XEUtils.lastForOf([11, 22, 33], (item, key) => {
+  // 通用迭代器,支持 return false 跳出循环 break
+  return false
+})
+XEUtils.lastArrayEach([11, 22, 33], (item, index) => {
   // 数组迭代器
 })
-XEUtils.objectLastEach({a: 11, b: 22}, (item, key) => {
+XEUtils.lastObjectEach({a: 11, b: 22}, (item, key) => {
   // 对象迭代器
 })
 ```
@@ -1018,13 +1018,11 @@ XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
 XEUtils.mean([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 66
 ```
 
-### toArray/from ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组
+### toArray ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.from([]) // []
-XEUtils.from(arguments) // [...]
 XEUtils.toArray([]) // []
 XEUtils.toArray({}) // []
 XEUtils.toArray(arguments) // [...]
@@ -1289,12 +1287,11 @@ XEUtils.treeToArray(list2, {data: 'data'})
 // [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
 ```
 
-### now/timestamp ( ) 返回当前时间戳
+### timestamp ( ) 返回当前时间戳
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.now() // 1514096716800
 XEUtils.timestamp() // 1514096716800
 ```
 
@@ -1809,11 +1806,6 @@ XEUtils.cookie.removeItem(name, {path: '/'})
 XEUtils.cookie.keys()
 // 获取所有
 XEUtils.cookie.getJSON()
-
-// 兼容函数
-XEUtils.cookie.set(name, value)
-XEUtils.cookie.get(name)
-XEUtils.cookie.remove(name)
 ```
 
 ## 全局参数设置

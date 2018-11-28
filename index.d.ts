@@ -492,7 +492,7 @@ export interface XEUtilsMethods {
   last(obj: object | Array<any>): any;
 
   /**
-   * 迭代器,支持 return false 跳出循环
+   * 迭代器,支持 return false 跳出循环 break
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
@@ -500,7 +500,7 @@ export interface XEUtilsMethods {
     ```javascript
     XEUtils.forOf([11, 22, 33], (item, index) => {
       if (index > 1) {
-        // 结束循环
+        // break 结束循环
         return false
       }
     })
@@ -551,21 +551,21 @@ export interface XEUtilsMethods {
   objectEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
-   * 迭代器,从最后开始迭代,支持 return false 跳出循环
+   * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
    * @param obj 对象
    * @param iteratee 回调 
    * @param context 上下文
    * @example 
     ```javascript
-    XEUtils.forOfLast([11, 22, 33], (item, index) => {
+    XEUtils.lastForOf([11, 22, 33], (item, index) => {
       if (index < 1) {
-        // 结束循环
+        // break 结束循环
         return false
       }
     })
     ```
    */
-  forOfLast(obj: any, iteratee: Function, context?: any): void;
+  lastForOf(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 通用迭代器,从最后开始迭代
@@ -588,12 +588,12 @@ export interface XEUtilsMethods {
    * @param context 上下文
    * @example 
     ```javascript
-    XEUtils.arrayLastEach([11, 22, 33], (item, index) => {
+    XEUtils.lastArrayEach([11, 22, 33], (item, index) => {
       console.log(item)
     })
     ```
    */
-  arrayLastEach(obj: any, iteratee: Function, context?: any): void;
+  lastArrayEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 对象迭代器,从最后开始迭代
@@ -602,12 +602,12 @@ export interface XEUtilsMethods {
    * @param context 上下文
    * @example 
     ```javascript
-    XEUtils.objectLastEach({a: 11, b: 22}, (item, key) => {
+    XEUtils.lastObjectEach({a: 11, b: 22}, (item, key) => {
       console.log(item)
     })
     ```
    */
-  objectLastEach(obj: any, iteratee: Function, context?: any): void;
+  lastObjectEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
    * 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组
@@ -687,18 +687,6 @@ export interface XEUtilsMethods {
    * @param array 数组
    */
   union(...array: any[]): Array<any>;
-
-  /**
-   * 数组按属性值升序
-   * @param array 数组
-   * @param iteratee 回调/属性
-   * @param context 上下文
-   * @example 
-    ```javascript
-    XEUtils.sort([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
-    ```
-   */
-  sort(array: Array<any>, iteratee: Function, context?: any): Array<any>;
 
   /**
    * 数组按属性值升序
