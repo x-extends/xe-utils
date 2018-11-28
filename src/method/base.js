@@ -822,7 +822,7 @@ function lastArrayEach (obj, iterate, context) {
 }
 
 /**
-  * 迭代器
+  * 迭代器,支持 return false 跳出循环 break
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iterate(item, index, obj) 回调
@@ -888,7 +888,7 @@ function lastEach (obj, iterate, context) {
 }
 
 /**
-  * 迭代器,从最后开始迭代
+  * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iterate(item, index, obj) 回调
