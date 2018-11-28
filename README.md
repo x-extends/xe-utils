@@ -76,6 +76,8 @@ import XEUtils from 'xe-utils'
 ## API
 
 * [setup ( options ) 全局参数设置](#全局参数设置)
+
+* *判断函数*
 * [isNaN (val) 判断是否非数值](#isnan-val-判断是否非数值)
 * [isFinite (val) 判断是否为有限数值](#isfinite-val-判断是否为有限数值)
 * [isUndefined (val) 判断 Undefined](#isundefined-val-判断-undefined)
@@ -105,6 +107,8 @@ import XEUtils from 'xe-utils'
 * [isWeakSet (val) 判断是否 WeakSet 对象](#isweakset-val-判断是否-weakset-对象)
 * [isLeapYear (date) 判断是否闰年](#isleapyear-date-判断是否闰年)
 * [isDateSame (date1, date2, format) 判断两个日期是否相同](#isdatesame-date1-date2-format-判断两个日期是否相同)
+
+* *常用函数*
 * [toNumber ( num ) 转数值](#tonumber--num--转数值)
 * [toInteger ( num ) 转整数](#tointeger--num--转整数)
 * [toArray ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组](#toarrayfrom--array-iteratee--context--根据数组或可迭代对象中创建一个新的数组)
@@ -174,6 +178,8 @@ import XEUtils from 'xe-utils'
 * [min ( arrb[, iteratee] ) 获取最小值](#min--arrb-iteratee--获取最小值)
 * [max ( arr [, iteratee] ) 获取最大值](#max--arr--iteratee--获取最大值)
 * [commafy ( num [, options] ) 数值千分位分隔符、小数点](#commafy--num--options--数值千分位分隔符小数点)
+
+* *日期函数*
 * [timestamp ( ) 返回当前时间戳](#nowtimestamp---返回当前时间戳)
 * [stringToDate ( str, format ) 任意格式字符串转为日期](#stringtodate--str-format--任意格式字符串转为日期)
 * [dateToString ( date [, format, options] ) 日期格式化为任意格式字符串](#datetostring--date--format-options--日期格式化为任意格式字符串)
@@ -187,6 +193,8 @@ import XEUtils from 'xe-utils'
 * [getMonthWeek ( date ) 返回某个月份的第几周](#getmonthweek--date--返回某个月份的第几周)
 * [getDayOfMonth ( date [, month] ) 返回某个月份的天数,可以指定前几个月或后几个月，默认当前](#getdayofmonth--date--month--返回某个月份的天数可以指定前几个月或后几个月默认当前)
 * [getDateDiff ( startDate, endDate [, rules] ) 返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle](#getdatediff--startdate-enddate--rules--返回两个日期之间差距如果结束日期小于开始日期-done-为-fasle)
+
+* *高级函数*
 * [arrayToTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#arraytotree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
 * [treeToArray ( array, options ) 将一个树结构转成数组列表](#treetoarray--array-options--将一个树结构转成数组列表)
 * [pluck ( array, key ) 获取数组对象中某属性值，返回一个数组](#pluck--array-key--获取数组对象中某属性值返回一个数组)
