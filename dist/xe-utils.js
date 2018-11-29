@@ -2129,12 +2129,23 @@
   var STRING_LAST = 'last'
 
   /**
-   * 返回时间戳
+   * 返回当前时间戳
    *
    * @returns Number
    */
-  var timestamp = Date.now || function () {
+  var now = Date.now || function () {
     return getDateTime(new Date())
+  }
+
+  /**
+   * 将日期格式化为时间戳
+   *
+    * @param {String/Number/Date} str 日期或数字
+    * @param {String} format 解析日期格式
+   * @returns Number
+   */
+  var timestamp = function (date, format) {
+    return date ? getDateTime(stringToDate(date, format)) : now()
   }
 
   var dateFormatRules = [
@@ -2176,7 +2187,7 @@
   /**
     * 字符串转为日期
     *
-    * @param {String} str 日期或数字
+    * @param {String/Number/Date} str 日期或数字
     * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、hh(12)HH(24)小时、mm分钟、ss秒、SSS毫秒)
     * @return {String}
     */
@@ -2502,8 +2513,8 @@
   }
 
   var dateExports = {
+    now: now,
     timestamp: timestamp,
-    now: timestamp,
     isDateSame: isDateSame,
     stringToDate: stringToDate,
     dateToString: dateToString,

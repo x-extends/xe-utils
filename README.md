@@ -180,7 +180,8 @@ import XEUtils from 'xe-utils'
   * [max ( arr [, iteratee] ) 获取最大值](#max--arr--iteratee--获取最大值)
   * [commafy ( num [, options] ) 数值千分位分隔符、小数点](#commafy--num--options--数值千分位分隔符小数点)
 * *日期函数*
-  * [timestamp ( ) 返回当前时间戳](#nowtimestamp---返回当前时间戳)
+  * [now ( ) 返回当前时间戳](#nowtimestamp---返回当前时间戳)
+  * [timestamp ( date[, format] ) 将日期格式化为时间戳](#nowtimestamp---返回当前时间戳)
   * [stringToDate ( str, format ) 任意格式字符串转为日期](#stringtodate--str-format--任意格式字符串转为日期)
   * [dateToString ( date [, format, options] ) 日期格式化为任意格式字符串](#datetostring--date--format-options--日期格式化为任意格式字符串)
   * [getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前](#getwhatyear--date-year--month--返回前几年或后几年的日期可以指定年初first年末last月份011默认当前)
@@ -1437,12 +1438,22 @@ XEUtils.treeToArray(list2, {data: 'data'})
 */
 ```
 
-### timestamp ( ) 返回当前时间戳
+### now ( ) 返回当前时间戳
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.timestamp() // 1514096716800
+XEUtils.now() // 1514096716800
+```
+
+### timestamp ( date[, format] ) 将日期格式化为时间戳
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.timestamp(new Date()) // 1514096716800
+XEUtils.timestamp('2018-12-01') // 1543593600000
+XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS') // 1513735830459
 ```
 
 ### stringToDate ( str, format ) 任意格式字符串转为日期
@@ -1468,7 +1479,7 @@ XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy')
 // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('20171220101030', 'yyyyMMddHHmmss')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm')
+XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm:ss')
 // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
 XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)

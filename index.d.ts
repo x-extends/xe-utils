@@ -953,7 +953,14 @@ export interface XEUtilsMethods {
   /**
    * 返回当前时间戳
    */
-  timestamp(): number;
+  now(): number;
+
+  /**
+   * 将日期格式化为时间戳
+   * @param date 字符串/日期/时间戳
+   * @param format 解析格式 yyyy MM dd HH mm ss SSS
+   */
+  timestamp(date: string | Date | number, format?: string): number;
 
   /**
    * 任意格式字符串转为日期
