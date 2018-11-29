@@ -941,14 +941,14 @@ export interface XEUtilsMethods {
    * @param array 数组
    * @param options 可选参数
    */
-  arrayToTree(array: Array<any>, options?: object): Array<any>;
+  toArrayTree(array: Array<any>, options?: object): Array<any>;
 
   /**
    * 将一个树结构转成数组列表
    * @param array 数组
    * @param options 可选参数
    */
-  treeToArray(array: Array<any>, options?: object): Array<any>;
+  toTreeArray(array: Array<any>, options?: object): Array<any>;
 
   /**
    * 返回当前时间戳

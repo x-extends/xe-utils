@@ -543,7 +543,7 @@
     * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
     * @return {Array}
     */
-  function arrayToTree (array, options) {
+  function toArrayTree (array, options) {
     var opts = baseExports.assign({}, setupDefaults.treeOptions, options)
     var optStrict = opts.strict
     var optKey = opts.key
@@ -633,7 +633,7 @@
     * @param {Object} options {children: 'children', data: 'data'}
     * @return {Array}
     */
-  function treeToArray (array, options) {
+  function toTreeArray (array, options) {
     return unTreeList([], array, baseExports.assign({}, setupDefaults.treeOptions, options))
   }
 
@@ -661,8 +661,8 @@
     pluck: pluck,
     invoke: invokeMap,
     invokeMap: invokeMap,
-    arrayToTree: arrayToTree,
-    treeToArray: treeToArray
+    toArrayTree: toArrayTree,
+    toTreeArray: toTreeArray
   }
 
   var STRING_UNDEFINED = 'undefined'

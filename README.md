@@ -188,8 +188,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [getDayOfMonth ( date [, month] ) 返回某个月份的天数,可以指定前几个月或后几个月，默认当前](#getdayofmonth--date--month--返回某个月份的天数可以指定前几个月或后几个月默认当前)
   * [getDateDiff ( startDate, endDate [, rules] ) 返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle](#getdatediff--startdate-enddate--rules--返回两个日期之间差距如果结束日期小于开始日期-done-为-fasle)
 * *高级函数*
-  * [arrayToTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#arraytotree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
-  * [treeToArray ( array, options ) 将一个树结构转成数组列表](#treetoarray--array-options--将一个树结构转成数组列表)
+  * [toArrayTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#toArrayTree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
+  * [toTreeArray ( array, options ) 将一个树结构转成数组列表](#toTreeArray--array-options--将一个树结构转成数组列表)
   * [property ( path ) 返回一个获取对象属性的函数](#property--path--返回一个获取对象属性的函数)
   * [pluck ( array, key ) 获取数组对象中某属性值，返回一个数组](#pluck--array-key--获取数组对象中某属性值返回一个数组)
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
@@ -1157,7 +1157,7 @@ XEUtils.invoke([{a: {b: [2, 0, 1]}}, {a: {b: [2, 1]}}, {a: {b: [4, 8, 1]}}], ['a
 // [[0, 1, 2], [1, 2], [1, 4, 8]]
 ```
 
-### arrayToTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
+### toArrayTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
 
 | 属性 | 描述 | 默认值 |
 |------|------|------|
@@ -1179,7 +1179,7 @@ let list1 = [
   {id: 3, name: '333'},
   {id: 4, parentId: 2, name: '444'}
 ]
-XEUtils.arrayToTree(list1)
+XEUtils.toArrayTree(list1)
 /*
 [
   {
@@ -1217,7 +1217,7 @@ let list1 = [
   {id: 4, parentId: 2, name: '444', seq: 2},
   {id: 5, parentId: 1, name: '555', seq: 1}
 ]
-XEUtils.arrayToTree(list1, {sortKey: 'seq'})
+XEUtils.toArrayTree(list1, {sortKey: 'seq'})
 /*
 [
   {
@@ -1266,7 +1266,7 @@ let list2 = [
   {id: 4, parentId: 2, name: '444'},
   {id: 5, parentId: 22, name: '555'}
 ]
-XEUtils.arrayToTree(list2, {data: 'data'})
+XEUtils.toArrayTree(list2, {data: 'data'})
 /*
 [
   {
@@ -1310,7 +1310,7 @@ let list3 = [
   {id: 4, parentId: 2, name: '444'},
   {id: 5, parentId: 22, name: '555'}
 ]
-XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
+XEUtils.toArrayTree(list3, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
 /*
 [
   {
@@ -1341,7 +1341,7 @@ XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', chil
 */
 ```
 
-### treeToArray ( array, options ) 将一个树结构转成数组列表
+### toTreeArray ( array, options ) 将一个树结构转成数组列表
 
 | 属性 | 描述 | 默认值 |
 |------|------|------|
@@ -1377,7 +1377,7 @@ let list1 = [
     "children":[]
   }
 ]
-XEUtils.treeToArray(list1)
+XEUtils.toTreeArray(list1)
 /*
 [
   {id: 1, name: '111'},
@@ -1419,7 +1419,7 @@ let list2 = [
     "children":[]
   }
 ]
-XEUtils.treeToArray(list2, {data: 'data'})
+XEUtils.toTreeArray(list2, {data: 'data'})
 /*
 [
   {id: 1, name: '111'},
