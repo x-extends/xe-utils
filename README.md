@@ -110,8 +110,8 @@ import XEUtils from 'xe-utils'
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
   * [toInteger ( num ) 转整数](#tointeger--num--转整数)
   * [toArray ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组](#toarrayfrom--array-iteratee--context--根据数组或可迭代对象中创建一个新的数组)
-  * [stringToJson (str) 字符串转 JSON](#stringtojson-str-字符串转-json)
-  * [jsonToString (obj) JSON 转字符串](#jsontostring-obj-json-转字符串)
+  * [toStringJSON (str) 字符串转 JSON](#stringtojson-str-字符串转-json)
+  * [toJSONString (obj) JSON 转字符串](#jsontostring-obj-json-转字符串)
   * [getType (obj) 获取对象类型](#gettype-obj-获取对象类型)
   * [getSize ( obj ) 返回对象的长度](#getsize--obj--返回对象的长度)
   * [uniqueId ( prefix ) 获取一个全局唯一标识](#uniqueid--prefix--获取一个全局唯一标识)
@@ -794,22 +794,22 @@ XEUtils.destructuring({a: 11, d: 44}, {a: 11, b: 22, c: 33}) // {a: 11, d: 44}
 XEUtils.destructuring({a: 11, c: 33, d: 44}, {a: 11, b: 22, c: null, e: 55, f: 66}) // {a: 11, c: null, d: 44}
 ```
 
-### stringToJson (str) 字符串转 JSON
+### toStringJSON (str) 字符串转 JSON
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.stringToJson('{"a":1}') // {a: 1}
-XEUtils.stringToJson('[11,22]') // [11, 22]
+XEUtils.toStringJSON('{"a":1}') // {a: 1}
+XEUtils.toStringJSON('[11,22]') // [11, 22]
 ```
 
-### jsonToString (obj) JSON 转字符串
+### toJSONString (obj) JSON 转字符串
 
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.jsonToString({a: 1}) // '{"a":1}'
-XEUtils.jsonToString([11, 22]) // '[11,22]'
+XEUtils.toJSONString({a: 1}) // '{"a":1}'
+XEUtils.toJSONString([11, 22]) // '[11,22]'
 ```
 
 ### keys (obj) 获取对象所有属性

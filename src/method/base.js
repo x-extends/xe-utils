@@ -677,7 +677,7 @@ var objectAssign = function (target) {
   * @param {String} str 字符串
   * @return {Object} 返回转换后对象
   */
-function stringToJson (str) {
+function toStringJSON (str) {
   if (isObject(str)) {
     return str
   } else if (isString(str)) {
@@ -694,7 +694,7 @@ function stringToJson (str) {
   * @param {Object} obj 对象
   * @return {String} 返回字符串
   */
-function jsonToString (obj) {
+function toJSONString (obj) {
   return JSON.stringify(obj) || ''
 }
 
@@ -1247,8 +1247,8 @@ var baseExports = {
   contains: includes,
   assign: objectAssign,
   extend: objectAssign,
-  stringToJson: stringToJson,
-  jsonToString: jsonToString,
+  toStringJSON: toStringJSON,
+  toJSONString: toJSONString,
   keys: objectKeys,
   values: objectValues,
   entries: objectEntries,
