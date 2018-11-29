@@ -477,13 +477,13 @@ export interface XEUtilsMethods {
    * 字符串转 JSON
    * @param str 字符串
    */
-  stringToJson(str: string): any;
+  toStringJSON(str: string): any;
 
   /**
    * JSON 转字符串
    * @param obj 对象
    */
-  sonToString(obj: any): string;
+  toJSONString(obj: any): string;
 
   /**
    * 获取对象所有属性
