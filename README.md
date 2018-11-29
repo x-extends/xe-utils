@@ -200,13 +200,13 @@ import XEUtils from 'xe-utils'
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
   * [zip ( ) 将每个数组中相应位置的值合并在一起](#zip---将每个数组中相应位置的值合并在一起)
   * [unzip ( arrays ) 与 zip 相反](#unzip--arrays--与-zip-相反)
-  * [serialize ( query ) 序列化查询参数](#serialize--query--序列化查询参数)
-  * [unserialize ( str ) 反转序列化查询参数](#unserialize--str--反转序列化查询参数)
   * [bind (callback, context[, ...arguments]) 创建一个绑定上下文的函数](#bind-callback-context-arguments-创建一个绑定上下文的函数)
   * [once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果](#once-callback-context-arguments-创建一个只能调用一次的函数只会返回第一次执行后的结果)
   * [throttle (callback, wait[, options]) 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数](#throttle-callback-wait-options-创建一个策略函数当被重复调用函数的时候至少每隔多少秒毫秒调用一次该函数)
   * [debounce (callback, wait[, options]) 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟](#debounce-callback-wait-options-创建一个防反跳策略函数在函数最后一次调用多少毫秒之后才会再次执行如果在期间内重复调用会重新计算延迟)
 * *浏览器函数*
+  * [serialize ( query ) 序列化查询参数](#serialize--query--序列化查询参数)
+  * [unserialize ( str ) 反转序列化查询参数](#unserialize--str--反转序列化查询参数)
   * [browse ( ) 获取浏览器信息](#browse---获取浏览器信息)
   * [locat ( ) 获取地址栏信息](#locat---获取地址栏信息)
   * [parseUrl ( url ) 解析 URL 参数](#parseurl--url--解析-url-参数)
@@ -844,17 +844,17 @@ XEUtils.last([11, 22]) // 22
 import XEUtils from 'xe-utils'
 
 XEUtils.each([11, 22, 33], (item, key) => {
-  // 通用迭代器
+  // 通用迭代器，支持遍历任意类型
 })
 XEUtils.forOf([11, 22, 33], (item, key) => {
-  // 通用迭代器,支持 return false 跳出循环 break
+  // 通用迭代器，支持遍历任意类型，支持 return false 跳出循环 break
   return false
 })
 XEUtils.arrayEach([11, 22, 33], (item, index) => {
-  // 数组迭代器
+  // 数组迭代器，只能用于遍历(数组或arguments)，性能高于 each
 })
 XEUtils.objectEach({a: 11, b: 22}, (item, key) => {
-  // 对象迭代器
+  // 对象迭代器，只能用于遍历对象，性能高于 each
 })
 ```
 
@@ -864,17 +864,17 @@ XEUtils.objectEach({a: 11, b: 22}, (item, key) => {
 import XEUtils from 'xe-utils'
 
 XEUtils.lastEach([11, 22, 33], (item, key) => {
-  // 通用迭代器
+  // 通用迭代器，支持遍历任意类型
 })
 XEUtils.lastForOf([11, 22, 33], (item, key) => {
-  // 通用迭代器,支持 return false 跳出循环 break
+  // 通用迭代器，支持遍历任意类型，支持 return false 跳出循环 break
   return false
 })
 XEUtils.lastArrayEach([11, 22, 33], (item, index) => {
-  // 数组迭代器
+  // 数组迭代器，只能用于遍历(数组或arguments)，性能高于 lastEach
 })
 XEUtils.lastObjectEach({a: 11, b: 22}, (item, key) => {
-  // 对象迭代器
+  // 对象迭代器，只能用于遍历对象，性能高于 lastEach
 })
 ```
 
