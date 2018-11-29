@@ -294,14 +294,14 @@
     */
   function arraySum (array, iterate, context) {
     var result = 0
-    var parseFloatFn = parseFloat
+    var toNumber = XEUtils.toNumber
     context = context || this
     baseExports.each(array, iterate ? baseExports.isFunction(iterate) ? function () {
-      result += iterate.apply(context, arguments) || 0
+      result += toNumber(iterate.apply(context, arguments))
     } : function (val) {
-      result += parseFloatFn(val[iterate] || 0)
+      result += toNumber(val[iterate])
     } : function (val) {
-      result += parseFloatFn(val || 0)
+      result += toNumber(val)
     })
     return result
   }

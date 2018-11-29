@@ -1069,6 +1069,7 @@ import XEUtils from 'xe-utils'
 
 XEUtils.sum([22, 66, 88]) // 176
 XEUtils.sum([{value: 11}, {value: 22}, {value: 66}], 'value') // 99
+XEUtils.sum({val1: 21, val2: 34, val3: 45}) // 100
 ```
 
 ### mean ( obj, iteratee [, context] ) 求平均值函数
@@ -1076,9 +1077,11 @@ XEUtils.sum([{value: 11}, {value: 22}, {value: 66}], 'value') // 99
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.mean({val1: 21, val2: 34, val3: 45}) // 100
 XEUtils.mean([22, 66, 60, 60]) // 52
 XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
 XEUtils.mean([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 66
+XEUtils.mean({val1: 21, val2: 34, val3: 45, val4: 55}) // 38.75
 ```
 
 ### toArray ( array ) 将对象或者伪数组转为新数组
