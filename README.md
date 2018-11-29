@@ -1088,6 +1088,7 @@ import XEUtils from 'xe-utils'
 
 XEUtils.toArray([]) // []
 XEUtils.toArray({}) // []
+XEUtils.toArray({name: 'test1', age: 25}) // ['test1', 25]
 XEUtils.toArray(arguments) // [...]
 ```
 
