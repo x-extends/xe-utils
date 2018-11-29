@@ -80,15 +80,14 @@ function clone (obj, deep) {
   *
   * @param {Function} callback 函数
   * @param {Object} context 上下文
-  * @param {*} amgs 额外的参数
+  * @param {*} args 额外的参数
   * @return {Object}
   */
 function bind (callback, context) {
-  var toArray = XEUtils.toArray
-  var amgs = toArray(arguments).slice(2)
+  var args = arraySlice(arguments, 2)
   context = context || this
   return function () {
-    return callback.apply(context, toArray(arguments).concat(amgs))
+    return callback.apply(context, arraySlice(arguments).concat(args))
   }
 }
 
@@ -97,20 +96,19 @@ function bind (callback, context) {
   *
   * @param {Function} callback 函数
   * @param {Object} context 上下文
-  * @param {*} amgs 额外的参数
+  * @param {*} args 额外的参数
   * @return {Object}
   */
 function once (callback, context) {
   var done = false
   var rest = null
-  var toArray = XEUtils.toArray
-  var amgs = toArray(arguments).slice(2)
+  var args = arraySlice(arguments, 2)
   context = context || this
   return function () {
     if (done) {
       return rest
     }
-    rest = callback.apply(context, toArray(arguments).concat(amgs))
+    rest = callback.apply(context, arraySlice(arguments).concat(args))
     done = true
     return rest
   }

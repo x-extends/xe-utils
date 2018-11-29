@@ -434,27 +434,15 @@
   }
 
   /**
-   * 根据数组或可迭代对象中创建一个新的数组
+   * 将对象或者伪数组转为新数组
    *
    * @param {Array} obj 数组
-   * @param {Function} iterate(item, index, array) 回调
-   * @param {Object} context 上下文
    * @return {Array}
    */
-  function toArray (array, iterate, context) {
-    if (baseExports.isArray(array)) {
-      return array
-    }
-    if (array === null || array === undefined) {
-      return []
-    }
-    var result = []
-    var index = 0
-    var len = array.length
-    for (; index < len; index++) {
-      result.push(array[index])
-    }
-    return arguments.length < 2 ? result : arrayMap(result, iterate, context || this)
+  function toArray (array) {
+    return arrayMap(array, function (item) {
+      return item
+    })
   }
 
   /**
@@ -743,15 +731,14 @@
     *
     * @param {Function} callback 函数
     * @param {Object} context 上下文
-    * @param {*} amgs 额外的参数
+    * @param {*} args 额外的参数
     * @return {Object}
     */
   function bind (callback, context) {
-    var toArray = XEUtils.toArray
-    var amgs = toArray(arguments).slice(2)
+    var args = arraySlice(arguments, 2)
     context = context || this
     return function () {
-      return callback.apply(context, toArray(arguments).concat(amgs))
+      return callback.apply(context, arraySlice(arguments).concat(args))
     }
   }
 
@@ -760,20 +747,19 @@
     *
     * @param {Function} callback 函数
     * @param {Object} context 上下文
-    * @param {*} amgs 额外的参数
+    * @param {*} args 额外的参数
     * @return {Object}
     */
   function once (callback, context) {
     var done = false
     var rest = null
-    var toArray = XEUtils.toArray
-    var amgs = toArray(arguments).slice(2)
+    var args = arraySlice(arguments, 2)
     context = context || this
     return function () {
       if (done) {
         return rest
       }
-      rest = callback.apply(context, toArray(arguments).concat(amgs))
+      rest = callback.apply(context, arraySlice(arguments).concat(args))
       done = true
       return rest
     }
@@ -2829,7 +2815,7 @@
   var unescape = formatEscaper(unescapeMap)
 
   /**
-    * 将带字符串转成驼峰字符串,例如 project-name => projectName
+    * 将带字符串转成驼峰字符串,例如： project-name 转为 projectName
     *
     * @param {String} str 字符串
     * @return {String}
@@ -2841,7 +2827,7 @@
   }
 
   /**
-    * 将带驼峰字符串转成字符串,例如 projectName => project-name
+    * 将带驼峰字符串转成字符串,例如： projectName 转为 project-name
     *
     * @param {String} str 字符串
     * @return {String}

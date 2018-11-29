@@ -847,12 +847,10 @@ export interface XEUtilsMethods {
   mean(obj: object | Array<any>, iteratee?: Function, context?: any): number;
 
   /**
-   * 根据数组或可迭代对象中创建一个新的数组
+   * 将对象或者伪数组转为新数组
    * @param array 对象/数组
-   * @param iteratee 回调
-   * @param context 上下文
    */
-  toArray(obj: object | Array<any>, iteratee?: Function, context?: any): Array<any>;
+  toArray(obj: object | Array<any>): Array<any>;
 
   /**
    * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值

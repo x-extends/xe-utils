@@ -72,7 +72,7 @@ var escape = formatEscaper(escapeMap)
 var unescape = formatEscaper(unescapeMap)
 
 /**
-  * 将带字符串转成驼峰字符串,例如 project-name => projectName
+  * 将带字符串转成驼峰字符串,例如： project-name 转为 projectName
   *
   * @param {String} str 字符串
   * @return {String}
@@ -84,7 +84,7 @@ function camelCase (str) {
 }
 
 /**
-  * 将带驼峰字符串转成字符串,例如 projectName => project-name
+  * 将带驼峰字符串转成字符串,例如： projectName 转为 project-name
   *
   * @param {String} str 字符串
   * @return {String}

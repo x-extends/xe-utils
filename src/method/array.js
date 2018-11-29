@@ -413,27 +413,15 @@ function unzip (arrays) {
 }
 
 /**
- * 根据数组或可迭代对象中创建一个新的数组
+ * 将对象或者伪数组转为新数组
  *
  * @param {Array} obj 数组
- * @param {Function} iterate(item, index, array) 回调
- * @param {Object} context 上下文
  * @return {Array}
  */
-function toArray (array, iterate, context) {
-  if (baseExports.isArray(array)) {
-    return array
-  }
-  if (array === null || array === undefined) {
-    return []
-  }
-  var result = []
-  var index = 0
-  var len = array.length
-  for (; index < len; index++) {
-    result.push(array[index])
-  }
-  return arguments.length < 2 ? result : arrayMap(result, iterate, context || this)
+function toArray (array) {
+  return arrayMap(array, function (item) {
+    return item
+  })
 }
 
 /**
