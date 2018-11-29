@@ -786,25 +786,28 @@ var objectValues = createGetObjects('values', 1)
 var objectEntries = createGetObjects('entries', 2)
 
 function createPickOmit (case1, case2) {
-  return function (obj) {
+  return function (obj, callback) {
     var item
     var rest = {}
     var result = []
+    var context = this
     var args = arguments
     var index = 1
     var len = args.length
-    for (; index < len; index++) {
-      item = args[index]
-      if (isArray(item)) {
-        result = result.concat(item)
-      } else {
-        result.push(item)
+    if (!isFunction(callback)) {
+      for (callback = 0; index < len; index++) {
+        item = args[index]
+        if (isArray(item)) {
+          result = result.concat(item)
+        } else {
+          result.push(item)
+        }
       }
     }
     each(obj, function (val, key) {
-      if (findIndexOf(result, function (name) {
+      if ((callback ? callback.call(context, val, key, obj) : findIndexOf(result, function (name) {
         return name === key
-      }) > -1 ? case1 : case2) {
+      }) > -1) ? case1 : case2) {
         rest[key] = val
       }
     })
@@ -819,7 +822,7 @@ function createPickOmit (case1, case2) {
  * @param {String/Array} keys 键数组
  * @return {Object}
  */
-var pick = createPickOmit(true, false)
+var pick = createPickOmit(1, 0)
 
 /**
  * 根据 keys 排除指定的属性值，返回一个新的对象
@@ -828,7 +831,7 @@ var pick = createPickOmit(true, false)
  * @param {String/Array} keys 键数组
  * @return {Object}
  */
-var omit = createPickOmit(false, true)
+var omit = createPickOmit(0, 1)
 
 /**
   * 获取对象第一个值

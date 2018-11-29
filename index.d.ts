@@ -490,14 +490,28 @@ export interface XEUtilsMethods {
   /**
    * 根据 keys 过滤指定的属性值，返回一个新的对象
    * @param obj 对象
+   * @param array 数组或字符串或方法
+   * @example 
+    ```javascript
+    XEUtils.pick({name: 'test11', age: 25, height: 176}, 'name', 'height') // {name: 'test11', height: 176}
+    XEUtils.pick({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {name: 'test11', age: 25}
+    XEUtils.pick({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {age: 25, height: 176}
+    ```
    */
-  pick(obj: any, ...array: any[] | string): object;
+  pick(obj: any, ...array: any[] | string | Function): object;
   
   /**
    * 根据 keys 排除指定的属性值，返回一个新的对象
    * @param obj 对象
+   * @param array 数组或字符串或方法
+   * @example 
+    ```javascript
+    XEUtils.omit({name: 'test11', age: 25, height: 176}, 'name', 'height') // {age: 25}
+    XEUtils.omit({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {height: 176}
+    XEUtils.omit({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {name: 'test11'}
+    ```
    */
-  omit(obj: any, ...array: any[] | string): object;
+  omit(obj: any, ...array: any[] | string | Function): object;
 
   /**
    * 获取对象第一个值
