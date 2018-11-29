@@ -1232,7 +1232,6 @@ var baseExports = {
   once: once,
   clear: clearObject,
   remove: removeObject,
-  deleteProperty: deleteProperty,
   range: range,
   throttle: throttle,
   debounce: debounce,

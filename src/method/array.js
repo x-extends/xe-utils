@@ -580,8 +580,8 @@ function arrayToTree (array, options) {
 
 function strictTree (array, optChildren) {
   baseExports.each(array, function (item) {
-    if (!item.children.length) {
-      baseExports.deleteProperty(item, optChildren)
+    if (item.children && !item.children.length) {
+      baseExports.remove(item, optChildren)
     }
   })
 }
@@ -592,10 +592,10 @@ function unTreeList (result, array, opts) {
   var optData = opts.data
   baseExports.each(array, function (item) {
     children = item[optChildren]
-    if (optData === null) {
-      baseExports.deleteProperty(item, optChildren)
-    } else {
+    if (optData) {
       item = item[optData]
+    } else {
+      baseExports.remove(item, optChildren)
     }
     result.push(item)
     if (children) {

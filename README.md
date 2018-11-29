@@ -1325,13 +1325,84 @@ XEUtils.arrayToTree(list3, {strict: true, parentKey: 'parentId', key: 'id', chil
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-let list1 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+let list1 = [
+  {
+    "id":1,
+    "name":"111",
+    "children":[
+      {
+        "id":2,
+        "parentId":1,
+        "name":"222",
+        "children":[
+          {
+            "id":4,
+            "parentId":2,
+            "name":"444",
+            "children":[]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id":3,
+    "name":"333",
+    "children":[]
+  }
+]
 XEUtils.treeToArray(list1)
-// [{id: 1}, {id: 2, data: {}, parentId: 1}, {id: 3, data: {}}, {id: 4, data: {}, parentId: 2}]
+/*
+[
+  {id: 1, name: '111'},
+  {id: 2, parentId: 1, name: '222'},
+  {id: 3, name: '333'},
+  {id: 4, parentId: 2, name: '444'}
+]
+*/
 
-let list2 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
+let list2 = [
+  {
+    "data":{"id":1,"name":"111"},
+    "id":1,
+    "children":[
+      {
+        "data":{"id":2,"parentId":1,"name":"222"},
+        "id":2,
+        "parentId":1,
+        "children":[
+          {
+            "data":{"id":4,"parentId":2,"name":"444"},
+            "id":4,
+            "parentId":2,
+            "children":[]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "data":{"id":3,"name":"333"},
+    "id":3,
+    "children":[]
+  },
+  {
+    "data":{"id":5,"parentId":22,"name":"555"},
+    "id":5,
+    "parentId":22,
+    "children":[]
+  }
+]
 XEUtils.treeToArray(list2, {data: 'data'})
-// [{id: 1}, {id: 2, parentId: 1}, {id: 3}, {id: 4, parentId: 2}]
+/*
+[
+  {id: 1, name: '111'},
+  {id: 2, parentId: 1, name: '222'},
+  {id: 3, name: '333'},
+  {id: 4, parentId: 2, name: '444'},
+  {id: 5, parentId: 22, name: '555'}
+]
+*/
 ```
 
 ### timestamp ( ) 返回当前时间戳

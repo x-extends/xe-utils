@@ -924,18 +924,6 @@ export interface XEUtilsMethods {
    * 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
    * @param array 数组
    * @param options 可选参数
-   * @example 
-    ```javascript
-    // 默认树结构
-    let list1 = [{id: 1, name: '111'}, {id: 2, parentId: 1, name: '222'}, {id: 3, name: '333'}, {id: 4, parentId: 2, name: '444'}]
-    XEUtils.arrayToTree(list1)
-    // [{"id":1,"name":"111","children":[{"id":2,"parentId":1,"name":"222","children":[{"id":4,"parentId":2,"name":"444","children":[]}]}]},{"id":3,"name":"333","children":[]}]
-    
-    // 返回带排序的树结构
-    let list1 = [{id: 1, name: '111', seq: 5}, {id: 2, parentId: 1, name: '222', seq: 3}, {id: 3, name: '333', seq: 6}, {id: 4, parentId: 2, name: '444', seq: 2}, {id: 5, parentId: 1, name: '555', seq: 1}]
-    XEUtils.arrayToTree(list1, {sortKey: 'seq'})
-    // [{"id":1,"name":"111","seq":5,"children":[{"id":5,"parentId":1,"name":"555","seq":1,"children":[]},{"id":2,"parentId":1,"name":"222","seq":3,"children":[{"id":4,"parentId":2,"name":"444","seq":2,"children":[]}]}]},{"id":3,"name":"333","seq":6,"children":[]}]
-    ```
    */
   arrayToTree(array: Array<any>, options?: object): Array<any>;
 
@@ -943,12 +931,6 @@ export interface XEUtilsMethods {
    * 将一个树结构转成数组列表
    * @param array 数组
    * @param options 可选参数
-   * @example 
-    ```javascript
-    let list1 = [{id: 1, data: {}, children: [{id: 2, data: {}, children: [{id: 4, data: {}}]}]}, {id: 3, data: {}}]
-    XEUtils.treeToArray(list1)
-    // [{id: 1}, {id: 2, data: {}, parentId: 1}, {id: 3, data: {}}, {id: 4, data: {}, parentId: 2}]
-    ```
    */
   treeToArray(array: Array<any>, options?: object): Array<any>;
 

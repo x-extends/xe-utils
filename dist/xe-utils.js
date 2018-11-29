@@ -601,8 +601,8 @@
 
   function strictTree (array, optChildren) {
     baseExports.each(array, function (item) {
-      if (!item.children.length) {
-        baseExports.deleteProperty(item, optChildren)
+      if (item.children && !item.children.length) {
+        baseExports.remove(item, optChildren)
       }
     })
   }
@@ -613,10 +613,10 @@
     var optData = opts.data
     baseExports.each(array, function (item) {
       children = item[optChildren]
-      if (optData === null) {
-        baseExports.deleteProperty(item, optChildren)
-      } else {
+      if (optData) {
         item = item[optData]
+      } else {
+        baseExports.remove(item, optChildren)
       }
       result.push(item)
       if (children) {
@@ -1895,7 +1895,6 @@
     once: once,
     clear: clearObject,
     remove: removeObject,
-    deleteProperty: deleteProperty,
     range: range,
     throttle: throttle,
     debounce: debounce,
