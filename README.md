@@ -122,7 +122,6 @@ import XEUtils from 'xe-utils'
   * [clear (obj[, defs, assigns]) 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)](#clear-obj-defs-assigns-清空对象-defs如果不传清空所有属性如果传对象清空并继承如果传值给所有赋值)
   * [remove (obj, iteratee) 移除对象属性](#remove-obj-iteratee-移除对象属性)
   * [assign (destination, ...sources) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝](#assignextend-destination-sources-浅拷贝一个或者多个对象到目标对象中如果第一值是true则使用深拷贝)
-  * [extend (destination, ...sources) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝](#assignextend-destination-sources-浅拷贝一个或者多个对象到目标对象中如果第一值是true则使用深拷贝)
   * [clone (obj, deep) 浅拷贝/深拷贝](#clone-obj-deep-浅拷贝深拷贝)
   * [destructuring (obj, ...target) 将一个或者多个对象值解构到目标对象](#destructuring-obj-target-将一个或者多个对象值解构到目标对象)
   * [trim ( str ) 去除字符串左右两边的空格](#trim--str--去除字符串左右两边的空格)
