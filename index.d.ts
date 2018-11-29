@@ -885,6 +885,18 @@ export interface XEUtilsMethods {
   chunk(array: Array<any>, size: number): Array<any>;
 
   /**
+   * 返回一个获取对象属性的函数
+   * @param path 键值
+   * @example 
+    ```javascript
+    let getName = XEUtils.property('name')
+    getName({name: 'test11', age: 25, height: 176}) // 'test11'
+    getName({age: 25, height: 176}) // undefined
+    ```
+   */
+  property(path: string): any;
+
+  /**
    * 获取数组对象中某属性值，返回一个数组
    * @param array 数组
    * @param key 键
