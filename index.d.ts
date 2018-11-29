@@ -270,6 +270,14 @@ export interface XEUtilsMethods {
   getSize(obj: any): number;
 
   /**
+   * slice ( array, start, end ) 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
+   * @param array 对象
+   * @param start 迭代器/属性
+   * @param end 上下文
+   */
+  slice(array: Array<any>, start?: number, end?: number): Array<any>;
+
+  /**
    * 返回对象第一个索引值
    * @param obj 对象
    * @param val 值
@@ -478,6 +486,18 @@ export interface XEUtilsMethods {
    * @param obj 对象
    */
   entries(obj: any): Array<any>;
+  
+  /**
+   * 根据 keys 过滤指定的属性值，返回一个新的对象
+   * @param obj 对象
+   */
+  pick(obj: any, ...array: any[] | string): object;
+  
+  /**
+   * 根据 keys 排除指定的属性值，返回一个新的对象
+   * @param obj 对象
+   */
+  omit(obj: any, ...array: any[] | string): object;
 
   /**
    * 获取对象第一个值

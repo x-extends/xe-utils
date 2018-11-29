@@ -1103,6 +1103,22 @@
     return len
   }
 
+  /**
+   * 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
+   * @param {Array/Arguments} array 数组或Arguments
+   * @param {Number} startIndex 开始索引
+   * @param {Number} endIndex 结束索引
+   */
+  function arraySlice (array, startIndex, endIndex) {
+    var result = []
+    if (array) {
+      for (startIndex = startIndex || 0, endIndex = endIndex || array.length; startIndex < endIndex; startIndex++) {
+        result.push(array[startIndex])
+      }
+    }
+    return result
+  }
+
   function createIndexOf (callback) {
     return function (obj, val) {
       if (obj) {
@@ -1242,13 +1258,8 @@
     * @return {Boolean}
     */
   function destructuring (destination, sources) {
-    var args = arguments
     if (destination && sources) {
-      var result = [{}]
-      for (var index = 1, len = args.length; index < len; index++) {
-        result.push(args[index])
-      }
-      var rest = objectAssign.apply(this, result)
+      var rest = objectAssign.apply(this, [{}].concat(arraySlice(arguments, 1)))
       var restKeys = objectKeys(rest)
       arrayEach(objectKeys(destination), function (key) {
         if (includes(restKeys, key)) {
@@ -1351,9 +1362,9 @@
     return obj
   }
 
-  function pluckRemove (iterate) {
-    return function (item, index) {
-      return index === iterate
+  function pluckProperty (name) {
+    return function (obj, key) {
+      return key === name
     }
   }
 
@@ -1371,7 +1382,7 @@
       var rest = []
       context = context || this
       if (!isFunction(iterate)) {
-        iterate = pluckRemove(iterate)
+        iterate = pluckProperty(iterate)
       }
       each(obj, function (item, index, rest) {
         if (iterate.call(context, item, index, rest)) {
@@ -1436,6 +1447,51 @@
     * @return {Array}
     */
   var objectEntries = createGetObjects('entries', 2)
+
+  function createPickOmit (case1, case2) {
+    return function (obj) {
+      var item
+      var rest = {}
+      var result = []
+      var args = arguments
+      var index = 1
+      var len = args.length
+      for (; index < len; index++) {
+        item = args[index]
+        if (isArray(item)) {
+          result = result.concat(item)
+        } else {
+          result.push(item)
+        }
+      }
+      each(obj, function (val, key) {
+        if (findIndexOf(result, function (name) {
+          return name === key
+        }) > -1 ? case1 : case2) {
+          rest[key] = val
+        }
+      })
+      return rest
+    }
+  }
+
+  /**
+   * 根据 keys 过滤指定的属性值，返回一个新的对象
+   *
+   * @param {Object} obj 对象
+   * @param {String/Array} keys 键数组
+   * @return {Object}
+   */
+  var pick = createPickOmit(true, false)
+
+  /**
+   * 根据 keys 排除指定的属性值，返回一个新的对象
+   *
+   * @param {Object} obj 对象
+   * @param {String/Array} keys 键数组
+   * @return {Object}
+   */
+  var omit = createPickOmit(false, true)
 
   /**
     * 获取对象第一个值
@@ -1800,6 +1856,7 @@
     getType: getType,
     uniqueId: uniqueId,
     getSize: getSize,
+    slice: arraySlice,
     indexOf: indexOf,
     lastIndexOf: lastIndexOf,
     findIndexOf: findIndexOf,
@@ -1813,6 +1870,8 @@
     keys: objectKeys,
     values: objectValues,
     entries: objectEntries,
+    pick: pick,
+    omit: omit,
     first: getFirst,
     last: getLast,
     each: each,

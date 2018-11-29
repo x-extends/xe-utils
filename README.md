@@ -550,6 +550,19 @@ XEUtils.getSize([1, 3]) // 2
 XEUtils.getSize({a: 2, b: 5}) // 2
 ```
 
+### slice ( array, start, end ) 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.slice([11, 22, 33, 44], 1) // [22, 33, 44]
+XEUtils.slice([11, 22, 33, 44], 1, 3) // [22, 33]
+function method () {
+  XEUtils.slice(arguments, 1, 3) // [22, 33]
+}
+method(11, 22, 33, 44)
+```
+
 ### indexOf (obj, val) 返回对象第一个索引值
 
 ```JavaScript
@@ -784,6 +797,24 @@ import XEUtils from 'xe-utils'
 
 XEUtils.entries({a: 11}) // [['a', 11]]
 XEUtils.entries([11, 22]) // [[0, 11], [1, 22]]
+```
+
+### pick (obj, array) 根据 keys 过滤指定的属性值，返回一个新的对象
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.pick({name: 'test11', age: 25, height: 176}, 'name', 'height') // {name: 'test11', height: 176}
+XEUtils.pick({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {name: 'test11', age: 25}
+```
+
+### omit (obj, array) 根据 keys 排除指定的属性值，返回一个新的对象
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.omit({name: 'test11', age: 25, height: 176}, 'name', 'height') // {age: 25}
+XEUtils.omit({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {height: 176}
 ```
 
 ### first (obj) 获取对象第一个值
