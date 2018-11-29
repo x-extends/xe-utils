@@ -581,8 +581,8 @@ XEUtils.indexOf([11, 22, 33, 22], 22) // 1
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.findIndexOf([11, 22, 33, 22], function (item){ return item === 55 }) // -1
-XEUtils.findIndexOf([11, 22, 33, 22], function (item){ return item === 22 }) // 1
+XEUtils.findIndexOf([11, 22, 33, 22], item => item === 55) // -1
+XEUtils.findIndexOf([11, 22, 33, 22], item => item === 22) // 1
 ```
 
 ### lastIndexOf (obj, val) 从最后开始的索引值,返回对象第一个索引值
@@ -599,8 +599,8 @@ XEUtils.lastIndexOf([11, 22, 33, 22], 22) // 3
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.findLastIndexOf([11, 22, 33, 22], function (item){ return item === 55 }) // -1
-XEUtils.findLastIndexOf([11, 22, 33, 22], function (item){ return item === 22 }) // 3
+XEUtils.findLastIndexOf([11, 22, 33, 22], item => item === 55) // -1
+XEUtils.findLastIndexOf([11, 22, 33, 22], item => item === 22) // 3
 ```
 
 ### includes (obj, val) 判断对象是否包含该值,成功返回 true 否则 false
@@ -632,6 +632,7 @@ let rest = XEUtils.bind(function (val) {
   return this.name + ' = ' + val
 }, {name: 'test'})
 rest(222) // 'test = 222'
+rest(333) // 'test = 333'
 ```
 
 ### once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果
@@ -658,15 +659,15 @@ function scrollEvent (evnt) {
 // 在计时结束之前执行
 document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100))
 // 在计时结束之前执行
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100, {
   leading: true,
   trailing: false
-})
+}))
 // 在计时结束之后执行
-document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100), {
+document.body.addEventListener('scroll', XEUtils.throttle(scrollEvent, 100, {
   leading: false,
   trailing: true
-})
+}))
 
 let func = XEUtils.throttle(function (msg) {
   console.log(msg)
@@ -686,19 +687,19 @@ function resizeEvent (evnt) {
 }
 
 // 在计时结束之后执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100))
+document.addEventListener('resize', XEUtils.debounce(resizeEvent, 100))
 // 在计时结束之前执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), true)
+document.addEventListener('resize', XEUtils.debounce(resizeEvent, 100, true))
 // 在计时结束之前执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {
+document.addEventListener('resize', XEUtils.debounce(resizeEvent, 100, {
   leading: true,
   trailing: false
-})
+}))
 // 在计时结束之后执行
-document.addEventListener('resize', XEUtils.debounce(resizeEvent), 100), {
+document.addEventListener('resize', XEUtils.debounce(resizeEvent, 100, {
   leading: false,
   trailing: true
-})
+}))
 
 let func = XEUtils.debounce(function (msg) {
   console.log(msg)
@@ -916,7 +917,6 @@ XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-let result = []
 XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a", b: "b"}
 ```
 
@@ -1646,7 +1646,7 @@ XEUtils.random(10, 100) // 10 ~ 100
 import XEUtils from 'xe-utils'
 
 XEUtils.min([22, 66, 77, 11]) // 11
-XEUtils.min([{a: 11}, {a: 44}], 'a') // 11
+XEUtils.min([{a: 11}, {a: 44}], 'a') // {a: 11}
 XEUtils.min([{a: 11}, {a: 44}], item => item.a) // {a: 11}
 ```
 
@@ -1656,7 +1656,7 @@ XEUtils.min([{a: 11}, {a: 44}], item => item.a) // {a: 11}
 import XEUtils from 'xe-utils'
 
 XEUtils.max([22, 66, 77, 11]) // 77
-XEUtils.max([{a: 11}, {a: 44}], 'a') // 44
+XEUtils.max([{a: 11}, {a: 44}], 'a') // {a: 44}
 XEUtils.max([{a: 11}, {a: 44}], item => item.a) // {a: 44}
 ```
 
@@ -1681,7 +1681,7 @@ XEUtils.commafy('111111111111111111111111111111111')
 import XEUtils from 'xe-utils'
 
 XEUtils.toNumber(123) // 123
-XEUtils.toNumber('12.3'}) // 12.3
+XEUtils.toNumber('12.3') // 12.3
 XEUtils.toNumber('abc') // 0
 ```
 
@@ -1691,7 +1691,7 @@ XEUtils.toNumber('abc') // 0
 import XEUtils from 'xe-utils'
 
 XEUtils.toInteger(123) // 123
-XEUtils.toInteger('12.3'}) // 12
+XEUtils.toInteger('12.3') // 12
 XEUtils.toInteger('abc') // 0
 ```
 
@@ -1740,7 +1740,7 @@ XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.camelCase('projectName') // 'project-name'
+XEUtils.camelCase('project-name') // 'projectName'
 ```
 
 ### kebabCase ( str ) 将字符串转成驼峰字符串
@@ -1748,7 +1748,7 @@ XEUtils.camelCase('projectName') // 'project-name'
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.kebabCase('project-name') // 'projectName'
+XEUtils.kebabCase('projectName') // 'project-name'
 ```
 
 ### repeat ( str, count ) 将字符串重复 n 次

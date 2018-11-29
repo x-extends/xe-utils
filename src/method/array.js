@@ -405,7 +405,7 @@ function unzip (arrays) {
   var index = 0
   var len = XEUtils.max(arrays, function (item) {
     return item.length || 0
-  })
+  }).length
   for (; index < len; index++) {
     result.push(arrayMap(arrays, index))
   }
@@ -504,7 +504,7 @@ function invokeMap (list, path) {
     }
     path = path[len]
   }
-  return baseExports.map(list, function (context) {
+  return arrayMap(list, function (context) {
     if (paths.length) {
       context = deepGetObj(context, paths)
     }

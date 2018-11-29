@@ -14,10 +14,21 @@ function getRandom (min, max) {
   return min >= max ? min : ((min = min >> 0) + Math.round(Math.random() * ((max || 9) - min)))
 }
 
-function sortData (arr, iterate) {
-  var list = baseExports.clone(arr)
-  var arraySort = XEUtils.sortBy
-  return (baseExports.isFunction(iterate) ? arraySort(XEUtils.map(list, iterate, this)) : arraySort(list, iterate))
+function createMinMax (handle) {
+  return function (arr, iterate) {
+    var context = this
+    var list = baseExports.clone(arr)
+    var arraySort = XEUtils.sortBy
+    if (baseExports.isFunction(iterate)) {
+      return handle(arraySort(XEUtils.map(list, function (val, index) {
+        return {
+          d: val,
+          v: iterate.call(context, val, index, list)
+        }
+      }), 'v')).d
+    }
+    return handle(arraySort(list, iterate))
+  }
 }
 
 /**
@@ -27,9 +38,9 @@ function sortData (arr, iterate) {
   * @param {Function} iterate(item, index, obj) 回调
   * @return {Number}
   */
-function arrayMin () {
-  return sortData.apply(this, arguments)[0]
-}
+var arrayMin = createMinMax(function (result) {
+  return result[0]
+})
 
 /**
   * 获取最大值
@@ -38,9 +49,9 @@ function arrayMin () {
   * @param {Function} iterate(item, index, obj) 回调
   * @return {Number}
   */
-function arrayMax () {
-  return sortData.apply(this, arguments).reverse()[0]
-}
+var arrayMax = createMinMax(function (result) {
+  return result.reverse()[0]
+})
 
 /**
   * 千分位分隔符、小数点
