@@ -1800,7 +1800,7 @@ XEUtils.kebabCase('projectName') // 'project-name'
 import XEUtils from 'xe-utils'
 
 XEUtils.repeat('a', 5) // aaaaa
-XEUtils.repeat('a', 5) // aaaaa
+XEUtils.repeat('ab', 3) // ababab
 ```
 
 ### padStart ( str, targetLength, padString ) 用指定字符从前面开始补全字符串
