@@ -338,6 +338,22 @@ export interface XEUtilsMethods {
   once(callback: Function, context: any, ...params: any[]): Function;
 
   /**
+   * 创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回
+   * @param count 次数
+   * @param callback 回调
+   * @param context 上下文
+   */
+  after(count: number, callback: Function, context: any): Function;
+
+  /**
+   * 创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回
+   * @param count 次数
+   * @param callback 回调
+   * @param context 上下文
+   */
+  before(count: number, callback: Function, context: any): Function;
+
+  /**
    * 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数
    * @param callback 回调
    * @param wait 毫秒
