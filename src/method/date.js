@@ -25,7 +25,7 @@ var now = Date.now || function () {
  * @returns Number
  */
 var timestamp = function (date, format) {
-  return date ? getDateTime(stringToDate(date, format)) : now()
+  return date ? getDateTime(toStringDate(date, format)) : now()
 }
 
 var dateFormatRules = [
@@ -59,7 +59,7 @@ function _dateMonth (date) {
  */
 function isDateSame (date1, date2, format) {
   if (date1 && date2) {
-    return dateToString(date1, format) === dateToString(date2, format)
+    return toDateString(date1, format) === toDateString(date2, format)
   }
   return false
 }
@@ -71,7 +71,7 @@ function isDateSame (date1, date2, format) {
   * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、hh(12)HH(24)小时、mm分钟、ss秒、SSS毫秒)
   * @return {String}
   */
-function stringToDate (str, format) {
+function toStringDate (str, format) {
   if (str) {
     var arr, sIndex, index, rules, len
     var dates = []
@@ -129,9 +129,9 @@ function formatPadStart (str, len, padStr) {
   * @param {Object} options {formats: {q: ['日', '一', '二', '三', '四', '五', '六'], E: function (value, match, date) {return '三'}, }} 自定义格式化模板
   * @return {String}
   */
-function dateToString (date, format, options) {
+function toDateString (date, format, options) {
   if (date) {
-    date = stringToDate(date)
+    date = toStringDate(date)
     if (baseExports.isDate(date)) {
       var result = format || setupDefaults.formatString
       var hours = date.getHours()
@@ -184,7 +184,7 @@ function dateToString (date, format, options) {
   */
 function getWhatYear (date, year, month) {
   var number
-  var currentDate = stringToDate(date)
+  var currentDate = toStringDate(date)
   if (year) {
     number = year && !isNaN(year) ? year : 0
     currentDate.setFullYear(_dateFullYear(currentDate) + number)
@@ -211,7 +211,7 @@ function getWhatYear (date, year, month) {
   * @return {Date}
   */
 function getWhatMonth (date, month, day) {
-  var currentDate = stringToDate(date)
+  var currentDate = toStringDate(date)
   var monthOffset = month && !isNaN(month) ? month : 0
   if (day || !isNaN(day)) {
     if (day === STRING_FIRST) {
@@ -237,7 +237,7 @@ function getWhatMonth (date, month, day) {
   * @return {Date}
   */
 function getWhatWeek (date, week, day) {
-  var currentDate = stringToDate(date)
+  var currentDate = toStringDate(date)
   var customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
   var currentDay = currentDate.getDay()
   var time = getDateTime(currentDate)
@@ -257,7 +257,7 @@ function getWhatWeek (date, week, day) {
   * @return {Date}
   */
 function getWhatDay (date, day, mode) {
-  var currentDate = stringToDate(date)
+  var currentDate = toStringDate(date)
   if (!isNaN(day)) {
     currentDate.setDate(currentDate.getDate() + Number(day))
     if (mode === STRING_FIRST) {
@@ -281,7 +281,7 @@ function calculateTime (startDate, endDate, timeGap) {
   */
 function getMonthWeek (date) {
   if (date) {
-    var currentDate = stringToDate(date)
+    var currentDate = toStringDate(date)
     var monthFirst = getWhatMonth(date, 0, STRING_FIRST)
     var monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
     if (monthFirstWeek < monthFirst) {
@@ -302,7 +302,7 @@ function getMonthWeek (date) {
   */
 function getYearDay (date) {
   if (date) {
-    return calculateTime(getWhatYear(date, 0, STRING_FIRST), stringToDate(date), DAY_TIME)
+    return calculateTime(getWhatYear(date, 0, STRING_FIRST), toStringDate(date), DAY_TIME)
   }
   return 0
 }
@@ -315,7 +315,7 @@ function getYearDay (date) {
   */
 function getYearWeek (date) {
   if (date) {
-    var currentDate = stringToDate(date)
+    var currentDate = toStringDate(date)
     var yearFirst = getWhatYear(date, 0, STRING_FIRST)
     var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
     if (yearFirstWeek < yearFirst) {
@@ -366,8 +366,8 @@ function getDayOfMonth (date, month) {
   */
 function getDateDiff (startDate, endDate, rules) {
   var result = {done: false, time: 0}
-  var startTime = getDateTime(stringToDate(startDate))
-  var endTime = getDateTime(endDate ? stringToDate(endDate) : new Date())
+  var startTime = getDateTime(toStringDate(startDate))
+  var endTime = getDateTime(endDate ? toStringDate(endDate) : new Date())
   if (startTime < endTime) {
     var item
     var diffTime = result.time = endTime - startTime
@@ -396,8 +396,8 @@ var dateExports = {
   now: now,
   timestamp: timestamp,
   isDateSame: isDateSame,
-  stringToDate: stringToDate,
-  dateToString: dateToString,
+  toStringDate: toStringDate,
+  toDateString: toDateString,
   getWhatYear: getWhatYear,
   getWhatMonth: getWhatMonth,
   getWhatWeek: getWhatWeek,

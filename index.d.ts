@@ -956,7 +956,7 @@ export interface XEUtilsMethods {
   now(): number;
 
   /**
-   * 将日期格式化为时间戳
+   * 将日期转为时间戳
    * @param date 字符串/日期/时间戳
    * @param format 解析格式 yyyy MM dd HH mm ss SSS
    */
@@ -968,16 +968,16 @@ export interface XEUtilsMethods {
    * @param format 解析格式 yyyy MM dd HH mm ss SSS
    * @example 
     ```javascript
-    XEUtils.stringToDate(1540130494594)
-    XEUtils.stringToDate(new Date())
-    XEUtils.stringToDate('2017-12-20 10:10:30')
-    XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy')
-    XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm')
-    XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
-    XEUtils.stringToDate('20171220201030', 'yyyyMMddHHmmss')
+    XEUtils.toStringDate(1540130494594)
+    XEUtils.toStringDate(new Date())
+    XEUtils.toStringDate('2017-12-20 10:10:30')
+    XEUtils.toStringDate('12/20/2017', 'MM/dd/yyyy')
+    XEUtils.toStringDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm')
+    XEUtils.toStringDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
+    XEUtils.toStringDate('20171220201030', 'yyyyMMddHHmmss')
     ```
    */
-  stringToDate(str: string | Date | number, format?: string): Date;
+  toStringDate(str: string | Date | number, format?: string): Date;
 
   /**
    * 日期格式化为任意格式字符串
@@ -986,16 +986,16 @@ export interface XEUtilsMethods {
    * @param options 可选参数
    * @example 
     ```javascript
-    XEUtils.dateToString(1513735830000)
-    XEUtils.dateToString(new Date())
-    XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
-    XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S')
-    XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
-    XEUtils.dateToString('2017-01-01 10:05:30', 'MM/dd/yyyy')
-    XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S')
+    XEUtils.toDateString(1513735830000)
+    XEUtils.toDateString(new Date())
+    XEUtils.toDateString(new Date(), 'yyyy-MM-dd')
+    XEUtils.toDateString(new Date(), 'yyyy-M-d H:m:s.S')
+    XEUtils.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
+    XEUtils.toDateString('2017-01-01 10:05:30', 'MM/dd/yyyy')
+    XEUtils.toDateString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S')
     ```
    */
-  dateToString(date: string | Date | number, format?: string, options?: object): string;
+  toDateString(date: string | Date | number, format?: string, options?: object): string;
 
   /**
    * 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前

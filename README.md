@@ -42,7 +42,7 @@ require.config({
   }
 })
 define('xe-utils', function (XEUtils) {
-  XEUtils.dateToString(new Date()) // 2018-01-01 10:30:00
+  XEUtils.toDateString(new Date()) // 2018-01-01 10:30:00
 })
 ```
 
@@ -61,10 +61,10 @@ const XEUtils = require('xe-utils')
 ### ES6 Module import 部分导入
 
 ```JavaScript
-import { dateToString, stringToDate } from 'xe-utils'
+import { toDateString, toStringDate } from 'xe-utils'
 
-dateToString(new Date()) // 2018-01-01 10:30:00
-stringToDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
+toDateString(new Date()) // 2018-01-01 10:30:00
+toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
 ```
 
 ### ES6 Module import 导入所有
@@ -180,9 +180,9 @@ import XEUtils from 'xe-utils'
   * [commafy ( num [, options] ) 数值千分位分隔符、小数点](#commafy--num--options--数值千分位分隔符小数点)
 * *日期函数*
   * [now ( ) 返回当前时间戳](#now---返回当前时间戳)
-  * [timestamp ( date[, format] ) 将日期格式化为时间戳](#timestamp--date-format--将日期格式化为时间戳)
-  * [stringToDate ( str, format ) 任意格式字符串转为日期](#stringtodate--str-format--任意格式字符串转为日期)
-  * [dateToString ( date [, format, options] ) 日期格式化为任意格式字符串](#datetostring--date--format-options--日期格式化为任意格式字符串)
+  * [timestamp ( date[, format] ) 将日期转为时间戳](#timestamp--date-format--将日期格式化为时间戳)
+  * [toStringDate ( str, format ) 任意格式字符串转为日期](#toStringDate--str-format--任意格式字符串转为日期)
+  * [toDateString ( date [, format, options] ) 日期格式化为任意格式字符串](#toDateString--date--format-options--日期格式化为任意格式字符串)
   * [getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前](#getwhatyear--date-year--month--返回前几年或后几年的日期可以指定年初first年末last月份011默认当前)
   * [getWhatMonth ( date, month [, day] ) 返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前](#getwhatmonth--date-month--day--返回前几月或后几月的日期可以指定月初first月末last天数默认当前)
   * [getWhatWeek ( date, week [, day] ) 返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前](#getwhatweek--date-week--day--返回前几周或后几周的日期可以指定星期几06默认当前)
@@ -517,7 +517,7 @@ import XEUtils from 'xe-utils'
 // 例如：new Date() => 2018-12-01
 XEUtils.isDateSame('2018-12-01', '2018-12-01') // true
 XEUtils.isDateSame(new Date(), '2018-12-01', 'yyyy') // 判断是否同一年 true
-XEUtils.isDateSame(new Date(), XEUtils.stringToDate('12/30/2018', 'MM/dd/yyyy'), 'MM') // 判断是否同一月 true
+XEUtils.isDateSame(new Date(), XEUtils.toStringDate('12/30/2018', 'MM/dd/yyyy'), 'MM') // 判断是否同一月 true
 XEUtils.isDateSame(new Date(), new Date(), 'dd') // 判断是否同一日 true
 XEUtils.isDateSame(new Date(), new Date(), 'yyyyMMdd') // 判断是否同年同月同日 true
 ```
@@ -1445,7 +1445,7 @@ import XEUtils from 'xe-utils'
 XEUtils.now() // 1514096716800
 ```
 
-### timestamp ( date[, format] ) 将日期格式化为时间戳
+### timestamp ( date[, format] ) 将日期转为时间戳
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -1455,7 +1455,7 @@ XEUtils.timestamp('2018-12-01') // 1543593600000
 XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS') // 1513735830459
 ```
 
-### stringToDate ( str, format ) 任意格式字符串转为日期
+### toStringDate ( str, format ) 任意格式字符串转为日期
 
 | 属性 | 描述 |
 |------|------|
@@ -1470,21 +1470,21 @@ XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS') // 15137
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.stringToDate('2017-12-20')
+XEUtils.toStringDate('2017-12-20')
 // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('2017-12-20 10:10:30')
+XEUtils.toStringDate('2017-12-20 10:10:30')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('12/20/2017', 'MM/dd/yyyy')
+XEUtils.toStringDate('12/20/2017', 'MM/dd/yyyy')
 // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('20171220101030', 'yyyyMMddHHmmss')
+XEUtils.toStringDate('20171220101030', 'yyyyMMddHHmmss')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm:ss')
+XEUtils.toStringDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm:ss')
 // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
-XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
+XEUtils.toStringDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 ```
 
-### dateToString ( date [, format, options] ) 日期格式化为任意格式字符串
+### toDateString ( date [, format, options] ) 日期格式化为任意格式字符串
 
 | 属性 | 描述 | 备注 | 值 |
 |------|------|------|------|
@@ -1518,37 +1518,37 @@ XEUtils.stringToDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.dateToString(1513735830000)
+XEUtils.toDateString(1513735830000)
 // '2017-01-01 14:05:30'
-XEUtils.dateToString(new Date())
+XEUtils.toDateString(new Date())
 // '2017-01-01 14:05:30'
-XEUtils.dateToString('2017-01-01 10:05:30', 'MM/dd/yyyy')
+XEUtils.toDateString('2017-01-01 10:05:30', 'MM/dd/yyyy')
 // '01/01/2017'
-XEUtils.dateToString('2017-01-01 10:05:30', 'M/d/yyyy')
+XEUtils.toDateString('2017-01-01 10:05:30', 'M/d/yyyy')
 // '1/1/2017'
-XEUtils.dateToString(new Date(), 'yyyyMMddHHmmssSSS')
+XEUtils.toDateString(new Date(), 'yyyyMMddHHmmssSSS')
 // '20170101140530099'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd')
+XEUtils.toDateString(new Date(), 'yyyy-MM-dd')
 // '2017-01-01'
-XEUtils.dateToString(new Date(), 'yy-M-d')
+XEUtils.toDateString(new Date(), 'yy-M-d')
 // '17-1-1'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
+XEUtils.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
 // '2017-01-01 14:05:30.099'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSSZ')
+XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSSZ')
 // '2017-01-01 02:05:30.099+0800'
-XEUtils.dateToString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZ')
+XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZ')
 // '2017-01-01 02:05:30.099 GMT+0800'
-XEUtils.dateToString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S')
+XEUtils.toDateString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S')
 // '2017-11-20 2:5:30.99'
-XEUtils.dateToString(new Date(), 'yyyy-M-d H:m:s.S')
+XEUtils.toDateString(new Date(), 'yyyy-M-d H:m:s.S')
 // '2017-1-1 14:5:30.99'
-XEUtils.dateToString(new Date(), 'yyyy-M-d h:m:s.S')
+XEUtils.toDateString(new Date(), 'yyyy-M-d h:m:s.S')
 // '2017-1-1 2:5:30.99'
-XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
+XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
 // '2017年01月01日 14时05分30秒99毫秒,星期3 第4季度'
-XEUtils.dateToString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度')
+XEUtils.toDateString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度')
 // '17年1月1日 14时5分30秒99毫秒,星期3 第4季度'
-XEUtils.dateToString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒zZ 星期E e 第q季 今年第D天 今年第w周 当月第W周 a A')
+XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒zZ 星期E e 第q季 今年第D天 今年第w周 当月第W周 a A')
 // '2018年05月29日 09时44分46秒647毫秒GMT+0800 星期2 1 第2季 今年第149天 今年第22周 当月第4周 am AM'
 ```
 
@@ -1998,7 +1998,7 @@ XEUtils.setup({
 import XEUtils from 'xe-utils'
 
 export function toDateStr (date) {
-  return XEUtils.dateToString(date, 'yyyy-MM-dd HH:mm')
+  return XEUtils.toDateString(date, 'yyyy-MM-dd HH:mm')
 }
 ```
 

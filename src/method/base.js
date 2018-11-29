@@ -415,7 +415,7 @@ function isWeakSet (obj) {
   * @return {Boolean}
   */
 function isLeapYear (date) {
-  var currentDate = date ? XEUtils.stringToDate(date) : new Date()
+  var currentDate = date ? XEUtils.toStringDate(date) : new Date()
   var year = currentDate.getFullYear()
   return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
 }
