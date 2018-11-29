@@ -175,8 +175,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 * *日期函数*
   * [now ( ) 返回当前时间戳](#now---返回当前时间戳)
   * [timestamp ( date[, format] ) 将日期转为时间戳](#timestamp--date-format--将日期格式化为时间戳)
-  * [toStringDate ( str, format ) 任意格式字符串转为日期](#toStringDate--str-format--任意格式字符串转为日期)
-  * [toDateString ( date [, format, options] ) 日期格式化为任意格式字符串](#toDateString--date--format-options--日期格式化为任意格式字符串)
+  * [toStringDate ( str, format ) 任意格式字符串转为日期](#tostringdate--str-format--任意格式字符串转为日期)
+  * [toDateString ( date [, format, options] ) 日期格式化为任意格式字符串](#todatestring--date--format-options--日期格式化为任意格式字符串)
   * [getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前](#getwhatyear--date-year--month--返回前几年或后几年的日期可以指定年初first年末last月份011默认当前)
   * [getWhatMonth ( date, month [, day] ) 返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前](#getwhatmonth--date-month--day--返回前几月或后几月的日期可以指定月初first月末last天数默认当前)
   * [getWhatWeek ( date, week [, day] ) 返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前](#getwhatweek--date-week--day--返回前几周或后几周的日期可以指定星期几06默认当前)
@@ -188,8 +188,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [getDayOfMonth ( date [, month] ) 返回某个月份的天数,可以指定前几个月或后几个月，默认当前](#getdayofmonth--date--month--返回某个月份的天数可以指定前几个月或后几个月默认当前)
   * [getDateDiff ( startDate, endDate [, rules] ) 返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle](#getdatediff--startdate-enddate--rules--返回两个日期之间差距如果结束日期小于开始日期-done-为-fasle)
 * *高级函数*
-  * [toArrayTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#toArrayTree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
-  * [toTreeArray ( array, options ) 将一个树结构转成数组列表](#toTreeArray--array-options--将一个树结构转成数组列表)
+  * [toArrayTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#toarraytree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
+  * [toTreeArray ( array, options ) 将一个树结构转成数组列表](#totreearray--array-options--将一个树结构转成数组列表)
   * [property ( path ) 返回一个获取对象属性的函数](#property--path--返回一个获取对象属性的函数)
   * [pluck ( array, key ) 获取数组对象中某属性值，返回一个数组](#pluck--array-key--获取数组对象中某属性值返回一个数组)
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
