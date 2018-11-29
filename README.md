@@ -203,8 +203,8 @@ import XEUtils from 'xe-utils'
   * [unzip ( arrays ) 与 zip 相反](#unzip--arrays--与-zip-相反)
   * [bind (callback, context[, ...arguments]) 创建一个绑定上下文的函数](#bind-callback-context-arguments-创建一个绑定上下文的函数)
   * [once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果](#once-callback-context-arguments-创建一个只能调用一次的函数只会返回第一次执行后的结果)
-  * [after (count, callback, context) 创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回]()
-  * [before (count, callback, context) 创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回]()
+  * [after (count, callback, context) 创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回](#after-count-callback-context-创建一个函数-调用次数超过-count-次之后执行回调并将所有结果记住后返回)
+  * [before (count, callback, context) 创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回](#before-count-callback-context-创建一个函数-调用次数不超过-count-次之前执行回调并将所有结果记住后返回)
   * [throttle (callback, wait[, options]) 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数](#throttle-callback-wait-options-创建一个策略函数当被重复调用函数的时候至少每隔多少秒毫秒调用一次该函数)
   * [debounce (callback, wait[, options]) 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟](#debounce-callback-wait-options-创建一个防反跳策略函数在函数最后一次调用多少毫秒之后才会再次执行如果在期间内重复调用会重新计算延迟)
 * *浏览器函数*
