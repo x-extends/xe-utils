@@ -553,7 +553,7 @@ XEUtils.getSize([1, 3]) // 2
 XEUtils.getSize({a: 2, b: 5}) // 2
 ```
 
-### slice ( array, start, end ) 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
+### slice ( array, start, end ) 裁剪（数组或伪数组），从 start 位置开始到 end 结束，但不包括 end 本身的位置
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -851,7 +851,7 @@ XEUtils.forOf([11, 22, 33], (item, key) => {
   return false
 })
 XEUtils.arrayEach([11, 22, 33], (item, index) => {
-  // 数组迭代器，只能用于遍历(数组或arguments)，性能高于 each
+  // 数组迭代器，只能用于遍历(数组或伪数组)，性能高于 each
 })
 XEUtils.objectEach({a: 11, b: 22}, (item, key) => {
   // 对象迭代器，只能用于遍历对象，性能高于 each
@@ -871,7 +871,7 @@ XEUtils.lastForOf([11, 22, 33], (item, key) => {
   return false
 })
 XEUtils.lastArrayEach([11, 22, 33], (item, index) => {
-  // 数组迭代器，只能用于遍历(数组或arguments)，性能高于 lastEach
+  // 数组迭代器，只能用于遍历(数组或伪数组)，性能高于 lastEach
 })
 XEUtils.lastObjectEach({a: 11, b: 22}, (item, key) => {
   // 对象迭代器，只能用于遍历对象，性能高于 lastEach
