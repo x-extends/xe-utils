@@ -11,7 +11,7 @@ XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，
 --- | --- | --- | --- | --- | --- |
 7+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 6.1+ ✔ |
 
-## CDN 安装
+## CDN install
 
 ### cdnjs 获取最新版本
 
@@ -29,7 +29,7 @@ XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，
 <script src="https://unpkg.com/xe-utils/dist/xe-utils.js"></script>
 ```
 
-## AMD 安装
+## AMD install
 
 ### require.js
 
@@ -42,35 +42,29 @@ require.config({
   }
 })
 define('xe-utils', function (XEUtils) {
-  XEUtils.toDateString(new Date()) // 2018-01-01 10:30:00
+  XEUtils.toDateString(new Date()) // 2018-01-01 10:30:28
 })
 ```
 
-## NPM 安装
+## NPM install
 
 ```JavaScript
 npm install xe-utils --save
 ```
 
-### NodeJS 导入
+### NodeJS require
 
 ```JavaScript
 const XEUtils = require('xe-utils')
 ```
 
-### ES6 Module import 部分导入
-
-```JavaScript
-import { toDateString, toStringDate } from 'xe-utils'
-
-toDateString(new Date()) // 2018-01-01 10:30:00
-toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
-```
-
-### ES6 Module import 导入所有
+### ES6 Module import
 
 ```JavaScript
 import XEUtils from 'xe-utils'
+
+XEUtils.toDateString(Date.now()) // 2018-01-01 10:30:28
+XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
 ```
 
 ## API
