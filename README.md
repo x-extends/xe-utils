@@ -149,7 +149,7 @@ import XEUtils from 'xe-utils'
   * [arrayEach ( obj, iteratee [, context] ) 迭代器](#eachforofarrayeachobjecteach--obj-iteratee--context--迭代器)
   * [objectEach ( obj, iteratee [, context] ) 迭代器](#eachforofarrayeachobjecteach--obj-iteratee--context--迭代器)
   * [lastEach ( obj, iteratee [, context] ) 迭代器,从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
-  * [lastForEach ( obj, iteratee [, context] ) 迭代器,从最后开始迭代,支持 return false 跳出循环 break](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
+  * [lastForOf ( obj, iteratee [, context] ) 迭代器,从最后开始迭代,支持 return false 跳出循环 break](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [lastArrayEach ( obj, iteratee [, context] ) 迭代器,从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [lastObjectEach ( obj, iteratee [, context] ) 迭代器,从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [keys (obj) 获取对象所有属性](#keys-obj-获取对象所有属性)
