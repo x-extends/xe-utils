@@ -103,7 +103,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
   * [toInteger ( num ) 转整数](#tointeger--num--转整数)
-  * [toArray ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组](#toarrayfrom--array-iteratee--context--根据数组或可迭代对象中创建一个新的数组)
+  * [toArray ( array ) 根据数组或可迭代对象中创建一个新的数组](#toarrayfrom--array--根据数组或可迭代对象中创建一个新的数组)
   * [toStringJSON (str) 字符串转 JSON](#tostringjson-str-字符串转-json)
   * [toJSONString (obj) JSON 转字符串](#tojsonstring-obj-json-转字符串)
   * [getType (obj) 获取对象类型](#gettype-obj-获取对象类型)
@@ -1081,7 +1081,7 @@ XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
 XEUtils.mean([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 66
 ```
 
-### toArray ( array, iteratee [, context] ) 根据数组或可迭代对象中创建一个新的数组
+### toArray ( array ) 根据数组或可迭代对象中创建一个新的数组
 
 ```JavaScript
 import XEUtils from 'xe-utils'
