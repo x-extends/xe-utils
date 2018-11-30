@@ -1070,6 +1070,33 @@
   }
 
   /**
+   * 深度比较两个对象之间的值是否相等
+   *
+   * @param {Object} obj1 值1
+   * @param {Object} obj2 值2
+   * @return {Boolean}
+   */
+  function isEqual (obj1, obj2) {
+    if (obj1 && obj2 && !isNumber(obj1) && !isString(obj1)) {
+      if (isRegExp(obj1)) {
+        return '' + obj1 === '' + obj2
+      } if (isDate(obj1) || isBoolean(obj1)) {
+        return +obj1 === +obj2
+      } else if (isArray(obj1) || isArray(obj2) ? isArray(obj1) && isArray(obj2) : obj1.constructor === obj2.constructor) {
+        var obj1Keys = objectKeys(obj1)
+        var obj2Keys = objectKeys(obj2)
+        if (obj1Keys.length === obj2Keys.length) {
+          return XEUtils.every(obj1Keys, function (key, index) {
+            return key === obj2Keys[index] && isEqual(obj1[key], obj2[obj2Keys[index]])
+          })
+        }
+        return false
+      }
+    }
+    return obj1 === obj2
+  }
+
+  /**
    * 返回一个获取对象属性的函数
    *
    * @param {String} name 属性名
@@ -1883,6 +1910,7 @@
     isSet: isSet,
     isWeakSet: isWeakSet,
     isLeapYear: isLeapYear,
+    isEqual: isEqual,
     property: property,
     getType: getType,
     uniqueId: uniqueId,

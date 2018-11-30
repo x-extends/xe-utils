@@ -244,6 +244,13 @@ export interface XEUtilsMethods {
   isLeapYear(date?: Date | number | string): boolean;
 
   /**
+   * 深度比较两个对象之间的值是否相等
+   * @param obj1 值1
+   * @param obj2 值2
+   */
+  isEqual(obj1: object | Array<any>, obj2: object | Array<any>): boolean;
+
+  /**
    * 判断两个日期是否相同
    * @param date1 日期
    * @param date2 日期

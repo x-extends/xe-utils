@@ -96,6 +96,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [isSet (val) 判断是否 Set 对象](#isset-val-判断是否-set-对象)
   * [isWeakSet (val) 判断是否 WeakSet 对象](#isweakset-val-判断是否-weakset-对象)
   * [isLeapYear (date) 判断是否闰年](#isleapyear-date-判断是否闰年)
+  * [isEqual (obj1, obj2) 深度比较两个对象之间的值是否相等](#isequal-obj1-obj2-深度比较两个对象之间的值是否相等)
   * [isDateSame (date1, date2, format) 判断两个日期是否相同](#isdatesame-date1-date2-format-判断两个日期是否相同)
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
@@ -498,6 +499,18 @@ XEUtils.isLeapYear(1606752000000)  // true
 XEUtils.isLeapYear('2018-12-01') // false
 XEUtils.isLeapYear('2020-12-01') // true
 XEUtils.isLeapYear(new Date('2020/12/01')) // true
+```
+
+### isEqual (obj1, obj2) 深度比较两个对象之间的值是否相等
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.isEqual({}, []) // false
+XEUtils.isEqual({0: 1}, [1]) // false
+XEUtils.isEqual({name: 'test1'}, {name: 'test1'}) // true
+XEUtils.isEqual({name: 'test1', list: [11, /\d/]}, {name: 'test1', list: [11,  /\d/]}) // true
+XEUtils.isEqual({name: 'test1', list: [11, 33, {a: /\D/}]}, {name: 'test1', list: [11, 33, {a: /\d/}]}) // false
 ```
 
 ### isDateSame (date1, date2, format) 判断两个日期是否相同
