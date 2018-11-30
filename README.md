@@ -69,7 +69,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 
 ## API
 
-* [全局参数设置](#全局参数设置)
+* *全局参数*
+  * [setup ( options ) 设置默认全局参数](#全局参数设置)
 * *基础函数*
   * [isNaN (val) 判断是否非数值](#isnan-val-判断是否非数值)
   * [isFinite (val) 判断是否为有限数值](#isfinite-val-判断是否为有限数值)
