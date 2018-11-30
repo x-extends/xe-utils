@@ -13,17 +13,13 @@ XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，
 
 ## CDN install
 
-### cdnjs 获取最新版本
-
-[点击浏览](https://cdn.jsdelivr.net/npm/xe-utils/)
+[cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
 
 ```HTML
 <script src="https://cdn.jsdelivr.net/npm/xe-utils/dist/xe-utils.js"></script>
 ```
 
-### unpkg 获取最新版本
-
-[点击浏览](https://unpkg.com/xe-utils/)
+[unpkg](https://unpkg.com/xe-utils/)
 
 ```HTML
 <script src="https://unpkg.com/xe-utils/dist/xe-utils.js"></script>
