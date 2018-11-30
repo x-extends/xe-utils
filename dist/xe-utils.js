@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.0
+ * xe-utils.js v1.7.0-beta.0
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.7.0'
+  XEUtils.version = '1.7.0-beta.0'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
