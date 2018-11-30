@@ -1077,7 +1077,7 @@
    * @return {Boolean}
    */
   function isEqual (obj1, obj2) {
-    if (obj1 && obj2 && !isNumber(obj1) && !isString(obj1)) {
+    if (obj1 && obj2 && !isNumber(obj1) && !isNumber(obj2) && !isString(obj1) && !isString(obj2)) {
       if (isRegExp(obj1)) {
         return '' + obj1 === '' + obj2
       } if (isDate(obj1) || isBoolean(obj1)) {
