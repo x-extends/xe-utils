@@ -1090,6 +1090,7 @@ XEUtils.toArray([]) // []
 XEUtils.toArray({}) // []
 XEUtils.toArray({name: 'test1', age: 25}) // ['test1', 25]
 XEUtils.toArray(arguments) // [...]
+XEUtils.toArray(document.querySelectorAll('div')) // [...]
 ```
 
 ### reduce ( array, iteratee [, initialValue] ) 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
