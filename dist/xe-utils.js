@@ -462,10 +462,9 @@
           return false
         }
       }
-    } else {
-      return includes(array1, array2)
+      return true
     }
-    return true
+    return includes(array1, array2)
   }
 
   /**
