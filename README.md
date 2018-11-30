@@ -2001,27 +2001,16 @@ XEUtils.setup({
 
 允许用您自己的实用函数扩展到XEUtils
 
-### 文件 ./util.js
-
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-export function toDateStr (date) {
-  return XEUtils.toDateString(date, 'yyyy-MM-dd HH:mm')
-}
-```
+XEUtils.mixin({
+  formatAmount (num) {
+    return parseFloat(num).toFixed(2)
+  }
+})
 
-### 示例 ./main.js
-
-```JavaScript
-import Vue from 'vue'
-import XEUtils from 'xe-utils'
-import util from './util'
-
-XEUtils.mixin(util)
-
-// 调用自定义扩展函数
-XEUtils.toDateStr(new Date()) // 2018-01-01 10:00
+XEUtils.formatAmount(100.1) // 100.10
 ```
 
 ## License
