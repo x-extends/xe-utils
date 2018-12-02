@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.0-beta.0
+ * xe-utils.js v1.7.0
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -13,7 +13,7 @@
 
   function XEUtils () { }
 
-  XEUtils.version = '1.7.0-beta.0'
+  XEUtils.version = '1.7.0'
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -726,6 +726,22 @@
   }
 
   /**
+    * 该方法和 setTimeout 一样的效果，区别就是支持上下文和额外参数
+    *
+    * @param {Function} callback 函数
+    * @param {Number} wait 延迟毫秒
+    * @param {*} args 额外的参数
+    * @return {Number}
+   */
+  function delay (callback, wait) {
+    var args = arraySlice(arguments, 3)
+    var context = this
+    return setTimeout(function () {
+      callback.apply(context, args)
+    }, wait)
+  }
+
+  /**
     * 创建一个绑定上下文的函数
     *
     * @param {Function} callback 函数
@@ -1173,10 +1189,13 @@
     return result
   }
 
-  function createIndexOf (callback) {
+  function createIndexOf (name, callback) {
     return function (obj, val) {
       if (obj) {
         if (isString(obj) || isArray(obj)) {
+          if (obj[name]) {
+            return obj[name](val)
+          }
           return callback(obj, val)
         }
         for (var key in obj) {
@@ -1198,10 +1217,7 @@
     * @param {Object} val 值
     * @return {Number}
     */
-  var indexOf = createIndexOf(function (obj, val) {
-    if (obj.indexOf) {
-      return obj.indexOf(val)
-    }
+  var indexOf = createIndexOf('indexOf', function (obj, val) {
     for (var index = 0, len = obj.length; index < len; index++) {
       if (val === obj[index]) {
         return index
@@ -1216,10 +1232,7 @@
     * @param {Object} val 值
     * @return {Number}
     */
-  var lastIndexOf = createIndexOf(function (obj, val) {
-    if (obj.lastIndexOf) {
-      return obj.lastIndexOf(val)
-    }
+  var lastIndexOf = createIndexOf('lastIndexOf', function (obj, val) {
     for (var len = obj.length - 1; len >= 0; len--) {
       if (val === obj[len]) {
         return len
@@ -1230,9 +1243,9 @@
 
   function createiterateIndexOf (callback) {
     return function (obj, iterate, context) {
-      if (obj && iterate) {
+      if (obj && isFunction(iterate)) {
         context = this || context
-        if (isString(obj) || isArray(obj)) {
+        if (isArray(obj) || isString(obj)) {
           return callback(obj, iterate, context)
         }
         for (var key in obj) {
@@ -1256,8 +1269,7 @@
     * @return {Object}
     */
   var findIndexOf = createiterateIndexOf(function (obj, iterate, context) {
-    var len = obj.length
-    for (var index = 0; index < len; index++) {
+    for (var index = 0, len = obj.length; index < len; index++) {
       if (iterate.call(context, obj[index], index, obj)) {
         return index
       }
@@ -1391,6 +1403,7 @@
     */
   function clearObject (obj, defs, assigns) {
     if (obj) {
+      var len
       var isDefs = arguments.length > 1 && (defs === null || !isObject(defs))
       var extds = isDefs ? assigns : defs
       if (isPlainObject(obj)) {
@@ -1399,10 +1412,12 @@
         } : function (val, key) {
           deleteProperty(obj, key)
         })
-        extds && objectAssign(obj, extds)
+        if (extds) {
+          objectAssign(obj, extds)
+        }
       } else if (isArray(obj)) {
         if (isDefs) {
-          var len = obj.length
+          len = obj.length
           while (len > 0) {
             len--
             obj[len] = defs
@@ -1410,7 +1425,9 @@
         } else {
           obj.length = 0
         }
-        extds && obj.push.apply(obj, extds)
+        if (extds) {
+          obj.push.apply(obj, extds)
+        }
       }
     }
     return obj
@@ -1461,12 +1478,12 @@
   }
 
   function createGetObjects (name, getIndex) {
+    var proMethod = Object[name]
     return function (obj) {
       var result = []
       if (obj) {
-        var objectKeysFn = Object[name]
-        if (objectKeysFn) {
-          return objectKeysFn(obj)
+        if (proMethod) {
+          return proMethod(obj)
         }
         each(obj, getIndex > 1 ? function (key) {
           result.push([key, obj[key]])
@@ -1712,12 +1729,10 @@
     var result = {}
     if (obj) {
       context = this || context
-      if (iterate !== null && iterate !== undefined) {
-        if (isObject(iterate)) {
-          iterate = createiterateEmpty(iterate)
-        } else if (!isFunction(iterate)) {
-          iterate = property(iterate)
-        }
+      if (iterate && isObject(iterate)) {
+        iterate = createiterateEmpty(iterate)
+      } else if (!isFunction(iterate)) {
+        iterate = property(iterate)
       }
       each(obj, function (val, key) {
         groupKey = iterate ? iterate.call(context, val, key, obj) : val
@@ -1784,11 +1799,11 @@
     * @return {Function}
     */
   function throttle (callback, wait, options) {
+    var args
+    var context
     var opts = options || {}
     var runFlag = false
-    var args = null
-    var context = null
-    var timeout = null
+    var timeout = 0
     var optLeading = 'leading' in opts ? opts.leading : true
     var optTrailing = 'trailing' in opts ? opts.trailing : false
     var runFn = function () {
@@ -1797,23 +1812,23 @@
       timeout = setTimeout(endFn, wait)
     }
     var endFn = function () {
-      timeout = null
+      timeout = 0
       if (!runFlag && optTrailing === true) {
         runFn()
       }
     }
     var cancelFn = function () {
-      var rest = timeout !== null
+      var rest = timeout !== 0
       clearTimeout(timeout)
       runFlag = false
-      timeout = null
+      timeout = 0
       return rest
     }
     var throttled = function () {
       args = arguments
       context = this
       runFlag = false
-      if (timeout === null) {
+      if (timeout === 0) {
         if (optLeading === true) {
           runFn()
         } else if (optTrailing === true) {
@@ -1834,39 +1849,39 @@
     * @return {Function}
     */
   function debounce (callback, wait, options) {
+    var args
+    var context
     var opts = options || {}
     var runFlag = false
-    var args = null
-    var context = null
-    var timeout = null
+    var timeout = 0
     var isLeading = typeof options === 'boolean'
     var optLeading = 'leading' in opts ? opts.leading : isLeading
     var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
     var clearTimeoutFn = clearTimeout
     var runFn = function () {
       runFlag = true
-      timeout = null
+      timeout = 0
       callback.apply(context, args)
     }
     var endFn = function () {
       if (optLeading === true) {
-        timeout = null
+        timeout = 0
       }
       if (!runFlag && optTrailing === true) {
         runFn()
       }
     }
     var cancelFn = function () {
-      var rest = timeout !== null
+      var rest = timeout !== 0
       clearTimeoutFn(timeout)
-      timeout = null
+      timeout = 0
       return rest
     }
     var debounced = function () {
       runFlag = false
       args = arguments
       context = this
-      if (timeout === null) {
+      if (timeout === 0) {
         if (optLeading === true) {
           runFn()
         }
@@ -1946,6 +1961,7 @@
     countBy: countBy,
     objectMap: objectMap,
     clone: clone,
+    delay: delay,
     bind: bind,
     once: once,
     after: after,
@@ -1975,24 +1991,27 @@
     * @return Object
     */
   function browse () {
-    var undef = 'undefined'
+    var $body
+    var $dom
+    var strUndefined = 'undefined'
     var result = {
       isNode: false,
       isMobile: false,
       isPC: false,
       isLocalStorage: false,
-      isSessionStorage: false
+      isSessionStorage: false,
+      isDoc: typeof document !== strUndefined
     }
-    if (typeof window === undef && typeof process !== undef) {
+    if (typeof window === strUndefined && typeof process !== strUndefined) {
       result.isNode = true
     } else {
       result.isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
       result.isPC = !result.isMobile
       result.isLocalStorage = isBrowseStorage(window.localStorage)
       result.isSessionStorage = isBrowseStorage(window.sessionStorage)
-      if (typeof document !== undef) {
-        var $dom = document
-        var $body = $dom.body || $dom.documentElement
+      if (result.isDoc) {
+        $dom = document
+        $body = $dom.body || $dom.documentElement
         baseExports.each(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
           result['-' + core] = !!$body[core + 'MatchesSelector']
         })
@@ -2004,6 +2023,8 @@
   var browseExports = {
     browse: browse
   }
+
+  var isDocument = typeof document !== 'undefined'
 
   function toCookieUnitTime (unit, expires) {
     var num = parseFloat(expires)
@@ -2038,32 +2059,37 @@
     *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
     */
   function cookie (name, value, options) {
-    var inserts = []
-    var args = arguments
-    var decode = decodeURIComponent
-    var encode = encodeURIComponent
-    var isDoc = typeof document !== 'undefined'
-    var $dom = isDoc ? document : null
-    var arrayEach = baseExports.each
-    var objectAssign = baseExports.assign
-    var isObject = baseExports.isObject
-    if (this && this.$context) {
-      this.$context = null
-    }
-    if (baseExports.isArray(name)) {
-      inserts = name
-    } else if (args.length > 1) {
-      inserts = [objectAssign({ name: name, value: value }, options)]
-    } else if (isObject(name)) {
-      inserts = [name]
-    }
-    if (inserts.length > 0) {
-      if (isDoc) {
+    if (isDocument) {
+      var opts
+      var expires
+      var values
+      var result
+      var cookies
+      var keyIndex
+      var inserts = []
+      var args = arguments
+      var decode = decodeURIComponent
+      var encode = encodeURIComponent
+      var $dom = document
+      var arrayEach = baseExports.each
+      var objectAssign = baseExports.assign
+      var isObject = baseExports.isObject
+      if (this && this.$context) {
+        this.$context = null
+      }
+      if (baseExports.isArray(name)) {
+        inserts = name
+      } else if (args.length > 1) {
+        inserts = [objectAssign({ name: name, value: value }, options)]
+      } else if (isObject(name)) {
+        inserts = [name]
+      }
+      if (inserts.length > 0) {
         arrayEach(inserts, function (obj) {
-          var opts = objectAssign({}, setupDefaults.cookies, obj)
-          var values = []
+          opts = objectAssign({}, setupDefaults.cookies, obj)
+          values = []
           if (opts.name) {
-            var expires = opts.expires
+            expires = opts.expires
             values.push(encode(opts.name) + '=' + encode(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
             if (expires) {
               if (isNaN(expires)) {
@@ -2088,18 +2114,20 @@
           }
           $dom.cookie = values.join('; ')
         })
+        return true
+      } else {
+        result = {}
+        cookies = $dom.cookie
+        if (cookies) {
+          arrayEach(cookies.split('; '), function (val) {
+            keyIndex = val.indexOf('=')
+            result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
+          })
+        }
+        return args.length === 1 ? result[name] : result
       }
-    } else {
-      var result = {}
-      var cookies = $dom.cookie
-      if (isDoc && cookies) {
-        arrayEach(cookies.split('; '), function (val) {
-          var keyIndex = val.indexOf('=')
-          result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
-        })
-      }
-      return args.length === 1 ? result[name] : result
     }
+    return false
   }
 
   function isCookieKey (key) {
@@ -2543,13 +2571,9 @@
     getDateDiff: getDateDiff
   }
 
-  var $locat = 0
+  var $locat = typeof location === 'undefined' ? 0 : location
   var decode = decodeURIComponent
   var encode = encodeURIComponent
-
-  if (typeof location !== 'undefined') {
-    $locat = location
-  }
 
   function parseURLQuery (uri) {
     return parseParams(uri.split('?')[1] || '')
@@ -2561,10 +2585,11 @@
    * @param {String} query 反序列化的字符串
    */
   function parseParams (str) {
+    var items
     var result = {}
     if (str) {
       baseExports.each(str.split('&'), function (param) {
-        var items = param.split('=')
+        items = param.split('=')
         result[decode(items[0])] = decode(items[1] || '')
       })
     }
@@ -2572,9 +2597,10 @@
   }
 
   function stringifyParams (resultVal, resultKey, isArr) {
+    var _arr
     var result = []
     baseExports.each(resultVal, function (item, key) {
-      var _arr = baseExports.isArray(item)
+      _arr = baseExports.isArray(item)
       if (baseExports.isPlainObject(item) || _arr) {
         result = result.concat(stringifyParams(item, resultKey + '[' + key + ']', _arr))
       } else {
@@ -2598,14 +2624,18 @@
   }
 
   function parseUrl (url) {
+    var hashs
+    var portText
+    var searchs
+    var parsed
     var href = '' + url
     if (href.indexOf('//') === 0) {
       href = ($locat ? $locat.protocol : '') + href
     } else if (href.indexOf('/') === 0) {
       href = getLocatOrigin() + href
     }
-    var searchs = href.replace(/#.*/, '').match(/(\?.*)/)
-    var parsed = {
+    searchs = href.replace(/#.*/, '').match(/(\?.*)/)
+    parsed = {
       href: href,
       hash: '',
       host: '',
@@ -2618,7 +2648,7 @@
       parsed.protocol = protocol
       return ''
     }).replace(/^([a-z0-9.+-]*)(:\d+)?\//, function (text, hostname, port) {
-      var portText = port || ''
+      portText = port || ''
       parsed.port = portText.replace(':', '')
       parsed.hostname = hostname
       parsed.host = hostname + portText
@@ -2627,7 +2657,7 @@
       parsed.hash = hash.length > 1 ? hash : ''
       return ''
     })
-    var hashs = parsed.hash.match(/#((.*)\?|(.*))/)
+    hashs = parsed.hash.match(/#((.*)\?|(.*))/)
     parsed.pathname = parsed.path.replace(/(\?|#.*).*/, '')
     parsed.origin = parsed.protocol + '//' + parsed.host
     parsed.hashKey = hashs ? (hashs[2] || hashs[1] || '') : ''
@@ -2651,10 +2681,11 @@
    * @param {Object} query 序列化的对象
    */
   function serialize (query) {
+    var _arr
     var params = []
     baseExports.each(query, function (item, key) {
       if (item !== undefined) {
-        var _arr = baseExports.isArray(item)
+        _arr = baseExports.isArray(item)
         if (baseExports.isPlainObject(item) || _arr) {
           params = params.concat(stringifyParams(item, key, _arr))
         } else {

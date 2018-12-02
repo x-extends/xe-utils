@@ -2,13 +2,9 @@
 
 var baseExports = require('./base')
 
-var $locat = 0
+var $locat = typeof location === 'undefined' ? 0 : location
 var decode = decodeURIComponent
 var encode = encodeURIComponent
-
-if (typeof location !== 'undefined') {
-  $locat = location
-}
 
 function parseURLQuery (uri) {
   return parseParams(uri.split('?')[1] || '')
@@ -20,10 +16,11 @@ function parseURLQuery (uri) {
  * @param {String} query 反序列化的字符串
  */
 function parseParams (str) {
+  var items
   var result = {}
   if (str) {
     baseExports.each(str.split('&'), function (param) {
-      var items = param.split('=')
+      items = param.split('=')
       result[decode(items[0])] = decode(items[1] || '')
     })
   }
@@ -31,9 +28,10 @@ function parseParams (str) {
 }
 
 function stringifyParams (resultVal, resultKey, isArr) {
+  var _arr
   var result = []
   baseExports.each(resultVal, function (item, key) {
-    var _arr = baseExports.isArray(item)
+    _arr = baseExports.isArray(item)
     if (baseExports.isPlainObject(item) || _arr) {
       result = result.concat(stringifyParams(item, resultKey + '[' + key + ']', _arr))
     } else {
@@ -57,14 +55,18 @@ function getBaseURL () {
 }
 
 function parseUrl (url) {
+  var hashs
+  var portText
+  var searchs
+  var parsed
   var href = '' + url
   if (href.indexOf('//') === 0) {
     href = ($locat ? $locat.protocol : '') + href
   } else if (href.indexOf('/') === 0) {
     href = getLocatOrigin() + href
   }
-  var searchs = href.replace(/#.*/, '').match(/(\?.*)/)
-  var parsed = {
+  searchs = href.replace(/#.*/, '').match(/(\?.*)/)
+  parsed = {
     href: href,
     hash: '',
     host: '',
@@ -77,7 +79,7 @@ function parseUrl (url) {
     parsed.protocol = protocol
     return ''
   }).replace(/^([a-z0-9.+-]*)(:\d+)?\//, function (text, hostname, port) {
-    var portText = port || ''
+    portText = port || ''
     parsed.port = portText.replace(':', '')
     parsed.hostname = hostname
     parsed.host = hostname + portText
@@ -86,7 +88,7 @@ function parseUrl (url) {
     parsed.hash = hash.length > 1 ? hash : ''
     return ''
   })
-  var hashs = parsed.hash.match(/#((.*)\?|(.*))/)
+  hashs = parsed.hash.match(/#((.*)\?|(.*))/)
   parsed.pathname = parsed.path.replace(/(\?|#.*).*/, '')
   parsed.origin = parsed.protocol + '//' + parsed.host
   parsed.hashKey = hashs ? (hashs[2] || hashs[1] || '') : ''
@@ -110,10 +112,11 @@ function locat () {
  * @param {Object} query 序列化的对象
  */
 function serialize (query) {
+  var _arr
   var params = []
   baseExports.each(query, function (item, key) {
     if (item !== undefined) {
-      var _arr = baseExports.isArray(item)
+      _arr = baseExports.isArray(item)
       if (baseExports.isPlainObject(item) || _arr) {
         params = params.concat(stringifyParams(item, key, _arr))
       } else {

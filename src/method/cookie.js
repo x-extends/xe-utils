@@ -4,6 +4,8 @@ var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
 var dateExports = require('./date')
 
+var isDocument = typeof document !== 'undefined'
+
 function toCookieUnitTime (unit, expires) {
   var num = parseFloat(expires)
   var nowdate = new Date()
@@ -37,32 +39,37 @@ function toCookieUTCString (date) {
   *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
   */
 function cookie (name, value, options) {
-  var inserts = []
-  var args = arguments
-  var decode = decodeURIComponent
-  var encode = encodeURIComponent
-  var isDoc = typeof document !== 'undefined'
-  var $dom = isDoc ? document : null
-  var arrayEach = baseExports.each
-  var objectAssign = baseExports.assign
-  var isObject = baseExports.isObject
-  if (this && this.$context) {
-    this.$context = null
-  }
-  if (baseExports.isArray(name)) {
-    inserts = name
-  } else if (args.length > 1) {
-    inserts = [objectAssign({name: name, value: value}, options)]
-  } else if (isObject(name)) {
-    inserts = [name]
-  }
-  if (inserts.length > 0) {
-    if (isDoc) {
+  if (isDocument) {
+    var opts
+    var expires
+    var values
+    var result
+    var cookies
+    var keyIndex
+    var inserts = []
+    var args = arguments
+    var decode = decodeURIComponent
+    var encode = encodeURIComponent
+    var $dom = document
+    var arrayEach = baseExports.each
+    var objectAssign = baseExports.assign
+    var isObject = baseExports.isObject
+    if (this && this.$context) {
+      this.$context = null
+    }
+    if (baseExports.isArray(name)) {
+      inserts = name
+    } else if (args.length > 1) {
+      inserts = [objectAssign({name: name, value: value}, options)]
+    } else if (isObject(name)) {
+      inserts = [name]
+    }
+    if (inserts.length > 0) {
       arrayEach(inserts, function (obj) {
-        var opts = objectAssign({}, setupDefaults.cookies, obj)
-        var values = []
+        opts = objectAssign({}, setupDefaults.cookies, obj)
+        values = []
         if (opts.name) {
-          var expires = opts.expires
+          expires = opts.expires
           values.push(encode(opts.name) + '=' + encode(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
           if (expires) {
             if (isNaN(expires)) {
@@ -87,18 +94,20 @@ function cookie (name, value, options) {
         }
         $dom.cookie = values.join('; ')
       })
+      return true
+    } else {
+      result = {}
+      cookies = $dom.cookie
+      if (cookies) {
+        arrayEach(cookies.split('; '), function (val) {
+          keyIndex = val.indexOf('=')
+          result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
+        })
+      }
+      return args.length === 1 ? result[name] : result
     }
-  } else {
-    var result = {}
-    var cookies = $dom.cookie
-    if (isDoc && cookies) {
-      arrayEach(cookies.split('; '), function (val) {
-        var keyIndex = val.indexOf('=')
-        result[decode(val.substring(0, keyIndex))] = decode(val.substring(keyIndex + 1) || '')
-      })
-    }
-    return args.length === 1 ? result[name] : result
   }
+  return false
 }
 
 function isCookieKey (key) {

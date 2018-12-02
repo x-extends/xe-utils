@@ -76,6 +76,22 @@ function clone (obj, deep) {
 }
 
 /**
+  * 该方法和 setTimeout 一样的效果，区别就是支持上下文和额外参数
+  *
+  * @param {Function} callback 函数
+  * @param {Number} wait 延迟毫秒
+  * @param {*} args 额外的参数
+  * @return {Number}
+ */
+function delay (callback, wait) {
+  var args = arraySlice(arguments, 3)
+  var context = this
+  return setTimeout(function () {
+    callback.apply(context, args)
+  }, wait)
+}
+
+/**
   * 创建一个绑定上下文的函数
   *
   * @param {Function} callback 函数
@@ -523,10 +539,13 @@ function arraySlice (array, startIndex, endIndex) {
   return result
 }
 
-function createIndexOf (callback) {
+function createIndexOf (name, callback) {
   return function (obj, val) {
     if (obj) {
       if (isString(obj) || isArray(obj)) {
+        if (obj[name]) {
+          return obj[name](val)
+        }
         return callback(obj, val)
       }
       for (var key in obj) {
@@ -548,10 +567,7 @@ function createIndexOf (callback) {
   * @param {Object} val 值
   * @return {Number}
   */
-var indexOf = createIndexOf(function (obj, val) {
-  if (obj.indexOf) {
-    return obj.indexOf(val)
-  }
+var indexOf = createIndexOf('indexOf', function (obj, val) {
   for (var index = 0, len = obj.length; index < len; index++) {
     if (val === obj[index]) {
       return index
@@ -566,10 +582,7 @@ var indexOf = createIndexOf(function (obj, val) {
   * @param {Object} val 值
   * @return {Number}
   */
-var lastIndexOf = createIndexOf(function (obj, val) {
-  if (obj.lastIndexOf) {
-    return obj.lastIndexOf(val)
-  }
+var lastIndexOf = createIndexOf('lastIndexOf', function (obj, val) {
   for (var len = obj.length - 1; len >= 0; len--) {
     if (val === obj[len]) {
       return len
@@ -580,9 +593,9 @@ var lastIndexOf = createIndexOf(function (obj, val) {
 
 function createiterateIndexOf (callback) {
   return function (obj, iterate, context) {
-    if (obj && iterate) {
+    if (obj && isFunction(iterate)) {
       context = this || context
-      if (isString(obj) || isArray(obj)) {
+      if (isArray(obj) || isString(obj)) {
         return callback(obj, iterate, context)
       }
       for (var key in obj) {
@@ -606,8 +619,7 @@ function createiterateIndexOf (callback) {
   * @return {Object}
   */
 var findIndexOf = createiterateIndexOf(function (obj, iterate, context) {
-  var len = obj.length
-  for (var index = 0; index < len; index++) {
+  for (var index = 0, len = obj.length; index < len; index++) {
     if (iterate.call(context, obj[index], index, obj)) {
       return index
     }
@@ -741,6 +753,7 @@ function deleteProperty (obj, property) {
   */
 function clearObject (obj, defs, assigns) {
   if (obj) {
+    var len
     var isDefs = arguments.length > 1 && (defs === null || !isObject(defs))
     var extds = isDefs ? assigns : defs
     if (isPlainObject(obj)) {
@@ -749,10 +762,12 @@ function clearObject (obj, defs, assigns) {
       } : function (val, key) {
         deleteProperty(obj, key)
       })
-      extds && objectAssign(obj, extds)
+      if (extds) {
+        objectAssign(obj, extds)
+      }
     } else if (isArray(obj)) {
       if (isDefs) {
-        var len = obj.length
+        len = obj.length
         while (len > 0) {
           len--
           obj[len] = defs
@@ -760,7 +775,9 @@ function clearObject (obj, defs, assigns) {
       } else {
         obj.length = 0
       }
-      extds && obj.push.apply(obj, extds)
+      if (extds) {
+        obj.push.apply(obj, extds)
+      }
     }
   }
   return obj
@@ -811,12 +828,12 @@ function removeObject (obj, iterate, context) {
 }
 
 function createGetObjects (name, getIndex) {
+  var proMethod = Object[name]
   return function (obj) {
     var result = []
     if (obj) {
-      var objectKeysFn = Object[name]
-      if (objectKeysFn) {
-        return objectKeysFn(obj)
+      if (proMethod) {
+        return proMethod(obj)
       }
       each(obj, getIndex > 1 ? function (key) {
         result.push([key, obj[key]])
@@ -1062,12 +1079,10 @@ function groupBy (obj, iterate, context) {
   var result = {}
   if (obj) {
     context = this || context
-    if (iterate !== null && iterate !== undefined) {
-      if (isObject(iterate)) {
-        iterate = createiterateEmpty(iterate)
-      } else if (!isFunction(iterate)) {
-        iterate = property(iterate)
-      }
+    if (iterate && isObject(iterate)) {
+      iterate = createiterateEmpty(iterate)
+    } else if (!isFunction(iterate)) {
+      iterate = property(iterate)
     }
     each(obj, function (val, key) {
       groupKey = iterate ? iterate.call(context, val, key, obj) : val
@@ -1134,11 +1149,11 @@ function range (start, stop, step) {
   * @return {Function}
   */
 function throttle (callback, wait, options) {
+  var args
+  var context
   var opts = options || {}
   var runFlag = false
-  var args = null
-  var context = null
-  var timeout = null
+  var timeout = 0
   var optLeading = 'leading' in opts ? opts.leading : true
   var optTrailing = 'trailing' in opts ? opts.trailing : false
   var runFn = function () {
@@ -1147,23 +1162,23 @@ function throttle (callback, wait, options) {
     timeout = setTimeout(endFn, wait)
   }
   var endFn = function () {
-    timeout = null
+    timeout = 0
     if (!runFlag && optTrailing === true) {
       runFn()
     }
   }
   var cancelFn = function () {
-    var rest = timeout !== null
+    var rest = timeout !== 0
     clearTimeout(timeout)
     runFlag = false
-    timeout = null
+    timeout = 0
     return rest
   }
   var throttled = function () {
     args = arguments
     context = this
     runFlag = false
-    if (timeout === null) {
+    if (timeout === 0) {
       if (optLeading === true) {
         runFn()
       } else if (optTrailing === true) {
@@ -1184,39 +1199,39 @@ function throttle (callback, wait, options) {
   * @return {Function}
   */
 function debounce (callback, wait, options) {
+  var args
+  var context
   var opts = options || {}
   var runFlag = false
-  var args = null
-  var context = null
-  var timeout = null
+  var timeout = 0
   var isLeading = typeof options === 'boolean'
   var optLeading = 'leading' in opts ? opts.leading : isLeading
   var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
   var clearTimeoutFn = clearTimeout
   var runFn = function () {
     runFlag = true
-    timeout = null
+    timeout = 0
     callback.apply(context, args)
   }
   var endFn = function () {
     if (optLeading === true) {
-      timeout = null
+      timeout = 0
     }
     if (!runFlag && optTrailing === true) {
       runFn()
     }
   }
   var cancelFn = function () {
-    var rest = timeout !== null
+    var rest = timeout !== 0
     clearTimeoutFn(timeout)
-    timeout = null
+    timeout = 0
     return rest
   }
   var debounced = function () {
     runFlag = false
     args = arguments
     context = this
-    if (timeout === null) {
+    if (timeout === 0) {
       if (optLeading === true) {
         runFn()
       }
@@ -1296,6 +1311,7 @@ var baseExports = {
   countBy: countBy,
   objectMap: objectMap,
   clone: clone,
+  delay: delay,
   bind: bind,
   once: once,
   after: after,

@@ -19,24 +19,27 @@ function isBrowseStorage (storage) {
   * @return Object
   */
 function browse () {
-  var undef = 'undefined'
+  var $body
+  var $dom
+  var strUndefined = 'undefined'
   var result = {
     isNode: false,
     isMobile: false,
     isPC: false,
     isLocalStorage: false,
-    isSessionStorage: false
+    isSessionStorage: false,
+    isDoc: typeof document !== strUndefined
   }
-  if (typeof window === undef && typeof process !== undef) {
+  if (typeof window === strUndefined && typeof process !== strUndefined) {
     result.isNode = true
   } else {
     result.isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
     result.isPC = !result.isMobile
     result.isLocalStorage = isBrowseStorage(window.localStorage)
     result.isSessionStorage = isBrowseStorage(window.sessionStorage)
-    if (typeof document !== undef) {
-      var $dom = document
-      var $body = $dom.body || $dom.documentElement
+    if (result.isDoc) {
+      $dom = document
+      $body = $dom.body || $dom.documentElement
       baseExports.each(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
         result['-' + core] = !!$body[core + 'MatchesSelector']
       })

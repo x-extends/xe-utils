@@ -329,6 +329,14 @@ export interface XEUtilsMethods {
   includeArrays(array1: Array<any>, array2: Array<any>): boolean;
 
   /**
+   * 该方法和 setTimeout 一样的效果，区别就是支持上下文和额外参数
+   * @param callback 回调
+   * @param wait 延迟毫秒
+   * @param params 额外的参数
+   */
+  delay(callback: Function, wait: number, ...params: any[]): number;
+
+  /**
    * 创建一个绑定上下文的函数
    * @param callback 回调
    * @param context 上下文
