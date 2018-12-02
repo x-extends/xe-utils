@@ -734,7 +734,7 @@
     * @return {Number}
    */
   function delay (callback, wait) {
-    var args = arraySlice(arguments, 3)
+    var args = arraySlice(arguments, 2)
     var context = this
     return setTimeout(function () {
       callback.apply(context, args)
