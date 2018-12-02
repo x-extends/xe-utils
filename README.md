@@ -172,7 +172,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [commafy ( num [, options] ) 数值千分位分隔符、小数点](#commafy--num--options--数值千分位分隔符小数点)
 * *日期函数*
   * [now ( ) 返回当前时间戳](#now---返回当前时间戳)
-  * [timestamp ( date[, format] ) 将日期转为时间戳](#timestamp--date-format--将日期格式化为时间戳)
+  * [timestamp ( date[, format] ) 将日期转为时间戳](#timestamp--date-format--将日期转为时间戳)
   * [toStringDate ( str, format ) 任意格式字符串转为日期](#tostringdate--str-format--任意格式字符串转为日期)
   * [toDateString ( date [, format, options] ) 日期格式化为任意格式字符串](#todatestring--date--format-options--日期格式化为任意格式字符串)
   * [getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前](#getwhatyear--date-year--month--返回前几年或后几年的日期可以指定年初first年末last月份011默认当前)
