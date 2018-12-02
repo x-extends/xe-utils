@@ -1471,6 +1471,7 @@ XEUtils.now() // 1514096716800
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.timestamp() // 获取当前时间戳
 XEUtils.timestamp(new Date()) // 1514096716800
 XEUtils.timestamp('2018-12-01') // 1543593600000
 XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS') // 1513735830459
