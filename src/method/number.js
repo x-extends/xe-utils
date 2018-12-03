@@ -63,7 +63,7 @@ var arrayMax = createMinMax(function (result) {
 function commafy (num, options) {
   num = ('' + num).replace(/,/g, '')
   if (num) {
-    var opts = baseExports.assign({spaceNumber: 3, separator: ','}, options)
+    var opts = baseExports.assign({ spaceNumber: 3, separator: ',' }, options)
     var optFixed = opts.fixed
     var result = (optFixed ? parseFloat(num).toFixed(optFixed) : num).split('.')
     return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')

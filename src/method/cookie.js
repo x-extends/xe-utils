@@ -4,7 +4,7 @@ var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
 var dateExports = require('./date')
 
-var isDocument = typeof document !== 'undefined'
+var isBowseDoc = typeof document !== 'undefined'
 
 function toCookieUnitTime (unit, expires) {
   var num = parseFloat(expires)
@@ -39,7 +39,7 @@ function toCookieUTCString (date) {
   *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
   */
 function cookie (name, value, options) {
-  if (isDocument) {
+  if (isBowseDoc) {
     var opts
     var expires
     var values
@@ -60,7 +60,7 @@ function cookie (name, value, options) {
     if (baseExports.isArray(name)) {
       inserts = name
     } else if (args.length > 1) {
-      inserts = [objectAssign({name: name, value: value}, options)]
+      inserts = [objectAssign({ name: name, value: value }, options)]
     } else if (isObject(name)) {
       inserts = [name]
     }
@@ -120,7 +120,7 @@ function setCookieItem (name, key, options) {
 }
 
 function removeCookieItem (name, options) {
-  cookie(name, 0, baseExports.assign({expires: -1}, setupDefaults.cookies, options))
+  cookie(name, 0, baseExports.assign({ expires: -1 }, setupDefaults.cookies, options))
 }
 
 function cookieKeys () {

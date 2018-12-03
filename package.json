@@ -1,11 +1,24 @@
 {
   "name": "xe-utils",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "A JavaScript tools library.",
   "main": "index.js",
   "typing": "index.d.ts",
   "scripts": {
-    "test": "make test"
+    "lint": "eslint dist/xe-utils.js src/**/*.js",
+    "unit": "jest",
+    "test": "npm run lint && npm run unit"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-friendly-formatter": "^4.0.1",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "jest": "^23.6.0",
+    "markdown-doctest": "^0.9.1"
   },
   "repository": {
     "type": "git",
@@ -16,7 +29,7 @@
     "vue-utils",
     "vxe-utils",
     "xe-utils",
-    "vxe"
+    "VXEUtils"
   ],
   "author": {
     "name": "Xu Liangzhan",

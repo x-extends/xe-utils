@@ -29,13 +29,13 @@ var timestamp = function (date, format) {
 }
 
 var dateFormatRules = [
-  {rules: [['yyyy', 4], ['yy', 2]]},
-  {rules: [['MM', 2], ['M', 1]], offset: -1},
-  {rules: [['dd', 2], ['d', 1]]},
-  {rules: [['HH', 2], ['H', 1]]},
-  {rules: [['mm', 2], ['m', 1]]},
-  {rules: [['ss', 2], ['s', 1]]},
-  {rules: [['SSS', 3], ['SS', 2], ['S', 1]]}
+  { rules: [['yyyy', 4], ['yy', 2]] },
+  { rules: [['MM', 2], ['M', 1]], offset: -1 },
+  { rules: [['dd', 2], ['d', 1]] },
+  { rules: [['HH', 2], ['H', 1]] },
+  { rules: [['mm', 2], ['m', 1]] },
+  { rules: [['ss', 2], ['s', 1]] },
+  { rules: [['SSS', 3], ['SS', 2], ['S', 1]] }
 ]
 
 function getDateTime (date) {
@@ -365,7 +365,7 @@ function getDayOfMonth (date, month) {
   * @return {Object}
   */
 function getDateDiff (startDate, endDate, rules) {
-  var result = {done: false, time: 0}
+  var result = { done: false, time: 0 }
   var startTime = getDateTime(toStringDate(startDate))
   var endTime = getDateTime(endDate ? toStringDate(endDate) : new Date())
   if (startTime < endTime) {
