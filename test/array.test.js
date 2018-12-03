@@ -17,9 +17,6 @@ describe('Array functions', () => {
     expect(
       XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], 'a')
     ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
-    expect(
-      XEUtils.sortBy(XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], (v1, v2) => v1.a > v2.a ? 1 : -1))
-    ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
   })
 
   test('shuffle()', () => {
