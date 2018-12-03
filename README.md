@@ -13,23 +13,37 @@ XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，
 --- | --- | --- | --- | --- | --- |
 7+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 6.1+ ✔ |
 
-## CDN install
+## Installing
 
-[cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
+```JavaScript
+npm install xe-utils --save
+```
+
+Using nodejs
+
+```JavaScript
+const XEUtils = require('xe-utils')
+```
+
+Using ES6
+
+```JavaScript
+import XEUtils from 'xe-utils'
+```
+
+[Using cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
 
 ```HTML
 <script src="https://cdn.jsdelivr.net/npm/xe-utils/dist/xe-utils.js"></script>
 ```
 
-[unpkg](https://unpkg.com/xe-utils/)
+[Using unpkg](https://unpkg.com/xe-utils/)
 
 ```HTML
 <script src="https://unpkg.com/xe-utils/dist/xe-utils.js"></script>
 ```
 
-## AMD install
-
-### require.js
+Using requirejs
 
 ```JavaScript
 // require 配置
@@ -39,21 +53,9 @@ require.config({
     'xe-utils': './dist/xe-utils.min'
   }
 })
-define('xe-utils', function (XEUtils) {
+define(['xe-utils'], function (XEUtils) {
   XEUtils.toDateString(new Date()) // 2018-01-01 10:30:28
 })
-```
-
-## NPM install
-
-```JavaScript
-npm install xe-utils --save
-```
-
-### NodeJS require
-
-```JavaScript
-const XEUtils = require('xe-utils')
 ```
 
 ### ES6 Module import
