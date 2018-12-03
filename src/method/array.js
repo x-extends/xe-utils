@@ -175,8 +175,13 @@ function arrayFilter (obj, iterate, context) {
     if (isArrayPro(FILTER_PRO)) {
       return obj[FILTER_PRO](iterate, context)
     } else {
-      var result = {}
-      baseExports.each(obj, function (val, key) {
+      var isArr = baseExports.isArray(obj)
+      var result = isArr ? [] : {}
+      baseExports.each(obj, isArr ? function (val, key) {
+        if (iterate.call(context, val, key, obj)) {
+          result.push(val)
+        }
+      } : function (val, key) {
         if (iterate.call(context, val, key, obj)) {
           result[key] = val
         }

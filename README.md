@@ -1010,7 +1010,6 @@ XEUtils.union([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
 import XEUtils from 'xe-utils'
 
 XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
-XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
 XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], (v1, v2) => v1.a > v2.a ? 1 : -1) // [{a: 4}, {a: 5}, {a: 9}]
 ```
 
@@ -1051,7 +1050,7 @@ XEUtils.every([{value: 11}, {value: 22}], item => item.value === 11) // false
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.filter([{value: 11}, {value: 22}], item => item.value > 11) // [{a: 22}]
+XEUtils.filter([{value: 11}, {value: 22}], item => item.value > 11) // [{value: 22}]
 ```
 
 ### find ( obj, iteratee [, context] ) 查找匹配第一条数据
@@ -1095,7 +1094,7 @@ import XEUtils from 'xe-utils'
 
 XEUtils.sum([22, 66, 88]) // 176
 XEUtils.sum([{value: 11}, {value: 22}, {value: 66}], 'value') // 99
-XEUtils.sum({val1: 21, val2: 34, val3: 45}) // 100
+XEUtils.sum({val1: 21, val2: 34, val3: 47}) // 102
 ```
 
 ### mean ( obj, iteratee [, context] ) 求平均值函数
@@ -1103,7 +1102,7 @@ XEUtils.sum({val1: 21, val2: 34, val3: 45}) // 100
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.mean({val1: 21, val2: 34, val3: 45}) // 100
+XEUtils.mean({ val1: 21, val2: 34, val3: 47 }) // 34
 XEUtils.mean([22, 66, 60, 60]) // 52
 XEUtils.mean([{value: 34}, {value: 22}], 'value') // 28
 XEUtils.mean([{value: 11}, {value: 22}, {value: 66}], item => item.value * 2) // 66
@@ -1241,14 +1240,14 @@ XEUtils.toArrayTree(list1)
 */
 
 // 返回带排序的树结构
-let list1 = [
+let list2 = [
   {id: 1, name: '111', seq: 5},
   {id: 2, parentId: 1, name: '222', seq: 3},
   {id: 3, name: '333', seq: 6},
   {id: 4, parentId: 2, name: '444', seq: 2},
   {id: 5, parentId: 1, name: '555', seq: 1}
 ]
-XEUtils.toArrayTree(list1, {sortKey: 'seq'})
+XEUtils.toArrayTree(list2, {sortKey: 'seq'})
 /*
 [
   {
@@ -1290,14 +1289,14 @@ XEUtils.toArrayTree(list1, {sortKey: 'seq'})
 */
 
 // 自定义数据存放属性
-let list2 = [
+let list3 = [
   {id: 1, name: '111'},
   {id: 2, parentId: 1, name: '222'},
   {id: 3, name: '333'},
   {id: 4, parentId: 2, name: '444'},
   {id: 5, parentId: 22, name: '555'}
 ]
-XEUtils.toArrayTree(list2, {data: 'data'})
+XEUtils.toArrayTree(list3, {data: 'data'})
 /*
 [
   {
@@ -1334,14 +1333,14 @@ XEUtils.toArrayTree(list2, {data: 'data'})
 */
 
 // 如果设置为严格模式，（非父子关联及冗余)的数据会被忽略
-let list3 = [
+let list4 = [
   {id: 1, name: '111'},
   {id: 2, parentId: 1, name: '222'},
   {id: 3, name: '333'},
   {id: 4, parentId: 2, name: '444'},
   {id: 5, parentId: 22, name: '555'}
 ]
-XEUtils.toArrayTree(list3, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
+XEUtils.toArrayTree(list4, {strict: true, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'})
 /*
 [
   {
@@ -1413,8 +1412,8 @@ XEUtils.toTreeArray(list1)
 [
   {id: 1, name: '111'},
   {id: 2, parentId: 1, name: '222'},
-  {id: 3, name: '333'},
   {id: 4, parentId: 2, name: '444'}
+  {id: 3, name: '333'}
 ]
 */
 
@@ -1455,8 +1454,8 @@ XEUtils.toTreeArray(list2, {data: 'data'})
 [
   {id: 1, name: '111'},
   {id: 2, parentId: 1, name: '222'},
-  {id: 3, name: '333'},
   {id: 4, parentId: 2, name: '444'},
+  {id: 3, name: '333'},
   {id: 5, parentId: 22, name: '555'}
 ]
 */
