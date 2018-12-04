@@ -104,11 +104,11 @@ describe('Date functions', () => {
       XEUtils.toDateString(date, 'yyyy-MM-dd HH:mm:ss.SSS')
     ).toEqual('2017-01-01 14:05:30.099')
     expect(
-      XEUtils.toDateString(date, 'yyyy-MM-dd hh:mm:ss.SSSZ')
-    ).toEqual('2017-01-01 02:05:30.099+0800')
+      XEUtils.toDateString(date, 'yyyy-MM-dd hh:mm:ss.SSS')
+    ).toEqual('2017-01-01 02:05:30.099')
     expect(
-      XEUtils.toDateString(date, 'yyyy-MM-dd hh:mm:ss.SSS zZ')
-    ).toEqual('2017-01-01 02:05:30.099 GMT+0800')
+      XEUtils.toDateString(date, 'yyyy-MM-dd hh:mm:ss.SSS')
+    ).toEqual('2017-01-01 02:05:30.099')
     expect(
       XEUtils.toDateString('2017-01-01 14:05:30', 'yyyy-M-d h:m:s.S')
     ).toEqual('2017-1-1 2:5:30.0')
@@ -125,8 +125,8 @@ describe('Date functions', () => {
       XEUtils.toDateString(time, 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度')
     ).toEqual('17年1月1日 14时5分30秒99毫秒,星期0 第1季度')
     expect(
-      XEUtils.toDateString(time, 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒zZ 星期E e 第q季 今年第D天 今年第w周 当月第W周 a A')
-    ).toEqual('2017年01月01日 02时05分30秒099毫秒GMT+0800 星期0 -1 第1季 今年第1天 今年第0周 当月第0周 pm PM')
+      XEUtils.toDateString(time, 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E e 第q季 今年第D天 今年第w周 当月第W周 a A')
+    ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期0 -1 第1季 今年第1天 今年第0周 当月第0周 pm PM')
   })
 
   test('getWhatYear()', () => {
