@@ -756,10 +756,10 @@ describe('Base functions', () => {
       XEUtils.isLeapYear('2018-12-01')
     ).toEqual(false)
     expect(
-      XEUtils.isLeapYear('2020-12-01')
+      XEUtils.isLeapYear('2020-12-01 10:30:30')
     ).toEqual(true)
     expect(
-      XEUtils.isLeapYear(1606752000000)
+      XEUtils.isLeapYear(new Date(2012, 1, 1).getTime())
     ).toEqual(true)
     expect(
       XEUtils.isLeapYear(new Date(2020, 11, 1))
@@ -988,23 +988,47 @@ describe('Base functions', () => {
 
   test('keys()', () => {
     expect(
-      XEUtils.keys({ a: 11 })
-    ).toEqual(['a'])
+      XEUtils.keys(123)
+    ).toEqual([])
+    expect(
+      XEUtils.keys({ a: 11, b: 22 })
+    ).toEqual(['a', 'b'])
+    expect(
+      XEUtils.keys([11, 22])
+    ).toEqual(['0', '1'])
+    expect(
+      XEUtils.keys('123')
+    ).toEqual(['0', '1', '2'])
   })
 
   test('values()', () => {
     expect(
-      XEUtils.values({ a: 11 })
-    ).toEqual([11])
+      XEUtils.values(123)
+    ).toEqual([])
+    expect(
+      XEUtils.values({ a: 11, b: 22 })
+    ).toEqual([11, 22])
+    expect(
+      XEUtils.values([11, 22])
+    ).toEqual([11, 22])
+    expect(
+      XEUtils.values('123')
+    ).toEqual(['1', '2', '3'])
   })
 
   test('entries()', () => {
     expect(
-      XEUtils.entries({ a: 11 })
-    ).toEqual([['a', 11]])
+      XEUtils.entries(123)
+    ).toEqual([])
+    expect(
+      XEUtils.entries({ a: 11, b: 22 })
+    ).toEqual([['a', 11], ['b', 22]])
     expect(
       XEUtils.entries([11, 22])
     ).toEqual([['0', 11], ['1', 22]])
+    expect(
+      XEUtils.entries('123')
+    ).toEqual([['0', '1'], ['1', '2'], ['2', '3']])
   })
 
   test('pick()', () => {
@@ -1033,6 +1057,15 @@ describe('Base functions', () => {
 
   test('first()', () => {
     expect(
+      XEUtils.first(123)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.first(true)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.first('123')
+    ).toEqual('1')
+    expect(
       XEUtils.first({ a: 11, b: 22 })
     ).toEqual(11)
     expect(
@@ -1041,6 +1074,15 @@ describe('Base functions', () => {
   })
 
   test('last()', () => {
+    expect(
+      XEUtils.last(123)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.last(true)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.last('123')
+    ).toEqual('3')
     expect(
       XEUtils.last({ a: 11, b: 22 })
     ).toEqual(22)
@@ -1091,6 +1133,9 @@ describe('Base functions', () => {
     expect(
       XEUtils.objectMap({ a: { type: 'a' }, b: { type: 'b' } }, item => item.type)
     ).toEqual({ a: 'a', b: 'b' })
+    expect(
+      XEUtils.objectMap([11, 22, 33], item => item)
+    ).toEqual({ 0: 11, 1: 22, 2: 33 })
   })
 
   test('clone()', () => {
@@ -1197,6 +1242,11 @@ describe('Base functions', () => {
     expect(
       list
     ).toEqual([11, 33, 44])
+    let obj = { a: 11, b: 22, c: 33 }
+    XEUtils.remove(obj, item => item === 22)
+    expect(
+      obj
+    ).toEqual({ a: 11, c: 33 })
   })
 
   test('range()', () => {
