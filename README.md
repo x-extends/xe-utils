@@ -385,6 +385,7 @@ XEUtils.isTypeError(new TypeError('error')) // true
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.isEmpty([11, 22]) // false
 XEUtils.isEmpty() // true
 XEUtils.isEmpty(0) // true
 XEUtils.isEmpty('') // true

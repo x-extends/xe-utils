@@ -297,13 +297,10 @@ function isTypeError (obj) {
   * @return {Boolean}
   */
 function isEmpty (obj) {
-  if (obj === 0 || !isNumber(obj)) {
-    for (var key in obj) {
-      return false
-    }
-    return true
+  for (var key in obj) {
+    return false
   }
-  return false
+  return true
 }
 
 /**

@@ -529,13 +529,25 @@ describe('Base functions', () => {
 
   test('isEmpty()', () => {
     expect(
+      XEUtils.isEmpty([11])
+    ).toEqual(false)
+    expect(
+      XEUtils.isEmpty({ a: 1 })
+    ).toEqual(false)
+    expect(
       XEUtils.isEmpty()
     ).toEqual(true)
     expect(
       XEUtils.isEmpty(0)
     ).toEqual(true)
     expect(
+      XEUtils.isEmpty(-1)
+    ).toEqual(true)
+    expect(
       XEUtils.isEmpty('')
+    ).toEqual(true)
+    expect(
+      XEUtils.isEmpty(false)
     ).toEqual(true)
     expect(
       XEUtils.isEmpty(null)
@@ -546,11 +558,38 @@ describe('Base functions', () => {
     expect(
       XEUtils.isEmpty([])
     ).toEqual(true)
+    expect(
+      XEUtils.isEmpty(/\d/)
+    ).toEqual(true)
+    expect(
+      XEUtils.isEmpty(function () {})
+    ).toEqual(true)
   })
 
   test('isNull()', () => {
     expect(
       XEUtils.isNull(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNull(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNull(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isNull(/null/)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNull({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isNull([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isNull(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNull('null')
     ).toEqual(false)
     expect(
       XEUtils.isNull('')
@@ -561,6 +600,21 @@ describe('Base functions', () => {
   })
 
   test('isSymbol()', () => {
+    expect(
+      XEUtils.isSymbol({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isSymbol([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isSymbol(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isSymbol(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isSymbol(function () {})
+    ).toEqual(false)
     expect(
       XEUtils.isSymbol('a')
     ).toEqual(false)
@@ -573,13 +627,40 @@ describe('Base functions', () => {
 
   test('isArguments()', () => {
     expect(
+      XEUtils.isArguments()
+    ).toEqual(false)
+    expect(
       XEUtils.isArguments([])
     ).toEqual(false)
+    expect(
+      XEUtils.isArguments({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isArguments(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isArguments(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isArguments(function () {})
+    ).toEqual(false)
+    let method = function () {
+      expect(
+        XEUtils.isArguments(arguments)
+      ).toEqual(true)
+    }
+    method()
   })
 
   test('isElement()', () => {
     expect(
       XEUtils.isElement({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isElement([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isElement(function () {})
     ).toEqual(false)
   })
 
@@ -587,17 +668,35 @@ describe('Base functions', () => {
     expect(
       XEUtils.isDocument({})
     ).toEqual(false)
+    expect(
+      XEUtils.isDocument([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isDocument(function () {})
+    ).toEqual(false)
   })
 
   test('isWindow()', () => {
     expect(
       XEUtils.isWindow({})
     ).toEqual(false)
+    expect(
+      XEUtils.isWindow([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isWindow(function () {})
+    ).toEqual(false)
   })
 
   test('isFormData()', () => {
     expect(
       XEUtils.isFormData({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isFormData([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isFormData('a=1')
     ).toEqual(false)
     expect(
       XEUtils.isFormData(new FormData())
@@ -609,6 +708,9 @@ describe('Base functions', () => {
       XEUtils.isMap({})
     ).toEqual(false)
     expect(
+      XEUtils.isMap([])
+    ).toEqual(false)
+    expect(
       XEUtils.isMap(new Map())
     ).toEqual(true)
   })
@@ -616,6 +718,9 @@ describe('Base functions', () => {
   test('isWeakMap()', () => {
     expect(
       XEUtils.isWeakMap({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakMap([])
     ).toEqual(false)
     expect(
       XEUtils.isWeakMap(new WeakMap())
@@ -627,6 +732,9 @@ describe('Base functions', () => {
       XEUtils.isSet({})
     ).toEqual(false)
     expect(
+      XEUtils.isSet([])
+    ).toEqual(false)
+    expect(
       XEUtils.isSet(new Set())
     ).toEqual(true)
   })
@@ -634,6 +742,9 @@ describe('Base functions', () => {
   test('isWeakSet()', () => {
     expect(
       XEUtils.isWeakSet({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakSet([])
     ).toEqual(false)
     expect(
       XEUtils.isWeakSet(new WeakSet())
