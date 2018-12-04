@@ -5,13 +5,13 @@ describe('Date functions', () => {
   let time = date.getTime()
   test('now()', () => {
     expect(
-      XEUtils.now() === Date.now()
+      XEUtils.now() >= time
     ).toEqual(true)
   })
 
   test('timestamp()', () => {
     expect(
-      XEUtils.timestamp() === XEUtils.timestamp(new Date())
+      XEUtils.timestamp() >= time
     ).toEqual(true)
     expect(
       XEUtils.timestamp('2018-12-01')

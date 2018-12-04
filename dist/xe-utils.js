@@ -810,10 +810,10 @@
     return function () {
       runCount++
       if (runCount <= count) {
-        rests.push(arguments)
+        rests.push(arguments[0])
       }
       if (runCount >= count) {
-        callback.call(context, rests)
+        callback.apply(context, [rests].concat(arraySlice(arguments)))
       }
     }
   }
@@ -832,8 +832,8 @@
     return function () {
       runCount++
       if (runCount < count) {
-        rests.push(arguments)
-        callback.call(context, rests)
+        rests.push(arguments[0])
+        callback.apply(context, [rests].concat(arraySlice(arguments)))
       }
     }
   }
@@ -1502,7 +1502,7 @@
           return proMethod(obj)
         }
         each(obj, getIndex > 1 ? function (key) {
-          result.push([key, obj[key]])
+          result.push(['' + key, obj[key]])
         } : function () {
           result.push(arguments[getIndex])
         })

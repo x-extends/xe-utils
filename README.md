@@ -324,7 +324,7 @@ import XEUtils from 'xe-utils'
 XEUtils.isRegExp(null) // false
 XEUtils.isRegExp('a') // false
 XEUtils.isRegExp(new RegExp('a')) // true
-XEUtils.isRegExp(/\a/) // true
+XEUtils.isRegExp(/\d/) // true
 ```
 
 ### isObject (val) 判断是否 Object 对象
@@ -343,7 +343,7 @@ XEUtils.isObject(123) // false
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.sPlainObject(null) // false
+XEUtils.isPlainObject(null) // false
 XEUtils.isPlainObject([]) // false
 XEUtils.isPlainObject(123) // false
 XEUtils.isPlainObject({}) // true
@@ -390,7 +390,7 @@ XEUtils.isEmpty(0) // true
 XEUtils.isEmpty('') // true
 XEUtils.isEmpty(null) // true
 XEUtils.isEmpty({}) // true
-XEUtils.isEmpty([]]) // true
+XEUtils.isEmpty([]) // true
 ```
 
 ### isNull (val) 判断是否为 Null
@@ -796,10 +796,8 @@ let obj4 = XEUtils.assign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
 obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 22}}
 
 // 深拷贝
-let obj2 = {a: null}
 let obj3 = {bb: {b: 11}}
-let obj4 = XEUtils.extend(true, obj3, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
-obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 11}}
+let obj4 = XEUtils.extend(true, obj3, {a: 11}) // {c: null, bb: {b: 11}}
 ```
 
 ### destructuring (obj, ...target) 将一个或者多个对象值解构到目标对象
@@ -852,7 +850,7 @@ XEUtils.values({a: 11}) // [11]
 import XEUtils from 'xe-utils'
 
 XEUtils.entries({a: 11}) // [['a', 11]]
-XEUtils.entries([11, 22]) // [[0, 11], [1, 22]]
+XEUtils.entries([11, 22]) // [['0', 11], ['1', 22]]
 ```
 
 ### pick (obj, array) 根据 keys 过滤指定的属性值 或者 接收一个判断函数，返回一个新的对象

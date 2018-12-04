@@ -5,7 +5,7 @@
   "main": "index.js",
   "typing": "index.d.ts",
   "scripts": {
-    "lint": "eslint dist/xe-utils.js src/**/*.js",
+    "lint": "eslint dist/xe-utils.js test/**/*.js src/**/*.js",
     "unit": "jest",
     "test": "npm run lint && npm run unit"
   },
