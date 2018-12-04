@@ -14,6 +14,12 @@ describe('Date functions', () => {
       XEUtils.timestamp() >= time
     ).toEqual(true)
     expect(
+      XEUtils.timestamp(time)
+    ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99).getTime())
+    expect(
+      XEUtils.timestamp(date)
+    ).toEqual(time)
+    expect(
       XEUtils.timestamp('2018-12-01')
     ).toEqual(new Date(2018, 11, 1).getTime())
     expect(
@@ -30,6 +36,12 @@ describe('Date functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.isDateSame(date, XEUtils.toStringDate('01/01/2017', 'MM/dd/yyyy'), 'MM')
+    ).toEqual(true)
+    expect(
+      XEUtils.isDateSame('2018-01-28', '2018-12-01', 'yyyy')
+    ).toEqual(true)
+    expect(
+      XEUtils.isDateSame('2017-12-01', '2018-12-01', 'MM-dd')
     ).toEqual(true)
     expect(
       XEUtils.isDateSame(time, date, 'dd')
