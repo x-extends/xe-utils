@@ -15,7 +15,13 @@ describe('Base functions', () => {
       XEUtils.isNaN([])
     ).toEqual(false)
     expect(
+      XEUtils.isNaN(-1)
+    ).toEqual(false)
+    expect(
       XEUtils.isNaN(true)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNaN(false)
     ).toEqual(false)
     expect(
       XEUtils.isNaN(undefined)
@@ -24,10 +30,13 @@ describe('Base functions', () => {
       XEUtils.isNaN({})
     ).toEqual(true)
     expect(
-      XEUtils.isNaN('num')
+      XEUtils.isNaN('null')
     ).toEqual(true)
     expect(
-      XEUtils.isNaN({})
+      XEUtils.isNaN('NAN')
+    ).toEqual(true)
+    expect(
+      XEUtils.isNaN(/\d/)
     ).toEqual(true)
     expect(
       XEUtils.isNaN(function () {})
@@ -39,7 +48,28 @@ describe('Base functions', () => {
       XEUtils.isFinite(NaN)
     ).toEqual(false)
     expect(
+      XEUtils.isFinite({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isFinite(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isFinite(/\d/)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFinite('num')
+    ).toEqual(false)
+    expect(
+      XEUtils.isFinite(-2)
+    ).toEqual(true)
+    expect(
       XEUtils.isFinite(0)
+    ).toEqual(true)
+    expect(
+      XEUtils.isFinite([])
+    ).toEqual(true)
+    expect(
+      XEUtils.isFinite('5')
     ).toEqual(true)
     expect(
       XEUtils.isFinite(2e64)
@@ -51,17 +81,78 @@ describe('Base functions', () => {
       XEUtils.isUndefined(0)
     ).toEqual(false)
     expect(
+      XEUtils.isUndefined(-2)
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined('')
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined(/\d/)
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined('null')
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined('undefined')
+    ).toEqual(false)
+    expect(
+      XEUtils.isUndefined(undefined)
+    ).toEqual(true)
+    expect(
       XEUtils.isUndefined()
     ).toEqual(true)
   })
 
   test('isArray()', () => {
+    let method = function () {
+      expect(
+        XEUtils.isArray(arguments)
+      ).toEqual(false)
+    }
+    method()
+    method(11, 22)
     expect(
       XEUtils.isArray(null)
     ).toEqual(false)
     expect(
+      XEUtils.isArray(undefined)
+    ).toEqual(false)
+    expect(
       XEUtils.isArray({})
     ).toEqual(false)
+    expect(
+      XEUtils.isArray(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isArray(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isArray(-2)
+    ).toEqual(false)
+    expect(
+      XEUtils.isArray(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isArray('false')
+    ).toEqual(false)
+    expect(
+      XEUtils.isArray([])
+    ).toEqual(true)
     expect(
       XEUtils.isArray([1, 2, 3])
     ).toEqual(true)
@@ -72,13 +163,40 @@ describe('Base functions', () => {
       XEUtils.isFloat(null)
     ).toEqual(false)
     expect(
+      XEUtils.isFloat('null')
+    ).toEqual(false)
+    expect(
+      XEUtils.isFloat({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isFloat([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isFloat(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isFloat(/1\.3/)
+    ).toEqual(false)
+    expect(
       XEUtils.isFloat(0)
     ).toEqual(false)
     expect(
       XEUtils.isFloat(3)
     ).toEqual(false)
     expect(
+      XEUtils.isFloat(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFloat('3.9a')
+    ).toEqual(false)
+    expect(
+      XEUtils.isFloat('1.3')
+    ).toEqual(true)
+    expect(
       XEUtils.isFloat(3.3)
+    ).toEqual(true)
+    expect(
+      XEUtils.isFloat(-2.3)
     ).toEqual(true)
   })
 
@@ -87,10 +205,37 @@ describe('Base functions', () => {
       XEUtils.isInteger(null)
     ).toEqual(false)
     expect(
+      XEUtils.isInteger([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger(/123/)
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger('null')
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger('undefined')
+    ).toEqual(false)
+    expect(
       XEUtils.isInteger(3.3)
     ).toEqual(false)
     expect(
-      XEUtils.isInteger(3)
+      XEUtils.isInteger(-1.3)
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger(2)
+    ).toEqual(true)
+    expect(
+      XEUtils.isInteger(-1)
     ).toEqual(true)
     expect(
       XEUtils.isInteger(0)
@@ -98,6 +243,27 @@ describe('Base functions', () => {
   })
 
   test('isFunction()', () => {
+    expect(
+      XEUtils.isFunction('null')
+    ).toEqual(false)
+    expect(
+      XEUtils.isFunction(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFunction(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFunction(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFunction(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFunction(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFunction([])
+    ).toEqual(false)
     expect(
       XEUtils.isFunction({})
     ).toEqual(false)
@@ -108,7 +274,25 @@ describe('Base functions', () => {
 
   test('isBoolean()', () => {
     expect(
+      XEUtils.isBoolean([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isBoolean({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isBoolean(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isBoolean(undefined)
+    ).toEqual(false)
+    expect(
       XEUtils.isBoolean('false')
+    ).toEqual(false)
+    expect(
+      XEUtils.isBoolean(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isBoolean(-1)
     ).toEqual(false)
     expect(
       XEUtils.isBoolean(true)
@@ -119,6 +303,32 @@ describe('Base functions', () => {
     expect(
       XEUtils.isString(1)
     ).toEqual(false)
+    expect(
+      XEUtils.isString(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isString(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isString(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isString({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isString([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isString(/\d/)
+    ).toEqual(false)
+    expect(
+      XEUtils.isString(function () {})
+    ).toEqual(false)
+    if (typeof Symbol !== 'undefined') {
+      expect(
+        XEUtils.isString(Symbol('abc'))
+      ).toEqual(false)
+    }
     expect(
       XEUtils.isString(true)
     ).toEqual(false)
@@ -135,16 +345,52 @@ describe('Base functions', () => {
       XEUtils.isNumber(null)
     ).toEqual(false)
     expect(
+      XEUtils.isNumber(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNumber({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isNumber([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isNumber(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isNumber(/123/)
+    ).toEqual(false)
+    expect(
       XEUtils.isNumber('1')
     ).toEqual(false)
     expect(
-      XEUtils.isNumber(1)
+      XEUtils.isNumber(-1)
+    ).toEqual(true)
+    expect(
+      XEUtils.isNumber(0)
+    ).toEqual(true)
+    expect(
+      XEUtils.isNumber(9.3)
     ).toEqual(true)
   })
 
   test('isRegExp()', () => {
     expect(
       XEUtils.isRegExp(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isRegExp(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isRegExp([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isRegExp({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isRegExp(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isRegExp(-1)
     ).toEqual(false)
     expect(
       XEUtils.isRegExp('a')
@@ -159,6 +405,32 @@ describe('Base functions', () => {
 
   test('isObject()', () => {
     expect(
+      XEUtils.isObject(123)
+    ).toEqual(false)
+    expect(
+      XEUtils.isObject(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isObject('null')
+    ).toEqual(false)
+    expect(
+      XEUtils.isObject(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isObject(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isObject(false)
+    ).toEqual(false)
+    if (typeof Symbol !== 'undefined') {
+      expect(
+        XEUtils.isObject(Symbol('123'))
+      ).toEqual(false)
+    }
+    expect(
+      XEUtils.isObject(/\d/)
+    ).toEqual(true)
+    expect(
       XEUtils.isObject(null)
     ).toEqual(true)
     expect(
@@ -167,9 +439,6 @@ describe('Base functions', () => {
     expect(
       XEUtils.isObject({})
     ).toEqual(true)
-    expect(
-      XEUtils.isObject(123)
-    ).toEqual(false)
   })
 
   test('isPlainObject()', () => {
@@ -177,11 +446,25 @@ describe('Base functions', () => {
       XEUtils.isPlainObject(null)
     ).toEqual(false)
     expect(
+      XEUtils.isPlainObject(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isPlainObject(/\d/)
+    ).toEqual(false)
+    expect(
+      XEUtils.isPlainObject(function () {})
+    ).toEqual(false)
+    expect(
       XEUtils.isPlainObject([])
     ).toEqual(false)
     expect(
       XEUtils.isPlainObject(123)
     ).toEqual(false)
+    if (typeof Symbol !== 'undefined') {
+      expect(
+        XEUtils.isPlainObject(Symbol('123'))
+      ).toEqual(false)
+    }
     expect(
       XEUtils.isPlainObject({})
     ).toEqual(true)
@@ -190,6 +473,24 @@ describe('Base functions', () => {
   test('isDate()', () => {
     expect(
       XEUtils.isDate('2017-12-20')
+    ).toEqual(false)
+    expect(
+      XEUtils.isDate('ue Dec 04 2018 15:02:06 GMT+0800')
+    ).toEqual(false)
+    expect(
+      XEUtils.isDate(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDate(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDate(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDate(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDate([])
     ).toEqual(false)
     expect(
       XEUtils.isDate({})

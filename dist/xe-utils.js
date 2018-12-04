@@ -861,7 +861,7 @@
     * @return {Boolean}
     */
   function isFloat (obj) {
-    return obj !== null && !isNaN(obj) && !isInteger(obj)
+    return obj !== null && !isNaN(obj) && !isArray(obj) && !isInteger(obj)
   }
 
   /**

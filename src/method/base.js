@@ -195,7 +195,7 @@ var isArray = Array.isArray || createInInObjectString('Array')
   * @return {Boolean}
   */
 function isFloat (obj) {
-  return obj !== null && !isNaN(obj) && !isInteger(obj)
+  return obj !== null && !isNaN(obj) && !isArray(obj) && !isInteger(obj)
 }
 
 /**
