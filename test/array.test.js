@@ -137,10 +137,25 @@ describe('Array functions', () => {
 
   test('toArray()', () => {
     expect(
+      XEUtils.toArray(0)
+    ).toEqual([])
+    expect(
+      XEUtils.toArray(true)
+    ).toEqual([])
+    expect(
+      XEUtils.toArray(/1,2,3/)
+    ).toEqual([])
+    expect(
       XEUtils.toArray([])
     ).toEqual([])
     expect(
       XEUtils.toArray({})
+    ).toEqual([])
+    expect(
+      XEUtils.toArray(10)
+    ).toEqual([])
+    expect(
+      XEUtils.toArray(function () {})
     ).toEqual([])
     expect(
       XEUtils.toArray({ name: 'test1', age: 25 })
@@ -148,6 +163,30 @@ describe('Array functions', () => {
   })
 
   test('includeArrays()', () => {
+    expect(
+      XEUtils.includeArrays(null, null)
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays(null, [])
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays({}, [])
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays([], 0)
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays([], null)
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays([], {})
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays([11, 22, 33], [11, 22, 33, 44])
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays([], [])
+    ).toEqual(true)
     expect(
       XEUtils.includeArrays([11, 22, 33], [])
     ).toEqual(true)

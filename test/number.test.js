@@ -18,6 +18,10 @@ describe('Number functions', () => {
     expect(
       rest >= 10 && rest <= 100
     ).toEqual(true)
+    rest = XEUtils.random(-5, 5)
+    expect(
+      rest >= -5 && rest <= 5
+    ).toEqual(true)
   })
 
   test('min()', () => {
@@ -61,6 +65,24 @@ describe('Number functions', () => {
 
   test('toNumber()', () => {
     expect(
+      XEUtils.toNumber([])
+    ).toEqual(0)
+    expect(
+      XEUtils.toNumber({})
+    ).toEqual(0)
+    expect(
+      XEUtils.toNumber(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.toNumber(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.toNumber('$123')
+    ).toEqual(0)
+    expect(
+      XEUtils.toNumber('123元')
+    ).toEqual(123)
+    expect(
       XEUtils.toNumber(123)
     ).toEqual(123)
     expect(
@@ -72,6 +94,27 @@ describe('Number functions', () => {
   })
 
   test('toInteger()', () => {
+    expect(
+      XEUtils.toInteger(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.toInteger(-1)
+    ).toEqual(-1)
+    expect(
+      XEUtils.toInteger([])
+    ).toEqual(0)
+    expect(
+      XEUtils.toInteger({})
+    ).toEqual(0)
+    expect(
+      XEUtils.toInteger(/\d/)
+    ).toEqual(0)
+    expect(
+      XEUtils.toInteger(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.toInteger(true)
+    ).toEqual(0)
     expect(
       XEUtils.toInteger(123)
     ).toEqual(123)

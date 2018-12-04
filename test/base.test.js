@@ -642,13 +642,13 @@ describe('Base functions', () => {
 
   test('isLeapYear()', () => {
     expect(
-      XEUtils.isLeapYear(1606752000000)
-    ).toEqual(true)
-    expect(
       XEUtils.isLeapYear('2018-12-01')
     ).toEqual(false)
     expect(
       XEUtils.isLeapYear('2020-12-01')
+    ).toEqual(true)
+    expect(
+      XEUtils.isLeapYear(1606752000000)
     ).toEqual(true)
     expect(
       XEUtils.isLeapYear(new Date(2020, 11, 1))
@@ -657,11 +657,38 @@ describe('Base functions', () => {
 
   test('isEqual()', () => {
     expect(
+      XEUtils.isEqual(0, false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqual(true, 1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqual(false, true)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqual({}, function () {})
+    ).toEqual(false)
+    expect(
       XEUtils.isEqual({}, [])
     ).toEqual(false)
     expect(
       XEUtils.isEqual({ 0: 1 }, [1])
     ).toEqual(false)
+    expect(
+      XEUtils.isEqual([undefined], [null])
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqual([11, 22], [22, 11])
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqual({ name: 'test1', list: [11, 33, { a: /\D/ }] }, { name: 'test1', list: [11, 33, { a: /\d/ }] })
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqual([11, 22, 33], [11, 22, 33])
+    ).toEqual(true)
+    expect(
+      XEUtils.isEqual([11, '22', /\d/, false], [11, '22', new RegExp('\\d'), false])
+    ).toEqual(true)
     expect(
       XEUtils.isEqual({ name: 'test1' }, { name: 'test1' })
     ).toEqual(true)
@@ -669,8 +696,8 @@ describe('Base functions', () => {
       XEUtils.isEqual({ name: 'test1', list: [11, /\d/] }, { name: 'test1', list: [11, /\d/] })
     ).toEqual(true)
     expect(
-      XEUtils.isEqual({ name: 'test1', list: [11, 33, { a: /\D/ }] }, { name: 'test1', list: [11, 33, { a: /\d/ }] })
-    ).toEqual(false)
+      XEUtils.isEqual([{ a: 1, b: [{ aa: false }, { bb: new Date(2018, 1, 1) }] }, { c: /\D/, d: null }], [{ a: 1, b: [{ aa: false }, { bb: new Date(2018, 1, 1) }] }, { c: /\D/, d: null }])
+    ).toEqual(true)
   })
 
   test('property()', () => {
@@ -703,8 +730,16 @@ describe('Base functions', () => {
       XEUtils.getType({})
     ).toEqual('object')
     expect(
+      XEUtils.getType(false)
+    ).toEqual('boolean')
+    expect(
       XEUtils.getType(function () {})
     ).toEqual('function')
+    if (typeof Symbol !== 'undefined') {
+      expect(
+        XEUtils.getType(Symbol('name'))
+      ).toEqual('symbol')
+    }
   })
 
   test('uniqueId()', () => {
@@ -720,6 +755,18 @@ describe('Base functions', () => {
   })
 
   test('getSize()', () => {
+    expect(
+      XEUtils.getSize('')
+    ).toEqual(0)
+    expect(
+      XEUtils.getSize(false)
+    ).toEqual(0)
+    expect(
+      XEUtils.getSize(-1)
+    ).toEqual(0)
+    expect(
+      XEUtils.getSize(function () {})
+    ).toEqual(0)
     expect(
       XEUtils.getSize('123')
     ).toEqual(3)

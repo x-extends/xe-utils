@@ -53,6 +53,12 @@ describe('Date functions', () => {
 
   test('toStringDate()', () => {
     expect(
+      XEUtils.toStringDate(time)
+    ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99))
+    expect(
+      XEUtils.toStringDate(date)
+    ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99))
+    expect(
       XEUtils.toStringDate('2017-12-20')
     ).toEqual(new Date(2017, 11, 20))
     expect(
@@ -233,8 +239,8 @@ describe('Date functions', () => {
 
   test('getMonthWeek()', () => {
     expect(
-      XEUtils.getMonthWeek(new Date())
-    ).toEqual(1)
+      XEUtils.getMonthWeek(date)
+    ).toEqual(0)
     expect(
       XEUtils.getMonthWeek('2017-01-20')
     ).toEqual(3)

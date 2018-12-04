@@ -472,7 +472,7 @@
     var len
     var index = 0
     var includes = baseExports.includes
-    if (baseExports.isArray(array2)) {
+    if (baseExports.isArray(array1) && baseExports.isArray(array2)) {
       for (len = array2.length; index < len; index++) {
         if (!includes(array1, array2[index])) {
           return false
@@ -2782,10 +2782,20 @@
     if (num) {
       var opts = baseExports.assign({ spaceNumber: 3, separator: ',' }, options)
       var optFixed = opts.fixed
-      var result = (optFixed ? parseFloat(num).toFixed(optFixed) : num).split('.')
+      var result = (optFixed ? stringToNumber(num).toFixed(optFixed) : num).split('.')
       return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
     }
     return num
+  }
+
+  function createToNumber (handle) {
+    return function (str) {
+      if (str) {
+        var num = handle(str)
+        return isNaN(num) ? 0 : num
+      }
+      return 0
+    }
   }
 
   /**
@@ -2793,22 +2803,14 @@
    * @param { String/Number } str 数值
    * @return {Number}
    */
-  function stringToNumber (str) {
-    if (str) {
-      var num = parseFloat(str)
-      return isNaN(num) ? 0 : num
-    }
-    return 0
-  }
+  var stringToNumber = createToNumber(parseFloat)
 
   /**
    * 转整数
    * @param { String/Number } str 数值
    * @return {Number}
    */
-  function stringToInteger (str) {
-    return parseInt(stringToNumber(str))
-  }
+  var stringToInteger = createToNumber(parseInt)
 
   var numberExports = {
     random: getRandom,

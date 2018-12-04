@@ -23,12 +23,18 @@ describe('String functions', () => {
     expect(
       XEUtils.escape('<a>link</a>')
     ).toEqual('&lt;a&gt;link&lt;/a&gt;')
+    expect(
+      XEUtils.escape('<script>alert()</script>')
+    ).toEqual('&lt;script&gt;alert()&lt;/script&gt;')
   })
 
   test('unescape()', () => {
     expect(
       XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;')
     ).toEqual('<a>link</a>')
+    expect(
+      XEUtils.unescape('&lt;script&gt;alert()&lt;/script&gt;')
+    ).toEqual('<script>alert()</script>')
   })
 
   test('camelCase()', () => {

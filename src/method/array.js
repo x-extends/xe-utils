@@ -440,7 +440,7 @@ function includeArrays (array1, array2) {
   var len
   var index = 0
   var includes = baseExports.includes
-  if (baseExports.isArray(array2)) {
+  if (baseExports.isArray(array1) && baseExports.isArray(array2)) {
     for (len = array2.length; index < len; index++) {
       if (!includes(array1, array2[index])) {
         return false
