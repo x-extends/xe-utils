@@ -80,7 +80,7 @@ describe('Date functions', () => {
 
   test('toDateString()', () => {
     expect(
-      XEUtils.toDateString(1483250730000)
+      XEUtils.toDateString(time)
     ).toEqual('2017-01-01 14:05:30')
     expect(
       XEUtils.toDateString(date)
