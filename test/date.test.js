@@ -15,10 +15,10 @@ describe('Date functions', () => {
     ).toEqual(true)
     expect(
       XEUtils.timestamp('2018-12-01')
-    ).toEqual(1543593600000)
+    ).toEqual(new Date(2018, 11, 1).getTime())
     expect(
       XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS')
-    ).toEqual(1513735830459)
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 459).getTime())
   })
 
   test('isDateSame()', () => {
