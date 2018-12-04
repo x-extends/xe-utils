@@ -523,7 +523,6 @@ XEUtils.isEqual({name: 'test1', list: [11, 33, {a: /\D/}]}, {name: 'test1', list
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-// 例如：new Date() => 2018-12-01
 XEUtils.isDateSame('2018-12-01', '2018-12-01') // true
 XEUtils.isDateSame(new Date(), '2018-12-01', 'yyyy') // 判断是否同一年 true
 XEUtils.isDateSame(new Date(), XEUtils.toStringDate('12/30/2018', 'MM/dd/yyyy'), 'MM') // 判断是否同一月 true
@@ -1543,7 +1542,7 @@ XEUtils.toStringDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.toDateString(1513735830000)
+XEUtils.toDateString(1483250730000)
 // '2017-01-01 14:05:30'
 XEUtils.toDateString(new Date())
 // '2017-01-01 14:05:30'
@@ -1563,18 +1562,18 @@ XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSSZ')
 // '2017-01-01 02:05:30.099+0800'
 XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZ')
 // '2017-01-01 02:05:30.099 GMT+0800'
-XEUtils.toDateString('2017-11-20 10:05:30', 'yyyy-M-d h:m:s.S')
-// '2017-11-20 2:5:30.99'
+XEUtils.toDateString('2017-01-01 10:05:30', 'yyyy-M-d h:m:s.S')
+// '2017-1-1 2:5:30.99'
 XEUtils.toDateString(new Date(), 'yyyy-M-d H:m:s.S')
 // '2017-1-1 14:5:30.99'
 XEUtils.toDateString(new Date(), 'yyyy-M-d h:m:s.S')
 // '2017-1-1 2:5:30.99'
 XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
-// '2017年01月01日 14时05分30秒99毫秒,星期3 第4季度'
+// '2017年01月01日 14时05分30秒99毫秒,星期0 第1季度'
 XEUtils.toDateString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度')
-// '17年1月1日 14时5分30秒99毫秒,星期3 第4季度'
+// '17年1月1日 14时5分30秒99毫秒,星期0 第1季度'
 XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒zZ 星期E e 第q季 今年第D天 今年第w周 当月第W周 a A')
-// '2018年05月29日 09时44分46秒647毫秒GMT+0800 星期2 1 第2季 今年第149天 今年第22周 当月第4周 am AM'
+// '2017年01月01日 02时05分30秒099毫秒GMT+0800 星期0 -1 第1季 今年第1天 今年第0周 当月第0周 pm PM'
 ```
 
 ### getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前
@@ -1688,10 +1687,9 @@ XEUtils.getDayOfMonth('2017-12-20', 1) // 31
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.getDateDiff('2017-11-20', '2017-12-21') // {MM: 1, dd: 1}
-XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1}
-XEUtils.getDateDiff('2017-12-20', '2017-12-21') // {dd: 1, ss: 30}
-XEUtils.getDateDiff('2018-01-01', '2017-12-21') // {done: false}
+XEUtils.getDateDiff('2017-11-20', '2017-12-21') // { done: true, time: 2678400000, yyyy: 0, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 }
+XEUtils.getDateDiff('2017-12-20', '2017-12-21') // { done: true, time: 86400000, yyyy: 0, MM: 0, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 }
+XEUtils.getDateDiff('2018-01-01', '2017-12-21') // { done: false, time: 0 }
 let dateDiff = XEUtils.getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
 let content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
 ```
@@ -1783,7 +1781,7 @@ XEUtils.trimLeft(' abc ') // 'abc '
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.trimRight(' abc ') // ' aa'
+XEUtils.trimRight(' abc ') // ' abc'
 ```
 
 ### escape ( str ) 转义HTML字符串，替换&, <, >, ", ', `字符
@@ -1823,8 +1821,8 @@ XEUtils.kebabCase('projectName') // 'project-name'
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.repeat('a', 5) // aaaaa
-XEUtils.repeat('ab', 3) // ababab
+XEUtils.repeat('a', 5) // 'aaaaa'
+XEUtils.repeat('ab', 3) // 'ababab'
 ```
 
 ### padStart ( str, targetLength, padString ) 用指定字符从前面开始补全字符串
@@ -1832,7 +1830,7 @@ XEUtils.repeat('ab', 3) // ababab
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.padStart('a', 5, 'b') // bbbba
+XEUtils.padStart('a', 5, 'b') // 'bbbba'
 ```
 
 ### padEnd ( str, targetLength [, padString] ) 用指定字符从后面开始补全字符串
@@ -1840,7 +1838,7 @@ XEUtils.padStart('a', 5, 'b') // bbbba
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.padEnd('a', 5, 'b') // abbbb
+XEUtils.padEnd('a', 5, 'b') // 'abbbb'
 ```
 
 ### startsWith ( str, val [, startIndex] ) 判断字符串是否在源字符串的头部
