@@ -87,9 +87,9 @@ function createToNumber (handle) {
  * @param { String/Number } str 数值
  * @return {String}
  */
-function toFixedString (str, fixedNum) {
-  var nums = ('' + toFixedNumber(str, fixedNum)).split('.')
-  return fixedNum ? [nums[0], '.', XEUtils.padEnd(nums[1] || '', fixedNum, '0')].join('') : nums[0]
+function toFixedString (str, digits) {
+  var nums = ('' + toFixedNumber(str, digits)).split('.')
+  return digits ? [nums[0], '.', XEUtils.padEnd(nums[1] || '', digits, '0')].join('') : nums[0]
 }
 
 /**
@@ -98,9 +98,9 @@ function toFixedString (str, fixedNum) {
  * @param { String/Number } str 数值
  * @return {String}
  */
-function toFixedNumber (str, fixedNum) {
-  if (fixedNum) {
-    return stringToNumber(('' + stringToNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + fixedNum + '}).*'), '$1'))
+function toFixedNumber (str, digits) {
+  if (digits) {
+    return stringToNumber(('' + stringToNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1'))
   }
   return stringToInteger(str)
 }
