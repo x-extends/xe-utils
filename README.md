@@ -1774,7 +1774,7 @@ XEUtils.toFixedNumber(123) // 123
 XEUtils.toFixedNumber('12.399') // 12
 XEUtils.toFixedNumber('12.399', 5) // 12.399
 XEUtils.toFixedNumber(234567.105967, 4) // 234567.1059
-XEUtils.toFixedNumber('1234.6988', 2) // 1234.69
+XEUtils.toFixedNumber('-1234.6988', 2) // -1234.69
 ```
 
 ### toFixedString ( num, digits ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
@@ -1786,7 +1786,7 @@ XEUtils.toFixedString(123) // '123'
 XEUtils.toFixedString('12.399') // '12'
 XEUtils.toFixedString('12.399', 5) // '12.39900'
 XEUtils.toFixedString(234567.105967, 4) // '234567.1059'
-XEUtils.toFixedString('1234.6988', 2) // '1234.69'
+XEUtils.toFixedString('-1234.6988', 2) // '-1234.69'
 ```
 
 ### trim ( str ) 去除字符串左右两边的空格

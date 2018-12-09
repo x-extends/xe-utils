@@ -65,6 +65,12 @@ describe('Number functions', () => {
 
   test('toFixedString()', () => {
     expect(
+      XEUtils.toFixedString(null)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString('null')
+    ).toEqual('0')
+    expect(
       XEUtils.toFixedString([])
     ).toEqual('0')
     expect(
@@ -89,6 +95,9 @@ describe('Number functions', () => {
       XEUtils.toFixedString(123)
     ).toEqual('123')
     expect(
+      XEUtils.toFixedString(null, 2)
+    ).toEqual('0.00')
+    expect(
       XEUtils.toFixedString('1.00', 0)
     ).toEqual('1')
     expect(
@@ -97,6 +106,9 @@ describe('Number functions', () => {
     expect(
       XEUtils.toFixedString('0.38996', 4)
     ).toEqual('0.3899')
+    expect(
+      XEUtils.toFixedString('8.3339', 3)
+    ).toEqual('8.333')
     expect(
       XEUtils.toFixedString(12.3999, 2)
     ).toEqual('12.39')
@@ -107,14 +119,20 @@ describe('Number functions', () => {
       XEUtils.toFixedString('1452349847.3979', 2)
     ).toEqual('1452349847.39')
     expect(
-      XEUtils.toFixedString('1452349847.3979', 5)
-    ).toEqual('1452349847.39790')
+      XEUtils.toFixedString('-1452349847.3979', 5)
+    ).toEqual('-1452349847.39790')
     expect(
       XEUtils.toFixedString('1452349847.3979', 20)
     ).toEqual('1452349847.39790000000000000000')
   })
 
   test('toFixedNumber()', () => {
+    expect(
+      XEUtils.toFixedNumber(null)
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('null')
+    ).toEqual(0)
     expect(
       XEUtils.toFixedNumber([])
     ).toEqual(0)
@@ -134,6 +152,9 @@ describe('Number functions', () => {
       XEUtils.toFixedNumber('$123')
     ).toEqual(0)
     expect(
+      XEUtils.toFixedNumber(null, 2)
+    ).toEqual(0)
+    expect(
       XEUtils.toFixedNumber('123元')
     ).toEqual(123)
     expect(
@@ -149,6 +170,9 @@ describe('Number functions', () => {
       XEUtils.toFixedNumber('0.38996', 4)
     ).toEqual(0.3899)
     expect(
+      XEUtils.toFixedNumber('8.3339', 3)
+    ).toEqual(8.333)
+    expect(
       XEUtils.toFixedNumber(12.3999, 2)
     ).toEqual(12.39)
     expect(
@@ -158,8 +182,8 @@ describe('Number functions', () => {
       XEUtils.toFixedNumber('1452349847.3979', 2)
     ).toEqual(1452349847.39)
     expect(
-      XEUtils.toFixedNumber('1452349847.3979', 5)
-    ).toEqual(1452349847.3979)
+      XEUtils.toFixedNumber('-1452349847.3979', 5)
+    ).toEqual(-1452349847.3979)
     expect(
       XEUtils.toFixedNumber('1452349847.3979', 20)
     ).toEqual(1452349847.3979)

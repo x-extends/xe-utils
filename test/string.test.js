@@ -60,14 +60,74 @@ describe('String functions', () => {
 
   test('padStart()', () => {
     expect(
+      XEUtils.padStart(null, 2)
+    ).toEqual('null')
+    expect(
+      XEUtils.padStart(null, 6)
+    ).toEqual('  null')
+    expect(
+      XEUtils.padStart(0, 2)
+    ).toEqual(' 0')
+    expect(
+      XEUtils.padStart('', 2)
+    ).toEqual('  ')
+    expect(
+      XEUtils.padStart('a', 4)
+    ).toEqual('   a')
+    expect(
+      XEUtils.padStart('a', 6, undefined)
+    ).toEqual('     a')
+    expect(
+      XEUtils.padStart('a', 6, null)
+    ).toEqual('nullna')
+    expect(
+      XEUtils.padStart('a', 6, false)
+    ).toEqual('falsea')
+    expect(
       XEUtils.padStart('a', 5, 'b')
     ).toEqual('bbbba')
+    expect(
+      XEUtils.padStart('2', 5, 0)
+    ).toEqual('00002')
+    expect(
+      XEUtils.padStart('2', 5, '0')
+    ).toEqual('00002')
   })
 
   test('padEnd()', () => {
     expect(
+      XEUtils.padEnd(null, 2)
+    ).toEqual('null')
+    expect(
+      XEUtils.padEnd(null, 6)
+    ).toEqual('null  ')
+    expect(
+      XEUtils.padEnd(0, 2)
+    ).toEqual('0 ')
+    expect(
+      XEUtils.padEnd('', 2)
+    ).toEqual('  ')
+    expect(
+      XEUtils.padEnd('a', 4)
+    ).toEqual('a   ')
+    expect(
+      XEUtils.padEnd('a', 6, undefined)
+    ).toEqual('a     ')
+    expect(
+      XEUtils.padEnd('a', 6, null)
+    ).toEqual('anulln')
+    expect(
+      XEUtils.padEnd('a', 6, false)
+    ).toEqual('afalse')
+    expect(
       XEUtils.padEnd('a', 5, 'b')
     ).toEqual('abbbb')
+    expect(
+      XEUtils.padEnd('2', 5, 0)
+    ).toEqual('20000')
+    expect(
+      XEUtils.padEnd('2', 5, '0')
+    ).toEqual('20000')
   })
 
   test('startsWith()', () => {
