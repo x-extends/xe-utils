@@ -122,11 +122,11 @@ function stringRepeat (str, count) {
 function stringPadStart (str, targetLength, padString, UNDEFINED) {
   var rest = '' + str
   targetLength = targetLength >> 0
+  padString = padString === UNDEFINED ? ' ' : '' + padString
   if (rest.padStart) {
     return rest.padStart(targetLength, padString)
   }
   if (targetLength > rest.length) {
-    padString = padString === UNDEFINED ? ' ' : '' + padString
     targetLength -= rest.length
     if (targetLength > padString.length) {
       padString += stringRepeat(padString, targetLength / padString.length)
@@ -147,11 +147,11 @@ function stringPadStart (str, targetLength, padString, UNDEFINED) {
 function stringPadEnd (str, targetLength, padString, UNDEFINED) {
   var rest = '' + str
   targetLength = targetLength >> 0
+  padString = padString === UNDEFINED ? ' ' : '' + padString
   if (rest.padEnd) {
     return rest.padEnd(targetLength, padString)
   }
   if (targetLength > rest.length) {
-    padString = padString === UNDEFINED ? ' ' : '' + padString
     targetLength -= rest.length
     if (targetLength > padString.length) {
       padString += stringRepeat(padString, targetLength / padString.length)
