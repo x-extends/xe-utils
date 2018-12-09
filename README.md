@@ -105,8 +105,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
   * [toInteger ( num ) 转整数](#tointeger--num--转整数)
-  * [toFixedNumber ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值]()
-  * [toFixedString ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串]()
+  * [toFixedNumber ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值](#tofixednumber--num-fixednum--和-numbertofixed-一样功能区别就是不会对小数进行四舍五入结果返回数值)
+  * [toFixedString ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串](#tofixedstring--num-fixednum--和-numbertofixed-一样功能区别就是不会对小数进行四舍五入结果返回字符串)
   * [toArray ( array ) 将对象或者伪数组转为新数组](#toarrayfrom--array--将对象或者伪数组转为新数组)
   * [toStringJSON (str) 字符串转 JSON](#tostringjson-str-字符串转-json)
   * [toJSONString (obj) JSON 转字符串](#tojsonstring-obj-json-转字符串)
