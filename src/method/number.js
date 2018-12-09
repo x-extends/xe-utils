@@ -82,8 +82,33 @@ function createToNumber (handle) {
 }
 
 /**
+ * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
+ *
+ * @param { String/Number } str 数值
+ * @return {String}
+ */
+function toFixedString (str, fixedNum) {
+  var nums = ('' + toFixedNumber(str, fixedNum)).split('.')
+  return fixedNum ? [nums[0], '.', XEUtils.padEnd(nums[1] || '', fixedNum, '0')].join('') : nums[0]
+}
+
+/**
+ * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值
+ *
+ * @param { String/Number } str 数值
+ * @return {String}
+ */
+function toFixedNumber (str, fixedNum) {
+  if (fixedNum) {
+    return stringToNumber(('' + stringToNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + fixedNum + '}).*'), '$1'))
+  }
+  return stringToInteger(str)
+}
+
+/**
  * 转数值
  * @param { String/Number } str 数值
+ *
  * @return {Number}
  */
 var stringToNumber = createToNumber(parseFloat)
@@ -91,6 +116,7 @@ var stringToNumber = createToNumber(parseFloat)
 /**
  * 转整数
  * @param { String/Number } str 数值
+ *
  * @return {Number}
  */
 var stringToInteger = createToNumber(parseInt)
@@ -100,6 +126,8 @@ var numberExports = {
   min: arrayMin,
   max: arrayMax,
   commafy: commafy,
+  toFixedString: toFixedString,
+  toFixedNumber: toFixedNumber,
   toNumber: stringToNumber,
   toInteger: stringToInteger
 }

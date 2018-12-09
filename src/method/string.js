@@ -119,13 +119,14 @@ function stringRepeat (str, count) {
   * @param {Number} padString 补全字符
   * @return {String}
   */
-function stringPadStart (str, targetLength, padString) {
+function stringPadStart (str, targetLength, padString, UNDEFINED) {
   var rest = '' + str
+  targetLength = targetLength >> 0
   if (rest.padStart) {
     return rest.padStart(targetLength, padString)
   }
-  if ((targetLength >> 0) > rest.length) {
-    padString = padString === undefined ? ' ' : '' + padString
+  if (targetLength > rest.length) {
+    padString = padString === UNDEFINED ? ' ' : '' + padString
     targetLength -= rest.length
     if (targetLength > padString.length) {
       padString += stringRepeat(padString, targetLength / padString.length)
@@ -143,13 +144,14 @@ function stringPadStart (str, targetLength, padString) {
   * @param {Number} padString 补全字符
   * @return {String}
   */
-function stringPadEnd (str, targetLength, padString) {
+function stringPadEnd (str, targetLength, padString, UNDEFINED) {
   var rest = '' + str
+  targetLength = targetLength >> 0
   if (rest.padEnd) {
     return rest.padEnd(targetLength, padString)
   }
-  if ((targetLength >> 0) > rest.length) {
-    padString = padString === undefined ? ' ' : '' + padString
+  if (targetLength > rest.length) {
+    padString = padString === UNDEFINED ? ' ' : '' + padString
     targetLength -= rest.length
     if (targetLength > padString.length) {
       padString += stringRepeat(padString, targetLength / padString.length)

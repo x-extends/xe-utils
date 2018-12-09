@@ -105,6 +105,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
   * [toInteger ( num ) 转整数](#tointeger--num--转整数)
+  * [toFixedNumber ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值]()
+  * [toFixedString ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串]()
   * [toArray ( array ) 将对象或者伪数组转为新数组](#toarrayfrom--array--将对象或者伪数组转为新数组)
   * [toStringJSON (str) 字符串转 JSON](#tostringjson-str-字符串转-json)
   * [toJSONString (obj) JSON 转字符串](#tojsonstring-obj-json-转字符串)
@@ -367,6 +369,7 @@ import XEUtils from 'xe-utils'
 
 XEUtils.isError(null) // false
 XEUtils.isError({}) // false
+XEUtils.isError(new TypeError('error')) // true
 XEUtils.isError(new Error('error')) // true
 ```
 
@@ -377,6 +380,7 @@ import XEUtils from 'xe-utils'
 
 XEUtils.isTypeError(null) // false
 XEUtils.isTypeError({}) // false
+XEUtils.isTypeError(new Error('error')) // false
 XEUtils.isTypeError(new TypeError('error')) // true
 ```
 
@@ -781,8 +785,10 @@ XEUtils.clear(b, null) // {b1: null, b2: null}
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-let list = [11, 22, 33, 44]
-XEUtils.remove(list, item => item === 22) // list = [11, 33, 44]
+let list1 = [11, 22, 33, 44]
+XEUtils.remove(list1, 2) // list1 = [11, 22, 44]
+let list2 = [11, 22, 33, 44]
+XEUtils.remove(list2, item => item === 22) // list2 = [11, 33, 44]
 ```
 
 ### assign/extend (destination, ...sources) 浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝
@@ -1757,6 +1763,30 @@ import XEUtils from 'xe-utils'
 XEUtils.toInteger(123) // 123
 XEUtils.toInteger('12.3') // 12
 XEUtils.toInteger('abc') // 0
+```
+
+### toFixedNumber ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.toFixedNumber(123) // 123
+XEUtils.toFixedNumber('12.399') // 12
+XEUtils.toFixedNumber('12.399', 5) // 12.399
+XEUtils.toFixedNumber(234567.105967, 4) // 234567.1059
+XEUtils.toFixedNumber('1234.6988', 2) // 1234.69
+```
+
+### toFixedString ( num, fixedNum ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.toFixedString(123) // '123'
+XEUtils.toFixedString('12.399') // '12'
+XEUtils.toFixedString('12.399', 5) // '12.39900'
+XEUtils.toFixedString(234567.105967, 4) // '234567.1059'
+XEUtils.toFixedString('1234.6988', 2) // '1234.69'
 ```
 
 ### trim ( str ) 去除字符串左右两边的空格

@@ -63,6 +63,108 @@ describe('Number functions', () => {
     ).toEqual('111,111,111,111,111,111,111,111,111,111,111')
   })
 
+  test('toFixedString()', () => {
+    expect(
+      XEUtils.toFixedString([])
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString({})
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString(function () {})
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString(true)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString('abc')
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString('$123')
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString('123元')
+    ).toEqual('123')
+    expect(
+      XEUtils.toFixedString(123)
+    ).toEqual('123')
+    expect(
+      XEUtils.toFixedString('1.00', 0)
+    ).toEqual('1')
+    expect(
+      XEUtils.toFixedString('0', 2)
+    ).toEqual('0.00')
+    expect(
+      XEUtils.toFixedString('0.38996', 4)
+    ).toEqual('0.3899')
+    expect(
+      XEUtils.toFixedString(12.3999, 2)
+    ).toEqual('12.39')
+    expect(
+      XEUtils.toFixedString('12.3999', 6)
+    ).toEqual('12.399900')
+    expect(
+      XEUtils.toFixedString('1452349847.3979', 2)
+    ).toEqual('1452349847.39')
+    expect(
+      XEUtils.toFixedString('1452349847.3979', 5)
+    ).toEqual('1452349847.39790')
+    expect(
+      XEUtils.toFixedString('1452349847.3979', 20)
+    ).toEqual('1452349847.39790000000000000000')
+  })
+
+  test('toFixedNumber()', () => {
+    expect(
+      XEUtils.toFixedNumber([])
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber({})
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('abc')
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('$123')
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('123元')
+    ).toEqual(123)
+    expect(
+      XEUtils.toFixedNumber(123)
+    ).toEqual(123)
+    expect(
+      XEUtils.toFixedNumber('1.00', 0)
+    ).toEqual(1)
+    expect(
+      XEUtils.toFixedNumber('0', 2)
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('0.38996', 4)
+    ).toEqual(0.3899)
+    expect(
+      XEUtils.toFixedNumber(12.3999, 2)
+    ).toEqual(12.39)
+    expect(
+      XEUtils.toFixedNumber('12.3999', 6)
+    ).toEqual(12.3999)
+    expect(
+      XEUtils.toFixedNumber('1452349847.3979', 2)
+    ).toEqual(1452349847.39)
+    expect(
+      XEUtils.toFixedNumber('1452349847.3979', 5)
+    ).toEqual(1452349847.3979)
+    expect(
+      XEUtils.toFixedNumber('1452349847.3979', 20)
+    ).toEqual(1452349847.3979)
+  })
+
   test('toNumber()', () => {
     expect(
       XEUtils.toNumber([])
@@ -77,6 +179,9 @@ describe('Number functions', () => {
       XEUtils.toNumber(true)
     ).toEqual(0)
     expect(
+      XEUtils.toNumber('abc')
+    ).toEqual(0)
+    expect(
       XEUtils.toNumber('$123')
     ).toEqual(0)
     expect(
@@ -89,8 +194,8 @@ describe('Number functions', () => {
       XEUtils.toNumber('12.3')
     ).toEqual(12.3)
     expect(
-      XEUtils.toNumber('abc')
-    ).toEqual(0)
+      XEUtils.toNumber('12456456.66663')
+    ).toEqual(12456456.66663)
   })
 
   test('toInteger()', () => {
@@ -116,13 +221,19 @@ describe('Number functions', () => {
       XEUtils.toInteger(true)
     ).toEqual(0)
     expect(
+      XEUtils.toInteger('abc')
+    ).toEqual(0)
+    expect(
       XEUtils.toInteger(123)
     ).toEqual(123)
+    expect(
+      XEUtils.toInteger(5675.9004)
+    ).toEqual(5675)
     expect(
       XEUtils.toInteger('12.3')
     ).toEqual(12)
     expect(
-      XEUtils.toInteger('abc')
-    ).toEqual(0)
+      XEUtils.toInteger('16572.3657567')
+    ).toEqual(16572)
   })
 })

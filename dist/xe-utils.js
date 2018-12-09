@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.1
+ * xe-utils.js v1.7.2
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2796,8 +2796,33 @@
   }
 
   /**
+   * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
+   *
+   * @param { String/Number } str 数值
+   * @return {String}
+   */
+  function toFixedString (str, fixedNum) {
+    var nums = ('' + toFixedNumber(str, fixedNum)).split('.')
+    return fixedNum ? [nums[0], '.', XEUtils.padEnd(nums[1] || '', fixedNum, '0')].join('') : nums[0]
+  }
+
+  /**
+   * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值
+   *
+   * @param { String/Number } str 数值
+   * @return {String}
+   */
+  function toFixedNumber (str, fixedNum) {
+    if (fixedNum) {
+      return stringToNumber(('' + stringToNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + fixedNum + '}).*'), '$1'))
+    }
+    return stringToInteger(str)
+  }
+
+  /**
    * 转数值
    * @param { String/Number } str 数值
+   *
    * @return {Number}
    */
   var stringToNumber = createToNumber(parseFloat)
@@ -2805,6 +2830,7 @@
   /**
    * 转整数
    * @param { String/Number } str 数值
+   *
    * @return {Number}
    */
   var stringToInteger = createToNumber(parseInt)
@@ -2814,6 +2840,8 @@
     min: arrayMin,
     max: arrayMax,
     commafy: commafy,
+    toFixedString: toFixedString,
+    toFixedNumber: toFixedNumber,
     toNumber: stringToNumber,
     toInteger: stringToInteger
   }
@@ -2935,13 +2963,14 @@
     * @param {Number} padString 补全字符
     * @return {String}
     */
-  function stringPadStart (str, targetLength, padString) {
+  function stringPadStart (str, targetLength, padString, UNDEFINED) {
     var rest = '' + str
+    targetLength = targetLength >> 0
     if (rest.padStart) {
       return rest.padStart(targetLength, padString)
     }
-    if ((targetLength >> 0) > rest.length) {
-      padString = padString === undefined ? ' ' : '' + padString
+    if (targetLength > rest.length) {
+      padString = padString === UNDEFINED ? ' ' : '' + padString
       targetLength -= rest.length
       if (targetLength > padString.length) {
         padString += stringRepeat(padString, targetLength / padString.length)
@@ -2959,13 +2988,14 @@
     * @param {Number} padString 补全字符
     * @return {String}
     */
-  function stringPadEnd (str, targetLength, padString) {
+  function stringPadEnd (str, targetLength, padString, UNDEFINED) {
     var rest = '' + str
+    targetLength = targetLength >> 0
     if (rest.padEnd) {
       return rest.padEnd(targetLength, padString)
     }
-    if ((targetLength >> 0) > rest.length) {
-      padString = padString === undefined ? ' ' : '' + padString
+    if (targetLength > rest.length) {
+      padString = padString === UNDEFINED ? ' ' : '' + padString
       targetLength -= rest.length
       if (targetLength > padString.length) {
         padString += stringRepeat(padString, targetLength / padString.length)

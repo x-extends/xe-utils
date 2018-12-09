@@ -1214,6 +1214,20 @@ export interface XEUtilsMethods {
   toInteger(num: string | number): number;
 
   /**
+   * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值
+   * @param num 数值/字符串
+   * @param fixedNum 小数保留位数
+   */
+  toFixedNumber(num: string | number): number;
+
+  /**
+   * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
+   * @param num 数值/字符串
+   * @param fixedNum 小数保留位数
+   */
+  toFixedString(num: string | number): string;
+
+  /**
    * 去除字符串左右两边的空格
    * @param str 字符串
    */

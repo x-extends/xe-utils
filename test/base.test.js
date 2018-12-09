@@ -501,6 +501,9 @@ describe('Base functions', () => {
     expect(
       XEUtils.isDate(new Date())
     ).toEqual(true)
+    expect(
+      XEUtils.isDate(XEUtils.toStringDate('2017-12-20', 'yyyy-MM-dd'))
+    ).toEqual(true)
   })
 
   test('isError()', () => {
@@ -510,6 +513,15 @@ describe('Base functions', () => {
     expect(
       XEUtils.isError({})
     ).toEqual(false)
+    expect(
+      XEUtils.isError([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isError(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isError(new TypeError('error'))
+    ).toEqual(true)
     expect(
       XEUtils.isError(new Error('error'))
     ).toEqual(true)
@@ -521,6 +533,9 @@ describe('Base functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.isTypeError({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isTypeError(new Error('error'))
     ).toEqual(false)
     expect(
       XEUtils.isTypeError(new TypeError('error'))
@@ -1238,6 +1253,11 @@ describe('Base functions', () => {
 
   test('remove()', () => {
     let list = [11, 22, 33, 44]
+    XEUtils.remove(list, 2)
+    expect(
+      list
+    ).toEqual([11, 22, 44])
+    list = [11, 22, 33, 44]
     XEUtils.remove(list, item => item === 22)
     expect(
       list
@@ -1247,9 +1267,17 @@ describe('Base functions', () => {
     expect(
       obj
     ).toEqual({ a: 11, c: 33 })
+    obj = { a: 11, b: 22, c: 33 }
+    XEUtils.remove(obj, 'c')
+    expect(
+      obj
+    ).toEqual({ a: 11, b: 22 })
   })
 
   test('range()', () => {
+    expect(
+      XEUtils.range(-5)
+    ).toEqual([])
     expect(
       XEUtils.range(0)
     ).toEqual([])
@@ -1265,6 +1293,12 @@ describe('Base functions', () => {
   })
 
   test('destructuring()', () => {
+    expect(
+      XEUtils.destructuring(null, { a: 11, b: 22, c: 33 })
+    ).toEqual(null)
+    expect(
+      XEUtils.destructuring({}, { a: 11, b: 22, c: 33 })
+    ).toEqual({})
     expect(
       XEUtils.destructuring({ a: null }, { a: 11, b: 22, c: 33 })
     ).toEqual({ a: 11 })
