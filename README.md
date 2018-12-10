@@ -519,6 +519,7 @@ XEUtils.isLeapYear(new Date('2020/12/01')) // true
 import XEUtils from 'xe-utils'
 
 XEUtils.isMatch({ aa: 11, bb: 22 }, { bb: 22 })  // true
+XEUtils.isMatch({ aa: 11, bb: 22 }, { bb: 33 })  // false
 ```
 
 ### isEqual (obj1, obj2) 深度比较两个对象之间的值是否相等
