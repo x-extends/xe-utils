@@ -1132,6 +1132,20 @@ describe('Base functions', () => {
     expect(
       rest
     ).toEqual([[11, 0], [22, 1], [33, 2]])
+    rest = []
+    XEUtils.each({ a: 11, b: 22, c: 33 }, (item, key, obj) => {
+      rest.push([item, key])
+    })
+    expect(
+      rest
+    ).toEqual([[11, 'a'], [22, 'b'], [33, 'c']])
+    rest = []
+    XEUtils.each('12345', (item, key, obj) => {
+      rest.push([item, key])
+    })
+    expect(
+      rest
+    ).toEqual([['1', '0'], ['2', '1'], ['3', '2'], ['4', '3'], ['5', '4']])
   })
 
   test('lastEach()', () => {
@@ -1142,6 +1156,20 @@ describe('Base functions', () => {
     expect(
       rest
     ).toEqual([[33, 2], [22, 1], [11, 0]])
+    rest = []
+    XEUtils.lastEach({ a: 11, b: 22, c: 33 }, (item, key, obj) => {
+      rest.push([item, key])
+    })
+    expect(
+      rest
+    ).toEqual([[33, 'c'], [22, 'b'], [11, 'a']])
+    rest = []
+    XEUtils.lastEach('12345', (item, key, obj) => {
+      rest.push([item, key])
+    })
+    expect(
+      rest
+    ).toEqual([['5', '4'], ['4', '3'], ['3', '2'], ['2', '1'], ['1', '0']])
   })
 
   test('groupBy()', () => {
@@ -1166,6 +1194,9 @@ describe('Base functions', () => {
     expect(
       XEUtils.objectMap({ a: { type: 'a' }, b: { type: 'b' } }, item => item.type)
     ).toEqual({ a: 'a', b: 'b' })
+    expect(
+      XEUtils.objectMap([{ type: 'a' }, { type: 'b' }], item => item.type)
+    ).toEqual({ 0: 'a', 1: 'b' })
     expect(
       XEUtils.objectMap([11, 22, 33], item => item)
     ).toEqual({ 0: 11, 1: 22, 2: 33 })
