@@ -82,7 +82,7 @@ function createToNumber (handle) {
 }
 
 /**
- * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
+ * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串
  *
  * @param { String/Number } str 数值
  * @return {String}
@@ -93,7 +93,7 @@ function toFixedString (str, digits) {
 }
 
 /**
- * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值
+ * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
  *
  * @param { String/Number } str 数值
  * @return {String}

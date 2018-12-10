@@ -3,17 +3,35 @@ const XEUtils = require('../index')
 describe('String functions', () => {
   test('trim()', () => {
     expect(
+      XEUtils.trim(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.trim(null)
+    ).toEqual('null')
+    expect(
       XEUtils.trim(' abc ')
     ).toEqual('abc')
   })
 
   test('trimLeft()', () => {
     expect(
+      XEUtils.trimLeft(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.trimLeft(null)
+    ).toEqual('null')
+    expect(
       XEUtils.trimLeft(' abc ')
     ).toEqual('abc ')
   })
 
   test('trimRight()', () => {
+    expect(
+      XEUtils.trimRight(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.trimRight(null)
+    ).toEqual('null')
     expect(
       XEUtils.trimRight(' abc ')
     ).toEqual(' abc')

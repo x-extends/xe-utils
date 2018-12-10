@@ -18,13 +18,24 @@ describe('Number functions', () => {
     expect(
       rest >= 10 && rest <= 100
     ).toEqual(true)
+    rest = XEUtils.random(500, 50000)
+    expect(
+      rest >= 500 && rest <= 50000
+    ).toEqual(true)
     rest = XEUtils.random(-5, 5)
     expect(
       rest >= -5 && rest <= 5
     ).toEqual(true)
+    rest = XEUtils.random(-1000, 0)
+    expect(
+      rest >= -1000 && rest <= 0
+    ).toEqual(true)
   })
 
   test('min()', () => {
+    expect(
+      XEUtils.min([22, null, 77, 11])
+    ).toEqual(null)
     expect(
       XEUtils.min([22, 66, 77, 11])
     ).toEqual(11)
@@ -38,6 +49,9 @@ describe('Number functions', () => {
 
   test('max()', () => {
     expect(
+      XEUtils.max([22, 66, null, 11])
+    ).toEqual(66)
+    expect(
       XEUtils.max([22, 66, 77, 11])
     ).toEqual(77)
     expect(
@@ -49,6 +63,15 @@ describe('Number functions', () => {
   })
 
   test('commafy()', () => {
+    expect(
+      XEUtils.commafy(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.commafy(null)
+    ).toEqual('null')
+    expect(
+      XEUtils.commafy('abcdefg')
+    ).toEqual('abcdefg')
     expect(
       XEUtils.commafy(1000000)
     ).toEqual('1,000,000')

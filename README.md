@@ -105,8 +105,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
   * [toInteger ( num ) 转整数](#tointeger--num--转整数)
-  * [toFixedNumber ( num, digits ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值](#tofixednumber--num-digits--和-numbertofixed-一样功能区别就是不会对小数进行四舍五入结果返回数值)
-  * [toFixedString ( num, digits ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串](#tofixedstring--num-digits--和-numbertofixed-一样功能区别就是不会对小数进行四舍五入结果返回字符串)
+  * [toFixedNumber ( num, digits ) 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值](#tofixednumber--num-digits--和-numbertofixed-一样功能区别就是不会对小数进行四舍五入结果返回数值)
+  * [toFixedString ( num, digits ) 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串](#tofixedstring--num-digits--和-numbertofixed-一样功能区别就是不会对小数进行四舍五入结果返回字符串)
   * [toArray ( array ) 将对象或者伪数组转为新数组](#toarrayfrom--array--将对象或者伪数组转为新数组)
   * [toStringJSON (str) 字符串转 JSON](#tostringjson-str-字符串转-json)
   * [toJSONString (obj) JSON 转字符串](#tojsonstring-obj-json-转字符串)
@@ -1511,6 +1511,8 @@ XEUtils.toStringDate('2017/12/20 10:10:30', 'yyyy/MM/dd HH:mm:ss')
 // Wed Dec 20 2017 10:10:00 GMT+0800 (中国标准时间)
 XEUtils.toStringDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
+// Fri Jan 26 2018 00:00:00 GMT+0800 (中国标准时间)
 ```
 
 ### toDateString ( date [, format, options] ) 日期格式化为任意格式字符串
@@ -1765,7 +1767,7 @@ XEUtils.toInteger('12.3') // 12
 XEUtils.toInteger('abc') // 0
 ```
 
-### toFixedNumber ( num, digits ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值
+### toFixedNumber ( num, digits ) 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -1777,7 +1779,7 @@ XEUtils.toFixedNumber(234567.105967, 4) // 234567.1059
 XEUtils.toFixedNumber('-1234.6988', 2) // -1234.69
 ```
 
-### toFixedString ( num, digits ) 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
+### toFixedString ( num, digits ) 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串
 
 ```JavaScript
 import XEUtils from 'xe-utils'

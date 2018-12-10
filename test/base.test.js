@@ -1072,10 +1072,19 @@ describe('Base functions', () => {
 
   test('first()', () => {
     expect(
+      XEUtils.first(null)
+    ).toEqual(undefined)
+    expect(
       XEUtils.first(123)
     ).toEqual(undefined)
     expect(
       XEUtils.first(true)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.first({})
+    ).toEqual(undefined)
+    expect(
+      XEUtils.first([])
     ).toEqual(undefined)
     expect(
       XEUtils.first('123')
@@ -1090,10 +1099,19 @@ describe('Base functions', () => {
 
   test('last()', () => {
     expect(
+      XEUtils.last(null)
+    ).toEqual(undefined)
+    expect(
       XEUtils.last(123)
     ).toEqual(undefined)
     expect(
       XEUtils.last(true)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.last({})
+    ).toEqual(undefined)
+    expect(
+      XEUtils.last([])
     ).toEqual(undefined)
     expect(
       XEUtils.last('123')

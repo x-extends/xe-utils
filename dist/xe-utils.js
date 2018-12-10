@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.3
+ * xe-utils.js v1.7.4
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -331,7 +331,7 @@
     * @return {Number}
     */
   function arrayMean (array, iterate, context) {
-    return arraySum(array, iterate, context || this) / baseExports.getSize(array)
+    return XEUtils.toNumber(arraySum(array, iterate, context || this) / baseExports.getSize(array))
   }
 
   /**
@@ -342,25 +342,28 @@
     * @param {Object} initialValue 初始值
     * @return {Number}
     */
-  function arrayReduce (array, callback, initialValue) {
-    var len
-    var index = 0
-    var context = this
-    var previous = initialValue
-    var keyList = baseExports.keys(array)
-    if (isArrayPro(REDUCE_PRO)) {
-      return array.reduce(function () {
-        return callback.apply(context, arguments)
-      }, initialValue)
+  /* eslint-disable valid-typeof */
+  function arrayReduce (array, callback, initialValue, UNDEFINED) {
+    if (array) {
+      var len
+      var index = 0
+      var context = this
+      var previous = initialValue
+      var keyList = baseExports.keys(array)
+      if (previous === UNDEFINED) {
+        previous = array[keyList[0]]
+        index = 1
+      }
+      if (isArrayPro(REDUCE_PRO)) {
+        return array.reduce(function () {
+          return callback.apply(context, arguments)
+        }, previous)
+      }
+      for (len = keyList.length; index < len; index++) {
+        previous = callback.call(context, previous, array[keyList[index]], index, array)
+      }
+      return previous
     }
-    if (typeof initialValue === 'undefined') {
-      previous = array[keyList[0]]
-      index = 1
-    }
-    for (len = keyList.length; index < len; index++) {
-      previous = callback.call(context, previous, array[keyList[index]], index, array)
-    }
-    return previous
   }
 
   /**
@@ -376,6 +379,8 @@
     if (baseExports.isArray(array) && array.copyWithin) {
       return array.copyWithin(target, start, end)
     }
+    var replaceIndex
+    var replaceArray
     var targetIndex = target >> 0
     var startIndex = start >> 0
     var len = array.length
@@ -386,7 +391,7 @@
         startIndex = startIndex >= 0 ? startIndex : len + startIndex
         endIndex = endIndex >= 0 ? endIndex : len + endIndex
         if (startIndex < endIndex) {
-          for (var replaceIndex = 0, replaceArray = array.slice(startIndex, endIndex); targetIndex < len; targetIndex++) {
+          for (replaceIndex = 0, replaceArray = array.slice(startIndex, endIndex); targetIndex < len; targetIndex++) {
             if (replaceArray.length <= replaceIndex) {
               break
             }
@@ -2246,14 +2251,19 @@
     * @return {String}
     */
   function toStringDate (str, format) {
+    var arr
+    var sIndex
+    var index
+    var rules
+    var len
+    var rest
+    var isDate
+    var dates = []
     if (str) {
-      var arr, sIndex, index, rules, len
-      var dates = []
-      var isDate = baseExports.isDate(str)
+      isDate = baseExports.isDate(str)
       if (isDate || /^[0-9]{11,13}$/.test(str)) {
-        return new Date(isDate ? getDateTime(str) : str)
-      }
-      if (baseExports.isString(str)) {
+        rest = new Date(isDate ? getDateTime(str) : str)
+      } else if (baseExports.isString(str)) {
         format = format || setupDefaults.formatDate
         baseExports.each(dateFormatRules, function (item) {
           for (index = 0, rules = item.rules, len = rules.length; index < len; index++) {
@@ -2267,10 +2277,10 @@
             }
           }
         })
-        return new Date(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
+        rest = new Date(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
       }
     }
-    return 'Invalid Date'
+    return !rest || isNaN(getDateTime(rest)) ? 'Invalid Date' : rest
   }
 
   function handleCustomTemplate (date, formats, match, value) {
@@ -2359,18 +2369,20 @@
   function getWhatYear (date, year, month) {
     var number
     var currentDate = toStringDate(date)
-    if (year) {
-      number = year && !isNaN(year) ? year : 0
-      currentDate.setFullYear(_dateFullYear(currentDate) + number)
-    }
-    if (month || !isNaN(month)) {
-      if (month === STRING_FIRST) {
-        return new Date(_dateFullYear(currentDate), 0, 1)
-      } else if (month === STRING_LAST) {
-        currentDate.setMonth(11)
-        return getWhatMonth(currentDate, 0, STRING_LAST)
-      } else {
-        currentDate.setMonth(month)
+    if (baseExports.isDate(currentDate)) {
+      if (year) {
+        number = year && !isNaN(year) ? year : 0
+        currentDate.setFullYear(_dateFullYear(currentDate) + number)
+      }
+      if (month || !isNaN(month)) {
+        if (month === STRING_FIRST) {
+          return new Date(_dateFullYear(currentDate), 0, 1)
+        } else if (month === STRING_LAST) {
+          currentDate.setMonth(11)
+          return getWhatMonth(currentDate, 0, STRING_LAST)
+        } else {
+          currentDate.setMonth(month)
+        }
       }
     }
     return currentDate
@@ -2387,17 +2399,19 @@
   function getWhatMonth (date, month, day) {
     var currentDate = toStringDate(date)
     var monthOffset = month && !isNaN(month) ? month : 0
-    if (day || !isNaN(day)) {
-      if (day === STRING_FIRST) {
-        return new Date(_dateFullYear(currentDate), _dateMonth(currentDate) + monthOffset, 1)
-      } else if (day === STRING_LAST) {
-        return new Date(getDateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
-      } else {
-        currentDate.setDate(day)
+    if (baseExports.isDate(currentDate)) {
+      if (day || !isNaN(day)) {
+        if (day === STRING_FIRST) {
+          return new Date(_dateFullYear(currentDate), _dateMonth(currentDate) + monthOffset, 1)
+        } else if (day === STRING_LAST) {
+          return new Date(getDateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
+        } else {
+          currentDate.setDate(day)
+        }
       }
-    }
-    if (monthOffset) {
-      currentDate.setMonth(_dateMonth(currentDate) + monthOffset)
+      if (monthOffset) {
+        currentDate.setMonth(_dateMonth(currentDate) + monthOffset)
+      }
     }
     return currentDate
   }
@@ -2411,15 +2425,22 @@
     * @return {Date}
     */
   function getWhatWeek (date, week, day) {
+    var time
+    var whatDayTime
+    var currentDay
+    var customDay
     var currentDate = toStringDate(date)
-    var customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
-    var currentDay = currentDate.getDay()
-    var time = getDateTime(currentDate)
-    var whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
-    if (week && !isNaN(week)) {
-      whatDayTime += week * WEEK_TIME
+    if (baseExports.isDate(currentDate)) {
+      customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
+      currentDay = currentDate.getDay()
+      time = getDateTime(currentDate)
+      whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
+      if (week && !isNaN(week)) {
+        whatDayTime += week * WEEK_TIME
+      }
+      return new Date(whatDayTime)
     }
-    return new Date(whatDayTime)
+    return currentDate
   }
 
   /**
@@ -2432,7 +2453,7 @@
     */
   function getWhatDay (date, day, mode) {
     var currentDate = toStringDate(date)
-    if (!isNaN(day)) {
+    if (baseExports.isDate(currentDate) && !isNaN(day)) {
       currentDate.setDate(currentDate.getDate() + Number(day))
       if (mode === STRING_FIRST) {
         return new Date(_dateFullYear(currentDate), _dateMonth(currentDate), currentDate.getDate())
@@ -2454,18 +2475,21 @@
     * @return {Number}
     */
   function getMonthWeek (date) {
-    if (date) {
-      var currentDate = toStringDate(date)
-      var monthFirst = getWhatMonth(date, 0, STRING_FIRST)
-      var monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
+    var monthFirst
+    var monthFirstWeek
+    var currentDate = toStringDate(date)
+    if (baseExports.isDate(currentDate)) {
+      monthFirst = getWhatMonth(currentDate, 0, STRING_FIRST)
+      monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
       if (monthFirstWeek < monthFirst) {
         monthFirstWeek = getWhatWeek(monthFirst, 1, 1)
       }
       if (currentDate >= monthFirstWeek) {
         return calculateTime(monthFirstWeek, currentDate, WEEK_TIME)
       }
+      return 0
     }
-    return 0
+    return currentDate
   }
 
   /**
@@ -2475,10 +2499,11 @@
     * @return {Number}
     */
   function getYearDay (date) {
-    if (date) {
-      return calculateTime(getWhatYear(date, 0, STRING_FIRST), toStringDate(date), DAY_TIME)
+    var currentDate = toStringDate(date)
+    if (baseExports.isDate(currentDate)) {
+      return calculateTime(getWhatYear(currentDate, 0, STRING_FIRST), currentDate, DAY_TIME)
     }
-    return 0
+    return currentDate
   }
 
   /**
@@ -2488,9 +2513,9 @@
     * @return {Number}
     */
   function getYearWeek (date) {
-    if (date) {
-      var currentDate = toStringDate(date)
-      var yearFirst = getWhatYear(date, 0, STRING_FIRST)
+    var currentDate = toStringDate(date)
+    if (baseExports.isDate(currentDate)) {
+      var yearFirst = getWhatYear(currentDate, 0, STRING_FIRST)
       var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
       if (yearFirstWeek < yearFirst) {
         yearFirstWeek = getWhatWeek(yearFirst, 1, 1)
@@ -2498,8 +2523,9 @@
       if (currentDate >= yearFirstWeek) {
         return calculateTime(yearFirstWeek, currentDate, WEEK_TIME)
       }
+      return 0
     }
-    return 0
+    return currentDate
   }
 
   /**
@@ -2510,10 +2536,11 @@
     * @return {Number}
     */
   function getDayOfYear (date, year) {
-    if (date) {
-      return baseExports.isLeapYear(getWhatYear(date, year)) ? 366 : 365
+    var currentDate = toStringDate(date)
+    if (baseExports.isDate(currentDate)) {
+      return baseExports.isLeapYear(getWhatYear(currentDate, year)) ? 366 : 365
     }
-    return 0
+    return currentDate
   }
 
   /**
@@ -2524,10 +2551,11 @@
     * @return {Number}
     */
   function getDayOfMonth (date, month) {
-    if (date) {
-      return Math.floor((getDateTime(getWhatMonth(date, month, STRING_LAST)) - getDateTime(getWhatMonth(date, month, STRING_FIRST))) / DAY_TIME) + 1
+    var currentDate = toStringDate(date)
+    if (baseExports.isDate(currentDate)) {
+      return Math.floor((getDateTime(getWhatMonth(currentDate, month, STRING_LAST)) - getDateTime(getWhatMonth(currentDate, month, STRING_FIRST))) / DAY_TIME) + 1
     }
-    return 0
+    return currentDate
   }
 
   /**
@@ -2539,27 +2567,35 @@
     * @return {Object}
     */
   function getDateDiff (startDate, endDate, rules) {
+    var startTime
+    var endTime
+    var item
+    var diffTime
+    var rule
+    var len
+    var index
     var result = { done: false, time: 0 }
-    var startTime = getDateTime(toStringDate(startDate))
-    var endTime = getDateTime(endDate ? toStringDate(endDate) : new Date())
-    if (startTime < endTime) {
-      var item
-      var diffTime = result.time = endTime - startTime
-      var rule = rules && rules.length > 0 ? rules : setupDefaults.dateDiffRules
-      var len = rule.length
-      var index = 0
-      result.done = true
-      for (; index < len; index++) {
-        item = rule[index]
-        if (diffTime >= item[1]) {
-          if (index === len - 1) {
-            result[item[0]] = diffTime || 0
+    startDate = toStringDate(startDate)
+    endDate = endDate ? toStringDate(endDate) : new Date()
+    if (baseExports.isDate(startDate) && baseExports.isDate(endDate)) {
+      startTime = getDateTime(startDate)
+      endTime = getDateTime(endDate)
+      if (startTime < endTime) {
+        diffTime = result.time = endTime - startTime
+        rule = rules && rules.length > 0 ? rules : setupDefaults.dateDiffRules
+        result.done = true
+        for (index = 0, len = rule.length; index < len; index++) {
+          item = rule[index]
+          if (diffTime >= item[1]) {
+            if (index === len - 1) {
+              result[item[0]] = diffTime || 0
+            } else {
+              result[item[0]] = Math.floor(diffTime / item[1])
+              diffTime -= result[item[0]] * item[1]
+            }
           } else {
-            result[item[0]] = Math.floor(diffTime / item[1])
-            diffTime -= result[item[0]] * item[1]
+            result[item[0]] = 0
           }
-        } else {
-          result[item[0]] = 0
         }
       }
     }
@@ -2796,7 +2832,7 @@
   }
 
   /**
-   * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回字符串
+   * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串
    *
    * @param { String/Number } str 数值
    * @return {String}
@@ -2807,7 +2843,7 @@
   }
 
   /**
-   * 和 Number.toFixed 一样功能，区别就是不会对小数进行四舍五入，结果返回数值
+   * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
    *
    * @param { String/Number } str 数值
    * @return {String}

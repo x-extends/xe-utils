@@ -72,7 +72,20 @@ describe('Array functions', () => {
 
   test('sum()', () => {
     expect(
-      XEUtils.sum([22, 66, 88])).toEqual(176)
+      XEUtils.sum(10)
+    ).toEqual(0)
+    expect(
+      XEUtils.sum(null)
+    ).toEqual(0)
+    expect(
+      XEUtils.sum({})
+    ).toEqual(0)
+    expect(
+      XEUtils.sum([])
+    ).toEqual(0)
+    expect(
+      XEUtils.sum([22, 66, 88])
+    ).toEqual(176)
     expect(
       XEUtils.sum([{ value: 11 }, { value: 22 }, { value: 66 }], 'value')
     ).toEqual(99)
@@ -82,6 +95,18 @@ describe('Array functions', () => {
   })
 
   test('mean()', () => {
+    expect(
+      XEUtils.mean(10)
+    ).toEqual(0)
+    expect(
+      XEUtils.mean(null)
+    ).toEqual(0)
+    expect(
+      XEUtils.mean([])
+    ).toEqual(0)
+    expect(
+      XEUtils.mean({})
+    ).toEqual(0)
     expect(
       XEUtils.mean({ val1: 21, val2: 34, val3: 47 })
     ).toEqual(34)
@@ -101,8 +126,23 @@ describe('Array functions', () => {
 
   test('reduce()', () => {
     expect(
+      XEUtils.reduce(null, (previous, item) => previous + item)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.reduce({}, (previous, item) => previous + item)
+    ).toEqual(XEUtils.reduce({}, (previous, item) => previous + item))
+    expect(
+      XEUtils.reduce([], (previous, item) => previous + item)
+    ).toEqual(XEUtils.reduce({}, (previous, item) => previous + item))
+    expect(
       XEUtils.reduce([22, 66, 88], (previous, item) => previous + item)
     ).toEqual(176)
+    expect(
+      XEUtils.reduce([22, 66, 88], (previous, item) => previous + item, 0)
+    ).toEqual(176)
+    expect(
+      XEUtils.reduce([{ num: 11 }, { num: 22 }, { num: 33 }], (previous, item) => previous + item.num, 0)
+    ).toEqual(66)
   })
 
   test('copyWithin()', () => {
@@ -115,6 +155,24 @@ describe('Array functions', () => {
   })
 
   test('chunk()', () => {
+    expect(
+      XEUtils.chunk(0)
+    ).toEqual([])
+    expect(
+      XEUtils.chunk('123')
+    ).toEqual([])
+    expect(
+      XEUtils.chunk(null)
+    ).toEqual([])
+    expect(
+      XEUtils.chunk({})
+    ).toEqual([])
+    expect(
+      XEUtils.chunk([])
+    ).toEqual([])
+    expect(
+      XEUtils.chunk(['a', 'b', 'c', 'd'])
+    ).toEqual([['a'], ['b'], ['c'], ['d']])
     expect(
       XEUtils.chunk(['a', 'b', 'c', 'd'], 2)
     ).toEqual([['a', 'b'], ['c', 'd']])
@@ -180,6 +238,9 @@ describe('Array functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.includeArrays([], {})
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays([11, 22, 33], { 0: 11, 1: 22 })
     ).toEqual(false)
     expect(
       XEUtils.includeArrays([11, 22, 33], [11, 22, 33, 44])

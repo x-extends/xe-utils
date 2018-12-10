@@ -299,7 +299,7 @@ function arraySum (array, iterate, context) {
   * @return {Number}
   */
 function arrayMean (array, iterate, context) {
-  return arraySum(array, iterate, context || this) / baseExports.getSize(array)
+  return XEUtils.toNumber(arraySum(array, iterate, context || this) / baseExports.getSize(array))
 }
 
 /**
@@ -310,25 +310,28 @@ function arrayMean (array, iterate, context) {
   * @param {Object} initialValue 初始值
   * @return {Number}
   */
-function arrayReduce (array, callback, initialValue) {
-  var len
-  var index = 0
-  var context = this
-  var previous = initialValue
-  var keyList = baseExports.keys(array)
-  if (isArrayPro(REDUCE_PRO)) {
-    return array.reduce(function () {
-      return callback.apply(context, arguments)
-    }, initialValue)
+/* eslint-disable valid-typeof */
+function arrayReduce (array, callback, initialValue, UNDEFINED) {
+  if (array) {
+    var len
+    var index = 0
+    var context = this
+    var previous = initialValue
+    var keyList = baseExports.keys(array)
+    if (previous === UNDEFINED) {
+      previous = array[keyList[0]]
+      index = 1
+    }
+    if (isArrayPro(REDUCE_PRO)) {
+      return array.reduce(function () {
+        return callback.apply(context, arguments)
+      }, previous)
+    }
+    for (len = keyList.length; index < len; index++) {
+      previous = callback.call(context, previous, array[keyList[index]], index, array)
+    }
+    return previous
   }
-  if (typeof initialValue === 'undefined') {
-    previous = array[keyList[0]]
-    index = 1
-  }
-  for (len = keyList.length; index < len; index++) {
-    previous = callback.call(context, previous, array[keyList[index]], index, array)
-  }
-  return previous
 }
 
 /**
@@ -344,6 +347,8 @@ function arrayCopyWithin (array, target, start, end) {
   if (baseExports.isArray(array) && array.copyWithin) {
     return array.copyWithin(target, start, end)
   }
+  var replaceIndex
+  var replaceArray
   var targetIndex = target >> 0
   var startIndex = start >> 0
   var len = array.length
@@ -354,7 +359,7 @@ function arrayCopyWithin (array, target, start, end) {
       startIndex = startIndex >= 0 ? startIndex : len + startIndex
       endIndex = endIndex >= 0 ? endIndex : len + endIndex
       if (startIndex < endIndex) {
-        for (var replaceIndex = 0, replaceArray = array.slice(startIndex, endIndex); targetIndex < len; targetIndex++) {
+        for (replaceIndex = 0, replaceArray = array.slice(startIndex, endIndex); targetIndex < len; targetIndex++) {
           if (replaceArray.length <= replaceIndex) {
             break
           }
