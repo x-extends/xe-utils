@@ -199,7 +199,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
   * [zip ( ) 将每个数组中相应位置的值合并在一起](#zip---将每个数组中相应位置的值合并在一起)
   * [unzip ( arrays ) 与 zip 相反](#unzip--arrays--与-zip-相反)
-  * zipObject ( props, values ) 根据键数组、值数组对转换为对象()
+  * [zipObject ( props, values ) 根据键数组、值数组对转换为对象](#zipobject--props-values--根据键数组值数组对转换为对象)
   * [delay (callback, wait[, ...arguments]) 该方法和 setTimeout 一样的效果，区别就是支持额外参数](#delay-callback-wait-arguments-该方法和-settimeout-一样的效果区别就是支持额外参数)
   * [bind (callback, context[, ...arguments]) 创建一个绑定上下文的函数](#bind-callback-context-arguments-创建一个绑定上下文的函数)
   * [once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果](#once-callback-context-arguments-创建一个只能调用一次的函数只会返回第一次执行后的结果)
