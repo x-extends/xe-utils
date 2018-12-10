@@ -882,6 +882,12 @@ describe('Base functions', () => {
 
   test('getSize()', () => {
     expect(
+      XEUtils.getSize(null)
+    ).toEqual(0)
+    expect(
+      XEUtils.getSize(undefined)
+    ).toEqual(0)
+    expect(
       XEUtils.getSize('')
     ).toEqual(0)
     expect(
@@ -889,6 +895,9 @@ describe('Base functions', () => {
     ).toEqual(0)
     expect(
       XEUtils.getSize(-1)
+    ).toEqual(0)
+    expect(
+      XEUtils.getSize(10)
     ).toEqual(0)
     expect(
       XEUtils.getSize(function () {})
@@ -900,11 +909,32 @@ describe('Base functions', () => {
       XEUtils.getSize([1, 3])
     ).toEqual(2)
     expect(
+      XEUtils.getSize([{ a: 1 }, { a: 2 }, { a: 3 }, { a: 4 }])
+    ).toEqual(4)
+    expect(
       XEUtils.getSize({ a: 2, b: 5 })
     ).toEqual(2)
   })
 
   test('slice()', () => {
+    expect(
+      XEUtils.slice(-0)
+    ).toEqual([])
+    expect(
+      XEUtils.slice(123)
+    ).toEqual([])
+    expect(
+      XEUtils.slice(false)
+    ).toEqual([])
+    expect(
+      XEUtils.slice({})
+    ).toEqual([])
+    expect(
+      XEUtils.slice([])
+    ).toEqual([])
+    expect(
+      XEUtils.slice([11, 22])
+    ).toEqual([11, 22])
     expect(
       XEUtils.slice([11, 22, 33, 44], 1)
     ).toEqual([22, 33, 44])
@@ -921,26 +951,68 @@ describe('Base functions', () => {
 
   test('indexOf()', () => {
     expect(
+      XEUtils.indexOf([11, 22, 33, 22])
+    ).toEqual(-1)
+    expect(
       XEUtils.indexOf([11, 22, 33, 22], 55)
     ).toEqual(-1)
     expect(
+      XEUtils.indexOf({ a: 1, b: 3 })
+    ).toEqual(-1)
+    expect(
+      XEUtils.indexOf({ a: 1, b: 3 }, 5)
+    ).toEqual(-1)
+    expect(
+      XEUtils.indexOf({ a: 1, b: 3 }, 1)
+    ).toEqual('a')
+    expect(
+      XEUtils.indexOf({ a: 1, b: 3 }, 3)
+    ).toEqual('b')
+    expect(
       XEUtils.indexOf([11, 22, 33, 22], 22)
     ).toEqual(1)
+    expect(
+      XEUtils.indexOf([11, 22, 33, 22], 33)
+    ).toEqual(2)
   })
 
   test('lastIndexOf()', () => {
     expect(
+      XEUtils.lastIndexOf([11, 22, 33, 22])
+    ).toEqual(-1)
+    expect(
       XEUtils.lastIndexOf([11, 22, 33, 22], 55)
     ).toEqual(-1)
     expect(
+      XEUtils.lastIndexOf({ a: 1, b: 3 })
+    ).toEqual(-1)
+    expect(
+      XEUtils.lastIndexOf({ a: 1, b: 3 }, 5)
+    ).toEqual(-1)
+    expect(
+      XEUtils.lastIndexOf({ a: 1, b: 3 }, 1)
+    ).toEqual('a')
+    expect(
+      XEUtils.lastIndexOf({ a: 1, b: 3 }, 3)
+    ).toEqual('b')
+    expect(
       XEUtils.lastIndexOf([11, 22, 33, 22], 22)
     ).toEqual(3)
+    expect(
+      XEUtils.lastIndexOf([11, 22, 33, 22], 33)
+    ).toEqual(2)
   })
 
   test('findIndexOf()', () => {
     expect(
       XEUtils.findIndexOf([11, 22, 33, 22], item => item === 55)
     ).toEqual(-1)
+    expect(
+      XEUtils.findIndexOf({ a: 11, b: 22, c: 33 }, item => item === 55)
+    ).toEqual(-1)
+    expect(
+      XEUtils.findIndexOf({ a: 11, b: 22, c: 33 }, item => item === 22)
+    ).toEqual('b')
     expect(
       XEUtils.findIndexOf([11, 22, 33, 22], item => item === 22)
     ).toEqual(1)
@@ -951,14 +1023,35 @@ describe('Base functions', () => {
       XEUtils.findLastIndexOf([11, 22, 33, 22], item => item === 55)
     ).toEqual(-1)
     expect(
+      XEUtils.findLastIndexOf({ a: 11, b: 22, c: 33 }, item => item === 55)
+    ).toEqual(-1)
+    expect(
+      XEUtils.findLastIndexOf({ a: 11, b: 22, c: 33 }, item => item === 22)
+    ).toEqual('b')
+    expect(
       XEUtils.findLastIndexOf([11, 22, 33, 22], item => item === 22)
     ).toEqual(3)
   })
 
   test('includes()', () => {
     expect(
+      XEUtils.includes([11])
+    ).toEqual(false)
+    expect(
+      XEUtils.includes({})
+    ).toEqual(false)
+    expect(
+      XEUtils.includes([], 22)
+    ).toEqual(false)
+    expect(
+      XEUtils.includes({}, 22)
+    ).toEqual(false)
+    expect(
       XEUtils.includes([11], 22)
     ).toEqual(false)
+    expect(
+      XEUtils.includes({ a: 11, b: 22 }, 22)
+    ).toEqual(true)
     expect(
       XEUtils.includes([11, 22], 22)
     ).toEqual(true)
@@ -1003,6 +1096,15 @@ describe('Base functions', () => {
 
   test('keys()', () => {
     expect(
+      XEUtils.keys(false)
+    ).toEqual([])
+    expect(
+      XEUtils.keys({})
+    ).toEqual([])
+    expect(
+      XEUtils.keys(-1)
+    ).toEqual([])
+    expect(
       XEUtils.keys(123)
     ).toEqual([])
     expect(
@@ -1018,6 +1120,15 @@ describe('Base functions', () => {
 
   test('values()', () => {
     expect(
+      XEUtils.values(false)
+    ).toEqual([])
+    expect(
+      XEUtils.values({})
+    ).toEqual([])
+    expect(
+      XEUtils.values(-1)
+    ).toEqual([])
+    expect(
       XEUtils.values(123)
     ).toEqual([])
     expect(
@@ -1032,6 +1143,15 @@ describe('Base functions', () => {
   })
 
   test('entries()', () => {
+    expect(
+      XEUtils.entries(false)
+    ).toEqual([])
+    expect(
+      XEUtils.entries({})
+    ).toEqual([])
+    expect(
+      XEUtils.entries(-1)
+    ).toEqual([])
     expect(
       XEUtils.entries(123)
     ).toEqual([])

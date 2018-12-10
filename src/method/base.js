@@ -597,7 +597,7 @@ function createiterateIndexOf (callback) {
       }
       for (var key in obj) {
         if (obj.hasOwnProperty(key)) {
-          if (obj[key] === iterate.call(context, obj[key], key, obj)) {
+          if (iterate.call(context, obj[key], key, obj)) {
             return key
           }
         }

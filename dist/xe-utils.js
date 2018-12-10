@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.4
+ * xe-utils.js v1.7.5
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1268,7 +1268,7 @@
         }
         for (var key in obj) {
           if (obj.hasOwnProperty(key)) {
-            if (obj[key] === iterate.call(context, obj[key], key, obj)) {
+            if (iterate.call(context, obj[key], key, obj)) {
               return key
             }
           }
