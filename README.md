@@ -199,6 +199,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
   * [zip ( ) 将每个数组中相应位置的值合并在一起](#zip---将每个数组中相应位置的值合并在一起)
   * [unzip ( arrays ) 与 zip 相反](#unzip--arrays--与-zip-相反)
+  * zipObject ( props, values ) 根据键数组、值数组对转换为对象()
   * [delay (callback, wait[, ...arguments]) 该方法和 setTimeout 一样的效果，区别就是支持额外参数](#delay-callback-wait-arguments-该方法和-settimeout-一样的效果区别就是支持额外参数)
   * [bind (callback, context[, ...arguments]) 创建一个绑定上下文的函数](#bind-callback-context-arguments-创建一个绑定上下文的函数)
   * [once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果](#once-callback-context-arguments-创建一个只能调用一次的函数只会返回第一次执行后的结果)
@@ -1149,6 +1150,15 @@ import XEUtils from 'xe-utils'
 
 XEUtils.unzip([['name1', true, 30], ['name2', true, 40], ['name3', false, 20]])
 // [['name1', 'name2', 'name3'], [true, true, false], [30, 40, 20]]
+```
+
+### zipObject ( props, values ) 根据键数组、值数组对转换为对象
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.zipObject(['aa', 'bb', 'cc'], [11, 22, 33])
+// { aa: 11, bb: 22, cc: 33 }
 ```
 
 ### chunk ( array, size ) 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素

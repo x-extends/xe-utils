@@ -901,6 +901,14 @@ export interface XEUtilsMethods {
    */
   unzip(arrays: Array<any>): Array<any>;
 
+    /**
+   * 将每个数组中相应位置的值合并在一起
+   * @param props 键数组
+   * @param values 值数组
+   * @example 
+   */
+  zipObject(props: Array<any>, values: Array<any>): object;
+
   /**
    * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
    * @param array 数组

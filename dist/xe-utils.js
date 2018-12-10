@@ -280,21 +280,17 @@
     */
   function arrayMap (obj, iterate, context) {
     var result = []
-    if (obj) {
-      if (arguments.length > 1) {
-        context = context || this
-        if (!baseExports.isFunction(iterate)) {
-          iterate = baseExports.property(iterate)
-        }
-        if (isArrayPro(MAP_PRO)) {
-          return obj[MAP_PRO](iterate, context)
-        } else {
-          baseExports.each(obj, function () {
-            result.push(iterate.apply(context, arguments))
-          })
-        }
+    if (obj && arguments.length > 1) {
+      context = context || this
+      if (!baseExports.isFunction(iterate)) {
+        iterate = baseExports.property(iterate)
+      }
+      if (isArrayPro(MAP_PRO)) {
+        return obj[MAP_PRO](iterate, context)
       } else {
-        return obj
+        baseExports.each(obj, function () {
+          result.push(iterate.apply(context, arguments))
+        })
       }
     }
     return result
@@ -425,6 +421,22 @@
         result = array.length ? [array] : array
       }
     }
+    return result
+  }
+
+  /**
+   * 根据键数组、值数组对转换为对象
+   *
+   * @param {Array} props 键数组
+   * @param {Number} values 值数组
+   * @return {Object}
+   */
+  function zipObject (props, values) {
+    var result = {}
+    values = values || []
+    baseExports.each(baseExports.values(props), function (val, key) {
+      result[val] = values[key]
+    })
     return result
   }
 
@@ -664,6 +676,7 @@
     chunk: chunk,
     zip: zip,
     unzip: unzip,
+    zipObject: zipObject,
     toArray: toArray,
     includeArrays: includeArrays,
     pluck: pluck,

@@ -66,6 +66,27 @@ describe('Array functions', () => {
 
   test('map()', () => {
     expect(
+      XEUtils.map(123)
+    ).toEqual([])
+    expect(
+      XEUtils.map('abc')
+    ).toEqual([])
+    expect(
+      XEUtils.map([])
+    ).toEqual([])
+    expect(
+      XEUtils.map({})
+    ).toEqual([])
+    expect(
+      XEUtils.map([], item => item.value)
+    ).toEqual([])
+    expect(
+      XEUtils.map({ a: 11, b: 22, c: 33 }, item => item)
+    ).toEqual([11, 22, 33])
+    expect(
+      XEUtils.map([11, 22, 33], item => item * 2)
+    ).toEqual([22, 44, 66])
+    expect(
       XEUtils.map([{ value: 11 }, { value: 22 }], item => item.value)
     ).toEqual([11, 22])
   })
@@ -191,6 +212,36 @@ describe('Array functions', () => {
     expect(
       XEUtils.unzip([['name1', true, 30], ['name2', true, 40], ['name3', false, 20]])
     ).toEqual([['name1', 'name2', 'name3'], [true, true, false], [30, 40, 20]])
+  })
+
+  test('zipObject()', () => {
+    expect(
+      XEUtils.zipObject(null)
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject(undefined)
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject(false)
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject({})
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject([])
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject({ a: 'aa', b: 'bb' }, [11, 22, 33])
+    ).toEqual({ aa: 11, bb: 22 })
+    expect(
+      XEUtils.zipObject({ 0: 'aa', 1: 'bb', 2: 'cc' }, [11, 22])
+    ).toEqual({ aa: 11, bb: 22, cc: undefined })
+    expect(
+      XEUtils.zipObject(['aa', 'bb', 'cc'], [11, 22, 33])
+    ).toEqual({ aa: 11, bb: 22, cc: 33 })
+    expect(
+      XEUtils.zipObject(['aa', 'bb', 'cc'], [11, 22])
+    ).toEqual({ aa: 11, bb: 22, cc: undefined })
   })
 
   test('toArray()', () => {
