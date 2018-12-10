@@ -45,17 +45,38 @@ describe('Array functions', () => {
 
   test('filter()', () => {
     expect(
+      XEUtils.filter([{ value: 11 }, { value: 22 }], item => item.value > 33)
+    ).toEqual([])
+    expect(
       XEUtils.filter([{ value: 11 }, { value: 22 }], item => item.value > 11)
     ).toEqual([{ value: 22 }])
   })
 
   test('find()', () => {
     expect(
+      XEUtils.find({})
+    ).toEqual(undefined)
+    expect(
+      XEUtils.find([])
+    ).toEqual(undefined)
+    expect(
+      XEUtils.find([{ value: 11 }, { value: 22 }], item => item.value === 66)
+    ).toEqual(undefined)
+    expect(
       XEUtils.find([{ value: 11 }, { value: 22 }], item => item.value === 22)
     ).toEqual({ value: 22 })
   })
 
   test('findKey()', () => {
+    expect(
+      XEUtils.findKey([])
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findKey()
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findKey([{ value: 11 }, { value: 22 }])
+    ).toEqual(undefined)
     expect(
       XEUtils.findKey([{ value: 11 }, { value: 22 }], item => item.value === 22)
     ).toEqual('1')

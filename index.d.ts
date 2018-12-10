@@ -244,6 +244,13 @@ export interface XEUtilsMethods {
   isLeapYear(date?: Date | number | string): boolean;
 
   /**
+   * 判断属性中的键和值是否包含在对象中
+   * @param obj 对象
+   * @param source 值
+   */
+  isMatch(obj: object | Array<any>, source: object): boolean;
+
+  /**
    * 深度比较两个对象之间的值是否相等
    * @param obj1 值1
    * @param obj2 值2

@@ -781,6 +781,51 @@ describe('Base functions', () => {
     ).toEqual(true)
   })
 
+  test('isMatch()', () => {
+    expect(
+      XEUtils.isMatch()
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch(null)
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch(undefined)
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch([])
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch({})
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch([], [])
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch({}, {})
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch({ a: 22 })
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch([11, 22], [11])
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch([22, 11], [11])
+    ).toEqual(false)
+    expect(
+      XEUtils.isMatch([11], [33])
+    ).toEqual(false)
+    expect(
+      XEUtils.isMatch([{ a: { bb: 33 } }], [{ a: { bb: 33 } }])
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch({ aa: 11, bb: 22 }, { bb: 22 })
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch({ aa: 11, bb: [1, 2, 3] }, { bb: [1, 2, 3] })
+    ).toEqual(true)
+  })
+
   test('isEqual()', () => {
     expect(
       XEUtils.isEqual(0, false)

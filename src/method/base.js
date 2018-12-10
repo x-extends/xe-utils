@@ -432,6 +432,30 @@ function isLeapYear (date) {
 }
 
 /**
+ * 判断属性中的键和值是否包含在对象中
+ *
+ * @param {Object/Array} obj 对象
+ * @param {Object} source 值
+ * @return {Boolean}
+ */
+function isMatch (obj, source) {
+  var objKeys = objectKeys(obj)
+  var sourceKeys = objectKeys(source)
+  if (sourceKeys.length) {
+    if (XEUtils.includeArrays(objKeys, sourceKeys)) {
+      return XEUtils.some(sourceKeys, function (key2) {
+        return findIndexOf(objKeys, function (key1) {
+          return key1 === key2 && isEqual(obj[key1], source[key2])
+        }) > -1
+      })
+    }
+  } else {
+    return true
+  }
+  return isEqual(obj, source)
+}
+
+/**
  * 深度比较两个对象之间的值是否相等
  *
  * @param {Object} obj1 值1
@@ -1271,6 +1295,7 @@ var baseExports = {
   isSet: isSet,
   isWeakSet: isWeakSet,
   isLeapYear: isLeapYear,
+  isMatch: isMatch,
   isEqual: isEqual,
   property: property,
   getType: getType,

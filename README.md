@@ -100,6 +100,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [isSet (val) 判断是否 Set 对象](#isset-val-判断是否-set-对象)
   * [isWeakSet (val) 判断是否 WeakSet 对象](#isweakset-val-判断是否-weakset-对象)
   * [isLeapYear (date) 判断是否闰年](#isleapyear-date-判断是否闰年)
+  * [isMatch (obj, source) 判断属性中的键和值是否包含在对象中](#ismatch-obj-source-判断属性中的键和值是否包含在对象中)
   * [isEqual (obj1, obj2) 深度比较两个对象之间的值是否相等](#isequal-obj1-obj2-深度比较两个对象之间的值是否相等)
   * [isDateSame (date1, date2, format) 判断两个日期是否相同](#isdatesame-date1-date2-format-判断两个日期是否相同)
 * *常用函数*
@@ -166,6 +167,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [findKey ( obj, iteratee [, context] ) 查找匹配第一条数据的键](#findkey--obj-iteratee--context--查找匹配第一条数据的键)
   * [map ( obj, iteratee [, context] ) 指定方法后的返回值组成的新数组](#map--obj-iteratee--context--指定方法后的返回值组成的新数组)
   * [objectMap ( obj, iteratee [, context] ) 指定方法后的返回值组成的新对象](#objectmap--obj-iteratee--context--指定方法后的返回值组成的新对象)
+  * [zipObject ( props, values ) 根据键数组、值数组对转换为对象](#zipobject--props-values--根据键数组值数组对转换为对象)
   * [pick (obj, array) 根据 keys 过滤指定的属性值 或者 接收一个判断函数，返回一个新的对象](#pick-obj-array-根据-keys-过滤指定的属性值-或者-接收一个判断函数返回一个新的对象)
   * [omit (obj, array) 根据 keys 排除指定的属性值 或者 接收一个判断函数，返回一个新的对象](#omit-obj-array-根据-keys-排除指定的属性值-或者-接收一个判断函数返回一个新的对象)
   * [copyWithin ( array, target, start [, end] ) 浅复制数组的一部分到同一数组中的另一个位置,数组大小不变](#copywithin--array-target-start--end--浅复制数组的一部分到同一数组中的另一个位置数组大小不变)
@@ -199,7 +201,6 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
   * [zip ( ) 将每个数组中相应位置的值合并在一起](#zip---将每个数组中相应位置的值合并在一起)
   * [unzip ( arrays ) 与 zip 相反](#unzip--arrays--与-zip-相反)
-  * [zipObject ( props, values ) 根据键数组、值数组对转换为对象](#zipobject--props-values--根据键数组值数组对转换为对象)
   * [delay (callback, wait[, ...arguments]) 该方法和 setTimeout 一样的效果，区别就是支持额外参数](#delay-callback-wait-arguments-该方法和-settimeout-一样的效果区别就是支持额外参数)
   * [bind (callback, context[, ...arguments]) 创建一个绑定上下文的函数](#bind-callback-context-arguments-创建一个绑定上下文的函数)
   * [once (callback, context[, ...arguments]) 创建一个只能调用一次的函数,只会返回第一次执行后的结果](#once-callback-context-arguments-创建一个只能调用一次的函数只会返回第一次执行后的结果)
@@ -510,6 +511,14 @@ XEUtils.isLeapYear(1606752000000)  // true
 XEUtils.isLeapYear('2018-12-01') // false
 XEUtils.isLeapYear('2020-12-01') // true
 XEUtils.isLeapYear(new Date('2020/12/01')) // true
+```
+
+### isMatch (obj, source) 判断属性中的键和值是否包含在对象中
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.isMatch({ aa: 11, bb: 22 }, { bb: 22 })  // true
 ```
 
 ### isEqual (obj1, obj2) 深度比较两个对象之间的值是否相等
