@@ -80,19 +80,45 @@
     return arrayUniq(result)
   }
 
+  function sortByDef (v1, v2) {
+    return v1 > v2 ? 1 : -1
+  }
+
   /**
     * 数组按属性值升序
     *
     * @param {Array} arr 数组
-    * @param {Function/String} iterate 方法或属性
+    * @param {Function/String/Array} iterate 方法或属性
+    * @param {Object} context 上下文
     * @return {Array}
     */
-  function arraySort (arr, iterate, context) {
-    return toArray(arr).sort(iterate ? baseExports.isFunction(iterate) ? iterate.bind(context || this) : function (v1, v2) {
-      return v1[iterate] > v2[iterate] ? 1 : -1
-    } : function (v1, v2) {
-      return v1 > v2 ? 1 : -1
-    })
+  function arraySort (arr, iterate, context, STR_UNDEFINED) {
+    if (arr) {
+      if (iterate === STR_UNDEFINED) {
+        return toArray(arr).sort(sortByDef)
+      }
+      context = context || this
+      var list = arrayMap(arr, function (item) {
+        return {
+          data: item
+        }
+      })
+      var sortKeys = arrayMap(baseExports.isArray(iterate) ? iterate : [iterate], function (item, index) {
+        baseExports.arrayEach(list, baseExports.isFunction(item) ? function (val, key) {
+          val[index] = item.call(context, val.data, key, arr)
+        } : function (val) {
+          val[index] = val.data[item]
+        })
+        return index
+      })
+      baseExports.lastArrayEach(sortKeys, function (key) {
+        list = list.sort(function (v1, v2) {
+          return v1[key] > v2[key] ? 1 : -1
+        })
+      })
+      return arrayMap(list, baseExports.property('data'))
+    }
+    return []
   }
 
   /**
@@ -1356,8 +1382,10 @@
     var len = args.length
     for (var source, index = 1; index < len; index++) {
       source = args[index]
-      arrayEach(objectKeys(args[index]), function (key) {
-        destination[key] = isClone ? clone(source[key], isClone) : source[key]
+      arrayEach(objectKeys(args[index]), isClone ? function (key) {
+        destination[key] = clone(source[key], isClone)
+      } : function (key) {
+        destination[key] = source[key]
       })
     }
     return destination
@@ -1636,8 +1664,12 @@
   }
 
   function arrayEach (obj, iterate, context) {
-    for (var index = 0, len = obj.length; index < len; index++) {
-      iterate.call(context || this, obj[index], index, obj)
+    if (obj.forEach) {
+      obj.forEach(iterate, context)
+    } else {
+      for (var index = 0, len = obj.length; index < len; index++) {
+        iterate.call(context || this, obj[index], index, obj)
+      }
     }
   }
 
@@ -1702,9 +1734,6 @@
     if (obj) {
       context = context || this
       if (isArray(obj)) {
-        if (isFunction(obj.forEach)) {
-          return obj.forEach(iterate, context)
-        }
         return arrayEach(obj, iterate, context)
       }
       return objectEach(obj, iterate, context)
@@ -2796,18 +2825,7 @@
 
   function createMinMax (handle) {
     return function (arr, iterate) {
-      var context = this
-      var list = baseExports.clone(arr)
-      var arraySort = XEUtils.sortBy
-      if (baseExports.isFunction(iterate)) {
-        return handle(arraySort(XEUtils.map(list, function (val, index) {
-          return {
-            d: val,
-            v: iterate.call(context, val, index, list)
-          }
-        }), 'v')).d
-      }
-      return handle(arraySort(list, iterate))
+      return handle(XEUtils.sortBy(baseExports.clone(arr), iterate, this))
     }
   }
 

@@ -48,19 +48,45 @@ function arrayUnion () {
   return arrayUniq(result)
 }
 
+function sortByDef (v1, v2) {
+  return v1 > v2 ? 1 : -1
+}
+
 /**
   * 数组按属性值升序
   *
   * @param {Array} arr 数组
-  * @param {Function/String} iterate 方法或属性
+  * @param {Function/String/Array} iterate 方法或属性
+  * @param {Object} context 上下文
   * @return {Array}
   */
-function arraySort (arr, iterate, context) {
-  return toArray(arr).sort(iterate ? baseExports.isFunction(iterate) ? iterate.bind(context || this) : function (v1, v2) {
-    return v1[iterate] > v2[iterate] ? 1 : -1
-  } : function (v1, v2) {
-    return v1 > v2 ? 1 : -1
-  })
+function arraySort (arr, iterate, context, STR_UNDEFINED) {
+  if (arr) {
+    if (iterate === STR_UNDEFINED) {
+      return toArray(arr).sort(sortByDef)
+    }
+    context = context || this
+    var list = arrayMap(arr, function (item) {
+      return {
+        data: item
+      }
+    })
+    var sortKeys = arrayMap(baseExports.isArray(iterate) ? iterate : [iterate], function (item, index) {
+      baseExports.arrayEach(list, baseExports.isFunction(item) ? function (val, key) {
+        val[index] = item.call(context, val.data, key, arr)
+      } : function (val) {
+        val[index] = val.data[item]
+      })
+      return index
+    })
+    baseExports.lastArrayEach(sortKeys, function (key) {
+      list = list.sort(function (v1, v2) {
+        return v1[key] > v2[key] ? 1 : -1
+      })
+    })
+    return arrayMap(list, baseExports.property('data'))
+  }
+  return []
 }
 
 /**

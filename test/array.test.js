@@ -90,6 +90,24 @@ describe('Array functions', () => {
     expect(
       XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], 'a')
     ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
+    expect(
+      XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], item => item.a)
+    ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
+    expect(
+      XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], [item => item.a])
+    ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
+    expect(
+      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], ['a', 'b'])
+    ).toEqual([{ a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 9, b: 2 }])
+    expect(
+      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], ['b', 'a'])
+    ).toEqual([{ a: 9, b: 2 }, { a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }])
+    expect(
+      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], [item => item.b, item => item.a])
+    ).toEqual([{ a: 9, b: 2 }, { a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }])
+    expect(
+      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], ['b', item => item.a])
+    ).toEqual([{ a: 9, b: 2 }, { a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }])
   })
 
   test('shuffle()', () => {

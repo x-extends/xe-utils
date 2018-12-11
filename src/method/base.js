@@ -684,8 +684,10 @@ function extend (destination, args, isClone) {
   var len = args.length
   for (var source, index = 1; index < len; index++) {
     source = args[index]
-    arrayEach(objectKeys(args[index]), function (key) {
-      destination[key] = isClone ? clone(source[key], isClone) : source[key]
+    arrayEach(objectKeys(args[index]), isClone ? function (key) {
+      destination[key] = clone(source[key], isClone)
+    } : function (key) {
+      destination[key] = source[key]
     })
   }
   return destination
@@ -964,8 +966,12 @@ function getLast (obj) {
 }
 
 function arrayEach (obj, iterate, context) {
-  for (var index = 0, len = obj.length; index < len; index++) {
-    iterate.call(context || this, obj[index], index, obj)
+  if (obj.forEach) {
+    obj.forEach(iterate, context)
+  } else {
+    for (var index = 0, len = obj.length; index < len; index++) {
+      iterate.call(context || this, obj[index], index, obj)
+    }
   }
 }
 
@@ -1030,9 +1036,6 @@ function each (obj, iterate, context) {
   if (obj) {
     context = context || this
     if (isArray(obj)) {
-      if (isFunction(obj.forEach)) {
-        return obj.forEach(iterate, context)
-      }
       return arrayEach(obj, iterate, context)
     }
     return objectEach(obj, iterate, context)

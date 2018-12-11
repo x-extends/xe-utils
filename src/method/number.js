@@ -16,18 +16,7 @@ function getRandom (min, max) {
 
 function createMinMax (handle) {
   return function (arr, iterate) {
-    var context = this
-    var list = baseExports.clone(arr)
-    var arraySort = XEUtils.sortBy
-    if (baseExports.isFunction(iterate)) {
-      return handle(arraySort(XEUtils.map(list, function (val, index) {
-        return {
-          d: val,
-          v: iterate.call(context, val, index, list)
-        }
-      }), 'v')).d
-    }
-    return handle(arraySort(list, iterate))
+    return handle(XEUtils.sortBy(baseExports.clone(arr), iterate, this))
   }
 }
 

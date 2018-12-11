@@ -770,7 +770,7 @@ export interface XEUtilsMethods {
     XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
     ```
    */
-  sortBy(array: Array<any>, iteratee: Function, context?: any): Array<any>;
+  sortBy(array: Array<any>, iteratee: Array<any> | Function | string, context?: any): Array<any>;
 
   /**
    * 将一个数组随机打乱，返回一个新的数组
