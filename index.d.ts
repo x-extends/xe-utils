@@ -767,7 +767,10 @@ export interface XEUtilsMethods {
    * @param context 上下文
    * @example 
     ```javascript
-    XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a') // [{a: 4}, {a: 5}, {a: 9}]
+    XEUtils.sortBy([{a: 9}, {a: 4}, {a: 5}], 'a')
+    // [{a: 4}, {a: 5}, {a: 9}]
+    XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], ['b', 'a'])
+    // [{ a: 9, b: 2 }, { a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }]
     ```
    */
   sortBy(array: Array<any>, iteratee: Array<any> | Function | string, context?: any): Array<any>;
