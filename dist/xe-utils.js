@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.5
+ * xe-utils.js v1.7.6
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -84,6 +84,17 @@
     return v1 > v2 ? 1 : -1
   }
 
+  function sortMultis (name, minor) {
+    return function (item1, item2) {
+      var v1 = item1[name]
+      var v2 = item2[name]
+      if (v1 === v2) {
+        return minor ? minor(item1, item2) : 0
+      }
+      return sortByDef(v1, v2)
+    }
+  }
+
   /**
     * 数组按属性值升序
     *
@@ -99,9 +110,7 @@
       }
       context = context || this
       var list = arrayMap(arr, function (item) {
-        return {
-          data: item
-        }
+        return { data: item }
       })
       var sortKeys = arrayMap(baseExports.isArray(iterate) ? iterate : [iterate], function (item, index) {
         baseExports.arrayEach(list, baseExports.isFunction(item) ? function (val, key) {
@@ -111,11 +120,13 @@
         })
         return index
       })
-      baseExports.lastArrayEach(sortKeys, function (key) {
-        list = list.sort(function (v1, v2) {
-          return v1[key] > v2[key] ? 1 : -1
+      var minor
+      if (sortKeys.length) {
+        baseExports.lastArrayEach(sortKeys, function (key) {
+          minor = sortMultis(key, minor)
         })
-      })
+        list = list.sort(minor)
+      }
       return arrayMap(list, baseExports.property('data'))
     }
     return []
