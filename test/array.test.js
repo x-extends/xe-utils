@@ -85,29 +85,35 @@ describe('Array functions', () => {
       XEUtils.sortBy([11, 55, 99, 22])
     ).toEqual([11, 22, 55, 99])
     expect(
+      XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22], [])
+    ).toEqual([11, 55, 99, 77, 11, 55, 22])
+    expect(
       XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22])
     ).toEqual([11, 11, 22, 55, 55, 77, 99])
     expect(
-      XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], 'a')
-    ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
+      XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
+    ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
-      XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], item => item.a)
-    ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
+      XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], ['age'])
+    ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
-      XEUtils.sortBy([{ a: 9 }, { a: 4 }, { a: 5 }], [item => item.a])
-    ).toEqual([{ a: 4 }, { a: 5 }, { a: 9 }])
+      XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], item => item.age)
+    ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
-      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], ['a', 'b'])
-    ).toEqual([{ a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 9, b: 2 }])
+      XEUtils.sortBy([{ name: 'x' }, { name: 'l' }, { name: 'a' }], [item => item.name])
+    ).toEqual([{ name: 'a' }, { name: 'l' }, { name: 'x' }])
     expect(
-      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], ['b', 'a'])
-    ).toEqual([{ a: 9, b: 2 }, { a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }])
+      XEUtils.sortBy([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'a', age: 28 }, { name: 'z', age: 29 }], ['name', 'age'])
+    ).toEqual([{ name: 'a', age: 28 }, { name: 'd', age: 27 }, { name: 'x', age: 26 }, { name: 'z', age: 29 }])
     expect(
-      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], [item => item.b, item => item.a])
-    ).toEqual([{ a: 9, b: 2 }, { a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }])
+      XEUtils.sortBy([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'a', age: 28 }, { name: 'z', age: 29 }], ['age', 'name'])
+    ).toEqual([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'a', age: 28 }, { name: 'z', age: 29 }])
     expect(
-      XEUtils.sortBy([{ a: 9, b: 2 }, { a: 4, b: 3 }, { a: 5, b: 3 }, { a: 1, b: 3 }], ['b', item => item.a])
-    ).toEqual([{ a: 9, b: 2 }, { a: 1, b: 3 }, { a: 4, b: 3 }, { a: 5, b: 3 }])
+      XEUtils.sortBy([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'a', age: 28 }, { name: 'z', age: 29 }], [item => item.age, item => item.name])
+    ).toEqual([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'a', age: 28 }, { name: 'z', age: 29 }])
+    expect(
+      XEUtils.sortBy([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'a', age: 28 }, { name: 'z', age: 29 }], ['age', item => item.name])
+    ).toEqual([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'a', age: 28 }, { name: 'z', age: 29 }])
   })
 
   test('shuffle()', () => {
