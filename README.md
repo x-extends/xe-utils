@@ -1030,10 +1030,25 @@ XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
 // 指定字段排序：[{ age: 26 }, { age: 27 }, { age: 28 }]
 XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
 // 自定义排序：[{a: 4}, {a: 5}, {a: 9}]
-XEUtils.sortBy([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'z', age: 26 }, { name: 'z', age: 26 }], ['age', 'name'])
-// 组合排序：[{ name: 'x', age: 26 }, { name: 'z', age: 26 }, { name: 'z', age: 26 }, { name: 'd', age: 27 }]
+XEUtils.sortBy([
+  { name: 'x', age: 26 },
+  { name: 'd', age: 27 },
+  { name: 'z', age: 26 },
+  { name: 'z', age: 26 }
+], ['age', 'name'])
+/* 组合排序：
+[{ name: 'x', age: 26 },
+{ name: 'z', age: 26 },
+{ name: 'z', age: 26 },
+{ name: 'd', age: 27 }]
+*/
 XEUtils.sortBy([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'x', age: 26 }, { name: 'z', age: 26 }], [item => item.name, item => item.age])
-// 混合排序：[{ name: 'd', age: 27 }, { name: 'x', age: 26 }, { name: 'x', age: 26 }, { name: 'z', age: 26 }]
+/*混合排序：
+[{ name: 'd', age: 27 },
+{ name: 'x', age: 26 },
+{ name: 'x', age: 26 },
+{ name: 'z', age: 26 }]
+*/
 ```
 
 ### shuffle ( array ) 将一个数组随机打乱，返回一个新的数组
