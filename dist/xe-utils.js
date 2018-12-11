@@ -55,13 +55,11 @@
     */
   function arrayUniq (array) {
     var result = []
-    if (baseExports.isArray(array)) {
-      baseExports.each(array, function (value) {
-        if (!result.includes(value)) {
-          result.push(value)
-        }
-      })
-    }
+    baseExports.each(array, function (value) {
+      if (!result.includes(value)) {
+        result.push(value)
+      }
+    })
     return result
   }
 
@@ -77,7 +75,7 @@
     var index = 0
     var len = args.length
     for (; index < len; index++) {
-      result = result.concat(args[index])
+      result = result.concat(toArray(args[index]))
     }
     return arrayUniq(result)
   }
@@ -90,14 +88,11 @@
     * @return {Array}
     */
   function arraySort (arr, iterate, context) {
-    if (baseExports.isArray(arr)) {
-      return arr.sort(iterate ? baseExports.isFunction(iterate) ? iterate.bind(context || this) : function (v1, v2) {
-        return v1[iterate] > v2[iterate] ? 1 : -1
-      } : function (v1, v2) {
-        return v1 > v2 ? 1 : -1
-      })
-    }
-    return arr
+    return toArray(arr).sort(iterate ? baseExports.isFunction(iterate) ? iterate.bind(context || this) : function (v1, v2) {
+      return v1[iterate] > v2[iterate] ? 1 : -1
+    } : function (v1, v2) {
+      return v1 > v2 ? 1 : -1
+    })
   }
 
   /**
@@ -202,26 +197,19 @@
     * @return {Object}
     */
   function arrayFilter (obj, iterate, context) {
+    var result = []
     if (obj && iterate) {
       context = context || this
       if (isArrayPro(FILTER_PRO)) {
         return obj[FILTER_PRO](iterate, context)
-      } else {
-        var isArr = baseExports.isArray(obj)
-        var result = isArr ? [] : {}
-        baseExports.each(obj, isArr ? function (val, key) {
-          if (iterate.call(context, val, key, obj)) {
-            result.push(val)
-          }
-        } : function (val, key) {
-          if (iterate.call(context, val, key, obj)) {
-            result[key] = val
-          }
-        })
-        return result
       }
+      baseExports.each(obj, function (val, key) {
+        if (iterate.call(context, val, key, obj)) {
+          result.push(val)
+        }
+      })
     }
-    return []
+    return result
   }
 
   /**
@@ -1023,7 +1011,7 @@
     * @return {Boolean}
     */
   function isElement (obj) {
-    return obj && isString(obj.nodeName) && isNumber(obj.nodeType)
+    return !!(obj && isString(obj.nodeName) && isNumber(obj.nodeType))
   }
 
   /**
@@ -1034,7 +1022,7 @@
     */
   var supportDocument = typeof document !== STRING_UNDEFINED
   function isDocument (obj) {
-    return obj && obj.nodeType === 9 && supportDocument
+    return !!(obj && obj.nodeType === 9 && supportDocument)
   }
 
   /**
@@ -1045,7 +1033,7 @@
     */
   var supportWindow = typeof window !== STRING_UNDEFINED
   function isWindow (obj) {
-    return obj && obj === obj.window && supportWindow
+    return !!(obj && obj === obj.window && supportWindow)
   }
 
   /**
@@ -1110,9 +1098,13 @@
     * @return {Boolean}
     */
   function isLeapYear (date) {
+    var year
     var currentDate = date ? XEUtils.toStringDate(date) : new Date()
-    var year = currentDate.getFullYear()
-    return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
+    if (isDate(currentDate)) {
+      year = currentDate.getFullYear()
+      return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
+    }
+    return false
   }
 
   /**

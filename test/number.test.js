@@ -26,10 +26,6 @@ describe('Number functions', () => {
     expect(
       rest >= -5 && rest <= 5
     ).toEqual(true)
-    rest = XEUtils.random(-1000, 0)
-    expect(
-      rest >= -1000 && rest <= 0
-    ).toEqual(true)
   })
 
   test('min()', () => {

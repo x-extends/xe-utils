@@ -339,7 +339,7 @@ var isArguments = createInInObjectString('Arguments')
   * @return {Boolean}
   */
 function isElement (obj) {
-  return obj && isString(obj.nodeName) && isNumber(obj.nodeType)
+  return !!(obj && isString(obj.nodeName) && isNumber(obj.nodeType))
 }
 
 /**
@@ -350,7 +350,7 @@ function isElement (obj) {
   */
 var supportDocument = typeof document !== STRING_UNDEFINED
 function isDocument (obj) {
-  return obj && obj.nodeType === 9 && supportDocument
+  return !!(obj && obj.nodeType === 9 && supportDocument)
 }
 
 /**
@@ -361,7 +361,7 @@ function isDocument (obj) {
   */
 var supportWindow = typeof window !== STRING_UNDEFINED
 function isWindow (obj) {
-  return obj && obj === obj.window && supportWindow
+  return !!(obj && obj === obj.window && supportWindow)
 }
 
 /**
@@ -426,9 +426,13 @@ function isWeakSet (obj) {
   * @return {Boolean}
   */
 function isLeapYear (date) {
+  var year
   var currentDate = date ? XEUtils.toStringDate(date) : new Date()
-  var year = currentDate.getFullYear()
-  return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
+  if (isDate(currentDate)) {
+    year = currentDate.getFullYear()
+    return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
+  }
+  return false
 }
 
 /**

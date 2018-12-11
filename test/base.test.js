@@ -616,6 +616,12 @@ describe('Base functions', () => {
 
   test('isSymbol()', () => {
     expect(
+      XEUtils.isSymbol(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isSymbol(undefined)
+    ).toEqual(false)
+    expect(
       XEUtils.isSymbol({})
     ).toEqual(false)
     expect(
@@ -623,6 +629,9 @@ describe('Base functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.isSymbol(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isSymbol(-1)
     ).toEqual(false)
     expect(
       XEUtils.isSymbol(false)
@@ -642,6 +651,12 @@ describe('Base functions', () => {
 
   test('isArguments()', () => {
     expect(
+      XEUtils.isArguments(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isArguments(undefined)
+    ).toEqual(false)
+    expect(
       XEUtils.isArguments()
     ).toEqual(false)
     expect(
@@ -652,6 +667,9 @@ describe('Base functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.isArguments(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isArguments(-1)
     ).toEqual(false)
     expect(
       XEUtils.isArguments(false)
@@ -669,6 +687,18 @@ describe('Base functions', () => {
 
   test('isElement()', () => {
     expect(
+      XEUtils.isElement(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isElement(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isElement(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isElement(123)
+    ).toEqual(false)
+    expect(
       XEUtils.isElement({})
     ).toEqual(false)
     expect(
@@ -680,6 +710,18 @@ describe('Base functions', () => {
   })
 
   test('isDocument()', () => {
+    expect(
+      XEUtils.isDocument(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDocument(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDocument(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDocument(123)
+    ).toEqual(false)
     expect(
       XEUtils.isDocument({})
     ).toEqual(false)
@@ -693,6 +735,18 @@ describe('Base functions', () => {
 
   test('isWindow()', () => {
     expect(
+      XEUtils.isWindow(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWindow(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWindow(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWindow(123)
+    ).toEqual(false)
+    expect(
       XEUtils.isWindow({})
     ).toEqual(false)
     expect(
@@ -704,6 +758,18 @@ describe('Base functions', () => {
   })
 
   test('isFormData()', () => {
+    expect(
+      XEUtils.isFormData(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFormData(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFormData(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isFormData(123)
+    ).toEqual(false)
     expect(
       XEUtils.isFormData({})
     ).toEqual(false)
@@ -720,6 +786,18 @@ describe('Base functions', () => {
 
   test('isMap()', () => {
     expect(
+      XEUtils.isMap(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isMap(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isMap(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isMap(123)
+    ).toEqual(false)
+    expect(
       XEUtils.isMap({})
     ).toEqual(false)
     expect(
@@ -731,6 +809,18 @@ describe('Base functions', () => {
   })
 
   test('isWeakMap()', () => {
+    expect(
+      XEUtils.isWeakMap(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakMap(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakMap(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakMap(123)
+    ).toEqual(false)
     expect(
       XEUtils.isWeakMap({})
     ).toEqual(false)
@@ -744,6 +834,18 @@ describe('Base functions', () => {
 
   test('isSet()', () => {
     expect(
+      XEUtils.isSet(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isSet(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isSet(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isSet(123)
+    ).toEqual(false)
+    expect(
       XEUtils.isSet({})
     ).toEqual(false)
     expect(
@@ -756,6 +858,18 @@ describe('Base functions', () => {
 
   test('isWeakSet()', () => {
     expect(
+      XEUtils.isWeakSet(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakSet(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakSet(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isWeakSet(123)
+    ).toEqual(false)
+    expect(
       XEUtils.isWeakSet({})
     ).toEqual(false)
     expect(
@@ -767,6 +881,27 @@ describe('Base functions', () => {
   })
 
   test('isLeapYear()', () => {
+    expect(
+      XEUtils.isLeapYear(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isLeapYear(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isLeapYear([])
+    ).toEqual(false)
+    expect(
+      XEUtils.isLeapYear({})
+    ).toEqual(false)
+    expect(
+      XEUtils.isLeapYear(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isLeapYear(123)
+    ).toEqual(false)
+    expect(
+      XEUtils.isLeapYear('abc')
+    ).toEqual(false)
     expect(
       XEUtils.isLeapYear('2018-12-01')
     ).toEqual(false)
@@ -796,6 +931,12 @@ describe('Base functions', () => {
     ).toEqual(true)
     expect(
       XEUtils.isMatch({})
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch(-1)
+    ).toEqual(true)
+    expect(
+      XEUtils.isMatch('sbc')
     ).toEqual(true)
     expect(
       XEUtils.isMatch([], [])
@@ -906,6 +1047,12 @@ describe('Base functions', () => {
     expect(
       XEUtils.getType(function () {})
     ).toEqual('function')
+    let method = function () {
+      expect(
+        XEUtils.getType(arguments)
+      ).toEqual('object')
+    }
+    method(11, 22)
     if (typeof Symbol !== 'undefined') {
       expect(
         XEUtils.getType(Symbol('name'))
