@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "1.7.6",
+  "version": "1.7.7",
   "description": "A JavaScript tools library.",
   "main": "index.js",
   "typing": "index.d.ts",
@@ -9,6 +9,10 @@
     "unit": "jest",
     "test": "npm run lint && npm run unit"
   },
+  "files": [
+    "src",
+    "dist/*.js"
+  ],
   "devDependencies": {
     "eslint": "^5.9.0",
     "eslint-config-standard": "^12.0.0",
