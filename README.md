@@ -2098,7 +2098,7 @@ XEUtils.setup({
 import XEUtils from 'xe-utils'
 
 XEUtils.mixin({
-  toDateText (date) {
+  toDateDiffText (date) {
     let currDate = '2018-12-10 10:10:00'
     let dateDiff = XEUtils.getDateDiff(date, currDate)
     if (dateDiff.done) {
@@ -2126,13 +2126,13 @@ XEUtils.mixin({
   }
 })
 
-XEUtils.toDateText('2018-12-10 10:09:59') // 刚刚
-XEUtils.toDateText('2018-12-10 10:09:30') // 30秒之前
-XEUtils.toDateText('2018-12-10 10:09:30') // 2分钟之前
-XEUtils.toDateText('2018-12-10 02:10:00') // 8小时之前
-XEUtils.toDateText('2018-12-09 04:09:30') // 1天之前
-XEUtils.toDateText('2018-04-09 04:09:30') // 8个月之前
-XEUtils.toDateText('2016-06-09 04:09:30') // 2年之前
+XEUtils.toDateDiffText('2018-12-10 10:09:59') // 刚刚
+XEUtils.toDateDiffText('2018-12-10 10:09:30') // 30秒之前
+XEUtils.toDateDiffText('2018-12-10 10:09:30') // 2分钟之前
+XEUtils.toDateDiffText('2018-12-10 02:10:00') // 8小时之前
+XEUtils.toDateDiffText('2018-12-09 04:09:30') // 1天之前
+XEUtils.toDateDiffText('2018-04-09 04:09:30') // 8个月之前
+XEUtils.toDateDiffText('2016-06-09 04:09:30') // 2年之前
 ```
 
 ## License
