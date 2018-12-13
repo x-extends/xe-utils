@@ -2098,12 +2098,41 @@ XEUtils.setup({
 import XEUtils from 'xe-utils'
 
 XEUtils.mixin({
-  formatAmount (num) {
-    return parseFloat(num).toFixed(2)
+  toDateText (date) {
+    let currDate = '2018-12-10 10:10:00'
+    let dateDiff = XEUtils.getDateDiff(date, currDate)
+    if (dateDiff.done) {
+      if (dateDiff.time < 31536000000) {
+        if (dateDiff.time < 2592000000) {
+          if (dateDiff.time < 86400000) {
+            if (dateDiff.time < 360000) {
+              if (dateDiff.time < 60000) {
+                if (dateDiff.time < 10000) {
+                  return `刚刚`
+                }
+                return `${dateDiff.ss}秒之前`
+              }
+              return `${dateDiff.mm}分钟之前`
+            }
+            return `${dateDiff.HH}小时之前`
+          }
+          return `${dateDiff.dd}天之前`
+        }
+        return `${dateDiff.MM}个月之前`
+      }
+      return `${dateDiff.yyyy}年之前`
+    }
+    return '错误类型'
   }
 })
 
-XEUtils.formatAmount(100.1) // 100.10
+XEUtils.toDateText('2018-12-10 10:09:59') // 刚刚
+XEUtils.toDateText('2018-12-10 10:09:30') // 30秒之前
+XEUtils.toDateText('2018-12-10 10:09:30') // 2分钟之前
+XEUtils.toDateText('2018-12-10 02:10:00') // 8小时之前
+XEUtils.toDateText('2018-12-09 04:09:30') // 1天之前
+XEUtils.toDateText('2018-04-09 04:09:30') // 8个月之前
+XEUtils.toDateText('2016-06-09 04:09:30') // 2年之前
 ```
 
 ## License
