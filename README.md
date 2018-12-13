@@ -1028,6 +1028,7 @@ XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22])
 // [11, 11, 22, 55, 55, 77, 99]
 XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
 // [{ age: 26 }, { age: 27 }, { age: 28 }]
+// 多字段排序
 XEUtils.sortBy([
   { name: 'x', age: 26 },
   { name: 'd', age: 27 },
@@ -1040,7 +1041,13 @@ XEUtils.sortBy([
 { name: 'z', age: 26 },
 { name: 'd', age: 27 }]
 */
-XEUtils.sortBy([{ name: 'x', age: 26 }, { name: 'd', age: 27 }, { name: 'x', age: 26 }, { name: 'z', age: 26 }], [item => item.name, item => item.age])
+// 自定义组合排序
+XEUtils.sortBy([
+  { name: 'x', age: 26 },
+  { name: 'd', age: 27 },
+  { name: 'x', age: 26 },
+  { name: 'z', age: 26 }
+], [item => item.name, item => item.age])
 /*
 [{ name: 'd', age: 27 },
 { name: 'x', age: 26 },
