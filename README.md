@@ -2099,7 +2099,7 @@ import XEUtils from 'xe-utils'
 
 XEUtils.mixin({
   toDateDiffText (date) {
-    let currDate = '2018-12-10 10:10:00'
+    let currDate = 1544407800000 // '2018-12-10 10:10:00'
     let dateDiff = XEUtils.getDateDiff(date, currDate)
     if (dateDiff.done) {
       if (dateDiff.time < 31536000000) {
