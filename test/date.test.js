@@ -92,6 +92,12 @@ describe('Date functions', () => {
       XEUtils.toStringDate('2017-12-20 10:10:30')
     ).toEqual(new Date(2017, 11, 20, 10, 10, 30))
     expect(
+      XEUtils.toStringDate('2017-12-20T10:10:30.423+0800')
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 423))
+    expect(
+      XEUtils.toStringDate('2017-12-20T10:10:30.423+0800', 'yyyy-MM-dd HH:mm:ss')
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30))
+    expect(
       XEUtils.toStringDate('12/20/2017', 'MM/dd/yyyy')
     ).toEqual(new Date(2017, 11, 20))
     expect(
