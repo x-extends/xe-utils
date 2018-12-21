@@ -104,14 +104,16 @@ describe('Array functions', () => {
     ).toEqual([{ name: 'a' }, { name: 'l' }, { name: 'x' }])
     expect(
       XEUtils.sortBy([
-        { name: 'x', age: 26 },
+        { name: 'x', age: 25 },
         { name: 'd', age: 27 },
+        { name: 'x', age: 24 },
         { name: 'x', age: 26 },
         { name: 'z', age: 26 }
       ], ['name', 'age'])
     ).toEqual([
       { name: 'd', age: 27 },
-      { name: 'x', age: 26 },
+      { name: 'x', age: 24 },
+      { name: 'x', age: 25 },
       { name: 'x', age: 26 },
       { name: 'z', age: 26 }
     ])

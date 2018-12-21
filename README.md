@@ -1033,11 +1033,13 @@ XEUtils.sortBy([
   { name: 'x', age: 26 },
   { name: 'd', age: 27 },
   { name: 'z', age: 26 },
-  { name: 'z', age: 26 }
+  { name: 'z', age: 24 },
+  { name: 'z', age: 25 }
 ], ['age', 'name'])
 /*
 [{ name: 'x', age: 26 },
-{ name: 'z', age: 26 },
+{ name: 'z', age: 24 },
+{ name: 'z', age: 25 },
 { name: 'z', age: 26 },
 { name: 'd', age: 27 }]
 */
