@@ -106,6 +106,7 @@ describe('Array functions', () => {
       XEUtils.sortBy([
         { name: 'x', age: 25 },
         { name: 'd', age: 27 },
+        { name: 'z', age: 27 },
         { name: 'x', age: 24 },
         { name: 'x', age: 26 },
         { name: 'z', age: 26 }
@@ -115,7 +116,8 @@ describe('Array functions', () => {
       { name: 'x', age: 24 },
       { name: 'x', age: 25 },
       { name: 'x', age: 26 },
-      { name: 'z', age: 26 }
+      { name: 'z', age: 26 },
+      { name: 'z', age: 27 }
     ])
     expect(
       XEUtils.sortBy([

@@ -1037,10 +1037,10 @@ XEUtils.sortBy([
   { name: 'z', age: 25 }
 ], ['age', 'name'])
 /*
-[{ name: 'x', age: 26 },
-{ name: 'z', age: 24 },
+[{ name: 'z', age: 24 },
 { name: 'z', age: 25 },
 { name: 'z', age: 26 },
+{ name: 'x', age: 26 },
 { name: 'd', age: 27 }]
 */
 // 自定义组合排序
