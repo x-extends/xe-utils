@@ -1945,7 +1945,7 @@ XEUtils.endsWith('abc', 5, 'a') // false
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.serialize({id: 123, name: 'n1'}) // id=123&name=n1
+XEUtils.serialize({id: 123, name: 'test1'}) // id=123&name=test1
 ```
 
 ### unserialize ( str ) 反转序列化查询参数
@@ -1953,7 +1953,7 @@ XEUtils.serialize({id: 123, name: 'n1'}) // id=123&name=n1
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.unserialize('id=123&name=n1') // {id: 123, name: 'n1'}
+XEUtils.unserialize('id=123&name=test1') // {id: '123', name: 'test1'}
 ```
 
 ### browse ( ) 获取浏览器信息

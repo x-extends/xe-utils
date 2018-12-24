@@ -78,7 +78,7 @@ function parseUrl (url) {
   parsed.path = href.replace(/^([a-z0-9.+-]*:)\/\//, function (text, protocol) {
     parsed.protocol = protocol
     return ''
-  }).replace(/^([a-z0-9.+-]*)(:\d+)?\//, function (text, hostname, port) {
+  }).replace(/^([a-z0-9.+-]*)(:\d+)?\/?/, function (text, hostname, port) {
     portText = port || ''
     parsed.port = portText.replace(':', '')
     parsed.hostname = hostname
