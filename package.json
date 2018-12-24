@@ -3,7 +3,7 @@
   "version": "1.7.9",
   "description": "A JavaScript tools library.",
   "main": "index.js",
-  "typing": "types/index.d.ts",
+  "typings": "types/index.d.ts",
   "scripts": {
     "lint": "eslint dist/xe-utils.js test/**/*.js src/**/*.js",
     "unit": "jest",
