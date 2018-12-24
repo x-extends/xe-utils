@@ -1447,7 +1447,7 @@ export interface XEUtilsMethods {
 }
 
 /**
- * javascript 函数库、工具类
+ * A JavaScript tools library.
  */
 declare var XEUtils: XEUtilsMethods;
 
