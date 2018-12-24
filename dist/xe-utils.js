@@ -166,7 +166,7 @@
     */
   function arraySample (array, number) {
     var result = arrayShuffle(array)
-    if (arguments.length === 1) {
+    if (arguments.length <= 1) {
       return result[0]
     }
     if (number < result.length) {

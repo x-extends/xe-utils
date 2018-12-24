@@ -3,6 +3,9 @@ const XEUtils = require('../index')
 describe('Array functions', () => {
   test('uniq()', () => {
     expect(
+      XEUtils.uniq()
+    ).toEqual([])
+    expect(
       XEUtils.uniq(null)
     ).toEqual([])
     expect(
@@ -40,6 +43,9 @@ describe('Array functions', () => {
 
   test('union()', () => {
     expect(
+      XEUtils.union()
+    ).toEqual([])
+    expect(
       XEUtils.union(undefined)
     ).toEqual([])
     expect(
@@ -63,6 +69,9 @@ describe('Array functions', () => {
   })
 
   test('sortBy()', () => {
+    expect(
+      XEUtils.sortBy()
+    ).toEqual([])
     expect(
       XEUtils.sortBy(null)
     ).toEqual([])
@@ -177,14 +186,17 @@ describe('Array functions', () => {
 
   test('shuffle()', () => {
     expect(
-      XEUtils.shuffle(null).length
-    ).toEqual(0)
+      XEUtils.shuffle()
+    ).toEqual([])
     expect(
-      XEUtils.shuffle(undefined).length
-    ).toEqual(0)
+      XEUtils.shuffle(null)
+    ).toEqual([])
     expect(
-      XEUtils.shuffle([]).length
-    ).toEqual(0)
+      XEUtils.shuffle(undefined)
+    ).toEqual([])
+    expect(
+      XEUtils.shuffle([])
+    ).toEqual([])
     expect(
       XEUtils.shuffle('abc').length
     ).toEqual(3)
@@ -200,6 +212,9 @@ describe('Array functions', () => {
   })
 
   test('sample()', () => {
+    expect(
+      XEUtils.sample()
+    ).toEqual(undefined)
     expect(
       XEUtils.sample(null)
     ).toEqual(undefined)
@@ -249,6 +264,9 @@ describe('Array functions', () => {
 
   test('some()', () => {
     expect(
+      XEUtils.some()
+    ).toEqual(false)
+    expect(
       XEUtils.some(null)
     ).toEqual(false)
     expect(
@@ -288,6 +306,9 @@ describe('Array functions', () => {
 
   test('every()', () => {
     expect(
+      XEUtils.every()
+    ).toEqual(true)
+    expect(
       XEUtils.every(null)
     ).toEqual(true)
     expect(
@@ -320,6 +341,9 @@ describe('Array functions', () => {
   })
 
   test('filter()', () => {
+    expect(
+      XEUtils.filter()
+    ).toEqual([])
     expect(
       XEUtils.filter(null)
     ).toEqual([])
@@ -360,6 +384,9 @@ describe('Array functions', () => {
 
   test('find()', () => {
     expect(
+      XEUtils.find()
+    ).toEqual(undefined)
+    expect(
       XEUtils.find(null)
     ).toEqual(undefined)
     expect(
@@ -392,6 +419,9 @@ describe('Array functions', () => {
   })
 
   test('findKey()', () => {
+    expect(
+      XEUtils.findKey()
+    ).toEqual(undefined)
     expect(
       XEUtils.findKey([])
     ).toEqual(undefined)
@@ -429,6 +459,9 @@ describe('Array functions', () => {
 
   test('map()', () => {
     expect(
+      XEUtils.map()
+    ).toEqual([])
+    expect(
       XEUtils.map(123)
     ).toEqual([])
     expect(
@@ -459,6 +492,9 @@ describe('Array functions', () => {
 
   test('sum()', () => {
     expect(
+      XEUtils.sum()
+    ).toEqual(0)
+    expect(
       XEUtils.sum(10)
     ).toEqual(0)
     expect(
@@ -482,6 +518,9 @@ describe('Array functions', () => {
   })
 
   test('mean()', () => {
+    expect(
+      XEUtils.mean()
+    ).toEqual(0)
     expect(
       XEUtils.mean(10)
     ).toEqual(0)
