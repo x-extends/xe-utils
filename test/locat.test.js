@@ -44,6 +44,12 @@ describe('location functions', () => {
       XEUtils.unserialize()
     ).toEqual({})
     expect(
+      XEUtils.unserialize({})
+    ).toEqual({})
+    expect(
+      XEUtils.unserialize([])
+    ).toEqual({})
+    expect(
       XEUtils.unserialize(null)
     ).toEqual({})
     expect(
@@ -51,6 +57,9 @@ describe('location functions', () => {
     ).toEqual({})
     expect(
       XEUtils.unserialize(0)
+    ).toEqual({})
+    expect(
+      XEUtils.unserialize(-1)
     ).toEqual({})
     expect(
       XEUtils.unserialize('id=123&name=test1')

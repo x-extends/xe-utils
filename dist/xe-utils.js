@@ -2712,7 +2712,7 @@
   function parseParams (str) {
     var items
     var result = {}
-    if (str) {
+    if (str && baseExports.isString(str)) {
       baseExports.each(str.split('&'), function (param) {
         items = param.split('=')
         result[decode(items[0])] = decode(items[1] || '')
