@@ -2137,6 +2137,7 @@ XEUtils.toDateDiffText('2018-12-10 02:10:00') // 8小时之前
 XEUtils.toDateDiffText('2018-12-09 04:09:30') // 1天之前
 XEUtils.toDateDiffText('2018-04-09 04:09:30') // 8个月之前
 XEUtils.toDateDiffText('2016-06-09 04:09:30') // 2年之前
+
 ```
 
 ## License
