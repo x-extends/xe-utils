@@ -2096,7 +2096,7 @@ XEUtils.setup({
 
 ## 扩展函数
 
-允许用您自己的实用函数扩展到XEUtils
+将您自己的实用函数扩展到 XEUtils
 
 ```JavaScript
 import XEUtils from 'xe-utils'

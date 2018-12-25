@@ -64,7 +64,7 @@ export interface XEUtilsMethods {
   setup(options: object): void;
 
   /**
-   * 允许用您自己的实用函数扩展到 XEUtils
+   * 将您自己的实用函数扩展到 XEUtils
    * @param methods 扩展函数集
    */
   mixin(methods: object): void;
@@ -536,7 +536,7 @@ export interface XEUtilsMethods {
     XEUtils.pick({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {age: 25, height: 176}
     ```
    */
-  pick(obj: any, ...array: any[] | string | Function): object;
+  pick(obj: any, array: Array<string>): object;
   
   /**
    * 根据 keys 排除指定的属性值，返回一个新的对象
@@ -549,7 +549,7 @@ export interface XEUtilsMethods {
     XEUtils.omit({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {name: 'test11'}
     ```
    */
-  omit(obj: any, ...array: any[] | string | Function): object;
+  omit(obj: any, array: Array<string>): object;
 
   /**
    * 获取对象第一个值
