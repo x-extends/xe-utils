@@ -1635,7 +1635,7 @@ XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒zZ �
 // '2017年01月01日 02时05分30秒099毫秒GMT+0800 星期0 -1 第1季 今年第1天 今年第0周 当月第0周 pm PM'
 ```
 
-### getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前
+### getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年的最初时间(first)、年的最后时间(last)、年的月份(0~11)，默认当前
 
 ```JavaScript
 import XEUtils from 'xe-utils'
@@ -1674,7 +1674,7 @@ XEUtils.getWhatWeek('2017-12-20', -1, 5) // Fri Dec 15 2017 00:00:00 GMT+0800 (�
 XEUtils.getWhatWeek('2017-12-20', 1, 0) // Sun Dec 31 2017 00:00:00 GMT+0800 (中国标准时间)
 ```
 
-### getWhatDay ( date, day [, mode] ) 返回前几天或后几天的日期
+### getWhatDay ( date, day [, mode] ) 返回前几天或后几天的日期,可以指定当天最初时间(first)、当天的最后时间(last)
 
 ```JavaScript
 import XEUtils from 'xe-utils'
