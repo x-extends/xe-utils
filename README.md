@@ -1549,6 +1549,8 @@ XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS') // 15137
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+XEUtils.toStringDate('12/20/2017')
+// 如果解析错误则返回 'Invalid Date'
 XEUtils.toStringDate('2017-12-20')
 // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.toStringDate('2017-12-20 10:10:30')
