@@ -1746,11 +1746,15 @@ XEUtils.getDayOfMonth('2017-12-20', 1) // 31
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.getDateDiff('2017-11-20', '2017-12-21') // { done: true, time: 2678400000, yyyy: 0, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 }
-XEUtils.getDateDiff('2017-12-20', '2017-12-21') // { done: true, time: 86400000, yyyy: 0, MM: 0, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 }
-XEUtils.getDateDiff('2018-01-01', '2017-12-21') // { done: false, time: 0 }
+XEUtils.getDateDiff('2017-11-20', '2017-12-21')
+// { done: true, time: 2678400000, yyyy: 0, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 }
+XEUtils.getDateDiff('2017-12-20', '2017-12-21')
+// { done: true, time: 86400000, yyyy: 0, MM: 0, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 }
+XEUtils.getDateDiff('2018-01-01', '2017-12-21')
+// { done: false, time: 0 }
 let dateDiff = XEUtils.getDateDiff('2017-12-20 10:10:30', '2017-12-21 10:15:00')
-let content = `${dateDiff.mm}分${dateDiff.ss}秒` // '4分30秒'
+let content = `${dateDiff.mm}分${dateDiff.ss}秒`
+// '4分30秒'
 ```
 
 ### random ( min, max ) 获取一个指定范围内随机数
