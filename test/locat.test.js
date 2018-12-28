@@ -132,7 +132,26 @@ describe('location functions', () => {
       }
     })
     expect(
-      XEUtils.parseUrl('http://www.xuliangzhan.com:8080/demo#/home?id=123')
+      XEUtils.parseUrl('http://localhost:8080/demo/#/home?id=123')
+    ).toEqual({
+      hash: '#/home?id=123',
+      hashKey: '/home',
+      hashQuery: {
+        id: '123'
+      },
+      host: 'localhost:8080',
+      hostname: 'localhost',
+      href: 'http://localhost:8080/demo/#/home?id=123',
+      origin: 'http://localhost:8080',
+      path: '/demo/',
+      pathname: '/demo/',
+      port: '8080',
+      protocol: 'http:',
+      search: '',
+      searchQuery: {}
+    })
+    expect(
+      XEUtils.parseUrl('http://www.xuliangzhan.com:8080/demo/?v=1#/home?id=123')
     ).toEqual({
       hash: '#/home?id=123',
       hashKey: '/home',
@@ -141,14 +160,16 @@ describe('location functions', () => {
       },
       host: 'www.xuliangzhan.com:8080',
       hostname: 'www.xuliangzhan.com',
-      href: 'http://www.xuliangzhan.com:8080/demo#/home?id=123',
+      href: 'http://www.xuliangzhan.com:8080/demo/?v=1#/home?id=123',
       origin: 'http://www.xuliangzhan.com:8080',
-      path: '/demo',
-      pathname: '/demo',
+      path: '/demo/?v=1',
+      pathname: '/demo/',
       port: '8080',
       protocol: 'http:',
-      search: '',
-      searchQuery: {}
+      search: '?v=1',
+      searchQuery: {
+        v: '1'
+      }
     })
   })
 })

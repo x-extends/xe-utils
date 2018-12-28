@@ -1987,14 +1987,24 @@ XEUtils.browse()
 ```JavaScript
 import XEUtils from 'xe-utils'
 
+// http://localhost:8080/demo?id=123
 XEUtils.locat()
 // {
 //   hash: '',
-//   hostname: '',
-//   protocol: '',
-//   port: '',
-//   origin: '',
-//   ...
+//   hashKey: '',
+//   hashQuery: {},
+//   host: 'localhost:8080',
+//   hostname: 'localhost',
+//   href: 'http://localhost:8080/demo?id=123',
+//   origin: 'http://localhost:8080',
+//   path: '/demo?id=123',
+//   pathname: '/demo',
+//   port: '8080',
+//   protocol: 'http:',
+//   search: '?id=123',
+//   searchQuery: {
+//     id: '123'
+//   }
 // }
 ```
 
@@ -2003,12 +2013,23 @@ XEUtils.locat()
 ```JavaScript
 import XEUtils from 'xe-utils'
 
-XEUtils.parseUrl('http://xuliangzhan.com:8080/demo?id=123')
+XEUtils.parseUrl('http://localhost:8080/demo/#/home?id=123')
 // {
-//   hostname: 'xuliangzhan.com',
-//   protocol: 'http:',
+//   hash: '#/home?id=123',
+//   hashKey: '/home',
+//   hashQuery: {
+//     id: '123'
+//   },
+//   host: 'localhost:8080',
+//   hostname: 'localhost.com',
+//   href: 'http://localhost:8080/demo/#/home?id=123',
+//   origin: 'http://localhost:8080',
+//   path: '/demo/',
+//   pathname: '/demo/',
 //   port: '8080',
-//   ...
+//   protocol: 'http:',
+//   search: '',
+//   searchQuery: {}
 // }
 ```
 
