@@ -554,9 +554,11 @@ import XEUtils from 'xe-utils'
 XEUtils.getType() // 'undefined'
 XEUtils.getType(null) // 'null'
 XEUtils.getType('') // 'string'
+XEUtils.getType(/\d/) // 'regexp'
 XEUtils.getType(1) // 'number'
 XEUtils.getType([]) // 'array'
 XEUtils.getType({}) // 'object'
+XEUtils.getType(new Error()) // 'error'
 XEUtils.getType(function(){}) // 'function'
 ```
 
