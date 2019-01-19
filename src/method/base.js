@@ -517,6 +517,12 @@ function getType (obj) {
   if (isArray(obj)) {
     return 'array'
   }
+  if (isRegExp(obj)) {
+    return 'regexp'
+  }
+  if (isError(obj)) {
+    return 'error'
+  }
   return typeof obj
 }
 

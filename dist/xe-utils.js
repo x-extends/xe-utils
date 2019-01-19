@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.9
+ * xe-utils.js v1.7.10
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1231,6 +1231,12 @@
     }
     if (isArray(obj)) {
       return 'array'
+    }
+    if (isRegExp(obj)) {
+      return 'regexp'
+    }
+    if (isError(obj)) {
+      return 'error'
     }
     return typeof obj
   }
