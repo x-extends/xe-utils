@@ -1027,13 +1027,22 @@ describe('Base functions', () => {
       XEUtils.getType()
     ).toEqual('undefined')
     expect(
+      XEUtils.getType(undefined)
+    ).toEqual('undefined')
+    expect(
       XEUtils.getType(null)
     ).toEqual('null')
+    expect(
+      XEUtils.getType('')
+    ).toEqual('string')
     expect(
       XEUtils.getType('1')
     ).toEqual('string')
     expect(
       XEUtils.getType(1)
+    ).toEqual('number')
+    expect(
+      XEUtils.getType(1547895990810)
     ).toEqual('number')
     expect(
       XEUtils.getType(new Date())
@@ -1042,13 +1051,22 @@ describe('Base functions', () => {
       XEUtils.getType([])
     ).toEqual('array')
     expect(
+      XEUtils.getType([{}])
+    ).toEqual('array')
+    expect(
       XEUtils.getType(/\d/)
+    ).toEqual('regexp')
+    expect(
+      XEUtils.getType(new RegExp('-'))
     ).toEqual('regexp')
     expect(
       XEUtils.getType({})
     ).toEqual('object')
     expect(
       XEUtils.getType(false)
+    ).toEqual('boolean')
+    expect(
+      XEUtils.getType(true)
     ).toEqual('boolean')
     expect(
       XEUtils.getType(new Error())
