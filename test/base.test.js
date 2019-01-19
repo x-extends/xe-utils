@@ -972,6 +972,9 @@ describe('Base functions', () => {
       XEUtils.isEqual(0, false)
     ).toEqual(false)
     expect(
+      XEUtils.isEqual(/0/, 0)
+    ).toEqual(false)
+    expect(
       XEUtils.isEqual(true, 1)
     ).toEqual(false)
     expect(
