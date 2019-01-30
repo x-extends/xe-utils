@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.7.10
+ * xe-utils.js v1.7.11
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1547,30 +1547,33 @@
     */
   function removeObject (obj, iterate, context) {
     if (obj) {
-      var removeKeys = []
-      var rest = []
-      context = context || this
-      if (!isFunction(iterate)) {
-        iterate = pluckProperty(iterate)
-      }
-      each(obj, function (item, index, rest) {
-        if (iterate.call(context, item, index, rest)) {
-          removeKeys.push(index)
+      if (arguments.length > 1) {
+        var removeKeys = []
+        var rest = []
+        context = context || this
+        if (!isFunction(iterate)) {
+          iterate = pluckProperty(iterate)
         }
-      })
-      if (isArray(obj)) {
-        lastEach(removeKeys, function (item, key) {
-          rest.push(obj[item])
-          obj.splice(item, 1)
+        each(obj, function (item, index, rest) {
+          if (iterate.call(context, item, index, rest)) {
+            removeKeys.push(index)
+          }
         })
-      } else {
-        rest = {}
-        arrayEach(removeKeys, function (key) {
-          rest[key] = obj[key]
-          deleteProperty(obj, key)
-        })
+        if (isArray(obj)) {
+          lastEach(removeKeys, function (item, key) {
+            rest.push(obj[item])
+            obj.splice(item, 1)
+          })
+        } else {
+          rest = {}
+          arrayEach(removeKeys, function (key) {
+            rest[key] = obj[key]
+            deleteProperty(obj, key)
+          })
+        }
+        return rest
       }
-      return rest
+      return clearObject(obj)
     }
     return obj
   }

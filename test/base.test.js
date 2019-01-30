@@ -1647,25 +1647,36 @@ describe('Base functions', () => {
 
   test('remove()', () => {
     let list = [11, 22, 33, 44]
+    XEUtils.remove(list)
+    expect(list).toEqual([])
+
+    list = [11, 22, 33, 44]
     XEUtils.remove(list, 2)
-    expect(
-      list
-    ).toEqual([11, 22, 44])
+    expect(list).toEqual([11, 22, 44])
+
+    list = [11, 22, 33, 44]
+    XEUtils.remove(list, '2')
+    expect(list).toEqual([11, 22, 33, 44])
+
     list = [11, 22, 33, 44]
     XEUtils.remove(list, item => item === 22)
-    expect(
-      list
-    ).toEqual([11, 33, 44])
+    expect(list).toEqual([11, 33, 44])
+
     let obj = { a: 11, b: 22, c: 33 }
+    XEUtils.remove(obj)
+    expect(obj).toEqual({})
+
+    obj = { a: 11, b: 22, c: 33 }
     XEUtils.remove(obj, item => item === 22)
-    expect(
-      obj
-    ).toEqual({ a: 11, c: 33 })
+    expect(obj).toEqual({ a: 11, c: 33 })
+
     obj = { a: 11, b: 22, c: 33 }
     XEUtils.remove(obj, 'c')
-    expect(
-      obj
-    ).toEqual({ a: 11, b: 22 })
+    expect(obj).toEqual({ a: 11, b: 22 })
+
+    obj = { a: 11, b: 22, c: 33, 2: 33 }
+    XEUtils.remove(obj, 2)
+    expect(obj).toEqual({ a: 11, b: 22, c: 33, 2: 33 })
   })
 
   test('range()', () => {
