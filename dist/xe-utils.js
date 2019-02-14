@@ -887,6 +887,10 @@
     }
   }
 
+  function isNumberFinite (obj) {
+    return isNumber(obj) && isFinite(obj)
+  }
+
   /**
     * 判断是否Undefined
     *
@@ -1998,7 +2002,7 @@
 
   var baseExports = {
     isNaN: isNaN,
-    isFinite: isFinite,
+    isFinite: isNumberFinite,
     isUndefined: isUndefined,
     isArray: isArray,
     isFloat: isFloat,

@@ -18,6 +18,9 @@ describe('Array functions', () => {
       XEUtils.uniq(123)
     ).toEqual([])
     expect(
+      XEUtils.uniq('')
+    ).toEqual([])
+    expect(
       XEUtils.uniq([])
     ).toEqual([])
     expect(
@@ -44,6 +47,12 @@ describe('Array functions', () => {
   test('union()', () => {
     expect(
       XEUtils.union()
+    ).toEqual([])
+    expect(
+      XEUtils.union(0)
+    ).toEqual([])
+    expect(
+      XEUtils.union(-1)
     ).toEqual([])
     expect(
       XEUtils.union(undefined)
@@ -582,13 +591,22 @@ describe('Array functions', () => {
 
   test('chunk()', () => {
     expect(
+      XEUtils.chunk()
+    ).toEqual([])
+    expect(
       XEUtils.chunk(0)
+    ).toEqual([])
+    expect(
+      XEUtils.chunk('')
     ).toEqual([])
     expect(
       XEUtils.chunk('123')
     ).toEqual([])
     expect(
       XEUtils.chunk(null)
+    ).toEqual([])
+    expect(
+      XEUtils.chunk(undefined)
     ).toEqual([])
     expect(
       XEUtils.chunk({})
@@ -621,6 +639,9 @@ describe('Array functions', () => {
 
   test('zipObject()', () => {
     expect(
+      XEUtils.zipObject()
+    ).toEqual({})
+    expect(
       XEUtils.zipObject(null)
     ).toEqual({})
     expect(
@@ -651,7 +672,19 @@ describe('Array functions', () => {
 
   test('toArray()', () => {
     expect(
+      XEUtils.toArray()
+    ).toEqual([])
+    expect(
+      XEUtils.toArray(null)
+    ).toEqual([])
+    expect(
+      XEUtils.toArray(undefined)
+    ).toEqual([])
+    expect(
       XEUtils.toArray(0)
+    ).toEqual([])
+    expect(
+      XEUtils.toArray('')
     ).toEqual([])
     expect(
       XEUtils.toArray(true)
@@ -678,7 +711,19 @@ describe('Array functions', () => {
 
   test('includeArrays()', () => {
     expect(
+      XEUtils.includeArrays(null)
+    ).toEqual(false)
+    expect(
       XEUtils.includeArrays(null, null)
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays(null, undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays(undefined, null)
+    ).toEqual(false)
+    expect(
+      XEUtils.includeArrays(undefined, undefined)
     ).toEqual(false)
     expect(
       XEUtils.includeArrays(null, [])

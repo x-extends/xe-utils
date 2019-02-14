@@ -1591,8 +1591,8 @@ XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
 | ss | 秒 | 自动补0 | 00~59 |
 | S | 毫秒 |  | 0~999 |
 | SSS | 毫秒 | 自动补0 | 000~999 |
-| a | 上午,下午 |  | am/pm |
-| A | 上午,下午 |  | AM/PM |
+| a | 小写 |  | am/pm |
+| A | 大写 |  | AM/PM |
 | D | 年份的第几天 |  | 1~366 |
 | e | 星期几 |  | 0~6 |
 | E | 星期几 |  | 1~7 |
