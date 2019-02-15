@@ -158,10 +158,10 @@ function toDateString (date, format, options) {
         [/e/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
         [/E/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
         [/q/g, '', function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
-        [/Z/g, '', function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, 0) + '00') }],
-        [/W/g, '', function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
-        [/w/g, '', function (match) { return handleCustomTemplate(date, formats, match, getYearWeek(date)) }],
-        [/D/g, '', function (match) { return handleCustomTemplate(date, formats, match, getYearDay(date)) }]
+        [/Z{1,2}/g, '', function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, '0') + (match.length === 1 ? ':' : '') + '00') }],
+        [/w/g, '', function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
+        [/W{1,2}/g, '', function (match) { return formatPadStart(handleCustomTemplate(date, formats, match, getYearWeek(date)), match.length, '0') }],
+        [/D{1,3}/g, '', function (match) { return formatPadStart(handleCustomTemplate(date, formats, match, getYearDay(date)), match.length, '0') }]
       ]
       var item
       var index = 0
