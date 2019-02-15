@@ -1598,9 +1598,9 @@ XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
 | e | 星期几 |  | 0~6 |
 | E | 星期几 |  | 1~7 |
 | q | 季度 |  | 1~4 |
-| W | 年份的第几周 | 如果属于上个年份最后周期，返回0 | 0~53 |
-| WW | 年份的第几周 | 自动补0 | 00~53 |
-| w | 月份的第几周 | 如果属于上个月份最后周期，返回0 | 0~5 |
+| W | 年的第几周 |  | 1~53 |
+| WW | 年的第几周 | 自动补0 | 01~53 |
+| w | 月的第几周 |  | 1~5 |
 | z | 时区 |  | GMT |
 | Z | 时区值 |  | [+-]HH:mm |
 | ZZ | 时区值 |  | [+-]HHmm |
@@ -1638,8 +1638,8 @@ XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星�
 // '2017年01月01日 14时05分30秒99毫秒,星期0 第1季度'
 XEUtils.toDateString(new Date(), 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度')
 // '17年1月1日 14时5分30秒99毫秒,星期0 第1季度'
-XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 ZZ 星期E e 第q季 今年第D天 今年第W周 当月第w周 a A')
-// '2017年01月01日 02时05分30秒099毫秒 +0800 星期0 -1 第1季 今年第1天 今年第0周 当月第0周 pm PM'
+XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 ZZ 星期E e 第q季 今年第D天 a A')
+// '2017年01月01日 02时05分30秒099毫秒 +0800 星期0 -1 第1季 今年第1天 pm PM'
 ```
 
 ### getWhatYear ( date, year [, month] ) 返回前几年或后几年的日期,可以指定年的最初时间(first)、年的最后时间(last)、年的月份(0~11)，默认当前

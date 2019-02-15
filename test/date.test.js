@@ -179,11 +179,11 @@ describe('Date functions', () => {
       XEUtils.toDateString(time, 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
     ).toEqual('2017年01月01日 14时05分30秒99毫秒,星期0 第1季度')
     expect(
-      XEUtils.toDateString(time, 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度 今年第D天 当月第W周')
-    ).toEqual('17年1月1日 14时5分30秒99毫秒,星期0 第1季度 今年第1天 当月第0周')
+      XEUtils.toDateString(time, 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度 今年第D天 今年第W周')
+    ).toEqual('17年1月1日 14时5分30秒99毫秒,星期0 第1季度 今年第1天 今年第52周')
     expect(
       XEUtils.toDateString(time, 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E e 第q季 今年第DDD天 今年第WW周 当月第w周 a A')
-    ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期0 -1 第1季 今年第001天 今年第00周 当月第0周 pm PM')
+    ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期0 -1 第1季 今年第001天 今年第52周 当月第4周 pm PM')
   })
 
   test('getWhatYear()', () => {
@@ -393,7 +393,7 @@ describe('Date functions', () => {
     ).toEqual('Invalid Date')
     expect(
       XEUtils.getYearWeek(date)
-    ).toEqual(0)
+    ).toEqual(52)
     expect(
       XEUtils.getYearWeek('2017-01-20')
     ).toEqual(3)
@@ -432,10 +432,10 @@ describe('Date functions', () => {
     ).toEqual('Invalid Date')
     expect(
       XEUtils.getMonthWeek(date)
-    ).toEqual(0)
+    ).toEqual(4)
     expect(
       XEUtils.getMonthWeek('2017-01-01')
-    ).toEqual(0)
+    ).toEqual(4)
     expect(
       XEUtils.getMonthWeek('2017-01-20')
     ).toEqual(3)
@@ -446,7 +446,7 @@ describe('Date functions', () => {
       XEUtils.getMonthWeek('2018-05-25')
     ).toEqual(3)
     expect(
-      XEUtils.getMonthWeek('2018-05-28')
+      XEUtils.getMonthWeek('2018-05-29')
     ).toEqual(4)
   })
 

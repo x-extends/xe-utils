@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.0
+ * xe-utils.js v1.8.1
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2318,6 +2318,14 @@
     return date.getMonth()
   }
 
+  function getYMD (date) {
+    return new Date(_dateFullYear(date), _dateMonth(date), date.getDate())
+  }
+
+  function getYMDTime (date) {
+    return getDateTime(getYMD(date))
+  }
+
   /**
    * 比较两个日期
    *
@@ -2457,24 +2465,24 @@
     */
   function getWhatYear (date, year, month) {
     var number
-    var currentDate = toStringDate(date)
-    if (baseExports.isDate(currentDate)) {
+    date = toStringDate(date)
+    if (baseExports.isDate(date)) {
       if (year) {
         number = year && !isNaN(year) ? year : 0
-        currentDate.setFullYear(_dateFullYear(currentDate) + number)
+        date.setFullYear(_dateFullYear(date) + number)
       }
       if (month || !isNaN(month)) {
         if (month === STRING_FIRST) {
-          return new Date(_dateFullYear(currentDate), 0, 1)
+          return new Date(_dateFullYear(date), 0, 1)
         } else if (month === STRING_LAST) {
-          currentDate.setMonth(11)
-          return getWhatMonth(currentDate, 0, STRING_LAST)
+          date.setMonth(11)
+          return getWhatMonth(date, 0, STRING_LAST)
         } else {
-          currentDate.setMonth(month)
+          date.setMonth(month)
         }
       }
     }
-    return currentDate
+    return date
   }
 
   /**
@@ -2486,23 +2494,23 @@
     * @return {Date}
     */
   function getWhatMonth (date, month, day) {
-    var currentDate = toStringDate(date)
     var monthOffset = month && !isNaN(month) ? month : 0
-    if (baseExports.isDate(currentDate)) {
+    date = toStringDate(date)
+    if (baseExports.isDate(date)) {
       if (day || !isNaN(day)) {
         if (day === STRING_FIRST) {
-          return new Date(_dateFullYear(currentDate), _dateMonth(currentDate) + monthOffset, 1)
+          return new Date(_dateFullYear(date), _dateMonth(date) + monthOffset, 1)
         } else if (day === STRING_LAST) {
-          return new Date(getDateTime(getWhatMonth(currentDate, monthOffset + 1, STRING_FIRST)) - 1)
+          return new Date(getDateTime(getWhatMonth(date, monthOffset + 1, STRING_FIRST)) - 1)
         } else {
-          currentDate.setDate(day)
+          date.setDate(day)
         }
       }
       if (monthOffset) {
-        currentDate.setMonth(_dateMonth(currentDate) + monthOffset)
+        date.setMonth(_dateMonth(date) + monthOffset)
       }
     }
-    return currentDate
+    return date
   }
 
   /**
@@ -2518,18 +2526,18 @@
     var whatDayTime
     var currentDay
     var customDay
-    var currentDate = toStringDate(date)
-    if (baseExports.isDate(currentDate)) {
-      customDay = Number(/^[0-7]$/.test(day) ? day : currentDate.getDay())
-      currentDay = currentDate.getDay()
-      time = getDateTime(currentDate)
+    date = toStringDate(date)
+    if (baseExports.isDate(date)) {
+      customDay = Number(/^[0-7]$/.test(day) ? day : date.getDay())
+      currentDay = date.getDay()
+      time = getDateTime(date)
       whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * DAY_TIME
       if (week && !isNaN(week)) {
         whatDayTime += week * WEEK_TIME
       }
       return new Date(whatDayTime)
     }
-    return currentDate
+    return date
   }
 
   /**
@@ -2541,20 +2549,16 @@
     * @return {Date}
     */
   function getWhatDay (date, day, mode) {
-    var currentDate = toStringDate(date)
-    if (baseExports.isDate(currentDate) && !isNaN(day)) {
-      currentDate.setDate(currentDate.getDate() + Number(day))
+    date = toStringDate(date)
+    if (baseExports.isDate(date) && !isNaN(day)) {
+      date.setDate(date.getDate() + Number(day))
       if (mode === STRING_FIRST) {
-        return new Date(_dateFullYear(currentDate), _dateMonth(currentDate), currentDate.getDate())
+        return new Date(_dateFullYear(date), _dateMonth(date), date.getDate())
       } else if (mode === STRING_LAST) {
-        return new Date(getDateTime(getWhatDay(currentDate, 1, STRING_FIRST)) - 1)
+        return new Date(getDateTime(getWhatDay(date, 1, STRING_FIRST)) - 1)
       }
     }
-    return currentDate
-  }
-
-  function calculateTime (startDate, endDate, timeGap) {
-    return Math.floor((getDateTime(new Date(_dateFullYear(endDate), _dateMonth(endDate), endDate.getDate())) - getDateTime(new Date(_dateFullYear(startDate), _dateMonth(startDate), startDate.getDate()))) / timeGap) + 1
+    return date
   }
 
   /**
@@ -2574,9 +2578,9 @@
         monthFirstWeek = getWhatWeek(monthFirst, 1, 1)
       }
       if (currentDate >= monthFirstWeek) {
-        return calculateTime(monthFirstWeek, currentDate, WEEK_TIME)
+        return Math.floor((getYMDTime(currentDate) - getYMDTime(monthFirstWeek)) / WEEK_TIME) + 1
       }
-      return 0
+      return getMonthWeek(getWhatWeek(currentDate, 0, 1))
     }
     return currentDate
   }
@@ -2588,11 +2592,11 @@
     * @return {Number}
     */
   function getYearDay (date) {
-    var currentDate = toStringDate(date)
-    if (baseExports.isDate(currentDate)) {
-      return calculateTime(getWhatYear(currentDate, 0, STRING_FIRST), currentDate, DAY_TIME)
+    date = toStringDate(date)
+    if (baseExports.isDate(date)) {
+      return Math.floor((getYMDTime(date) - getYMDTime(getWhatYear(date, 0, STRING_FIRST))) / DAY_TIME) + 1
     }
-    return currentDate
+    return date
   }
 
   /**
@@ -2602,19 +2606,14 @@
     * @return {Number}
     */
   function getYearWeek (date) {
-    var currentDate = toStringDate(date)
-    if (baseExports.isDate(currentDate)) {
-      var yearFirst = getWhatYear(currentDate, 0, STRING_FIRST)
-      var yearFirstWeek = getWhatWeek(yearFirst, 0, 1)
-      if (yearFirstWeek < yearFirst) {
-        yearFirstWeek = getWhatWeek(yearFirst, 1, 1)
-      }
-      if (currentDate >= yearFirstWeek) {
-        return calculateTime(yearFirstWeek, currentDate, WEEK_TIME)
-      }
-      return 0
+    date = toStringDate(date)
+    if (baseExports.isDate(date)) {
+      date = getYMD(date)
+      date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7)
+      var week = new Date(date.getFullYear(), 0, 4)
+      return Math.round(((date.getTime() - week.getTime()) / DAY_TIME + (week.getDay() + 6) % 7 - 3) / 7) + 1
     }
-    return currentDate
+    return date
   }
 
   /**
@@ -2625,11 +2624,11 @@
     * @return {Number}
     */
   function getDayOfYear (date, year) {
-    var currentDate = toStringDate(date)
-    if (baseExports.isDate(currentDate)) {
-      return baseExports.isLeapYear(getWhatYear(currentDate, year)) ? 366 : 365
+    date = toStringDate(date)
+    if (baseExports.isDate(date)) {
+      return baseExports.isLeapYear(getWhatYear(date, year)) ? 366 : 365
     }
-    return currentDate
+    return date
   }
 
   /**
@@ -2640,11 +2639,11 @@
     * @return {Number}
     */
   function getDayOfMonth (date, month) {
-    var currentDate = toStringDate(date)
-    if (baseExports.isDate(currentDate)) {
-      return Math.floor((getDateTime(getWhatMonth(currentDate, month, STRING_LAST)) - getDateTime(getWhatMonth(currentDate, month, STRING_FIRST))) / DAY_TIME) + 1
+    date = toStringDate(date)
+    if (baseExports.isDate(date)) {
+      return Math.floor((getDateTime(getWhatMonth(date, month, STRING_LAST)) - getDateTime(getWhatMonth(date, month, STRING_FIRST))) / DAY_TIME) + 1
     }
-    return currentDate
+    return date
   }
 
   /**
