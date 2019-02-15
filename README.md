@@ -1600,7 +1600,6 @@ XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
 | q | 季度 |  | 1~4 |
 | W | 年的第几周 |  | 1~53 |
 | WW | 年的第几周 | 自动补0 | 01~53 |
-| w | 月的第几周 |  | 1~5 |
 | z | 时区 |  | GMT |
 | Z | 时区值 |  | [+-]HH:mm |
 | ZZ | 时区值 |  | [+-]HHmm |

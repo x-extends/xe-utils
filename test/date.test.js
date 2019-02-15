@@ -182,8 +182,8 @@ describe('Date functions', () => {
       XEUtils.toDateString(time, 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度 今年第D天 今年第W周')
     ).toEqual('17年1月1日 14时5分30秒99毫秒,星期0 第1季度 今年第1天 今年第52周')
     expect(
-      XEUtils.toDateString(time, 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E e 第q季 今年第DDD天 今年第WW周 当月第w周 a A')
-    ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期0 -1 第1季 今年第001天 今年第52周 当月第4周 pm PM')
+      XEUtils.toDateString(time, 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E e 第q季 今年第DDD天 今年第WW周 a A')
+    ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期0 -1 第1季 今年第001天 今年第52周 pm PM')
   })
 
   test('getWhatYear()', () => {

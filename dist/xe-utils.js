@@ -2435,7 +2435,6 @@
           [/E/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
           [/q/g, '', function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],
           [/Z{1,2}/g, '', function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, '0') + (match.length === 1 ? ':' : '') + '00') }],
-          [/w/g, '', function (match) { return handleCustomTemplate(date, formats, match, getMonthWeek(date)) }],
           [/W{1,2}/g, '', function (match) { return formatPadStart(handleCustomTemplate(date, formats, match, getYearWeek(date)), match.length, '0') }],
           [/D{1,3}/g, '', function (match) { return formatPadStart(handleCustomTemplate(date, formats, match, getYearDay(date)), match.length, '0') }]
         ]
@@ -2608,7 +2607,7 @@
   function getYearWeek (date) {
     date = toStringDate(date)
     if (baseExports.isDate(date)) {
-      date = getYMD(date)
+      date.setHours(0, 0, 0, 0)
       date.setDate(date.getDate() + 3 - (date.getDay() + 6) % 7)
       var week = new Date(date.getFullYear(), 0, 4)
       return Math.round(((date.getTime() - week.getTime()) / DAY_TIME + (week.getDay() + 6) % 7 - 3) / 7) + 1
