@@ -1602,7 +1602,8 @@ XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
 | WW | 年份的第几周 | 自动补0 | 00~53 |
 | w | 月份的第几周 | 如果属于上个月份最后周期，返回0 | 0~5 |
 | z | 时区 |  | GMT |
-| Z | 时区值 |  | [+-]HHmm |
+| Z | 时区值 |  | [+-]HH:mm |
+| ZZ | 时区值 |  | [+-]HHmm |
 
 ```JavaScript
 import XEUtils from 'xe-utils'
