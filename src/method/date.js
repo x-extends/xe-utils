@@ -162,7 +162,6 @@ function toDateString (date, format, options) {
         [/S{1,3}/g, date.getMilliseconds()],
         [/a/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm) }],
         [/A/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase()) }],
-        [/z/g, '', function (match) { return handleCustomTemplate(date, formats, match, 'GMT') }],
         [/e/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
         [/E/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
         [/q/g, '', function (match) { return handleCustomTemplate(date, formats, match, Math.floor((_dateMonth(date) + 3) / 3)) }],

@@ -1600,7 +1600,6 @@ XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
 | q | 季度 |  | 1~4 |
 | W | 年的第几周 |  | 1~53 |
 | WW | 年的第几周 | 自动补0 | 01~53 |
-| z | 时区 |  | GMT |
 | Z | 时区值 |  | [+-]HH:mm |
 | ZZ | 时区值 |  | [+-]HHmm |
 
@@ -1623,9 +1622,9 @@ XEUtils.toDateString(new Date(), 'yy-M-d')
 // '17-1-1'
 XEUtils.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
 // '2017-01-01 14:05:30.099'
-XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZ')
+XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS GMTZ')
 // '2017-01-01 02:05:30.099 GMT+08:00'
-XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS zZZ')
+XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS GMTZZ')
 // '2017-01-01 02:05:30.099 GMT+0800'
 XEUtils.toDateString('2017-01-01 10:05:30', 'yyyy-M-d h:m:s.S')
 // '2017-1-1 2:5:30.99'
