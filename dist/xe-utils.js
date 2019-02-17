@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.2
+ * xe-utils.js v1.8.3
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -923,7 +923,9 @@
     * @param {Number, String} number 数值
     * @return {Boolean}
     */
-  var isInteger = Number.isInteger
+  var isInteger = function (obj) {
+    return obj !== null && !isNaN(obj) && !isArray(obj) && obj % 1 === 0
+  }
 
   /**
     * 判断是否方法

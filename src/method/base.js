@@ -208,7 +208,9 @@ function isFloat (obj) {
   * @param {Number, String} number 数值
   * @return {Boolean}
   */
-var isInteger = Number.isInteger
+var isInteger = function (obj) {
+  return obj !== null && !isNaN(obj) && !isArray(obj) && obj % 1 === 0
+}
 
 /**
   * 判断是否方法

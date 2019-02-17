@@ -205,6 +205,9 @@ describe('Base functions', () => {
       XEUtils.isFloat(-1)
     ).toEqual(false)
     expect(
+      XEUtils.isFloat('0')
+    ).toEqual(false)
+    expect(
       XEUtils.isFloat('3.9a')
     ).toEqual(false)
     expect(
@@ -249,6 +252,18 @@ describe('Base functions', () => {
     expect(
       XEUtils.isInteger(-1.3)
     ).toEqual(false)
+    expect(
+      XEUtils.isInteger('3.4')
+    ).toEqual(false)
+    expect(
+      XEUtils.isInteger('0')
+    ).toEqual(true)
+    expect(
+      XEUtils.isInteger('3')
+    ).toEqual(true)
+    expect(
+      XEUtils.isInteger('-5')
+    ).toEqual(true)
     expect(
       XEUtils.isInteger(2)
     ).toEqual(true)
