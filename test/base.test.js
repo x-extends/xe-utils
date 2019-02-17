@@ -1534,6 +1534,9 @@ describe('Base functions', () => {
       XEUtils.keys({ a: 11, b: 22 })
     ).toEqual(['a', 'b'])
     expect(
+      XEUtils.keys([{ a: 11 }, { a: 22 }, { a: 33 }])
+    ).toEqual(['0', '1', '2'])
+    expect(
       XEUtils.keys([11, 22])
     ).toEqual(['0', '1'])
     expect(
@@ -1563,6 +1566,9 @@ describe('Base functions', () => {
     expect(
       XEUtils.values({ a: 11, b: 22 })
     ).toEqual([11, 22])
+    expect(
+      XEUtils.values([{ a: 11 }, { a: 22 }, { a: 33 }])
+    ).toEqual([{ a: 11 }, { a: 22 }, { a: 33 }])
     expect(
       XEUtils.values([11, 22])
     ).toEqual([11, 22])

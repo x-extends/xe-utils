@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.1
+ * xe-utils.js v1.8.2
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1606,7 +1606,7 @@
     * @param {Object} obj 对象/数组
     * @return {Array}
     */
-  var objectKeys = createGetObjects('keys', 0)
+  var objectKeys = createGetObjects('keys', 1)
 
   /**
     * 获取对象所有值
@@ -1614,7 +1614,7 @@
     * @param {Object} obj 对象/数组
     * @return {Array}
     */
-  var objectValues = createGetObjects('values', 1)
+  var objectValues = createGetObjects('values', 0)
 
   /**
     * 获取对象所有属性、值
