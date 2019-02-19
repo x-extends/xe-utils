@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.4
+ * xe-utils.js v1.8.5
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1852,6 +1852,7 @@
    * @param {Object/Array} data 对象
    * @param {String/Function} property 键、路径
    * @param {Object} defaultValue 默认值
+   * @return {Object}
    */
   function get (obj, property, defaultValue) {
     if (isNull(obj) || isUndefined(obj)) {
@@ -1859,6 +1860,48 @@
     }
     var result = pathGet(obj, property)
     return isUndefined(result) ? defaultValue : result
+  }
+
+  function valSet (obj, key, isSet, value) {
+    if (obj[key]) {
+      if (isSet) {
+        obj[key] = value
+      }
+    } else {
+      var matchs = key ? key.match(/(.+)\[(\d+)\]$/) : null
+      var rest = isSet ? value : {}
+      if (matchs) {
+        var index = parseInt(matchs[2])
+        if (obj[matchs[1]]) {
+          obj[matchs[1]][index] = rest
+        } else {
+          obj[matchs[1]] = new Array(index + 1)
+          obj[matchs[1]][index] = rest
+        }
+      } else {
+        obj[key] = rest
+      }
+      return rest
+    }
+    return obj[key]
+  }
+
+  /**
+   * 设置对象属性上的值。如果属性不存在则创建它
+   * @param {Object/Array} data 对象
+   * @param {String/Function} property 键、路径
+   * @param {Object} value 值
+   */
+  function set (obj, property, value) {
+    if (obj) {
+      var rest = obj
+      var keys = property ? (isArray(property) ? property : ('' + property).split('.')) : []
+      var len = keys.length
+      arrayEach(keys, function (key, index) {
+        rest = valSet(rest, key, index === len - 1, value)
+      })
+    }
+    return obj
   }
 
   /**
@@ -2104,6 +2147,7 @@
     lastArrayEach: lastArrayEach,
     lastObjectEach: lastObjectEach,
     get: get,
+    set: set,
     groupBy: groupBy,
     countBy: countBy,
     objectMap: objectMap,

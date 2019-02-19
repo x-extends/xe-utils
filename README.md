@@ -964,6 +964,17 @@ XEUtils.get({a: {b: 11, c: 22, d: [33, {f: 66}]}}, 'a.d[1].f') // 66
 XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, ['a', 'c']) // 22
 ```
 
+### set ( obj, property, value ) 设置对象属性上的值。如果属性不存在则创建它
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.set({}, 'a.d[0]', 33) // {a: {d: [33]}}
+XEUtils.set({a: {}}, 'a.d[0].f.h', 44) // {a: {d: [{f: {h: 44}}]}}
+XEUtils.set({}, ['a', 'c'], 22) // {a: {c: 22}}
+XEUtils.set({}, ['a', 'd[0]', 'f', 'h'], 44) // {a: {d: [{f: {h: 44}}]}}
+```
+
 ### groupBy ( obj, iteratee [, context] ) 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组
 
 ```JavaScript

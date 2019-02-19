@@ -697,6 +697,21 @@ export interface XEUtilsMethods {
   get(obj: any, property: string | Array<string>, defaultValue: any): any;
 
   /**
+   * 设置对象属性上的值。如果属性不存在则创建它
+   * @param obj 对象
+   * @param property 键、路径
+   * @param value 值
+   * @example 
+    ```javascript
+    XEUtils.set({}, 'a.d[0]', 33) // {a: {d: [33]}}
+    XEUtils.set({a: {}}, 'a.d[0].f.h', 44) // {a: {d: [{f: {h: 44}}]}}
+    XEUtils.set({}, ['a', 'c'], 22) // {a: {c: 22}}
+    XEUtils.set({}, ['a', 'd[0]', 'f', 'h'], 44) // {a: {d: [{f: {h: 44}}]}}
+    ```
+   */
+  set(obj: any, property: string | Array<string>, value: any): void;
+
+  /**
    * 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组
    * @param obj 对象
    * @param iteratee 回调/属性

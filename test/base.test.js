@@ -1774,6 +1774,12 @@ describe('Base functions', () => {
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } })
     ).toEqual(undefined)
     expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, null)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, undefined)
+    ).toEqual(undefined)
+    expect(
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, '')
     ).toEqual(undefined)
     expect(
@@ -1818,6 +1824,60 @@ describe('Base functions', () => {
     expect(
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'e'], '333')
     ).toEqual('333')
+  })
+
+  test('set()', () => {
+    expect(
+      XEUtils.set(null)
+    ).toEqual(null)
+    expect(
+      XEUtils.set(undefined)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.set({})
+    ).toEqual({})
+    expect(
+      XEUtils.set([])
+    ).toEqual([])
+    expect(
+      XEUtils.set({ a: 11 }, null)
+    ).toEqual({ a: 11 })
+    expect(
+      XEUtils.set([11])
+    ).toEqual([11], null)
+    expect(
+      XEUtils.set({}, 'a', 11)
+    ).toEqual({ a: 11 })
+    expect(
+      XEUtils.sum(XEUtils.set({ b: 22 }, 'a', 11))
+    ).toEqual(33)
+    expect(
+      XEUtils.set({}, 'a.b', 11)
+    ).toEqual({ a: { b: 11 } })
+    expect(
+      XEUtils.set({}, 'a.d[0]', 33)
+    ).toEqual({ a: { d: [33] } })
+    expect(
+      XEUtils.set({ a: {} }, 'a.d[0].f.h', 44)
+    ).toEqual({ a: { d: [{ f: { h: 44 } }] } })
+    expect(
+      XEUtils.set({}, 'a.d[0].f.h[0]', 55)
+    ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
+    expect(
+      XEUtils.set({}, ['a'], 11)
+    ).toEqual({ a: 11 })
+    expect(
+      XEUtils.sum(XEUtils.set({ c: 33 }, ['a'], 11))
+    ).toEqual(44)
+    expect(
+      XEUtils.set({}, ['a', 'c'], 22)
+    ).toEqual({ a: { c: 22 } })
+    expect(
+      XEUtils.set({}, ['a', 'd[0]', 'f', 'h'], 44)
+    ).toEqual({ a: { d: [{ f: { h: 44 } }] } })
+    expect(
+      XEUtils.set({ a: {} }, ['a', 'd[0]', 'f', 'h[0]'], 55)
+    ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
   })
 
   test('groupBy()', () => {
