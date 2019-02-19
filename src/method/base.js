@@ -1135,7 +1135,7 @@ function pathGet (obj, property) {
 /**
  * 获取对象的属性的值，如果值为 undefined，则返回默认值
  * @param {Object/Array} data 对象
- * @param {String/Function} property 键
+ * @param {String/Function} property 键、路径
  * @param {Object} defaultValue 默认值
  */
 function get (obj, property, defaultValue) {

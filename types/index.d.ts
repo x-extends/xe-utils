@@ -682,6 +682,21 @@ export interface XEUtilsMethods {
   lastObjectEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
+   * 获取对象的属性的值，如果值为 undefined，则返回默认值
+   * @param obj 对象
+   * @param property 键、路径
+   * @param defaultValue 默认值
+   * @example 
+    ```javascript
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.b') // 11
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.e', 'default') // 'default'
+    XEUtils.get({a: {b: 11, c: 22, d: [33, {f: 66}]}}, 'a.d[1].f') // 66
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, ['a', 'c']) // 22
+    ```
+   */
+  get(obj: any, property: string | Array<string>, defaultValue: any): any;
+
+  /**
    * 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组
    * @param obj 对象
    * @param iteratee 回调/属性
