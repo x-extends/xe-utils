@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.3
+ * xe-utils.js v1.8.4
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1824,6 +1824,43 @@
     }
   }
 
+  function valGet (obj, key) {
+    var matchs = key ? key.match(/(.+)?\[(\d+)\]$/) : null
+    return matchs ? (matchs[1] ? obj[matchs[1]][matchs[2]] : obj[matchs[2]]) : obj[key]
+  }
+
+  function pathGet (obj, property) {
+    if (obj) {
+      var rest
+      var keys = property ? (isArray(property) ? property : ('' + property).split('.')) : []
+      var index = 0
+      var len = keys.length
+      if (len) {
+        for (rest = obj; index < len; index++) {
+          rest = valGet(rest, keys[index])
+          if (isUndefined(rest) || isNull(rest)) {
+            return
+          }
+        }
+        return rest
+      }
+    }
+  }
+
+  /**
+   * 获取对象的属性的值，如果值为 undefined，则返回默认值
+   * @param {Object/Array} data 对象
+   * @param {String/Function} property 键
+   * @param {Object} defaultValue 默认值
+   */
+  function get (obj, property, defaultValue) {
+    if (isNull(obj) || isUndefined(obj)) {
+      return defaultValue
+    }
+    var result = pathGet(obj, property)
+    return isUndefined(result) ? defaultValue : result
+  }
+
   /**
     * 集合分组,默认使用键值分组,如果有iterate则使用结果进行分组
     *
@@ -2066,6 +2103,7 @@
     lastForEach: lastArrayEach,
     lastArrayEach: lastArrayEach,
     lastObjectEach: lastObjectEach,
+    get: get,
     groupBy: groupBy,
     countBy: countBy,
     objectMap: objectMap,

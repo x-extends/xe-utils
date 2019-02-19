@@ -150,6 +150,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [lastObjectEach ( obj, iteratee [, context] ) 对象迭代器，从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [forOf ( obj, iteratee [, context] ) 通用迭代器,支持 return false 跳出循环 break](#eachforofarrayeachobjecteach--obj-iteratee--context--迭代器)
   * [lastForOf ( obj, iteratee [, context] ) 通用迭代器,从最后开始迭代，支持 return false 跳出循环 break](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
+  * [get (obj) 获取对象的属性的值，如果值为 undefined，则返回默认值](#keys-obj-获取对象所有属性)
   * [keys (obj) 获取对象所有属性](#keys-obj-获取对象所有属性)
   * [values (obj) 获取对象所有值](#values-obj-获取对象所有值)
   * [entries (obj) 获取对象所有属性、值](#entries-obj-获取对象所有属性值)
@@ -949,6 +950,18 @@ XEUtils.lastArrayEach([11, 22, 33], (item, index) => {
 XEUtils.lastObjectEach({a: 11, b: 22}, (item, key) => {
   // 对象迭代器，只能用于遍历对象，性能高于 lastEach
 })
+```
+
+### get ( obj, property, defaultValue ) 获取对象的属性的值，如果值为 undefined，则返回默认值
+
+```JavaScript
+import XEUtils from 'xe-utils'
+
+XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.b') // 11
+XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.e', 'default') // 'default'
+XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.d[0]') // 33
+XEUtils.get({a: {b: 11, c: 22, d: [33, {f: 66}]}}, 'a.d[1].f') // 66
+XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, ['a', 'c']) // 22
 ```
 
 ### groupBy ( obj, iteratee [, context] ) 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组

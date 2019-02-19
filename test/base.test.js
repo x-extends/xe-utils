@@ -1760,6 +1760,66 @@ describe('Base functions', () => {
     ).toEqual([['5', '4'], ['4', '3'], ['3', '2'], ['2', '1'], ['1', '0']])
   })
 
+  test('get()', () => {
+    expect(
+      XEUtils.get()
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get('123')
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get(null)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } })
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, '')
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, [])
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get('abc', '[2]')
+    ).toEqual('c')
+    expect(
+      XEUtils.get('abc', [0])
+    ).toEqual('a')
+    expect(
+      XEUtils.get([11, 22, 33], 1)
+    ).toEqual(22)
+    expect(
+      XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)
+    ).toEqual({ a: 33, b: 44 })
+    expect(
+      XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')
+    ).toEqual(44)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a')
+    ).toEqual({ b: 11, c: 22, d: [33, 44] })
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.b')
+    ).toEqual(11)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')
+    ).toEqual([33, 44])
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[0]')
+    ).toEqual(33)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, { f: 66 }] } }, 'a.d[1].f')
+    ).toEqual(66)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[3]', '111')
+    ).toEqual('111')
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'c'], '222')
+    ).toEqual(22)
+    expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'e'], '333')
+    ).toEqual('333')
+  })
+
   test('groupBy()', () => {
     expect(
       XEUtils.groupBy([{ type: 'a' }, { type: 'b' }], 'type')
