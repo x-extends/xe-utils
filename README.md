@@ -150,6 +150,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [lastObjectEach ( obj, iteratee [, context] ) 对象迭代器，从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [forOf ( obj, iteratee [, context] ) 通用迭代器,支持 return false 跳出循环 break](#eachforofarrayeachobjecteach--obj-iteratee--context--迭代器)
   * [lastForOf ( obj, iteratee [, context] ) 通用迭代器,从最后开始迭代，支持 return false 跳出循环 break](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
+  * [has (obj, property) 检查键、路径是否是该对象的属性](#has--obj-property--检查键路径是否是该对象的属性)
   * [get (obj, property, defaultValue) 获取对象的属性的值，如果值为 undefined，则返回默认值](#user-content-get--obj-property-defaultvalue--获取对象的属性的值如果值为-undefined则返回默认值)
   * [set ( obj, property, value ) 设置对象属性上的值。如果属性不存在则创建它](#set--obj-property-value--设置对象属性上的值如果属性不存在则创建它)
   * [keys (obj) 获取对象所有属性](#keys-obj-获取对象所有属性)
