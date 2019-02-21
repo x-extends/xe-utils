@@ -682,6 +682,22 @@ export interface XEUtilsMethods {
   lastObjectEach(obj: any, iteratee: Function, context?: any): void;
 
   /**
+   * 检查键、路径是否是该对象的属性
+   * @param obj 对象
+   * @param property 键、路径
+   * @example 
+    ```javascript
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.b') // true
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.e') // false
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.d[0]') // true
+    XEUtils.get({a: {b: 11, c: 22, d: [33, {f: 66}]}}, 'a.d[1].f') // true
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, ['a', 'd[1]']) // true
+    XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, ['a', 'd[3]']) // false
+    ```
+   */
+  has(obj: any, property: string | Array<string>): boolean;
+
+  /**
    * 获取对象的属性的值，如果值为 undefined，则返回默认值
    * @param obj 对象
    * @param property 键、路径

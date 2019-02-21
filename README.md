@@ -953,6 +953,19 @@ XEUtils.lastObjectEach({a: 11, b: 22}, (item, key) => {
 })
 ```
 
+### has ( obj, property ) 检查键、路径是否是该对象的属性
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.has({a: {b: 11, c: 22, d: [33, 44]}}, 'a.b') // true
+XEUtils.has({a: {b: 11, c: 22, d: [33, 44]}}, 'a.e') // false
+XEUtils.has({a: {b: 11, c: 22, d: [33, 44]}}, 'a.d[0]') // true
+XEUtils.has({a: {b: 11, c: 22, d: [33, {f: 66}]}}, 'a.d[1].f') // true
+XEUtils.has({a: {b: 11, c: 22, d: [33, 44]}}, ['a', 'd[1]']) // true
+XEUtils.has({a: {b: 11, c: 22, d: [33, 44]}}, ['a', 'd[3]']) // false
+```
+
 ### get ( obj, property, defaultValue ) 获取对象的属性的值，如果值为 undefined，则返回默认值
 
 ```javascript

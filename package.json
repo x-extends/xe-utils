@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "A JavaScript tools library.",
   "main": "index.js",
   "typings": "types/index.d.ts",

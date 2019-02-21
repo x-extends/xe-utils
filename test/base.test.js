@@ -1760,6 +1760,75 @@ describe('Base functions', () => {
     ).toEqual([['5', '4'], ['4', '3'], ['3', '2'], ['2', '1'], ['1', '0']])
   })
 
+  test('has()', () => {
+    expect(
+      XEUtils.has()
+    ).toEqual(false)
+    expect(
+      XEUtils.has('123')
+    ).toEqual(false)
+    expect(
+      XEUtils.has(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } })
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, null)
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, '')
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, [])
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[3]')
+    ).toEqual(false)
+    expect(
+      XEUtils.has('abc', '[2]')
+    ).toEqual(true)
+    expect(
+      XEUtils.has('abc', [0])
+    ).toEqual(true)
+    expect(
+      XEUtils.has([11, 22, 33], 1)
+    ).toEqual(true)
+    expect(
+      XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)
+    ).toEqual(true)
+    expect(
+      XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 0, c: 22, d: [33, 44] } }, 'a.b')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [null] } }, 'a.d[0]')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, { f: 66 }] } }, 'a.d[1].f')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44, 55, undefined] } }, 'a.d[3]')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: undefined, d: [33, 44] } }, ['a', 'c'])
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44], e: 0 } }, ['a', 'e'])
+    ).toEqual(true)
+  })
+
   test('get()', () => {
     expect(
       XEUtils.get()

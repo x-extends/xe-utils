@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.5
+ * xe-utils.js v1.8.6
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -721,6 +721,10 @@
   var objectToString = Object.prototype.toString
   var objectAssignFns = Object.assign
 
+  function hasOwnProp (obj, key) {
+    return obj.hasOwnProperty(key)
+  }
+
   /* eslint-disable valid-typeof */
   function createInTypeof (type) {
     return function (obj) {
@@ -1301,7 +1305,7 @@
           return callback(obj, val)
         }
         for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
+          if (hasOwnProp(obj, key)) {
             if (val === obj[key]) {
               return key
             }
@@ -1351,7 +1355,7 @@
           return callback(obj, iterate, context)
         }
         for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
+          if (hasOwnProp(obj, key)) {
             if (iterate.call(context, obj[key], key, obj)) {
               return key
             }
@@ -1707,7 +1711,7 @@
 
   function objectEach (obj, iterate, context) {
     for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (hasOwnProp(obj, key)) {
         iterate.call(context || this, obj[key], key, obj)
       }
     }
@@ -1744,7 +1748,7 @@
         }
       } else {
         for (var key in obj) {
-          if (obj.hasOwnProperty(key)) {
+          if (hasOwnProp(obj, key)) {
             if (iterate.call(context, obj[key], key, obj) === false) {
               break
             }
@@ -1824,15 +1828,76 @@
     }
   }
 
+  function getHGSKeys (property) {
+    return property ? (isArray(property) ? property : ('' + property).split('.')) : []
+  }
+
+  /**
+   * 检查键、路径是否是该对象的属性
+   * @param {Object/Array} data 对象
+   * @param {String/Function} property 键、路径
+   * @return {Boolean}
+   */
+  var hgKeyRE = /(.+)?\[(\d+)\]$/
+  var sKeyRE = /(.+)\[(\d+)\]$/
+  function has (obj, property) {
+    if (obj) {
+      var prop
+      var arrIndex
+      var objProp
+      var matchs
+      var rest
+      var isHas
+      var keys = getHGSKeys(property)
+      var index = 0
+      var len = keys.length
+      for (rest = obj; index < len; index++) {
+        isHas = false
+        prop = keys[index]
+        matchs = prop ? prop.match(hgKeyRE) : ''
+        if (matchs) {
+          arrIndex = matchs[1]
+          objProp = matchs[2]
+          if (arrIndex) {
+            if (rest[arrIndex]) {
+              if (hasOwnProp(rest[arrIndex], objProp)) {
+                isHas = true
+                rest = rest[arrIndex][objProp]
+              }
+            }
+          } else {
+            if (hasOwnProp(rest, objProp)) {
+              isHas = true
+              rest = rest[objProp]
+            }
+          }
+        } else {
+          if (hasOwnProp(rest, prop)) {
+            isHas = true
+            rest = rest[prop]
+          }
+        }
+        if (isHas) {
+          if (index === len - 1) {
+            return true
+          }
+        } else {
+          break
+        }
+      }
+    }
+    return false
+  }
+
   function valGet (obj, key) {
-    var matchs = key ? key.match(/(.+)?\[(\d+)\]$/) : null
-    return matchs ? (matchs[1] ? obj[matchs[1]][matchs[2]] : obj[matchs[2]]) : obj[key]
+    var matchs = key ? key.match(hgKeyRE) : ''
+    return matchs ? (matchs[1] ? (obj[matchs[1]] ? obj[matchs[1]][matchs[2]] : undefined) : obj[matchs[2]]) : obj[key]
   }
 
   function pathGet (obj, property) {
     if (obj) {
       var rest
-      var keys = property ? (isArray(property) ? property : ('' + property).split('.')) : []
+      var keys = getHGSKeys(property)
       var index = 0
       var len = keys.length
       if (len) {
@@ -1842,8 +1907,8 @@
             return
           }
         }
-        return rest
       }
+      return rest
     }
   }
 
@@ -1868,7 +1933,7 @@
         obj[key] = value
       }
     } else {
-      var matchs = key ? key.match(/(.+)\[(\d+)\]$/) : null
+      var matchs = key ? key.match(sKeyRE) : null
       var rest = isSet ? value : {}
       if (matchs) {
         var index = parseInt(matchs[2])
@@ -1895,7 +1960,7 @@
   function set (obj, property, value) {
     if (obj) {
       var rest = obj
-      var keys = property ? (isArray(property) ? property : ('' + property).split('.')) : []
+      var keys = getHGSKeys(property)
       var len = keys.length
       arrayEach(keys, function (key, index) {
         rest = valSet(rest, key, index === len - 1, value)
@@ -2146,6 +2211,7 @@
     lastForEach: lastArrayEach,
     lastArrayEach: lastArrayEach,
     lastObjectEach: lastObjectEach,
+    has: has,
     get: get,
     set: set,
     groupBy: groupBy,
