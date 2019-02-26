@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.6
+ * xe-utils.js v1.8.7
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2243,6 +2243,10 @@
     }
   }
 
+  function isBrowseType (type) {
+    return navigator.userAgent.indexOf(type) > -1
+  }
+
   /**
     * 获取浏览器内核
     * @return Object
@@ -2250,22 +2254,18 @@
   function browse () {
     var $body
     var $dom
+    var isChrome
     var strUndefined = 'undefined'
     var result = {
       isNode: false,
       isMobile: false,
       isPC: false,
-      isLocalStorage: false,
-      isSessionStorage: false,
       isDoc: typeof document !== strUndefined
     }
     if (typeof window === strUndefined && typeof process !== strUndefined) {
       result.isNode = true
     } else {
-      result.isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
-      result.isPC = !result.isMobile
-      result.isLocalStorage = isBrowseStorage(window.localStorage)
-      result.isSessionStorage = isBrowseStorage(window.sessionStorage)
+      isChrome = isBrowseType('Chrome')
       if (result.isDoc) {
         $dom = document
         $body = $dom.body || $dom.documentElement
@@ -2273,6 +2273,13 @@
           result['-' + core] = !!$body[core + 'MatchesSelector']
         })
       }
+      baseExports.assign(result, {
+        safari: !isChrome && isBrowseType('Safari'),
+        isMobile: /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent),
+        isPC: !result.isMobile,
+        isLocalStorage: isBrowseStorage(window.localStorage),
+        isSessionStorage: isBrowseStorage(window.sessionStorage)
+      })
     }
     return result
   }
