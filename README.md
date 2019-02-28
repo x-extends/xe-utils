@@ -1,4 +1,6 @@
-# javascript 函数库、工具类
+# xe-utils
+
+javascript 函数库、工具类
 
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.org/package/xe-utils)
 [![npm build](https://travis-ci.org/xuliangzhan/xe-utils.svg?branch=master)](https://travis-ci.org/xuliangzhan/xe-utils)
@@ -26,7 +28,7 @@ Using nodejs
 const XEUtils = require('xe-utils')
 ```
 
-在 [unpkg](https://unpkg.com/xe-utils/) 和 [cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/) 上获取
+Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
 
 ```HTML
 <script src="https://unpkg.com/xe-utils/dist/xe-utils.min.js"></script>
