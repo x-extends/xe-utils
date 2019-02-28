@@ -35,13 +35,13 @@ import XEUtils from 'xe-utils'
 [Using cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
 
 ```HTML
-<script src="https://cdn.jsdelivr.net/npm/xe-utils/dist/xe-utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xe-utils/dist/xe-utils.min.js"></script>
 ```
 
 [Using unpkg](https://unpkg.com/xe-utils/)
 
 ```HTML
-<script src="https://unpkg.com/xe-utils/dist/xe-utils.js"></script>
+<script src="https://unpkg.com/xe-utils/dist/xe-utils.min.js"></script>
 ```
 
 Using requirejs
