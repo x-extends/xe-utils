@@ -16,7 +16,7 @@ XEUtils 提供一套实用的基础函数、任意格式的日期转换函数，
 
 ## Installing
 
-```javascript
+```shell
 npm install xe-utils --save
 ```
 
@@ -26,37 +26,10 @@ Using nodejs
 const XEUtils = require('xe-utils')
 ```
 
-Using ES6
-
-```javascript
-import XEUtils from 'xe-utils'
-```
-
-[Using cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
-
-```HTML
-<script src="https://cdn.jsdelivr.net/npm/xe-utils/dist/xe-utils.min.js"></script>
-```
-
-[Using unpkg](https://unpkg.com/xe-utils/)
+在 [unpkg](https://unpkg.com/xe-utils/) 和 [cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/) 上获取
 
 ```HTML
 <script src="https://unpkg.com/xe-utils/dist/xe-utils.min.js"></script>
-```
-
-Using requirejs
-
-```javascript
-// require 配置
-require.config({
-  paths: {
-    // ...,
-    'xe-utils': './dist/xe-utils.min'
-  }
-})
-define(['xe-utils'], function (XEUtils) {
-  XEUtils.toDateString(new Date()) // 2018-01-01 10:30:28
-})
 ```
 
 ### ES6 Module import
