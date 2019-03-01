@@ -1535,7 +1535,7 @@ XEUtils.toTreeArray(list2, {data: 'data'})
 ```javascript
 import XEUtils from 'xe-utils'
 
-XEUtils.now() // 1514096716800
+XEUtils.now() // Date.now() 获取当前时间戳 1514096716800
 ```
 
 ### timestamp ( date[, format] ) 将日期转为时间戳
@@ -1543,7 +1543,7 @@ XEUtils.now() // 1514096716800
 ```javascript
 import XEUtils from 'xe-utils'
 
-XEUtils.timestamp() // 获取当前时间戳
+XEUtils.timestamp() // XEUtils.now() = Date.now() 获取当前时间戳 1514096716800
 XEUtils.timestamp(new Date()) // 1514096716800
 XEUtils.timestamp('2018-12-01') // 1543593600000
 XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS') // 1513735830459
