@@ -1218,10 +1218,11 @@ function valSet (obj, key, isSet, value) {
       obj[key] = value
     }
   } else {
+    var index
     var matchs = key ? key.match(sKeyRE) : null
     var rest = isSet ? value : {}
     if (matchs) {
-      var index = parseInt(matchs[2])
+      index = parseInt(matchs[2])
       if (obj[matchs[1]]) {
         obj[matchs[1]][index] = rest
       } else {

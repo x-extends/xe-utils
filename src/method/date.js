@@ -24,8 +24,12 @@ var now = Date.now || function () {
   * @param {String} format 解析日期格式
  * @returns Number
  */
-var timestamp = function (date, format) {
-  return date ? getDateTime(toStringDate(date, format)) : now()
+var timestamp = function (str, format) {
+  if (arguments.length) {
+    var date = toStringDate(str, format)
+    return baseExports.isDate(date) ? getDateTime(date) : date
+  }
+  return now()
 }
 
 var dateFormatRules = [

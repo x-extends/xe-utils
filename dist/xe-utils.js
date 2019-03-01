@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.8
+ * xe-utils.js v1.8.9
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1933,10 +1933,11 @@
         obj[key] = value
       }
     } else {
+      var index
       var matchs = key ? key.match(sKeyRE) : null
       var rest = isSet ? value : {}
       if (matchs) {
-        var index = parseInt(matchs[2])
+        index = parseInt(matchs[2])
         if (obj[matchs[1]]) {
           obj[matchs[1]][index] = rest
         } else {
@@ -2255,6 +2256,7 @@
     var $body
     var $dom
     var isChrome
+    var isEdge
     var isMobile = false
     var strUndefined = 'undefined'
     var result = {
@@ -2266,6 +2268,7 @@
     if (typeof window === strUndefined && typeof process !== strUndefined) {
       result.isNode = true
     } else {
+      isEdge = isBrowseType('Edge')
       isChrome = isBrowseType('Chrome')
       isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
       if (result.isDoc) {
@@ -2276,7 +2279,9 @@
         })
       }
       baseExports.assign(result, {
-        safari: !isChrome && isBrowseType('Safari'),
+        edge: isEdge,
+        msie: !isEdge && result['-ms'],
+        safari: !isChrome && !isEdge && isBrowseType('Safari'),
         isMobile: isMobile,
         isPC: !isMobile,
         isLocalStorage: isBrowseStorage(window.localStorage),
@@ -2451,8 +2456,12 @@
     * @param {String} format 解析日期格式
    * @returns Number
    */
-  var timestamp = function (date, format) {
-    return date ? getDateTime(toStringDate(date, format)) : now()
+  var timestamp = function (str, format) {
+    if (arguments.length) {
+      var date = toStringDate(str, format)
+      return baseExports.isDate(date) ? getDateTime(date) : date
+    }
+    return now()
   }
 
   var dateFormatRules = [

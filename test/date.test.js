@@ -11,6 +11,30 @@ describe('Date functions', () => {
 
   test('timestamp()', () => {
     expect(
+      XEUtils.timestamp(null)
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.timestamp(undefined)
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.timestamp(0)
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.timestamp(-1)
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.timestamp('')
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.timestamp('abc')
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.timestamp([])
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.timestamp({})
+    ).toEqual('Invalid Date')
+    expect(
       XEUtils.timestamp() >= time
     ).toEqual(true)
     expect(

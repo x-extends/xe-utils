@@ -26,6 +26,7 @@ function browse () {
   var $body
   var $dom
   var isChrome
+  var isEdge
   var isMobile = false
   var strUndefined = 'undefined'
   var result = {
@@ -37,6 +38,7 @@ function browse () {
   if (typeof window === strUndefined && typeof process !== strUndefined) {
     result.isNode = true
   } else {
+    isEdge = isBrowseType('Edge')
     isChrome = isBrowseType('Chrome')
     isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
     if (result.isDoc) {
@@ -47,7 +49,9 @@ function browse () {
       })
     }
     baseExports.assign(result, {
-      safari: !isChrome && isBrowseType('Safari'),
+      edge: isEdge,
+      msie: !isEdge && result['-ms'],
+      safari: !isChrome && !isEdge && isBrowseType('Safari'),
       isMobile: isMobile,
       isPC: !isMobile,
       isLocalStorage: isBrowseStorage(window.localStorage),
