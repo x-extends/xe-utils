@@ -3,6 +3,8 @@
   "version": "1.8.9",
   "description": "A JavaScript tools library.",
   "main": "index.js",
+  "unpkg": "dist/xe-utils.js",
+  "jsdelivr": "dist/xe-utils.js",
   "typings": "types/index.d.ts",
   "scripts": {
     "lint": "eslint dist/xe-utils.js test/**/*.js src/**/*.js",
