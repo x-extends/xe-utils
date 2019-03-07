@@ -29,7 +29,7 @@ const XEUtils = require('xe-utils')
 Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
 
 ```HTML
-<script src="https://unpkg.com/xe-utils/dist/xe-utils.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xe-utils"></script>
 ```
 
 ### ES6 Module import
