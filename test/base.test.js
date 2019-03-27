@@ -1801,6 +1801,9 @@ describe('Base functions', () => {
       XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)
     ).toEqual(true)
     expect(
+      XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1]')
+    ).toEqual(true)
+    expect(
       XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')
     ).toEqual(true)
     expect(
@@ -1808,6 +1811,12 @@ describe('Base functions', () => {
     ).toEqual(true)
     expect(
       XEUtils.has({ a: { b: 0, c: 22, d: [33, 44] } }, 'a.b')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] }, 'a.d': 333 }, 'a.d')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: { c: 22, d: [33, 44] }, 'a.b': 333 }, 'a.b')
     ).toEqual(true)
     expect(
       XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')
@@ -1865,6 +1874,9 @@ describe('Base functions', () => {
     ).toEqual(22)
     expect(
       XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)
+    ).toEqual({ a: 33, b: 44 })
+    expect(
+      XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1]')
     ).toEqual({ a: 33, b: 44 })
     expect(
       XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')
