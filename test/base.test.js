@@ -1876,6 +1876,9 @@ describe('Base functions', () => {
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.b')
     ).toEqual(11)
     expect(
+      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] }, 'a.b': 333 }, 'a.b')
+    ).toEqual(333)
+    expect(
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')
     ).toEqual([33, 44])
     expect(

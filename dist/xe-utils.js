@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.10
+ * xe-utils.js v1.8.11
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1894,18 +1894,24 @@
   function pathGet (obj, property) {
     if (obj) {
       var rest
-      var keys = getHGSKeys(property)
+      var keys
+      var len
       var index = 0
-      var len = keys.length
-      if (len) {
-        for (rest = obj; index < len; index++) {
-          rest = valGet(rest, keys[index])
-          if (isUndefined(rest) || isNull(rest)) {
-            return
+      if (obj.hasOwnProperty(property)) {
+        return obj[property]
+      } else {
+        keys = getHGSKeys(property)
+        len = keys.length
+        if (len) {
+          for (rest = obj; index < len; index++) {
+            rest = valGet(rest, keys[index])
+            if (isUndefined(rest) || isNull(rest)) {
+              return
+            }
           }
         }
+        return rest
       }
-      return rest
     }
   }
 
