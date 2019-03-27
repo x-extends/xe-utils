@@ -1127,47 +1127,51 @@ var hgKeyRE = /(.+)?\[(\d+)\]$/
 var sKeyRE = /(.+)\[(\d+)\]$/
 function has (obj, property) {
   if (obj) {
-    var prop
-    var arrIndex
-    var objProp
-    var matchs
-    var rest
-    var isHas
-    var keys = getHGSKeys(property)
-    var index = 0
-    var len = keys.length
-    for (rest = obj; index < len; index++) {
-      isHas = false
-      prop = keys[index]
-      matchs = prop ? prop.match(hgKeyRE) : ''
-      if (matchs) {
-        arrIndex = matchs[1]
-        objProp = matchs[2]
-        if (arrIndex) {
-          if (rest[arrIndex]) {
-            if (hasOwnProp(rest[arrIndex], objProp)) {
+    if (hasOwnProp(obj, property)) {
+      return true
+    } else {
+      var prop
+      var arrIndex
+      var objProp
+      var matchs
+      var rest
+      var isHas
+      var keys = getHGSKeys(property)
+      var index = 0
+      var len = keys.length
+      for (rest = obj; index < len; index++) {
+        isHas = false
+        prop = keys[index]
+        matchs = prop ? prop.match(hgKeyRE) : ''
+        if (matchs) {
+          arrIndex = matchs[1]
+          objProp = matchs[2]
+          if (arrIndex) {
+            if (rest[arrIndex]) {
+              if (hasOwnProp(rest[arrIndex], objProp)) {
+                isHas = true
+                rest = rest[arrIndex][objProp]
+              }
+            }
+          } else {
+            if (hasOwnProp(rest, objProp)) {
               isHas = true
-              rest = rest[arrIndex][objProp]
+              rest = rest[objProp]
             }
           }
         } else {
-          if (hasOwnProp(rest, objProp)) {
+          if (hasOwnProp(rest, prop)) {
             isHas = true
-            rest = rest[objProp]
+            rest = rest[prop]
           }
         }
-      } else {
-        if (hasOwnProp(rest, prop)) {
-          isHas = true
-          rest = rest[prop]
+        if (isHas) {
+          if (index === len - 1) {
+            return true
+          }
+        } else {
+          break
         }
-      }
-      if (isHas) {
-        if (index === len - 1) {
-          return true
-        }
-      } else {
-        break
       }
     }
   }
@@ -1185,7 +1189,7 @@ function pathGet (obj, property) {
     var keys
     var len
     var index = 0
-    if (obj.hasOwnProperty(property)) {
+    if (hasOwnProp(obj, property)) {
       return obj[property]
     } else {
       keys = getHGSKeys(property)
