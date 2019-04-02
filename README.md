@@ -172,6 +172,9 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 * *高级函数*
   * [toArrayTree ( array, options ) 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构](#toarraytree--array-options--一个高性能的树结构转换函数将一个带层级的数据列表转成树结构)
   * [toTreeArray ( array, options ) 将一个树结构转成数组列表](#totreearray--array-options--将一个树结构转成数组列表)
+  * [findTree ( obj, iterate[, options, context] ) 从树结构中查找匹配第一条数据的键、值、路径](#user-content-findtree--obj-iterate-options-context--从树结构中查找匹配第一条数据的键值路径)
+  * [eachTree ( obj, iterate[, options, context] ) 从树结构中遍历数据的键、值、路径](#user-content-eachtree--obj-iterate-options-context--从树结构中遍历数据的键值路径)
+  * [mapTree ( obj, iterate[, options, context] ) 从树结构中指定方法后的返回值组成的新数组](#user-content-maptree--obj-iterate-options-context--从树结构中指定方法后的返回值组成的新数组)
   * [property ( path ) 返回一个获取对象属性的函数](#property--path--返回一个获取对象属性的函数)
   * [pluck ( array, key ) 获取数组对象中某属性值，返回一个数组](#pluck--array-key--获取数组对象中某属性值返回一个数组)
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
