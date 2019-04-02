@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.12
+ * xe-utils.js v1.8.13
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -39,10 +39,6 @@
   var EVERY_PRO = 'every'
   var SOME_PRO = 'some'
   var REDUCE_PRO = 'reduce'
-
-  function _objectHasOwnProperty (obj, key) {
-    return obj.hasOwnProperty(key)
-  }
 
   /**
     * 数组去重
@@ -191,7 +187,7 @@
         return obj[SOME_PRO](iterate, context)
       } else {
         for (var key in obj) {
-          if (_objectHasOwnProperty(obj, key)) {
+          if (baseExports._hasOwnProp(obj, key)) {
             if (iterate.call(context, obj[key], key, obj)) {
               return true
             }
@@ -217,7 +213,7 @@
         return obj[EVERY_PRO](iterate, context)
       } else {
         for (var key in obj) {
-          if (_objectHasOwnProperty(obj, key)) {
+          if (baseExports._hasOwnProp(obj, key)) {
             if (!iterate.call(context, obj[key], key, obj)) {
               return false
             }
@@ -266,10 +262,18 @@
       if (isArrayPro(FIND_PRO)) {
         return obj[FIND_PRO](iterate, context)
       } else {
-        for (var key in obj) {
-          if (_objectHasOwnProperty(obj, key)) {
-            if (iterate.call(context, obj[key], key, obj)) {
-              return obj[key]
+        if (baseExports.isArray(obj)) {
+          for (var index = 0, len = obj.length; index < len; index++) {
+            if (iterate.call(context, obj[index], index, obj)) {
+              return obj[index]
+            }
+          }
+        } else {
+          for (var key in obj) {
+            if (baseExports._hasOwnProp(obj, key)) {
+              if (iterate.call(context, obj[key], key, obj)) {
+                return obj[key]
+              }
             }
           }
         }
@@ -289,7 +293,7 @@
     if (obj && iterate) {
       context = context || this
       for (var key in obj) {
-        if (_objectHasOwnProperty(obj, key)) {
+        if (baseExports._hasOwnProp(obj, key)) {
           if (iterate.call(context, obj[key], key, obj)) {
             return key
           }
@@ -403,8 +407,7 @@
     if (baseExports.isArray(array) && array.copyWithin) {
       return array.copyWithin(target, start, end)
     }
-    var replaceIndex
-    var replaceArray
+    var replaceIndex, replaceArray
     var targetIndex = target >> 0
     var startIndex = start >> 0
     var len = array.length
@@ -685,6 +688,102 @@
     return unTreeList([], array, baseExports.assign({}, setupDefaults.treeOptions, options))
   }
 
+  function createTreeFunc (handle) {
+    return function (obj, iterate, options, context) {
+      return handle(obj, iterate, context || this, [], options ? options.children : 'children')
+    }
+  }
+
+  function findTreeItem (obj, iterate, context, path, optChildren) {
+    var item, key, index, len, paths, match
+    if (baseExports.isArray(obj)) {
+      for (index = 0, len = obj.length; index < len; index++) {
+        item = obj[index]
+        paths = path.concat(['' + index])
+        if (iterate.call(context, item, index, obj, paths)) {
+          return { index: index, item: item, path: paths, items: obj }
+        }
+        if (optChildren && item) {
+          match = findTreeItem(item[optChildren], iterate, context, paths.concat([optChildren]), optChildren)
+          if (match) {
+            return match
+          }
+        }
+      }
+    } else {
+      for (key in obj) {
+        if (baseExports._hasOwnProp(obj, key)) {
+          item = obj[key]
+          paths = path.concat([key])
+          if (iterate.call(context, item, index, obj, paths)) {
+            return { index: key, item: item, path: paths, items: obj }
+          }
+          if (optChildren && item) {
+            match = findTreeItem(item[optChildren], iterate, context, paths.concat([optChildren]), optChildren)
+            if (match) {
+              return match
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+    * 从树结构中查找匹配第一条数据的键、值、路径
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Object} { item, index, items, path }
+    */
+  var findTree = createTreeFunc(findTreeItem)
+
+  function eachTreeItem (obj, iterate, context, path, optChildren) {
+    var paths
+    baseExports.each(obj, function (item, index) {
+      paths = path.concat(['' + index])
+      iterate.call(context, item, index, obj, paths)
+      if (item && optChildren) {
+        eachTreeItem(item[optChildren], iterate, context, paths, optChildren)
+      }
+    })
+  }
+
+  /**
+    * 从树结构中遍历数据的键、值、路径
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    */
+  var eachTree = createTreeFunc(eachTreeItem)
+
+  function mapTreeItem (obj, iterate, context, path, optChildren) {
+    var paths, rest
+    return arrayMap(obj, function (item, index) {
+      paths = path.concat(['' + index])
+      rest = iterate.call(context, item, index, obj, paths)
+      if (rest && item && optChildren && item[optChildren]) {
+        rest[optChildren] = mapTreeItem(item[optChildren], iterate, context, paths, optChildren)
+      }
+      return rest
+    })
+  }
+
+  /**
+    * 从树结构中指定方法后的返回值组成的新数组
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Object/Array}
+    */
+  var mapTree = createTreeFunc(mapTreeItem)
+
   var arrayExports = {
     uniq: arrayUniq,
     union: arrayUnion,
@@ -711,7 +810,10 @@
     invoke: invokeMap,
     invokeMap: invokeMap,
     toArrayTree: toArrayTree,
-    toTreeArray: toTreeArray
+    toTreeArray: toTreeArray,
+    findTree: findTree,
+    eachTree: eachTree,
+    mapTree: mapTree
   }
 
   var STRING_UNDEFINED = 'undefined'
@@ -1799,8 +1901,7 @@
     */
   function lastForOf (obj, iterate, context) {
     if (obj) {
-      var len
-      var list
+      var len, list
       context = context || this
       if (isArray(obj)) {
         for (len = obj.length - 1; len >= 0; len--) {
@@ -1842,12 +1943,7 @@
       if (hasOwnProp(obj, property)) {
         return true
       } else {
-        var prop
-        var arrIndex
-        var objProp
-        var matchs
-        var rest
-        var isHas
+        var prop, arrIndex, objProp, matchs, rest, isHas
         var keys = getHGSKeys(property)
         var index = 0
         var len = keys.length
@@ -1897,9 +1993,7 @@
 
   function pathGet (obj, property) {
     if (obj) {
-      var rest
-      var keys
-      var len
+      var rest, keys, len
       var index = 0
       if (hasOwnProp(obj, property)) {
         return obj[property]
@@ -2032,8 +2126,7 @@
     * @return {Object}
     */
   function range (start, stop, step) {
-    var index
-    var len
+    var index, len
     var result = []
     var args = arguments
     if (args.length < 2) {
@@ -2060,8 +2153,7 @@
     * @return {Function}
     */
   function throttle (callback, wait, options) {
-    var args
-    var context
+    var args, context
     var opts = options || {}
     var runFlag = false
     var timeout = 0
@@ -2110,8 +2202,7 @@
     * @return {Function}
     */
   function debounce (callback, wait, options) {
-    var args
-    var context
+    var args, context
     var opts = options || {}
     var runFlag = false
     var timeout = 0
@@ -2156,6 +2247,7 @@
   }
 
   var baseExports = {
+    _hasOwnProp: hasOwnProp,
     isNaN: isNaN,
     isFinite: isNumberFinite,
     isUndefined: isUndefined,
@@ -2260,10 +2352,7 @@
     * @return Object
     */
   function browse () {
-    var $body
-    var $dom
-    var isChrome
-    var isEdge
+    var $body, $dom, isChrome, isEdge
     var isMobile = false
     var strUndefined = 'undefined'
     var result = {
@@ -2338,12 +2427,7 @@
     */
   function cookie (name, value, options) {
     if (isBowseDoc) {
-      var opts
-      var expires
-      var values
-      var result
-      var cookies
-      var keyIndex
+      var opts, expires, values, result, cookies, keyIndex
       var inserts = []
       var args = arguments
       var decode = decodeURIComponent
@@ -2523,13 +2607,7 @@
     * @return {String}
     */
   function toStringDate (str, format) {
-    var arr
-    var sIndex
-    var index
-    var rules
-    var len
-    var rest
-    var isDate
+    var arr, sIndex, index, rules, len, rest, isDate
     var dates = []
     if (str) {
       isDate = baseExports.isDate(str)
@@ -2695,10 +2773,7 @@
     * @return {Date}
     */
   function getWhatWeek (date, week, day) {
-    var time
-    var whatDayTime
-    var currentDay
-    var customDay
+    var time, whatDayTime, currentDay, customDay
     date = toStringDate(date)
     if (baseExports.isDate(date)) {
       customDay = Number(/^[0-7]$/.test(day) ? day : date.getDay())
@@ -2741,8 +2816,7 @@
     * @return {Number}
     */
   function getMonthWeek (date) {
-    var monthFirst
-    var monthFirstWeek
+    var monthFirst, monthFirstWeek
     var currentDate = toStringDate(date)
     if (baseExports.isDate(currentDate)) {
       monthFirst = getWhatMonth(currentDate, 0, STRING_FIRST)
@@ -2828,13 +2902,7 @@
     * @return {Object}
     */
   function getDateDiff (startDate, endDate, rules) {
-    var startTime
-    var endTime
-    var item
-    var diffTime
-    var rule
-    var len
-    var index
+    var startTime, endTime, item, diffTime, rule, len, index
     var result = { done: false, time: 0 }
     startDate = toStringDate(startDate)
     endDate = endDate ? toStringDate(endDate) : new Date()
@@ -2934,10 +3002,7 @@
   }
 
   function parseUrl (url) {
-    var hashs
-    var portText
-    var searchs
-    var parsed
+    var hashs, portText, searchs, parsed
     var href = '' + url
     if (href.indexOf('//') === 0) {
       href = ($locat ? $locat.protocol : '') + href

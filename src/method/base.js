@@ -1087,8 +1087,7 @@ function lastEach (obj, iterate, context) {
   */
 function lastForOf (obj, iterate, context) {
   if (obj) {
-    var len
-    var list
+    var len, list
     context = context || this
     if (isArray(obj)) {
       for (len = obj.length - 1; len >= 0; len--) {
@@ -1130,12 +1129,7 @@ function has (obj, property) {
     if (hasOwnProp(obj, property)) {
       return true
     } else {
-      var prop
-      var arrIndex
-      var objProp
-      var matchs
-      var rest
-      var isHas
+      var prop, arrIndex, objProp, matchs, rest, isHas
       var keys = getHGSKeys(property)
       var index = 0
       var len = keys.length
@@ -1185,9 +1179,7 @@ function valGet (obj, key) {
 
 function pathGet (obj, property) {
   if (obj) {
-    var rest
-    var keys
-    var len
+    var rest, keys, len
     var index = 0
     if (hasOwnProp(obj, property)) {
       return obj[property]
@@ -1320,8 +1312,7 @@ function countBy (obj, iterate, context) {
   * @return {Object}
   */
 function range (start, stop, step) {
-  var index
-  var len
+  var index, len
   var result = []
   var args = arguments
   if (args.length < 2) {
@@ -1348,8 +1339,7 @@ function range (start, stop, step) {
   * @return {Function}
   */
 function throttle (callback, wait, options) {
-  var args
-  var context
+  var args, context
   var opts = options || {}
   var runFlag = false
   var timeout = 0
@@ -1398,8 +1388,7 @@ function throttle (callback, wait, options) {
   * @return {Function}
   */
 function debounce (callback, wait, options) {
-  var args
-  var context
+  var args, context
   var opts = options || {}
   var runFlag = false
   var timeout = 0
@@ -1444,6 +1433,7 @@ function debounce (callback, wait, options) {
 }
 
 var baseExports = {
+  _hasOwnProp: hasOwnProp,
   isNaN: isNaN,
   isFinite: isNumberFinite,
   isUndefined: isUndefined,

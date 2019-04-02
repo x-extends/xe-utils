@@ -23,10 +23,7 @@ function isBrowseType (type) {
   * @return Object
   */
 function browse () {
-  var $body
-  var $dom
-  var isChrome
-  var isEdge
+  var $body, $dom, isChrome, isEdge
   var isMobile = false
   var strUndefined = 'undefined'
   var result = {

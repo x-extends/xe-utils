@@ -564,23 +564,6 @@ export interface XEUtilsMethods {
   last(obj: object | Array<any>): any;
 
   /**
-   * 迭代器,支持 return false 跳出循环 break
-   * @param obj 对象
-   * @param iteratee 回调 
-   * @param context 上下文
-   * @example 
-    ```javascript
-    XEUtils.forOf([11, 22, 33], (item, index) => {
-      if (index > 1) {
-        // break 结束循环
-        return false
-      }
-    })
-    ```
-   */
-  forOf(obj: any, iteratee: Function, context?: any): void;
-
-  /**
    * 通用迭代器
    * @param obj 对象
    * @param iteratee 回调 
@@ -873,7 +856,15 @@ export interface XEUtilsMethods {
    * @param iteratee 回调
    * @param context 上下文
    */
-  filter(array: Array<any>, iteratee: Function, context?: any): any;
+  filter(array: Array<any>, iteratee: Function, context?: any): Array<any>;
+
+  /**
+   * 查找匹配第一条数据
+   * @param array 数组
+   * @param iteratee 回调
+   * @param context 上下文
+   */
+  find(array: Array<any>, iteratee: Function, context?: any): any;
 
   /**
    * 查找匹配第一条数据的键
@@ -996,7 +987,7 @@ export interface XEUtilsMethods {
     getName({age: 25, height: 176}) // undefined
     ```
    */
-  property(path: string): any;
+  property(path: string): Function;
 
   /**
    * 获取数组对象中某属性值，返回一个数组
@@ -1023,18 +1014,45 @@ export interface XEUtilsMethods {
   invoke(list: Array<any>, path: Array<string> | string | Function): Array<any>
 
   /**
-   * 一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构
-   * @param array 数组
-   * @param options 可选参数
+   * 将一个带层级的数据列表转成树结构
+   * @param {Array} array 数组
+   * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
    */
   toArrayTree(array: Array<any>, options?: object): Array<any>;
 
   /**
    * 将一个树结构转成数组列表
-   * @param array 数组
-   * @param options 可选参数
+   * @param {Array} array 数组
+   * @param {Object} options {children: 'children', data: 'data'}
    */
   toTreeArray(array: Array<any>, options?: object): Array<any>;
+
+  /**
+   * 从树结构中查找匹配第一条数据的键、值、路径
+   * @param {Object} obj 对象/数组
+   * @param {Function} iterate(item, index, items, path) 回调
+   * @param {Object} options {children: 'children'}
+   * @param {Object} context 上下文
+   */
+  findTree(array: Array<any>, iterate: Function, options?: object, context?: any): any;
+
+  /**
+   * 从树结构中遍历数据的键、值、路径
+   * @param {Object} obj 对象/数组
+   * @param {Function} iterate(item, index, items, path) 回调
+   * @param {Object} options {children: 'children'}
+   * @param {Object} context 上下文
+   */
+  eachTree(array: Array<any>, iterate: Function, options?: object, context?: any): void;
+
+  /**
+   * 从树结构中指定方法后的返回值组成的新数组
+   * @param {Object} obj 对象/数组
+   * @param {Function} iterate(item, index, items, path) 回调
+   * @param {Object} options {children: 'children'}
+   * @param {Object} context 上下文
+   */
+  mapTree(array: Array<any>, iterate: Function, options?: object, context?: any): Array<any>;
 
   /**
    * 返回当前时间戳

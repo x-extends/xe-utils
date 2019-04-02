@@ -55,10 +55,7 @@ function getBaseURL () {
 }
 
 function parseUrl (url) {
-  var hashs
-  var portText
-  var searchs
-  var parsed
+  var hashs, portText, searchs, parsed
   var href = '' + url
   if (href.indexOf('//') === 0) {
     href = ($locat ? $locat.protocol : '') + href

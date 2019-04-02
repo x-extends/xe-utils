@@ -40,12 +40,7 @@ function toCookieUTCString (date) {
   */
 function cookie (name, value, options) {
   if (isBowseDoc) {
-    var opts
-    var expires
-    var values
-    var result
-    var cookies
-    var keyIndex
+    var opts, expires, values, result, cookies, keyIndex
     var inserts = []
     var args = arguments
     var decode = decodeURIComponent

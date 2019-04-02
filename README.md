@@ -122,7 +122,6 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [lastEach ( obj, iteratee [, context] ) 通用迭代器，从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [lastArrayEach ( obj, iteratee [, context] ) 数组迭代器，从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [lastObjectEach ( obj, iteratee [, context] ) 对象迭代器，从最后开始迭代](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
-  * [forOf ( obj, iteratee [, context] ) 通用迭代器,支持 return false 跳出循环 break](#eachforofarrayeachobjecteach--obj-iteratee--context--迭代器)
   * [lastForOf ( obj, iteratee [, context] ) 通用迭代器,从最后开始迭代，支持 return false 跳出循环 break](#lasteachlastforoflastarrayeachlastobjecteach--obj-iteratee--context--迭代器从最后开始迭代)
   * [has (obj, property) 检查键、路径是否是该对象的属性](#has--obj-property--检查键路径是否是该对象的属性)
   * [get (obj, property, defaultValue) 获取对象的属性的值，如果值为 undefined，则返回默认值](#user-content-get--obj-property-defaultvalue--获取对象的属性的值如果值为-undefined则返回默认值)
@@ -888,17 +887,13 @@ XEUtils.last({a: 11, b: 22}) // 22
 XEUtils.last([11, 22]) // 22
 ```
 
-### each/forOf/arrayEach/objectEach ( obj, iteratee [, context] ) 迭代器
+### each/arrayEach/objectEach ( obj, iteratee [, context] ) 迭代器
 
 ```javascript
 import XEUtils from 'xe-utils'
 
 XEUtils.each([11, 22, 33], (item, key) => {
   // 通用迭代器，支持遍历任意类型
-})
-XEUtils.forOf([11, 22, 33], (item, key) => {
-  // 通用迭代器，支持遍历任意类型，支持 return false 跳出循环 break
-  return false
 })
 XEUtils.arrayEach([11, 22, 33], (item, index) => {
   // 数组迭代器，只能用于遍历(数组或伪数组)，性能高于 each
@@ -1528,6 +1523,41 @@ XEUtils.toTreeArray(list2, {data: 'data'})
   {id: 5, parentId: 22, name: '555'}
 ]
 */
+```
+
+### findTree ( obj, iterate[, options, context] ) 从树结构中查找匹配第一条数据的键、值、路径
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.findTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => item.id === 20) // {item: {id: 20}, ...}
+XEUtils.findTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => item.id === 20, {children: 'childs'}) // {item: {id: 20}, ...}
+```
+
+### eachTree ( obj, iterate[, options, context] ) 从树结构中遍历数据的键、值、路径
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.eachTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
+  console.log(item.id)
+})
+XEUtils.eachTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
+  console.log(item.id)
+}, {children: 'childs'})
+```
+
+### mapTree ( obj, iterate[, options, context] ) 从树结构中指定方法后的返回值组成的新数组
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.mapTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
+  return { id: item.id * 2 }
+}) // [{id: 2}, {id: 4, children: [{id: 40}]}, {id: 6}]
+XEUtils.mapTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
+  return { id: item.id * 2 }
+}, {children: 'childs'}) // [{id: 2}, {id: 4, children: [{id: 40}]}, {id: 6}]
 ```
 
 ### now ( ) 返回当前时间戳

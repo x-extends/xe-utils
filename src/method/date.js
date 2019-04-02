@@ -84,13 +84,7 @@ function isDateSame (date1, date2, format) {
   * @return {String}
   */
 function toStringDate (str, format) {
-  var arr
-  var sIndex
-  var index
-  var rules
-  var len
-  var rest
-  var isDate
+  var arr, sIndex, index, rules, len, rest, isDate
   var dates = []
   if (str) {
     isDate = baseExports.isDate(str)
@@ -256,10 +250,7 @@ function getWhatMonth (date, month, day) {
   * @return {Date}
   */
 function getWhatWeek (date, week, day) {
-  var time
-  var whatDayTime
-  var currentDay
-  var customDay
+  var time, whatDayTime, currentDay, customDay
   date = toStringDate(date)
   if (baseExports.isDate(date)) {
     customDay = Number(/^[0-7]$/.test(day) ? day : date.getDay())
@@ -302,8 +293,7 @@ function getWhatDay (date, day, mode) {
   * @return {Number}
   */
 function getMonthWeek (date) {
-  var monthFirst
-  var monthFirstWeek
+  var monthFirst, monthFirstWeek
   var currentDate = toStringDate(date)
   if (baseExports.isDate(currentDate)) {
     monthFirst = getWhatMonth(currentDate, 0, STRING_FIRST)
@@ -389,13 +379,7 @@ function getDayOfMonth (date, month) {
   * @return {Object}
   */
 function getDateDiff (startDate, endDate, rules) {
-  var startTime
-  var endTime
-  var item
-  var diffTime
-  var rule
-  var len
-  var index
+  var startTime, endTime, item, diffTime, rule, len, index
   var result = { done: false, time: 0 }
   startDate = toStringDate(startDate)
   endDate = endDate ? toStringDate(endDate) : new Date()

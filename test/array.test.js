@@ -1033,4 +1033,67 @@ describe('Array functions', () => {
       { id: 5, parentId: 22, name: '555' }
     ])
   })
+
+  test('findTree()', () => {
+    let rest
+    expect(
+      XEUtils.findTree(0, item => item)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findTree(null, item => item)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findTree(undefined, item => item)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findTree([], item => item)
+    ).toEqual(undefined)
+    rest = XEUtils.findTree([{ a: 11 }], item => item.a === 11)
+    expect(rest.item).toEqual({ a: 11 })
+    rest = XEUtils.findTree([{ a: 11 }, { a: 22 }, { a: 33, children: [{ a: 44 }] }], item => item.a === 44)
+    expect(rest.item).toEqual({ a: 44 })
+    rest = XEUtils.findTree([{ a: 11 }, { a: 22 }, { a: 33, childs: [{ a: 44 }] }], item => item.a === 44, { children: 'childs' })
+    expect(rest.item).toEqual({ a: 44 })
+  })
+
+  test('eachTree()', () => {
+    let rest = []
+    XEUtils.eachTree([{ a: 11 }, { a: 22 }], item => {
+      rest.push(item)
+    })
+    expect(rest).toEqual([{ a: 11 }, { a: 22 }])
+    rest = []
+    XEUtils.eachTree([{ a: 11 }, { a: 22, children: [{ a: 222 }, { a: 223 }] }], item => {
+      rest.push(item)
+    })
+    expect(rest).toEqual([{ a: 11 }, { a: 22, children: [{ a: 222 }, { a: 223 }] }, { a: 222 }, { a: 223 }])
+    rest = []
+    XEUtils.eachTree([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 223 }] }], item => {
+      rest.push(item)
+    }, { children: 'childs' })
+    expect(rest).toEqual([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 223 }] }, { a: 222 }, { a: 223 }])
+  })
+
+  test('mapTree()', () => {
+    expect(
+      XEUtils.mapTree([{ a: 11 }, { a: 22 }], item => {
+        return item.a * 2
+      })
+    ).toEqual([22, 44])
+    expect(
+      XEUtils.mapTree([{ a: 11 }, { a: 22 }], item => {
+        return { a: item.a * 2 }
+      })
+    ).toEqual([{ a: 22 }, { a: 44 }])
+    expect(
+      XEUtils.mapTree([{ a: 11 }, { a: 22, children: [{ a: 222 }, { a: 223 }] }], item => {
+        return { a: item.a * 2 }
+      })
+    ).toEqual([{ a: 22 }, { a: 44, children: [{ a: 444 }, { a: 446 }] }])
+    expect(
+      XEUtils.mapTree([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 223 }] }], item => {
+        return { a: item.a * 2 }
+      }, { children: 'childs' })
+    ).toEqual([{ a: 22 }, { a: 44, childs: [{ a: 444 }, { a: 446 }] }])
+  })
 })
