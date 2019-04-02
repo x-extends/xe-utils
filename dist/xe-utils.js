@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.13
+ * xe-utils.js v1.8.14
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -32,13 +32,6 @@
       ['S', 0]
     ]
   }
-
-  var FIND_PRO = 'find'
-  var MAP_PRO = 'map'
-  var FILTER_PRO = 'filter'
-  var EVERY_PRO = 'every'
-  var SOME_PRO = 'some'
-  var REDUCE_PRO = 'reduce'
 
   /**
     * 数组去重
@@ -168,8 +161,32 @@
     return result
   }
 
-  function isArrayPro (array, pro) {
-    return baseExports.isArray(array) && array[pro]
+  function createIterateHandle (prop, useArray, restIndex, matchValue, defaultValue) {
+    return function (obj, iterate, context) {
+      if (obj && iterate) {
+        context = context || this
+        if (prop && obj[prop]) {
+          return obj[prop](iterate, context)
+        } else {
+          if (useArray && baseExports.isArray(obj)) {
+            for (var index = 0, len = obj.length; index < len; index++) {
+              if (!!iterate.call(context, obj[index], index, obj) === matchValue) {
+                return [true, false, index, obj[index]][restIndex]
+              }
+            }
+          } else {
+            for (var key in obj) {
+              if (baseExports._hasOwnProp(obj, key)) {
+                if (!!iterate.call(context, obj[key], key, obj) === matchValue) {
+                  return [true, false, key, obj[key]][restIndex]
+                }
+              }
+            }
+          }
+        }
+      }
+      return defaultValue
+    }
   }
 
   /**
@@ -180,23 +197,7 @@
     * @param {Object} context 上下文
     * @return {Boolean}
     */
-  function arraySome (obj, iterate, context) {
-    if (obj && iterate) {
-      context = context || this
-      if (isArrayPro(SOME_PRO)) {
-        return obj[SOME_PRO](iterate, context)
-      } else {
-        for (var key in obj) {
-          if (baseExports._hasOwnProp(obj, key)) {
-            if (iterate.call(context, obj[key], key, obj)) {
-              return true
-            }
-          }
-        }
-      }
-    }
-    return false
-  }
+  var arraySome = createIterateHandle('some', 1, 0, true, false)
 
   /**
     * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
@@ -206,23 +207,27 @@
     * @param {Object} context 上下文
     * @return {Boolean}
     */
-  function arrayEvery (obj, iterate, context) {
-    if (obj && iterate) {
-      context = context || this
-      if (isArrayPro(EVERY_PRO)) {
-        return obj[EVERY_PRO](iterate, context)
-      } else {
-        for (var key in obj) {
-          if (baseExports._hasOwnProp(obj, key)) {
-            if (!iterate.call(context, obj[key], key, obj)) {
-              return false
-            }
-          }
-        }
-      }
-    }
-    return true
-  }
+  var arrayEvery = createIterateHandle('every', 1, 1, false, true)
+
+  /**
+    * 查找匹配第一条数据的键
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  var findKey = createIterateHandle('', 0, 2, true)
+
+  /**
+    * 查找匹配第一条数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  var arrayFind = createIterateHandle('find', 1, 3, true)
 
   /**
     * 根据回调过滤数据
@@ -236,8 +241,8 @@
     var result = []
     if (obj && iterate) {
       context = context || this
-      if (isArrayPro(FILTER_PRO)) {
-        return obj[FILTER_PRO](iterate, context)
+      if (obj.filter) {
+        return obj.filter(iterate, context)
       }
       baseExports.each(obj, function (val, key) {
         if (iterate.call(context, val, key, obj)) {
@@ -246,60 +251,6 @@
       })
     }
     return result
-  }
-
-  /**
-    * 查找匹配第一条数据
-    *
-    * @param {Object} obj 对象/数组
-    * @param {Function} iterate(item, index, obj) 回调
-    * @param {Object} context 上下文
-    * @return {Object}
-    */
-  function arrayFind (obj, iterate, context) {
-    if (obj && iterate) {
-      context = context || this
-      if (isArrayPro(FIND_PRO)) {
-        return obj[FIND_PRO](iterate, context)
-      } else {
-        if (baseExports.isArray(obj)) {
-          for (var index = 0, len = obj.length; index < len; index++) {
-            if (iterate.call(context, obj[index], index, obj)) {
-              return obj[index]
-            }
-          }
-        } else {
-          for (var key in obj) {
-            if (baseExports._hasOwnProp(obj, key)) {
-              if (iterate.call(context, obj[key], key, obj)) {
-                return obj[key]
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  /**
-    * 查找匹配第一条数据的键
-    *
-    * @param {Object} obj 对象/数组
-    * @param {Function} iterate(item, index, obj) 回调
-    * @param {Object} context 上下文
-    * @return {Object}
-    */
-  function findKey (obj, iterate, context) {
-    if (obj && iterate) {
-      context = context || this
-      for (var key in obj) {
-        if (baseExports._hasOwnProp(obj, key)) {
-          if (iterate.call(context, obj[key], key, obj)) {
-            return key
-          }
-        }
-      }
-    }
   }
 
   /**
@@ -317,8 +268,8 @@
       if (!baseExports.isFunction(iterate)) {
         iterate = baseExports.property(iterate)
       }
-      if (isArrayPro(MAP_PRO)) {
-        return obj[MAP_PRO](iterate, context)
+      if (obj.map) {
+        return obj.map(iterate, context)
       } else {
         baseExports.each(obj, function () {
           result.push(iterate.apply(context, arguments))
@@ -370,22 +321,26 @@
     * @param {Object} initialValue 初始值
     * @return {Number}
     */
-  /* eslint-disable valid-typeof */
-  function arrayReduce (array, callback, initialValue, UNDEFINED) {
+  function arrayReduce (array, callback, initialValue) {
     if (array) {
-      var len
+      var len, reduceMethod
       var index = 0
       var context = this
       var previous = initialValue
+      var isInitialVal = arguments.length > 2
       var keyList = baseExports.keys(array)
-      if (previous === UNDEFINED) {
-        previous = array[keyList[0]]
-        index = 1
-      }
-      if (isArrayPro(REDUCE_PRO)) {
-        return array.reduce(function () {
+      if (array.length && array.reduce) {
+        reduceMethod = function () {
           return callback.apply(context, arguments)
-        }, previous)
+        }
+        if (isInitialVal) {
+          return array.reduce(reduceMethod, previous)
+        }
+        return array.reduce(reduceMethod)
+      }
+      if (isInitialVal) {
+        index = 1
+        previous = array[keyList[0]]
       }
       for (len = keyList.length; index < len; index++) {
         previous = callback.call(context, previous, array[keyList[index]], index, array)
@@ -784,6 +739,28 @@
     */
   var mapTree = createTreeFunc(mapTreeItem)
 
+  /**
+    * 从树结构中根据回调过滤数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Array}
+    */
+  function filterTree (obj, iterate, options, context) {
+    var result = []
+    if (obj && iterate) {
+      context = context || this
+      eachTree(obj, function (item, index, items, path) {
+        if (iterate.call(context, item, index, items, path)) {
+          result.push(item)
+        }
+      }, options)
+    }
+    return result
+  }
+
   var arrayExports = {
     uniq: arrayUniq,
     union: arrayUnion,
@@ -813,7 +790,8 @@
     toTreeArray: toTreeArray,
     findTree: findTree,
     eachTree: eachTree,
-    mapTree: mapTree
+    mapTree: mapTree,
+    filterTree: filterTree
   }
 
   var STRING_UNDEFINED = 'undefined'
@@ -1291,23 +1269,57 @@
    * @return {Boolean}
    */
   function isEqual (obj1, obj2) {
-    if (obj1 && obj2 && !isNumber(obj1) && !isNumber(obj2) && !isString(obj1) && !isString(obj2)) {
-      if (isRegExp(obj1)) {
-        return '' + obj1 === '' + obj2
-      } if (isDate(obj1) || isBoolean(obj1)) {
-        return +obj1 === +obj2
-      } else if (isArray(obj1) || isArray(obj2) ? isArray(obj1) && isArray(obj2) : obj1.constructor === obj2.constructor) {
-        var obj1Keys = objectKeys(obj1)
-        var obj2Keys = objectKeys(obj2)
-        if (obj1Keys.length === obj2Keys.length) {
-          return XEUtils.every(obj1Keys, function (key, index) {
-            return key === obj2Keys[index] && isEqual(obj1[key], obj2[obj2Keys[index]])
-          })
+    return equalCompare(obj1, obj2, defaultCompare)
+  }
+
+  function defaultCompare (v1, v2) {
+    return v1 === v2
+  }
+
+  function equalCompare (val1, val2, compare, func, key, obj1, obj2) {
+    if (val1 && val2 && !isNumber(val1) && !isNumber(val2) && !isString(val1) && !isString(val2)) {
+      if (isRegExp(val1)) {
+        return compare('' + val1, '' + val2, key, obj1, obj2)
+      } if (isDate(val1) || isBoolean(val1)) {
+        return compare(+val1, +val2, key, obj1, obj2)
+      } else {
+        var result, val1Keys, val2Keys
+        var isObj1Arr = isArray(val1)
+        var isObj2Arr = isArray(val2)
+        if (isObj1Arr || isObj2Arr ? isObj1Arr && isObj2Arr : val1.constructor === val2.constructor) {
+          val1Keys = objectKeys(val1)
+          val2Keys = objectKeys(val2)
+          if (func) {
+            result = func(val1, val2, key)
+          }
+          if (val1Keys.length === val2Keys.length) {
+            return isUndefined(result) ? XEUtils.every(val1Keys, function (key, index) {
+              return key === val2Keys[index] && equalCompare(val1[key], val2[val2Keys[index]], compare, func, isObj1Arr || isObj2Arr ? index : key, val1, val2)
+            }) : !!result
+          }
+          return false
         }
-        return false
       }
     }
-    return obj1 === obj2
+    return compare(val1, val2, key, obj1, obj2)
+  }
+
+  /**
+   * 深度比较两个对象之间的值是否相等，使用自定义比较函数
+   *
+   * @param {Object} obj1 值1
+   * @param {Object} obj2 值2
+   * @param {Function} func 自定义函数
+   * @return {Boolean}
+   */
+  function isEqualWith (obj1, obj2, func) {
+    if (isFunction(func)) {
+      return equalCompare(obj1, obj2, function (v1, v2, key, obj1, obj2) {
+        var result = func(v1, v2, key, obj1, obj2)
+        return isUndefined(result) ? defaultCompare(v1, v2) : !!result
+      }, func)
+    }
+    return equalCompare(obj1, obj2, defaultCompare)
   }
 
   /**
@@ -2279,6 +2291,7 @@
     isLeapYear: isLeapYear,
     isMatch: isMatch,
     isEqual: isEqual,
+    isEqualWith: isEqualWith,
     property: property,
     getType: getType,
     uniqueId: uniqueId,

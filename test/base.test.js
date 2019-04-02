@@ -1222,6 +1222,84 @@ describe('Base functions', () => {
     ).toEqual(true)
   })
 
+  test('isEqualWith()', () => {
+    expect(
+      XEUtils.isEqualWith(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(0, false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(undefined, false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(undefined, null)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(null, false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(0, undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(undefined, 0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(false, 0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(/0/, 0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(true, 1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith(false, true)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith({}, function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith({}, [])
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith({ 0: 1 }, [1])
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith([undefined], [null])
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith([11, 22], [22, 11])
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith([11, 22], [22, 11], (v1, v2) => true)
+    ).toEqual(true)
+    expect(
+      XEUtils.isEqualWith({ name: 'test1', list: [11, 33, { a: /\D/ }] }, { name: 'test1', list: [11, 33, { a: /\d/ }] })
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith([11, 22, 33], [11, 22, 33])
+    ).toEqual(true)
+    expect(
+      XEUtils.isEqualWith([11, 22, 33], [11, 22, 33], (v1, v2) => false)
+    ).toEqual(false)
+    expect(
+      XEUtils.isEqualWith([11, '22', /\d/, false], [11, '22', new RegExp('\\d'), false])
+    ).toEqual(true)
+    expect(
+      XEUtils.isEqualWith({ name: 'test1' }, { name: 'test1' })
+    ).toEqual(true)
+    expect(
+      XEUtils.isEqualWith({ name: 'test1', list: [11, /\d/] }, { name: 'test1', list: [11, /\d/] })
+    ).toEqual(true)
+    expect(
+      XEUtils.isEqualWith([{ a: 1, b: [{ aa: false }, { bb: new Date(2018, 1, 1) }] }, { c: /\D/, d: null }], [{ a: 1, b: [{ aa: false }, { bb: new Date(2018, 1, 1) }] }, { c: /\D/, d: null }])
+    ).toEqual(true)
+  })
+
   test('property()', () => {
     let getName = XEUtils.property('name')
     expect(

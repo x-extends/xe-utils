@@ -477,23 +477,57 @@ function isMatch (obj, source) {
  * @return {Boolean}
  */
 function isEqual (obj1, obj2) {
-  if (obj1 && obj2 && !isNumber(obj1) && !isNumber(obj2) && !isString(obj1) && !isString(obj2)) {
-    if (isRegExp(obj1)) {
-      return '' + obj1 === '' + obj2
-    } if (isDate(obj1) || isBoolean(obj1)) {
-      return +obj1 === +obj2
-    } else if (isArray(obj1) || isArray(obj2) ? isArray(obj1) && isArray(obj2) : obj1.constructor === obj2.constructor) {
-      var obj1Keys = objectKeys(obj1)
-      var obj2Keys = objectKeys(obj2)
-      if (obj1Keys.length === obj2Keys.length) {
-        return XEUtils.every(obj1Keys, function (key, index) {
-          return key === obj2Keys[index] && isEqual(obj1[key], obj2[obj2Keys[index]])
-        })
+  return equalCompare(obj1, obj2, defaultCompare)
+}
+
+function defaultCompare (v1, v2) {
+  return v1 === v2
+}
+
+function equalCompare (val1, val2, compare, func, key, obj1, obj2) {
+  if (val1 && val2 && !isNumber(val1) && !isNumber(val2) && !isString(val1) && !isString(val2)) {
+    if (isRegExp(val1)) {
+      return compare('' + val1, '' + val2, key, obj1, obj2)
+    } if (isDate(val1) || isBoolean(val1)) {
+      return compare(+val1, +val2, key, obj1, obj2)
+    } else {
+      var result, val1Keys, val2Keys
+      var isObj1Arr = isArray(val1)
+      var isObj2Arr = isArray(val2)
+      if (isObj1Arr || isObj2Arr ? isObj1Arr && isObj2Arr : val1.constructor === val2.constructor) {
+        val1Keys = objectKeys(val1)
+        val2Keys = objectKeys(val2)
+        if (func) {
+          result = func(val1, val2, key)
+        }
+        if (val1Keys.length === val2Keys.length) {
+          return isUndefined(result) ? XEUtils.every(val1Keys, function (key, index) {
+            return key === val2Keys[index] && equalCompare(val1[key], val2[val2Keys[index]], compare, func, isObj1Arr || isObj2Arr ? index : key, val1, val2)
+          }) : !!result
+        }
+        return false
       }
-      return false
     }
   }
-  return obj1 === obj2
+  return compare(val1, val2, key, obj1, obj2)
+}
+
+/**
+ * 深度比较两个对象之间的值是否相等，使用自定义比较函数
+ *
+ * @param {Object} obj1 值1
+ * @param {Object} obj2 值2
+ * @param {Function} func 自定义函数
+ * @return {Boolean}
+ */
+function isEqualWith (obj1, obj2, func) {
+  if (isFunction(func)) {
+    return equalCompare(obj1, obj2, function (v1, v2, key, obj1, obj2) {
+      var result = func(v1, v2, key, obj1, obj2)
+      return isUndefined(result) ? defaultCompare(v1, v2) : !!result
+    }, func)
+  }
+  return equalCompare(obj1, obj2, defaultCompare)
 }
 
 /**
@@ -1465,6 +1499,7 @@ var baseExports = {
   isLeapYear: isLeapYear,
   isMatch: isMatch,
   isEqual: isEqual,
+  isEqualWith: isEqualWith,
   property: property,
   getType: getType,
   uniqueId: uniqueId,

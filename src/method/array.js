@@ -4,13 +4,6 @@ var XEUtils = require('../core/utils')
 var setupDefaults = require('../core/setup')
 var baseExports = require('./base')
 
-var FIND_PRO = 'find'
-var MAP_PRO = 'map'
-var FILTER_PRO = 'filter'
-var EVERY_PRO = 'every'
-var SOME_PRO = 'some'
-var REDUCE_PRO = 'reduce'
-
 /**
   * 数组去重
   *
@@ -139,8 +132,32 @@ function arraySample (array, number) {
   return result
 }
 
-function isArrayPro (array, pro) {
-  return baseExports.isArray(array) && array[pro]
+function createIterateHandle (prop, useArray, restIndex, matchValue, defaultValue) {
+  return function (obj, iterate, context) {
+    if (obj && iterate) {
+      context = context || this
+      if (prop && obj[prop]) {
+        return obj[prop](iterate, context)
+      } else {
+        if (useArray && baseExports.isArray(obj)) {
+          for (var index = 0, len = obj.length; index < len; index++) {
+            if (!!iterate.call(context, obj[index], index, obj) === matchValue) {
+              return [true, false, index, obj[index]][restIndex]
+            }
+          }
+        } else {
+          for (var key in obj) {
+            if (baseExports._hasOwnProp(obj, key)) {
+              if (!!iterate.call(context, obj[key], key, obj) === matchValue) {
+                return [true, false, key, obj[key]][restIndex]
+              }
+            }
+          }
+        }
+      }
+    }
+    return defaultValue
+  }
 }
 
 /**
@@ -151,23 +168,7 @@ function isArrayPro (array, pro) {
   * @param {Object} context 上下文
   * @return {Boolean}
   */
-function arraySome (obj, iterate, context) {
-  if (obj && iterate) {
-    context = context || this
-    if (isArrayPro(SOME_PRO)) {
-      return obj[SOME_PRO](iterate, context)
-    } else {
-      for (var key in obj) {
-        if (baseExports._hasOwnProp(obj, key)) {
-          if (iterate.call(context, obj[key], key, obj)) {
-            return true
-          }
-        }
-      }
-    }
-  }
-  return false
-}
+var arraySome = createIterateHandle('some', 1, 0, true, false)
 
 /**
   * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
@@ -177,23 +178,27 @@ function arraySome (obj, iterate, context) {
   * @param {Object} context 上下文
   * @return {Boolean}
   */
-function arrayEvery (obj, iterate, context) {
-  if (obj && iterate) {
-    context = context || this
-    if (isArrayPro(EVERY_PRO)) {
-      return obj[EVERY_PRO](iterate, context)
-    } else {
-      for (var key in obj) {
-        if (baseExports._hasOwnProp(obj, key)) {
-          if (!iterate.call(context, obj[key], key, obj)) {
-            return false
-          }
-        }
-      }
-    }
-  }
-  return true
-}
+var arrayEvery = createIterateHandle('every', 1, 1, false, true)
+
+/**
+  * 查找匹配第一条数据的键
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iterate(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+var findKey = createIterateHandle('', 0, 2, true)
+
+/**
+  * 查找匹配第一条数据
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iterate(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Object}
+  */
+var arrayFind = createIterateHandle('find', 1, 3, true)
 
 /**
   * 根据回调过滤数据
@@ -207,8 +212,8 @@ function arrayFilter (obj, iterate, context) {
   var result = []
   if (obj && iterate) {
     context = context || this
-    if (isArrayPro(FILTER_PRO)) {
-      return obj[FILTER_PRO](iterate, context)
+    if (obj.filter) {
+      return obj.filter(iterate, context)
     }
     baseExports.each(obj, function (val, key) {
       if (iterate.call(context, val, key, obj)) {
@@ -217,60 +222,6 @@ function arrayFilter (obj, iterate, context) {
     })
   }
   return result
-}
-
-/**
-  * 查找匹配第一条数据
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
-function arrayFind (obj, iterate, context) {
-  if (obj && iterate) {
-    context = context || this
-    if (isArrayPro(FIND_PRO)) {
-      return obj[FIND_PRO](iterate, context)
-    } else {
-      if (baseExports.isArray(obj)) {
-        for (var index = 0, len = obj.length; index < len; index++) {
-          if (iterate.call(context, obj[index], index, obj)) {
-            return obj[index]
-          }
-        }
-      } else {
-        for (var key in obj) {
-          if (baseExports._hasOwnProp(obj, key)) {
-            if (iterate.call(context, obj[key], key, obj)) {
-              return obj[key]
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-/**
-  * 查找匹配第一条数据的键
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
-function findKey (obj, iterate, context) {
-  if (obj && iterate) {
-    context = context || this
-    for (var key in obj) {
-      if (baseExports._hasOwnProp(obj, key)) {
-        if (iterate.call(context, obj[key], key, obj)) {
-          return key
-        }
-      }
-    }
-  }
 }
 
 /**
@@ -288,8 +239,8 @@ function arrayMap (obj, iterate, context) {
     if (!baseExports.isFunction(iterate)) {
       iterate = baseExports.property(iterate)
     }
-    if (isArrayPro(MAP_PRO)) {
-      return obj[MAP_PRO](iterate, context)
+    if (obj.map) {
+      return obj.map(iterate, context)
     } else {
       baseExports.each(obj, function () {
         result.push(iterate.apply(context, arguments))
@@ -341,22 +292,26 @@ function arrayMean (array, iterate, context) {
   * @param {Object} initialValue 初始值
   * @return {Number}
   */
-/* eslint-disable valid-typeof */
-function arrayReduce (array, callback, initialValue, UNDEFINED) {
+function arrayReduce (array, callback, initialValue) {
   if (array) {
-    var len
+    var len, reduceMethod
     var index = 0
     var context = this
     var previous = initialValue
+    var isInitialVal = arguments.length > 2
     var keyList = baseExports.keys(array)
-    if (previous === UNDEFINED) {
-      previous = array[keyList[0]]
-      index = 1
-    }
-    if (isArrayPro(REDUCE_PRO)) {
-      return array.reduce(function () {
+    if (array.length && array.reduce) {
+      reduceMethod = function () {
         return callback.apply(context, arguments)
-      }, previous)
+      }
+      if (isInitialVal) {
+        return array.reduce(reduceMethod, previous)
+      }
+      return array.reduce(reduceMethod)
+    }
+    if (isInitialVal) {
+      index = 1
+      previous = array[keyList[0]]
     }
     for (len = keyList.length; index < len; index++) {
       previous = callback.call(context, previous, array[keyList[index]], index, array)
@@ -755,6 +710,28 @@ function mapTreeItem (obj, iterate, context, path, optChildren) {
   */
 var mapTree = createTreeFunc(mapTreeItem)
 
+/**
+  * 从树结构中根据回调过滤数据
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iterate(item, index, items, path) 回调
+  * @param {Object} options {children: 'children'}
+  * @param {Object} context 上下文
+  * @return {Array}
+  */
+function filterTree (obj, iterate, options, context) {
+  var result = []
+  if (obj && iterate) {
+    context = context || this
+    eachTree(obj, function (item, index, items, path) {
+      if (iterate.call(context, item, index, items, path)) {
+        result.push(item)
+      }
+    }, options)
+  }
+  return result
+}
+
 var arrayExports = {
   uniq: arrayUniq,
   union: arrayUnion,
@@ -784,7 +761,8 @@ var arrayExports = {
   toTreeArray: toTreeArray,
   findTree: findTree,
   eachTree: eachTree,
-  mapTree: mapTree
+  mapTree: mapTree,
+  filterTree: filterTree
 }
 
 module.exports = arrayExports

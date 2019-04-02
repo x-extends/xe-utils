@@ -1096,4 +1096,27 @@ describe('Array functions', () => {
       }, { children: 'childs' })
     ).toEqual([{ a: 22 }, { a: 44, childs: [{ a: 444 }, { a: 446 }] }])
   })
+
+  test('filterTree()', () => {
+    expect(
+      XEUtils.filterTree([{ a: 11 }, { a: 22 }], item => {
+        return item.a === 33
+      })
+    ).toEqual([])
+    expect(
+      XEUtils.filterTree([{ a: 11 }, { a: 22 }], item => {
+        return item.a === 11
+      })
+    ).toEqual([{ a: 11 }])
+    expect(
+      XEUtils.filterTree([{ a: 11 }, { a: 22, children: [{ a: 222 }, { a: 223 }] }], item => {
+        return item.a >= 22
+      })
+    ).toEqual([{ a: 22, children: [{ a: 222 }, { a: 223 }] }, { a: 222 }, { a: 223 }])
+    expect(
+      XEUtils.filterTree([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 223 }] }], item => {
+        return item.a >= 22
+      }, { children: 'childs' })
+    ).toEqual([{ a: 22, childs: [{ a: 222 }, { a: 223 }] }, { a: 222 }, { a: 223 }])
+  })
 })

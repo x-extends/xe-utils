@@ -255,7 +255,15 @@ export interface XEUtilsMethods {
    * @param obj1 值1
    * @param obj2 值2
    */
-  isEqual(obj1: object | Array<any>, obj2: object | Array<any>): boolean;
+  isEqual(obj1: any, obj2: any): boolean;
+
+  /**
+   * 深度比较两个对象之间的值是否相等，使用自定义比较函数
+   * @param obj1 值1
+   * @param obj2 值2
+   * @param func 自定义函数
+   */
+  isEqualWith(obj1: any, obj2: any, func?: Function): boolean;
 
   /**
    * 判断两个日期是否相同
@@ -1053,6 +1061,15 @@ export interface XEUtilsMethods {
    * @param {Object} context 上下文
    */
   mapTree(array: Array<any>, iterate: Function, options?: object, context?: any): Array<any>;
+
+  /**
+   * 从树结构中根据回调过滤数据
+   * @param {Object} obj 对象/数组
+   * @param {Function} iterate(item, index, items, path) 回调
+   * @param {Object} options {children: 'children'}
+   * @param {Object} context 上下文
+   */
+  filterTree(array: Array<any>, iterate: Function, options?: object, context?: any): Array<any>;
 
   /**
    * 返回当前时间戳

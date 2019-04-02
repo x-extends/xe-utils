@@ -513,6 +513,17 @@ XEUtils.isEqual({name: 'test1', list: [11, /\d/]}, {name: 'test1', list: [11,  /
 XEUtils.isEqual({name: 'test1', list: [11, 33, {a: /\D/}]}, {name: 'test1', list: [11, 33, {a: /\d/}]}) // false
 ```
 
+### isEqualWith (obj1, obj2, func) 深度比较两个对象之间的值是否相等，使用自定义比较函数
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.isEqualWith({0: 1}, [1]) // false
+XEUtils.isEqualWith({0: 1}, [1], (v1, v2) => true) // true
+XEUtils.isEqualWith([1], [1]) // true
+XEUtils.isEqualWith([1], [1], (v1, v2) => false) // false
+```
+
 ### isDateSame (date1, date2, format) 判断两个日期是否相同
 
 ```javascript
@@ -1561,6 +1572,19 @@ XEUtils.mapTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id:
 XEUtils.mapTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
   return { id: item.id * 2 }
 }, {children: 'childs'}) // [{id: 2}, {id: 4, children: [{id: 40}]}, {id: 6}]
+```
+
+### filterTree ( obj, iterate[, options, context] ) 从树结构中根据回调过滤数据
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.filterTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
+  return item.id === 1
+}) // {id: 1}
+XEUtils.filterTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
+  return item.id >= 3
+}, {children: 'childs'}) // [{id: 20}, {id: 3, childs: [{id: 30}]}, {id: 30}]
 ```
 
 ### now ( ) 返回当前时间戳
