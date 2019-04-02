@@ -76,6 +76,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [isLeapYear (date) 判断是否闰年](#isleapyear-date-判断是否闰年)
   * [isMatch (obj, source) 判断属性中的键和值是否包含在对象中](#ismatch-obj-source-判断属性中的键和值是否包含在对象中)
   * [isEqual (obj1, obj2) 深度比较两个对象之间的值是否相等](#isequal-obj1-obj2-深度比较两个对象之间的值是否相等)
+  * [isEqualWith (obj1, obj2, func) 深度比较两个对象之间的值是否相等，使用自定义比较函数](#user-content-isequalwith-obj1-obj2-func-深度比较两个对象之间的值是否相等使用自定义比较函数)
   * [isDateSame (date1, date2, format) 判断两个日期是否相同](#isdatesame-date1-date2-format-判断两个日期是否相同)
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
@@ -175,6 +176,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [findTree ( obj, iterate[, options, context] ) 从树结构中查找匹配第一条数据的键、值、路径](#user-content-findtree--obj-iterate-options-context--从树结构中查找匹配第一条数据的键值路径)
   * [eachTree ( obj, iterate[, options, context] ) 从树结构中遍历数据的键、值、路径](#user-content-eachtree--obj-iterate-options-context--从树结构中遍历数据的键值路径)
   * [mapTree ( obj, iterate[, options, context] ) 从树结构中指定方法后的返回值组成的新数组](#user-content-maptree--obj-iterate-options-context--从树结构中指定方法后的返回值组成的新数组)
+  * [filterTree ( obj, iterate[, options, context] ) 从树结构中根据回调过滤数据](#user-content-filtertree--obj-iterate-options-context--从树结构中根据回调过滤数据)
   * [property ( path ) 返回一个获取对象属性的函数](#property--path--返回一个获取对象属性的函数)
   * [pluck ( array, key ) 获取数组对象中某属性值，返回一个数组](#pluck--array-key--获取数组对象中某属性值返回一个数组)
   * [invoke ( list, path, ...arguments ) 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它](#invoke--list-path-arguments--在list的每个元素上执行方法任何传递的额外参数都会在调用方法的时候传递给它)
