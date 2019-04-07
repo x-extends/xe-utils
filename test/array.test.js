@@ -1095,6 +1095,11 @@ describe('Array functions', () => {
         return { a: item.a * 2 }
       }, { children: 'childs' })
     ).toEqual([{ a: 22 }, { a: 44, childs: [{ a: 444 }, { a: 446 }] }])
+    expect(
+      XEUtils.mapTree([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 223 }] }], item => {
+        return { a: item.a * 2 }
+      }, { children: 'childs', mapChildren: 'childs2' })
+    ).toEqual([{ a: 22 }, { a: 44, childs2: [{ a: 444 }, { a: 446 }] }])
   })
 
   test('filterTree()', () => {

@@ -1574,6 +1574,9 @@ XEUtils.mapTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id:
 XEUtils.mapTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
   return { id: item.id * 2 }
 }, {children: 'childs'}) // [{id: 2}, {id: 4, children: [{id: 40}]}, {id: 6}]
+XEUtils.mapTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
+  return { id: item.id * 2 }
+}, {children: 'childs', mapChildren: 'childs2'}) // [{id: 2}, {id: 4, childs2: [{id: 40}]}, {id: 6}]
 ```
 
 ### filterTree ( obj, iterate[, options, context] ) 从树结构中根据回调过滤数据
