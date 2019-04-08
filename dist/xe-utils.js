@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.15
+ * xe-utils.js v1.8.16
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -647,21 +647,21 @@
     return function (obj, iterate, options, context) {
       var opts = options || {}
       var optChildren = opts.children || 'children'
-      return handle(obj, iterate, context || this, [], optChildren, opts.mapChildren || optChildren)
+      return handle(null, obj, iterate, context || this, [], optChildren, opts.mapChildren || optChildren)
     }
   }
 
-  function findTreeItem (obj, iterate, context, path, parseChildren, mapChildren) {
+  function findTreeItem (parent, obj, iterate, context, path, parseChildren, mapChildren) {
     var item, key, index, len, paths, match
     if (baseExports.isArray(obj)) {
       for (index = 0, len = obj.length; index < len; index++) {
         item = obj[index]
         paths = path.concat(['' + index])
-        if (iterate.call(context, item, index, obj, paths)) {
-          return { index: index, item: item, path: paths, items: obj }
+        if (iterate.call(context, item, index, obj, paths, parent)) {
+          return { index: index, item: item, path: paths, items: obj, parent: parent }
         }
         if (parseChildren && item) {
-          match = findTreeItem(item[parseChildren], iterate, context, paths.concat([parseChildren]), parseChildren, mapChildren)
+          match = findTreeItem(item, item[parseChildren], iterate, context, paths.concat([parseChildren]), parseChildren, mapChildren)
           if (match) {
             return match
           }
@@ -672,11 +672,11 @@
         if (baseExports._hasOwnProp(obj, key)) {
           item = obj[key]
           paths = path.concat([key])
-          if (iterate.call(context, item, index, obj, paths)) {
+          if (iterate.call(context, item, index, obj, paths, parent)) {
             return { index: key, item: item, path: paths, items: obj }
           }
           if (parseChildren && item) {
-            match = findTreeItem(item[parseChildren], iterate, context, paths.concat([parseChildren]), parseChildren, mapChildren)
+            match = findTreeItem(item, item[parseChildren], iterate, context, paths.concat([parseChildren]), parseChildren, mapChildren)
             if (match) {
               return match
             }
@@ -690,20 +690,20 @@
     * 从树结构中查找匹配第一条数据的键、值、路径
     *
     * @param {Object} obj 对象/数组
-    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Function} iterate(item, index, items, path, parent) 回调
     * @param {Object} options {children: 'children'}
     * @param {Object} context 上下文
     * @return {Object} { item, index, items, path }
     */
   var findTree = createTreeFunc(findTreeItem)
 
-  function eachTreeItem (obj, iterate, context, path, parseChildren, mapChildren) {
+  function eachTreeItem (parent, obj, iterate, context, path, parseChildren, mapChildren) {
     var paths
     baseExports.each(obj, function (item, index) {
       paths = path.concat(['' + index])
-      iterate.call(context, item, index, obj, paths)
+      iterate.call(context, item, index, obj, paths, parent)
       if (item && parseChildren) {
-        eachTreeItem(item[parseChildren], iterate, context, paths, parseChildren, mapChildren)
+        eachTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, mapChildren)
       }
     })
   }
@@ -712,19 +712,19 @@
     * 从树结构中遍历数据的键、值、路径
     *
     * @param {Object} obj 对象/数组
-    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Function} iterate(item, index, items, path, parent) 回调
     * @param {Object} options {children: 'children', mapChildren: 'children}
     * @param {Object} context 上下文
     */
   var eachTree = createTreeFunc(eachTreeItem)
 
-  function mapTreeItem (obj, iterate, context, path, parseChildren, mapChildren) {
+  function mapTreeItem (parent, obj, iterate, context, path, parseChildren, mapChildren) {
     var paths, rest
     return arrayMap(obj, function (item, index) {
       paths = path.concat(['' + index])
-      rest = iterate.call(context, item, index, obj, paths)
+      rest = iterate.call(context, item, index, obj, paths, parent)
       if (rest && item && parseChildren && item[parseChildren]) {
-        rest[mapChildren] = mapTreeItem(item[parseChildren], iterate, context, paths, parseChildren, mapChildren)
+        rest[mapChildren] = mapTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, mapChildren)
       }
       return rest
     })
@@ -734,7 +734,7 @@
     * 从树结构中指定方法后的返回值组成的新数组
     *
     * @param {Object} obj 对象/数组
-    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Function} iterate(item, index, items, path, parent) 回调
     * @param {Object} options {children: 'children'}
     * @param {Object} context 上下文
     * @return {Object/Array}
@@ -745,7 +745,7 @@
     * 从树结构中根据回调过滤数据
     *
     * @param {Object} obj 对象/数组
-    * @param {Function} iterate(item, index, items, path) 回调
+    * @param {Function} iterate(item, index, items, path, parent) 回调
     * @param {Object} options {children: 'children'}
     * @param {Object} context 上下文
     * @return {Array}
@@ -754,8 +754,8 @@
     var result = []
     if (obj && iterate) {
       context = context || this
-      eachTree(obj, function (item, index, items, path) {
-        if (iterate.call(context, item, index, items, path)) {
+      eachTree(obj, function (item, index, items, path, parent) {
+        if (iterate.call(context, item, index, items, path, parent)) {
           result.push(item)
         }
       }, options)
@@ -3427,10 +3427,10 @@
   )
 
   /**
- * functions of mixing
- *
- * @param {Object} methods
- */
+   * functions of mixing
+   *
+   * @param {Object} methods
+   */
   XEUtils.mixin = function (methods) {
     methodExports.each(methods, function (fn, name) {
       XEUtils[name] = methodExports.isFunction(fn) && fn._c !== false ? function () {

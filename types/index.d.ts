@@ -1038,7 +1038,7 @@ export interface XEUtilsMethods {
   /**
    * 从树结构中查找匹配第一条数据的键、值、路径
    * @param {Object} obj 对象/数组
-   * @param {Function} iterate(item, index, items, path) 回调
+   * @param {Function} iterate(item, index, items, path, parent) 回调
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
@@ -1047,7 +1047,7 @@ export interface XEUtilsMethods {
   /**
    * 从树结构中遍历数据的键、值、路径
    * @param {Object} obj 对象/数组
-   * @param {Function} iterate(item, index, items, path) 回调
+   * @param {Function} iterate(item, index, items, path, parent) 回调
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
@@ -1065,7 +1065,7 @@ export interface XEUtilsMethods {
   /**
    * 从树结构中根据回调过滤数据
    * @param {Object} obj 对象/数组
-   * @param {Function} iterate(item, index, items, path) 回调
+   * @param {Function} iterate(item, index, items, path, parent) 回调
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
