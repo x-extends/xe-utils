@@ -592,8 +592,6 @@ function unTreeList (result, array, opts) {
     children = item[optChildren]
     if (optData) {
       item = item[optData]
-    } else {
-      baseExports.remove(item, optChildren)
     }
     result.push(item)
     if (children) {

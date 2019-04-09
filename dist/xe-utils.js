@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.16
+ * xe-utils.js v1.8.17
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -621,8 +621,6 @@
       children = item[optChildren]
       if (optData) {
         item = item[optData]
-      } else {
-        baseExports.remove(item, optChildren)
       }
       result.push(item)
       if (children) {

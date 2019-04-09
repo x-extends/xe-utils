@@ -986,10 +986,10 @@ describe('Array functions', () => {
     expect(
       XEUtils.toTreeArray(list1)
     ).toEqual([
-      { id: 1, name: '111' },
-      { id: 2, parentId: 1, name: '222' },
-      { id: 4, parentId: 2, name: '444' },
-      { id: 3, name: '333' }
+      list1[0],
+      list1[0].children[0],
+      list1[0].children[0].children[0],
+      list1[1]
     ])
     let list2 = [
       {
