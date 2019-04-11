@@ -107,6 +107,9 @@ describe('Date functions', () => {
       XEUtils.toStringDate(time)
     ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99))
     expect(
+      XEUtils.toStringDate('' + time)
+    ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99))
+    expect(
       XEUtils.toStringDate(date)
     ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99))
     expect(
@@ -162,6 +165,9 @@ describe('Date functions', () => {
     ).toEqual('Invalid Date')
     expect(
       XEUtils.toDateString(time)
+    ).toEqual('2017-01-01 14:05:30')
+    expect(
+      XEUtils.toDateString('' + time)
     ).toEqual('2017-01-01 14:05:30')
     expect(
       XEUtils.toDateString(date)

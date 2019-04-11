@@ -89,7 +89,7 @@ function toStringDate (str, format) {
   if (str) {
     isDate = baseExports.isDate(str)
     if (isDate || /^[0-9]{11,13}$/.test(str)) {
-      rest = new Date(isDate ? getDateTime(str) : str)
+      rest = new Date(isDate ? getDateTime(str) : Number(str))
     } else if (baseExports.isString(str)) {
       format = format || setupDefaults.formatDate
       baseExports.each(dateFormatRules, function (item) {
