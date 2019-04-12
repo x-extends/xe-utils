@@ -7,7 +7,7 @@ var setupDefaults = {
     key: 'id',
     children: 'children'
   },
-  formatDate: formatString + '.SSS',
+  formatDate: formatString + '.SSSZ',
   formatString: formatString,
   dateDiffRules: [
     ['yyyy', 31536000000],

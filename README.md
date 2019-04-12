@@ -1622,6 +1622,7 @@ XEUtils.timestamp('2017/12/20 10:10:30.459', 'yyyy/MM/dd HH:mm:ss.SSS') // 15137
 | mm | 分钟 |
 | ss | 秒 |
 | SSS | 毫秒 |
+| Z | 时区 |
 
 ```javascript
 import XEUtils from 'xe-utils'
@@ -1634,6 +1635,10 @@ XEUtils.toStringDate('2017-12-20 10:10:30')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
 XEUtils.toStringDate('2017-12-20T10:10:30.738+0800')
 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+XEUtils.toStringDate('2017-12-20T10:10:30.738+01:00')
+// Wed Dec 20 2017 17:10:30 GMT+0800 (中国标准时间)
+XEUtils.toStringDate('2017-12-20T10:10:30.738Z')
+// Wed Dec 20 2017 18:10:30 GMT+0800 (中国标准时间)
 XEUtils.toStringDate('12/20/2017', 'MM/dd/yyyy')
 // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
 XEUtils.toStringDate('20171220101030', 'yyyyMMddHHmmss')
