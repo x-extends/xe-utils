@@ -132,7 +132,7 @@ describe('Date functions', () => {
     ).toEqual(new Date('2017-12-20T10:10:30.423+10:00'))
     expect(
       XEUtils.toStringDate('2017-12-20T10:10:30.423Z')
-    ).toEqual(new Date(2017, 11, 20, 18, 10, 30, 423))
+    ).toEqual(new Date('2017-12-20T10:10:30.423Z'))
     expect(
       XEUtils.toStringDate('12/20/2017', 'MM/dd/yyyy')
     ).toEqual(new Date(2017, 11, 20))
