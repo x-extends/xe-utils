@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "1.8.19",
+  "version": "1.8.20",
   "description": "A JavaScript tools library.",
   "main": "index.js",
   "unpkg": "dist/xe-utils.js",
