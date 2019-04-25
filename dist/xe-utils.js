@@ -1633,11 +1633,11 @@
 
   function getSortPros (arr, list, iterate, context) {
     iterate = baseExports.isArray(iterate) ? iterate : [iterate]
-    baseExports.arrayEach(iterate, function (item, index) {
-      baseExports.arrayEach(list, baseExports.isFunction(item) ? function (val, key) {
-        val[index] = item.call(context, val.data, key, arr)
+    baseExports.arrayEach(iterate, function (prop, index) {
+      baseExports.arrayEach(list, baseExports.isFunction(prop) ? function (val, key) {
+        val[index] = prop.call(context, val.data, key, arr)
       } : function (val) {
-        val[index] = val.data[item]
+        val[index] = baseExports.get(val.data, prop)
       })
     })
     return iterate

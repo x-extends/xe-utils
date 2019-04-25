@@ -115,6 +115,15 @@ describe('Array functions', () => {
       XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], ['age'])
     ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
+      XEUtils.sortBy([{ a: { b: 66 } }, { a: { b: 33 } }, { a: { b: 11 } }], 'a.b')
+    ).toEqual([{ a: { b: 11 } }, { a: { b: 33 } }, { a: { b: 66 } }])
+    expect(
+      XEUtils.sortBy([{ a: { b: 66 } }, { a: { b: 33 } }, { a: { b: 11 } }], ['a.b'])
+    ).toEqual([{ a: { b: 11 } }, { a: { b: 33 } }, { a: { b: 66 } }])
+    expect(
+      XEUtils.sortBy([{ a: { b: 66 }, c: 6 }, { a: { b: 33 }, c: 9 }, { a: { b: 11 }, c: 6 }], ['c', 'a.b'])
+    ).toEqual([{ a: { b: 11 }, c: 6 }, { a: { b: 66 }, c: 6 }, { a: { b: 33 }, c: 9 }])
+    expect(
       XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], item => item.age)
     ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
