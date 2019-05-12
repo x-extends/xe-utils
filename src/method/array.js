@@ -412,13 +412,16 @@ function zip () {
  * @param {Array} arrays 数组集合
  */
 function unzip (arrays) {
+  var index, len
   var result = []
-  var index = 0
-  var len = XEUtils.max(arrays, function (item) {
-    return item.length || 0
-  }).length
-  for (; index < len; index++) {
-    result.push(arrayMap(arrays, index))
+  if (arrays && arrays.length) {
+    index = 0
+    len = XEUtils.max(arrays, function (item) {
+      return item.length || 0
+    }).length
+    for (; index < len; index++) {
+      result.push(arrayMap(arrays, index))
+    }
   }
   return result
 }
