@@ -3237,6 +3237,10 @@
     toInteger: stringToInteger
   }
 
+  function formatText (str) {
+    return ('' + (str === null || str === void 0 ? '' : str))
+  }
+
   /**
     * 去除字符串左右两边的空格
     *
@@ -3254,7 +3258,7 @@
     * @return {String}
     */
   function stringTrimLeft (str) {
-    return str && str.trimLeft ? str.trimLeft() : ('' + str).replace(/^[\s\uFEFF\xA0]+/g, '')
+    return str && str.trimLeft ? str.trimLeft() : formatText(str).replace(/^[\s\uFEFF\xA0]+/g, '')
   }
 
   /**
@@ -3264,7 +3268,7 @@
     * @return {String}
     */
   function stringTrimRight (str) {
-    return str && str.trimRight ? str.trimRight() : ('' + str).replace(/[\s\uFEFF\xA0]+$/g, '')
+    return str && str.trimRight ? str.trimRight() : formatText(str).replace(/[\s\uFEFF\xA0]+$/g, '')
   }
 
   var escapeMap = {
@@ -3284,7 +3288,7 @@
   function formatEscaper (dataMap) {
     var replaceRegexp = new RegExp('(?:' + baseExports.keys(dataMap).join('|') + ')', 'g')
     return function (str) {
-      return ('' + str).replace(replaceRegexp, function (match) {
+      return formatText(str).replace(replaceRegexp, function (match) {
         return dataMap[match]
       })
     }
@@ -3313,7 +3317,7 @@
     * @return {String}
     */
   function camelCase (str) {
-    return ('' + str).replace(/(-[a-zA-Z])/g, function (text, u) {
+    return formatText(str).replace(/(-[a-zA-Z])/g, function (text, u) {
       return u.substring(1).toLocaleUpperCase()
     })
   }
@@ -3325,7 +3329,7 @@
     * @return {String}
     */
   function kebabCase (str) {
-    return ('' + str).replace(/([A-Z])/g, function (text, u) {
+    return formatText(str).replace(/([A-Z])/g, function (text, u) {
       return '-' + u.toLowerCase()
     })
   }
@@ -3338,9 +3342,9 @@
     * @return {String}
     */
   function stringRepeat (str, count) {
-    var rest = '' + str
-    if (str.repeat) {
-      return str.repeat(count)
+    var rest = formatText(str)
+    if (rest.repeat) {
+      return rest.repeat(count)
     }
     var list = isNaN(count) ? [] : new Array(parseInt(count))
     return list.join(rest) + (list.length > 0 ? rest : '')
@@ -3355,7 +3359,7 @@
     * @return {String}
     */
   function stringPadStart (str, targetLength, padString, UNDEFINED) {
-    var rest = '' + str
+    var rest = formatText(str)
     targetLength = targetLength >> 0
     padString = padString === UNDEFINED ? ' ' : '' + padString
     if (rest.padStart) {
@@ -3380,7 +3384,7 @@
     * @return {String}
     */
   function stringPadEnd (str, targetLength, padString, UNDEFINED) {
-    var rest = '' + str
+    var rest = formatText(str)
     targetLength = targetLength >> 0
     padString = padString === UNDEFINED ? ' ' : '' + padString
     if (rest.padEnd) {
@@ -3405,7 +3409,7 @@
     * @return {String}
     */
   function stringStartsWith (str, val, startIndex) {
-    var rest = '' + str
+    var rest = formatText(str)
     return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
   }
 
@@ -3418,7 +3422,7 @@
     * @return {String}
     */
   function stringEndsWith (str, val, startIndex) {
-    var rest = '' + str
+    var rest = formatText(str)
     return arguments.length === 1 ? rest.indexOf(val) === rest.length - 1 : rest.substring(0, startIndex).indexOf(val) === startIndex - 1
   }
 

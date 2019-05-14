@@ -3,11 +3,23 @@ const XEUtils = require('../index')
 describe('String functions', () => {
   test('trim()', () => {
     expect(
+      XEUtils.trim()
+    ).toEqual('')
+    expect(
+      XEUtils.trim(null)
+    ).toEqual('')
+    expect(
+      XEUtils.trim(undefined)
+    ).toEqual('')
+    expect(
       XEUtils.trim(0)
     ).toEqual('0')
     expect(
-      XEUtils.trim(null)
-    ).toEqual('null')
+      XEUtils.trim([])
+    ).toEqual('')
+    expect(
+      XEUtils.trim('0')
+    ).toEqual('0')
     expect(
       XEUtils.trim(' abc ')
     ).toEqual('abc')
@@ -15,11 +27,23 @@ describe('String functions', () => {
 
   test('trimLeft()', () => {
     expect(
+      XEUtils.trimLeft()
+    ).toEqual('')
+    expect(
+      XEUtils.trimLeft(null)
+    ).toEqual('')
+    expect(
+      XEUtils.trimLeft(undefined)
+    ).toEqual('')
+    expect(
       XEUtils.trimLeft(0)
     ).toEqual('0')
     expect(
-      XEUtils.trimLeft(null)
-    ).toEqual('null')
+      XEUtils.trimLeft([])
+    ).toEqual('')
+    expect(
+      XEUtils.trimLeft('0')
+    ).toEqual('0')
     expect(
       XEUtils.trimLeft(' abc ')
     ).toEqual('abc ')
@@ -27,17 +51,44 @@ describe('String functions', () => {
 
   test('trimRight()', () => {
     expect(
+      XEUtils.trimRight()
+    ).toEqual('')
+    expect(
+      XEUtils.trimRight(null)
+    ).toEqual('')
+    expect(
+      XEUtils.trimRight(undefined)
+    ).toEqual('')
+    expect(
       XEUtils.trimRight(0)
     ).toEqual('0')
     expect(
-      XEUtils.trimRight(null)
-    ).toEqual('null')
+      XEUtils.trimRight([])
+    ).toEqual('')
+    expect(
+      XEUtils.trimRight('0')
+    ).toEqual('0')
     expect(
       XEUtils.trimRight(' abc ')
     ).toEqual(' abc')
   })
 
   test('escape()', () => {
+    expect(
+      XEUtils.escape()
+    ).toEqual('')
+    expect(
+      XEUtils.escape(null)
+    ).toEqual('')
+    expect(
+      XEUtils.escape(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.escape(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.escape([])
+    ).toEqual('')
     expect(
       XEUtils.escape('<a>link</a>')
     ).toEqual('&lt;a&gt;link&lt;/a&gt;')
@@ -48,6 +99,21 @@ describe('String functions', () => {
 
   test('unescape()', () => {
     expect(
+      XEUtils.unescape()
+    ).toEqual('')
+    expect(
+      XEUtils.unescape(null)
+    ).toEqual('')
+    expect(
+      XEUtils.unescape(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.unescape(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.unescape([])
+    ).toEqual('')
+    expect(
       XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;')
     ).toEqual('<a>link</a>')
     expect(
@@ -57,17 +123,74 @@ describe('String functions', () => {
 
   test('camelCase()', () => {
     expect(
+      XEUtils.camelCase()
+    ).toEqual('')
+    expect(
+      XEUtils.camelCase(null)
+    ).toEqual('')
+    expect(
+      XEUtils.camelCase(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.camelCase(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.camelCase([])
+    ).toEqual('')
+    expect(
       XEUtils.camelCase('project-name')
     ).toEqual('projectName')
   })
 
   test('kebabCase()', () => {
     expect(
+      XEUtils.kebabCase()
+    ).toEqual('')
+    expect(
+      XEUtils.kebabCase(null)
+    ).toEqual('')
+    expect(
+      XEUtils.kebabCase(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.kebabCase(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.kebabCase([])
+    ).toEqual('')
+    expect(
       XEUtils.kebabCase('projectName')
     ).toEqual('project-name')
   })
 
   test('repeat()', () => {
+    expect(
+      XEUtils.repeat()
+    ).toEqual('')
+    expect(
+      XEUtils.repeat(null)
+    ).toEqual('')
+    expect(
+      XEUtils.repeat(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.repeat(0)
+    ).toEqual('')
+    expect(
+      XEUtils.repeat([])
+    ).toEqual('')
+    expect(
+      XEUtils.repeat('aaaaa')
+    ).toEqual('')
+    expect(
+      XEUtils.repeat('aaaaa', 0)
+    ).toEqual('')
+    expect(
+      XEUtils.repeat('aaaaa', null)
+    ).toEqual('')
+    expect(
+      XEUtils.repeat('aaaaa', undefined)
+    ).toEqual('')
     expect(
       XEUtils.repeat('a', 5)
     ).toEqual('aaaaa')
@@ -78,11 +201,26 @@ describe('String functions', () => {
 
   test('padStart()', () => {
     expect(
+      XEUtils.padStart()
+    ).toEqual('')
+    expect(
+      XEUtils.padStart(null)
+    ).toEqual('')
+    expect(
+      XEUtils.padStart(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.padStart(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.padStart([])
+    ).toEqual('')
+    expect(
       XEUtils.padStart(null, 2)
-    ).toEqual('null')
+    ).toEqual('  ')
     expect(
       XEUtils.padStart(null, 6)
-    ).toEqual('  null')
+    ).toEqual('      ')
     expect(
       XEUtils.padStart(0, 2)
     ).toEqual(' 0')
@@ -114,11 +252,26 @@ describe('String functions', () => {
 
   test('padEnd()', () => {
     expect(
+      XEUtils.padEnd()
+    ).toEqual('')
+    expect(
+      XEUtils.padEnd(null)
+    ).toEqual('')
+    expect(
+      XEUtils.padEnd(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.padEnd(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.padEnd([])
+    ).toEqual('')
+    expect(
       XEUtils.padEnd(null, 2)
-    ).toEqual('null')
+    ).toEqual('  ')
     expect(
       XEUtils.padEnd(null, 6)
-    ).toEqual('null  ')
+    ).toEqual('      ')
     expect(
       XEUtils.padEnd(0, 2)
     ).toEqual('0 ')
