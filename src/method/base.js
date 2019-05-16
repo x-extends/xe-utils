@@ -6,6 +6,10 @@ var STRING_UNDEFINED = 'undefined'
 var objectToString = Object.prototype.toString
 var objectAssignFns = Object.assign
 
+function toValString (obj) {
+  return ('' + (obj === null || obj === void 0 ? '' : obj))
+}
+
 function hasOwnProp (obj, key) {
   return obj.hasOwnProperty(key)
 }
@@ -1513,6 +1517,7 @@ var baseExports = {
   contains: includes,
   assign: objectAssign,
   extend: objectAssign,
+  toString: toValString,
   toStringJSON: toStringJSON,
   toJSONString: toJSONString,
   keys: objectKeys,

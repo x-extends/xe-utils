@@ -37,8 +37,12 @@ function arrayUnion () {
   return arrayUniq(result)
 }
 
+// function sortByDef (v1, v2) {
+//   return v1 > v2 ? 1 : -1
+// }
+
 function sortByDef (v1, v2) {
-  return v1 > v2 ? 1 : -1
+  return baseExports.toString(v1).localeCompare(baseExports.toString(v2))
 }
 
 function sortMultis (name, compares) {

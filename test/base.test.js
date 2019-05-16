@@ -1586,7 +1586,52 @@ describe('Base functions', () => {
     ).toEqual(false)
   })
 
+  test('toString()', () => {
+    expect(
+      XEUtils.toString()
+    ).toEqual('')
+    expect(
+      XEUtils.toString(null)
+    ).toEqual('')
+    expect(
+      XEUtils.toString(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.toString(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toString(-1)
+    ).toEqual('-1')
+    expect(
+      XEUtils.toString(1)
+    ).toEqual('1')
+    expect(
+      XEUtils.toString([])
+    ).toEqual('')
+    expect(
+      XEUtils.toString({})
+    ).toEqual('[object Object]')
+    expect(
+      XEUtils.toString([123])
+    ).toEqual('123')
+    expect(
+      XEUtils.toString([null])
+    ).toEqual('')
+    expect(
+      XEUtils.toString([undefined])
+    ).toEqual('')
+  })
+
   test('toStringJSON()', () => {
+    expect(
+      XEUtils.toStringJSON()
+    ).toEqual({})
+    expect(
+      XEUtils.toStringJSON(0)
+    ).toEqual({})
+    expect(
+      XEUtils.toStringJSON('')
+    ).toEqual({})
     expect(
       XEUtils.toStringJSON('{"a":1}')
     ).toEqual({ a: 1 })
@@ -1596,6 +1641,18 @@ describe('Base functions', () => {
   })
 
   test('toJSONString()', () => {
+    expect(
+      XEUtils.toJSONString('')
+    ).toEqual('""')
+    expect(
+      XEUtils.toJSONString(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toJSONString([])
+    ).toEqual('[]')
+    expect(
+      XEUtils.toJSONString({})
+    ).toEqual('{}')
     expect(
       XEUtils.toJSONString({ a: 1 })
     ).toEqual('{"a":1}')

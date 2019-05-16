@@ -2,10 +2,6 @@
 
 var baseExports = require('./base')
 
-function formatText (str) {
-  return ('' + (str === null || str === void 0 ? '' : str))
-}
-
 /**
   * 去除字符串左右两边的空格
   *
@@ -23,7 +19,7 @@ function stringTrim (str) {
   * @return {String}
   */
 function stringTrimLeft (str) {
-  return str && str.trimLeft ? str.trimLeft() : formatText(str).replace(/^[\s\uFEFF\xA0]+/g, '')
+  return str && str.trimLeft ? str.trimLeft() : baseExports.toString(str).replace(/^[\s\uFEFF\xA0]+/g, '')
 }
 
 /**
@@ -33,7 +29,7 @@ function stringTrimLeft (str) {
   * @return {String}
   */
 function stringTrimRight (str) {
-  return str && str.trimRight ? str.trimRight() : formatText(str).replace(/[\s\uFEFF\xA0]+$/g, '')
+  return str && str.trimRight ? str.trimRight() : baseExports.toString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
 }
 
 var escapeMap = {
@@ -53,7 +49,7 @@ baseExports.each(escapeMap, function (item, key) {
 function formatEscaper (dataMap) {
   var replaceRegexp = new RegExp('(?:' + baseExports.keys(dataMap).join('|') + ')', 'g')
   return function (str) {
-    return formatText(str).replace(replaceRegexp, function (match) {
+    return baseExports.toString(str).replace(replaceRegexp, function (match) {
       return dataMap[match]
     })
   }
@@ -82,7 +78,7 @@ var unescape = formatEscaper(unescapeMap)
   * @return {String}
   */
 function camelCase (str) {
-  return formatText(str).replace(/(-[a-zA-Z])/g, function (text, u) {
+  return baseExports.toString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
     return u.substring(1).toLocaleUpperCase()
   })
 }
@@ -94,7 +90,7 @@ function camelCase (str) {
   * @return {String}
   */
 function kebabCase (str) {
-  return formatText(str).replace(/([A-Z])/g, function (text, u) {
+  return baseExports.toString(str).replace(/([A-Z])/g, function (text, u) {
     return '-' + u.toLowerCase()
   })
 }
@@ -107,7 +103,7 @@ function kebabCase (str) {
   * @return {String}
   */
 function stringRepeat (str, count) {
-  var rest = formatText(str)
+  var rest = baseExports.toString(str)
   if (rest.repeat) {
     return rest.repeat(count)
   }
@@ -124,7 +120,7 @@ function stringRepeat (str, count) {
   * @return {String}
   */
 function stringPadStart (str, targetLength, padString, UNDEFINED) {
-  var rest = formatText(str)
+  var rest = baseExports.toString(str)
   targetLength = targetLength >> 0
   padString = padString === UNDEFINED ? ' ' : '' + padString
   if (rest.padStart) {
@@ -149,7 +145,7 @@ function stringPadStart (str, targetLength, padString, UNDEFINED) {
   * @return {String}
   */
 function stringPadEnd (str, targetLength, padString, UNDEFINED) {
-  var rest = formatText(str)
+  var rest = baseExports.toString(str)
   targetLength = targetLength >> 0
   padString = padString === UNDEFINED ? ' ' : '' + padString
   if (rest.padEnd) {
@@ -174,7 +170,7 @@ function stringPadEnd (str, targetLength, padString, UNDEFINED) {
   * @return {String}
   */
 function stringStartsWith (str, val, startIndex) {
-  var rest = formatText(str)
+  var rest = baseExports.toString(str)
   return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
 }
 
@@ -187,7 +183,7 @@ function stringStartsWith (str, val, startIndex) {
   * @return {String}
   */
 function stringEndsWith (str, val, startIndex) {
-  var rest = formatText(str)
+  var rest = baseExports.toString(str)
   return arguments.length === 1 ? rest.indexOf(val) === rest.length - 1 : rest.substring(0, startIndex).indexOf(val) === startIndex - 1
 }
 

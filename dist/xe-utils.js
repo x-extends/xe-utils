@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.21
+ * xe-utils.js v1.8.23
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -36,6 +36,10 @@
   var STRING_UNDEFINED = 'undefined'
   var objectToString = Object.prototype.toString
   var objectAssignFns = Object.assign
+
+  function toValString (obj) {
+    return ('' + (obj === null || obj === void 0 ? '' : obj))
+  }
 
   function hasOwnProp (obj, key) {
     return obj.hasOwnProperty(key)
@@ -1544,6 +1548,7 @@
     contains: includes,
     assign: objectAssign,
     extend: objectAssign,
+    toString: toValString,
     toStringJSON: toStringJSON,
     toJSONString: toJSONString,
     keys: objectKeys,
@@ -1616,8 +1621,12 @@
     return arrayUniq(result)
   }
 
+  // function sortByDef (v1, v2) {
+  //   return v1 > v2 ? 1 : -1
+  // }
+
   function sortByDef (v1, v2) {
-    return v1 > v2 ? 1 : -1
+    return baseExports.toString(v1).localeCompare(baseExports.toString(v2))
   }
 
   function sortMultis (name, compares) {
@@ -3237,10 +3246,6 @@
     toInteger: stringToInteger
   }
 
-  function formatText (str) {
-    return ('' + (str === null || str === void 0 ? '' : str))
-  }
-
   /**
     * 去除字符串左右两边的空格
     *
@@ -3258,7 +3263,7 @@
     * @return {String}
     */
   function stringTrimLeft (str) {
-    return str && str.trimLeft ? str.trimLeft() : formatText(str).replace(/^[\s\uFEFF\xA0]+/g, '')
+    return str && str.trimLeft ? str.trimLeft() : baseExports.toString(str).replace(/^[\s\uFEFF\xA0]+/g, '')
   }
 
   /**
@@ -3268,7 +3273,7 @@
     * @return {String}
     */
   function stringTrimRight (str) {
-    return str && str.trimRight ? str.trimRight() : formatText(str).replace(/[\s\uFEFF\xA0]+$/g, '')
+    return str && str.trimRight ? str.trimRight() : baseExports.toString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
   }
 
   var escapeMap = {
@@ -3288,7 +3293,7 @@
   function formatEscaper (dataMap) {
     var replaceRegexp = new RegExp('(?:' + baseExports.keys(dataMap).join('|') + ')', 'g')
     return function (str) {
-      return formatText(str).replace(replaceRegexp, function (match) {
+      return baseExports.toString(str).replace(replaceRegexp, function (match) {
         return dataMap[match]
       })
     }
@@ -3317,7 +3322,7 @@
     * @return {String}
     */
   function camelCase (str) {
-    return formatText(str).replace(/(-[a-zA-Z])/g, function (text, u) {
+    return baseExports.toString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
       return u.substring(1).toLocaleUpperCase()
     })
   }
@@ -3329,7 +3334,7 @@
     * @return {String}
     */
   function kebabCase (str) {
-    return formatText(str).replace(/([A-Z])/g, function (text, u) {
+    return baseExports.toString(str).replace(/([A-Z])/g, function (text, u) {
       return '-' + u.toLowerCase()
     })
   }
@@ -3342,7 +3347,7 @@
     * @return {String}
     */
   function stringRepeat (str, count) {
-    var rest = formatText(str)
+    var rest = baseExports.toString(str)
     if (rest.repeat) {
       return rest.repeat(count)
     }
@@ -3359,7 +3364,7 @@
     * @return {String}
     */
   function stringPadStart (str, targetLength, padString, UNDEFINED) {
-    var rest = formatText(str)
+    var rest = baseExports.toString(str)
     targetLength = targetLength >> 0
     padString = padString === UNDEFINED ? ' ' : '' + padString
     if (rest.padStart) {
@@ -3384,7 +3389,7 @@
     * @return {String}
     */
   function stringPadEnd (str, targetLength, padString, UNDEFINED) {
-    var rest = formatText(str)
+    var rest = baseExports.toString(str)
     targetLength = targetLength >> 0
     padString = padString === UNDEFINED ? ' ' : '' + padString
     if (rest.padEnd) {
@@ -3409,7 +3414,7 @@
     * @return {String}
     */
   function stringStartsWith (str, val, startIndex) {
-    var rest = formatText(str)
+    var rest = baseExports.toString(str)
     return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
   }
 
@@ -3422,7 +3427,7 @@
     * @return {String}
     */
   function stringEndsWith (str, val, startIndex) {
-    var rest = formatText(str)
+    var rest = baseExports.toString(str)
     return arguments.length === 1 ? rest.indexOf(val) === rest.length - 1 : rest.substring(0, startIndex).indexOf(val) === startIndex - 1
   }
 

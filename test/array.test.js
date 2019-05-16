@@ -100,6 +100,12 @@ describe('Array functions', () => {
       XEUtils.sortBy('abc')
     ).toEqual(['a', 'b', 'c'])
     expect(
+      XEUtils.sortBy(['b', 'j', 'a', 'c'])
+    ).toEqual(['a', 'b', 'c', 'j'])
+    expect(
+      XEUtils.sortBy(['b', 0, 'j', 3, 'a', 'c', 9])
+    ).toEqual([0, 3, 9, 'a', 'b', 'c', 'j'])
+    expect(
       XEUtils.sortBy([11, 55, 99, 22])
     ).toEqual([11, 22, 55, 99])
     expect(

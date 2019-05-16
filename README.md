@@ -81,6 +81,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 * *常用函数*
   * [toNumber ( num ) 转数值](#tonumber--num--转数值)
   * [toInteger ( num ) 转整数](#tointeger--num--转整数)
+  * [toString ( obj ) 转字符串](#tostring--obj--转字符串)
   * [toFixedNumber ( num, digits ) 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值](#tofixednumber--num-digits--和-numbertofixed-类似区别就是不会对小数进行四舍五入结果返回数值)
   * [toFixedString ( num, digits ) 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串](#tofixedstring--num-digits--和-numbertofixed-类似区别就是不会对小数进行四舍五入结果返回字符串)
   * [toArray ( array ) 将对象或者伪数组转为新数组](#toarrayfrom--array--将对象或者伪数组转为新数组)
@@ -1906,6 +1907,16 @@ import XEUtils from 'xe-utils'
 XEUtils.toInteger(123) // 123
 XEUtils.toInteger('12.3') // 12
 XEUtils.toInteger('abc') // 0
+```
+
+### toString ( obj ) 转字符串
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.toInteger(0) // '0'
+XEUtils.toInteger(null) // ''
+XEUtils.toInteger(undefined) // ''
 ```
 
 ### toFixedNumber ( num, digits ) 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值

@@ -504,6 +504,12 @@ export interface XEUtilsMethods {
   destructuring(obj: object, ...target: object[]): object;
 
   /**
+   * 转字符串
+   * @param obj 值
+   */
+  toString(obj: any): any;
+
+  /**
    * 字符串转 JSON
    * @param str 字符串
    */
