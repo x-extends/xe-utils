@@ -111,6 +111,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
   * [padEnd ( str, targetLength [, padString] ) 用指定字符从后面开始补全字符串](#padend--str-targetlength--padstring--用指定字符从后面开始补全字符串)
   * [startsWith ( str, val [, startIndex] ) 判断字符串是否在源字符串的头部](#startswith--str-val--startindex--判断字符串是否在源字符串的头部)
   * [endsWith ( str, val [, startIndex] ) 判断字符串是否在源字符串的尾部](#endswith--str-val--startindex--判断字符串是否在源字符串的尾部)
+  * [template ( str, obj ) 解析动态字符串模板](#template--str-obj--解析动态字符串模板)
   * [slice ( array, start, end ) 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置](#slice--array-start-end--裁剪-arguments-或数组-array从-start-位置开始到-end-结束但不包括-end-本身的位置)
   * [indexOf (obj, val) 返回对象第一个索引值](#indexof-obj-val-返回对象第一个索引值)
   * [findIndexOf (obj, iteratee [, context]) 返回对象第一个索引值](#findindexof-obj-iteratee--context-返回对象第一个索引值)
@@ -2038,6 +2039,15 @@ XEUtils.startsWith('abc', 'b') // false
 import XEUtils from 'xe-utils'
 
 XEUtils.endsWith('abc', 5, 'a') // false
+```
+
+### template ( str, obj] ) 解析动态字符串模板
+
+```javascript
+import XEUtils from 'xe-utils'
+
+XEUtils.template('{{ name }}', {name: 'test1'}) // test1
+XEUtils.template('{{ name }} {{{age}}}', {name: 'test1', age: 26}) // test1 {26}
 ```
 
 ### serialize ( query ) 序列化查询参数

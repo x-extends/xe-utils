@@ -312,4 +312,49 @@ describe('String functions', () => {
       XEUtils.endsWith('abc', 5, 'a')
     ).toEqual(false)
   })
+
+  test('template()', () => {
+    expect(
+      XEUtils.template()
+    ).toEqual('')
+    expect(
+      XEUtils.template(null)
+    ).toEqual('')
+    expect(
+      XEUtils.template(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.template(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.template([])
+    ).toEqual('')
+    expect(
+      XEUtils.template('{name}')
+    ).toEqual('{name}')
+    expect(
+      XEUtils.template('{{name}}')
+    ).toEqual('{{name}}')
+    expect(
+      XEUtils.template('{{name}}', null)
+    ).toEqual('{{name}}')
+    expect(
+      XEUtils.template('{{name}}', undefined)
+    ).toEqual('{{name}}')
+    expect(
+      XEUtils.template('{{name}}', [])
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('{{name}}', {})
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('{{name}}', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.template('{{name}}-{{age}}', { name: 'test1', age: 26 })
+    ).toEqual('test1-26')
+    expect(
+      XEUtils.template('{{name}} to {{{age}}}12{3} {{{{sex}}}}', { name: 'test1', age: 26, sex: '男' })
+    ).toEqual('test1 to {26}12{3} {{男}}')
+  })
 })

@@ -1423,6 +1423,13 @@ export interface XEUtilsMethods {
   endsWith(str: string, val: string, startIndex: number): string;
 
   /**
+   * 解析动态字符串模板
+   * @param str 字符串模板
+   * @param obj 对象
+   */
+  template(str: string, obj: object): string;
+
+  /**
    * 判断字符串是否在源字符串的头部
    * @param query 序列化的对象
    */

@@ -187,6 +187,21 @@ function stringEndsWith (str, val, startIndex) {
   return arguments.length === 1 ? rest.indexOf(val) === rest.length - 1 : rest.substring(0, startIndex).indexOf(val) === startIndex - 1
 }
 
+/**
+ * 解析动态字符串模板
+ * @param {String} str 字符串模板
+ * @param {Object} obj 对象
+ */
+function template (str, obj) {
+  var rest = baseExports.toString(str)
+  if (rest && obj) {
+    return rest.replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, keys) {
+      return baseExports.get(obj, keys)
+    })
+  }
+  return rest
+}
+
 var stringExports = {
   trim: stringTrim,
   trimLeft: stringTrimLeft,
@@ -199,7 +214,8 @@ var stringExports = {
   padStart: stringPadStart,
   padEnd: stringPadEnd,
   startsWith: stringStartsWith,
-  endsWith: stringEndsWith
+  endsWith: stringEndsWith,
+  template: template
 }
 
 module.exports = stringExports
