@@ -47,84 +47,6 @@ export default {
       filterName: '',
       list: [
         {
-          label: 'Setting',
-          value: 'setup',
-          expand: true,
-          children: [
-            {
-              name: 'setup',
-              args: 'options',
-              title: '全局参数设置',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.setup({
-                  cookies: {
-                    path: '/'
-                  },
-                  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: null},
-                  formatDate: 'yyyy-MM-dd HH:mm:ss.SSS',
-                  formatString: 'yyyy-MM-dd HH:mm:ss',
-                  formatStringMatchs : {
-                    E: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                    q: [null, '第一季度', '第二季度', '第三季度', '第四季度']
-                  },
-                  commafys: {spaceNumber: 3, separator: ',', fixed: 0}
-                })
-                `
-              ]
-            },
-            {
-              name: 'mixin',
-              args: 'func',
-              title: '扩展函数，将您自己的实用函数扩展到 XEUtils',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.mixin({
-                  toDateDiffText (date) {
-                    let currDate = 1544407800000 // '2018-12-10 10:10:00'
-                    let dateDiff = XEUtils.getDateDiff(date, currDate)
-                    if (dateDiff.done) {
-                      if (dateDiff.time < 31536000000) {
-                        if (dateDiff.time < 2592000000) {
-                          if (dateDiff.time < 86400000) {
-                            if (dateDiff.time < 360000) {
-                              if (dateDiff.time < 60000) {
-                                if (dateDiff.time < 10000) {
-                                  return \`刚刚\`
-                                }
-                                return \`\${dateDiff.ss}秒之前\`
-                              }
-                              return \`\${dateDiff.mm}分钟之前\`
-                            }
-                            return \`\${dateDiff.HH}小时之前\`
-                          }
-                          return \`\${dateDiff.dd}天之前\`
-                        }
-                        return \`\${dateDiff.MM}个月之前\`
-                      }
-                      return \`\${dateDiff.yyyy}年之前\`
-                    }
-                    return '错误类型'
-                  }
-                })
-
-                XEUtils.toDateDiffText('2018-12-10 10:09:59') // 刚刚
-                XEUtils.toDateDiffText('2018-12-10 10:09:30') // 30秒之前
-                XEUtils.toDateDiffText('2018-12-10 10:09:30') // 2分钟之前
-                XEUtils.toDateDiffText('2018-12-10 02:10:00') // 8小时之前
-                XEUtils.toDateDiffText('2018-12-09 04:09:30') // 1天之前
-                XEUtils.toDateDiffText('2018-04-09 04:09:30') // 8个月之前
-                XEUtils.toDateDiffText('2016-06-09 04:09:30') // 2年之前
-                `
-              ]
-            }
-          ]
-        },
-        {
           label: 'Object',
           value: 'object',
           expand: true,
@@ -2789,6 +2711,84 @@ export default {
                 XEUtils.cookie.keys()
                 // 获取所有
                 XEUtils.cookie.getJSON()
+                `
+              ]
+            }
+          ]
+        },
+        {
+          label: 'Setting',
+          value: 'setup',
+          expand: true,
+          children: [
+            {
+              name: 'setup',
+              args: 'options',
+              title: '全局参数设置',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.setup({
+                  cookies: {
+                    path: '/'
+                  },
+                  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: null},
+                  formatDate: 'yyyy-MM-dd HH:mm:ss.SSS',
+                  formatString: 'yyyy-MM-dd HH:mm:ss',
+                  formatStringMatchs : {
+                    E: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+                    q: [null, '第一季度', '第二季度', '第三季度', '第四季度']
+                  },
+                  commafys: {spaceNumber: 3, separator: ',', fixed: 0}
+                })
+                `
+              ]
+            },
+            {
+              name: 'mixin',
+              args: 'func',
+              title: '扩展函数，将您自己的实用函数扩展到 XEUtils',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.mixin({
+                  toDateDiffText (date) {
+                    let currDate = 1544407800000 // '2018-12-10 10:10:00'
+                    let dateDiff = XEUtils.getDateDiff(date, currDate)
+                    if (dateDiff.done) {
+                      if (dateDiff.time < 31536000000) {
+                        if (dateDiff.time < 2592000000) {
+                          if (dateDiff.time < 86400000) {
+                            if (dateDiff.time < 360000) {
+                              if (dateDiff.time < 60000) {
+                                if (dateDiff.time < 10000) {
+                                  return \`刚刚\`
+                                }
+                                return \`\${dateDiff.ss}秒之前\`
+                              }
+                              return \`\${dateDiff.mm}分钟之前\`
+                            }
+                            return \`\${dateDiff.HH}小时之前\`
+                          }
+                          return \`\${dateDiff.dd}天之前\`
+                        }
+                        return \`\${dateDiff.MM}个月之前\`
+                      }
+                      return \`\${dateDiff.yyyy}年之前\`
+                    }
+                    return '错误类型'
+                  }
+                })
+
+                XEUtils.toDateDiffText('2018-12-10 10:09:59') // 刚刚
+                XEUtils.toDateDiffText('2018-12-10 10:09:30') // 30秒之前
+                XEUtils.toDateDiffText('2018-12-10 10:09:30') // 2分钟之前
+                XEUtils.toDateDiffText('2018-12-10 02:10:00') // 8小时之前
+                XEUtils.toDateDiffText('2018-12-09 04:09:30') // 1天之前
+                XEUtils.toDateDiffText('2018-04-09 04:09:30') // 8个月之前
+                XEUtils.toDateDiffText('2016-06-09 04:09:30') // 2年之前
                 `
               ]
             }
