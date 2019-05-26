@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.8.25
+ * xe-utils.js v1.8.27
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1621,13 +1621,13 @@
     return arrayUniq(result)
   }
 
-  function sortByDef (v1, v2) {
-    return v1 > v2 ? 1 : -1
-  }
-
   // function sortByDef (v1, v2) {
-  //   return baseExports.toString(v1).localeCompare(baseExports.toString(v2))
+  //   return v1 > v2 ? 1 : -1
   // }
+
+  function sortByDef (v1, v2) {
+    return v1 && v1.localeCompare ? v1.localeCompare(v2) : (v1 > v2 ? 1 : -1)
+  }
 
   function sortMultis (name, compares) {
     return function (item1, item2) {
