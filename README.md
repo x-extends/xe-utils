@@ -2208,7 +2208,7 @@ XEUtils.cookie.getJSON()
 ## 全局参数设置
 
 ```javascript
-import XEUtils from 'xe-ajax'
+import XEUtils from 'xe-utils'
 
 XEUtils.setup({
   cookies: {
