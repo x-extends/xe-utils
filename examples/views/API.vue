@@ -1,8 +1,14 @@
 <template>
   <div class="page-container">
     <div class="aside">
+      <div class="header">
+        <h1 class="title">xe-utils</h1>
+        <div class="search-wrapper">
+          <input class="search-input" v-model="filterName" type="search" placeholder="API">
+        </div>
+      </div>
       <ul>
-        <li class="menu-item" v-for="(group, gIndex) in list" :key="gIndex">
+        <li class="menu-item" v-for="(group, gIndex) in apiList" :key="gIndex">
           <a class="menu-link" @click="group.expand = !group.expand">{{ group.label }}</a>
           <ul class="child-menu" v-show="group.expand">
             <li class="menu-item" v-for="(item, index) in group.children" :key="index" :class="{active: selected === item}">
@@ -13,10 +19,15 @@
       </ul>
     </div>
     <div class="body">
-      <div v-for="(group, gIndex) in list" :key="gIndex">
+      <div v-for="(group, gIndex) in apiList" :key="gIndex">
         <div class="api-item" v-for="(item, index) in group.children" :key="index">
-          <p class="title" :id="item.name">{{ item.name }} ({{ item.params }}) {{ item.title }}</p>
+          <p class="title" :id="item.name">{{ item.name }} ({{ item.args }}) {{ item.title }}</p>
           <p class="desc">{{ item.desc }}</p>
+          <table class="param-table" border="0" v-if="item.params && item.params.length">
+            <tr v-for="(rows, pIndex) in item.params" :key="pIndex">
+              <td v-for="(val, vIndex) in rows" :key="vIndex">{{ val }}</td>
+            </tr>
+          </table>
           <pre>
             <code class="javascript" v-for="(code,cIndex) in item.codes" :key="cIndex">{{ code }}</code>
           </pre>
@@ -33,6 +44,7 @@ export default {
   data () {
     return {
       selected: null,
+      filterName: '',
       list: [
         {
           label: 'Setting',
@@ -41,9 +53,10 @@ export default {
           children: [
             {
               name: 'setup',
-              params: 'options',
+              args: 'options',
               title: '全局参数设置',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.setup({
@@ -61,6 +74,53 @@ export default {
                 })
                 `
               ]
+            },
+            {
+              name: 'mixin',
+              args: 'func',
+              title: '扩展函数，将您自己的实用函数扩展到 XEUtils',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.mixin({
+                  toDateDiffText (date) {
+                    let currDate = 1544407800000 // '2018-12-10 10:10:00'
+                    let dateDiff = XEUtils.getDateDiff(date, currDate)
+                    if (dateDiff.done) {
+                      if (dateDiff.time < 31536000000) {
+                        if (dateDiff.time < 2592000000) {
+                          if (dateDiff.time < 86400000) {
+                            if (dateDiff.time < 360000) {
+                              if (dateDiff.time < 60000) {
+                                if (dateDiff.time < 10000) {
+                                  return \`刚刚\`
+                                }
+                                return \`\${dateDiff.ss}秒之前\`
+                              }
+                              return \`\${dateDiff.mm}分钟之前\`
+                            }
+                            return \`\${dateDiff.HH}小时之前\`
+                          }
+                          return \`\${dateDiff.dd}天之前\`
+                        }
+                        return \`\${dateDiff.MM}个月之前\`
+                      }
+                      return \`\${dateDiff.yyyy}年之前\`
+                    }
+                    return '错误类型'
+                  }
+                })
+
+                XEUtils.toDateDiffText('2018-12-10 10:09:59') // 刚刚
+                XEUtils.toDateDiffText('2018-12-10 10:09:30') // 30秒之前
+                XEUtils.toDateDiffText('2018-12-10 10:09:30') // 2分钟之前
+                XEUtils.toDateDiffText('2018-12-10 02:10:00') // 8小时之前
+                XEUtils.toDateDiffText('2018-12-09 04:09:30') // 1天之前
+                XEUtils.toDateDiffText('2018-04-09 04:09:30') // 8个月之前
+                XEUtils.toDateDiffText('2016-06-09 04:09:30') // 2年之前
+                `
+              ]
             }
           ]
         },
@@ -71,9 +131,10 @@ export default {
           children: [
             {
               name: 'isNaN',
-              params: 'val',
+              args: 'val',
               title: '判断是否非数值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isNaN(undefined) // true
@@ -87,9 +148,10 @@ export default {
             },
             {
               name: 'isFinite',
-              params: 'val',
+              args: 'val',
               title: '判断是否为有限数值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isFinite(NaN) // false
@@ -100,9 +162,10 @@ export default {
             },
             {
               name: 'isUndefined',
-              params: 'val',
+              args: 'val',
               title: '判断 Undefined',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isUndefined(0) // false
@@ -112,9 +175,10 @@ export default {
             },
             {
               name: 'isArray',
-              params: 'val',
+              args: 'val',
               title: '判断是否数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isArray(null) // false
@@ -125,9 +189,10 @@ export default {
             },
             {
               name: 'isFloat',
-              params: 'val',
+              args: 'val',
               title: '判断是否小数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isFloat(null) // false
@@ -139,9 +204,10 @@ export default {
             },
             {
               name: 'isInteger',
-              params: 'val',
+              args: 'val',
               title: '判断是否整数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isInteger(null) // false
@@ -153,9 +219,10 @@ export default {
             },
             {
               name: 'isFunction',
-              params: 'val',
+              args: 'val',
               title: '判断是否方法',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isFunction({}) // false
@@ -165,9 +232,10 @@ export default {
             },
             {
               name: 'isBoolean',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Boolean 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isBoolean('false') // false
@@ -177,9 +245,10 @@ export default {
             },
             {
               name: 'isString',
-              params: 'val',
+              args: 'val',
               title: '判断是否 String 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isString(1) // false
@@ -191,9 +260,10 @@ export default {
             },
             {
               name: 'isNumber',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Number 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isNumber(null) // false
@@ -204,9 +274,10 @@ export default {
             },
             {
               name: 'isRegExp',
-              params: 'val',
+              args: 'val',
               title: '判断是否 RegExp 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isRegExp(null) // false
@@ -218,9 +289,10 @@ export default {
             },
             {
               name: 'isObject',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Object 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isObject(null) // true
@@ -232,9 +304,10 @@ export default {
             },
             {
               name: 'isPlainObject',
-              params: 'val',
+              args: 'val',
               title: '判断是否是一个对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isPlainObject(null) // false
@@ -246,9 +319,10 @@ export default {
             },
             {
               name: 'isDate',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Date 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isDate('2017-12-20') // false
@@ -260,9 +334,10 @@ export default {
             },
             {
               name: 'isError',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Error 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isError(null) // false
@@ -274,9 +349,10 @@ export default {
             },
             {
               name: 'isTypeError',
-              params: 'val',
+              args: 'val',
               title: '判断是否 TypeError 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isTypeError(null) // false
@@ -288,9 +364,10 @@ export default {
             },
             {
               name: 'isEmpty',
-              params: 'val',
+              args: 'val',
               title: '判断是否为空,包括空对象、空数值、空字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isEmpty([11, 22]) // false
@@ -305,9 +382,10 @@ export default {
             },
             {
               name: 'isNull',
-              params: 'val',
+              args: 'val',
               title: '判断是否为 Null',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isNull(0) // false
@@ -318,9 +396,10 @@ export default {
             },
             {
               name: 'isSymbol',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Symbol 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isSymbol('a') // false
@@ -330,9 +409,10 @@ export default {
             },
             {
               name: 'isArguments',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Arguments 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isArguments([]) // false
@@ -342,9 +422,10 @@ export default {
             },
             {
               name: 'isElement',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Element 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isElement({}) // false
@@ -354,9 +435,10 @@ export default {
             },
             {
               name: 'isDocument',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Document 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isDocument({}) // false
@@ -367,9 +449,10 @@ export default {
             },
             {
               name: 'isWindow',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Window 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isWindow({}) // false
@@ -380,9 +463,10 @@ export default {
             },
             {
               name: 'isFormData',
-              params: 'val',
+              args: 'val',
               title: '判断是否 FormData 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isFormData({}) // false
@@ -392,9 +476,10 @@ export default {
             },
             {
               name: 'isMap',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Map 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isMap({}) // false
@@ -404,9 +489,10 @@ export default {
             },
             {
               name: 'isWeakMap',
-              params: 'val',
+              args: 'val',
               title: '判断是否 WeakMap 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isWeakMap({}) // false
@@ -416,9 +502,10 @@ export default {
             },
             {
               name: 'isSet',
-              params: 'val',
+              args: 'val',
               title: '判断是否 Set 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isSet({}) // false
@@ -428,9 +515,10 @@ export default {
             },
             {
               name: 'isWeakSet',
-              params: 'val',
+              args: 'val',
               title: '判断是否 WeakSet 对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isWeakSet({}) // false
@@ -440,9 +528,10 @@ export default {
             },
             {
               name: 'isLeapYear',
-              params: 'date',
+              args: 'date',
               title: '判断是否闰年',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isLeapYear(1606752000000)  // true
@@ -454,9 +543,10 @@ export default {
             },
             {
               name: 'isMatch',
-              params: 'obj, source',
+              args: 'obj, source',
               title: '判断属性中的键和值是否包含在对象中',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isMatch({ aa: 11, bb: 22 }, { bb: 22 })  // true
@@ -466,9 +556,10 @@ export default {
             },
             {
               name: 'isEqual',
-              params: 'obj1, obj2',
+              args: 'obj1, obj2',
               title: '深度比较两个对象之间的值是否相等',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isEqual({}, []) // false
@@ -481,9 +572,10 @@ export default {
             },
             {
               name: 'isEqualWith',
-              params: 'obj1, obj2, func',
+              args: 'obj1, obj2, func',
               title: '深度比较两个对象之间的值是否相等，使用自定义比较函数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isEqualWith({0: 1}, [1]) // false
@@ -495,9 +587,10 @@ export default {
             },
             {
               name: 'isDateSame',
-              params: 'date1, date2, format',
+              args: 'date1, date2, format',
               title: '判断两个日期是否相同',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.isDateSame('2018-12-01', '2018-12-01') // true
@@ -510,9 +603,10 @@ export default {
             },
             {
               name: 'getType',
-              params: 'obj',
+              args: 'obj',
               title: '获取对象类型',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getType() // 'undefined'
@@ -529,9 +623,10 @@ export default {
             },
             {
               name: 'uniqueId',
-              params: 'prefix',
+              args: 'prefix',
               title: '获取一个全局唯一标识',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.uniqueId() // 1
@@ -542,9 +637,10 @@ export default {
             },
             {
               name: 'getSize',
-              params: 'obj',
+              args: 'obj',
               title: '返回对象的长度',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getSize('123') // 3
@@ -555,9 +651,10 @@ export default {
             },
             {
               name: 'clear',
-              params: 'obj[, defs, assigns]',
+              args: 'obj[, defs, assigns]',
               title: '清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)',
               desc: '',
+              params: [],
               codes: [
                 `
                 let a = [11, 22, 33, 33]
@@ -573,9 +670,10 @@ export default {
             },
             {
               name: 'assign',
-              params: 'destination, ...sources',
+              args: 'destination, ...sources',
               title: '浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝',
               desc: '',
+              params: [],
               codes: [
                 `
                 // 浅拷贝
@@ -592,9 +690,10 @@ export default {
             },
             {
               name: 'destructuring',
-              params: 'obj, ...target',
+              args: 'obj, ...target',
               title: '将一个或者多个对象值解构到目标对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.destructuring({a: null}, {a: 11, b: 22, c: 33}) // {a: 11}
@@ -605,9 +704,10 @@ export default {
             },
             {
               name: 'toStringJSON',
-              params: 'str',
+              args: 'str',
               title: '字符串转 JSON',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toStringJSON('{"a":1}') // {a: 1}
@@ -617,9 +717,10 @@ export default {
             },
             {
               name: 'toJSONString',
-              params: 'obj',
+              args: 'obj',
               title: 'JSON 转字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toJSONString({a: 1}) // '{"a":1}'
@@ -629,9 +730,10 @@ export default {
             },
             {
               name: 'keys',
-              params: 'obj',
+              args: 'obj',
               title: '获取对象所有属性',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.keys({a: 11}) // ['a']
@@ -640,9 +742,10 @@ export default {
             },
             {
               name: 'values',
-              params: 'obj',
+              args: 'obj',
               title: '获取对象所有值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.values({a: 11}) // [11]
@@ -651,9 +754,10 @@ export default {
             },
             {
               name: 'entries',
-              params: 'obj',
+              args: 'obj',
               title: '获取对象所有属性、值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.entries({a: 11}) // [['a', 11]]
@@ -663,9 +767,10 @@ export default {
             },
             {
               name: 'pick',
-              params: 'obj, array',
+              args: 'obj, array',
               title: '根据 keys 过滤指定的属性值 或者 接收一个判断函数，返回一个新的对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.pick({name: 'test11', age: 25, height: 176}, 'name', 'height') // {name: 'test11', height: 176}
@@ -676,9 +781,10 @@ export default {
             },
             {
               name: 'omit',
-              params: 'obj, array',
+              args: 'obj, array',
               title: '根据 keys 排除指定的属性值 或者 接收一个判断函数，返回一个新的对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.omit({name: 'test11', age: 25, height: 176}, 'name', 'height') // {age: 25}
@@ -689,9 +795,10 @@ export default {
             },
             {
               name: 'first',
-              params: 'obj',
+              args: 'obj',
               title: '获取对象第一个值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.first({a: 11, b : 22}) // 11
@@ -701,9 +808,10 @@ export default {
             },
             {
               name: 'last',
-              params: 'obj',
+              args: 'obj',
               title: '获取对象最后一个值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.last({a: 11, b: 22}) // 22
@@ -713,9 +821,10 @@ export default {
             },
             {
               name: 'each',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '通用迭代器',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.each([11, 22, 33], (item, key) => {
@@ -726,9 +835,10 @@ export default {
             },
             {
               name: 'objectEach',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '对象迭代器',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.objectEach([11, 22, 33], (item, key) => {
@@ -739,9 +849,10 @@ export default {
             },
             {
               name: 'lastEach',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '通用迭代器，从最后开始迭代',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.lastEach([11, 22, 33], (item, key) => {
@@ -752,9 +863,10 @@ export default {
             },
             {
               name: 'lastObjectEach',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '通用迭代器，从最后开始迭代',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.lastObjectEach([11, 22, 33], (item, key) => {
@@ -765,9 +877,10 @@ export default {
             },
             {
               name: 'has',
-              params: 'obj, property',
+              args: 'obj, property',
               title: '检查键、路径是否是该对象的属性',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.has({a: {b: 11, c: 22, d: [33, 44]}}, 'a.b') // true
@@ -781,9 +894,10 @@ export default {
             },
             {
               name: 'get',
-              params: 'obj, property, defaultValue',
+              args: 'obj, property, defaultValue',
               title: '获取对象的属性的值，如果值为 undefined，则返回默认值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.get({a: {b: 11, c: 22, d: [33, 44]}}, 'a.b') // 11
@@ -796,9 +910,10 @@ export default {
             },
             {
               name: 'set',
-              params: 'obj, property, value',
+              args: 'obj, property, value',
               title: '设置对象属性上的值。如果属性不存在则创建它',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.set({}, 'a.d[0]', 33) // {a: {d: [33]}}
@@ -810,9 +925,10 @@ export default {
             },
             {
               name: 'groupBy',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
@@ -823,9 +939,10 @@ export default {
             },
             {
               name: 'countBy',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '集合分组统计,返回各组中对象的数量统计',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.countBy([{type: 'a'}, {type: 'b'}], 'type') // {a: 1, b: 1}
@@ -835,9 +952,10 @@ export default {
             },
             {
               name: 'range',
-              params: 'start, stop, step',
+              args: 'start, stop, step',
               title: '序号列表生成函数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.range(0) // []
@@ -849,9 +967,10 @@ export default {
             },
             {
               name: 'objectMap',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '指定方法后的返回值组成的新对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a", b: "b"}
@@ -860,9 +979,10 @@ export default {
             },
             {
               name: 'clone',
-              params: 'obj, deep',
+              args: 'obj, deep',
               title: '浅拷贝/深拷贝',
               desc: '',
+              params: [],
               codes: [
                 `
                 let v1 = {a: 11, b: {b1: 22}}
@@ -879,9 +999,10 @@ export default {
             },
             {
               name: 'uniq',
-              params: 'array',
+              args: 'array',
               title: ' 数组去重',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.uniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
@@ -890,9 +1011,10 @@ export default {
             },
             {
               name: 'union',
-              params: '...array',
+              args: '...array',
               title: '将多个数的值返回唯一的并集数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.union([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
@@ -908,9 +1030,10 @@ export default {
           children: [
             {
               name: 'delay',
-              params: 'callback, wait[, ...arguments]',
+              args: 'callback, wait[, ...arguments]',
               title: '该方法和 setTimeout 一样的效果，区别就是支持额外参数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.delay(function (name) {
@@ -922,9 +1045,10 @@ export default {
             },
             {
               name: 'bind',
-              params: 'callback, context[, ...arguments]',
+              args: 'callback, context[, ...arguments]',
               title: '创建一个绑定上下文的函数',
               desc: '',
+              params: [],
               codes: [
                 `
                 let rest = XEUtils.bind(function (val) {
@@ -937,9 +1061,10 @@ export default {
             },
             {
               name: 'once',
-              params: 'callback, context[, ...arguments]',
+              args: 'callback, context[, ...arguments]',
               title: '创建一个只能调用一次的函数,只会返回第一次执行后的结果',
               desc: '',
+              params: [],
               codes: [
                 `
                 let rest = XEUtils.once(function (val) {
@@ -952,9 +1077,10 @@ export default {
             },
             {
               name: 'after',
-              params: 'count, callback, context',
+              args: 'count, callback, context',
               title: '创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回',
               desc: '',
+              params: [],
               codes: [
                 `
                 function getJSON (url, callback) {
@@ -975,9 +1101,10 @@ export default {
             },
             {
               name: 'before',
-              params: 'count, callback, context',
+              args: 'count, callback, context',
               title: '创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回',
               desc: '',
+              params: [],
               codes: [
                 `
                 document.querySelector('.btn').addEventListener('click', XEUtils.before(4, function (rests) {
@@ -988,9 +1115,10 @@ export default {
             },
             {
               name: 'throttle',
-              params: 'callback, wait[, options]',
+              args: 'callback, wait[, options]',
               title: '创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数',
               desc: '',
+              params: [],
               codes: [
                 `
                 function scrollEvent (evnt) {
@@ -1021,9 +1149,10 @@ export default {
             },
             {
               name: 'debounce',
-              params: 'callback, wait[, options]',
+              args: 'callback, wait[, options]',
               title: '创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟',
               desc: '',
+              params: [],
               codes: [
                 `
                 function resizeEvent (evnt) {
@@ -1063,9 +1192,10 @@ export default {
           children: [
             {
               name: 'arrayEach',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '数组迭代器',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.arrayEach([11, 22, 33], (item, key) => {
@@ -1076,9 +1206,10 @@ export default {
             },
             {
               name: 'lastArrayEach',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: ' 数组迭代器，从最后开始迭代',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.lastArrayEach([11, 22, 33], (item, key) => {
@@ -1089,9 +1220,10 @@ export default {
             },
             {
               name: 'slice',
-              params: 'array, start, end',
+              args: 'array, start, end',
               title: '裁剪（数组或伪数组），从 start 位置开始到 end 结束，但不包括 end 本身的位置',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.slice([11, 22, 33, 44], 1) // [22, 33, 44]
@@ -1105,9 +1237,10 @@ export default {
             },
             {
               name: 'indexOf',
-              params: 'obj, val',
+              args: 'obj, val',
               title: '返回对象第一个索引值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.indexOf([11, 22, 33, 22], 55) // -1
@@ -1117,9 +1250,10 @@ export default {
             },
             {
               name: 'findIndexOf',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '返回对象第一个索引值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.findIndexOf([11, 22, 33, 22], item => item === 55) // -1
@@ -1129,9 +1263,10 @@ export default {
             },
             {
               name: 'lastIndexOf',
-              params: 'obj, val',
+              args: 'obj, val',
               title: '从最后开始的索引值,返回对象第一个索引值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.lastIndexOf([11, 22, 33, 22], 55) // -1
@@ -1141,9 +1276,10 @@ export default {
             },
             {
               name: 'findLastIndexOf',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '从最后开始的索引值,返回对象第一个索引值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.findLastIndexOf([11, 22, 33, 22], item => item === 55) // -1
@@ -1153,9 +1289,10 @@ export default {
             },
             {
               name: 'includes',
-              params: 'obj, val',
+              args: 'obj, val',
               title: '判断对象是否包含该值,成功返回 true 否则 false',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.includes([11], 22) // false
@@ -1165,9 +1302,10 @@ export default {
             },
             {
               name: 'includeArrays',
-              params: 'array1, array2',
+              args: 'array1, array2',
               title: '判断数组是否包含另一数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.includeArrays([11, 22, 33], []) // true
@@ -1179,9 +1317,10 @@ export default {
             },
             {
               name: 'remove',
-              params: 'obj, iteratee',
+              args: 'obj, iteratee',
               title: '移除对象属性',
               desc: '',
+              params: [],
               codes: [
                 `
                 let list1 = [11, 22, 33, 44]
@@ -1193,9 +1332,10 @@ export default {
             },
             {
               name: 'sortBy',
-              params: 'arr, iteratee [, context]',
+              args: 'arr, iteratee [, context]',
               title: '数组按属性值升序',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22])
@@ -1235,9 +1375,10 @@ export default {
             },
             {
               name: 'shuffle',
-              params: 'array',
+              args: 'array',
               title: '将一个数组随机打乱，返回一个新的数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.shuffle([11, 22, 33, 44, 55]) // [22, 33, 55, 11, 44]
@@ -1246,9 +1387,10 @@ export default {
             },
             {
               name: 'sample',
-              params: 'array, number',
+              args: 'array, number',
               title: '从一个数组中随机返回几个元素',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.sample([11, 22, 33, 44, 55], 3) // [22, 33, 55]
@@ -1257,9 +1399,10 @@ export default {
             },
             {
               name: 'some',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '对象中的值中的每一项运行给定函数,如果函数对任一项返回 true,则返回 true,否则返回 false',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.some([{value: 11}, {value: 22}], item => item.value === 55) // false
@@ -1268,9 +1411,10 @@ export default {
             },
             {
               name: 'every',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: ' 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回 true,则返回 true,否则返回 false',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.every([{value: 11}, {value: 22}], item => item.value === 11) // false
@@ -1279,9 +1423,10 @@ export default {
             },
             {
               name: 'filter',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '根据回调过滤数据',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.filter([{value: 11}, {value: 22}], item => item.value > 11) // [{value: 22}]
@@ -1290,9 +1435,10 @@ export default {
             },
             {
               name: 'find',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '查找匹配第一条数据',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.find([{value: 11}, {value: 22}], item => item.value === 55) // null
@@ -1301,9 +1447,10 @@ export default {
             },
             {
               name: 'findKey',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '查找匹配第一条数据的键',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.findKey([{value: 11}, {value: 22}], item => item.value === 22) // '1'
@@ -1313,9 +1460,10 @@ export default {
             },
             {
               name: 'map',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '指定方法后的返回值组成的新数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.map([{value: 11}, {value: 22}], item => item.value) // [11, 22]
@@ -1324,9 +1472,10 @@ export default {
             },
             {
               name: 'copyWithin',
-              params: 'array, target, start [, end]',
+              args: 'array, target, start [, end]',
               title: '浅复制数组的一部分到同一数组中的另一个位置,数组大小不变',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.copyWithin([11, 22, 33, 44], 0, 2) // [33, 44, 33, 44]
@@ -1336,9 +1485,10 @@ export default {
             },
             {
               name: 'sum',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: '求和函数，将数值相加',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.sum([22, 66, 88]) // 176
@@ -1349,9 +1499,10 @@ export default {
             },
             {
               name: 'mean',
-              params: 'obj, iteratee [, context]',
+              args: 'obj, iteratee [, context]',
               title: ' 求平均值函数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.mean({ val1: 21, val2: 34, val3: 47 }) // 34
@@ -1364,9 +1515,10 @@ export default {
             },
             {
               name: 'toArray',
-              params: 'array',
+              args: 'array',
               title: '将对象或者伪数组转为新数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toArray([]) // []
@@ -1379,9 +1531,10 @@ export default {
             },
             {
               name: 'reduce',
-              params: 'array, iteratee [, initialValue]',
+              args: 'array, iteratee [, initialValue]',
               title: '接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.reduce([22, 66, 88], (previous, item) => previous + item) // 176
@@ -1390,9 +1543,10 @@ export default {
             },
             {
               name: 'zip',
-              params: '...[]',
+              args: '...[]',
               title: '将每个数组中相应位置的值合并在一起',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.zip(['name1', 'name2', 'name3'], [true, true, false], [30, 40, 20])
@@ -1402,9 +1556,10 @@ export default {
             },
             {
               name: 'unzip',
-              params: 'arrays',
+              args: 'arrays',
               title: '与 zip 相反',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.unzip([['name1', true, 30], ['name2', true, 40], ['name3', false, 20]])
@@ -1414,9 +1569,10 @@ export default {
             },
             {
               name: 'zipObject',
-              params: 'props, values',
+              args: 'props, values',
               title: '根据键数组、值数组对转换为对象',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.zipObject(['aa', 'bb', 'cc'], [11, 22, 33])
@@ -1426,9 +1582,10 @@ export default {
             },
             {
               name: 'chunk',
-              params: 'array, size',
+              args: 'array, size',
               title: '将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.chunk(['a', 'b', 'c', 'd'], 2) // [['a', 'b'], ['c', 'd']]
@@ -1438,9 +1595,10 @@ export default {
             },
             {
               name: 'property',
-              params: 'path',
+              args: 'path',
               title: '返回一个获取对象属性的函数',
               desc: '',
+              params: [],
               codes: [
                 `
                 let getName = XEUtils.property('name')
@@ -1451,9 +1609,10 @@ export default {
             },
             {
               name: 'pluck',
-              params: 'array, key',
+              args: 'array, key',
               title: '获取数组对象中某属性值，返回一个数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.pluck([{a: 11, b: 22}, {a: 33, b: 44}], 'a') // [11, 33]
@@ -1463,9 +1622,10 @@ export default {
             },
             {
               name: 'invoke',
-              params: 'list, path, ...arguments',
+              args: 'list, path, ...arguments',
               title: '在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.invoke([[3, 1, 6, 7], [3, 2, 1, 8]], 'sort') // [[1, 3, 6, 7], [1, 2, 3, 8]]
@@ -1478,19 +1638,21 @@ export default {
             },
             {
               name: 'toArrayTree',
-              params: 'array, options',
+              args: 'array, options',
               title: '一个高性能的树结构转换函数，将一个带层级的数据列表转成树结构',
               desc: '',
+              params: [
+                ['属性', '描述', '默认值'],
+                ['strict', '是否严格模式，启用后会忽略错误数据', 'false'],
+                ['key', '节点键值', 'id'],
+                ['parentKey', '子节点属性', 'parentId'],
+                ['children', '数据存放属性', 'children'],
+                ['sortKey', '对树节点进行排序属性', ''],
+                ['reverse', 'sortKey不为空是有效，默认升序', 'false'],
+                ['data', '数据存放属性', 'null']
+              ],
               codes: [
                 `
-                // strict  是否严格模式，启用后会忽略错误数据  false
-                // key  节点键值  'id'
-                // parentKey  父节点键值  'parentId'
-                // children  子节点属性  'children'
-                // sortKey  对树节点进行排序属性  默认不排序
-                // reverse  sortKey不为空是有效，默认升序  默认false
-                // data  数据存放属性;  null
-
                 // 默认树结构
                 let list1 = [
                   {id: 1, name: '111'},
@@ -1663,15 +1825,16 @@ export default {
             },
             {
               name: 'toTreeArray',
-              params: 'array, options',
+              args: 'array, options',
               title: '将一个树结构转成数组列表',
               desc: '',
+              params: [
+                ['属性', '描述', '默认值'],
+                ['children', '子节点属性', 'children'],
+                ['data', '数据存放属性', '']
+              ],
               codes: [
                 `
-                // 属性  描述  默认值
-                // children  子节点属性  'children'
-                // data  数据存放属性  null
-
                 let list1 = [
                   {
                     "id":1,
@@ -1755,9 +1918,10 @@ export default {
             },
             {
               name: 'findTree',
-              params: 'obj, iterate[, options, context]',
+              args: 'obj, iterate[, options, context]',
               title: '从树结构中查找匹配第一条数据的键、值、路径',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.findTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => item.id === 20) // {item: {id: 20}, ...}
@@ -1767,9 +1931,10 @@ export default {
             },
             {
               name: 'eachTree',
-              params: 'obj, iterate[, options, context]',
+              args: 'obj, iterate[, options, context]',
               title: '从树结构中遍历数据的键、值、路径',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.eachTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
@@ -1783,9 +1948,10 @@ export default {
             },
             {
               name: 'mapTree',
-              params: 'obj, iterate[, options, context]',
+              args: 'obj, iterate[, options, context]',
               title: '从树结构中指定方法后的返回值组成的新数组',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.mapTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
@@ -1802,9 +1968,10 @@ export default {
             },
             {
               name: 'filterTree',
-              params: 'obj, iterate[, options, context]',
+              args: 'obj, iterate[, options, context]',
               title: '从树结构中根据回调过滤数据',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.filterTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
@@ -1825,9 +1992,10 @@ export default {
           children: [
             {
               name: 'now',
-              params: '',
+              args: '',
               title: '返回当前时间戳',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.now() // Date.now() 获取当前时间戳 1514096716800
@@ -1836,9 +2004,10 @@ export default {
             },
             {
               name: 'timestamp',
-              params: 'date[, format]',
+              args: 'date[, format]',
               title: '将日期转为时间戳',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.timestamp() // XEUtils.now() = Date.now() 获取当前时间戳 1514096716800
@@ -1850,21 +2019,22 @@ export default {
             },
             {
               name: 'toStringDate',
-              params: 'str, format',
+              args: 'str, format',
               title: '任意格式字符串转为日期',
               desc: '',
+              params: [
+                ['属性', '描述'],
+                ['yyyy', '年份'],
+                ['MM', '月份'],
+                ['dd', '日'],
+                ['HH', '小时'],
+                ['mm', '分钟'],
+                ['ss', '秒'],
+                ['SSS', '毫秒'],
+                ['Z', '时区']
+              ],
               codes: [
                 `
-                // 属性  描述
-                // yyyy  年份
-                // MM  月份
-                // dd  日
-                // HH  小时
-                // mm  分钟
-                // ss  秒
-                // SSS  毫秒
-                // Z  时区
-
                 XEUtils.toStringDate('12/20/2017')
                 // 如果解析错误则返回 'Invalid Date'
                 XEUtils.toStringDate('2017-12-20')
@@ -1892,40 +2062,41 @@ export default {
             },
             {
               name: 'toDateString',
-              params: 'date [, format, options]',
+              args: 'date [, format, options]',
               title: '日期格式化为任意格式字符串',
               desc: '',
+              params: [
+                ['属性', '描述', '备注', '值的范围'],
+                ['yy', '年份', '自动截取后两位', ''],
+                ['yyyy', '年份', '', ''],
+                ['M', '月份', '', '1~12'],
+                ['MM', '月份', '自动补0', '01~12'],
+                ['d', '日', '', '1~31'],
+                ['dd', '日', '自动补0', '01~31'],
+                ['h', '12小时制', '', '1~12'],
+                ['hh', '12小时制', '自动补0', ' 01~12'],
+                ['H', '24小时制', '', '0~23'],
+                ['HH', '24小时制', '自动补0', '00~23'],
+                ['m', '分钟', '', ''],
+                ['mm', '分钟', '自动补0', '00~59'],
+                ['s', '秒', '', ''],
+                ['ss', '秒', '自动补0', '00~59'],
+                ['S', '毫秒', '', ''],
+                ['SSS', '毫秒', '自动补0', ''],
+                ['a', 'am/pm，小写', '', 'am/pm'],
+                ['A', 'AM/PM，大写', '', 'AM/PM'],
+                ['D', '年份的第几天', '', '1~366'],
+                ['DDD', '年份的第几天', '自动补0', '001~366'],
+                ['e', '星期几', '', '0~6'],
+                ['E', '星期几', '', '1~7'],
+                ['q', '季度', '', '1~4'],
+                ['W', '年的第几周', '', '1~53'],
+                ['WW', '年的第几周', '自动补0', ''],
+                ['Z', '时区值', '', '[+-]HH:mm'],
+                ['ZZ', '时区值', '', '[+-]HHmm']
+              ],
               codes: [
                 `
-                // 属性  描述  备注  值
-                // yy  年份  自动截取后两位  
-                // yyyy  年份    
-                // M  月份    1~12
-                // MM  月份  自动补0  01~12
-                // d  日    1~31
-                // dd  日  自动补0  01~31
-                // h  12小时制    1~12
-                // hh  12小时制  自动补0  01~12
-                // H  24小时制    0~23
-                // HH  24小时制  自动补0  00~23
-                // m  分钟    0~59
-                // mm  分钟  自动补0  00~59
-                // s  秒    0~59
-                // ss  秒  自动补0  00~59
-                // S  毫秒    0~999
-                // SSS  毫秒  自动补0  000~999
-                // a  am/pm，大写    am/pm
-                // A  AM/PM，小写    AM/PM
-                // D  年份的第几天    1~366
-                // DDD  年份的第几天    001~366
-                // // e  星期几    0~6
-                // E  星期几    1~7
-                // q  季度    1~4
-                // W  年的第几周    1~53
-                // WW  年的第几周  自动补0  01~53
-                // Z  时区值    [+-]HH:mm
-                // ZZ  时区值    [+-]HHmm
-
                 XEUtils.toDateString(1483250730000)
                 // '2017-01-01 14:05:30'
                 XEUtils.toDateString(new Date())
@@ -1963,9 +2134,10 @@ export default {
             },
             {
               name: 'getWhatYear',
-              params: 'date, year [, month]',
+              args: 'date, year [, month]',
               title: '返回前几年或后几年的日期,可以指定年的最初时间(first)、年的最后时间(last)、年的月份(0~11)，默认当前',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getWhatYear(new Date(), -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
@@ -1979,9 +2151,10 @@ export default {
             },
             {
               name: 'getWhatMonth',
-              params: 'date, month [, day]',
+              args: 'date, month [, day]',
               title: '返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getWhatMonth(new Date(), -1) // Mon Nov 20 2017 00:00:00 GMT+0800 (中国标准时间)
@@ -1995,9 +2168,10 @@ export default {
             },
             {
               name: 'getWhatWeek',
-              params: 'date, week [, day]',
+              args: 'date, week [, day]',
               title: '返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getWhatWeek(new Date(), -1) // Sun Dec 17 2017 00:00:00 GMT+0800 (中国标准时间)
@@ -2011,9 +2185,10 @@ export default {
             },
             {
               name: 'getWhatDay',
-              params: 'date, day [, mode]',
+              args: 'date, day [, mode]',
               title: '返回前几天或后几天的日期,可以指定当天最初时间(first)、当天的最后时间(last)',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getWhatDay(new Date(), -1) // Tue Dec 19 2017 00:00:00 GMT+0800 (中国标准时间)
@@ -2027,9 +2202,10 @@ export default {
             },
             {
               name: 'getDayOfYear',
-              params: 'date [, year]',
+              args: 'date [, year]',
               title: '返回某个年份的天数,可以指定前几个年或后几个年，默认当前',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getDayOfYear(new Date()) // 365
@@ -2042,9 +2218,10 @@ export default {
             },
             {
               name: 'getYearDay',
-              params: 'date',
+              args: 'date',
               title: '返回某个年份的第几天',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getYearDay(new Date()) // 149
@@ -2055,9 +2232,10 @@ export default {
             },
             {
               name: 'getYearWeek',
-              params: 'date',
+              args: 'date',
               title: '返回某个年份的第几周',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getYearWeek(new Date()) // 22
@@ -2068,9 +2246,10 @@ export default {
             },
             {
               name: 'getMonthWeek',
-              params: 'date',
+              args: 'date',
               title: '返回某个月份的第几周',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getMonthWeek(new Date()) // 4
@@ -2081,9 +2260,10 @@ export default {
             },
             {
               name: 'getDayOfMonth',
-              params: 'date [, month]',
+              args: 'date [, month]',
               title: '返回某个月份的天数,可以指定前几个月或后几个月，默认当前',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getDayOfMonth(new Date()) // 31
@@ -2096,9 +2276,10 @@ export default {
             },
             {
               name: 'getDateDiff',
-              params: 'startDate, endDate [, rules]',
+              args: 'startDate, endDate [, rules]',
               title: '返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getDateDiff('2017-11-20', '2017-12-21')
@@ -2122,9 +2303,10 @@ export default {
           children: [
             {
               name: 'random',
-              params: 'min, max',
+              args: 'min, max',
               title: '获取一个指定范围内随机数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.random() // 0 ~ 9
@@ -2136,9 +2318,10 @@ export default {
             },
             {
               name: 'min',
-              params: 'array [, iteratee]',
+              args: 'array [, iteratee]',
               title: '获取最小值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.min([22, 66, 77, 11]) // 11
@@ -2149,9 +2332,10 @@ export default {
             },
             {
               name: 'max',
-              params: 'array [, iteratee]',
+              args: 'array [, iteratee]',
               title: '获取最大值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.max([22, 66, 77, 11]) // 77
@@ -2162,9 +2346,10 @@ export default {
             },
             {
               name: 'commafy',
-              params: 'num [, options]',
+              args: 'num [, options]',
               title: '数值千分位分隔符、小数点',
               desc: '',
+              params: [],
               codes: [
                 `
                 // 千分位格式化 1,000,000
@@ -2180,9 +2365,10 @@ export default {
             },
             {
               name: 'toNumber',
-              params: 'num',
+              args: 'num',
               title: '转数值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toNumber(123) // 123
@@ -2193,9 +2379,10 @@ export default {
             },
             {
               name: 'toInteger',
-              params: 'num',
+              args: 'num',
               title: '转整数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toInteger(123) // 123
@@ -2206,9 +2393,10 @@ export default {
             },
             {
               name: 'toFixedNumber',
-              params: 'num, digits',
+              args: 'num, digits',
               title: '和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toFixedNumber(123) // 123
@@ -2221,9 +2409,10 @@ export default {
             },
             {
               name: 'toFixedString',
-              params: 'num, digits',
+              args: 'num, digits',
               title: '和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toFixedString(123) // '123'
@@ -2243,9 +2432,10 @@ export default {
           children: [
             {
               name: 'toString',
-              params: 'obj',
+              args: 'obj',
               title: '转字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.toInteger(0) // '0'
@@ -2256,9 +2446,10 @@ export default {
             },
             {
               name: 'trim',
-              params: 'str',
+              args: 'str',
               title: '去除字符串左右两边的空格',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.trim(' abc ') // 'abc'
@@ -2267,9 +2458,10 @@ export default {
             },
             {
               name: 'trimLeft',
-              params: 'str',
+              args: 'str',
               title: '去除字符串左边的空格',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.trimLeft(' abc ') // 'abc '
@@ -2278,9 +2470,10 @@ export default {
             },
             {
               name: 'trimRight',
-              params: 'str',
+              args: 'str',
               title: '去除字符串右边的空格',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.trimRight(' abc ') // ' abc'
@@ -2289,9 +2482,10 @@ export default {
             },
             {
               name: 'escape',
-              params: 'str',
+              args: 'str',
               title: '转义HTML字符串，替换&, <, >, ", \', `字符',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.escape('<a>link</a>') // '&lt;a&gt;link&lt;/a&gt;'
@@ -2300,9 +2494,10 @@ export default {
             },
             {
               name: 'unescape',
-              params: 'str',
+              args: 'str',
               title: '反转 escape',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.unescape('&lt;a&gt;link&lt;/a&gt;') // '<a>link</a>'
@@ -2311,9 +2506,10 @@ export default {
             },
             {
               name: 'camelCase',
-              params: 'str',
+              args: 'str',
               title: '将带驼峰字符串转成字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.camelCase('project-name') // 'projectName'
@@ -2322,9 +2518,10 @@ export default {
             },
             {
               name: 'kebabCase',
-              params: 'str',
+              args: 'str',
               title: '将字符串转成驼峰字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.kebabCase('projectName') // 'project-name'
@@ -2333,9 +2530,10 @@ export default {
             },
             {
               name: 'repeat',
-              params: 'str, count',
+              args: 'str, count',
               title: '将字符串重复 n 次',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.repeat('a', 5) // 'aaaaa'
@@ -2345,9 +2543,10 @@ export default {
             },
             {
               name: 'padStart',
-              params: 'str, targetLength, padString',
+              args: 'str, targetLength, padString',
               title: '用指定字符从前面开始补全字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.padStart('a', 5, 'b') // 'bbbba'
@@ -2356,9 +2555,10 @@ export default {
             },
             {
               name: 'padEnd',
-              params: 'str, targetLength [, padString]',
+              args: 'str, targetLength [, padString]',
               title: '用指定字符从后面开始补全字符串',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.padEnd('a', 5, 'b') // 'abbbb'
@@ -2367,9 +2567,10 @@ export default {
             },
             {
               name: 'startsWith',
-              params: 'str, val [, startIndex]',
+              args: 'str, val [, startIndex]',
               title: '判断字符串是否在源字符串的头部',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.startsWith('abc', 'b') // false
@@ -2378,9 +2579,10 @@ export default {
             },
             {
               name: 'endsWith',
-              params: 'str, val [, startIndex]',
+              args: 'str, val [, startIndex]',
               title: '判断字符串是否在源字符串的尾部',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.endsWith('abc', 5, 'a') // false
@@ -2389,9 +2591,10 @@ export default {
             },
             {
               name: 'template',
-              params: 'str, obj',
+              args: 'str, obj',
               title: '解析动态字符串模板',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.template('{{ name }}', {name: 'test1'}) // test1
@@ -2401,9 +2604,10 @@ export default {
             },
             {
               name: 'serialize',
-              params: 'query',
+              args: 'query',
               title: '序列化查询参数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.serialize({id: 123, name: 'test1'}) // id=123&name=test1
@@ -2412,9 +2616,10 @@ export default {
             },
             {
               name: 'unserialize',
-              params: 'str',
+              args: 'str',
               title: '反转序列化查询参数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.unserialize('id=123&name=test1') // {id: '123', name: 'test1'}
@@ -2430,9 +2635,10 @@ export default {
           children: [
             {
               name: 'browse',
-              params: '',
+              args: '',
               title: '获取浏览器信息',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.browse()
@@ -2453,9 +2659,10 @@ export default {
             },
             {
               name: 'locat',
-              params: '',
+              args: '',
               title: '获取地址栏信息',
               desc: '',
+              params: [],
               codes: [
                 `
                 // http://localhost:8080/demo?id=123
@@ -2482,9 +2689,10 @@ export default {
             },
             {
               name: 'parseUrl',
-              params: 'url',
+              args: 'url',
               title: '解析 URL 参数',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.parseUrl('http://localhost:8080/demo/#/home?id=123')
@@ -2510,9 +2718,10 @@ export default {
             },
             {
               name: 'getBaseURL',
-              params: '',
+              args: '',
               title: '获取上下文路径',
               desc: '',
+              params: [],
               codes: [
                 `
                 XEUtils.getBaseURL() // http://localhost/demo/
@@ -2521,9 +2730,10 @@ export default {
             },
             {
               name: 'cookie',
-              params: 'name, value, options',
+              args: 'name, value, options',
               title: 'Cookie 操作函数',
               desc: '',
+              params: [],
               codes: [
                 `
                 // 获取所有
@@ -2587,8 +2797,34 @@ export default {
       ]
     }
   },
+  computed: {
+    apiList () {
+      if (this.filterName) {
+        let filterName = this.filterName.toLowerCase()
+        return this.list.map(group => {
+          let rest = Object.assign({}, group)
+          group.expand = true
+          rest.children = group.children.filter(item => item.name.toLowerCase().indexOf(filterName) > -1 || item.title.toLowerCase().indexOf(filterName) > -1)
+          return rest
+        }).filter(item => item.children.length)
+      }
+      return this.list
+    }
+  },
+  watch: {
+    apiList () {
+      this.$nextTick(() => {
+        if (this.apiList.length) {
+          this.selected = this.apiList[0].children[0]
+          Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
+            hljs.highlightBlock(block)
+          })
+        }
+      })
+    }
+  },
   created () {
-    this.selected = this.list[0].children[0]
+    this.selected = this.apiList[0].children[0]
   },
   mounted () {
     Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
