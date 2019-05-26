@@ -41,6 +41,7 @@ function arrayUnion () {
 //   return v1 > v2 ? 1 : -1
 // }
 
+// 支持中文、数字、字母排序
 function sortByDef (v1, v2) {
   return v1 && v1.localeCompare ? v1.localeCompare(v2) : (v1 > v2 ? 1 : -1)
 }
