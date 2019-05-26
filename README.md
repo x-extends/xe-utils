@@ -6,7 +6,7 @@
 [![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.min.js?compression=gzip&label=gzip%20size:%20JS)](http://img.badgesize.io/https://unpkg.com/xe-utils/lib/index.umd.min.js?compression=gzip&label=gzip%20size:%20JS)
 [![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/xuliangzhan/xe-utils/blob/master/LICENSE)
 
-javascript 函数库、工具类，提供一套实用的基础函数、任意格式的日期转换函数，浏览器相关操作函数等...
+javascript 函数库、工具类，提供一套实用的基础函数、日期转换函数等...
 
 ## Browser Support
 
