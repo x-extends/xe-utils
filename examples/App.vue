@@ -15,6 +15,7 @@ html, body {
   padding: 0;
   color: #000;
   font-size: 14px;
+  overflow: hidden;
   font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,\\5FAE\8F6F\96C5\9ED1,Arial,sans-serif;
   * {
     box-sizing: border-box;
