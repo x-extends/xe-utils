@@ -59,6 +59,12 @@ html, body {
       .title {
         font-size: 28px;
         margin: 10px 0 0 0;
+        text-align: center;
+        a {
+          color: #409eff;
+          text-decoration: none;
+          cursor: pointer;
+        }
       }
       .search-wrapper {
         padding: 10px 0;

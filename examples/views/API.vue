@@ -2,9 +2,11 @@
   <div class="page-container">
     <div class="aside">
       <div class="header">
-        <h1 class="title">xe-utils</h1>
+        <h1 class="title">
+          <a href="https://github.com/xuliangzhan/xe-utils">xe-utils</a>
+        </h1>
         <div class="search-wrapper">
-          <input class="search-input" v-model="filterName" type="search" placeholder="API">
+          <input class="search-input" v-model="filterName" type="search" placeholder="API 搜索">
         </div>
       </div>
       <ul>
