@@ -1023,19 +1023,23 @@ function getLast (obj) {
 }
 
 function arrayEach (obj, iterate, context) {
-  if (obj.forEach) {
-    obj.forEach(iterate, context)
-  } else {
-    for (var index = 0, len = obj.length; index < len; index++) {
-      iterate.call(context || this, obj[index], index, obj)
+  if (obj) {
+    if (obj.forEach) {
+      obj.forEach(iterate, context)
+    } else {
+      for (var index = 0, len = obj.length; index < len; index++) {
+        iterate.call(context || this, obj[index], index, obj)
+      }
     }
   }
 }
 
 function objectEach (obj, iterate, context) {
-  for (var key in obj) {
-    if (hasOwnProp(obj, key)) {
-      iterate.call(context || this, obj[key], key, obj)
+  if (obj) {
+    for (var key in obj) {
+      if (hasOwnProp(obj, key)) {
+        iterate.call(context || this, obj[key], key, obj)
+      }
     }
   }
 }

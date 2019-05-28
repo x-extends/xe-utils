@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.9.0
+ * xe-utils.js v1.9.1
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1054,19 +1054,23 @@
   }
 
   function arrayEach (obj, iterate, context) {
-    if (obj.forEach) {
-      obj.forEach(iterate, context)
-    } else {
-      for (var index = 0, len = obj.length; index < len; index++) {
-        iterate.call(context || this, obj[index], index, obj)
+    if (obj) {
+      if (obj.forEach) {
+        obj.forEach(iterate, context)
+      } else {
+        for (var index = 0, len = obj.length; index < len; index++) {
+          iterate.call(context || this, obj[index], index, obj)
+        }
       }
     }
   }
 
   function objectEach (obj, iterate, context) {
-    for (var key in obj) {
-      if (hasOwnProp(obj, key)) {
-        iterate.call(context || this, obj[key], key, obj)
+    if (obj) {
+      for (var key in obj) {
+        if (hasOwnProp(obj, key)) {
+          iterate.call(context || this, obj[key], key, obj)
+        }
       }
     }
   }
@@ -2208,13 +2212,13 @@
     return function (obj, iterate, options, context) {
       var opts = options || {}
       var optChildren = opts.children || 'children'
-      return handle(null, obj, iterate, context || this, [], optChildren, opts.mapChildren || optChildren)
+      return handle(null, obj, iterate, context || this, [], optChildren, opts)
     }
   }
 
-  function findTreeItem (parent, obj, iterate, context, path, parseChildren, mapChildren) {
-    var item, key, index, len, paths, match
-    if (baseExports.isArray(obj)) {
+  function findTreeItem (parent, obj, iterate, context, path, parseChildren, opts) {
+    if (obj) {
+      var item, index, len, paths, match
       for (index = 0, len = obj.length; index < len; index++) {
         item = obj[index]
         paths = path.concat(['' + index])
@@ -2222,25 +2226,9 @@
           return { index: index, item: item, path: paths, items: obj, parent: parent }
         }
         if (parseChildren && item) {
-          match = findTreeItem(item, item[parseChildren], iterate, context, paths.concat([parseChildren]), parseChildren, mapChildren)
+          match = findTreeItem(item, item[parseChildren], iterate, context, paths.concat([parseChildren]), parseChildren, opts)
           if (match) {
             return match
-          }
-        }
-      }
-    } else {
-      for (key in obj) {
-        if (baseExports._hasOwnProp(obj, key)) {
-          item = obj[key]
-          paths = path.concat([key])
-          if (iterate.call(context, item, index, obj, paths, parent)) {
-            return { index: key, item: item, path: paths, items: obj }
-          }
-          if (parseChildren && item) {
-            match = findTreeItem(item, item[parseChildren], iterate, context, paths.concat([parseChildren]), parseChildren, mapChildren)
-            if (match) {
-              return match
-            }
           }
         }
       }
@@ -2258,13 +2246,13 @@
     */
   var findTree = createTreeFunc(findTreeItem)
 
-  function eachTreeItem (parent, obj, iterate, context, path, parseChildren, mapChildren) {
+  function eachTreeItem (parent, obj, iterate, context, path, parseChildren, opts) {
     var paths
     baseExports.each(obj, function (item, index) {
       paths = path.concat(['' + index])
       iterate.call(context, item, index, obj, paths, parent)
       if (item && parseChildren) {
-        eachTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, mapChildren)
+        eachTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
       }
     })
   }
@@ -2279,13 +2267,14 @@
     */
   var eachTree = createTreeFunc(eachTreeItem)
 
-  function mapTreeItem (parent, obj, iterate, context, path, parseChildren, mapChildren) {
+  function mapTreeItem (parent, obj, iterate, context, path, parseChildren, opts) {
     var paths, rest
+    var mapChildren = opts.mapChildren || parseChildren
     return arrayMap(obj, function (item, index) {
       paths = path.concat(['' + index])
       rest = iterate.call(context, item, index, obj, paths, parent)
       if (rest && item && parseChildren && item[parseChildren]) {
-        rest[mapChildren] = mapTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, mapChildren)
+        rest[mapChildren] = mapTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
       }
       return rest
     })
@@ -2324,6 +2313,41 @@
     return result
   }
 
+  function searchTreeItem (parent, obj, iterate, context, path, parseChildren, opts) {
+    var paths, rest, isAllow, hasChild
+    var rests = []
+    var hasOriginal = opts.original
+    var mapChildren = opts.mapChildren || parseChildren
+    baseExports.arrayEach(obj, function (item, index) {
+      paths = path.concat(['' + index])
+      isAllow = iterate.call(context, item, index, obj, paths, parent)
+      hasChild = parseChildren && item[parseChildren]
+      if (isAllow || hasChild) {
+        rest = hasOriginal ? item : baseExports.assign({}, item)
+      }
+      if (isAllow || hasChild) {
+        rest[mapChildren] = searchTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
+        if (isAllow || rest[mapChildren].length) {
+          rests.push(rest)
+        }
+      } else if (isAllow) {
+        rests.push(rest)
+      }
+    })
+    return rests
+  }
+
+  /**
+    * 从树结构中根据回调查找数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path, parent) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Array}
+    */
+  var searchTree = createTreeFunc(searchTreeItem)
+
   var arrayExports = {
     uniq: arrayUniq,
     union: arrayUnion,
@@ -2354,7 +2378,8 @@
     findTree: findTree,
     eachTree: eachTree,
     mapTree: mapTree,
-    filterTree: filterTree
+    filterTree: filterTree,
+    searchTree: searchTree
   }
 
   /* eslint-disable valid-typeof */

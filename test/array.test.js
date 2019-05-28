@@ -717,7 +717,7 @@ describe('Array functions', () => {
       XEUtils.toArray(10)
     ).toEqual([])
     expect(
-      XEUtils.toArray(function () {})
+      XEUtils.toArray(function () { })
     ).toEqual([])
     expect(
       XEUtils.toArray({ name: 'test1', age: 25 })
@@ -1138,5 +1138,28 @@ describe('Array functions', () => {
         return item.a >= 22
       }, { children: 'childs' })
     ).toEqual([{ a: 22, childs: [{ a: 222 }, { a: 223 }] }, { a: 222 }, { a: 223 }])
+  })
+
+  test('searchTree()', () => {
+    expect(
+      XEUtils.searchTree([{ a: 11 }, { a: 22 }], item => {
+        return item.a === 33
+      })
+    ).toEqual([])
+    expect(
+      XEUtils.searchTree([{ a: 11 }, { a: 22 }], item => {
+        return item.a === 11
+      })
+    ).toEqual([{ a: 11, children: [] }])
+    expect(
+      XEUtils.searchTree([{ a: 11 }, { a: 22, children: [{ a: 222 }, { a: 223 }] }], item => {
+        return item.a >= 22
+      })
+    ).toEqual([{ a: 22, children: [{ a: 222, children: [] }, { a: 223, children: [] }] }])
+    expect(
+      XEUtils.searchTree([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 3 }] }], item => {
+        return item.a >= 22
+      }, { children: 'childs' })
+    ).toEqual([{ a: 22, childs: [{ a: 222, childs: [] }] }])
   })
 })

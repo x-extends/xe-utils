@@ -1843,7 +1843,10 @@ export default {
               args: 'obj, iterate[, options, context]',
               title: '从树结构中查找匹配第一条数据的键、值、路径',
               desc: '',
-              params: [],
+              params: [
+                ['属性', '描述', '默认值'],
+                ['children', '子节点属性', 'children']
+              ],
               codes: [
                 `
                 XEUtils.findTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => item.id === 20) // {item: {id: 20}, ...}
@@ -1856,7 +1859,10 @@ export default {
               args: 'obj, iterate[, options, context]',
               title: '从树结构中遍历数据的键、值、路径',
               desc: '',
-              params: [],
+              params: [
+                ['属性', '描述', '默认值'],
+                ['children', '子节点属性', 'children']
+              ],
               codes: [
                 `
                 XEUtils.eachTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
@@ -1873,7 +1879,11 @@ export default {
               args: 'obj, iterate[, options, context]',
               title: '从树结构中指定方法后的返回值组成的新数组',
               desc: '',
-              params: [],
+              params: [
+                ['属性', '描述', '默认值'],
+                ['children', '子节点属性', 'children'],
+                ['mapChildren', '将子节点映射到指定的属性', '']
+              ],
               codes: [
                 `
                 XEUtils.mapTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
@@ -1893,15 +1903,36 @@ export default {
               args: 'obj, iterate[, options, context]',
               title: '从树结构中根据回调过滤数据',
               desc: '',
-              params: [],
+              params: [
+                ['属性', '描述', '默认值'],
+                ['children', '子节点属性', 'children']
+              ],
               codes: [
                 `
-                XEUtils.filterTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
-                  return item.id === 1
-                }) // {id: 1}
-                XEUtils.filterTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
-                  return item.id >= 3
-                }, {children: 'childs'}) // [{id: 20}, {id: 3, childs: [{id: 30}]}, {id: 30}]
+                XEUtils.filterTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => item.id === 1) 
+                // {id: 1}
+                XEUtils.filterTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => item.id >= 3, {children: 'childs'}) 
+                // [{id: 20}, {id: 3, childs: [{id: 30}]}, {id: 30}]
+                `
+              ]
+            },
+            {
+              name: 'searchTree',
+              args: 'obj, iterate[, options, context]',
+              title: '从树结构中根据回调查找数据',
+              desc: '',
+              params: [
+                ['属性', '描述', '默认值'],
+                ['children', '子节点属性', 'children'],
+                ['mapChildren', '将子节点映射到指定的属性', ''],
+                ['original', '是否保持源数据的引用', 'false']
+              ],
+              codes: [
+                `
+                XEUtils.searchTree([{id: 1}, {id: 2, children: [{id: 0}]}, {id: 3, children: [{id: 30}]}], item => item.id > 1)
+                // [{id: 3, children: [{id: 30, children: []}]}]
+                XEUtils.searchTree([{id: 1}, {id: 2, childs: [{id: 0}]}, {id: 3, childs: [{id: 30}]}], item => item.id >= 2, {children: 'childs'})
+                // [{id: 2, childs: []}, {id: 3, childs: [{id: 30, childs: []}]}]
                 `
               ]
             }
