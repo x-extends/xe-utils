@@ -1932,9 +1932,9 @@ export default {
               codes: [
                 `
                 XEUtils.searchTree([{id: 1}, {id: 2, children: [{id: 0}]}, {id: 3, children: [{id: 30}]}], item => item.id > 1)
-                // [{id: 3, children: [{id: 30, children: []}]}]
+                // [{id: 3, children: [{id: 30}]}]
                 XEUtils.searchTree([{id: 1}, {id: 2, childs: [{id: 0}]}, {id: 3, childs: [{id: 30}]}], item => item.id >= 2, {children: 'childs'})
-                // [{id: 2, childs: []}, {id: 3, childs: [{id: 30, childs: []}]}]
+                // [{id: 2, childs: []}, {id: 3, childs: [{id: 30}]}]
                 `
               ]
             }

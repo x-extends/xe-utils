@@ -1150,16 +1150,16 @@ describe('Array functions', () => {
       XEUtils.searchTree([{ a: 11 }, { a: 22 }], item => {
         return item.a === 11
       })
-    ).toEqual([{ a: 11, children: [] }])
+    ).toEqual([{ a: 11 }])
     expect(
       XEUtils.searchTree([{ a: 11 }, { a: 22, children: [{ a: 222 }, { a: 223 }] }], item => {
         return item.a >= 22
       })
-    ).toEqual([{ a: 22, children: [{ a: 222, children: [] }, { a: 223, children: [] }] }])
+    ).toEqual([{ a: 22, children: [{ a: 222 }, { a: 223 }] }])
     expect(
       XEUtils.searchTree([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 3 }] }], item => {
         return item.a >= 22
       }, { children: 'childs' })
-    ).toEqual([{ a: 22, childs: [{ a: 222, childs: [] }] }])
+    ).toEqual([{ a: 22, childs: [{ a: 222 }, { a: 3 }] }])
   })
 })
