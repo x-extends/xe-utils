@@ -34,6 +34,10 @@ html, body {
     font-size: 14px;
   }
 }
+.keyword-lighten {
+  color: #000;
+  background-color: #FFFF00;
+}
 .page-container {
   height: 100%;
   margin: 0 auto;

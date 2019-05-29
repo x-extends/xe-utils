@@ -1931,10 +1931,10 @@ export default {
               ],
               codes: [
                 `
-                XEUtils.searchTree([{id: 1}, {id: 2, children: [{id: 0}]}, {id: 3, children: [{id: 30}]}], item => item.id > 1)
-                // [{id: 3, children: [{id: 30}]}]
-                XEUtils.searchTree([{id: 1}, {id: 2, childs: [{id: 0}]}, {id: 3, childs: [{id: 30}]}], item => item.id >= 2, {children: 'childs'})
-                // [{id: 2, childs: []}, {id: 3, childs: [{id: 30}]}]
+                XEUtils.searchTree([{ id: 1 }, { id: 2, children: [{ id: 0 }] }, { id: 3, children: [{ id: 30 }] }], item => item.id > 1)
+                // [{ id: 2, children: [{ id: 0, children: [] }] }, { id: 3, children: [{ id: 30, children: [] }] }]
+                XEUtils.searchTree([{ id: 1 }, { id: 2, childs: [{ id: 0 }] }, { id: 3, childs: [{ id: 30 }] }], item => item.id >= 2, { children: 'childs' })
+                // [{ id: 2, childs: [{ id: 0, childs: [] }] }, { id: 3, childs: [{ id: 30, childs: [] }] }]
                 `
               ]
             }
@@ -2837,8 +2837,8 @@ export default {
         let filterRE = new RegExp(filterName, 'gi')
         let list= window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
         window.XEUtils.eachTree(list, item => {
-          item.name = (item.name||'').replace(filterRE, match => `<span style="color: red;">${match}</span>`)
-          item.title = (item.title||'').replace(filterRE, match => `<span style="color: red;">${match}</span>`)
+          item.name = (item.name||'').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
+          item.title = (item.title||'').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
         }, { children: 'children' })
         return list
       }

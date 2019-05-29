@@ -725,25 +725,25 @@ function filterTree (obj, iterate, options, context) {
   return result
 }
 
-function searchTreeItem (parent, obj, iterate, context, path, parseChildren, opts) {
+function searchTreeItem (parentAllow, parent, obj, iterate, context, path, parseChildren, opts) {
   var paths, rest, isAllow, hasChild
   var rests = []
   var hasOriginal = opts.original
   var mapChildren = opts.mapChildren || parseChildren
   baseExports.arrayEach(obj, function (item, index) {
     paths = path.concat(['' + index])
-    isAllow = iterate.call(context, item, index, obj, paths, parent)
+    isAllow = parentAllow || iterate.call(context, item, index, obj, paths, parent)
     hasChild = parseChildren && item[parseChildren]
     if (isAllow || hasChild) {
       rest = hasOriginal ? item : baseExports.assign({}, item)
     }
-    if (isAllow) {
-      rests.push(rest)
-    } else if (hasChild) {
-      rest[mapChildren] = searchTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
-      if (rest[mapChildren].length) {
+    if (isAllow || hasChild) {
+      rest[mapChildren] = searchTreeItem(isAllow, item, item[parseChildren], iterate, context, paths, parseChildren, opts)
+      if (isAllow || rest[mapChildren].length) {
         rests.push(rest)
       }
+    } else if (isAllow) {
+      rests.push(rest)
     }
   })
   return rests
@@ -758,7 +758,9 @@ function searchTreeItem (parent, obj, iterate, context, path, parseChildren, opt
   * @param {Object} context 上下文
   * @return {Array}
   */
-var searchTree = createTreeFunc(searchTreeItem)
+var searchTree = createTreeFunc(function (parent, obj, iterate, context, path, parseChildren, opts) {
+  return searchTreeItem(0, parent, obj, iterate, context, path, parseChildren, opts)
+})
 
 var arrayExports = {
   uniq: arrayUniq,

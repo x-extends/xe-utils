@@ -1142,24 +1142,16 @@ describe('Array functions', () => {
 
   test('searchTree()', () => {
     expect(
-      XEUtils.searchTree([{ a: 11 }, { a: 22 }], item => {
-        return item.a === 33
-      })
+      XEUtils.searchTree([{ a: 11 }, { a: 22 }], item => item.a === 33)
     ).toEqual([])
     expect(
-      XEUtils.searchTree([{ a: 11 }, { a: 22 }], item => {
-        return item.a === 11
-      })
-    ).toEqual([{ a: 11 }])
+      XEUtils.searchTree([{ a: 11 }, { a: 22 }], item => item.a === 11)
+    ).toEqual([{ a: 11, children: [] }])
     expect(
-      XEUtils.searchTree([{ a: 11 }, { a: 22, children: [{ a: 222 }, { a: 223 }] }], item => {
-        return item.a >= 22
-      })
-    ).toEqual([{ a: 22, children: [{ a: 222 }, { a: 223 }] }])
+      XEUtils.searchTree([{ id: 1 }, { id: 2, children: [{ id: 0 }] }, { id: 3, children: [{ id: 30 }] }], item => item.id > 1)
+    ).toEqual([{ id: 2, children: [{ id: 0, children: [] }] }, { id: 3, children: [{ id: 30, children: [] }] }])
     expect(
-      XEUtils.searchTree([{ a: 11 }, { a: 22, childs: [{ a: 222 }, { a: 3 }] }], item => {
-        return item.a >= 22
-      }, { children: 'childs' })
-    ).toEqual([{ a: 22, childs: [{ a: 222 }, { a: 3 }] }])
+      XEUtils.searchTree([{ id: 1 }, { id: 2, childs: [{ id: 0 }] }, { id: 3, childs: [{ id: 30 }] }], item => item.id >= 2, { children: 'childs' })
+    ).toEqual([{ id: 2, childs: [{ id: 0, childs: [] }] }, { id: 3, childs: [{ id: 30, childs: [] }] }])
   })
 })
