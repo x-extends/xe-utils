@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.9.1
+ * xe-utils.js v1.9.2
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2325,13 +2325,13 @@
       if (isAllow || hasChild) {
         rest = hasOriginal ? item : baseExports.assign({}, item)
       }
-      if (isAllow || hasChild) {
+      if (isAllow) {
+        rests.push(rest)
+      } else if (hasChild) {
         rest[mapChildren] = searchTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
-        if (isAllow || rest[mapChildren].length) {
+        if (rest[mapChildren].length) {
           rests.push(rest)
         }
-      } else if (isAllow) {
-        rests.push(rest)
       }
     })
     return rests

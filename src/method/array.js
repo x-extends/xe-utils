@@ -737,13 +737,13 @@ function searchTreeItem (parent, obj, iterate, context, path, parseChildren, opt
     if (isAllow || hasChild) {
       rest = hasOriginal ? item : baseExports.assign({}, item)
     }
-    if (isAllow || hasChild) {
+    if (isAllow) {
+      rests.push(rest)
+    } else if (hasChild) {
       rest[mapChildren] = searchTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
-      if (isAllow || rest[mapChildren].length) {
+      if (rest[mapChildren].length) {
         rests.push(rest)
       }
-    } else if (isAllow) {
-      rests.push(rest)
     }
   })
   return rests
