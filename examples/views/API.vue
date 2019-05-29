@@ -14,7 +14,7 @@
           <a class="menu-link" @click="group.expand = !group.expand">{{ group.label }}</a>
           <ul class="child-menu" v-show="group.expand">
             <li class="menu-item" v-for="(item, index) in group.children" :key="index" :class="{active: selected === item}">
-              <a class="menu-link" @click="menuLinkEvent(item)">{{ item.name }}</a>
+              <a class="menu-link" @click="menuLinkEvent(item)" v-html="item.name"></a>
             </li>
           </ul>
         </li>
@@ -23,8 +23,8 @@
     <div class="body">
       <div v-for="(group, gIndex) in apiList" :key="gIndex">
         <div class="api-item" v-for="(item, index) in group.children" :key="index">
-          <p class="title" :id="item.name">{{ item.name }} ({{ item.args }}) {{ item.title }}</p>
-          <p class="desc">{{ item.desc }}</p>
+          <p class="title" :id="item.name" v-html="`${item.name } (${ item.args }) ${ item.title}`"></p>
+          <p class="desc" v-html="item.desc"></p>
           <table class="param-table" border="0" v-if="item.params && item.params.length">
             <tr v-for="(rows, pIndex) in item.params" :key="pIndex">
               <td v-for="(val, vIndex) in rows" :key="vIndex">{{ val }}</td>
@@ -2834,12 +2834,13 @@ export default {
     apiList () {
       if (this.filterName) {
         let filterName = this.filterName.toLowerCase()
-        return this.list.map(group => {
-          let rest = Object.assign({}, group)
-          group.expand = true
-          rest.children = group.children.filter(item => item.name.toLowerCase().indexOf(filterName) > -1 || item.title.toLowerCase().indexOf(filterName) > -1)
-          return rest
-        }).filter(item => item.children.length)
+        let filterRE = new RegExp(filterName, 'gi')
+        let list= window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
+        window.XEUtils.eachTree(list, item => {
+          item.name = (item.name||'').replace(filterRE, match => `<span style="color: red;">${match}</span>`)
+          item.title = (item.title||'').replace(filterRE, match => `<span style="color: red;">${match}</span>`)
+        }, { children: 'children' })
+        return list
       }
       return this.list
     }
