@@ -6,7 +6,7 @@
           <a href="https://github.com/xuliangzhan/xe-utils">xe-utils</a>
         </h1>
         <div class="search-wrapper">
-          <input class="search-input" v-model="filterName" type="search" placeholder="API 搜索"/>
+          <input class="search-input" v-model="filterName" type="search" placeholder="API 搜索">
         </div>
       </div>
       <ul>
@@ -21,8 +21,8 @@
       </ul>
     </div>
     <div class="body">
-      <div v-for="(group, gIndex) in apiList" :key="gIndex">
-        <div class="api-item" v-for="(item, index) in group.children" :key="index">
+      <div v-for="group in apiList" :key="group.value">
+        <div class="api-item" v-for="item in group.children" :key="item.name">
           <p class="title" :id="item.name" v-html="`${item.name } (${ item.args }) ${ item.title}`"></p>
           <p class="desc" v-html="item.desc"></p>
           <table class="param-table" border="0" v-if="item.params && item.params.length">
