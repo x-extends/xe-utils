@@ -49,6 +49,52 @@ export default {
       filterName: '',
       list: []
     }
+  },
+  computed: {
+    apiList () {
+      if (this.filterName) {
+        let filterName = this.filterName.toLowerCase()
+        let filterRE = new RegExp(filterName, 'gi')
+        let list= window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
+        window.XEUtils.eachTree(list, item => {
+          item.name = (item.name||'').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
+          item.title = (item.title||'').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
+        }, { children: 'children' })
+        return list
+      }
+      return this.list
+    }
+  },
+  watch: {
+    apiList () {
+      this.$nextTick(() => {
+        if (this.apiList.length) {
+          this.selected = this.apiList[0].children[0]
+          Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
+            hljs.highlightBlock(block)
+          })
+        }
+      })
+    }
+  },
+  created () {
+    this.selected = this.apiList[0].children[0]
+  },
+  mounted () {
+    Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
+      hljs.highlightBlock(block)
+    })
+  },
+  methods: {
+    menuLinkEvent (item) {
+      let elem = document.getElementById(item.name)
+      this.selected = item
+      if (elem && elem.scrollIntoView) {
+        elem.scrollIntoView()
+      } else if (elem && elem.scrollIntoViewIfNeeded) {
+        elem.scrollIntoViewIfNeeded()
+      }
+    }
   }
 }
 </script>
