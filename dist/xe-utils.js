@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.9.4
+ * xe-utils.js v1.9.5
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -1186,7 +1186,8 @@
   }
 
   function getHGSKeys (property) {
-    return property ? (isArray(property) ? property : ('' + property).split('.')) : []
+    // 以最快的方式判断数组，可忽略准确性
+    return property ? (property.splice && property.join ? property : ('' + property).split('.')) : []
   }
 
   /**
@@ -1199,7 +1200,7 @@
   var sKeyRE = /(.+)\[(\d+)\]$/
   function has (obj, property) {
     if (obj) {
-      if (hasOwnProp(obj, property)) {
+      if (obj.hasOwnProperty(property)) {
         return true
       } else {
         var prop, arrIndex, objProp, matchs, rest, isHas
@@ -1215,19 +1216,19 @@
             objProp = matchs[2]
             if (arrIndex) {
               if (rest[arrIndex]) {
-                if (hasOwnProp(rest[arrIndex], objProp)) {
+                if (rest[arrIndex].hasOwnProperty(objProp)) {
                   isHas = true
                   rest = rest[arrIndex][objProp]
                 }
               }
             } else {
-              if (hasOwnProp(rest, objProp)) {
+              if (rest.hasOwnProperty(objProp)) {
                 isHas = true
                 rest = rest[objProp]
               }
             }
           } else {
-            if (hasOwnProp(rest, prop)) {
+            if (rest.hasOwnProperty(prop)) {
               isHas = true
               rest = rest[prop]
             }
@@ -1254,7 +1255,7 @@
     if (obj) {
       var rest, keys, len
       var index = 0
-      if (hasOwnProp(obj, property)) {
+      if (obj[property] || obj.hasOwnProperty(property)) {
         return obj[property]
       } else {
         keys = getHGSKeys(property)
@@ -1262,7 +1263,7 @@
         if (len) {
           for (rest = obj; index < len; index++) {
             rest = valGet(rest, keys[index])
-            if (isUndefined(rest) || isNull(rest)) {
+            if (rest === undefined || rest === null) {
               return
             }
           }
@@ -1274,17 +1275,17 @@
 
   /**
    * 获取对象的属性的值，如果值为 undefined，则返回默认值
-   * @param {Object/Array} data 对象
+   * @param {Object/Array} obj 对象
    * @param {String/Function} property 键、路径
    * @param {Object} defaultValue 默认值
    * @return {Object}
    */
   function get (obj, property, defaultValue) {
-    if (isNull(obj) || isUndefined(obj)) {
+    if (obj === null || obj === undefined) {
       return defaultValue
     }
     var result = pathGet(obj, property)
-    return isUndefined(result) ? defaultValue : result
+    return result === undefined ? defaultValue : result
   }
 
   function valSet (obj, key, isSet, value) {
@@ -1314,18 +1315,22 @@
 
   /**
    * 设置对象属性上的值。如果属性不存在则创建它
-   * @param {Object/Array} data 对象
+   * @param {Object/Array} obj 对象
    * @param {String/Function} property 键、路径
    * @param {Object} value 值
    */
   function set (obj, property, value) {
     if (obj) {
-      var rest = obj
-      var keys = getHGSKeys(property)
-      var len = keys.length
-      arrayEach(keys, function (key, index) {
-        rest = valSet(rest, key, index === len - 1, value)
-      })
+      if (obj[property] || obj.hasOwnProperty(property)) {
+        obj[property] = value
+      } else {
+        var rest = obj
+        var keys = getHGSKeys(property)
+        var len = keys.length
+        for (var index = 0; index < len; index++) {
+          rest = valSet(rest, keys[index], index === len - 1, value)
+        }
+      }
     }
     return obj
   }
