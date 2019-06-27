@@ -1486,6 +1486,21 @@ describe('Base functions', () => {
     ).toEqual(2)
   })
 
+  test('arrayIndexOf()', () => {
+    expect(
+      XEUtils.arrayIndexOf([11, 22, 33, 22])
+    ).toEqual(-1)
+    expect(
+      XEUtils.arrayIndexOf([11, 22, 33, 22], 55)
+    ).toEqual(-1)
+    expect(
+      XEUtils.arrayIndexOf([11, 22, 33, 22], 22)
+    ).toEqual(1)
+    expect(
+      XEUtils.arrayIndexOf([11, 22, 33, 22], 33)
+    ).toEqual(2)
+  })
+
   test('lastIndexOf()', () => {
     expect(
       XEUtils.lastIndexOf([11, 22, 33, 22])
@@ -1510,6 +1525,21 @@ describe('Base functions', () => {
     ).toEqual(3)
     expect(
       XEUtils.lastIndexOf([11, 22, 33, 22], 33)
+    ).toEqual(2)
+  })
+
+  test('arrayLastIndexOf()', () => {
+    expect(
+      XEUtils.arrayLastIndexOf([11, 22, 33, 22])
+    ).toEqual(-1)
+    expect(
+      XEUtils.arrayLastIndexOf([11, 22, 33, 22], 55)
+    ).toEqual(-1)
+    expect(
+      XEUtils.arrayLastIndexOf([11, 22, 33, 22], 22)
+    ).toEqual(3)
+    expect(
+      XEUtils.arrayLastIndexOf([11, 22, 33, 22], 33)
     ).toEqual(2)
   })
 

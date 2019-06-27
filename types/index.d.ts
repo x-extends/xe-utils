@@ -307,6 +307,13 @@ export interface XEUtilsMethods {
   indexOf(obj: object | Array<any>, val: any): number;
 
   /**
+   * 返回数组第一个索引值
+   * @param obj 数组
+   * @param val 值
+   */
+  arrayIndexOf(obj: object | Array<any>, val: any): number;
+
+  /**
    * 返回对象第一个索引值
    * @param obj 对象
    * @param iteratee 迭代器/属性
@@ -320,6 +327,13 @@ export interface XEUtilsMethods {
    * @param val 值
    */
   lastIndexOf(obj: object | Array<any>, val: any): number;
+
+  /**
+   * 从最后开始的索引值,返回数组第一个索引值
+   * @param obj 数组
+   * @param val 值
+   */
+  arrayLastIndexOf(obj: object | Array<any>, val: any): number;
 
   /**
    * 从最后开始的索引值,返回对象第一个索引值

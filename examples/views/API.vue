@@ -42,25 +42,6 @@
 <script>
 import hljs from 'highlight.js'
 
-import {
-  VXETable,
-  Table,
-  TableColumn,
-  TableHeader,
-  TableBody    
-} from 'vxe-table'
-import zhCNLocat from 'vxe-table/lib/locale/lang/zh-CN'
-
-Vue.use(Table)
-Vue.use(TableColumn)
-Vue.use(TableHeader)
-Vue.use(TableBody)
-
-// 按需加载的方式默认是不带国际化的，需要自行导入
-VXETable.setup({
-  i18n: (key, value) => VXETable.t(zhCNLocat, key)
-})
-
 export default {
   data () {
     return {

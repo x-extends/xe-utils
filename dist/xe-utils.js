@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.9.5
+ * xe-utils.js v1.9.6
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -670,6 +670,17 @@
     }
   }
 
+  function arrayIndexOf (obj, val) {
+    if (obj.indexOf) {
+      return obj.indexOf(val)
+    }
+    for (var index = 0, len = obj.length; index < len; index++) {
+      if (val === obj[index]) {
+        return index
+      }
+    }
+  }
+
   /**
     * 返回对象第一个索引值
     *
@@ -677,13 +688,19 @@
     * @param {Object} val 值
     * @return {Number}
     */
-  var indexOf = createIndexOf('indexOf', function (obj, val) {
-    for (var index = 0, len = obj.length; index < len; index++) {
-      if (val === obj[index]) {
-        return index
+  var indexOf = createIndexOf('indexOf', arrayIndexOf)
+
+  function arrayLastIndexOf (obj, val) {
+    if (obj.lastIndexOf) {
+      return obj.lastIndexOf(val)
+    }
+    for (var len = obj.length - 1; len >= 0; len--) {
+      if (val === obj[len]) {
+        return len
       }
     }
-  })
+    return -1
+  }
 
   /**
     * 从最后开始的索引值,返回对象第一个索引值
@@ -692,14 +709,7 @@
     * @param {Object} val 值
     * @return {Number}
     */
-  var lastIndexOf = createIndexOf('lastIndexOf', function (obj, val) {
-    for (var len = obj.length - 1; len >= 0; len--) {
-      if (val === obj[len]) {
-        return len
-      }
-    }
-    return -1
-  })
+  var lastIndexOf = createIndexOf('lastIndexOf', arrayLastIndexOf)
 
   function createiterateIndexOf (callback) {
     return function (obj, iterate, context) {
@@ -1550,7 +1560,9 @@
     getSize: getSize,
     slice: arraySlice,
     indexOf: indexOf,
+    arrayIndexOf: arrayIndexOf,
     lastIndexOf: lastIndexOf,
+    arrayLastIndexOf: arrayLastIndexOf,
     findIndexOf: findIndexOf,
     findLastIndexOf: findLastIndexOf,
     includes: includes,
