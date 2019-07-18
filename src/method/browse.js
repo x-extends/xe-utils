@@ -47,6 +47,7 @@ function browse () {
     }
     baseExports.assign(result, {
       edge: isEdge,
+      firefox: isBrowseType('Firefox'),
       msie: !isEdge && result['-ms'],
       safari: !isChrome && !isEdge && isBrowseType('Safari'),
       isMobile: isMobile,

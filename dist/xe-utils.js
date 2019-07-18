@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.9.6
+ * xe-utils.js v1.9.7
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2269,6 +2269,7 @@
       paths = path.concat(['' + index])
       iterate.call(context, item, index, obj, paths, parent)
       if (item && parseChildren) {
+        paths.push(parseChildren)
         eachTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
       }
     })
@@ -2446,6 +2447,7 @@
       }
       baseExports.assign(result, {
         edge: isEdge,
+        firefox: isBrowseType('Firefox'),
         msie: !isEdge && result['-ms'],
         safari: !isChrome && !isEdge && isBrowseType('Safari'),
         isMobile: isMobile,

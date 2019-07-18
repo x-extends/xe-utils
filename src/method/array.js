@@ -664,6 +664,7 @@ function eachTreeItem (parent, obj, iterate, context, path, parseChildren, opts)
     paths = path.concat(['' + index])
     iterate.call(context, item, index, obj, paths, parent)
     if (item && parseChildren) {
+      paths.push(parseChildren)
       eachTreeItem(item, item[parseChildren], iterate, context, paths, parseChildren, opts)
     }
   })
