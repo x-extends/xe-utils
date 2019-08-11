@@ -489,6 +489,9 @@ function defaultCompare (v1, v2) {
 }
 
 function equalCompare (val1, val2, compare, func, key, obj1, obj2) {
+  if (val1 === val2) {
+    return true
+  }
   if (val1 && val2 && !isNumber(val1) && !isNumber(val2) && !isString(val1) && !isString(val2)) {
     if (isRegExp(val1)) {
       return compare('' + val1, '' + val2, key, obj1, obj2)

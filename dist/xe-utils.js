@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v1.9.7
+ * xe-utils.js v1.9.8
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -520,6 +520,9 @@
   }
 
   function equalCompare (val1, val2, compare, func, key, obj1, obj2) {
+    if (val1 === val2) {
+      return true
+    }
     if (val1 && val2 && !isNumber(val1) && !isNumber(val2) && !isString(val1) && !isString(val2)) {
       if (isRegExp(val1)) {
         return compare('' + val1, '' + val2, key, obj1, obj2)
