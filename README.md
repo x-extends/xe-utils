@@ -47,4 +47,4 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 
 ## License
 
-Copyright (c) 2017-present, Xu Liangzhan
+MIT License, 2017-present, Xu Liangzhan
