@@ -19,7 +19,7 @@ function deepGetObj (obj, path) {
  * @param {...Object} arguments
  * @return {Array}
  */
-function invokeMap (list, path) {
+function invoke (list, path) {
   var func
   var args = arguments
   var params = []
@@ -47,4 +47,4 @@ function invokeMap (list, path) {
   })
 }
 
-module.exports = invokeMap
+module.exports = invoke

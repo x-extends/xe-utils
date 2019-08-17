@@ -661,7 +661,7 @@
    * @param {...Object} arguments
    * @return {Array}
    */
-  function invokeMap (list, path) {
+  function invoke (list, path) {
     var func
     var args = arguments
     var params = []
@@ -1004,7 +1004,7 @@
     toArray: toArray,
     includeArrays: includeArrays,
     pluck: pluck,
-    invokeMap: invokeMap,
+    invoke: invoke,
     arrayEach: arrayEach,
     lastArrayEach: lastArrayEach,
     toArrayTree: toArrayTree,
