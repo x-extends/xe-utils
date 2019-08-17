@@ -56,17 +56,14 @@ export default {
             {
               name: 'isNaN',
               args: 'val',
-              title: '判断是否非数值',
+              title: '判断是否非数值，如果 value 是一个 NaN，那么返回 true，否则返回 false',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.isNaN(undefined) // true
-                XEUtils.isNaN({}) // true
-                XEUtils.isNaN('num') // true
-                XEUtils.isNaN(true) // false
-                XEUtils.isNaN(null) // false
-                XEUtils.isNaN('') // false
+                isNaN(undefined) // true
+                XEUtils.isNaN(undefined) // false
+                XEUtils.isNaN(NaN) // true
                 `
               ]
             },

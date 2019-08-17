@@ -1,0 +1,42 @@
+var staticEncodeURIComponent = require('../static/staticEncodeURIComponent')
+
+var each = require('../base/each')
+var isArray = require('../base/isArray')
+var isPlainObject = require('../base/isPlainObject')
+
+function stringifyParams (resultVal, resultKey, isArr) {
+  var _arr
+  var result = []
+  each(resultVal, function (item, key) {
+    _arr = isArray(item)
+    if (isPlainObject(item) || _arr) {
+      result = result.concat(stringifyParams(item, resultKey + '[' + key + ']', _arr))
+    } else {
+      result.push(staticEncodeURIComponent(resultKey + '[' + (isArr ? '' : key) + ']') + '=' + staticEncodeURIComponent(item === null ? '' : item))
+    }
+  })
+  return result
+}
+
+/**
+ * 查询参数序列化
+ *
+ * @param {Object} query 序列化的对象
+ */
+function serialize (query) {
+  var _arr
+  var params = []
+  each(query, function (item, key) {
+    if (item !== undefined) {
+      _arr = isArray(item)
+      if (isPlainObject(item) || _arr) {
+        params = params.concat(stringifyParams(item, key, _arr))
+      } else {
+        params.push(staticEncodeURIComponent(key) + '=' + staticEncodeURIComponent(item === null ? '' : item))
+      }
+    }
+  })
+  return params.join('&').replace(/%20/g, '+')
+}
+
+module.exports = serialize

@@ -15,6 +15,9 @@ describe('String functions', () => {
       XEUtils.trim(0)
     ).toEqual('0')
     expect(
+      XEUtils.trim(-1)
+    ).toEqual('-1')
+    expect(
       XEUtils.trim([])
     ).toEqual('')
     expect(
@@ -38,6 +41,9 @@ describe('String functions', () => {
     expect(
       XEUtils.trimLeft(0)
     ).toEqual('0')
+    expect(
+      XEUtils.trimLeft(-1)
+    ).toEqual('-1')
     expect(
       XEUtils.trimLeft([])
     ).toEqual('')
@@ -63,6 +69,9 @@ describe('String functions', () => {
       XEUtils.trimRight(0)
     ).toEqual('0')
     expect(
+      XEUtils.trimRight(-1)
+    ).toEqual('-1')
+    expect(
       XEUtils.trimRight([])
     ).toEqual('')
     expect(
@@ -86,6 +95,9 @@ describe('String functions', () => {
     expect(
       XEUtils.escape(0)
     ).toEqual('0')
+    expect(
+      XEUtils.escape(-1)
+    ).toEqual('-1')
     expect(
       XEUtils.escape([])
     ).toEqual('')
@@ -111,6 +123,9 @@ describe('String functions', () => {
       XEUtils.unescape(0)
     ).toEqual('0')
     expect(
+      XEUtils.unescape(-1)
+    ).toEqual('-1')
+    expect(
       XEUtils.unescape([])
     ).toEqual('')
     expect(
@@ -135,6 +150,9 @@ describe('String functions', () => {
       XEUtils.camelCase(0)
     ).toEqual('0')
     expect(
+      XEUtils.camelCase(-1)
+    ).toEqual('-1')
+    expect(
       XEUtils.camelCase([])
     ).toEqual('')
     expect(
@@ -155,6 +173,9 @@ describe('String functions', () => {
     expect(
       XEUtils.kebabCase(0)
     ).toEqual('0')
+    expect(
+      XEUtils.kebabCase(-1)
+    ).toEqual('-1')
     expect(
       XEUtils.kebabCase([])
     ).toEqual('')
@@ -303,14 +324,86 @@ describe('String functions', () => {
 
   test('startsWith()', () => {
     expect(
+      XEUtils.startsWith()
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith('')
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith('abc')
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith('abc', null)
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith('abc', -1)
+    ).toEqual(false)
+    expect(
       XEUtils.startsWith('abc', 'b')
     ).toEqual(false)
+    expect(
+      XEUtils.startsWith('abc', 'b', 2)
+    ).toEqual(false)
+    expect(
+      XEUtils.startsWith('abc', 'a')
+    ).toEqual(true)
+    expect(
+      XEUtils.startsWith('abc', 'b', 1)
+    ).toEqual(true)
   })
 
   test('endsWith()', () => {
     expect(
-      XEUtils.endsWith('abc', 5, 'a')
+      XEUtils.endsWith()
     ).toEqual(false)
+    expect(
+      XEUtils.endsWith(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith('')
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith('abc')
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith('abc', null)
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith('abc', -1)
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith('abc', 'a')
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith('abc', 'c', 2)
+    ).toEqual(false)
+    expect(
+      XEUtils.endsWith('abc', 'c')
+    ).toEqual(true)
+    expect(
+      XEUtils.endsWith('abc', 'b', 2)
+    ).toEqual(true)
   })
 
   test('template()', () => {
@@ -326,6 +419,9 @@ describe('String functions', () => {
     expect(
       XEUtils.template(0)
     ).toEqual('0')
+    expect(
+      XEUtils.template(-1)
+    ).toEqual('-1')
     expect(
       XEUtils.template([])
     ).toEqual('')

@@ -39,6 +39,7 @@ describe('location functions', () => {
       XEUtils.serialize({ id: 123, name: undefined })
     ).toEqual('id=123')
   })
+
   test('unserialize()', () => {
     expect(
       XEUtils.unserialize()
@@ -77,6 +78,7 @@ describe('location functions', () => {
       XEUtils.unserialize('id=123&name=')
     ).toEqual({ id: '123', name: '' })
   })
+
   test('parseUrl()', () => {
     expect(
       XEUtils.parseUrl('http://xuliangzhan.com')

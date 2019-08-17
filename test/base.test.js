@@ -4,9 +4,15 @@ describe('Base functions', () => {
   test('isNaN()', () => {
     expect(
       XEUtils.isNaN()
-    ).toEqual(true)
+    ).toEqual(false)
     expect(
       XEUtils.isNaN(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNaN(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.isNaN(1)
     ).toEqual(false)
     expect(
       XEUtils.isNaN(null)
@@ -28,21 +34,24 @@ describe('Base functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.isNaN(undefined)
-    ).toEqual(true)
+    ).toEqual(false)
     expect(
       XEUtils.isNaN({})
-    ).toEqual(true)
+    ).toEqual(false)
     expect(
       XEUtils.isNaN('null')
-    ).toEqual(true)
+    ).toEqual(false)
     expect(
       XEUtils.isNaN('NAN')
-    ).toEqual(true)
+    ).toEqual(false)
     expect(
       XEUtils.isNaN(/\d/)
-    ).toEqual(true)
+    ).toEqual(false)
     expect(
       XEUtils.isNaN(function () {})
+    ).toEqual(false)
+    expect(
+      XEUtils.isNaN(NaN)
     ).toEqual(true)
   })
 
@@ -1392,6 +1401,9 @@ describe('Base functions', () => {
 
   test('getSize()', () => {
     expect(
+      XEUtils.getSize()
+    ).toEqual(0)
+    expect(
       XEUtils.getSize(null)
     ).toEqual(0)
     expect(
@@ -1426,40 +1438,25 @@ describe('Base functions', () => {
     ).toEqual(2)
   })
 
-  test('slice()', () => {
-    expect(
-      XEUtils.slice(-0)
-    ).toEqual([])
-    expect(
-      XEUtils.slice(123)
-    ).toEqual([])
-    expect(
-      XEUtils.slice(false)
-    ).toEqual([])
-    expect(
-      XEUtils.slice({})
-    ).toEqual([])
-    expect(
-      XEUtils.slice([])
-    ).toEqual([])
-    expect(
-      XEUtils.slice([11, 22])
-    ).toEqual([11, 22])
-    expect(
-      XEUtils.slice([11, 22, 33, 44], 1)
-    ).toEqual([22, 33, 44])
-    expect(
-      XEUtils.slice([11, 22, 33, 44], 1, 3)
-    ).toEqual([22, 33])
-    let method = function () {
-      expect(
-        XEUtils.slice(arguments, 1, 3)
-      ).toEqual([22, 33])
-    }
-    method(11, 22, 33, 44)
-  })
-
   test('indexOf()', () => {
+    expect(
+      XEUtils.indexOf()
+    ).toEqual(-1)
+    expect(
+      XEUtils.indexOf(null)
+    ).toEqual(-1)
+    expect(
+      XEUtils.indexOf(undefined)
+    ).toEqual(-1)
+    expect(
+      XEUtils.indexOf([])
+    ).toEqual(-1)
+    expect(
+      XEUtils.indexOf({})
+    ).toEqual(-1)
+    expect(
+      XEUtils.indexOf(function () {})
+    ).toEqual(-1)
     expect(
       XEUtils.indexOf([11, 22, 33, 22])
     ).toEqual(-1)
@@ -1595,25 +1592,6 @@ describe('Base functions', () => {
     expect(
       XEUtils.includes([11, 22], 22)
     ).toEqual(true)
-  })
-
-  test('assign()', () => {
-    let obj1 = { bb: { b: 11 } }
-    let obj2 = XEUtils.assign(obj1, { a: 11 })
-    expect(
-      obj1.bb === obj2.bb
-    ).toEqual(true)
-    expect(
-      obj1.bb === obj2.bb
-    ).toEqual(true)
-    obj1 = { bb: { b: 11 } }
-    obj2 = XEUtils.extend(true, obj1, { a: 11 })
-    expect(
-      obj1 === obj2
-    ).toEqual(false)
-    expect(
-      obj1.bb === obj2.bb
-    ).toEqual(false)
   })
 
   test('toString()', () => {
@@ -1789,11 +1767,11 @@ describe('Base functions', () => {
 
   test('pick()', () => {
     expect(
-      XEUtils.pick({ name: 'test11', age: 25, height: 176 }, 'name', 'height')
-    ).toEqual({ name: 'test11', height: 176 })
+      XEUtils.pick({ name: 'test11', age: 25, height: 176 }, 'name')
+    ).toEqual({ name: 'test11' })
     expect(
-      XEUtils.pick({ name: 'test11', age: 25, height: 176 }, ['name', 'age'])
-    ).toEqual({ name: 'test11', age: 25 })
+      XEUtils.pick({ name: 'test11', age: 25, height: 176 }, ['age'])
+    ).toEqual({ age: 25 })
     expect(
       XEUtils.pick({ name: 'test11', age: 25, height: 176 }, val => XEUtils.isNumber(val))
     ).toEqual({ age: 25, height: 176 })
@@ -2147,18 +2125,6 @@ describe('Base functions', () => {
     ).toEqual({ a: 2, b: 1 })
   })
 
-  test('objectMap()', () => {
-    expect(
-      XEUtils.objectMap({ a: { type: 'a' }, b: { type: 'b' } }, item => item.type)
-    ).toEqual({ a: 'a', b: 'b' })
-    expect(
-      XEUtils.objectMap([{ type: 'a' }, { type: 'b' }], item => item.type)
-    ).toEqual({ 0: 'a', 1: 'b' })
-    expect(
-      XEUtils.objectMap([11, 22, 33], item => item)
-    ).toEqual({ 0: 11, 1: 22, 2: 33 })
-  })
-
   test('clone()', () => {
     let v1 = { a: 11, b: { b1: 22 } }
     let v2 = XEUtils.clone(v1)
@@ -2169,71 +2135,6 @@ describe('Base functions', () => {
     expect(
       v1.b === v3.b
     ).toEqual(false)
-  })
-
-  test('delay()', done => {
-    XEUtils.delay(function (name) {
-      expect(
-        name
-      ).toEqual('test11')
-      done()
-    }, 300, 'test11')
-  })
-
-  test('bind()', () => {
-    let rest = XEUtils.bind(function (val) {
-      return this.name + ' = ' + val
-    }, { name: 'test' })
-    expect(
-      rest(222)
-    ).toEqual('test = 222')
-    expect(
-      rest(333)
-    ).toEqual('test = 333')
-  })
-
-  test('once()', () => {
-    let rest = XEUtils.once(function (val) {
-      return this.name + ' = ' + val
-    }, { name: 'test' })
-    expect(
-      rest(222)
-    ).toEqual('test = 222')
-    expect(
-      rest(333)
-    ).toEqual('test = 222')
-  })
-
-  test('after()', done => {
-    function getJSON (url, complete) {
-      setTimeout(function () {
-        complete({ data: url })
-      }, 200)
-    }
-    let finish = XEUtils.after(3, function (rests) {
-      expect(
-        rests
-      ).toEqual([{ data: '/api/list1' }, { data: '/api/list2' }, { data: '/api/list3' }])
-      done()
-    })
-    getJSON('/api/list1', finish)
-    getJSON('/api/list2', finish)
-    getJSON('/api/list3', finish)
-  })
-
-  test('before()', done => {
-    let meeting = XEUtils.before(4, function (rests, val) {
-      if (val === 222) {
-        expect(
-          rests
-        ).toEqual([111, 222])
-        done()
-      }
-    })
-    meeting(111)
-    meeting(222)
-    meeting(333)
-    meeting(444)
   })
 
   test('clear()', () => {

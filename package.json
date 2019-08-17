@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "1.9.8",
+  "version": "2.0.0-beta.1",
   "description": "A JavaScript tools library.",
   "main": "index.js",
   "unpkg": "dist/xe-utils.js",
@@ -9,12 +9,12 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "eslint dist/xe-utils.js test/**/*.js src/**/*.js",
+    "lint": "eslint dist/xe-utils.js test/**/*.js methods/**/*.js",
     "unit": "jest",
     "test": "npm run lint && npm run unit"
   },
   "files": [
-    "src",
+    "methods",
     "types",
     "dist"
   ],

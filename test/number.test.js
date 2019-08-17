@@ -31,7 +31,7 @@ describe('Number functions', () => {
   test('min()', () => {
     expect(
       XEUtils.min([22, null, 77, 11])
-    ).toEqual(null)
+    ).toEqual(11)
     expect(
       XEUtils.min([22, 66, 77, 11])
     ).toEqual(11)
@@ -39,7 +39,7 @@ describe('Number functions', () => {
       XEUtils.min([{ a: 11 }, { a: 44 }], 'a')
     ).toEqual({ a: 11 })
     expect(
-      XEUtils.min([{ a: 11 }, { a: 44 }], item => item.a)
+      XEUtils.min([{ a: 33 }, { a: 11 }, { a: 44 }], item => item.a)
     ).toEqual({ a: 11 })
   })
 
@@ -54,7 +54,7 @@ describe('Number functions', () => {
       XEUtils.max([{ a: 11 }, { a: 44 }], 'a')
     ).toEqual({ a: 44 })
     expect(
-      XEUtils.max([{ a: 11 }, { a: 44 }], item => item.a)
+      XEUtils.max([{ a: 33 }, { a: 11 }, { a: 44 }], item => item.a)
     ).toEqual({ a: 44 })
   })
 
