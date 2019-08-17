@@ -10,10 +10,10 @@
         </div>
       </div>
       <ul>
-        <li class="menu-item" v-for="(group, gIndex) in apiList" :key="gIndex">
+        <li class="menu-item" v-for="group in apiList" :key="group.id">
           <a class="menu-link" @click="group.expand = !group.expand">{{ group.label }}</a>
           <ul class="child-menu" v-show="group.expand">
-            <li class="menu-item" v-for="(item, index) in group.children" :key="index" :class="{active: selected === item}">
+            <li class="menu-item" v-for="item in group.children" :key="item.id" :class="{active: selected === item}">
               <a class="menu-link" @click="menuLinkEvent(item)" v-html="item.name"></a>
             </li>
           </ul>
@@ -21,8 +21,8 @@
       </ul>
     </div>
     <div class="body">
-      <div v-for="group in apiList" :key="group.value">
-        <div class="api-item" v-for="item in group.children" :key="item.name">
+      <div v-for="group in apiList" :key="group.id">
+        <div class="api-item" v-for="item in group.children" :key="item.id">
           <p class="title" :id="item.name" v-html="`${item.name } (${ item.args }) ${ item.title}`"></p>
           <p class="desc" v-html="item.desc"></p>
           <table class="param-table" border="0" v-if="item.params && item.params.length">
@@ -2881,6 +2881,10 @@ export default {
     }
   },
   created () {
+    let id = 1
+    window.XEUtils.eachTree(this.apiList, item => {
+      item.id = id++
+    })
     this.selected = this.apiList[0].children[0]
   },
   mounted () {
