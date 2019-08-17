@@ -1039,30 +1039,30 @@ describe('Array functions', () => {
     ).toEqual([22, 55])
   })
 
-  test('invokeMap()', () => {
+  test('invoke()', () => {
     expect(
-      XEUtils.invokeMap()
+      XEUtils.invoke()
     ).toEqual([])
     expect(
-      XEUtils.invokeMap(null)
+      XEUtils.invoke(null)
     ).toEqual([])
     expect(
-      XEUtils.invokeMap(undefined)
+      XEUtils.invoke(undefined)
     ).toEqual([])
     expect(
-      XEUtils.invokeMap(-1)
+      XEUtils.invoke(-1)
     ).toEqual([])
     expect(
-      XEUtils.invokeMap(0)
+      XEUtils.invoke(0)
     ).toEqual([])
     expect(
-      XEUtils.invokeMap([])
+      XEUtils.invoke([])
     ).toEqual([])
     expect(
-      XEUtils.invokeMap({})
+      XEUtils.invoke({})
     ).toEqual([])
     expect(
-      XEUtils.invokeMap([
+      XEUtils.invoke([
         [3, 1, 6, 7],
         [3, 2, 1, 8],
         [3, 2, 5, 9, 6],
@@ -1075,13 +1075,13 @@ describe('Array functions', () => {
       [1, 2, 3, 3]
     ])
     expect(
-      XEUtils.invokeMap(['123', '456'], 'split')
+      XEUtils.invoke(['123', '456'], 'split')
     ).toEqual([['123'], ['456']])
     expect(
-      XEUtils.invokeMap([123, 456], String.prototype.split, '')
+      XEUtils.invoke([123, 456], String.prototype.split, '')
     ).toEqual([['1', '2', '3'], ['4', '5', '6']])
     expect(
-      XEUtils.invokeMap([{ a: { b: [2, 0, 1] } }, { a: { b: [2, 1] } }, { a: { b: [4, 8, 1] } }], ['a', 'b', 'sort'])
+      XEUtils.invoke([{ a: { b: [2, 0, 1] } }, { a: { b: [2, 1] } }, { a: { b: [4, 8, 1] } }], ['a', 'b', 'sort'])
     ).toEqual([[0, 1, 2], [1, 2], [1, 4, 8]])
   })
 
