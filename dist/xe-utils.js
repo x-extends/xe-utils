@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.0.0-beta.1
+ * xe-utils.js v2.0.0-beta.2
  * (c) 2017-2018 Xu Liangzhan
  * ISC License.
  * @preserve
@@ -150,6 +150,7 @@
   }
 
   var objectExports = {
+    extend: assign,
     assign: assign,
     objectMap: objectMap,
     objectEach: objectEach,
@@ -1010,6 +1011,7 @@
     includeArrays: includeArrays,
     pluck: pluck,
     invoke: invoke,
+    invokeMap: invoke,
     arrayEach: arrayEach,
     lastArrayEach: lastArrayEach,
     toArrayTree: toArrayTree,

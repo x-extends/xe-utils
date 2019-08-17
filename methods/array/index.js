@@ -63,6 +63,7 @@ var arrayExports = {
   includeArrays: includeArrays,
   pluck: pluck,
   invoke: invoke,
+  invokeMap: invoke,
   arrayEach: arrayEach,
   lastArrayEach: lastArrayEach,
   toArrayTree: toArrayTree,

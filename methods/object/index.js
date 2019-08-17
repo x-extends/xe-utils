@@ -4,6 +4,7 @@ var lastObjectEach = require('./lastObjectEach')
 var objectMap = require('./objectMap')
 
 var objectExports = {
+  extend: assign,
   assign: assign,
   objectMap: objectMap,
   objectEach: objectEach,
