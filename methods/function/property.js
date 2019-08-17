@@ -1,3 +1,5 @@
+var isNull = require('../base/isNull')
+
 /**
  * 返回一个获取对象属性的函数
  *
@@ -6,7 +8,7 @@
  */
 function property (name, defs) {
   return function (obj) {
-    return obj === null ? defs : obj[name]
+    return isNull(obj) ? defs : obj[name]
   }
 }
 

@@ -11,6 +11,8 @@ var isLeapYear = require('./isLeapYear')
 var isDate = require('./isDate')
 var eqNull = require('./eqNull')
 var each = require('./each')
+var forOf = require('./forOf')
+var lastForOf = require('./lastForOf')
 var indexOf = require('./indexOf')
 var lastIndexOf = require('./lastIndexOf')
 var keys = require('./keys')
@@ -113,6 +115,8 @@ var baseExports = {
   first: first,
   last: last,
   each: each,
+  forOf: forOf,
+  lastForOf: lastForOf,
   lastEach: lastEach,
   has: has,
   get: get,

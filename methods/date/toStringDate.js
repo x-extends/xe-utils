@@ -1,5 +1,7 @@
 var setupDefaults = require('../setupDefaults')
 
+var staticParseInt = require('../static/staticParseInt')
+
 var helperGetUTCDateTime = require('./helperGetUTCDateTime')
 var helperGetDateTime = require('./helperGetDateTime')
 
@@ -32,7 +34,7 @@ function toStringDate (str, format) {
   if (str) {
     dateType = isDate(str)
     if (dateType || /^[0-9]{11,13}$/.test(str)) {
-      rest = new Date(dateType ? helperGetDateTime(str) : Number(str))
+      rest = new Date(dateType ? helperGetDateTime(str) : staticParseInt(str))
     } else if (isString(str)) {
       format = format || setupDefaults.formatDate
       arrayEach(dateFormatRules, function (item) {
@@ -61,7 +63,7 @@ function toStringDate (str, format) {
           // 如果指定时区，时区转换
           tempMatch = zStr.match(/([-+]{1})(\d{2}):?(\d{2})/)
           if (tempMatch) {
-            rest = new Date(helperGetUTCDateTime(dates) - (tempMatch[1] === '-' ? -1 : 1) * parseInt(tempMatch[2]) * 3600000 + parseInt(tempMatch[3]) * 60000)
+            rest = new Date(helperGetUTCDateTime(dates) - (tempMatch[1] === '-' ? -1 : 1) * staticParseInt(tempMatch[2]) * 3600000 + staticParseInt(tempMatch[3]) * 60000)
           }
         }
       } else {

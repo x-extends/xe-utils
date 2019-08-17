@@ -13,7 +13,6 @@ var toNumber = require('../number/toNumber')
   */
 function sum (array, iterate, context) {
   var result = 0
-  context = context || this
   each(array, iterate ? isFunction(iterate) ? function () {
     result += toNumber(iterate.apply(context, arguments))
   } : function (val) {

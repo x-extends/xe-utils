@@ -22,7 +22,6 @@ function groupBy (obj, iterate, context) {
   var groupKey
   var result = {}
   if (obj) {
-    context = this || context
     if (iterate && isObject(iterate)) {
       iterate = createiterateEmpty(iterate)
     } else if (!isFunction(iterate)) {

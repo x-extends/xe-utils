@@ -10,14 +10,14 @@ var slice = require('../array/slice')
 function after (count, callback, context) {
   var runCount = 0
   var rests = []
-  context = context || this
   return function () {
+    var args = arguments
     runCount++
     if (runCount <= count) {
-      rests.push(arguments[0])
+      rests.push(args[0])
     }
     if (runCount >= count) {
-      callback.apply(context, [rests].concat(slice(arguments)))
+      callback.apply(context, [rests].concat(slice(args)))
     }
   }
 }

@@ -6,7 +6,6 @@ var hasOwnProp = require('./hasOwnProp')
 function helperCreateiterateIndexOf (callback) {
   return function (obj, iterate, context) {
     if (obj && isFunction(iterate)) {
-      context = this || context
       if (isArray(obj) || isString(obj)) {
         return callback(obj, iterate, context)
       }

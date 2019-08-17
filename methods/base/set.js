@@ -1,3 +1,5 @@
+var staticParseInt = require('../static/staticParseInt')
+
 var helperGetHGSKeys = require('./helperGetHGSKeys')
 
 var hasOwnProp = require('./hasOwnProp')
@@ -14,7 +16,7 @@ function valSet (obj, key, isSet, value) {
     var matchs = key ? key.match(sKeyRE) : null
     var rest = isSet ? value : {}
     if (matchs) {
-      index = parseInt(matchs[2])
+      index = staticParseInt(matchs[2])
       if (obj[matchs[1]]) {
         obj[matchs[1]][index] = rest
       } else {

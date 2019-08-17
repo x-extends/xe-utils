@@ -1,5 +1,5 @@
 var repeat = require('./repeat')
-var toString = require('./toString')
+var toValString = require('./toValString')
 
 /**
   * 用指定字符从后面开始补全字符串
@@ -10,7 +10,7 @@ var toString = require('./toString')
   * @return {String}
   */
 function padEnd (str, targetLength, padString, UNDEFINED) {
-  var rest = toString(str)
+  var rest = toValString(str)
   targetLength = targetLength >> 0
   padString = padString === UNDEFINED ? ' ' : '' + padString
   if (rest.padEnd) {

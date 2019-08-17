@@ -1,3 +1,6 @@
+var staticSetTimeout = require('../static/staticSetTimeout')
+var staticClearTimeout = require('../static/staticClearTimeout')
+
 /**
   * 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数
   *
@@ -16,7 +19,7 @@ function throttle (callback, wait, options) {
   var runFn = function () {
     runFlag = true
     callback.apply(context, args)
-    timeout = setTimeout(endFn, wait)
+    timeout = staticSetTimeout(endFn, wait)
   }
   var endFn = function () {
     timeout = 0
@@ -26,7 +29,7 @@ function throttle (callback, wait, options) {
   }
   var cancelFn = function () {
     var rest = timeout !== 0
-    clearTimeout(timeout)
+    staticClearTimeout(timeout)
     runFlag = false
     timeout = 0
     return rest
@@ -39,7 +42,7 @@ function throttle (callback, wait, options) {
       if (optLeading === true) {
         runFn()
       } else if (optTrailing === true) {
-        timeout = setTimeout(endFn, wait)
+        timeout = staticSetTimeout(endFn, wait)
       }
     }
   }

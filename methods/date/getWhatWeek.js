@@ -1,5 +1,7 @@
 var staticDayTime = require('../static/staticDayTime')
 var staticWeekTime = require('../static/staticWeekTime')
+var staticParseInt = require('../static/staticParseInt')
+
 var helperGetDateTime = require('./helperGetDateTime')
 
 var toStringDate = require('./toStringDate')
@@ -18,7 +20,7 @@ function getWhatWeek (date, week, day) {
   var time, whatDayTime, currentDay, customDay
   date = toStringDate(date)
   if (isDate(date)) {
-    customDay = Number(/^[0-7]$/.test(day) ? day : date.getDay())
+    customDay = staticParseInt(/^[0-7]$/.test(day) ? day : date.getDay())
     currentDay = date.getDay()
     time = helperGetDateTime(date)
     whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * staticDayTime

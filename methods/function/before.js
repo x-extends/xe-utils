@@ -12,10 +12,11 @@ function before (count, callback, context) {
   var rests = []
   context = context || this
   return function () {
+    var args = arguments
     runCount++
     if (runCount < count) {
-      rests.push(arguments[0])
-      callback.apply(context, [rests].concat(slice(arguments)))
+      rests.push(args[0])
+      callback.apply(context, [rests].concat(slice(args)))
     }
   }
 }

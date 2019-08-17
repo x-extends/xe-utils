@@ -1,5 +1,4 @@
-/* eslint-disable valid-typeof */
-var staticStrUndefined = require('../static/staticStrUndefined')
+var staticWindow = require('../static/staticWindow')
 
 /**
   * 判断是否Window对象
@@ -7,9 +6,8 @@ var staticStrUndefined = require('../static/staticStrUndefined')
   * @param {Object} obj 对象
   * @return {Boolean}
   */
-var supportWindow = typeof window !== staticStrUndefined
 function isWindow (obj) {
-  return !!(obj && obj === obj.window && supportWindow)
+  return staticWindow && !!(obj && obj === obj.window)
 }
 
 module.exports = isWindow

@@ -6,6 +6,7 @@ var each = require('./each')
 var arrayEach = require('../array/arrayEach')
 var lastEach = require('./lastEach')
 var clear = require('./clear')
+var eqNull = require('./eqNull')
 
 function pluckProperty (name) {
   return function (obj, key) {
@@ -23,10 +24,9 @@ function pluckProperty (name) {
   */
 function remove (obj, iterate, context) {
   if (obj) {
-    if (arguments.length > 1) {
+    if (!eqNull(iterate)) {
       var removeKeys = []
       var rest = []
-      context = context || this
       if (!isFunction(iterate)) {
         iterate = pluckProperty(iterate)
       }

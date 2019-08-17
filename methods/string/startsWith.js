@@ -1,4 +1,4 @@
-var toString = require('../string/toString')
+var toValString = require('./toValString')
 
 /**
   * 判断字符串是否在源字符串的头部
@@ -9,7 +9,7 @@ var toString = require('../string/toString')
   * @return {String}
   */
 function startsWith (str, val, startIndex) {
-  var rest = toString(str)
+  var rest = toValString(str)
   return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
 }
 

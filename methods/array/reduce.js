@@ -12,7 +12,7 @@ function reduce (array, callback, initialValue) {
   if (array) {
     var len, reduceMethod
     var index = 0
-    var context = this
+    var context = null
     var previous = initialValue
     var isInitialVal = arguments.length > 2
     var keyList = keys(array)

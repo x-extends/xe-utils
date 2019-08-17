@@ -1,4 +1,4 @@
-var toString = require('./toString')
+var toValString = require('./toValString')
 
 /**
   * 将带字符串转成驼峰字符串,例如： project-name 转为 projectName
@@ -7,7 +7,7 @@ var toString = require('./toString')
   * @return {String}
   */
 function camelCase (str) {
-  return toString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
+  return toValString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
     return u.substring(1).toLocaleUpperCase()
   })
 }

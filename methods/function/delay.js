@@ -1,3 +1,5 @@
+var staticSetTimeout = require('../static/staticSetTimeout')
+
 var slice = require('../array/slice')
 
 /**
@@ -11,7 +13,7 @@ var slice = require('../array/slice')
 function delay (callback, wait) {
   var args = slice(arguments, 2)
   var context = this
-  return setTimeout(function () {
+  return staticSetTimeout(function () {
     callback.apply(context, args)
   }, wait)
 }

@@ -1,4 +1,4 @@
-var toString = require('./toString')
+var toValString = require('./toValString')
 
 var get = require('../base/get')
 
@@ -8,7 +8,7 @@ var get = require('../base/get')
  * @param {Object} obj 对象
  */
 function template (str, obj) {
-  var rest = toString(str)
+  var rest = toValString(str)
   if (rest && obj) {
     return rest.replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, keys) {
       return get(obj, keys)

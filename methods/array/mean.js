@@ -13,7 +13,7 @@ var getSize = require('../base/getSize')
   * @return {Number}
   */
 function mean (array, iterate, context) {
-  return toNumber(sum(array, iterate, context || this) / getSize(array))
+  return toNumber(sum(array, iterate, context) / getSize(array))
 }
 
 module.exports = mean

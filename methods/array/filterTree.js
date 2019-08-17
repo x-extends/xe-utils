@@ -12,7 +12,6 @@ var eachTree = require('./eachTree')
 function filterTree (obj, iterate, options, context) {
   var result = []
   if (obj && iterate) {
-    context = context || this
     eachTree(obj, function (item, index, items, path, parent) {
       if (iterate.call(context, item, index, items, path, parent)) {
         result.push(item)

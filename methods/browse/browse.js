@@ -1,5 +1,6 @@
 var staticStrUndefined = require('../static/staticStrUndefined')
 var staticDocument = require('../static/staticDocument')
+var staticWindow = require('../static/staticWindow')
 
 var assign = require('../object/assign')
 var arrayEach = require('../array/arrayEach')
@@ -33,7 +34,7 @@ function browse () {
     isPC: false,
     isDoc: !!staticDocument
   }
-  if (typeof window === staticStrUndefined && typeof process !== staticStrUndefined) {
+  if (!staticWindow && typeof process !== staticStrUndefined) {
     result.isNode = true
   } else {
     isEdge = isBrowseType('Edge')
@@ -52,8 +53,8 @@ function browse () {
       safari: !isChrome && !isEdge && isBrowseType('Safari'),
       isMobile: isMobile,
       isPC: !isMobile,
-      isLocalStorage: isBrowseStorage(window.localStorage),
-      isSessionStorage: isBrowseStorage(window.sessionStorage)
+      isLocalStorage: isBrowseStorage(staticWindow.localStorage),
+      isSessionStorage: isBrowseStorage(staticWindow.sessionStorage)
     })
   }
   return result

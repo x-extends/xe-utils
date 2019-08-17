@@ -1,3 +1,5 @@
+var staticParseInt = require('../static/staticParseInt')
+
 var helperCreateToNumber = require('./helperCreateToNumber')
 
 /**
@@ -6,6 +8,6 @@ var helperCreateToNumber = require('./helperCreateToNumber')
  *
  * @return {Number}
  */
-var toInteger = helperCreateToNumber(parseInt)
+var toInteger = helperCreateToNumber(staticParseInt)
 
 module.exports = toInteger

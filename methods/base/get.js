@@ -2,6 +2,8 @@ var staticHGKeyRE = require('../static/staticHGKeyRE')
 
 var helperGetHGSKeys = require('./helperGetHGSKeys')
 var hasOwnProp = require('./hasOwnProp')
+var isUndefined = require('./isUndefined')
+var eqNull = require('./eqNull')
 
 /**
  * 获取对象的属性的值，如果值为 undefined，则返回默认值
@@ -11,11 +13,11 @@ var hasOwnProp = require('./hasOwnProp')
  * @return {Object}
  */
 function get (obj, property, defaultValue) {
-  if (obj === null || obj === undefined) {
+  if (eqNull(obj)) {
     return defaultValue
   }
   var result = pathGet(obj, property)
-  return result === undefined ? defaultValue : result
+  return isUndefined(result) ? defaultValue : result
 }
 
 function valGet (obj, key) {
@@ -35,7 +37,7 @@ function pathGet (obj, property) {
       if (len) {
         for (rest = obj; index < len; index++) {
           rest = valGet(rest, props[index])
-          if (rest === undefined || rest === null) {
+          if (eqNull(rest)) {
             return
           }
         }

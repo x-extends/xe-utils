@@ -4,6 +4,8 @@ var map = require('./map')
 
 var isArray = require('../base/isArray')
 var isFunction = require('../base/isFunction')
+var isUndefined = require('../base/isUndefined')
+var isNull = require('../base/isNull')
 var get = require('../base/get')
 var property = require('../function/property')
 
@@ -13,11 +15,11 @@ var property = require('../function/property')
 
 // 支持中文、数字、字母排序 > null > undefined
 function sortByDef (v1, v2) {
-  if (v1 === undefined) {
+  if (isUndefined(v1)) {
     return 1
   }
-  if (v1 === null) {
-    return v2 === undefined ? -1 : 1
+  if (isNull(v1)) {
+    return isUndefined(v2) ? -1 : 1
   }
   return v1 && v1.localeCompare ? v1.localeCompare(v2) : (v1 > v2 ? 1 : -1)
 }
@@ -62,7 +64,7 @@ function sortBy (arr, iterate, context, STR_UNDEFINED) {
     var list = map(arr, function (item) {
       return { data: item }
     })
-    var sortPros = getSortPros(arr, list, iterate, context || this)
+    var sortPros = getSortPros(arr, list, iterate, context)
     var len = sortPros.length
     if (len) {
       while (len >= 0) {

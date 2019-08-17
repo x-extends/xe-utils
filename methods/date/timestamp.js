@@ -13,7 +13,7 @@ var isDate = require('../base/isDate')
  * @returns Number
  */
 var timestamp = function (str, format) {
-  if (arguments.length) {
+  if (str) {
     var date = toStringDate(str, format)
     return isDate(date) ? helperGetDateTime(date) : date
   }

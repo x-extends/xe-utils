@@ -1,4 +1,4 @@
-var toString = require('./toString')
+var toValString = require('./toValString')
 
 /**
   * 判断字符串是否在源字符串的尾部
@@ -9,7 +9,7 @@ var toString = require('./toString')
   * @return {String}
   */
 function endsWith (str, val, startIndex) {
-  var rest = toString(str)
+  var rest = toValString(str)
   var argsLen = arguments.length
   return argsLen > 1 && (argsLen > 2 ? rest.substring(0, startIndex).indexOf(val) === startIndex - 1 : rest.indexOf(val) === rest.length - 1)
 }

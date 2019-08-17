@@ -6,9 +6,6 @@ var setupDefaults = require('./setupDefaults')
 
 var assign = require('./object/assign')
 
-var each = require('./base/each')
-var isFunction = require('./base/isFunction')
-
 var baseExports = require('./base')
 var arrayExports = require('./array')
 var objectExports = require('./object')
@@ -38,14 +35,7 @@ assign(
 function XEUtils () {}
 
 function mixin (methods) {
-  each(methods, function (func, name) {
-    XEUtils[name] = isFunction(func) && func._c !== false ? function () {
-      var result = func.apply(XEUtils.$context, arguments)
-      XEUtils.$context = null
-      return result
-    } : func
-  })
-  return XEUtils
+  return assign(XEUtils, methods)
 }
 
 function setup (options) {

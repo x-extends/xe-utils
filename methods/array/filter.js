@@ -11,7 +11,6 @@ var each = require('../base/each')
 function filter (obj, iterate, context) {
   var result = []
   if (obj && iterate) {
-    context = context || this
     if (obj.filter) {
       return obj.filter(iterate, context)
     }

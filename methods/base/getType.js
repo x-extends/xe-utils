@@ -3,6 +3,7 @@ var isDate = require('./isDate')
 var isArray = require('./isArray')
 var isRegExp = require('./isRegExp')
 var isError = require('./isError')
+var isNull = require('./isNull')
 
 /**
   * 获取对象类型
@@ -11,8 +12,8 @@ var isError = require('./isError')
   * @return {String}
   */
 function getType (obj) {
-  if (obj === null) {
-    return '' + obj
+  if (isNull(obj)) {
+    return 'null'
   }
   if (isSymbol(obj)) {
     return 'symbol'

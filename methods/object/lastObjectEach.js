@@ -3,7 +3,7 @@ var keys = require('../base/keys')
 
 function lastObjectEach (obj, iterate, context) {
   lastArrayEach(keys(obj), function (key) {
-    iterate.call(context || this, obj[key], key, obj)
+    iterate.call(context, obj[key], key, obj)
   })
 }
 

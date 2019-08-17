@@ -1,7 +1,7 @@
 var eqNull = require('../base/eqNull')
 
-function toString (obj) {
+function toValString (obj) {
   return '' + (eqNull(obj) ? '' : obj)
 }
 
-module.exports = toString
+module.exports = toValString

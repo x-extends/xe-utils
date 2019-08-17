@@ -10,7 +10,6 @@ var slice = require('../array/slice')
   */
 function bind (callback, context) {
   var args = slice(arguments, 2)
-  context = context || this
   return function () {
     return callback.apply(context, slice(arguments).concat(args))
   }

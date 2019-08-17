@@ -14,7 +14,6 @@ function objectMap (obj, iterate, context) {
   var result = {}
   if (obj) {
     if (iterate) {
-      context = context || this
       if (!isFunction(iterate)) {
         iterate = property(iterate)
       }

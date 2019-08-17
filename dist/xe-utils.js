@@ -31,23 +31,34 @@
     ]
   }
 
+  var staticStrUndefined = 'undefined'
+
+  var staticStrLast = 'last'
+
+  var staticStrFirst = 'first'
+
   var staticDayTime = 86400000
 
   var staticWeekTime = staticDayTime * 7
 
-  var staticStrUndefined = 'undefined'
+  /* eslint-disable valid-typeof */
+  var staticLocation = typeof location === staticStrUndefined ? 0 : location
 
-  var staticLocation = typeof location === 'undefined' ? 0 : location
+  /* eslint-disable valid-typeof */
+  var staticWindow = typeof window === staticStrUndefined ? 0 : window
 
-  var staticDocument = typeof document === 'undefined' ? 0 : document
+  /* eslint-disable valid-typeof */
+  var staticDocument = typeof document === staticStrUndefined ? 0 : document
 
   var staticEncodeURIComponent = encodeURIComponent
 
   var staticDecodeURIComponent = decodeURIComponent
 
-  var staticStrLast = 'last'
+  var staticSetTimeout = setTimeout
 
-  var staticStrFirst = 'first'
+  var staticClearTimeout = clearTimeout
+
+  var staticParseInt = parseInt
 
   var staticEscapeMap = {
     '&': '&amp;',
@@ -109,7 +120,6 @@
     var result = {}
     if (obj) {
       if (iterate) {
-        context = context || this
         if (!isFunction(iterate)) {
           iterate = property(iterate)
         }
@@ -127,7 +137,7 @@
     if (obj) {
       for (var key in obj) {
         if (hasOwnProp(obj, key)) {
-          iterate.call(context || this, obj[key], key, obj)
+          iterate.call(context, obj[key], key, obj)
         }
       }
     }
@@ -135,13 +145,13 @@
 
   function lastObjectEach (obj, iterate, context) {
     lastArrayEach(keys(obj), function (key) {
-      iterate.call(context || this, obj[key], key, obj)
+      iterate.call(context, obj[key], key, obj)
     })
   }
 
   var objectExports = {
     assign: assign,
-    objectMap,
+    objectMap: objectMap,
     objectEach: objectEach,
     lastObjectEach: lastObjectEach
   }
@@ -185,11 +195,11 @@
 
   // 支持中文、数字、字母排序 > null > undefined
   function sortByDef (v1, v2) {
-    if (v1 === undefined) {
+    if (isUndefined(v1)) {
       return 1
     }
-    if (v1 === null) {
-      return v2 === undefined ? -1 : 1
+    if (isNull(v1)) {
+      return isUndefined(v2) ? -1 : 1
     }
     return v1 && v1.localeCompare ? v1.localeCompare(v2) : (v1 > v2 ? 1 : -1)
   }
@@ -234,7 +244,7 @@
       var list = map(arr, function (item) {
         return { data: item }
       })
-      var sortPros = getSortPros(arr, list, iterate, context || this)
+      var sortPros = getSortPros(arr, list, iterate, context)
       var len = sortPros.length
       if (len) {
         while (len >= 0) {
@@ -332,7 +342,6 @@
   function filter (obj, iterate, context) {
     var result = []
     if (obj && iterate) {
-      context = context || this
       if (obj.filter) {
         return obj.filter(iterate, context)
       }
@@ -410,7 +419,6 @@
   function map (obj, iterate, context) {
     var result = []
     if (obj && arguments.length > 1) {
-      context = context || this
       if (!isFunction(iterate)) {
         iterate = property(iterate)
       }
@@ -435,7 +443,6 @@
     */
   function sum (array, iterate, context) {
     var result = 0
-    context = context || this
     each(array, iterate ? isFunction(iterate) ? function () {
       result += toNumber(iterate.apply(context, arguments))
     } : function (val) {
@@ -455,7 +462,7 @@
     * @return {Number}
     */
   function mean (array, iterate, context) {
-    return toNumber(sum(array, iterate, context || this) / getSize(array))
+    return toNumber(sum(array, iterate, context) / getSize(array))
   }
 
   /**
@@ -470,7 +477,7 @@
     if (array) {
       var len, reduceMethod
       var index = 0
-      var context = this
+      var context = null
       var previous = initialValue
       var isInitialVal = arguments.length > 2
       var keyList = keys(array)
@@ -695,7 +702,7 @@
         obj.forEach(iterate, context)
       } else {
         for (var index = 0, len = obj.length; index < len; index++) {
-          iterate.call(context || this, obj[index], index, obj)
+          iterate.call(context, obj[index], index, obj)
         }
       }
     }
@@ -703,7 +710,7 @@
 
   function lastArrayEach (obj, iterate, context) {
     for (var len = obj.length - 1; len >= 0; len--) {
-      iterate.call(context || this, obj[len], len, obj)
+      iterate.call(context, obj[len], len, obj)
     }
   }
 
@@ -894,7 +901,6 @@
   function filterTree (obj, iterate, options, context) {
     var result = []
     if (obj && iterate) {
-      context = context || this
       eachTree(obj, function (item, index, items, path, parent) {
         if (iterate.call(context, item, index, items, path, parent)) {
           result.push(item)
@@ -944,7 +950,6 @@
   function helperCreateIterateHandle (prop, useArray, restIndex, matchValue, defaultValue) {
     return function (obj, iterate, context) {
       if (obj && iterate) {
-        context = context || this
         if (prop && obj[prop]) {
           return obj[prop](iterate, context)
         } else {
@@ -973,7 +978,7 @@
     return function (obj, iterate, options, context) {
       var opts = options || {}
       var optChildren = opts.children || 'children'
-      return handle(null, obj, iterate, context || this, [], optChildren, opts)
+      return handle(null, obj, iterate, context, [], optChildren, opts)
     }
   }
 
@@ -1056,7 +1061,7 @@
     * @return {Boolean}
     */
   function isFloat (obj) {
-    return obj !== null && !isNaN(obj) && !isArray(obj) && !isInteger(obj)
+    return !isNull(obj) && !isNaN(obj) && !isArray(obj) && !isInteger(obj)
   }
 
   /**
@@ -1066,7 +1071,7 @@
     * @return {Boolean}
     */
   var isInteger = function (obj) {
-    return obj !== null && !isNaN(obj) && !isArray(obj) && obj % 1 === 0
+    return !isNull(obj) && !isNaN(obj) && !isArray(obj) && obj % 1 === 0
   }
 
   /**
@@ -1217,17 +1222,14 @@
     return !!(obj && staticDocument && obj.nodeType === 9)
   }
 
-  /* eslint-disable valid-typeof */
-
   /**
     * 判断是否Window对象
     *
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  var supportWindow = typeof window !== staticStrUndefined
   function isWindow (obj) {
-    return !!(obj && obj === obj.window && supportWindow)
+    return staticWindow && !!(obj && obj === obj.window)
   }
 
   /* eslint-disable valid-typeof */
@@ -1371,8 +1373,8 @@
     * @return {String}
     */
   function getType (obj) {
-    if (obj === null) {
-      return '' + obj
+    if (isNull(obj)) {
+      return 'null'
     }
     if (isSymbol(obj)) {
       return 'symbol'
@@ -1572,13 +1574,65 @@
     */
   function each (obj, iterate, context) {
     if (obj) {
-      context = context || this
-      if (isArray(obj)) {
-        return arrayEach(obj, iterate, context)
-      }
-      return objectEach(obj, iterate, context)
+      return (isArray(obj) ? arrayEach : objectEach)(obj, iterate, context)
     }
     return obj
+  }
+
+  /**
+    * 迭代器,支持 return false 跳出循环 break
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function forOf (obj, iterate, context) {
+    if (obj) {
+      if (isArray(obj)) {
+        for (var index = 0, len = obj.length; index < len; index++) {
+          if (iterate.call(context, obj[index], index, obj) === false) {
+            break
+          }
+        }
+      } else {
+        for (var key in obj) {
+          if (hasOwnProp(obj, key)) {
+            if (iterate.call(context, obj[key], key, obj) === false) {
+              break
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+    * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
+  function lastForOf (obj, iterate, context) {
+    if (obj) {
+      var len, list
+      if (isArray(obj)) {
+        for (len = obj.length - 1; len >= 0; len--) {
+          if (iterate.call(context, obj[len], len, obj) === false) {
+            break
+          }
+        }
+      } else {
+        list = keys(obj)
+        for (len = list.length - 1; len >= 0; len--) {
+          if (iterate.call(context, obj[list[len]], list[len], obj) === false) {
+            break
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -1591,7 +1645,7 @@
     */
   function lastEach (obj, iterate, context) {
     if (obj) {
-      return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context || this)
+      return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context)
     }
     return obj
   }
@@ -1658,11 +1712,11 @@
    * @return {Object}
    */
   function get (obj, property, defaultValue) {
-    if (obj === null || obj === undefined) {
+    if (eqNull(obj)) {
       return defaultValue
     }
     var result = pathGet(obj, property)
-    return result === undefined ? defaultValue : result
+    return isUndefined(result) ? defaultValue : result
   }
 
   function valGet (obj, key) {
@@ -1682,7 +1736,7 @@
         if (len) {
           for (rest = obj; index < len; index++) {
             rest = valGet(rest, props[index])
-            if (rest === undefined || rest === null) {
+            if (eqNull(rest)) {
               return
             }
           }
@@ -1704,7 +1758,7 @@
       var matchs = key ? key.match(sKeyRE) : null
       var rest = isSet ? value : {}
       if (matchs) {
-        index = parseInt(matchs[2])
+        index = staticParseInt(matchs[2])
         if (obj[matchs[1]]) {
           obj[matchs[1]][index] = rest
         } else {
@@ -1759,7 +1813,6 @@
     var groupKey
     var result = {}
     if (obj) {
-      context = this || context
       if (iterate && isObject(iterate)) {
         iterate = createiterateEmpty(iterate)
       } else if (!isFunction(iterate)) {
@@ -1828,7 +1881,7 @@
   function clear (obj, defs, assigns) {
     if (obj) {
       var len
-      var isDefs = arguments.length > 1 && (defs === null || !isObject(defs))
+      var isDefs = arguments.length > 1 && (isNull(defs) || !isObject(defs))
       var extds = isDefs ? assigns : defs
       if (isPlainObject(obj)) {
         objectEach(obj, isDefs ? function (val, key) {
@@ -1873,10 +1926,9 @@
     */
   function remove (obj, iterate, context) {
     if (obj) {
-      if (arguments.length > 1) {
+      if (!eqNull(iterate)) {
         var removeKeys = []
         var rest = []
-        context = context || this
         if (!isFunction(iterate)) {
           iterate = pluckProperty(iterate)
         }
@@ -2008,7 +2060,6 @@
   function helperCreateiterateIndexOf (callback) {
     return function (obj, iterate, context) {
       if (obj && isFunction(iterate)) {
-        context = this || context
         if (isArray(obj) || isString(obj)) {
           return callback(obj, iterate, context)
         }
@@ -2150,6 +2201,8 @@
     first: first,
     last: last,
     each: each,
+    forOf: forOf,
+    lastForOf: lastForOf,
     lastEach: lastEach,
     has: has,
     get: get,
@@ -2252,7 +2305,7 @@
    *
    * @return {Number}
    */
-  var toInteger = helperCreateToNumber(parseInt)
+  var toInteger = helperCreateToNumber(staticParseInt)
 
   function helperCreateMinMax (handle) {
     return function (arr, iterate) {
@@ -2311,7 +2364,7 @@
    * @returns Number
    */
   var timestamp = function (str, format) {
-    if (arguments.length) {
+    if (str) {
       var date = toStringDate(str, format)
       return isDate(date) ? helperGetDateTime(date) : date
     }
@@ -2357,7 +2410,7 @@
     if (str) {
       dateType = isDate(str)
       if (dateType || /^[0-9]{11,13}$/.test(str)) {
-        rest = new Date(dateType ? helperGetDateTime(str) : Number(str))
+        rest = new Date(dateType ? helperGetDateTime(str) : staticParseInt(str))
       } else if (isString(str)) {
         format = format || setupDefaults.formatDate
         arrayEach(dateFormatRules, function (item) {
@@ -2386,7 +2439,7 @@
             // 如果指定时区，时区转换
             tempMatch = zStr.match(/([-+]{1})(\d{2}):?(\d{2})/)
             if (tempMatch) {
-              rest = new Date(helperGetUTCDateTime(dates) - (tempMatch[1] === '-' ? -1 : 1) * parseInt(tempMatch[2]) * 3600000 + parseInt(tempMatch[3]) * 60000)
+              rest = new Date(helperGetUTCDateTime(dates) - (tempMatch[1] === '-' ? -1 : 1) * staticParseInt(tempMatch[2]) * 3600000 + staticParseInt(tempMatch[3]) * 60000)
             }
           }
         } else {
@@ -2540,7 +2593,7 @@
     var time, whatDayTime, currentDay, customDay
     date = toStringDate(date)
     if (isDate(date)) {
-      customDay = Number(/^[0-7]$/.test(day) ? day : date.getDay())
+      customDay = staticParseInt(/^[0-7]$/.test(day) ? day : date.getDay())
       currentDay = date.getDay()
       time = helperGetDateTime(date)
       whatDayTime = time + ((customDay === 0 ? 7 : customDay) - (currentDay === 0 ? 7 : currentDay)) * staticDayTime
@@ -2563,7 +2616,7 @@
   function getWhatDay (date, day, mode) {
     date = toStringDate(date)
     if (isDate(date) && !isNaN(day)) {
-      date.setDate(date.getDate() + Number(day))
+      date.setDate(date.getDate() + staticParseInt(day))
       if (mode === staticStrFirst) {
         return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate())
       } else if (mode === staticStrLast) {
@@ -2758,7 +2811,7 @@
     * @return {String}
     */
   function trimLeft (str) {
-    return str && str.trimLeft ? str.trimLeft() : toString(str).replace(/^[\s\uFEFF\xA0]+/g, '')
+    return str && str.trimLeft ? str.trimLeft() : toValString(str).replace(/^[\s\uFEFF\xA0]+/g, '')
   }
 
   /**
@@ -2768,7 +2821,7 @@
     * @return {String}
     */
   function trimRight (str) {
-    return str && str.trimRight ? str.trimRight() : toString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
+    return str && str.trimRight ? str.trimRight() : toValString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
   }
 
   /**
@@ -2799,7 +2852,7 @@
     * @return {String}
     */
   function camelCase (str) {
-    return toString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
+    return toValString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
       return u.substring(1).toLocaleUpperCase()
     })
   }
@@ -2811,7 +2864,7 @@
     * @return {String}
     */
   function kebabCase (str) {
-    return toString(str).replace(/([A-Z])/g, function (text, u) {
+    return toValString(str).replace(/([A-Z])/g, function (text, u) {
       return '-' + u.toLowerCase()
     })
   }
@@ -2824,11 +2877,11 @@
     * @return {String}
     */
   function repeat (str, count) {
-    var rest = toString(str)
+    var rest = toValString(str)
     if (rest.repeat) {
       return rest.repeat(count)
     }
-    var list = isNaN(count) ? [] : new Array(parseInt(count))
+    var list = isNaN(count) ? [] : new Array(staticParseInt(count))
     return list.join(rest) + (list.length > 0 ? rest : '')
   }
 
@@ -2841,7 +2894,7 @@
     * @return {String}
     */
   function padStart (str, targetLength, padString, UNDEFINED) {
-    var rest = toString(str)
+    var rest = toValString(str)
     targetLength = targetLength >> 0
     padString = padString === UNDEFINED ? ' ' : '' + padString
     if (rest.padStart) {
@@ -2866,7 +2919,7 @@
     * @return {String}
     */
   function padEnd (str, targetLength, padString, UNDEFINED) {
-    var rest = toString(str)
+    var rest = toValString(str)
     targetLength = targetLength >> 0
     padString = padString === UNDEFINED ? ' ' : '' + padString
     if (rest.padEnd) {
@@ -2891,7 +2944,7 @@
     * @return {String}
     */
   function startsWith (str, val, startIndex) {
-    var rest = toString(str)
+    var rest = toValString(str)
     return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
   }
 
@@ -2904,7 +2957,7 @@
     * @return {String}
     */
   function endsWith (str, val, startIndex) {
-    var rest = toString(str)
+    var rest = toValString(str)
     var argsLen = arguments.length
     return argsLen > 1 && (argsLen > 2 ? rest.substring(0, startIndex).indexOf(val) === startIndex - 1 : rest.indexOf(val) === rest.length - 1)
   }
@@ -2915,7 +2968,7 @@
    * @param {Object} obj 对象
    */
   function template (str, obj) {
-    var rest = toString(str)
+    var rest = toValString(str)
     if (rest && obj) {
       return rest.replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, keys) {
         return get(obj, keys)
@@ -2924,14 +2977,14 @@
     return rest
   }
 
-  function toString (obj) {
+  function toValString (obj) {
     return '' + (eqNull(obj) ? '' : obj)
   }
 
   function helperFormatEscaper (dataMap) {
     var replaceRegexp = new RegExp('(?:' + keys(dataMap).join('|') + ')', 'g')
     return function (str) {
-      return toString(str).replace(replaceRegexp, function (match) {
+      return toValString(str).replace(replaceRegexp, function (match) {
         return dataMap[match]
       })
     }
@@ -2951,7 +3004,7 @@
     startsWith: startsWith,
     endsWith: endsWith,
     template: template,
-    toString: toString
+    toString: toValString
   }
 
   /**
@@ -2962,7 +3015,7 @@
    */
   function property (name, defs) {
     return function (obj) {
-      return obj === null ? defs : obj[name]
+      return isNull(obj) ? defs : obj[name]
     }
   }
 
@@ -2976,7 +3029,6 @@
     */
   function bind (callback, context) {
     var args = slice(arguments, 2)
-    context = context || this
     return function () {
       return callback.apply(context, slice(arguments).concat(args))
     }
@@ -2994,7 +3046,6 @@
     var done = false
     var rest = null
     var args = slice(arguments, 2)
-    context = context || this
     return function () {
       if (done) {
         return rest
@@ -3015,14 +3066,14 @@
   function after (count, callback, context) {
     var runCount = 0
     var rests = []
-    context = context || this
     return function () {
+      var args = arguments
       runCount++
       if (runCount <= count) {
-        rests.push(arguments[0])
+        rests.push(args[0])
       }
       if (runCount >= count) {
-        callback.apply(context, [rests].concat(slice(arguments)))
+        callback.apply(context, [rests].concat(slice(args)))
       }
     }
   }
@@ -3039,10 +3090,11 @@
     var rests = []
     context = context || this
     return function () {
+      var args = arguments
       runCount++
       if (runCount < count) {
-        rests.push(arguments[0])
-        callback.apply(context, [rests].concat(slice(arguments)))
+        rests.push(args[0])
+        callback.apply(context, [rests].concat(slice(args)))
       }
     }
   }
@@ -3065,7 +3117,7 @@
     var runFn = function () {
       runFlag = true
       callback.apply(context, args)
-      timeout = setTimeout(endFn, wait)
+      timeout = staticSetTimeout(endFn, wait)
     }
     var endFn = function () {
       timeout = 0
@@ -3075,7 +3127,7 @@
     }
     var cancelFn = function () {
       var rest = timeout !== 0
-      clearTimeout(timeout)
+      staticClearTimeout(timeout)
       runFlag = false
       timeout = 0
       return rest
@@ -3088,7 +3140,7 @@
         if (optLeading === true) {
           runFn()
         } else if (optTrailing === true) {
-          timeout = setTimeout(endFn, wait)
+          timeout = staticSetTimeout(endFn, wait)
         }
       }
     }
@@ -3112,7 +3164,6 @@
     var isLeading = typeof options === 'boolean'
     var optLeading = 'leading' in opts ? opts.leading : isLeading
     var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
-    var clearTimeoutFn = clearTimeout
     var runFn = function () {
       runFlag = true
       timeout = 0
@@ -3128,7 +3179,7 @@
     }
     var cancelFn = function () {
       var rest = timeout !== 0
-      clearTimeoutFn(timeout)
+      staticClearTimeout(timeout)
       timeout = 0
       return rest
     }
@@ -3141,9 +3192,9 @@
           runFn()
         }
       } else {
-        clearTimeoutFn(timeout)
+        staticClearTimeout(timeout)
       }
-      timeout = setTimeout(endFn, wait)
+      timeout = staticSetTimeout(endFn, wait)
     }
     debounced.cancel = cancelFn
     return debounced
@@ -3160,7 +3211,7 @@
   function delay (callback, wait) {
     var args = slice(arguments, 2)
     var context = this
-    return setTimeout(function () {
+    return staticSetTimeout(function () {
       callback.apply(context, args)
     }, wait)
   }
@@ -3246,7 +3297,7 @@
       if (isPlainObject(item) || _arr) {
         result = result.concat(stringifyParams(item, resultKey + '[' + key + ']', _arr))
       } else {
-        result.push(staticEncodeURIComponent(resultKey + '[' + (isArr ? '' : key) + ']') + '=' + staticEncodeURIComponent(item === null ? '' : item))
+        result.push(staticEncodeURIComponent(resultKey + '[' + (isArr ? '' : key) + ']') + '=' + staticEncodeURIComponent(isNull(item) ? '' : item))
       }
     })
     return result
@@ -3261,12 +3312,12 @@
     var _arr
     var params = []
     each(query, function (item, key) {
-      if (item !== undefined) {
+      if (!isUndefined(item)) {
         _arr = isArray(item)
         if (isPlainObject(item) || _arr) {
           params = params.concat(stringifyParams(item, key, _arr))
         } else {
-          params.push(staticEncodeURIComponent(key) + '=' + staticEncodeURIComponent(item === null ? '' : item))
+          params.push(staticEncodeURIComponent(key) + '=' + staticEncodeURIComponent(isNull(item) ? '' : item))
         }
       }
     })
@@ -3339,11 +3390,6 @@
       var opts, expires, values, result, cookies, keyIndex
       var inserts = []
       var args = arguments
-      var staticDecodeURIComponent = decodeURIComponent
-      var staticEncodeURIComponent = encodeURIComponent
-      if (this && this.$context) {
-        this.$context = null
-      }
       if (isArray(name)) {
         inserts = name
       } else if (args.length > 1) {
@@ -3374,7 +3420,7 @@
               opts.expires = expires
             }
             arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
-              if (opts[key] !== undefined) {
+              if (!isUndefined(opts[key])) {
                 values.push(opts[key] && key === 'secure' ? key : (key + '=' + opts[key]))
               }
             })
@@ -3460,7 +3506,7 @@
       isPC: false,
       isDoc: !!staticDocument
     }
-    if (typeof window === staticStrUndefined && typeof process !== staticStrUndefined) {
+    if (!staticWindow && typeof process !== staticStrUndefined) {
       result.isNode = true
     } else {
       isEdge = isBrowseType('Edge')
@@ -3479,8 +3525,8 @@
         safari: !isChrome && !isEdge && isBrowseType('Safari'),
         isMobile: isMobile,
         isPC: !isMobile,
-        isLocalStorage: isBrowseStorage(window.localStorage),
-        isSessionStorage: isBrowseStorage(window.sessionStorage)
+        isLocalStorage: isBrowseStorage(staticWindow.localStorage),
+        isSessionStorage: isBrowseStorage(staticWindow.sessionStorage)
       })
     }
     return result
@@ -3509,14 +3555,7 @@
   function XEUtils () { }
 
   function mixin (methods) {
-    each(methods, function (func, name) {
-      XEUtils[name] = isFunction(func) && func._c !== false ? function () {
-        var result = func.apply(XEUtils.$context, arguments)
-        XEUtils.$context = null
-        return result
-      } : func
-    })
-    return XEUtils
+    return assign(XEUtils, methods)
   }
 
   function setup (options) {

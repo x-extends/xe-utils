@@ -1,4 +1,4 @@
-var toString = require('../string/toString')
+var toValString = require('./toValString')
 var repeat = require('../string/repeat')
 
 /**
@@ -10,7 +10,7 @@ var repeat = require('../string/repeat')
   * @return {String}
   */
 function padStart (str, targetLength, padString, UNDEFINED) {
-  var rest = toString(str)
+  var rest = toValString(str)
   targetLength = targetLength >> 0
   padString = padString === UNDEFINED ? ' ' : '' + padString
   if (rest.padStart) {

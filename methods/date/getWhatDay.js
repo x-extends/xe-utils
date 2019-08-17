@@ -1,5 +1,6 @@
 var staticStrFirst = require('../static/staticStrFirst')
 var staticStrLast = require('../static/staticStrLast')
+var staticParseInt = require('../static/staticParseInt')
 
 var helperGetDateFullYear = require('./helperGetDateFullYear')
 var helperGetDateMonth = require('./helperGetDateMonth')
@@ -19,7 +20,7 @@ var isDate = require('../base/isDate')
 function getWhatDay (date, day, mode) {
   date = toStringDate(date)
   if (isDate(date) && !isNaN(day)) {
-    date.setDate(date.getDate() + Number(day))
+    date.setDate(date.getDate() + staticParseInt(day))
     if (mode === staticStrFirst) {
       return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate())
     } else if (mode === staticStrLast) {

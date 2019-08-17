@@ -13,7 +13,6 @@ var property = require('../function/property')
 function map (obj, iterate, context) {
   var result = []
   if (obj && arguments.length > 1) {
-    context = context || this
     if (!isFunction(iterate)) {
       iterate = property(iterate)
     }

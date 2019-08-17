@@ -1,9 +1,12 @@
 var setupDefaults = require('../setupDefaults')
 var staticDocument = require('../static/staticDocument')
+var staticDecodeURIComponent = require('../static/staticDecodeURIComponent')
+var staticEncodeURIComponent = require('../static/staticEncodeURIComponent')
 
 var isArray = require('../base/isArray')
 var isObject = require('../base/isObject')
 var isDate = require('../base/isDate')
+var isUndefined = require('../base/isUndefined')
 var includes = require('../array/includes')
 var keys = require('../base/keys')
 
@@ -54,11 +57,6 @@ function cookie (name, value, options) {
     var opts, expires, values, result, cookies, keyIndex
     var inserts = []
     var args = arguments
-    var staticDecodeURIComponent = decodeURIComponent
-    var staticEncodeURIComponent = encodeURIComponent
-    if (this && this.$context) {
-      this.$context = null
-    }
     if (isArray(name)) {
       inserts = name
     } else if (args.length > 1) {
@@ -89,7 +87,7 @@ function cookie (name, value, options) {
             opts.expires = expires
           }
           arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
-            if (opts[key] !== undefined) {
+            if (!isUndefined(opts[key])) {
               values.push(opts[key] && key === 'secure' ? key : (key + '=' + opts[key]))
             }
           })

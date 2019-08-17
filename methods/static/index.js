@@ -1,25 +1,33 @@
+var staticStrUndefined = require('./staticStrUndefined')
+var staticStrLast = require('./staticStrLast')
+var staticStrFirst = require('./staticStrFirst')
 var staticDayTime = require('./staticDayTime')
 var staticWeekTime = require('./staticWeekTime')
-var staticStrUndefined = require('./staticStrUndefined')
 var staticLocation = require('./staticLocation')
+var staticWindow = require('./staticWindow')
 var staticDocument = require('./staticDocument')
 var staticEncodeURIComponent = require('./staticEncodeURIComponent')
 var staticDecodeURIComponent = require('./staticDecodeURIComponent')
-var staticStrLast = require('./staticStrLast')
-var staticStrFirst = require('./staticStrFirst')
+var staticSetTimeout = require('./staticSetTimeout')
+var staticClearTimeout = require('./staticClearTimeout')
+var staticParseInt = require('./staticParseInt')
 var staticEscapeMap = require('./staticEscapeMap')
 var staticHGKeyRE = require('./staticHGKeyRE')
 
 var staticExports = {
+  staticStrUndefined: staticStrUndefined,
+  staticStrLast: staticStrLast,
+  staticStrFirst: staticStrFirst,
   staticDayTime: staticDayTime,
   staticWeekTime: staticWeekTime,
-  staticStrUndefined: staticStrUndefined,
   staticLocation: staticLocation,
+  staticWindow: staticWindow,
   staticDocument: staticDocument,
   staticEncodeURIComponent: staticEncodeURIComponent,
   staticDecodeURIComponent: staticDecodeURIComponent,
-  staticStrLast: staticStrLast,
-  staticStrFirst: staticStrFirst,
+  staticSetTimeout: staticSetTimeout,
+  staticClearTimeout: staticClearTimeout,
+  staticParseInt: staticParseInt,
   staticEscapeMap: staticEscapeMap,
   staticHGKeyRE: staticHGKeyRE
 }

@@ -4,7 +4,6 @@ var isArray = require('../base/isArray')
 function helperCreateIterateHandle (prop, useArray, restIndex, matchValue, defaultValue) {
   return function (obj, iterate, context) {
     if (obj && iterate) {
-      context = context || this
       if (prop && obj[prop]) {
         return obj[prop](iterate, context)
       } else {

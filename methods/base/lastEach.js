@@ -12,7 +12,7 @@ var lastObjectEach = require('../object/lastObjectEach')
   */
 function lastEach (obj, iterate, context) {
   if (obj) {
-    return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context || this)
+    return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context)
   }
   return obj
 }
