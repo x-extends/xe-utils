@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.0.0
+ * xe-utils.js v2.0.1
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -3557,7 +3557,14 @@
   function XEUtils () { }
 
   function mixin (methods) {
-    return assign(XEUtils, methods)
+    each(methods, function (fn, name) {
+      XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
+        var result = fn.apply(XEUtils.$context, arguments)
+        XEUtils.$context = null
+        return result
+      } : fn
+    })
+    return XEUtils
   }
 
   function setup (options) {
