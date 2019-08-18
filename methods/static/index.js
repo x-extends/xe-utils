@@ -8,8 +8,6 @@ var staticWindow = require('./staticWindow')
 var staticDocument = require('./staticDocument')
 var staticEncodeURIComponent = require('./staticEncodeURIComponent')
 var staticDecodeURIComponent = require('./staticDecodeURIComponent')
-var staticSetTimeout = require('./staticSetTimeout')
-var staticClearTimeout = require('./staticClearTimeout')
 var staticParseInt = require('./staticParseInt')
 var staticEscapeMap = require('./staticEscapeMap')
 var staticHGKeyRE = require('./staticHGKeyRE')
@@ -25,8 +23,6 @@ var staticExports = {
   staticDocument: staticDocument,
   staticEncodeURIComponent: staticEncodeURIComponent,
   staticDecodeURIComponent: staticDecodeURIComponent,
-  staticSetTimeout: staticSetTimeout,
-  staticClearTimeout: staticClearTimeout,
   staticParseInt: staticParseInt,
   staticEscapeMap: staticEscapeMap,
   staticHGKeyRE: staticHGKeyRE

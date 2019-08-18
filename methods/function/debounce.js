@@ -1,6 +1,3 @@
-var staticSetTimeout = require('../static/staticSetTimeout')
-var staticClearTimeout = require('../static/staticClearTimeout')
-
 /**
   * 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟
   *
@@ -32,7 +29,7 @@ function debounce (callback, wait, options) {
   }
   var cancelFn = function () {
     var rest = timeout !== 0
-    staticClearTimeout(timeout)
+    clearTimeout(timeout)
     timeout = 0
     return rest
   }
@@ -45,9 +42,9 @@ function debounce (callback, wait, options) {
         runFn()
       }
     } else {
-      staticClearTimeout(timeout)
+      clearTimeout(timeout)
     }
-    timeout = staticSetTimeout(endFn, wait)
+    timeout = setTimeout(endFn, wait)
   }
   debounced.cancel = cancelFn
   return debounced

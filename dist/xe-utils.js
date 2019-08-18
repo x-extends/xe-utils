@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.0.1
+ * xe-utils.js v2.0.2
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -53,10 +53,6 @@
   var staticEncodeURIComponent = encodeURIComponent
 
   var staticDecodeURIComponent = decodeURIComponent
-
-  var staticSetTimeout = setTimeout
-
-  var staticClearTimeout = clearTimeout
 
   var staticParseInt = parseInt
 
@@ -3119,7 +3115,7 @@
     var runFn = function () {
       runFlag = true
       callback.apply(context, args)
-      timeout = staticSetTimeout(endFn, wait)
+      timeout = setTimeout(endFn, wait)
     }
     var endFn = function () {
       timeout = 0
@@ -3129,7 +3125,7 @@
     }
     var cancelFn = function () {
       var rest = timeout !== 0
-      staticClearTimeout(timeout)
+      clearTimeout(timeout)
       runFlag = false
       timeout = 0
       return rest
@@ -3142,7 +3138,7 @@
         if (optLeading === true) {
           runFn()
         } else if (optTrailing === true) {
-          timeout = staticSetTimeout(endFn, wait)
+          timeout = setTimeout(endFn, wait)
         }
       }
     }
@@ -3181,7 +3177,7 @@
     }
     var cancelFn = function () {
       var rest = timeout !== 0
-      staticClearTimeout(timeout)
+      clearTimeout(timeout)
       timeout = 0
       return rest
     }
@@ -3194,9 +3190,9 @@
           runFn()
         }
       } else {
-        staticClearTimeout(timeout)
+        clearTimeout(timeout)
       }
-      timeout = staticSetTimeout(endFn, wait)
+      timeout = setTimeout(endFn, wait)
     }
     debounced.cancel = cancelFn
     return debounced
@@ -3213,7 +3209,7 @@
   function delay (callback, wait) {
     var args = slice(arguments, 2)
     var context = this
-    return staticSetTimeout(function () {
+    return setTimeout(function () {
       callback.apply(context, args)
     }, wait)
   }
