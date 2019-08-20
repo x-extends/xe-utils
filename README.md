@@ -36,7 +36,7 @@ Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net
 <script src="https://cdn.jsdelivr.net/npm/xe-utils"></script>
 ```
 
-### ES6 Module import
+### Import all methods
 
 ```javascript
 import XEUtils from 'xe-utils'
@@ -65,7 +65,7 @@ XEUtils.mixin({
 XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss') // 2018-01-01 10:30:28
 ```
 
-Import all methods by methods
+Import all methods by methods  
 按功能导入所有方法
 
 ```javascript
