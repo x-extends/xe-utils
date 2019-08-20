@@ -47,7 +47,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 
 ## Import on demand
 
-By introducing the method as needed, the volume can be minimized. (The minimal lib is ≈ 400B gzip ≈ 60B)
+By introducing the method as needed, the volume can be minimized. (The minimal lib is ≈ 400B gzip ≈ 60B)  
 这样按需引入方法，可以使体积达到最小（最小的包大约是 ≈ 400B gzip ≈ 60B）
 
 ```javascript
