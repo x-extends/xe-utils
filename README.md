@@ -45,6 +45,58 @@ XEUtils.toDateString(Date.now()) // 2018-01-01 10:30:28
 XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
 ```
 
+## Import on demand
+
+By introducing the method as needed, the volume can be minimized. (The minimal lib is ≈ 500B, The maximal lib is ≈ 10KB)  
+这样按需引入方法，可以使体积达到最小（最小的包大约是 ≈ 500B，最大的包大约是 ≈ 10KB）
+
+```javascript
+import XEUtils from 'xe-utils/methods/xe-utils'
+import each from 'xe-utils/methods/base/each'
+import toDateString from 'xe-utils/methods/date/toDateString'
+import toFixedNumber from 'xe-utils/methods/number/toFixedNumber'
+
+XEUtils.mixin({
+  each,
+  toDateString,
+  toFixedNumber
+})
+
+XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss') // 2018-01-01 10:30:28
+```
+
+Import all methods by methods
+按功能导入所有方法
+
+```javascript
+import XEUtils from 'xe-utils/methods/xe-utils'
+import objectMethods from 'xe-utils/methods/object'
+import arrayMethods from 'xe-utils/methods/array'
+import baseMethods from 'xe-utils/methods/base'
+import numberMethods from 'xe-utils/methods/number'
+import dateMethods from 'xe-utils/methods/date'
+import stringMethods from 'xe-utils/methods/string'
+import functionMethods from 'xe-utils/methods/function'
+import locatMethods from 'xe-utils/methods/locat'
+import cookieMethods from 'xe-utils/methods/cookie'
+import browseMethods from 'xe-utils/methods/browse'
+
+XEUtils.mixin({
+  objectMethods,
+  arrayMethods,
+  baseMethods,
+  numberMethods,
+  dateMethods,
+  stringMethods,
+  functionMethods,
+  locatMethods,
+  cookieMethods,
+  browseMethods
+})
+
+XEUtils.toStringDate('2018-01-01 10:30:28') // Mon Jan 01 2018 10:30:28 GMT+0800 (中国标准时间)
+```
+
 ## License
 
 MIT License, 2017-present, Xu Liangzhan

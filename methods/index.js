@@ -1,12 +1,8 @@
 'use strict'
 
-'use strict'
-
-var setupDefaults = require('./setupDefaults')
+var XEUtils = require('./xe-utils')
 
 var assign = require('./object/assign')
-var each = require('./base/each')
-var isFunction = require('./base/isFunction')
 
 var baseExports = require('./base')
 var arrayExports = require('./array')
@@ -34,27 +30,7 @@ assign(
   functionExports
 )
 
-function XEUtils () {}
-
-function mixin (methods) {
-  each(methods, function (fn, name) {
-    XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
-      var result = fn.apply(XEUtils.$context, arguments)
-      XEUtils.$context = null
-      return result
-    } : fn
-  })
-  return XEUtils
-}
-
-function setup (options) {
-  assign(setupDefaults, options)
-}
-
-mixin(methodExports)
-
-XEUtils.mixin = mixin
-XEUtils.setup = setup
+XEUtils.mixin(methodExports)
 
 module.exports = XEUtils
 module.exports.default = XEUtils

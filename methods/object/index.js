@@ -1,3 +1,5 @@
+'use strict'
+
 var assign = require('./assign')
 var objectEach = require('./objectEach')
 var lastObjectEach = require('./lastObjectEach')

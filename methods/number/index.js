@@ -1,3 +1,5 @@
+'use strict'
+
 var random = require('./random')
 var max = require('./max')
 var min = require('./min')

@@ -1,3 +1,5 @@
+'use strict'
+
 var browse = require('./browse')
 
 var browseExports = {

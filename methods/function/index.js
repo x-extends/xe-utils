@@ -1,3 +1,5 @@
+'use strict'
+
 var property = require('./property')
 var bind = require('./bind')
 var once = require('./once')

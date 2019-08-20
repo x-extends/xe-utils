@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.0.2
+ * xe-utils.js v2.0.5
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -30,6 +30,26 @@
       ['S', 0]
     ]
   }
+
+  function mixin (methods) {
+    each(methods, function (fn, name) {
+      XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
+        var result = fn.apply(XEUtils.$context, arguments)
+        XEUtils.$context = null
+        return result
+      } : fn
+    })
+    return XEUtils
+  }
+
+  function setup (options) {
+    assign(setupDefaults, options)
+  }
+
+  function XEUtils () { }
+
+  XEUtils.mixin = mixin
+  XEUtils.setup = setup
 
   var staticStrUndefined = 'undefined'
 
@@ -3550,27 +3570,7 @@
     functionExports
   )
 
-  function XEUtils () { }
-
-  function mixin (methods) {
-    each(methods, function (fn, name) {
-      XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
-        var result = fn.apply(XEUtils.$context, arguments)
-        XEUtils.$context = null
-        return result
-      } : fn
-    })
-    return XEUtils
-  }
-
-  function setup (options) {
-    assign(setupDefaults, options)
-  }
-
-  mixin(methodExports)
-
-  XEUtils.mixin = mixin
-  XEUtils.setup = setup
+  XEUtils.mixin(methodExports)
 
   return XEUtils
 }))
