@@ -1,4 +1,4 @@
-var toValString = require('./toValString')
+var toValString = require('./toString')
 
 var get = require('../base/get')
 

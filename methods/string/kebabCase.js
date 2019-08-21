@@ -1,4 +1,4 @@
-var toValString = require('./toValString')
+var toValString = require('./toString')
 
 /**
   * 将带驼峰字符串转成字符串,例如： projectName 转为 project-name

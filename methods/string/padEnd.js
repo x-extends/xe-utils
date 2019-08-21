@@ -1,5 +1,5 @@
 var repeat = require('./repeat')
-var toValString = require('./toValString')
+var toValString = require('./toString')
 
 /**
   * 用指定字符从后面开始补全字符串

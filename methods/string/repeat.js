@@ -1,6 +1,6 @@
 var staticParseInt = require('../static/staticParseInt')
 
-var toValString = require('./toValString')
+var toValString = require('./toString')
 
 /**
   * 将字符串重复 n次

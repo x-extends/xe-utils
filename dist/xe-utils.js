@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.0.5
+ * xe-utils.js v2.0.7
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -48,6 +48,7 @@
 
   function XEUtils () { }
 
+  XEUtils.v = 'v2'
   XEUtils.mixin = mixin
   XEUtils.setup = setup
 
@@ -3554,23 +3555,21 @@
     browse: browse
   }
 
-  var methodExports = {}
-
-  assign(
-    methodExports,
-    baseExports,
-    arrayExports,
-    objectExports,
-    browseExports,
-    cookieExports,
-    dateExports,
-    locatExports,
-    numberExports,
-    stringExports,
-    functionExports
+  XEUtils.mixin(
+    assign(
+      {},
+      baseExports,
+      arrayExports,
+      objectExports,
+      browseExports,
+      cookieExports,
+      dateExports,
+      locatExports,
+      numberExports,
+      stringExports,
+      functionExports
+    )
   )
-
-  XEUtils.mixin(methodExports)
 
   return XEUtils
 }))

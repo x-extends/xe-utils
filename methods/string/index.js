@@ -13,7 +13,7 @@ var kebabCase = require('./kebabCase')
 var startsWith = require('./startsWith')
 var endsWith = require('./endsWith')
 var template = require('./template')
-var toValString = require('./toValString')
+var toValString = require('./toString')
 
 var stringExports = {
   trim: trim,

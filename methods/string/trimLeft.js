@@ -1,4 +1,4 @@
-var toValString = require('./toValString')
+var toValString = require('./toString')
 
 /**
   * 去除字符串左边的空格

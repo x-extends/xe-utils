@@ -14,23 +14,22 @@ var locatExports = require('./locat')
 var numberExports = require('./number')
 var stringExports = require('./string')
 var functionExports = require('./function')
-var methodExports = {}
 
-assign(
-  methodExports,
-  baseExports,
-  arrayExports,
-  objectExports,
-  browseExports,
-  cookieExports,
-  dateExports,
-  locatExports,
-  numberExports,
-  stringExports,
-  functionExports
+XEUtils.mixin(
+  assign(
+    {},
+    baseExports,
+    arrayExports,
+    objectExports,
+    browseExports,
+    cookieExports,
+    dateExports,
+    locatExports,
+    numberExports,
+    stringExports,
+    functionExports
+  )
 )
-
-XEUtils.mixin(methodExports)
 
 module.exports = XEUtils
 module.exports.default = XEUtils

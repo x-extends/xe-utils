@@ -1,4 +1,4 @@
-var toValString = require('./toValString')
+var toValString = require('./toString')
 
 /**
   * 判断字符串是否在源字符串的头部

@@ -24,6 +24,7 @@ function setup (options) {
 
 function XEUtils () {}
 
+XEUtils.v = 'v2'
 XEUtils.mixin = mixin
 XEUtils.setup = setup
 
