@@ -5,14 +5,16 @@ var objectMap = require('../object/objectMap')
 
 var map = require('../array/map')
 
-function startClone (func, arr, deep) {
-  return func(arr, deep ? deepClone : function (val) {
+function startClone (func, obj, deep) {
+  return func(obj, deep ? function (val) {
+    return deepClone(val, deep)
+  } : function (val) {
     return val
   })
 }
 
-function deepClone (obj, deep) {
-  return isPlainObject(obj) ? startClone(objectMap, obj, deep) : isArray(obj) ? startClone(map, obj, deep) : obj
+function deepClone (val, deep) {
+  return isPlainObject(val) ? startClone(objectMap, val, deep) : isArray(val) ? startClone(map, val, deep) : val
 }
 
 /**
