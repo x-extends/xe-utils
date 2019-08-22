@@ -2887,12 +2887,14 @@ export default {
         item.id = id++
       })
       this.selected = this.apiList[0].children[0]
-    }, 0)
+    }, 50)
   },
   mounted () {
-    Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
-      hljs.highlightBlock(block)
-    })
+    setTimeout(() => {
+      Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
+        hljs.highlightBlock(block)
+      })
+    },100)
   },
   methods: {
     menuLinkEvent (item) {
