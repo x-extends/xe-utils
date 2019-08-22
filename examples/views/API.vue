@@ -2881,20 +2881,16 @@ export default {
     }
   },
   created () {
-    setTimeout(() => {
-      let id = 1
-      window.XEUtils.eachTree(this.apiList, item => {
-        item.id = id++
-      })
-      this.selected = this.apiList[0].children[0]
-    }, 50)
+    let id = 1
+    window.XEUtils.eachTree(this.apiList, item => {
+      item.id = id++
+    })
+    this.selected = this.apiList[0].children[0]
   },
   mounted () {
-    setTimeout(() => {
-      Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
-        hljs.highlightBlock(block)
-      })
-    },100)
+    Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
+      hljs.highlightBlock(block)
+    })
   },
   methods: {
     menuLinkEvent (item) {

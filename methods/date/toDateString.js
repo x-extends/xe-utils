@@ -34,6 +34,10 @@ function formatPadStart (str, len, padStr) {
   return str
 }
 
+function formatDayE (day) {
+  return day === 0 ? 7 : day
+}
+
 /**
   * 日期格式化为字符串
   *
@@ -62,8 +66,8 @@ function toDateString (date, format, options) {
         [/S{1,3}/g, date.getMilliseconds()],
         [/a/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm) }],
         [/A/g, '', function (match) { return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase()) }],
-        [/e/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay() - 1) }],
-        [/E/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
+        [/e/g, '', function (match) { return handleCustomTemplate(date, formats, match, date.getDay()) }],
+        [/E/g, '', function (match) { return handleCustomTemplate(date, formats, match, formatDayE(date.getDay())) }],
         [/q/g, '', function (match) { return handleCustomTemplate(date, formats, match, Math.floor((helperGetDateMonth(date) + 3) / 3)) }],
         [/Z{1,2}/g, '', function (match) { return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + formatPadStart(zoneHours, 2, '0') + (match.length === 1 ? ':' : '') + '00') }],
         [/W{1,2}/g, '', function (match) { return formatPadStart(handleCustomTemplate(date, formats, match, getYearWeek(date)), match.length, '0') }],
