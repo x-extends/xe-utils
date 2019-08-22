@@ -2881,11 +2881,13 @@ export default {
     }
   },
   created () {
-    let id = 1
-    window.XEUtils.eachTree(this.apiList, item => {
-      item.id = id++
-    })
-    this.selected = this.apiList[0].children[0]
+    setTimeout(() => {
+      let id = 1
+      window.XEUtils.eachTree(this.apiList, item => {
+        item.id = id++
+      })
+      this.selected = this.apiList[0].children[0]
+    }, 50)
   },
   mounted () {
     Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
