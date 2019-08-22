@@ -2887,7 +2887,7 @@ export default {
         item.id = id++
       })
       this.selected = this.apiList[0].children[0]
-    }, 50)
+    }, 0)
   },
   mounted () {
     Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
