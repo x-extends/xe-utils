@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.0.10
+ * xe-utils.js v2.1.0
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -164,14 +164,6 @@
     lastArrayEach(keys(obj), function (key) {
       iterate.call(context, obj[key], key, obj)
     })
-  }
-
-  var objectExports = {
-    extend: assign,
-    assign: assign,
-    objectMap: objectMap,
-    objectEach: objectEach,
-    lastObjectEach: lastObjectEach
   }
 
   /**
@@ -998,46 +990,6 @@
       var optChildren = opts.children || 'children'
       return handle(null, obj, iterate, context, [], optChildren, opts)
     }
-  }
-
-  var arrayExports = {
-    uniq: uniq,
-    union: union,
-    sortBy: sortBy,
-    shuffle: shuffle,
-    sample: sample,
-    some: some,
-    every: every,
-    slice: slice,
-    filter: filter,
-    find: find,
-    findKey: findKey,
-    includes: includes,
-    arrayIndexOf: arrayIndexOf,
-    arrayLastIndexOf: arrayLastIndexOf,
-    map: map,
-    sum: sum,
-    mean: mean,
-    reduce: reduce,
-    copyWithin: copyWithin,
-    chunk: chunk,
-    zip: zip,
-    unzip: unzip,
-    zipObject: zipObject,
-    toArray: toArray,
-    includeArrays: includeArrays,
-    pluck: pluck,
-    invoke: invoke,
-    invokeMap: invoke,
-    arrayEach: arrayEach,
-    lastArrayEach: lastArrayEach,
-    toArrayTree: toArrayTree,
-    toTreeArray: toTreeArray,
-    findTree: findTree,
-    eachTree: eachTree,
-    mapTree: mapTree,
-    filterTree: filterTree,
-    searchTree: searchTree
   }
 
   function hasOwnProp (obj, key) {
@@ -2170,73 +2122,6 @@
     return property ? (property.splice && property.join ? property : ('' + property).split('.')) : []
   }
 
-  var baseExports = {
-    hasOwnProp: hasOwnProp,
-    eqNull: eqNull,
-    isNaN: isNumberNaN,
-    isFinite: isNumberFinite,
-    isUndefined: isUndefined,
-    isArray: isArray,
-    isFloat: isFloat,
-    isInteger: isInteger,
-    isFunction: isFunction,
-    isBoolean: isBoolean,
-    isString: isString,
-    isNumber: isNumber,
-    isRegExp: isRegExp,
-    isObject: isObject,
-    isPlainObject: isPlainObject,
-    isDate: isDate,
-    isError: isError,
-    isTypeError: isTypeError,
-    isEmpty: isEmpty,
-    isNull: isNull,
-    isSymbol: isSymbol,
-    isArguments: isArguments,
-    isElement: isElement,
-    isDocument: isDocument,
-    isWindow: isWindow,
-    isFormData: isFormData,
-    isMap: isMap,
-    isWeakMap: isWeakMap,
-    isSet: isSet,
-    isWeakSet: isWeakSet,
-    isLeapYear: isLeapYear,
-    isMatch: isMatch,
-    isEqual: isEqual,
-    isEqualWith: isEqualWith,
-    getType: getType,
-    uniqueId: uniqueId,
-    getSize: getSize,
-    indexOf: indexOf,
-    lastIndexOf: lastIndexOf,
-    findIndexOf: findIndexOf,
-    findLastIndexOf: findLastIndexOf,
-    toStringJSON: toStringJSON,
-    toJSONString: toJSONString,
-    keys: keys,
-    values: values,
-    entries: entries,
-    pick: pick,
-    omit: omit,
-    first: first,
-    last: last,
-    each: each,
-    forOf: forOf,
-    lastForOf: lastForOf,
-    lastEach: lastEach,
-    has: has,
-    get: get,
-    set: set,
-    groupBy: groupBy,
-    countBy: countBy,
-    clone: clone,
-    clear: clear,
-    remove: remove,
-    range: range,
-    destructuring: destructuring
-  }
-
   /**
     * 获取一个指定范围内随机数
     *
@@ -2355,17 +2240,6 @@
       }
       return 0
     }
-  }
-
-  var numberExports = {
-    random: random,
-    min: min,
-    max: max,
-    commafy: commafy,
-    toFixedString: toFixedString,
-    toFixedNumber: toFixedNumber,
-    toNumber: toNumber,
-    toInteger: toInteger
   }
 
   /**
@@ -2801,24 +2675,6 @@
     return new Date()
   }
 
-  var dateExports = {
-    now: now,
-    timestamp: timestamp,
-    isDateSame: isDateSame,
-    toStringDate: toStringDate,
-    toDateString: toDateString,
-    getWhatYear: getWhatYear,
-    getWhatMonth: getWhatMonth,
-    getWhatWeek: getWhatWeek,
-    getWhatDay: getWhatDay,
-    getYearDay: getYearDay,
-    getYearWeek: getYearWeek,
-    getMonthWeek: getMonthWeek,
-    getDayOfYear: getDayOfYear,
-    getDayOfMonth: getDayOfMonth,
-    getDateDiff: getDateDiff
-  }
-
   /**
     * 去除字符串左右两边的空格
     *
@@ -3013,23 +2869,6 @@
         return dataMap[match]
       })
     }
-  }
-
-  var stringExports = {
-    trim: trim,
-    trimLeft: trimLeft,
-    trimRight: trimRight,
-    escape: escape,
-    unescape: unescape,
-    camelCase: camelCase,
-    kebabCase: kebabCase,
-    repeat: repeat,
-    padStart: padStart,
-    padEnd: padEnd,
-    startsWith: startsWith,
-    endsWith: endsWith,
-    template: template,
-    toString: toValString
   }
 
   /**
@@ -3241,17 +3080,6 @@
     }, wait)
   }
 
-  var functionExports = {
-    property: property,
-    bind: bind,
-    once: once,
-    after: after,
-    before: before,
-    throttle: throttle,
-    debounce: debounce,
-    delay: delay
-  }
-
   function parseURLQuery (uri) {
     return unserialize(uri.split('?')[1] || '')
   }
@@ -3294,24 +3122,6 @@
     parsed.hashQuery = parseURLQuery(parsed.hash)
     parsed.searchQuery = parseURLQuery(parsed.search)
     return parsed
-  }
-
-  function getBaseURL () {
-    if (staticLocation) {
-      var pathname = staticLocation.pathname
-      var lastIndex = lastIndexOf(pathname, '/') + 1
-      return helperGetLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
-    }
-    return ''
-  }
-
-  /**
-    * 获取地址栏信息
-    *
-    * @return Object
-    */
-  function locat () {
-    return staticLocation ? parseUrl(staticLocation.href) : {}
   }
 
   function stringifyParams (resultVal, resultKey, isArr) {
@@ -3366,16 +3176,77 @@
     return result
   }
 
-  function helperGetLocatOrigin () {
-    return staticLocation ? (staticLocation.origin || (staticLocation.protocol + '//' + staticLocation.host)) : ''
+  function getBaseURL () {
+    if (staticLocation) {
+      var pathname = staticLocation.pathname
+      var lastIndex = lastIndexOf(pathname, '/') + 1
+      return helperGetLocatOrigin() + (lastIndex === pathname.length ? pathname : pathname.substring(0, lastIndex))
+    }
+    return ''
   }
 
-  var locatExports = {
-    parseUrl: parseUrl,
-    getBaseURL: getBaseURL,
-    locat: locat,
-    serialize: serialize,
-    unserialize: unserialize
+  /**
+    * 获取地址栏信息
+    *
+    * @return Object
+    */
+  function locat () {
+    return staticLocation ? parseUrl(staticLocation.href) : {}
+  }
+
+  /* eslint-disable valid-typeof */
+  function isBrowseStorage (storage) {
+    try {
+      var testKey = '__xe_t'
+      storage.setItem(testKey, 1)
+      storage.removeItem(testKey)
+      return true
+    } catch (e) {
+      return false
+    }
+  }
+
+  function isBrowseType (type) {
+    return navigator.userAgent.indexOf(type) > -1
+  }
+
+  /**
+    * 获取浏览器内核
+    * @return Object
+    */
+  function browse () {
+    var $body, isChrome, isEdge
+    var isMobile = false
+    var result = {
+      isNode: false,
+      isMobile: isMobile,
+      isPC: false,
+      isDoc: !!staticDocument
+    }
+    if (!staticWindow && typeof process !== staticStrUndefined) {
+      result.isNode = true
+    } else {
+      isEdge = isBrowseType('Edge')
+      isChrome = isBrowseType('Chrome')
+      isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
+      if (result.isDoc) {
+        $body = staticDocument.body || staticDocument.documentElement
+        arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
+          result['-' + core] = !!$body[core + 'MatchesSelector']
+        })
+      }
+      assign(result, {
+        edge: isEdge,
+        firefox: isBrowseType('Firefox'),
+        msie: !isEdge && result['-ms'],
+        safari: !isChrome && !isEdge && isBrowseType('Safari'),
+        isMobile: isMobile,
+        isPC: !isMobile,
+        isLocalStorage: isBrowseStorage(staticWindow.localStorage),
+        isSessionStorage: isBrowseStorage(staticWindow.sessionStorage)
+      })
+    }
+    return result
   }
 
   function toCookieUnitTime (unit, expires) {
@@ -3498,84 +3369,206 @@
     getJSON: cookie
   })
 
-  var cookieExports = {
+  function helperGetLocatOrigin () {
+    return staticLocation ? (staticLocation.origin || (staticLocation.protocol + '//' + staticLocation.host)) : ''
+  }
+
+  // core
+
+  // object
+
+  // array
+
+  // base
+
+  // number
+
+  // date
+
+  // string
+
+  // function
+
+  // url
+
+  // browse
+
+  XEUtils.mixin({
+    // object
+    assign: assign,
+    objectEach: objectEach,
+    lastObjectEach: lastObjectEach,
+    objectMap: objectMap,
+
+    // array
+    uniq: uniq,
+    union: union,
+    sortBy: sortBy,
+    shuffle: shuffle,
+    sample: sample,
+    some: some,
+    every: every,
+    slice: slice,
+    filter: filter,
+    find: find,
+    findKey: findKey,
+    includes: includes,
+    arrayIndexOf: arrayIndexOf,
+    arrayLastIndexOf: arrayLastIndexOf,
+    map: map,
+    sum: sum,
+    mean: mean,
+    reduce: reduce,
+    copyWithin: copyWithin,
+    chunk: chunk,
+    zip: zip,
+    unzip: unzip,
+    zipObject: zipObject,
+    toArray: toArray,
+    includeArrays: includeArrays,
+    pluck: pluck,
+    invoke: invoke,
+    invokeMap: invoke,
+    arrayEach: arrayEach,
+    lastArrayEach: lastArrayEach,
+    toArrayTree: toArrayTree,
+    toTreeArray: toTreeArray,
+    findTree: findTree,
+    eachTree: eachTree,
+    mapTree: mapTree,
+    filterTree: filterTree,
+    searchTree: searchTree,
+
+    // base
+    hasOwnProp: hasOwnProp,
+    eqNull: eqNull,
+    isNaN: isNumberNaN,
+    isFinite: isNumberFinite,
+    isUndefined: isUndefined,
+    isArray: isArray,
+    isFloat: isFloat,
+    isInteger: isInteger,
+    isFunction: isFunction,
+    isBoolean: isBoolean,
+    isString: isString,
+    isNumber: isNumber,
+    isRegExp: isRegExp,
+    isObject: isObject,
+    isPlainObject: isPlainObject,
+    isDate: isDate,
+    isError: isError,
+    isTypeError: isTypeError,
+    isEmpty: isEmpty,
+    isNull: isNull,
+    isSymbol: isSymbol,
+    isArguments: isArguments,
+    isElement: isElement,
+    isDocument: isDocument,
+    isWindow: isWindow,
+    isFormData: isFormData,
+    isMap: isMap,
+    isWeakMap: isWeakMap,
+    isSet: isSet,
+    isWeakSet: isWeakSet,
+    isLeapYear: isLeapYear,
+    isMatch: isMatch,
+    isEqual: isEqual,
+    isEqualWith: isEqualWith,
+    getType: getType,
+    uniqueId: uniqueId,
+    getSize: getSize,
+    indexOf: indexOf,
+    lastIndexOf: lastIndexOf,
+    findIndexOf: findIndexOf,
+    findLastIndexOf: findLastIndexOf,
+    toStringJSON: toStringJSON,
+    toJSONString: toJSONString,
+    keys: keys,
+    values: values,
+    entries: entries,
+    pick: pick,
+    omit: omit,
+    first: first,
+    last: last,
+    each: each,
+    forOf: forOf,
+    lastForOf: lastForOf,
+    lastEach: lastEach,
+    has: has,
+    get: get,
+    set: set,
+    groupBy: groupBy,
+    countBy: countBy,
+    clone: clone,
+    clear: clear,
+    remove: remove,
+    range: range,
+    destructuring: destructuring,
+
+    // number
+    random: random,
+    min: min,
+    max: max,
+    commafy: commafy,
+    toFixedString: toFixedString,
+    toFixedNumber: toFixedNumber,
+    toNumber: toNumber,
+    toInteger: toInteger,
+
+    // date
+    now: now,
+    timestamp: timestamp,
+    isDateSame: isDateSame,
+    toStringDate: toStringDate,
+    toDateString: toDateString,
+    getWhatYear: getWhatYear,
+    getWhatMonth: getWhatMonth,
+    getWhatWeek: getWhatWeek,
+    getWhatDay: getWhatDay,
+    getYearDay: getYearDay,
+    getYearWeek: getYearWeek,
+    getMonthWeek: getMonthWeek,
+    getDayOfYear: getDayOfYear,
+    getDayOfMonth: getDayOfMonth,
+    getDateDiff: getDateDiff,
+
+    // string
+    trim: trim,
+    trimLeft: trimLeft,
+    trimRight: trimRight,
+    escape: escape,
+    unescape: unescape,
+    camelCase: camelCase,
+    kebabCase: kebabCase,
+    repeat: repeat,
+    padStart: padStart,
+    padEnd: padEnd,
+    startsWith: startsWith,
+    endsWith: endsWith,
+    template: template,
+    toString: toValString,
+
+    // function
+    property: property,
+    bind: bind,
+    once: once,
+    after: after,
+    before: before,
+    throttle: throttle,
+    debounce: debounce,
+    delay: delay,
+
+    // url
+    unserialize: unserialize,
+    serialize: serialize,
+    parseUrl: parseUrl,
+
+    // browse
+    getBaseURL: getBaseURL,
+    locat: locat,
+    browse: browse,
     cookie: cookie
-  }
-
-  /* eslint-disable valid-typeof */
-  function isBrowseStorage (storage) {
-    try {
-      var testKey = '__xe_t'
-      storage.setItem(testKey, 1)
-      storage.removeItem(testKey)
-      return true
-    } catch (e) {
-      return false
-    }
-  }
-
-  function isBrowseType (type) {
-    return navigator.userAgent.indexOf(type) > -1
-  }
-
-  /**
-    * 获取浏览器内核
-    * @return Object
-    */
-  function browse () {
-    var $body, isChrome, isEdge
-    var isMobile = false
-    var result = {
-      isNode: false,
-      isMobile: isMobile,
-      isPC: false,
-      isDoc: !!staticDocument
-    }
-    if (!staticWindow && typeof process !== staticStrUndefined) {
-      result.isNode = true
-    } else {
-      isEdge = isBrowseType('Edge')
-      isChrome = isBrowseType('Chrome')
-      isMobile = /(Android|webOS|iPhone|iPad|iPod|SymbianOS|BlackBerry|Windows Phone)/.test(navigator.userAgent)
-      if (result.isDoc) {
-        $body = staticDocument.body || staticDocument.documentElement
-        arrayEach(['webkit', 'khtml', 'moz', 'ms', 'o'], function (core) {
-          result['-' + core] = !!$body[core + 'MatchesSelector']
-        })
-      }
-      assign(result, {
-        edge: isEdge,
-        firefox: isBrowseType('Firefox'),
-        msie: !isEdge && result['-ms'],
-        safari: !isChrome && !isEdge && isBrowseType('Safari'),
-        isMobile: isMobile,
-        isPC: !isMobile,
-        isLocalStorage: isBrowseStorage(staticWindow.localStorage),
-        isSessionStorage: isBrowseStorage(staticWindow.sessionStorage)
-      })
-    }
-    return result
-  }
-
-  var browseExports = {
-    browse: browse
-  }
-
-  XEUtils.mixin(
-    assign(
-      {},
-      baseExports,
-      arrayExports,
-      objectExports,
-      browseExports,
-      cookieExports,
-      dateExports,
-      locatExports,
-      numberExports,
-      stringExports,
-      functionExports
-    )
-  )
+  })
 
   return XEUtils
 }))

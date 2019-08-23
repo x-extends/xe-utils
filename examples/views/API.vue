@@ -2579,6 +2579,42 @@ export default {
                 XEUtils.template('{{ name }} {{{age}}}', {name: 'test1', age: 26}) // test1 {26}
                 `
               ]
+            }
+          ]
+        },
+        {
+          label: 'Url',
+          value: 'url',
+          expand: true,
+          children: [
+            {
+              name: 'parseUrl',
+              args: 'url',
+              title: '解析 URL 参数',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.parseUrl('http://localhost:8080/demo/#/home?id=123')
+                // {
+                //   hash: '#/home?id=123',
+                //   hashKey: '/home',
+                //   hashQuery: {
+                //     id: '123'
+                //   },
+                //   host: 'localhost:8080',
+                //   hostname: 'localhost.com',
+                //   href: 'http://localhost:8080/demo/#/home?id=123',
+                //   origin: 'http://localhost:8080',
+                //   path: '/demo/',
+                //   pathname: '/demo/',
+                //   port: '8080',
+                //   protocol: 'http:',
+                //   search: '',
+                //   searchQuery: {}
+                // }
+                `
+              ]
             },
             {
               name: 'serialize',
@@ -2661,35 +2697,6 @@ export default {
                 //   searchQuery: {
                 //     id: '123'
                 //   }
-                // }
-                `
-              ]
-            },
-            {
-              name: 'parseUrl',
-              args: 'url',
-              title: '解析 URL 参数',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.parseUrl('http://localhost:8080/demo/#/home?id=123')
-                // {
-                //   hash: '#/home?id=123',
-                //   hashKey: '/home',
-                //   hashQuery: {
-                //     id: '123'
-                //   },
-                //   host: 'localhost:8080',
-                //   hostname: 'localhost.com',
-                //   href: 'http://localhost:8080/demo/#/home?id=123',
-                //   origin: 'http://localhost:8080',
-                //   path: '/demo/',
-                //   pathname: '/demo/',
-                //   port: '8080',
-                //   protocol: 'http:',
-                //   search: '',
-                //   searchQuery: {}
                 // }
                 `
               ]

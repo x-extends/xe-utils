@@ -6,7 +6,7 @@
 [![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/lib/index.umd.min.js)
 [![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/xuliangzhan/xe-utils/blob/master/LICENSE)
 
-javascript 函数库、工具类，提供一套实用的基础函数、日期转换函数等...
+javascript 函数库、工具类，提供一套实用的函数库
 
 ## Browser Support
 
@@ -45,7 +45,7 @@ XEUtils.toDateString(Date.now()) // 2018-01-01 10:30:28
 XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
 ```
 
-## Import on demand（推荐方式，需要哪个函数就添加哪个，不浪费一丝空间）
+## Import on demand
 
 By introducing the method as needed, the volume can be minimized. (The minimal lib is ≈ 400B gzip ≈ 60B)  
 这样按需引入方法，可以使体积达到最小（最小的包大约是 ≈ 400B gzip ≈ 60B）
@@ -77,8 +77,7 @@ import numberMethods from 'xe-utils/methods/number'
 import dateMethods from 'xe-utils/methods/date'
 import stringMethods from 'xe-utils/methods/string'
 import functionMethods from 'xe-utils/methods/function'
-import locatMethods from 'xe-utils/methods/locat'
-import cookieMethods from 'xe-utils/methods/cookie'
+import urlMethods from 'xe-utils/methods/url'
 import browseMethods from 'xe-utils/methods/browse'
 
 XEUtils.mixin({
@@ -89,8 +88,7 @@ XEUtils.mixin({
   dateMethods,
   stringMethods,
   functionMethods,
-  locatMethods,
-  cookieMethods,
+  urlMethods,
   browseMethods
 })
 

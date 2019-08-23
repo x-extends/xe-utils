@@ -1,8 +1,8 @@
 var staticLocation = require('../static/staticLocation')
 
-var helperGetLocatOrigin = require('./helperGetLocatOrigin')
-
 var unserialize = require('./unserialize')
+
+var helperGetLocatOrigin = require('../browse/helperGetLocatOrigin')
 
 function parseURLQuery (uri) {
   return unserialize(uri.split('?')[1] || '')

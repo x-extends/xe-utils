@@ -1,6 +1,6 @@
 var staticLocation = require('../static/staticLocation')
 
-var parseUrl = require('./parseUrl')
+var parseUrl = require('../url/parseUrl')
 
 /**
   * 获取地址栏信息
