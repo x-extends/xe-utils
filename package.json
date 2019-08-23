@@ -5,7 +5,7 @@
   "main": "index.js",
   "unpkg": "dist/xe-utils.js",
   "jsdelivr": "dist/xe-utils.js",
-  "typings": "types/index.d.ts",
+  "typings": "index.d.ts",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -15,7 +15,6 @@
   },
   "files": [
     "methods",
-    "types",
     "dist",
     "*.d.ts"
   ],
