@@ -80,7 +80,7 @@ import functionMethods from 'xe-utils/methods/function'
 import urlMethods from 'xe-utils/methods/url'
 import browseMethods from 'xe-utils/methods/browse'
 
-XEUtils.mixin({
+XEUtils.mixin(
   objectMethods,
   arrayMethods,
   baseMethods,
@@ -90,7 +90,7 @@ XEUtils.mixin({
   functionMethods,
   urlMethods,
   browseMethods
-})
+)
 
 XEUtils.toStringDate('2018-01-01 10:30:28') // Mon Jan 01 2018 10:30:28 GMT+0800 (中国标准时间)
 ```
