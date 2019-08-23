@@ -6,6 +6,7 @@ var hasOwnProp = require('./hasOwnProp')
 
 /**
  * 检查键、路径是否是该对象的属性
+ *
  * @param {Object/Array} data 对象
  * @param {String/Function} property 键、路径
  * @return {Boolean}

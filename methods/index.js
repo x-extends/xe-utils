@@ -5,6 +5,7 @@ var XEUtils = require('./xe-utils')
 
 // object
 var assign = require('./object/assign')
+var extend = require('./object/extend')
 var objectEach = require('./object/objectEach')
 var lastObjectEach = require('./object/lastObjectEach')
 var objectMap = require('./object/objectMap')
@@ -37,6 +38,7 @@ var unzip = require('./array/unzip')
 var zipObject = require('./array/zipObject')
 var pluck = require('./array/pluck')
 var invoke = require('./array/invoke')
+var invokeMap = require('./array/invokeMap')
 var toArrayTree = require('./array/toArrayTree')
 var toTreeArray = require('./array/toTreeArray')
 var findTree = require('./array/findTree')
@@ -180,6 +182,7 @@ var browse = require('./browse/browse')
 XEUtils.mixin({
   // object
   assign: assign,
+  extend: extend,
   objectEach: objectEach,
   lastObjectEach: lastObjectEach,
   objectMap: objectMap,
@@ -212,7 +215,7 @@ XEUtils.mixin({
   includeArrays: includeArrays,
   pluck: pluck,
   invoke: invoke,
-  invokeMap: invoke,
+  invokeMap: invokeMap,
   arrayEach: arrayEach,
   lastArrayEach: lastArrayEach,
   toArrayTree: toArrayTree,

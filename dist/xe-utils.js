@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.1.0
+ * xe-utils.js v2.2.0
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -31,15 +31,16 @@
     ]
   }
 
-  function mixin (methods) {
-    each(methods, function (fn, name) {
-      XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
-        var result = fn.apply(XEUtils.$context, arguments)
-        XEUtils.$context = null
-        return result
-      } : fn
+  function mixin () {
+    arrayEach(arguments, function (methods) {
+      each(methods, function (fn, name) {
+        XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
+          var result = fn.apply(XEUtils.$context, arguments)
+          XEUtils.$context = null
+          return result
+        } : fn
+      })
     })
-    return XEUtils
   }
 
   function setup (options) {
@@ -90,7 +91,7 @@
 
   var objectAssignFns = Object.assign
 
-  function extend (destination, args, isClone) {
+  function handleAssign (destination, args, isClone) {
     var len = args.length
     for (var source, index = 1; index < len; index++) {
       source = args[index]
@@ -116,14 +117,16 @@
       if (target === true) {
         if (args.length > 1) {
           target = isArray(target[1]) ? [] : {}
-          return extend(target, args, true)
+          return handleAssign(target, args, true)
         }
       } else {
-        return objectAssignFns ? objectAssignFns.apply(Object, args) : extend(target, args)
+        return objectAssignFns ? objectAssignFns.apply(Object, args) : handleAssign(target, args)
       }
     }
     return target
   }
+
+  var extend = assign
 
   /**
     * 指定方法后的返回值组成的新对象
@@ -706,6 +709,8 @@
     })
   }
 
+  var invokeMap = invoke
+
   function arrayEach (obj, iterate, context) {
     if (obj) {
       if (obj.forEach) {
@@ -992,10 +997,22 @@
     }
   }
 
+  /**
+    * 判断对象自身属性中是否具有指定的属性
+    *
+    * @param {Object} obj 对象
+    * @param {String/Number} key 键值
+    * @return {Boolean}
+    */
   function hasOwnProp (obj, key) {
     return obj.hasOwnProperty(key)
   }
 
+  /**
+   * 判断是否 undefined 和 null
+   * @param {Object} obj 对象
+   * @return {Boolean}
+   */
   function eqNull (obj) {
     return isNull(obj) || isUndefined(obj)
   }
@@ -1623,6 +1640,7 @@
 
   /**
    * 检查键、路径是否是该对象的属性
+   *
    * @param {Object/Array} data 对象
    * @param {String/Function} property 键、路径
    * @return {Boolean}
@@ -2751,7 +2769,7 @@
   }
 
   /**
-    * 将字符串重复 n次
+    * 将字符串重复 n 次
     *
     * @param {String} str 字符串
     * @param {Number} count 次数
@@ -2774,10 +2792,10 @@
     * @param {Number} padString 补全字符
     * @return {String}
     */
-  function padStart (str, targetLength, padString, UNDEFINED) {
+  function padStart (str, targetLength, padString) {
     var rest = toValString(str)
     targetLength = targetLength >> 0
-    padString = padString === UNDEFINED ? ' ' : '' + padString
+    padString = isUndefined(padString) ? ' ' : '' + padString
     if (rest.padStart) {
       return rest.padStart(targetLength, padString)
     }
@@ -2799,10 +2817,10 @@
     * @param {Number} padString 补全字符
     * @return {String}
     */
-  function padEnd (str, targetLength, padString, UNDEFINED) {
+  function padEnd (str, targetLength, padString) {
     var rest = toValString(str)
     targetLength = targetLength >> 0
-    padString = padString === UNDEFINED ? ' ' : '' + padString
+    padString = isUndefined(padString) ? ' ' : '' + padString
     if (rest.padEnd) {
       return rest.padEnd(targetLength, padString)
     }
@@ -3396,6 +3414,7 @@
   XEUtils.mixin({
     // object
     assign: assign,
+    extend: extend,
     objectEach: objectEach,
     lastObjectEach: lastObjectEach,
     objectMap: objectMap,
@@ -3428,7 +3447,7 @@
     includeArrays: includeArrays,
     pluck: pluck,
     invoke: invoke,
-    invokeMap: invoke,
+    invokeMap: invokeMap,
     arrayEach: arrayEach,
     lastArrayEach: lastArrayEach,
     toArrayTree: toArrayTree,

@@ -49,7 +49,7 @@ import arrayLastIndexOf from 'xe-utils/methods/array/arrayLastIndexOf'
 import hasOwnProp from 'xe-utils/methods/base/hasOwnProp'
 import isArray from 'xe-utils/methods/base/isArray'
 import isNull from 'xe-utils/methods/base/isNull'
-import isNaN from 'xe-utils/methods/base/isNaN'
+import isNumberNaN from 'xe-utils/methods/base/isNaN'
 import isUndefined from 'xe-utils/methods/base/isUndefined'
 import isFunction from 'xe-utils/methods/base/isFunction'
 import isObject from 'xe-utils/methods/base/isObject'
@@ -70,7 +70,7 @@ import getSize from 'xe-utils/methods/base/getSize'
 import lastEach from 'xe-utils/methods/base/lastEach'
 import remove from 'xe-utils/methods/base/remove'
 import clear from 'xe-utils/methods/base/clear'
-import isFinite from 'xe-utils/methods/base/isFinite'
+import isNumberFinite from 'xe-utils/methods/base/isFinite'
 import isFloat from 'xe-utils/methods/base/isFloat'
 import isInteger from 'xe-utils/methods/base/isInteger'
 import isBoolean from 'xe-utils/methods/base/isBoolean'
@@ -152,7 +152,7 @@ import kebabCase from 'xe-utils/methods/string/kebabCase'
 import startsWith from 'xe-utils/methods/string/startsWith'
 import endsWith from 'xe-utils/methods/string/endsWith'
 import template from 'xe-utils/methods/string/template'
-import toString from 'xe-utils/methods/string/toString'
+import toValString from 'xe-utils/methods/string/toString'
 
 // function
 import property from 'xe-utils/methods/function/property'
@@ -224,7 +224,7 @@ XEUtils.mixin({
   hasOwnProp,
   isArray,
   isNull,
-  isNaN,
+  isNaN: isNumberNaN,
   isUndefined,
   isFunction,
   isObject,
@@ -245,7 +245,7 @@ XEUtils.mixin({
   lastEach,
   remove,
   clear,
-  isFinite,
+  isFinite: isNumberFinite,
   isFloat,
   isInteger,
   isBoolean,
@@ -327,7 +327,7 @@ XEUtils.mixin({
   startsWith,
   endsWith,
   template,
-  toString,
+  toString: toValString,
 
   // function
   property,

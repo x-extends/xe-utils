@@ -1,6 +1,8 @@
 var repeat = require('./repeat')
 var toValString = require('./toString')
 
+var isUndefined = require('../base/isUndefined')
+
 /**
   * 用指定字符从后面开始补全字符串
   *
@@ -9,10 +11,10 @@ var toValString = require('./toString')
   * @param {Number} padString 补全字符
   * @return {String}
   */
-function padEnd (str, targetLength, padString, UNDEFINED) {
+function padEnd (str, targetLength, padString) {
   var rest = toValString(str)
   targetLength = targetLength >> 0
-  padString = padString === UNDEFINED ? ' ' : '' + padString
+  padString = isUndefined(padString) ? ' ' : '' + padString
   if (rest.padEnd) {
     return rest.padEnd(targetLength, padString)
   }

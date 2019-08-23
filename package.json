@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A JavaScript tools library.",
   "main": "index.js",
   "unpkg": "dist/xe-utils.js",
@@ -16,7 +16,8 @@
   "files": [
     "methods",
     "types",
-    "dist"
+    "dist",
+    "*.d.ts"
   ],
   "dependencies": {},
   "devDependencies": {
@@ -28,11 +29,12 @@
     "core-js": "^2.6.5",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "highlight.js": "^9.15.6",
     "jest": "^24.8.0",
     "markdown-doctest": "^0.9.1",
-    "highlight.js": "^9.15.6",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
+    "tern": "^0.24.1",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue-template-compiler": "^2.6.10"

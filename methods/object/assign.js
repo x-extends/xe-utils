@@ -5,7 +5,7 @@ var clone = require('../base/clone')
 
 var objectAssignFns = Object.assign
 
-function extend (destination, args, isClone) {
+function handleAssign (destination, args, isClone) {
   var len = args.length
   for (var source, index = 1; index < len; index++) {
     source = args[index]
@@ -31,10 +31,10 @@ var assign = function (target) {
     if (target === true) {
       if (args.length > 1) {
         target = isArray(target[1]) ? [] : {}
-        return extend(target, args, true)
+        return handleAssign(target, args, true)
       }
     } else {
-      return objectAssignFns ? objectAssignFns.apply(Object, args) : extend(target, args)
+      return objectAssignFns ? objectAssignFns.apply(Object, args) : handleAssign(target, args)
     }
   }
   return target

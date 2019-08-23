@@ -3,7 +3,7 @@ var staticParseInt = require('../static/staticParseInt')
 var toValString = require('./toString')
 
 /**
-  * 将字符串重复 n次
+  * 将字符串重复 n 次
   *
   * @param {String} str 字符串
   * @param {Number} count 次数
