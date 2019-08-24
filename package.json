@@ -18,7 +18,6 @@
     "dist",
     "*.d.ts"
   ],
-  "dependencies": {},
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-eslint": "^3.8.0",
