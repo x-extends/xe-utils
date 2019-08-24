@@ -81,14 +81,23 @@ import urlMethods from 'xe-utils/methods/url'
 import browseMethods from 'xe-utils/methods/browse'
 
 XEUtils.mixin(
+  // object
   objectMethods,
+  // array
   arrayMethods,
+  // base
   baseMethods,
+  // number
   numberMethods,
+  // date
   dateMethods,
+  // string
   stringMethods,
+  // function
   functionMethods,
+  // url
   urlMethods,
+  // browse
   browseMethods
 )
 
