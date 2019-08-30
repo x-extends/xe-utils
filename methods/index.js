@@ -1,16 +1,16 @@
 'use strict'
 
-// core
+// 核心
 var XEUtils = require('./xe-utils')
 
-// object
+// 对象相关的方法
 var assign = require('./object/assign')
 var extend = require('./object/extend')
 var objectEach = require('./object/objectEach')
 var lastObjectEach = require('./object/lastObjectEach')
 var objectMap = require('./object/objectMap')
 
-// array
+// 数组相关的方法
 var map = require('./array/map')
 var some = require('./array/some')
 var every = require('./array/every')
@@ -49,7 +49,7 @@ var searchTree = require('./array/searchTree')
 var arrayIndexOf = require('./array/arrayIndexOf')
 var arrayLastIndexOf = require('./array/arrayLastIndexOf')
 
-// base
+// 基础方法
 var hasOwnProp = require('./base/hasOwnProp')
 var isArray = require('./base/isArray')
 var isNull = require('./base/isNull')
@@ -115,7 +115,7 @@ var countBy = require('./base/countBy')
 var range = require('./base/range')
 var destructuring = require('./base/destructuring')
 
-// number
+// 数值相关方法
 var random = require('./number/random')
 var max = require('./number/max')
 var min = require('./number/min')
@@ -125,7 +125,7 @@ var toFixedNumber = require('./number/toFixedNumber')
 var toInteger = require('./number/toInteger')
 var toNumber = require('./number/toNumber')
 
-// date
+// 日期相关的方法
 var getWhatYear = require('./date/getWhatYear')
 var getWhatMonth = require('./date/getWhatMonth')
 var getWhatDay = require('./date/getWhatDay')
@@ -142,7 +142,7 @@ var getDayOfYear = require('./date/getDayOfYear')
 var getDayOfMonth = require('./date/getDayOfMonth')
 var getDateDiff = require('./date/getDateDiff')
 
-// string
+// 字符串相关的方法
 var padEnd = require('./string/padEnd')
 var padStart = require('./string/padStart')
 var repeat = require('./string/repeat')
@@ -158,7 +158,7 @@ var endsWith = require('./string/endsWith')
 var template = require('./string/template')
 var toValString = require('./string/toString')
 
-// function
+// 函数相关的方法
 var property = require('./function/property')
 var bind = require('./function/bind')
 var once = require('./function/once')
@@ -168,12 +168,12 @@ var throttle = require('./function/throttle')
 var debounce = require('./function/debounce')
 var delay = require('./function/delay')
 
-// url
+// 地址相关的方法
 var unserialize = require('./url/unserialize')
 var serialize = require('./url/serialize')
 var parseUrl = require('./url/parseUrl')
 
-// browse
+// 浏览器相关的方法
 var getBaseURL = require('./browse/getBaseURL')
 var locat = require('./browse/locat')
 var cookie = require('./browse/cookie')

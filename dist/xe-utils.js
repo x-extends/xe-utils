@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.1
+ * xe-utils.js v2.2.2
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -3391,25 +3391,25 @@
     return staticLocation ? (staticLocation.origin || (staticLocation.protocol + '//' + staticLocation.host)) : ''
   }
 
-  // core
+  // 核心
 
-  // object
+  // 对象相关的方法
 
-  // array
+  // 数组相关的方法
 
-  // base
+  // 基础方法
 
-  // number
+  // 数值相关方法
 
-  // date
+  // 日期相关的方法
 
-  // string
+  // 字符串相关的方法
 
-  // function
+  // 函数相关的方法
 
-  // url
+  // 地址相关的方法
 
-  // browse
+  // 浏览器相关的方法
 
   XEUtils.mixin({
     // object

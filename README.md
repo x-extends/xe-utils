@@ -6,7 +6,7 @@
 [![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/lib/index.umd.min.js)
 [![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/xuliangzhan/xe-utils/blob/master/LICENSE)
 
-javascript 函数库、工具类，提供一套实用的函数库
+JavaScript 函数库、工具类
 
 ## Browser Support
 
@@ -47,11 +47,9 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 
 ## Import on demand
 
-By introducing the method as needed, the volume can be minimized.  
 这样按需引入方法，可以使体积达到最小
 
 单个导入，包的大小 gzip >≈ 60B 起步，按需导入，绝不放过任何一个冗余的函数  
-Single import, package size gzip >≈ 60B start, import as needed, no waste of space.
 
 ```javascript
 import XEUtils from 'xe-utils/methods/xe-utils'
@@ -68,7 +66,6 @@ XEUtils.mixin({
 XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss') // 2018-01-01 10:30:28
 ```
 
-Import all methods by methods  
 按功能导入所有方法
 
 ```javascript

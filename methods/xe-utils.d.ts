@@ -8,13 +8,13 @@ interface XEUtilsMethods {
 
   /**
    * 将您自己的实用函数扩展到 XEUtils
-   * @param methods 扩展函数集
+   * @param methods 函数集
    */
   mixin(...methods: object[]): void;
 }
 
 /**
- * A JavaScript tools library.
+ * JavaScript 函数库、工具类
  */
 export declare var XEUtils: XEUtilsMethods;
 
