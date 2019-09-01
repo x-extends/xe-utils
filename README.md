@@ -1,5 +1,6 @@
 # xe-utils
 
+[![gitee star](https://gitee.com/xuliangzhan_admin/xe-utils/badge/star.svg?theme=dark)](https://gitee.com/xuliangzhan_admin/xe-utils/stargazers)
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.org/package/xe-utils)
 [![npm build](https://travis-ci.org/xuliangzhan/xe-utils.svg?branch=master)](https://travis-ci.org/xuliangzhan/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
