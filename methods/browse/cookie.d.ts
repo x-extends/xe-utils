@@ -1,3 +1,5 @@
+import { XEUtilsMethods } from '../xe-utils'
+
 export interface XECookie {
   /**
    * 根据 name 判断 Cookie 是否存在
@@ -44,5 +46,17 @@ export interface XECookie {
  * @param options 可选参数 
  */
 export declare function cookie(): XECookie;
+
+declare module '../xe-utils' {
+  interface XEUtilsMethods {
+    /**
+    * Cookie 操作函数
+    * @param name 键/数组/对象
+    * @param value 值
+    * @param options 可选参数 
+    */
+    cookie(): XECookie;
+  }
+}
 
 export default cookie

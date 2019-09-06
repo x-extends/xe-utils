@@ -1,4 +1,4 @@
-interface XEUtilsMethods {
+export interface XEUtilsMethods {
   v: string;
   /**
    * 设置全局参数
