@@ -286,15 +286,13 @@ export default {
             {
               name: 'isEmpty',
               args: 'val',
-              title: '判断是否为空,包括空对象、空数值、空字符串',
+              title: '判断是否为空对象',
               desc: '',
               params: [],
               codes: [
                 `
                 XEUtils.isEmpty([11, 22]) // false
-                XEUtils.isEmpty() // true
-                XEUtils.isEmpty(0) // true
-                XEUtils.isEmpty('') // true
+                XEUtils.isEmpty({a:null}) // false
                 XEUtils.isEmpty(null) // true
                 XEUtils.isEmpty({}) // true
                 XEUtils.isEmpty([]) // true

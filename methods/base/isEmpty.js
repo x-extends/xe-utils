@@ -1,5 +1,5 @@
 /**
-  * 判断是否为空,包括空对象、空数值、空字符串
+  * 判断是否为空对象
   *
   * @param {Object} obj 对象
   * @return {Boolean}
