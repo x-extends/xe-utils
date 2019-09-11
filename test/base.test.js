@@ -643,10 +643,16 @@ describe('Base functions', () => {
       XEUtils.isEmpty({ a: 1 })
     ).toEqual(false)
     expect(
+      XEUtils.isEmpty(' ')
+    ).toEqual(false)
+    expect(
       XEUtils.isEmpty()
     ).toEqual(true)
     expect(
       XEUtils.isEmpty(0)
+    ).toEqual(true)
+    expect(
+      XEUtils.isEmpty(100)
     ).toEqual(true)
     expect(
       XEUtils.isEmpty(-1)
