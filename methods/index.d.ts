@@ -1,3 +1,5 @@
+import XEUtils from './xe-utils'
+
 // core
 export * from './xe-utils'
 
@@ -176,3 +178,5 @@ export * from './browse/getBaseURL'
 export * from './browse/locat'
 export * from './browse/cookie'
 export * from './browse/browse'
+
+export default XEUtils
