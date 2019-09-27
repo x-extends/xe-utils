@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.5
+ * xe-utils.js v2.2.6
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2198,8 +2198,12 @@
    * @return {String}
    */
   function toFixedString (str, digits) {
-    var nums = ('' + toFixedNumber(str, digits)).split('.')
-    return digits ? [nums[0], '.', padEnd(nums[1] || '', digits, '0')].join('') : nums[0]
+    var nums = helperFixedNumber(str, digits).split('.')
+    var rest = digits ? [nums[0], '.', padEnd(nums[1] || '', digits, '0')].join('') : nums[0]
+    if (rest.substring(0, 1) === '-' && parseFloat(rest) === 0) {
+      return digits ? rest.replace(/^-/, '') : '0'
+    }
+    return rest
   }
 
   /**
@@ -2209,10 +2213,8 @@
    * @return {String}
    */
   function toFixedNumber (str, digits) {
-    if (digits) {
-      return toNumber(('' + toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1'))
-    }
-    return toInteger(str)
+    var rest = (digits ? toNumber : toInteger)(helperFixedNumber(str, digits))
+    return rest === 0 ? 0 : rest
   }
 
   /**
@@ -2254,10 +2256,16 @@
     return function (str) {
       if (str) {
         var num = handle(str)
-        return isNaN(num) ? 0 : num
+        if (!isNaN(num)) {
+          return num
+        }
       }
       return 0
     }
+  }
+
+  function helperFixedNumber (str, digits) {
+    return toValString(toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1')
   }
 
   /**
@@ -2877,6 +2885,12 @@
   }
 
   function toValString (obj) {
+    if (isNumber(obj)) {
+      if (('' + obj).indexOf('e-') >= 0) {
+        var isNegative = obj < 0
+        return (isNegative ? '-' : '') + '0' + ('' + ((isNegative ? Math.abs(obj) : obj) + 1)).substr(1)
+      }
+    }
     return '' + (eqNull(obj) ? '' : obj)
   }
 

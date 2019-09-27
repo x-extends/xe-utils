@@ -90,6 +90,12 @@ describe('Number functions', () => {
       XEUtils.toFixedString('null')
     ).toEqual('0')
     expect(
+      XEUtils.toFixedString('-0')
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString('-0.0')
+    ).toEqual('0')
+    expect(
       XEUtils.toFixedString([])
     ).toEqual('0')
     expect(
@@ -143,6 +149,30 @@ describe('Number functions', () => {
     expect(
       XEUtils.toFixedString('1452349847.3979', 20)
     ).toEqual('1452349847.39790000000000000000')
+    expect(
+      XEUtils.toFixedString(1e-8)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString('1e-8', 6)
+    ).toEqual('0.000000')
+    expect(
+      XEUtils.toFixedString(1e-8, 8)
+    ).toEqual('0.00000001')
+    expect(
+      XEUtils.toFixedString('1e-8', 12)
+    ).toEqual('0.000000010000')
+    expect(
+      XEUtils.toFixedString(-1e-12)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixedString('-1e-8', 8)
+    ).toEqual('-0.00000001')
+    expect(
+      XEUtils.toFixedString(-123e-8, 4)
+    ).toEqual('0.0000')
+    expect(
+      XEUtils.toFixedString('-123e-8', 12)
+    ).toEqual('-0.000001230000')
   })
 
   test('toFixedNumber()', () => {
@@ -151,6 +181,12 @@ describe('Number functions', () => {
     ).toEqual(0)
     expect(
       XEUtils.toFixedNumber('null')
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('-0')
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('-0.0')
     ).toEqual(0)
     expect(
       XEUtils.toFixedNumber([])
@@ -206,6 +242,30 @@ describe('Number functions', () => {
     expect(
       XEUtils.toFixedNumber('1452349847.3979', 20)
     ).toEqual(1452349847.3979)
+    expect(
+      XEUtils.toFixedNumber(1e-8)
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('9e-8', 6)
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber(9e-8, 8)
+    ).toEqual(9e-8)
+    expect(
+      XEUtils.toFixedNumber('9e-8', 12)
+    ).toEqual(9e-8)
+    expect(
+      XEUtils.toFixedNumber(-9e-12)
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('-9e-8', 8)
+    ).toEqual(-9e-8)
+    expect(
+      XEUtils.toFixedNumber(-923e-8, 4)
+    ).toEqual(0)
+    expect(
+      XEUtils.toFixedNumber('-923e-8', 12)
+    ).toEqual(-0.00000923)
   })
 
   test('toNumber()', () => {
