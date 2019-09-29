@@ -1,24 +1,32 @@
 import { XEUtilsMethods } from '../xe-utils'
 
+function searchTreeIterate(item: any, index: number, items: Array<any>, path: Array<string>, parent: any, nodes: Array<any>){}
+
+interface searchTreeOptions {
+  children?: string = 'children';
+  mapChildren?: string;
+  original?: boolean;
+}
+
 /**
  * 从树结构中根据回调查找数据
  * @param {Object} obj 对象/数组
- * @param {Function} iterate(item, index, items, path, parent) 回调
+ * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function searchTree(array: Array<any>, iterate: Function, options?: object, context?: any): Array<any>;
+export declare function searchTree(array: Array<any>, iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): Array<any>;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
     /**
      * 从树结构中根据回调查找数据
      * @param {Object} obj 对象/数组
-     * @param {Function} iterate(item, index, items, path, parent) 回调
+     * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
      * @param {Object} options {children: 'children'}
      * @param {Object} context 上下文
      */
-    searchTree(array: Array<any>, iterate: Function, options?: object, context?: any): Array<any>;
+    searchTree(array: Array<any>, iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): Array<any>;
   }
 }
 
