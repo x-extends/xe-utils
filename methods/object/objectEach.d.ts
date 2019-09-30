@@ -1,12 +1,14 @@
 import { XEUtilsMethods } from '../xe-utils'
 
+export declare function objectEachIterate(item?: any, index?: string, obj?: any): any;
+
 /**
  * 对象迭代器
  * @param obj 对象
  * @param iteratee 回调 
  * @param context 上下文
  */
-export declare function objectEach(obj: any, iteratee: Function, context ?: any): void;
+export declare function objectEach(obj: any, iteratee: typeof objectEachIterate, context ?: any): void;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -16,7 +18,7 @@ declare module '../xe-utils' {
      * @param iteratee 回调 
      * @param context 上下文
      */
-    objectEach(obj: any, iteratee: Function, context ?: any): void;
+    objectEach(obj: any, iteratee: typeof objectEachIterate, context ?: any): void;
   }
 }
 

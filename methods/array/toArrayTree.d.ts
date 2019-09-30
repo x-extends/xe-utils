@@ -1,10 +1,10 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-interface toArrayTreeOptions {
+export interface toArrayTreeOptions {
   strict?: boolean;
-  key?: string = 'id';
-  parentKey?: string = 'parentId';
-  children?: string = 'children';
+  key?: string;
+  parentKey?: string;
+  children?: string;
   sortKey?: string;
   reverse?: string;
   data?: string;

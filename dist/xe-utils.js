@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.7
+ * xe-utils.js v2.2.8
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve

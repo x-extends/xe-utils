@@ -1,9 +1,9 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-function searchTreeIterate(item: any, index: number, items: Array<any>, path: Array<string>, parent: any, nodes: Array<any>){}
+export declare function searchTreeIterate(item: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
 
-interface searchTreeOptions {
-  children?: string = 'children';
+export interface searchTreeOptions {
+  children?: string;
   mapChildren?: string;
   original?: boolean;
 }

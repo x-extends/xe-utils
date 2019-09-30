@@ -1,9 +1,9 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-function filterTreeIterate(item: any, index: number, items: Array<any>, path: Array<string>, parent: any, nodes: Array<any>){}
+export declare function filterTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
 
-interface filterTreeOptions {
-  children?: string = 'children';
+export interface filterTreeOptions {
+  children?: string;
 }
 
 /**

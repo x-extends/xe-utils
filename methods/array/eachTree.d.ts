@@ -1,9 +1,9 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-function eachTreeIterate(item: any, index: number, items: Array<any>, path: Array<string>, parent: any, nodes: Array<any>){}
+export declare function eachTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
 
-interface eachTreeOptions {
-  children?: string = 'children';
+export interface eachTreeOptions {
+  children?: string;
 }
 
 /**

@@ -1,7 +1,7 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-interface toTreeArrayOptions {
-  children?: string = 'children';
+export interface toTreeArrayOptions {
+  children?: string;
   data?: string;
 }
 

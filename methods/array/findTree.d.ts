@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-function findTreeIterate(item: any, index: number, items: Array<any>, path: Array<string>, parent: any, nodes: Array<any>){}
+export declare function findTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
 
 interface TerrResult { 
   index?: number;
@@ -12,7 +12,7 @@ interface TerrResult {
 }
 
 interface findTreeOptions {
-  children?: string = 'children';
+  children?: string;
 }
 
 /**
