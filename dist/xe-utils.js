@@ -5,12 +5,11 @@
  * @preserve
  */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-    typeof define === 'function' && define.amd ? define(factory) :
-      (global.XEUtils = factory());
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory()
+    : typeof define === 'function' && define.amd ? define(factory)
+      : (global.XEUtils = factory())
 }(this, function () {
   'use strict'
-
 
   var formatString = 'yyyy-MM-dd HH:mm:ss'
   var setupDefaults = {
@@ -32,12 +31,7 @@
     ]
   }
 
-
-
-
-
-
-  function mixin() {
+  function mixin () {
     arrayEach(arguments, function (methods) {
       each(methods, function (fn, name) {
         XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
@@ -49,56 +43,40 @@
     })
   }
 
-  function setup(options) {
+  function setup (options) {
     assign(setupDefaults, options)
   }
 
-  function XEUtils() { }
+  function XEUtils () { }
 
   XEUtils.v = 'v2'
   XEUtils.mixin = mixin
   XEUtils.setup = setup
 
-
   var staticStrUndefined = 'undefined'
-
 
   var staticStrLast = 'last'
 
-
   var staticStrFirst = 'first'
-
 
   var staticDayTime = 86400000
 
-
-
   var staticWeekTime = staticDayTime * 7
-
-
 
   /* eslint-disable valid-typeof */
   var staticLocation = typeof location === staticStrUndefined ? 0 : location
 
-
-
   /* eslint-disable valid-typeof */
   var staticWindow = typeof window === staticStrUndefined ? 0 : window
-
-
 
   /* eslint-disable valid-typeof */
   var staticDocument = typeof document === staticStrUndefined ? 0 : document
 
-
   var staticEncodeURIComponent = encodeURIComponent
-
 
   var staticDecodeURIComponent = decodeURIComponent
 
-
   var staticParseInt = parseInt
-
 
   var staticEscapeMap = {
     '&': '&amp;',
@@ -109,14 +87,11 @@
     '`': '&#x60;'
   }
 
-
   var staticHGKeyRE = /(.+)?\[(\d+)\]$/
-
-
 
   var objectAssignFns = Object.assign
 
-  function handleAssign(destination, args, isClone) {
+  function handleAssign (destination, args, isClone) {
     var len = args.length
     for (var source, index = 1; index < len; index++) {
       source = args[index]
@@ -151,11 +126,7 @@
     return target
   }
 
-
-
   var extend = assign
-
-
 
   /**
     * 指定方法后的返回值组成的新对象
@@ -165,7 +136,7 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function objectMap(obj, iterate, context) {
+  function objectMap (obj, iterate, context) {
     var result = {}
     if (obj) {
       if (iterate) {
@@ -182,9 +153,7 @@
     return result
   }
 
-
-
-  function objectEach(obj, iterate, context) {
+  function objectEach (obj, iterate, context) {
     if (obj) {
       for (var key in obj) {
         if (hasOwnProp(obj, key)) {
@@ -194,15 +163,11 @@
     }
   }
 
-
-
-  function lastObjectEach(obj, iterate, context) {
+  function lastObjectEach (obj, iterate, context) {
     lastArrayEach(keys(obj), function (key) {
       iterate.call(context, obj[key], key, obj)
     })
   }
-
-
 
   /**
     * 数组去重
@@ -210,7 +175,7 @@
     * @param {Array} array 数组
     * @return {Array}
     */
-  function uniq(array) {
+  function uniq (array) {
     var result = []
     each(array, function (value) {
       if (!includes(result, value)) {
@@ -220,15 +185,13 @@
     return result
   }
 
-
-
   /**
     * 将多个数的值返回唯一的并集数组
     *
     * @param {...Array} 数组
     * @return {Array}
     */
-  function union() {
+  function union () {
     var args = arguments
     var result = []
     var index = 0
@@ -239,15 +202,12 @@
     return uniq(result)
   }
 
-
-
-
   // function sortByDef (v1, v2) {
   //   return v1 > v2 ? 1 : -1
   // }
 
   // 支持中文、数字、字母排序 > null > undefined
-  function sortByDef(v1, v2) {
+  function sortByDef (v1, v2) {
     if (isUndefined(v1)) {
       return 1
     }
@@ -257,7 +217,7 @@
     return v1 && v1.localeCompare ? v1.localeCompare(v2) : (v1 > v2 ? 1 : -1)
   }
 
-  function sortMultis(name, compares) {
+  function sortMultis (name, compares) {
     return function (item1, item2) {
       var v1 = item1[name]
       var v2 = item2[name]
@@ -268,7 +228,7 @@
     }
   }
 
-  function getSortPros(arr, list, iterate, context) {
+  function getSortPros (arr, list, iterate, context) {
     iterate = isArray(iterate) ? iterate : [iterate]
     arrayEach(iterate, function (prop, index) {
       arrayEach(list, isFunction(prop) ? function (val, key) {
@@ -288,7 +248,7 @@
     * @param {Object} context 上下文
     * @return {Array}
     */
-  function sortBy(arr, iterate, context, STR_UNDEFINED) {
+  function sortBy (arr, iterate, context, STR_UNDEFINED) {
     if (arr) {
       if (iterate === STR_UNDEFINED) {
         return toArray(arr).sort(sortByDef)
@@ -311,16 +271,13 @@
     return []
   }
 
-
-
-
   /**
     * 将一个数组随机打乱，返回一个新的数组
     *
     * @param {Array} array 数组
     * @return {Array}
     */
-  function shuffle(array) {
+  function shuffle (array) {
     var index
     var result = []
     var list = values(array)
@@ -333,8 +290,6 @@
     return result
   }
 
-
-
   /**
     * 从一个数组中随机返回几个元素
     *
@@ -342,7 +297,7 @@
     * @param {Number} number 个数
     * @return {Array}
     */
-  function sample(array, number) {
+  function sample (array, number) {
     var result = shuffle(array)
     if (arguments.length <= 1) {
       return result[0]
@@ -352,8 +307,6 @@
     }
     return result
   }
-
-
 
   /**
     * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
@@ -365,8 +318,6 @@
     */
   var some = helperCreateIterateHandle('some', 1, 0, true, false)
 
-
-
   /**
     * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
     *
@@ -377,14 +328,13 @@
     */
   var every = helperCreateIterateHandle('every', 1, 1, false, true)
 
-
   /**
    * 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
    * @param {Array/Arguments} array 数组或Arguments
    * @param {Number} startIndex 开始索引
    * @param {Number} endIndex 结束索引
    */
-  function slice(array, startIndex, endIndex) {
+  function slice (array, startIndex, endIndex) {
     var result = []
     if (array) {
       for (startIndex = startIndex || 0, endIndex = endIndex || array.length; startIndex < endIndex; startIndex++) {
@@ -394,8 +344,6 @@
     return result
   }
 
-
-
   /**
     * 根据回调过滤数据
     *
@@ -404,7 +352,7 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function filter(obj, iterate, context) {
+  function filter (obj, iterate, context) {
     var result = []
     if (obj && iterate) {
       if (obj.filter) {
@@ -419,8 +367,6 @@
     return result
   }
 
-
-
   /**
     * 查找匹配第一条数据
     *
@@ -430,8 +376,6 @@
     * @return {Object}
     */
   var find = helperCreateIterateHandle('find', 1, 3, true)
-
-
 
   /**
     * 查找匹配第一条数据的键
@@ -443,8 +387,6 @@
     */
   var findKey = helperCreateIterateHandle('', 0, 2, true)
 
-
-
   /**
     * 判断对象是否包含该值,成功返回true否则false
     *
@@ -452,12 +394,11 @@
     * @param {Object} val 值
     * @return {Boolean}
     */
-  function includes(obj, val) {
+  function includes (obj, val) {
     return indexOf(obj, val) !== -1
   }
 
-
-  function arrayIndexOf(obj, val) {
+  function arrayIndexOf (obj, val) {
     if (obj.indexOf) {
       return obj.indexOf(val)
     }
@@ -468,8 +409,7 @@
     }
   }
 
-
-  function arrayLastIndexOf(obj, val) {
+  function arrayLastIndexOf (obj, val) {
     if (obj.lastIndexOf) {
       return obj.lastIndexOf(val)
     }
@@ -481,8 +421,6 @@
     return -1
   }
 
-
-
   /**
     * 指定方法后的返回值组成的新数组
     *
@@ -491,7 +429,7 @@
     * @param {Object} context 上下文
     * @return {Array}
     */
-  function map(obj, iterate, context) {
+  function map (obj, iterate, context) {
     var result = []
     if (obj && arguments.length > 1) {
       if (!isFunction(iterate)) {
@@ -508,9 +446,6 @@
     return result
   }
 
-
-
-
   /**
     * 求和函数，将数值相加
     *
@@ -519,7 +454,7 @@
     * @param {Object} context 上下文
     * @return {Number}
     */
-  function sum(array, iterate, context) {
+  function sum (array, iterate, context) {
     var result = 0
     each(array, iterate ? isFunction(iterate) ? function () {
       result += toNumber(iterate.apply(context, arguments))
@@ -531,10 +466,6 @@
     return result
   }
 
-
-
-
-
   /**
     * 求平均值函数
     *
@@ -543,11 +474,9 @@
     * @param {Object} context 上下文
     * @return {Number}
     */
-  function mean(array, iterate, context) {
+  function mean (array, iterate, context) {
     return toNumber(sum(array, iterate, context) / getSize(array))
   }
-
-
 
   /**
     * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值。
@@ -557,7 +486,7 @@
     * @param {Object} initialValue 初始值
     * @return {Number}
     */
-  function reduce(array, callback, initialValue) {
+  function reduce (array, callback, initialValue) {
     if (array) {
       var len, reduceMethod
       var index = 0
@@ -585,8 +514,6 @@
     }
   }
 
-
-
   /**
     * 浅复制数组的一部分到同一数组中的另一个位置,数组大小不变
     *
@@ -596,7 +523,7 @@
     * @param {Number} end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
     * @return {Array}
     */
-  function copyWithin(array, target, start, end) {
+  function copyWithin (array, target, start, end) {
     if (isArray(array) && array.copyWithin) {
       return array.copyWithin(target, start, end)
     }
@@ -623,8 +550,6 @@
     return array
   }
 
-
-
   /**
     * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
     *
@@ -632,7 +557,7 @@
     * @param {Number} size 每组大小
     * @return {Array}
     */
-  function chunk(array, size) {
+  function chunk (array, size) {
     var index
     var result = []
     var arrLen = size >> 0 || 1
@@ -650,26 +575,21 @@
     return result
   }
 
-
-
   /**
    * 将每个数组中相应位置的值合并在一起
    *
    * @param {Array*} array 数组
    */
-  function zip() {
+  function zip () {
     return unzip(arguments)
   }
-
-
-
 
   /**
    * 与 zip 相反
    *
    * @param {Array} arrays 数组集合
    */
-  function unzip(arrays) {
+  function unzip (arrays) {
     var index, len
     var result = []
     if (arrays && arrays.length) {
@@ -684,8 +604,6 @@
     return result
   }
 
-
-
   /**
    * 根据键数组、值数组对转换为对象
    *
@@ -693,7 +611,7 @@
    * @param {Number} arr 值数组
    * @return {Object}
    */
-  function zipObject(props, arr) {
+  function zipObject (props, arr) {
     var result = {}
     arr = arr || []
     each(values(props), function (val, key) {
@@ -702,21 +620,17 @@
     return result
   }
 
-
-
   /**
    * 将对象或者伪数组转为新数组
    *
    * @param {Array} obj 数组
    * @return {Array}
    */
-  function toArray(array) {
+  function toArray (array) {
     return map(array, function (item) {
       return item
     })
   }
-
-
 
   /**
     * 判断数组是否包含另一数组
@@ -725,7 +639,7 @@
     * @param {Array} array2 被包含数组
     * @return {Boolean}
     */
-  function includeArrays(array1, array2) {
+  function includeArrays (array1, array2) {
     var len
     var index = 0
     if (isArray(array1) && isArray(array2)) {
@@ -739,8 +653,6 @@
     return includes(array1, array2)
   }
 
-
-
   /**
     * 获取数组对象中某属性值，返回一个数组
     *
@@ -748,14 +660,11 @@
     * @param {String} key 属性值
     * @return {Array}
     */
-  function pluck(obj, key) {
+  function pluck (obj, key) {
     return map(obj, key)
   }
 
-
-
-
-  function deepGetObj(obj, path) {
+  function deepGetObj (obj, path) {
     var index = 0
     var len = path.length
     while (obj && index < len) {
@@ -772,7 +681,7 @@
    * @param {...Object} arguments
    * @return {Array}
    */
-  function invoke(list, path) {
+  function invoke (list, path) {
     var func
     var args = arguments
     var params = []
@@ -800,12 +709,9 @@
     })
   }
 
-
-
   var invokeMap = invoke
 
-
-  function arrayEach(obj, iterate, context) {
+  function arrayEach (obj, iterate, context) {
     if (obj) {
       if (obj.forEach) {
         obj.forEach(iterate, context)
@@ -817,19 +723,13 @@
     }
   }
 
-
-  function lastArrayEach(obj, iterate, context) {
+  function lastArrayEach (obj, iterate, context) {
     for (var len = obj.length - 1; len >= 0; len--) {
       iterate.call(context, obj[len], len, obj)
     }
   }
 
-
-
-
-
-
-  function strictTree(array, optChildren) {
+  function strictTree (array, optChildren) {
     each(array, function (item) {
       if (item.children && !item.children.length) {
         remove(item, optChildren)
@@ -844,7 +744,7 @@
     * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
     * @return {Array}
     */
-  function toArrayTree(array, options) {
+  function toArrayTree (array, options) {
     var opts = assign({}, setupDefaults.treeOptions, options)
     var optStrict = opts.strict
     var optKey = opts.key
@@ -900,11 +800,7 @@
     return result
   }
 
-
-
-
-
-  function unTreeList(result, array, opts) {
+  function unTreeList (result, array, opts) {
     var children
     var optChildren = opts.children
     var optData = opts.data
@@ -928,13 +824,11 @@
     * @param {Object} options {children: 'children', data: 'data'}
     * @return {Array}
     */
-  function toTreeArray(array, options) {
+  function toTreeArray (array, options) {
     return unTreeList([], array, assign({}, setupDefaults.treeOptions, options))
   }
 
-
-
-  function findTreeItem(parent, obj, iterate, context, path, node, parseChildren, opts) {
+  function findTreeItem (parent, obj, iterate, context, path, node, parseChildren, opts) {
     if (obj) {
       var item, index, len, paths, nodes, match
       for (index = 0, len = obj.length; index < len; index++) {
@@ -965,9 +859,7 @@
     */
   var findTree = helperCreateTreeFunc(findTreeItem)
 
-
-
-  function eachTreeItem(parent, obj, iterate, context, path, node, parseChildren, opts) {
+  function eachTreeItem (parent, obj, iterate, context, path, node, parseChildren, opts) {
     var paths, nodes
     each(obj, function (item, index) {
       paths = path.concat(['' + index])
@@ -990,10 +882,7 @@
     */
   var eachTree = helperCreateTreeFunc(eachTreeItem)
 
-
-
-
-  function mapTreeItem(parent, obj, iterate, context, path, node, parseChildren, opts) {
+  function mapTreeItem (parent, obj, iterate, context, path, node, parseChildren, opts) {
     var paths, nodes, rest
     var mapChildren = opts.mapChildren || parseChildren
     return map(obj, function (item, index) {
@@ -1018,8 +907,6 @@
     */
   var mapTree = helperCreateTreeFunc(mapTreeItem)
 
-
-
   /**
     * 从树结构中根据回调过滤数据
     *
@@ -1029,7 +916,7 @@
     * @param {Object} context 上下文
     * @return {Array}
     */
-  function filterTree(obj, iterate, options, context) {
+  function filterTree (obj, iterate, options, context) {
     var result = []
     if (obj && iterate) {
       eachTree(obj, function (item, index, items, path, parent, nodes) {
@@ -1041,11 +928,7 @@
     return result
   }
 
-
-
-
-
-  function searchTreeItem(parentAllow, parent, obj, iterate, context, path, node, parseChildren, opts) {
+  function searchTreeItem (parentAllow, parent, obj, iterate, context, path, node, parseChildren, opts) {
     var paths, nodes, rest, isAllow, hasChild
     var rests = []
     var hasOriginal = opts.original
@@ -1083,9 +966,7 @@
     return searchTreeItem(0, parent, obj, iterate, context, path, nodes, parseChildren, opts)
   })
 
-
-
-  function helperCreateIterateHandle(prop, useArray, restIndex, matchValue, defaultValue) {
+  function helperCreateIterateHandle (prop, useArray, restIndex, matchValue, defaultValue) {
     return function (obj, iterate, context) {
       if (obj && iterate) {
         if (prop && obj[prop]) {
@@ -1112,15 +993,13 @@
     }
   }
 
-
-  function helperCreateTreeFunc(handle) {
+  function helperCreateTreeFunc (handle) {
     return function (obj, iterate, options, context) {
       var opts = options || {}
       var optChildren = opts.children || 'children'
       return handle(null, obj, iterate, context, [], [], optChildren, opts)
     }
   }
-
 
   /**
     * 判断对象自身属性中是否具有指定的属性
@@ -1129,36 +1008,27 @@
     * @param {String/Number} key 键值
     * @return {Boolean}
     */
-  function hasOwnProp(obj, key) {
+  function hasOwnProp (obj, key) {
     return obj.hasOwnProperty(key)
   }
-
-
 
   /**
    * 判断是否 undefined 和 null
    * @param {Object} obj 对象
    * @return {Boolean}
    */
-  function eqNull(obj) {
+  function eqNull (obj) {
     return isNull(obj) || isUndefined(obj)
   }
 
-
-
   /* eslint-disable eqeqeq */
-  function isNumberNaN(obj) {
+  function isNumberNaN (obj) {
     return isNumber(obj) && isNaN(obj)
   }
 
-
-
-  function isNumberFinite(obj) {
+  function isNumberFinite (obj) {
     return isNumber(obj) && isFinite(obj)
   }
-
-
-
 
   /**
     * 判断是否Undefined
@@ -1168,8 +1038,6 @@
     */
   var isUndefined = helperCreateInTypeof(staticStrUndefined)
 
-
-
   /**
     * 判断是否数组
     *
@@ -1178,19 +1046,15 @@
     */
   var isArray = Array.isArray || helperCreateInInObjectString('Array')
 
-
-
   /**
     * 判断是否小数
     *
     * @param {Number} obj 数值
     * @return {Boolean}
     */
-  function isFloat(obj) {
+  function isFloat (obj) {
     return !isNull(obj) && !isNaN(obj) && !isArray(obj) && !isInteger(obj)
   }
-
-
 
   /**
     * 判断是否整数
@@ -1202,8 +1066,6 @@
     return !isNull(obj) && !isNaN(obj) && !isArray(obj) && obj % 1 === 0
   }
 
-
-
   /**
     * 判断是否方法
     *
@@ -1211,8 +1073,6 @@
     * @return {Boolean}
     */
   var isFunction = helperCreateInTypeof('function')
-
-
 
   /**
     * 判断是否Boolean对象
@@ -1222,8 +1082,6 @@
     */
   var isBoolean = helperCreateInTypeof('boolean')
 
-
-
   /**
     * 判断是否String对象
     *
@@ -1231,8 +1089,6 @@
     * @return {Boolean}
     */
   var isString = helperCreateInTypeof('string')
-
-
 
   /**
     * 判断是否Number对象
@@ -1242,8 +1098,6 @@
     */
   var isNumber = helperCreateInTypeof('number')
 
-
-
   /**
     * 判断是否RegExp对象
     *
@@ -1251,8 +1105,6 @@
     * @return {Boolean}
     */
   var isRegExp = helperCreateInInObjectString('RegExp')
-
-
 
   /**
     * 判断是否Object对象
@@ -1262,18 +1114,15 @@
     */
   var isObject = helperCreateInTypeof('object')
 
-
   /**
     * 判断是否对象
     *
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isPlainObject(obj) {
+  function isPlainObject (obj) {
     return obj ? obj.constructor === Object : false
   }
-
-
 
   /**
     * 判断是否Date对象
@@ -1283,8 +1132,6 @@
     */
   var isDate = helperCreateInInObjectString('Date')
 
-
-
   /**
     * 判断是否Error对象
     *
@@ -1293,17 +1140,15 @@
     */
   var isError = helperCreateInInObjectString('Error')
 
-
   /**
     * 判断是否TypeError对象
     *
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isTypeError(obj) {
+  function isTypeError (obj) {
     return obj ? obj.constructor === TypeError : false
   }
-
 
   /**
     * 判断是否为空对象
@@ -1311,13 +1156,12 @@
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isEmpty(obj) {
+  function isEmpty (obj) {
     for (var key in obj) {
       return false
     }
     return true
   }
-
 
   /**
     * 判断是否为Null
@@ -1325,10 +1169,9 @@
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isNull(obj) {
+  function isNull (obj) {
     return obj === null
   }
-
 
   /* eslint-disable valid-typeof */
 
@@ -1339,11 +1182,9 @@
     * @return {Boolean}
     */
   var supportSymbol = typeof Symbol !== staticStrUndefined
-  function isSymbol(obj) {
+  function isSymbol (obj) {
     return supportSymbol && Symbol.isSymbol ? Symbol.isSymbol(obj) : (typeof obj === 'symbol')
   }
-
-
 
   /**
     * 判断是否Arguments对象
@@ -1353,19 +1194,15 @@
     */
   var isArguments = helperCreateInInObjectString('Arguments')
 
-
-
   /**
     * 判断是否Element对象
     *
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isElement(obj) {
+  function isElement (obj) {
     return !!(obj && isString(obj.nodeName) && isNumber(obj.nodeType))
   }
-
-
 
   /**
     * 判断是否Document对象
@@ -1373,11 +1210,9 @@
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isDocument(obj) {
+  function isDocument (obj) {
     return !!(obj && staticDocument && obj.nodeType === 9)
   }
-
-
 
   /**
     * 判断是否Window对象
@@ -1385,10 +1220,9 @@
     * @param {Object} obj 对象
     * @return {Boolean}
     */
-  function isWindow(obj) {
+  function isWindow (obj) {
     return staticWindow && !!(obj && obj === obj.window)
   }
-
 
   /* eslint-disable valid-typeof */
 
@@ -1399,10 +1233,9 @@
     * @return {Boolean}
     */
   var supportFormData = typeof FormData !== staticStrUndefined
-  function isFormData(obj) {
+  function isFormData (obj) {
     return supportFormData && obj instanceof FormData
   }
-
 
   /* eslint-disable valid-typeof */
 
@@ -1413,10 +1246,9 @@
     * @return {Boolean}
    */
   var supportMap = typeof Map !== staticStrUndefined
-  function isMap(obj) {
+  function isMap (obj) {
     return supportMap && obj instanceof Map
   }
-
 
   /* eslint-disable valid-typeof */
 
@@ -1427,10 +1259,9 @@
     * @return {Boolean}
    */
   var supportWeakMap = typeof WeakMap !== staticStrUndefined
-  function isWeakMap(obj) {
+  function isWeakMap (obj) {
     return supportWeakMap && obj instanceof WeakMap
   }
-
 
   /* eslint-disable valid-typeof */
 
@@ -1441,10 +1272,9 @@
     * @return {Boolean}
    */
   var supportSet = typeof Set !== staticStrUndefined
-  function isSet(obj) {
+  function isSet (obj) {
     return supportSet && obj instanceof Set
   }
-
 
   /* eslint-disable valid-typeof */
 
@@ -1455,12 +1285,9 @@
     * @return {Boolean}
    */
   var supportWeakSet = typeof WeakSet !== staticStrUndefined
-  function isWeakSet(obj) {
+  function isWeakSet (obj) {
     return supportWeakSet && obj instanceof WeakSet
   }
-
-
-
 
   /**
     * 判断是否闰年
@@ -1468,7 +1295,7 @@
     * @param {Date} date 日期或数字
     * @return {Boolean}
     */
-  function isLeapYear(date) {
+  function isLeapYear (date) {
     var year
     var currentDate = date ? toStringDate(date) : helperNewDate()
     if (isDate(currentDate)) {
@@ -1478,9 +1305,6 @@
     return false
   }
 
-
-
-
   /**
    * 判断属性中的键和值是否包含在对象中
    *
@@ -1488,7 +1312,7 @@
    * @param {Object} source 值
    * @return {Boolean}
    */
-  function isMatch(obj, source) {
+  function isMatch (obj, source) {
     var objKeys = keys(obj)
     var sourceKeys = keys(source)
     if (sourceKeys.length) {
@@ -1505,8 +1329,6 @@
     return isEqual(obj, source)
   }
 
-
-
   /**
    * 深度比较两个对象之间的值是否相等
    *
@@ -1514,12 +1336,9 @@
    * @param {Object} obj2 值2
    * @return {Boolean}
    */
-  function isEqual(obj1, obj2) {
+  function isEqual (obj1, obj2) {
     return helperEqualCompare(obj1, obj2, helperDefaultCompare)
   }
-
-
-
 
   /**
    * 深度比较两个对象之间的值是否相等，使用自定义比较函数
@@ -1529,7 +1348,7 @@
    * @param {Function} func 自定义函数
    * @return {Boolean}
    */
-  function isEqualWith(obj1, obj2, func) {
+  function isEqualWith (obj1, obj2, func) {
     if (isFunction(func)) {
       return helperEqualCompare(obj1, obj2, function (v1, v2, key, obj1, obj2) {
         var result = func(v1, v2, key, obj1, obj2)
@@ -1539,15 +1358,13 @@
     return helperEqualCompare(obj1, obj2, helperDefaultCompare)
   }
 
-
-
   /**
     * 获取对象类型
     *
     * @param {Object} obj 对象
     * @return {String}
     */
-  function getType(obj) {
+  function getType (obj) {
     if (isNull(obj)) {
       return 'null'
     }
@@ -1569,7 +1386,6 @@
     return typeof obj
   }
 
-
   /**
     * 获取一个全局唯一标识
     *
@@ -1577,11 +1393,9 @@
     * @return {Number}
     */
   var __uniqueId = 0
-  function uniqueId(prefix) {
+  function uniqueId (prefix) {
     return (prefix ? '' + prefix : 0) + ++__uniqueId
   }
-
-
 
   /**
     * 返回对象的长度
@@ -1589,7 +1403,7 @@
     * @param {Object} obj 对象
     * @return {Number}
     */
-  function getSize(obj) {
+  function getSize (obj) {
     var len = 0
     if (isString(obj) || isArray(obj)) {
       return obj.length
@@ -1600,9 +1414,6 @@
     return len
   }
 
-
-
-
   /**
     * 返回对象第一个索引值
     *
@@ -1612,9 +1423,6 @@
     */
   var indexOf = helperCreateIndexOf('indexOf', arrayIndexOf)
 
-
-
-
   /**
     * 从最后开始的索引值,返回对象第一个索引值
     *
@@ -1623,8 +1431,6 @@
     * @return {Number}
     */
   var lastIndexOf = helperCreateIndexOf('lastIndexOf', arrayLastIndexOf)
-
-
 
   /**
     * 返回对象第一个索引值
@@ -1643,8 +1449,6 @@
     return -1
   })
 
-
-
   /**
     * 从最后开始的索引值,返回对象第一个索引值
     *
@@ -1662,15 +1466,13 @@
     return -1
   })
 
-
-
   /**
     * 字符串转JSON
     *
     * @param {String} str 字符串
     * @return {Object} 返回转换后对象
     */
-  function toStringJSON(str) {
+  function toStringJSON (str) {
     if (isObject(str)) {
       return str
     } else if (isString(str)) {
@@ -1681,18 +1483,15 @@
     return {}
   }
 
-
   /**
     * JSON转字符串
     *
     * @param {Object} obj 对象
     * @return {String} 返回字符串
     */
-  function toJSONString(obj) {
+  function toJSONString (obj) {
     return JSON.stringify(obj) || ''
   }
-
-
 
   /**
     * 获取对象所有属性
@@ -1702,8 +1501,6 @@
     */
   var keys = helperCreateGetObjects('keys', 1)
 
-
-
   /**
     * 获取对象所有值
     *
@@ -1712,8 +1509,6 @@
     */
   var values = helperCreateGetObjects('values', 0)
 
-
-
   /**
     * 获取对象所有属性、值
     *
@@ -1721,8 +1516,6 @@
     * @return {Array}
     */
   var entries = helperCreateGetObjects('entries', 2)
-
-
 
   /**
    * 根据 key 过滤指定的属性值，返回一个新的对象
@@ -1733,8 +1526,6 @@
    */
   var pick = helperCreatePickOmit(1, 0)
 
-
-
   /**
    * 根据 key 排除指定的属性值，返回一个新的对象
    *
@@ -1744,19 +1535,15 @@
    */
   var omit = helperCreatePickOmit(0, 1)
 
-
-
   /**
     * 获取对象第一个值
     *
     * @param {Object} obj 对象/数组
     * @return {Object}
     */
-  function first(obj) {
+  function first (obj) {
     return values(obj)[0]
   }
-
-
 
   /**
     * 获取对象最后一个值
@@ -1764,12 +1551,10 @@
     * @param {Object} obj 对象/数组
     * @return {Object}
     */
-  function last(obj) {
+  function last (obj) {
     var list = values(obj)
     return list[list.length - 1]
   }
-
-
 
   /**
     * 迭代器
@@ -1779,14 +1564,12 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function each(obj, iterate, context) {
+  function each (obj, iterate, context) {
     if (obj) {
       return (isArray(obj) ? arrayEach : objectEach)(obj, iterate, context)
     }
     return obj
   }
-
-
 
   /**
     * 迭代器,支持 return false 跳出循环 break
@@ -1796,7 +1579,7 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function forOf(obj, iterate, context) {
+  function forOf (obj, iterate, context) {
     if (obj) {
       if (isArray(obj)) {
         for (var index = 0, len = obj.length; index < len; index++) {
@@ -1816,8 +1599,6 @@
     }
   }
 
-
-
   /**
     * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
     *
@@ -1826,7 +1607,7 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function lastForOf(obj, iterate, context) {
+  function lastForOf (obj, iterate, context) {
     if (obj) {
       var len, list
       if (isArray(obj)) {
@@ -1846,8 +1627,6 @@
     }
   }
 
-
-
   /**
     * 迭代器,从最后开始迭代
     *
@@ -1856,16 +1635,12 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function lastEach(obj, iterate, context) {
+  function lastEach (obj, iterate, context) {
     if (obj) {
       return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context)
     }
     return obj
   }
-
-
-
-
 
   /**
    * 检查键、路径是否是该对象的属性
@@ -1874,7 +1649,7 @@
    * @param {String/Function} property 键、路径
    * @return {Boolean}
    */
-  function has(obj, property) {
+  function has (obj, property) {
     if (obj) {
       if (hasOwnProp(obj, property)) {
         return true
@@ -1922,9 +1697,6 @@
     return false
   }
 
-
-
-
   /**
    * 获取对象的属性的值，如果值为 undefined，则返回默认值
    * @param {Object/Array} obj 对象
@@ -1932,7 +1704,7 @@
    * @param {Object} defaultValue 默认值
    * @return {Object}
    */
-  function get(obj, property, defaultValue) {
+  function get (obj, property, defaultValue) {
     if (eqNull(obj)) {
       return defaultValue
     }
@@ -1940,12 +1712,12 @@
     return isUndefined(result) ? defaultValue : result
   }
 
-  function valGet(obj, key) {
+  function valGet (obj, key) {
     var matchs = key ? key.match(staticHGKeyRE) : ''
     return matchs ? (matchs[1] ? (obj[matchs[1]] ? obj[matchs[1]][matchs[2]] : undefined) : obj[matchs[2]]) : obj[key]
   }
 
-  function pathGet(obj, property) {
+  function pathGet (obj, property) {
     if (obj) {
       var rest, props, len
       var index = 0
@@ -1967,13 +1739,9 @@
     }
   }
 
-
-
-
-
   var sKeyRE = /(.+)\[(\d+)\]$/
 
-  function valSet(obj, key, isSet, value) {
+  function valSet (obj, key, isSet, value) {
     if (obj[key]) {
       if (isSet) {
         obj[key] = value
@@ -2004,7 +1772,7 @@
    * @param {String/Function} property 键、路径
    * @param {Object} value 值
    */
-  function set(obj, property, value) {
+  function set (obj, property, value) {
     if (obj) {
       if (obj[property] || hasOwnProp(obj, property)) {
         obj[property] = value
@@ -2020,9 +1788,7 @@
     return obj
   }
 
-
-
-  function createiterateEmpty(iterate) {
+  function createiterateEmpty (iterate) {
     return function () {
       return isEmpty(iterate)
     }
@@ -2036,7 +1802,7 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function groupBy(obj, iterate, context) {
+  function groupBy (obj, iterate, context) {
     var groupKey
     var result = {}
     if (obj) {
@@ -2057,9 +1823,6 @@
     return result
   }
 
-
-
-
   /**
     * 集合分组统计,返回各组中对象的数量统计
     *
@@ -2068,7 +1831,7 @@
     * @param {Object} context 上下文
     * @return {Object}
     */
-  function countBy(obj, iterate, context) {
+  function countBy (obj, iterate, context) {
     var result = groupBy(obj, iterate, context || this)
     objectEach(result, function (item, key) {
       result[key] = item.length
@@ -2076,11 +1839,7 @@
     return result
   }
 
-
-
-
-
-  function startClone(func, obj, deep) {
+  function startClone (func, obj, deep) {
     return func(obj, deep ? function (val) {
       return deepClone(val, deep)
     } : function (val) {
@@ -2088,7 +1847,7 @@
     })
   }
 
-  function deepClone(val, deep) {
+  function deepClone (val, deep) {
     return isPlainObject(val) ? startClone(objectMap, val, deep) : isArray(val) ? startClone(map, val, deep) : val
   }
 
@@ -2099,15 +1858,12 @@
     * @param {Boolean} deep 是否深拷贝
     * @return {Object}
     */
-  function clone(obj, deep) {
+  function clone (obj, deep) {
     if (obj) {
       return deepClone(obj, deep)
     }
     return obj
   }
-
-
-
 
   /**
     * 清空对象
@@ -2117,7 +1873,7 @@
     * @param {Object/Array} assigns 默认值
     * @return {Object}
     */
-  function clear(obj, defs, assigns) {
+  function clear (obj, defs, assigns) {
     if (obj) {
       var len
       var isDefs = arguments.length > 1 && (isNull(defs) || !isObject(defs))
@@ -2149,10 +1905,7 @@
     return obj
   }
 
-
-
-
-  function pluckProperty(name) {
+  function pluckProperty (name) {
     return function (obj, key) {
       return key === name
     }
@@ -2166,7 +1919,7 @@
     * @param {Object} context 上下文
     * @return {Object/Array}
     */
-  function remove(obj, iterate, context) {
+  function remove (obj, iterate, context) {
     if (obj) {
       if (!eqNull(iterate)) {
         var removeKeys = []
@@ -2198,7 +1951,6 @@
     return obj
   }
 
-
   /**
     * 序号列表生成函数
     *
@@ -2207,7 +1959,7 @@
     * @param {Number} step 自增值
     * @return {Object}
     */
-  function range(start, stop, step) {
+  function range (start, stop, step) {
     var index, len
     var result = []
     var args = arguments
@@ -2226,10 +1978,6 @@
     return result
   }
 
-
-
-
-
   /**
     * 将一个或者多个对象值解构到目标对象
     *
@@ -2237,7 +1985,7 @@
     * @param {...Object}
     * @return {Boolean}
     */
-  function destructuring(destination, sources) {
+  function destructuring (destination, sources) {
     if (destination && sources) {
       var rest = assign.apply(this, [{}].concat(slice(arguments, 1)))
       var restKeys = keys(rest)
@@ -2250,9 +1998,7 @@
     return destination
   }
 
-
-
-  function helperCreateGetObjects(name, getIndex) {
+  function helperCreateGetObjects (name, getIndex) {
     var proMethod = Object[name]
     return function (obj) {
       var result = []
@@ -2270,9 +2016,7 @@
     }
   }
 
-
-
-  function helperCreateIndexOf(name, callback) {
+  function helperCreateIndexOf (name, callback) {
     return function (obj, val) {
       if (obj) {
         if (typeof obj === 'string' || isArray(obj)) {
@@ -2293,26 +2037,22 @@
     }
   }
 
-
   var objectToString = Object.prototype.toString
 
-  function helperCreateInInObjectString(type) {
+  function helperCreateInInObjectString (type) {
     return function (obj) {
       return '[object ' + type + ']' === objectToString.call(obj)
     }
   }
 
-
   /* eslint-disable valid-typeof */
-  function helperCreateInTypeof(type) {
+  function helperCreateInTypeof (type) {
     return function (obj) {
       return typeof obj === type
     }
   }
 
-
-
-  function helperCreateiterateIndexOf(callback) {
+  function helperCreateiterateIndexOf (callback) {
     return function (obj, iterate, context) {
       if (obj && isFunction(iterate)) {
         if (isArray(obj) || isString(obj)) {
@@ -2330,9 +2070,7 @@
     }
   }
 
-
-
-  function helperCreatePickOmit(case1, case2) {
+  function helperCreatePickOmit (case1, case2) {
     return function (obj, callback) {
       var item, index
       var rest = {}
@@ -2358,13 +2096,11 @@
     }
   }
 
-
-  function helperDefaultCompare(v1, v2) {
+  function helperDefaultCompare (v1, v2) {
     return v1 === v2
   }
 
-
-  function helperDeleteProperty(obj, property) {
+  function helperDeleteProperty (obj, property) {
     try {
       delete obj[property]
     } catch (e) {
@@ -2372,10 +2108,7 @@
     }
   }
 
-
-
-
-  function helperEqualCompare(val1, val2, compare, func, key, obj1, obj2) {
+  function helperEqualCompare (val1, val2, compare, func, key, obj1, obj2) {
     if (val1 === val2) {
       return true
     }
@@ -2406,12 +2139,10 @@
     return compare(val1, val2, key, obj1, obj2)
   }
 
-
-  function helperGetHGSKeys(property) {
+  function helperGetHGSKeys (property) {
     // 以最快的方式判断数组，可忽略准确性
     return property ? (property.splice && property.join ? property : ('' + property).split('.')) : []
   }
-
 
   /**
     * 获取一个指定范围内随机数
@@ -2420,11 +2151,9 @@
     * @param {Number} maxVal 最大值
     * @return {Number}
     */
-  function random(minVal, maxVal) {
+  function random (minVal, maxVal) {
     return minVal >= maxVal ? minVal : ((minVal = minVal >> 0) + Math.round(Math.random() * ((maxVal || 9) - minVal)))
   }
-
-
 
   /**
     * 获取最小值
@@ -2437,8 +2166,6 @@
     return rest > itemVal
   })
 
-
-
   /**
     * 获取最大值
     *
@@ -2450,9 +2177,6 @@
     return rest < itemVal
   })
 
-
-
-
   /**
     * 千分位分隔符、小数点
     *
@@ -2460,7 +2184,7 @@
     * @param {Object} 参数 {spaceNumber: 分割位数(默认3), separator: 分隔符(默认,), fixed: 小数位数(默认null)}
     * @return {String}
    */
-  function commafy(num, options) {
+  function commafy (num, options) {
     num = ('' + num).replace(/,/g, '')
     if (num) {
       var opts = assign({ spaceNumber: 3, separator: ',' }, options)
@@ -2471,15 +2195,13 @@
     return num
   }
 
-
-
   /**
    * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串
    *
    * @param { String/Number } str 数值
    * @return {String}
    */
-  function toFixedString(str, digits) {
+  function toFixedString (str, digits) {
     var nums = helperFixedNumber(str, digits).split('.')
     var rest = digits ? [nums[0], '.', padEnd(nums[1] || '', digits, '0')].join('') : nums[0]
     if (rest.substring(0, 1) === '-' && parseFloat(rest) === 0) {
@@ -2488,20 +2210,16 @@
     return rest
   }
 
-
-
   /**
    * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
    *
    * @param { String/Number } str 数值
    * @return {String}
    */
-  function toFixedNumber(str, digits) {
+  function toFixedNumber (str, digits) {
     var rest = (digits ? toNumber : toInteger)(helperFixedNumber(str, digits))
     return rest === 0 ? 0 : rest
   }
-
-
 
   /**
    * 转数值
@@ -2511,9 +2229,6 @@
    */
   var toNumber = helperCreateToNumber(parseFloat)
 
-
-
-
   /**
    * 转整数
    * @param { String/Number } str 数值
@@ -2522,10 +2237,7 @@
    */
   var toInteger = helperCreateToNumber(staticParseInt)
 
-
-
-
-  function helperCreateMinMax(handle) {
+  function helperCreateMinMax (handle) {
     return function (arr, iterate) {
       if (arr && arr.length) {
         var rest, itemIndex
@@ -2544,8 +2256,7 @@
     }
   }
 
-
-  function helperCreateToNumber(handle) {
+  function helperCreateToNumber (handle) {
     return function (str) {
       if (str) {
         var num = handle(str)
@@ -2557,12 +2268,9 @@
     }
   }
 
-
-
-  function helperFixedNumber(str, digits) {
+  function helperFixedNumber (str, digits) {
     return toValString(toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1')
   }
-
 
   /**
    * 返回当前时间戳
@@ -2572,10 +2280,6 @@
   var now = Date.now || function () {
     return helperGetDateTime(helperNewDate())
   }
-
-
-
-
 
   /**
    * 将日期格式化为时间戳
@@ -2592,8 +2296,6 @@
     return now()
   }
 
-
-
   /**
    * 比较两个日期
    *
@@ -2601,19 +2303,13 @@
    * @param {Number/String/Date} date2 日期
    * @param {String} format 格式化
    */
-  function isDateSame(date1, date2, format) {
+  function isDateSame (date1, date2, format) {
     if (date1 && date2) {
       date1 = toDateString(date1, format)
       return date1 !== 'Invalid Date' && date1 === toDateString(date2, format)
     }
     return false
   }
-
-
-
-
-
-
 
   var dateFormatRules = [
     { rules: [['yyyy', 4], ['yy', 2]] },
@@ -2633,7 +2329,7 @@
     * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、hh(12)HH(24)小时、mm分钟、ss秒、SSS毫秒、Z时区)
     * @return {String}
     */
-  function toStringDate(str, format) {
+  function toStringDate (str, format) {
     var arr, sIndex, index, rules, len, rest, dateType, tempMatch, zStr
     var dates = []
     if (str) {
@@ -2679,13 +2375,7 @@
     return !rest || isNaN(helperGetDateTime(rest)) ? 'Invalid Date' : rest
   }
 
-
-
-
-
-
-
-  function handleCustomTemplate(date, formats, match, value) {
+  function handleCustomTemplate (date, formats, match, value) {
     var format = formats[match]
     if (format) {
       if (isFunction(format)) {
@@ -2697,7 +2387,7 @@
     return value
   }
 
-  function formatPadStart(str, len, padStr) {
+  function formatPadStart (str, len, padStr) {
     str = '' + str
     var index = str.length
     while (index < len) {
@@ -2707,7 +2397,7 @@
     return str
   }
 
-  function formatDayE(day) {
+  function formatDayE (day) {
     return day === 0 ? 7 : day
   }
 
@@ -2719,7 +2409,7 @@
     * @param {Object} options {formats: {q: ['日', '一', '二', '三', '四', '五', '六'], E: function (value, match, date) {return '三'}, }} 自定义格式化模板
     * @return {String}
     */
-  function toDateString(date, format, options) {
+  function toDateString (date, format, options) {
     if (date) {
       date = toStringDate(date)
       if (isDate(date)) {
@@ -2762,10 +2452,6 @@
     return ''
   }
 
-
-
-
-
   /**
     * 返回前几年或后几年的日期
     *
@@ -2774,7 +2460,7 @@
     * @param {Number/String} month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
     * @return {Date}
     */
-  function getWhatYear(date, year, month) {
+  function getWhatYear (date, year, month) {
     var number
     date = toStringDate(date)
     if (isDate(date)) {
@@ -2796,10 +2482,6 @@
     return date
   }
 
-
-
-
-
   /**
     * 返回前几月或后几月的日期
     *
@@ -2808,7 +2490,7 @@
     * @param {Number/String} day 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
     * @return {Date}
     */
-  function getWhatMonth(date, month, day) {
+  function getWhatMonth (date, month, day) {
     var monthOffset = month && !isNaN(month) ? month : 0
     date = toStringDate(date)
     if (isDate(date)) {
@@ -2828,11 +2510,6 @@
     return date
   }
 
-
-
-
-
-
   /**
     * 返回前几周或后几周的星期几
     *
@@ -2841,7 +2518,7 @@
     * @param {Number} day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
     * @return {Date}
     */
-  function getWhatWeek(date, week, day) {
+  function getWhatWeek (date, week, day) {
     var time, whatDayTime, currentDay, customDay
     date = toStringDate(date)
     if (isDate(date)) {
@@ -2857,10 +2534,6 @@
     return date
   }
 
-
-
-
-
   /**
     * 返回前几天或后几天的日期
     *
@@ -2869,7 +2542,7 @@
     * @param {String} mode 获取时分秒(null默认当前时分秒)、日初(first)、日末(last)
     * @return {Date}
     */
-  function getWhatDay(date, day, mode) {
+  function getWhatDay (date, day, mode) {
     date = toStringDate(date)
     if (isDate(date) && !isNaN(day)) {
       date.setDate(date.getDate() + staticParseInt(day))
@@ -2882,18 +2555,13 @@
     return date
   }
 
-
-
-
-
-
   /**
     * 返回某个年份的第几天
     *
     * @param {Date} date 日期或数字
     * @return {Number}
     */
-  function getYearDay(date) {
+  function getYearDay (date) {
     date = toStringDate(date)
     if (isDate(date)) {
       return Math.floor((helperGetYMDTime(date) - helperGetYMDTime(getWhatYear(date, 0, staticStrFirst))) / staticDayTime) + 1
@@ -2901,17 +2569,13 @@
     return date
   }
 
-
-
-
-
   /**
     * 返回某个年份的第几周
     *
     * @param {Date} date 日期或数字
     * @return {Number}
     */
-  function getYearWeek(date) {
+  function getYearWeek (date) {
     date = toStringDate(date)
     if (isDate(date)) {
       date.setHours(0, 0, 0, 0)
@@ -2922,18 +2586,13 @@
     return date
   }
 
-
-
-
-
-
   /**
     * 返回某个月的第几周
     *
     * @param {Date} date 日期或数字
     * @return {Number}
     */
-  function getMonthWeek(date) {
+  function getMonthWeek (date) {
     var monthFirst, monthFirstWeek
     var currentDate = toStringDate(date)
     if (isDate(currentDate)) {
@@ -2950,9 +2609,6 @@
     return currentDate
   }
 
-
-
-
   /**
     * 返回某个年份的天数
     *
@@ -2960,18 +2616,13 @@
     * @param {Number} year 年(默认当年)、前几个年、后几个年
     * @return {Number}
     */
-  function getDayOfYear(date, year) {
+  function getDayOfYear (date, year) {
     date = toStringDate(date)
     if (isDate(date)) {
       return isLeapYear(getWhatYear(date, year)) ? 366 : 365
     }
     return date
   }
-
-
-
-
-
 
   /**
     * 返回某个月份的天数
@@ -2980,18 +2631,13 @@
     * @param {Number} month 月(默认当月)、前几个月、后几个月
     * @return {Number}
     */
-  function getDayOfMonth(date, month) {
+  function getDayOfMonth (date, month) {
     date = toStringDate(date)
     if (isDate(date)) {
       return Math.floor((helperGetDateTime(getWhatMonth(date, month, staticStrLast)) - helperGetDateTime(getWhatMonth(date, month, staticStrFirst))) / staticDayTime) + 1
     }
     return date
   }
-
-
-
-
-
 
   /**
     * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
@@ -3001,7 +2647,7 @@
     * @param {Date} rule 自定义计算规则
     * @return {Object}
     */
-  function getDateDiff(startDate, endDate, rules) {
+  function getDateDiff (startDate, endDate, rules) {
     var startTime, endTime, item, diffTime, rule, len, index
     var result = { done: false, time: 0 }
     startDate = toStringDate(startDate)
@@ -3031,44 +2677,33 @@
     return result
   }
 
-
-  function helperGetDateFullYear(date) {
+  function helperGetDateFullYear (date) {
     return date.getFullYear()
   }
 
-
-  function helperGetDateMonth(date) {
+  function helperGetDateMonth (date) {
     return date.getMonth()
   }
 
-
-  function helperGetDateTime(date) {
+  function helperGetDateTime (date) {
     return date.getTime()
   }
 
-
-  function helperGetUTCDateTime(dates) {
+  function helperGetUTCDateTime (dates) {
     return Date.UTC(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
   }
 
-
-
-  function helperGetYMD(date) {
+  function helperGetYMD (date) {
     return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate())
   }
 
-
-
-  function helperGetYMDTime(date) {
+  function helperGetYMDTime (date) {
     return helperGetDateTime(helperGetYMD(date))
   }
 
-
-  function helperNewDate() {
+  function helperNewDate () {
     return new Date()
   }
-
-
 
   /**
     * 去除字符串左右两边的空格
@@ -3076,11 +2711,9 @@
     * @param {String} str 字符串
     * @return {String}
     */
-  function trim(str) {
+  function trim (str) {
     return str && str.trim ? str.trim() : trimRight(trimLeft(str))
   }
-
-
 
   /**
     * 去除字符串左边的空格
@@ -3088,11 +2721,9 @@
     * @param {String} str 字符串
     * @return {String}
     */
-  function trimLeft(str) {
+  function trimLeft (str) {
     return str && str.trimLeft ? str.trimLeft() : toValString(str).replace(/^[\s\uFEFF\xA0]+/g, '')
   }
-
-
 
   /**
     * 去除字符串右边的空格
@@ -3100,12 +2731,9 @@
     * @param {String} str 字符串
     * @return {String}
     */
-  function trimRight(str) {
+  function trimRight (str) {
     return str && str.trimRight ? str.trimRight() : toValString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
   }
-
-
-
 
   /**
     * 转义HTML字符串，替换&, <, >, ", ', `字符
@@ -3114,10 +2742,6 @@
     * @return {String}
     */
   var escape = helperFormatEscaper(staticEscapeMap)
-
-
-
-
 
   var unescapeMap = {}
   each(staticEscapeMap, function (item, key) {
@@ -3132,21 +2756,17 @@
     */
   var unescape = helperFormatEscaper(unescapeMap)
 
-
-
   /**
     * 将带字符串转成驼峰字符串,例如： project-name 转为 projectName
     *
     * @param {String} str 字符串
     * @return {String}
     */
-  function camelCase(str) {
+  function camelCase (str) {
     return toValString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
       return u.substring(1).toLocaleUpperCase()
     })
   }
-
-
 
   /**
     * 将带驼峰字符串转成字符串,例如： projectName 转为 project-name
@@ -3154,14 +2774,11 @@
     * @param {String} str 字符串
     * @return {String}
     */
-  function kebabCase(str) {
+  function kebabCase (str) {
     return toValString(str).replace(/([A-Z])/g, function (text, u) {
       return '-' + u.toLowerCase()
     })
   }
-
-
-
 
   /**
     * 将字符串重复 n 次
@@ -3170,7 +2787,7 @@
     * @param {Number} count 次数
     * @return {String}
     */
-  function repeat(str, count) {
+  function repeat (str, count) {
     var rest = toValString(str)
     if (rest.repeat) {
       return rest.repeat(count)
@@ -3178,9 +2795,6 @@
     var list = isNaN(count) ? [] : new Array(staticParseInt(count))
     return list.join(rest) + (list.length > 0 ? rest : '')
   }
-
-
-
 
   /**
     * 用指定字符从前面开始补全字符串
@@ -3190,7 +2804,7 @@
     * @param {Number} padString 补全字符
     * @return {String}
     */
-  function padStart(str, targetLength, padString) {
+  function padStart (str, targetLength, padString) {
     var rest = toValString(str)
     targetLength = targetLength >> 0
     padString = isUndefined(padString) ? ' ' : '' + padString
@@ -3207,9 +2821,6 @@
     return rest
   }
 
-
-
-
   /**
     * 用指定字符从后面开始补全字符串
     *
@@ -3218,7 +2829,7 @@
     * @param {Number} padString 补全字符
     * @return {String}
     */
-  function padEnd(str, targetLength, padString) {
+  function padEnd (str, targetLength, padString) {
     var rest = toValString(str)
     targetLength = targetLength >> 0
     padString = isUndefined(padString) ? ' ' : '' + padString
@@ -3235,8 +2846,6 @@
     return rest
   }
 
-
-
   /**
     * 判断字符串是否在源字符串的头部
     *
@@ -3245,12 +2854,10 @@
     * @param {Number} startIndex 开始索引
     * @return {String}
     */
-  function startsWith(str, val, startIndex) {
+  function startsWith (str, val, startIndex) {
     var rest = toValString(str)
     return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
   }
-
-
 
   /**
     * 判断字符串是否在源字符串的尾部
@@ -3260,21 +2867,18 @@
     * @param {Number} startIndex 开始索引
     * @return {String}
     */
-  function endsWith(str, val, startIndex) {
+  function endsWith (str, val, startIndex) {
     var rest = toValString(str)
     var argsLen = arguments.length
     return argsLen > 1 && (argsLen > 2 ? rest.substring(0, startIndex).indexOf(val) === startIndex - 1 : rest.indexOf(val) === rest.length - 1)
   }
-
-
-
 
   /**
    * 解析动态字符串模板
    * @param {String} str 字符串模板
    * @param {Object} obj 对象
    */
-  function template(str, obj) {
+  function template (str, obj) {
     var rest = toValString(str)
     if (rest && obj) {
       return rest.replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, keys) {
@@ -3284,10 +2888,7 @@
     return rest
   }
 
-
-
-
-  function toValString(obj) {
+  function toValString (obj) {
     if (isNumber(obj)) {
       if (('' + obj).indexOf('e-') >= 0) {
         var isNegative = obj < 0
@@ -3297,9 +2898,7 @@
     return '' + (eqNull(obj) ? '' : obj)
   }
 
-
-
-  function helperFormatEscaper(dataMap) {
+  function helperFormatEscaper (dataMap) {
     var replaceRegexp = new RegExp('(?:' + keys(dataMap).join('|') + ')', 'g')
     return function (str) {
       return toValString(str).replace(replaceRegexp, function (match) {
@@ -3308,21 +2907,17 @@
     }
   }
 
-
-
   /**
    * 返回一个获取对象属性的函数
    *
    * @param {String} name 属性名
    * @param {Object} defs 空值
    */
-  function property(name, defs) {
+  function property (name, defs) {
     return function (obj) {
       return isNull(obj) ? defs : obj[name]
     }
   }
-
-
 
   /**
     * 创建一个绑定上下文的函数
@@ -3332,14 +2927,12 @@
     * @param {*} args 额外的参数
     * @return {Object}
     */
-  function bind(callback, context) {
+  function bind (callback, context) {
     var args = slice(arguments, 2)
     return function () {
       return callback.apply(context, slice(arguments).concat(args))
     }
   }
-
-
 
   /**
     * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
@@ -3349,7 +2942,7 @@
     * @param {*} args 额外的参数
     * @return {Object}
     */
-  function once(callback, context) {
+  function once (callback, context) {
     var done = false
     var rest = null
     var args = slice(arguments, 2)
@@ -3363,8 +2956,6 @@
     }
   }
 
-
-
   /**
     * 创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回
     *
@@ -3372,7 +2963,7 @@
     * @param {Function} callback 完成回调
     * @return {Object}
     */
-  function after(count, callback, context) {
+  function after (count, callback, context) {
     var runCount = 0
     var rests = []
     return function () {
@@ -3387,8 +2978,6 @@
     }
   }
 
-
-
   /**
     * 创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回
     *
@@ -3396,7 +2985,7 @@
     * @param {Function} callback 完成回调
     * @return {Object}
     */
-  function before(count, callback, context) {
+  function before (count, callback, context) {
     var runCount = 0
     var rests = []
     context = context || this
@@ -3410,7 +2999,6 @@
     }
   }
 
-
   /**
     * 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数
     *
@@ -3419,7 +3007,7 @@
     * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
     * @return {Function}
     */
-  function throttle(callback, wait, options) {
+  function throttle (callback, wait, options) {
     var args, context
     var opts = options || {}
     var runFlag = false
@@ -3460,7 +3048,6 @@
     return throttled
   }
 
-
   /**
     * 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟
     *
@@ -3469,7 +3056,7 @@
     * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
     * @return {Function}
     */
-  function debounce(callback, wait, options) {
+  function debounce (callback, wait, options) {
     var args, context
     var opts = options || {}
     var runFlag = false
@@ -3513,8 +3100,6 @@
     return debounced
   }
 
-
-
   /**
     * 该方法和 setTimeout 一样的效果，区别就是支持上下文和额外参数
     *
@@ -3523,7 +3108,7 @@
     * @param {*} args 额外的参数
     * @return {Number}
    */
-  function delay(callback, wait) {
+  function delay (callback, wait) {
     var args = slice(arguments, 2)
     var context = this
     return setTimeout(function () {
@@ -3531,15 +3116,11 @@
     }, wait)
   }
 
-
-
-
-
-  function parseURLQuery(uri) {
+  function parseURLQuery (uri) {
     return unserialize(uri.split('?')[1] || '')
   }
 
-  function parseUrl(url) {
+  function parseUrl (url) {
     var hashs, portText, searchs, parsed
     var href = '' + url
     if (href.indexOf('//') === 0) {
@@ -3579,10 +3160,7 @@
     return parsed
   }
 
-
-
-
-  function stringifyParams(resultVal, resultKey, isArr) {
+  function stringifyParams (resultVal, resultKey, isArr) {
     var _arr
     var result = []
     each(resultVal, function (item, key) {
@@ -3601,7 +3179,7 @@
    *
    * @param {Object} query 序列化的对象
    */
-  function serialize(query) {
+  function serialize (query) {
     var _arr
     var params = []
     each(query, function (item, key) {
@@ -3617,16 +3195,12 @@
     return params.join('&').replace(/%20/g, '+')
   }
 
-
-
-
-
   /**
    * 查询参数序列化
    *
    * @param {String} query 反序列化的字符串
    */
-  function unserialize(str) {
+  function unserialize (str) {
     var items
     var result = {}
     if (str && isString(str)) {
@@ -3638,11 +3212,7 @@
     return result
   }
 
-
-
-
-
-  function getBaseURL() {
+  function getBaseURL () {
     if (staticLocation) {
       var pathname = staticLocation.pathname
       var lastIndex = lastIndexOf(pathname, '/') + 1
@@ -3651,23 +3221,17 @@
     return ''
   }
 
-
-
-
   /**
     * 获取地址栏信息
     *
     * @return Object
     */
-  function locat() {
+  function locat () {
     return staticLocation ? parseUrl(staticLocation.href) : {}
   }
 
-
-
-
   /* eslint-disable valid-typeof */
-  function isBrowseStorage(storage) {
+  function isBrowseStorage (storage) {
     try {
       var testKey = '__xe_t'
       storage.setItem(testKey, 1)
@@ -3678,7 +3242,7 @@
     }
   }
 
-  function isBrowseType(type) {
+  function isBrowseType (type) {
     return navigator.userAgent.indexOf(type) > -1
   }
 
@@ -3686,7 +3250,7 @@
     * 获取浏览器内核
     * @return Object
     */
-  function browse() {
+  function browse () {
     var $body, isChrome, isEdge
     var isMobile = false
     var result = {
@@ -3721,13 +3285,7 @@
     return result
   }
 
-
-
-
-
-
-
-  function toCookieUnitTime(unit, expires) {
+  function toCookieUnitTime (unit, expires) {
     var num = parseFloat(expires)
     var nowdate = helperNewDate()
     var time = helperGetDateTime(nowdate)
@@ -3743,7 +3301,7 @@
     return time
   }
 
-  function toCookieUTCString(date) {
+  function toCookieUTCString (date) {
     return (isDate(date) ? date : new Date(date)).toUTCString()
   }
 
@@ -3759,7 +3317,7 @@
     *   @param {Boolean} secure: 设置为安全的,只能用https协议
     *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
     */
-  function cookie(name, value, options) {
+  function cookie (name, value, options) {
     if (staticDocument) {
       var opts, expires, values, result, cookies, keyIndex
       var inserts = []
@@ -3817,20 +3375,20 @@
     return false
   }
 
-  function isCookieKey(key) {
+  function isCookieKey (key) {
     return includes(cookieKeys(), key)
   }
 
-  function setCookieItem(name, key, options) {
+  function setCookieItem (name, key, options) {
     cookie(name, key, options)
     return cookie
   }
 
-  function removeCookieItem(name, options) {
+  function removeCookieItem (name, options) {
     cookie(name, 0, assign({ expires: -1 }, setupDefaults.cookies, options))
   }
 
-  function cookieKeys() {
+  function cookieKeys () {
     return keys(cookie())
   }
 
@@ -3847,13 +3405,9 @@
     getJSON: cookie
   })
 
-
-
-  function helperGetLocatOrigin() {
+  function helperGetLocatOrigin () {
     return staticLocation ? (staticLocation.origin || (staticLocation.protocol + '//' + staticLocation.host)) : ''
   }
-
-
 
   // 核心
 
@@ -4052,7 +3606,6 @@
     browse: browse,
     cookie: cookie
   })
-
 
   return XEUtils
 }))
