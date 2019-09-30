@@ -2376,6 +2376,7 @@ export default {
               codes: [
                 `
                 XEUtils.toFixedNumber(123) // 123
+                XEUtils.toFixedNumber(1e-8, 3) // 0
                 XEUtils.toFixedNumber('12.399') // 12
                 XEUtils.toFixedNumber('12.399', 5) // 12.399
                 XEUtils.toFixedNumber(234567.105967, 4) // 234567.1059
@@ -2392,6 +2393,8 @@ export default {
               codes: [
                 `
                 XEUtils.toFixedString(123) // '123'
+                XEUtils.toFixedString(1e-8, 3) // '0'
+                XEUtils.toFixedString(1e-8, 10) // '0.0000000100'
                 XEUtils.toFixedString('12.399') // '12'
                 XEUtils.toFixedString('12.399', 5) // '12.39900'
                 XEUtils.toFixedString(234567.105967, 4) // '234567.1059'
@@ -2414,9 +2417,10 @@ export default {
               params: [],
               codes: [
                 `
-                XEUtils.toInteger(0) // '0'
-                XEUtils.toInteger(null) // ''
-                XEUtils.toInteger(undefined) // ''
+                XEUtils.toString(0) // '0'
+                XEUtils.toString(1e-5) // '0.00001'
+                XEUtils.toString(null) // ''
+                XEUtils.toString(undefined) // ''
                 `
               ]
             },
@@ -2863,10 +2867,10 @@ export default {
       if (this.filterName) {
         let filterName = this.filterName.toLowerCase()
         let filterRE = new RegExp(filterName, 'gi')
-        let list= window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
+        let list = window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
         window.XEUtils.eachTree(list, item => {
-          item.name = (item.name||'').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
-          item.title = (item.title||'').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
+          item.name = (item.name || '').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
+          item.title = (item.title || '').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
         }, { children: 'children' })
         return list
       }

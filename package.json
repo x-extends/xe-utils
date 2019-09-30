@@ -13,29 +13,42 @@
     "unit": "jest",
     "test": "npm run lint && npm run unit"
   },
-  "files": [
-    "methods",
-    "dist",
-    "*.d.ts"
-  ],
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.8.0",
-    "@vue/cli-plugin-eslint": "^3.8.0",
-    "@vue/cli-service": "^3.8.0",
+    "@vue/cli-plugin-babel": "^3.11.0",
+    "@vue/cli-plugin-eslint": "^3.11.0",
+    "@vue/cli-plugin-typescript": "^3.11.0",
+    "@vue/cli-service": "^3.11.0",
     "@vue/eslint-config-standard": "^4.0.0",
+    "@vue/eslint-config-typescript": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "core-js": "^2.6.5",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "highlight.js": "^9.15.6",
-    "jest": "^24.8.0",
+    "jest": "^24.9.0",
     "markdown-doctest": "^0.9.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
-    "tern": "^0.24.1",
+    "typescript": "^3.4.3",
     "vue": "^2.6.10",
+    "vue-class-component": "^7.0.2",
+    "vue-property-decorator": "^8.1.0",
     "vue-router": "^3.0.3",
     "vue-template-compiler": "^2.6.10"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "@vue/standard",
+      "@vue/typescript"
+    ],
+    "rules": {},
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    }
   },
   "postcss": {
     "plugins": {
@@ -45,24 +58,5 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/xuliangzhan/xe-utils.git"
-  },
-  "keywords": [
-    "tool",
-    "util",
-    "js-tools",
-    "js-utils"
-  ],
-  "author": {
-    "name": "Xu Liangzhan",
-    "email": "xu_liangzhan@163.com"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/xuliangzhan/xe-utils/issues"
-  },
-  "homepage": "https://github.com/xuliangzhan/xe-utils#readme"
+  ]
 }

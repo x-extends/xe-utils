@@ -7,13 +7,5 @@ module.exports = {
     performance: {
       hints: false
     }
-  },
-  pages: {
-    index: {
-      entry: 'examples/main.js',
-      template: 'public/index.html',
-      filename: 'index.html',
-      title: 'xe-utils'
-    }
   }
 }
