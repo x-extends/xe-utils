@@ -6,6 +6,12 @@
   "unpkg": "dist/xe-utils.min.js",
   "jsdelivr": "dist/xe-utils.min.js",
   "typings": "index.d.ts",
+  "files": [
+    "methods",
+    "dist",
+    "*.ts",
+    "*.d.ts"
+  ],
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
