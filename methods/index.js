@@ -358,4 +358,3 @@ XEUtils.mixin({
 })
 
 module.exports = XEUtils
-module.exports.default = XEUtils

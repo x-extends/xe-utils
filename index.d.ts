@@ -1,1 +1,3 @@
-export * from './methods'
+import XEUtils from './methods'
+
+export default XEUtils
