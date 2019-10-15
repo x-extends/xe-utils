@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param num 数值/字符串
      * @param digits 小数保留位数
      */
-    toFixedString(num: string | number, digits: number): string;
+    toFixedString: typeof toFixedString;
   }
 }
 

@@ -24,7 +24,7 @@ declare module '../xe-utils' {
      * @param {Object} options {children: 'children'}
      * @param {Object} context 上下文
      */
-    filterTree(array: Array<any>, iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): Array<any>;
+    filterTree: typeof filterTree;
   }
 }
 

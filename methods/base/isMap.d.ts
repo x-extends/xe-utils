@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Map 对象
      * @param val 值
      */
-    isMap(val: any): boolean;
+    isMap: typeof isMap;
   }
 }
 

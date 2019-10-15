@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param wait 延迟毫秒
      * @param params 额外的参数
      */
-    delay(callback: Function, wait: number, ...params: any[]): number;
+    delay: typeof delay;
   }
 }
 

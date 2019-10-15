@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param val 值
      */
-    includes(obj: any, val: any): boolean;
+    includes: typeof includes;
   }
 }
 

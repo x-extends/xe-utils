@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param target 目标对象
  * @param sources 多个对象
 */
-export declare function extend(target: object, ...sources: any[]): any;
+export declare function extend(target: any, ...sources: any[]): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param target 目标对象
      * @param sources 多个对象
     */
-    extend(target: object, ...sources: any[]): any;
+    extend: typeof extend;
   }
 }
 

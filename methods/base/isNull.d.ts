@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否为 Null
      * @param val 值
      */
-    isNull(val: any): boolean;
+    isNull: typeof isNull;
   }
 }
 

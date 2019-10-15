@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Error 对象
      * @param val 值
      */
-    isError(val: any): boolean;
+    isError: typeof isError;
   }
 }
 

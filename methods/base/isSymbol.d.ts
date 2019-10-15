@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Symbol 对象
      * @param val 值
      */
-    isSymbol(val: any): boolean;
+    isSymbol: typeof isSymbol;
   }
 }
 

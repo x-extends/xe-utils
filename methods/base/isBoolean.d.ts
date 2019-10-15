@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Boolean 对象
      * @param val 值
      */
-    isBoolean(val: any): boolean;
+    isBoolean: typeof isBoolean;
   }
 }
 

@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 返回某个月份的第几周
      * @param date 字符串/日期/时间戳
      */
-    getMonthWeek(date: string | Date | number): number;
+    getMonthWeek: typeof getMonthWeek;
   }
 }
 

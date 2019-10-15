@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param iteratee 回调/属性
  * @param context 上下文
  */
-export declare function groupBy(obj: any, iteratee: Function, context?: any): object;
+export declare function groupBy(obj: any, iteratee: Function, context?: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param iteratee 回调/属性
      * @param context 上下文
      */
-    groupBy(obj: any, iteratee: Function, context?: any): object;
+    groupBy: typeof groupBy;
   }
 }
 

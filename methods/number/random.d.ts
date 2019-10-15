@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param min 最小值
      * @param max 最大值
      */
-    random(min: number, max: number): number;
+    random: typeof random;
   }
 }
 

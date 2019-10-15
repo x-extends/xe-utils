@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param iteratee 回调/属性
  * @param context 上下文
  */
-export declare function sortBy(array: Array<any>, iteratee: Array<any> | Function | string, context?: any): Array<any>;
+export declare function sortBy(array: any[], iteratee: any[] | Function | string, context?: any): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param iteratee 回调/属性
      * @param context 上下文
      */
-    sortBy(array: Array<any>, iteratee: Array<any> | Function | string, context?: any): Array<any>;
+    sortBy: typeof sortBy;
   }
 }
 

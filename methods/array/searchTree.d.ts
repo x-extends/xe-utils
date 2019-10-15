@@ -26,7 +26,7 @@ declare module '../xe-utils' {
      * @param {Object} options {children: 'children'}
      * @param {Object} context 上下文
      */
-    searchTree(array: Array<any>, iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): Array<any>;
+    searchTree: typeof searchTree;
   }
 }
 

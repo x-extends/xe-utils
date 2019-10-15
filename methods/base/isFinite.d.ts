@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否为有限数值
      * @param val 值
      */
-    isFinite(val: any): boolean;
+    isFinite: typeof isFinite;
   }
 }
 

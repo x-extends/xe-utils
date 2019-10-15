@@ -69,7 +69,7 @@ declare module '../xe-utils' {
     /**
      * 获取浏览器信息
      */
-    browse(): XEBrowse;
+    browse: typeof browse;
   }
 }
 

@@ -18,7 +18,7 @@ declare module '../xe-utils' {
      * @param start 从该位置开始读取数据，默认为 0 。如果为负值，表示倒数
      * @param end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
      */
-    copyWithin(array: Array<any>, target: number, start?: Number, end?: number): Array<any>;
+    copyWithin: typeof copyWithin;
   }
 }
 

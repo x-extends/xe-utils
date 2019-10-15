@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param month 周(默认当前周)、前几周、后几周
      * @param day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
      */
-    getWhatWeek(date: string | Date | number, week?: number | string, day?: number | string): Date;
+    getWhatWeek: typeof getWhatWeek;
   }
 }
 

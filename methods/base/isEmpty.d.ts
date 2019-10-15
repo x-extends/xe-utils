@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否为空对象
      * @param val 值
      */
-    isEmpty(val: any): boolean;
+    isEmpty: typeof isEmpty;
   }
 }
 

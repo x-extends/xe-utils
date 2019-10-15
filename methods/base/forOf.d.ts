@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param iteratee 回调 
      * @param context 上下文
      */
-    forOf(obj: any, iteratee: Function, context?: any): void;
+    forOf: typeof forOf;
   }
 }
 

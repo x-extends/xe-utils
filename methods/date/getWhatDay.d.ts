@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param day 天(默认当天)、前几天、后几天
      * @param mode 获取时分秒(null默认当前时分秒)、日初(first)、日末(last)
      */
-    getWhatDay(date: string | Date | number, day?: number, mode?: number | string): Date;
+    getWhatDay: typeof getWhatDay;
   }
 }
 

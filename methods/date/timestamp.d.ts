@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param date 字符串/日期/时间戳
      * @param format 解析格式 yyyy MM dd HH mm ss SSS
      */
-    timestamp(date: string | Date | number, format?: string): number;
+    timestamp: typeof timestamp;
   }
 }
 

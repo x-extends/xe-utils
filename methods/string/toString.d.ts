@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 转字符串
      * @param obj 值
      */
-    toString(obj: any): string;
+    toString: typeof toString;
   }
 }
 

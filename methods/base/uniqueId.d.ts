@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 获取一个全局唯一标识
      * @param prefix 自定义前缀
      */
-    uniqueId(prefix?: string): string;
+    uniqueId: typeof uniqueId;
   }
 }
 

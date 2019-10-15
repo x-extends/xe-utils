@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param number 返回个数
      * @example 
      */
-    sample(array: Array<any>, number?: number): Array<any>;
+    sample: typeof sample;
   }
 }
 

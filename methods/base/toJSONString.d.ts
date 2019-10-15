@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * JSON 转字符串
      * @param obj 对象
      */
-    toJSONString(obj: any): string;
+    toJSONString: typeof toJSONString;
   }
 }
 

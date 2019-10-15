@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Date 对象
      * @param val 值
      */
-    isDate(val: any): boolean;
+    isDate: typeof isDate;
   }
 }
 

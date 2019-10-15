@@ -24,7 +24,7 @@ declare module '../xe-utils' {
      * @param {Object} options {children: 'children'}
      * @param {Object} context 上下文
      */
-    eachTree(array: Array<any>, iterate: typeof eachTreeIterate, options?: eachTreeOptions, context?: any): void;
+    eachTree: typeof eachTree;
   }
 }
 

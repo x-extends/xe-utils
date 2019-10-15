@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Set 对象
      * @param val 值
      */
-    isSet(val: any): boolean;
+    isSet: typeof isSet;
   }
 }
 

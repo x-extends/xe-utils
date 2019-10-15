@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param context 上下文
      * @param params 额外的参数
      */
-    bind(callback: Function, context?: any, ...params: any[]): Function;
+    bind: typeof bind;
   }
 }
 

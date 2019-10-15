@@ -1,5 +1,32 @@
 import { XEUtilsMethods } from '../xe-utils'
 
+export interface CookieOptions {
+  /**
+   * 键
+   */
+  name?: string;
+  /**
+   * 值
+   */
+  value?: string;
+  /**
+   * 路径
+   */
+  path?: string;
+  /**
+   * 作用域
+   */
+  domain?: string;
+  /**
+   * 设置为安全的,只能用https协议
+   */
+  secure?: string;
+  /**
+   * 过期时间,可以指定日期或者字符串，默认天
+   */
+  expires?: string;
+}
+
 export interface XECookie {
   /**
    * 根据 name 判断 Cookie 是否存在
@@ -13,7 +40,7 @@ export interface XECookie {
    * @param value 值
    * @param options 可选参数
    */
-  setItem(name: string, value: any, options?: object): this;
+  setItem(name: string, value: any, options?: CookieOptions): this;
 
   /**
    * 根据 name 获取 Cookie
@@ -26,17 +53,17 @@ export interface XECookie {
    * @param name 键
    * @param options 可选参数
    */
-  removeItem(name: string, options?: object): number;
+  removeItem(name: string, options?: CookieOptions): number;
 
   /**
    * 获取 Cookie 所有键
    */
-  keys(): Array<object>;
+  keys(): any[];
 
   /**
    * 获取所有 Cookie
    */
-  getJSON(): object;
+  getJSON(): any;
 }
   
 /**
@@ -46,6 +73,7 @@ export interface XECookie {
  * @param options 可选参数 
  */
 export declare function cookie(): XECookie;
+export declare function cookie(name: string, value?: any, options?: CookieOptions): XECookie;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -55,7 +83,7 @@ declare module '../xe-utils' {
     * @param value 值
     * @param options 可选参数 
     */
-    cookie(): XECookie;
+    cookie: typeof cookie;
   }
 }
 

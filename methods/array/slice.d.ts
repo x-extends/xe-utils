@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param start 迭代器/属性
      * @param end 上下文
      */
-    slice(array: Array<any>, start?: number, end?: number): Array<any>;
+    slice: typeof slice;
   }
 }
 

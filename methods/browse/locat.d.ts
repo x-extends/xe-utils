@@ -11,7 +11,7 @@ declare module '../xe-utils' {
     /**
      * 获取地址栏信息
      */
-    locat(): XEUrl;
+    locat: typeof locat;
   }
 }
 

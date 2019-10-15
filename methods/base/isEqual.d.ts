@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj1 值1
      * @param obj2 值2
      */
-    isEqual(obj1: any, obj2: any): boolean;
+    isEqual: typeof isEqual;
   }
 }
 

@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param val 值
  */
-export declare function lastIndexOf(obj: object | Array<any>, val: any): number;
+export declare function lastIndexOf(obj: any, val: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param val 值
      */
-    lastIndexOf(obj: object | Array<any>, val: any): number;
+    lastIndexOf: typeof lastIndexOf;
   }
 }
 

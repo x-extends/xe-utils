@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 WeakSet 对象
      * @param val 值
      */
-    isWeakSet(val: any): boolean;
+    isWeakSet: typeof isWeakSet;
   }
 }
 

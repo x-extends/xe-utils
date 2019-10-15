@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param array1 数组
  * @param array2 数组
  */
-export declare function includeArrays(array1: Array<any>, array2: Array<any>): boolean;
+export declare function includeArrays(array1: any[], array2: any[]): boolean;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param array1 数组
      * @param array2 数组
      */
-    includeArrays(array1: Array<any>, array2: Array<any>): boolean;
+    includeArrays: typeof includeArrays;
   }
 }
 

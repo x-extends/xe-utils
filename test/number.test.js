@@ -63,8 +63,23 @@ describe('Number functions', () => {
       XEUtils.commafy(0)
     ).toEqual('0')
     expect(
-      XEUtils.commafy(null)
+      XEUtils.commafy(-1)
+    ).toEqual('-1')
+    expect(
+      XEUtils.commafy(12345)
+    ).toEqual('12,345')
+    expect(
+      XEUtils.commafy('null')
     ).toEqual('null')
+    expect(
+      XEUtils.commafy(null)
+    ).toEqual('')
+    expect(
+      XEUtils.commafy('undefined')
+    ).toEqual('undefined')
+    expect(
+      XEUtils.commafy(undefined)
+    ).toEqual('')
     expect(
       XEUtils.commafy('abcdefg')
     ).toEqual('abcdefg')

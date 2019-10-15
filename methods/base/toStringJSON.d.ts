@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 字符串转 JSON
      * @param str 字符串
      */
-    toStringJSON(str: string): any;
+    toStringJSON: typeof toStringJSON;
   }
 }
 

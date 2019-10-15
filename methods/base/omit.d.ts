@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param array 数组或字符串或方法
  */
-export declare function omit(obj: any, array: Array<string>): object;
+export declare function omit(obj: any, array: Array<string>): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param array 数组或字符串或方法
      */
-    omit(obj: any, array: Array<string>): object;
+    omit: typeof omit;
   }
 }
 

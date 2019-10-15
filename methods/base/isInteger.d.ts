@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否整数
      * @param val 值
      */
-    isInteger(val: any): boolean;
+    isInteger: typeof isInteger;
   }
 }
 

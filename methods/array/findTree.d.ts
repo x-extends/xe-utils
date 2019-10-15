@@ -22,7 +22,7 @@ interface findTreeOptions {
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function findTree(array: Array<any>, iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): any;
+export declare function findTree(array: Array<any>, iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): TerrResult;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -33,7 +33,7 @@ declare module '../xe-utils' {
      * @param {Object} options {children: 'children'}
      * @param {Object} context 上下文
      */
-    findTree(array: Array<any>, iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): TerrResult;
+    findTree: typeof findTree;
   }
 }
 

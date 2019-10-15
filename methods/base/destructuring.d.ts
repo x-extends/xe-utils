@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param target 目标
  */
-export declare function destructuring(obj: object, ...target: object[]): object;
+export declare function destructuring(obj: any, ...target: any[]): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param target 目标
      */
-    destructuring(obj: object, ...target: object[]): object;
+    destructuring: typeof destructuring;
   }
 }
 

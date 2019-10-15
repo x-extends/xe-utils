@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param iteratee 迭代器/值
  */
-export declare function remove(obj: object | Array<any>, iteratee: any): object;
+export declare function remove(obj: any, iteratee: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param iteratee 迭代器/值
      */
-    remove(obj: object | Array<any>, iteratee: any): object;
+    remove: typeof remove;
   }
 }
 

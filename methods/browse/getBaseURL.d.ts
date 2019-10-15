@@ -10,7 +10,7 @@ declare module '../xe-utils' {
     /**
      * 获取上下文路径
      */
-    getBaseURL(): string;
+    getBaseURL: typeof getBaseURL;
   }
 }
 

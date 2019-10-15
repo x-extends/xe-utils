@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param date 字符串/日期/时间戳
      * @param year 年(默认当年)、前几个年、后几个年
      */
-    getDayOfYear(date: string | Date | number, year?: number): Date;
+    getDayOfYear: typeof getDayOfYear;
   }
 }
 

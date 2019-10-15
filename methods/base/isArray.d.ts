@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否数组
      * @param val 值
      */
-    isArray(val: any): boolean;
+    isArray: typeof isArray;
   }
 }
 

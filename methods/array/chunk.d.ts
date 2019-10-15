@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param array 数组
      * @param size 每组大小
      */
-    chunk(array: Array<any>, size: number): Array<any>;
+    chunk: typeof chunk;
   }
 }
 

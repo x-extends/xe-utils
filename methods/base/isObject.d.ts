@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Object 对象
      * @param val 值
      */
-    isObject(val: any): boolean;
+    isObject: typeof isObject;
   }
 }
 

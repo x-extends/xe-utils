@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断 Undefined
      * @param val 值
      */
-    isUndefined(val: any): boolean;
+    isUndefined: typeof isUndefined;
   }
 }
 

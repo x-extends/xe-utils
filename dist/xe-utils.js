@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.10
+ * xe-utils.js v2.2.11
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2185,7 +2185,7 @@
     * @return {String}
    */
   function commafy (num, options) {
-    num = ('' + num).replace(/,/g, '')
+    num = toValString(num).replace(/,/g, '')
     if (num) {
       var opts = assign({ spaceNumber: 3, separator: ',' }, options)
       var optFixed = opts.fixed

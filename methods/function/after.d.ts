@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param callback 回调
      * @param context 上下文
      */
-    after(count: number, callback: Function, context?: any): Function;
+    after: typeof after;
   }
 }
 

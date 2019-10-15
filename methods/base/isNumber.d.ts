@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Number 对象
      * @param val 值
      */
-    isNumber(val: any): boolean;
+    isNumber: typeof isNumber;
   }
 }
 

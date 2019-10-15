@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Element 对象
      * @param val 值
      */
-    isElement(val: any): boolean;
+    isElement: typeof isElement;
   }
 }
 

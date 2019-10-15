@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 将字符串转成驼峰字符串
      * @param str 字符串
      */
-    kebabCase(str: string): string;
+    kebabCase: typeof kebabCase;
   }
 }
 

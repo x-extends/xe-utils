@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param year 年(默认当前年)、前几个年(数值)、后几个年(数值)
      * @param month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
      */
-    getWhatYear(date: string | Date | number, year?: number | string, month?: number | string): Date;
+    getWhatYear: typeof getWhatYear;
   }
 }
 

@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 数组去重
      * @param array 数组
      */
-    uniq(array: Array<any>): Array<any>;
+    uniq: typeof uniq;
   }
 }
 

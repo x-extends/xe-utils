@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否闰年
      * @param date 日期
      */
-    isLeapYear(date?: Date | number | string): boolean;
+    isLeapYear: typeof isLeapYear;
   }
 }
 

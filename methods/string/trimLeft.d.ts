@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 去除字符串左边的空格
      * @param str 字符串
      */
-    trimLeft(str: string): string;
+    trimLeft: typeof trimLeft;
   }
 }
 

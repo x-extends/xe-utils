@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param source 值
  */
-export declare function isMatch(obj: object | Array<any>, source: object): boolean;
+export declare function isMatch(obj: any, source: any): boolean;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param source 值
      */
-    isMatch(obj: object | Array<any>, source: object): boolean;
+    isMatch: typeof isMatch;
   }
 }
 

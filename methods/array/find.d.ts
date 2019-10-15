@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param iteratee 回调
      * @param context 上下文
      */
-    find(array: Array<any>, iteratee: Function, context?: any): any;
+    find: typeof find;
   }
 }
 

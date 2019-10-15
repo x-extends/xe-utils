@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param deep 是否深拷贝
  */
-export declare function clone(obj: object | Array<any>, deep?: boolean): object | Array<any>;
+export declare function clone(obj: any, deep?: boolean): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param deep 是否深拷贝
      */
-    clone(obj: object | Array<any>, deep?: boolean): object | Array<any>;
+    clone: typeof clone;
   }
 }
 

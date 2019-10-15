@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 反转 escape
      * @param str 字符串
      */
-    unescape(str: string): string;
+    unescape: typeof unescape;
   }
 }
 

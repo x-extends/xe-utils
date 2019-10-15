@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 数组
  * @param val 值
  */
-export declare function arrayIndexOf(obj: object | Array<any>, val: any): number;
+export declare function arrayIndexOf(obj: any, val: any): number;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 数组
      * @param val 值
      */
-    arrayIndexOf(obj: object | Array<any>, val: any): number;
+    arrayIndexOf: typeof arrayIndexOf;
   }
 }
 

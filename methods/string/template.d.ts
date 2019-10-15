@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param str 字符串模板
  * @param obj 对象
  */
-export declare function template(str: string, obj: object): string;
+export declare function template(str: string, obj: any): string;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param str 字符串模板
      * @param obj 对象
      */
-    template(str: string, obj: object): string;
+    template: typeof template;
   }
 }
 

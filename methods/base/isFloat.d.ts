@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否小数
      * @param val 值
      */
-    isFloat(val: any): boolean;
+    isFloat: typeof isFloat;
   }
 }
 

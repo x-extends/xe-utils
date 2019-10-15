@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param obj2 值2
      * @param func 自定义函数
      */
-    isEqualWith(obj1: any, obj2: any, func?: Function): boolean;
+    isEqualWith: typeof isEqualWith;
   }
 }
 

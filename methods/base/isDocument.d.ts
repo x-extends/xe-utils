@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Document 对象
      * @param val 值
      */
-    isDocument(val: any): boolean;
+    isDocument: typeof isDocument;
   }
 }
 

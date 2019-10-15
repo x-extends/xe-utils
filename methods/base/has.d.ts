@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param property 键、路径
      */
-    has(obj: any, property: string | Array<string>): boolean;
+    has: typeof has;
   }
 }
 

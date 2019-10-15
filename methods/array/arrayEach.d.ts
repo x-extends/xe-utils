@@ -18,7 +18,7 @@ declare module '../xe-utils' {
      * @param iteratee 回调 
      * @param context 上下文
      */
-    arrayEach(obj: any, iteratee: typeof arrayEachIterate, context?: any): void;
+    arrayEach: typeof arrayEach;
   }
 }
 

@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 将多个数的值返回唯一的并集数组
      * @param array 数组
      */
-    union(...array: any[]): Array<any>;
+    union: typeof union;
   }
 }
 

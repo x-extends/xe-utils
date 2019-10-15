@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 WeakMap 对象
      * @param val 值
      */
-    isWeakMap(val: any): boolean;
+    isWeakMap: typeof isWeakMap;
   }
 }
 

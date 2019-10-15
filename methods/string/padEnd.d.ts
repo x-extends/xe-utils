@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param targetLength 结果长度
      * @param padString 补全字符
      */
-    padEnd(str: string, targetLength: number, padString?: string): string;
+    padEnd: typeof padEnd;
   }
 }
 

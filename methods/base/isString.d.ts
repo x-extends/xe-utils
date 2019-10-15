@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否String对象
      * @param val 值
      */
-    isString(val: any): boolean;
+    isString: typeof isString;
   }
 }
 

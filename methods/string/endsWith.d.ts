@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param val 值
      * @param startIndex 开始索引
      */
-    endsWith(str: string, val: string, startIndex?: number): string;
+    endsWith: typeof endsWith;
   }
 }
 

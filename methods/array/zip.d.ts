@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 将每个数组中相应位置的值合并在一起
      * @param arrays 多个数组
      */
-    zip(...arrays: Array<any>): Array<any>;
+    zip: typeof zip;
   }
 }
 

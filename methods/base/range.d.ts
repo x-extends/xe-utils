@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param stop 结束值
      * @param step 自增值
      */
-    range(start: number, stop: number, step?: number): Array<any>;
+    range: typeof range;
   }
 }
 

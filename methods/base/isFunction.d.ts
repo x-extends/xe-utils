@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否方法
      * @param val 值
      */
-    isFunction(val: any): boolean;
+    isFunction: typeof isFunction;
   }
 }
 

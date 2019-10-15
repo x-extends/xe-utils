@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 获取对象类型
      * @param obj 对象
      */
-    getType(obj: any): string;
+    getType: typeof getType;
   }
 }
 

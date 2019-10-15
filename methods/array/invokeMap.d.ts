@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param key 键
  * @example 
  */
-export declare function invokeMap(list: Array<any>, path: Array<string> | string | Function): Array<any>;
+export declare function invokeMap(list: any[], path: string[] | string | Function): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param key 键
      * @example 
      */
-    invokeMap(list: Array<any>, path: Array<string> | string | Function): Array<any>;
+    invokeMap: typeof invokeMap;
   }
 }
 

@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否非数值
      * @param val 值
      */
-    isNaN(val: any): boolean;
+    isNaN: typeof isNaN;
   }
 }
 

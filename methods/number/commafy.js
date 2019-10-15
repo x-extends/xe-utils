@@ -1,6 +1,7 @@
 var toNumber = require('./toNumber')
 
 var assign = require('../object/assign')
+var toValString = require('../string/toString')
 
 /**
   * 千分位分隔符、小数点
@@ -10,7 +11,7 @@ var assign = require('../object/assign')
   * @return {String}
  */
 function commafy (num, options) {
-  num = ('' + num).replace(/,/g, '')
+  num = toValString(num).replace(/,/g, '')
   if (num) {
     var opts = assign({ spaceNumber: 3, separator: ',' }, options)
     var optFixed = opts.fixed

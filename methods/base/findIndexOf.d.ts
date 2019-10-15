@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param iteratee 迭代器/属性
  * @param context 上下文
  */
-export declare function findIndexOf(obj: object | Array<any>, iteratee: any, context?: any): number;
+export declare function findIndexOf(obj: any, iteratee: any, context?: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param iteratee 迭代器/属性
      * @param context 上下文
      */
-    findIndexOf(obj: object | Array<any>, iteratee: any, context?: any): number;
+    findIndexOf: typeof findIndexOf;
   }
 }
 

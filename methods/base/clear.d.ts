@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param defs 默认值
  * @param assigns 值
  */
-export declare function clear(obj: object | Array<any>, defs?: object, assigns?: object): object;
+export declare function clear(obj: any, defs?: any, assigns?: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param defs 默认值
      * @param assigns 值
      */
-    clear(obj: object | Array<any>, defs?: object, assigns?: object): object;
+    clear: typeof clear;
   }
 }
 

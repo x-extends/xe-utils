@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param date2 日期
      * @param format 格式化
      */
-    isDateSame(date1: Date | number | string, date2: Date | number | string, format?: string): boolean;
+    isDateSame: typeof isDateSame;
   }
 }
 

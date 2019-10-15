@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param obj 对象
      * @param key 键值
      */
-    hasOwnProp(obj: any, key: string | number): boolean;
+    hasOwnProp: typeof hasOwnProp;
   }
 }
 

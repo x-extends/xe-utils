@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 FormData 对象
      * @param val 值
      */
-    isFormData(val: any): boolean;
+    isFormData: typeof isFormData;
   }
 }
 

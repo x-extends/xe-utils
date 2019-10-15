@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 转数值
      * @param num 数值/字符串
      */
-    toNumber(num: string | number): number;
+    toNumber: typeof toNumber;
   }
 }
 

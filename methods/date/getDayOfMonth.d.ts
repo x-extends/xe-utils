@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param date 字符串/日期/时间戳
      * @param month 月(默认当月)、前几个月、后几个月
      */
-    getDayOfMonth(date: string | Date | number, month: number): number;
+    getDayOfMonth: typeof getDayOfMonth;
   }
 }
 

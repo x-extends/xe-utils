@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 返回对象的长度
      * @param obj 对象
      */
-    getSize(obj: any): number;
+    getSize: typeof getSize;
   }
 }
 

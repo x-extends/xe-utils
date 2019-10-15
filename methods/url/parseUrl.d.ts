@@ -44,11 +44,11 @@ export interface XEUrl {
   /**
    * 获取 #hash 对象参数
    */
-  hashQuery: object;
+  hashQuery: any;
   /**
    * 获取查询对象参数
    */
-  searchQuery: object;
+  searchQuery: any;
 }
 
 /**
@@ -63,7 +63,7 @@ declare module '../xe-utils' {
      * 解析 URL 参数
      * @param ulr 字符串
      */
-    parseUrl(ulr: string): XEUrl;
+    parseUrl: typeof parseUrl;
   }
 }
 

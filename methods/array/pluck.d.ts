@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param key 键
      * @example 
      */
-    pluck(array: Array<any>, key: string): Array<any>;
+    pluck: typeof pluck;
   }
 }
 

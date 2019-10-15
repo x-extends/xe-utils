@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 获取对象所有值
      * @param obj 对象
      */
-    values(obj: any): Array<any>;
+    values: typeof values;
   }
 }
 

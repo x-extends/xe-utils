@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param iteratee 回调
  * @param context 上下文
  */
-export declare function mean(obj: object | Array<any>, iteratee?: Function, context?: any): number;
+export declare function mean(obj: any, iteratee?: Function, context?: any): number;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param iteratee 回调
      * @param context 上下文
      */
-    mean(obj: object | Array<any>, iteratee?: Function, context?: any): number;
+    mean: typeof mean;
   }
 }
 

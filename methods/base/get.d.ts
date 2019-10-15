@@ -16,7 +16,7 @@ declare module '../xe-utils' {
      * @param property 键、路径
      * @param defaultValue 默认值
      */
-    get(obj: any, property: string | Array<string>, defaultValue?: any): any;
+    get: typeof get;
   }
 }
 

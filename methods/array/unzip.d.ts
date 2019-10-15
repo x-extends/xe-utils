@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 与 zip 相反
      * @param arrays 数组
      */
-    unzip(arrays: Array<any>): Array<any>;
+    unzip: typeof unzip;
   }
 }
 

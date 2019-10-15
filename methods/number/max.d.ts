@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param array 数组
      * @param iteratee 回调/属性
      */
-    max(array: Array<any>, iteratee: string | Function): number;
+    max: typeof max;
   }
 }
 

@@ -14,7 +14,7 @@ declare module '../xe-utils' {
      * @param str 字符串
      * @param count 次数
      */
-    repeat(str: string, count: number): string;
+    repeat: typeof repeat;
   }
 }
 

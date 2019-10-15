@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 Arguments 对象
      * @param val 值
      */
-    isArguments(val: any): boolean;
+    isArguments: typeof isArguments;
   }
 }
 

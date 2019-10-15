@@ -18,7 +18,7 @@ declare module '../xe-utils' {
      * @param initialValue 默认值
      * @example 
      */
-    reduce(array: Array<any>, iteratee?: Function, initialValue?: any): any;
+    reduce: typeof reduce;
   }
 }
 

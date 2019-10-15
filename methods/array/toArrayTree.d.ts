@@ -24,7 +24,7 @@ declare module '../xe-utils' {
      * @param {Array} array 数组
      * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
      */
-    toArrayTree(array: Array<any>, options?: toArrayTreeOptions): Array<any>;
+    toArrayTree: typeof toArrayTree;
   }
 }
 

@@ -12,7 +12,7 @@ declare module '../xe-utils' {
      * 判断是否 undefined 和 null
      * @param obj 对象
      */
-    eqNull(obj: any): boolean;
+    eqNull: typeof eqNull;
   }
 }
 

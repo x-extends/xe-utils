@@ -10,7 +10,7 @@ declare module '../xe-utils' {
     /**
      * 返回当前时间戳
      */
-    now(): number;
+    now: typeof now;
   }
 }
 
