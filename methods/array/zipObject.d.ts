@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param values 值数组
  * @example 
  */
-export declare function zipObject(props: Array<any>, values: Array<any>): any;
+export declare function zipObject(props: any[], values: any[]): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

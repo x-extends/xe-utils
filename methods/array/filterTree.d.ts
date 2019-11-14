@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-export declare function filterTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
+export declare function filterTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
 export interface filterTreeOptions {
   children?: string;
@@ -13,7 +13,7 @@ export interface filterTreeOptions {
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function filterTree(array: Array<any>, iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): Array<any>;
+export declare function filterTree(array: any[], iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

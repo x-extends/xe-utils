@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param start 迭代器/属性
  * @param end 上下文
  */
-export declare function slice(array: Array<any>, start?: number, end?: number): Array<any>;
+export declare function slice(array: any[], start?: number, end?: number): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

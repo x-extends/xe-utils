@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-export declare function eachIterate(item?: any, index?: any, obj?: any): any;
+export declare function eachIterate(item: any, index: any, obj: any): any;
 
 /**
  * 通用迭代器

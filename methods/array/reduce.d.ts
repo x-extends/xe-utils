@@ -7,7 +7,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param initialValue 默认值
  * @example 
  */
-export declare function reduce(array: Array<any>, iteratee?: Function, initialValue?: any): any;
+export declare function reduce(array: any[], iteratee?: Function, initialValue?: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

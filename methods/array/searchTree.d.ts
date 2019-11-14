@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-export declare function searchTreeIterate(item: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
+export declare function searchTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
 export interface searchTreeOptions {
   children?: string;
@@ -15,7 +15,7 @@ export interface searchTreeOptions {
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function searchTree(array: Array<any>, iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): Array<any>;
+export declare function searchTree(array: any[], iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

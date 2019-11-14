@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-export declare function arrayEachIterate(item?: any, index?: number, list?: Array<any>): any;
+export declare function arrayEachIterate(item: any, index: number, list: any): any;
 
 /**
  * 数组迭代器

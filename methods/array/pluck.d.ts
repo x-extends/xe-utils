@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param key 键
  * @example 
  */
-export declare function pluck(array: Array<any>, key: string): Array<any>;
+export declare function pluck(array: any[], key: string): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param number 返回个数
  * @example 
  */
-export declare function sample(array: Array<any>, number?: number): Array<any>;
+export declare function sample(array: any[], number?: number): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

@@ -15,7 +15,7 @@ export interface toArrayTreeOptions {
  * @param {Array} array 数组
  * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
  */
-export declare function toArrayTree(array: Array<any>, options?: toArrayTreeOptions): Array<any>;
+export declare function toArrayTree(array: any[], options?: toArrayTreeOptions): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

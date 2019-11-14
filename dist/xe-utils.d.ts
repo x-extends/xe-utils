@@ -70,7 +70,7 @@ declare namespace XEUtils {
 
 
 
-  export function objectEachIterate(item?: any, index?: string, obj?: any): any;
+  export function objectEachIterate(item: any, index: string, obj: any): any;
 
   /**
    * 对象迭代器
@@ -102,7 +102,7 @@ declare namespace XEUtils {
    * 数组去重
    * @param array 数组
    */
-  export function uniq(array: Array<any>): Array<any>;
+  export function uniq(array: any[]): any[];
 
 
 
@@ -113,7 +113,7 @@ declare namespace XEUtils {
    * 将多个数的值返回唯一的并集数组
    * @param array 数组
    */
-  export function union(...array: any[]): Array<any>;
+  export function union(...array: any[]): any[];
 
 
 
@@ -137,7 +137,7 @@ declare namespace XEUtils {
    * 将一个数组随机打乱，返回一个新的数组
    * @param array 数组
     */
-  export function shuffle(array: Array<any>): Array<any>;
+  export function shuffle(array: any[]): any[];
 
 
 
@@ -150,7 +150,7 @@ declare namespace XEUtils {
    * @param number 返回个数
    * @example 
    */
-  export function sample(array: Array<any>, number?: number): Array<any>;
+  export function sample(array: any[], number?: number): any[];
 
 
 
@@ -176,7 +176,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function every(array: Array<any>, iteratee: Function, context?: any): Array<any>;
+  export function every(array: any[], iteratee: Function, context?: any): any[];
 
 
 
@@ -189,7 +189,7 @@ declare namespace XEUtils {
    * @param start 迭代器/属性
    * @param end 上下文
    */
-  export function slice(array: Array<any>, start?: number, end?: number): Array<any>;
+  export function slice(array: any[], start?: number, end?: number): any[];
 
 
 
@@ -202,7 +202,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function filter(array: Array<any>, iteratee: Function, context?: any): Array<any>;
+  export function filter(array: any[], iteratee: Function, context?: any): any[];
 
 
 
@@ -215,7 +215,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function find(array: Array<any>, iteratee: Function, context?: any): any;
+  export function find(array: any[], iteratee: Function, context?: any): any;
 
 
 
@@ -228,7 +228,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function findKey(array: Array<any>, iteratee: Function, context?: any): any;
+  export function findKey(array: any[], iteratee: Function, context?: any): any;
 
 
 
@@ -277,7 +277,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function map(array: Array<any>, iteratee: Function, context?: any): Array<any>;
+  export function map(array: any[], iteratee: Function, context?: any): any[];
 
 
 
@@ -317,7 +317,7 @@ declare namespace XEUtils {
    * @param initialValue 默认值
    * @example 
    */
-  export function reduce(array: Array<any>, iteratee?: Function, initialValue?: any): any;
+  export function reduce(array: any[], iteratee?: Function, initialValue?: any): any;
 
 
 
@@ -331,7 +331,7 @@ declare namespace XEUtils {
    * @param start 从该位置开始读取数据，默认为 0 。如果为负值，表示倒数
    * @param end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
    */
-  export function copyWithin(array: Array<any>, target: number, start?: Number, end?: number): Array<any>;
+  export function copyWithin(array: any[], target: number, start?: Number, end?: number): any[];
 
 
 
@@ -343,7 +343,7 @@ declare namespace XEUtils {
    * @param array 数组
    * @param size 每组大小
    */
-  export function chunk(array: Array<any>, size: number): Array<any>;
+  export function chunk(array: any[], size: number): any[];
 
 
 
@@ -354,7 +354,7 @@ declare namespace XEUtils {
    * 将每个数组中相应位置的值合并在一起
    * @param arrays 多个数组
    */
-  export function zip(...arrays: Array<any>): Array<any>;
+  export function zip(...arrays: any[]): any[];
 
 
 
@@ -365,7 +365,7 @@ declare namespace XEUtils {
    * 与 zip 相反
    * @param arrays 数组
    */
-  export function unzip(arrays: Array<any>): Array<any>;
+  export function unzip(arrays: any[]): any[];
 
 
 
@@ -378,7 +378,7 @@ declare namespace XEUtils {
    * @param values 值数组
    * @example 
    */
-  export function zipObject(props: Array<any>, values: Array<any>): any;
+  export function zipObject(props: any[], values: any[]): any;
 
 
 
@@ -414,7 +414,7 @@ declare namespace XEUtils {
    * @param key 键
    * @example 
    */
-  export function pluck(array: Array<any>, key: string): Array<any>;
+  export function pluck(array: any[], key: string): any[];
 
 
 
@@ -447,7 +447,7 @@ declare namespace XEUtils {
 
 
 
-  export function arrayEachIterate(item?: any, index?: number, list?: Array<any>): any;
+  export function arrayEachIterate(item: any, index: number, list: any[]): any;
 
   /**
    * 数组迭代器
@@ -490,7 +490,7 @@ declare namespace XEUtils {
    * @param {Array} array 数组
    * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
    */
-  export function toArrayTree(array: Array<any>, options?: toArrayTreeOptions): Array<any>;
+  export function toArrayTree(array: any[], options?: toArrayTreeOptions): any[];
 
 
 
@@ -507,22 +507,22 @@ declare namespace XEUtils {
    * @param {Array} array 数组
    * @param {Object} options {children: 'children', data: 'data'}
    */
-  export function toTreeArray(array: Array<any>, options?: toTreeArrayOptions): Array<any>;
+  export function toTreeArray(array: any[], options?: toTreeArrayOptions): any[];
 
 
 
 
 
 
-  export function findTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
+  export function findTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
   interface TerrResult {
     index?: number;
     item?: any;
     path?: Array<string>;
-    items?: Array<any>;
+    items?: any[];
     parent?: any;
-    nodes?: Array<any>;
+    nodes?: any[];
   }
 
   interface findTreeOptions {
@@ -536,14 +536,14 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function findTree(array: Array<any>, iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): TerrResult;
+  export function findTree(array: any[], iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): TerrResult;
 
 
 
 
 
 
-  export function eachTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
+  export function eachTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
   export interface eachTreeOptions {
     children?: string;
@@ -556,14 +556,14 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function eachTree(array: Array<any>, iterate: typeof eachTreeIterate, options?: eachTreeOptions, context?: any): void;
+  export function eachTree(array: any[], iterate: typeof eachTreeIterate, options?: eachTreeOptions, context?: any): void;
 
 
 
 
 
 
-  export function mapTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
+  export function mapTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
   interface mapTreeOptions {
     children?: string;
@@ -577,14 +577,14 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children', mapChildren: 'children}
    * @param {Object} context 上下文
    */
-  export function mapTree(array: Array<any>, iterate: typeof mapTreeIterate, options?: mapTreeOptions, context?: any): Array<any>;
+  export function mapTree(array: any[], iterate: typeof mapTreeIterate, options?: mapTreeOptions, context?: any): any[];
 
 
 
 
 
 
-  export function filterTreeIterate(item?: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
+  export function filterTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
   export interface filterTreeOptions {
     children?: string;
@@ -597,14 +597,14 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function filterTree(array: Array<any>, iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): Array<any>;
+  export function filterTree(array: any[], iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): any[];
 
 
 
 
 
 
-  export function searchTreeIterate(item: any, index?: number, items?: Array<any>, path?: Array<string>, parent?: any, nodes?: Array<any>): any;
+  export function searchTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
   export interface searchTreeOptions {
     children?: string;
@@ -619,7 +619,7 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function searchTree(array: Array<any>, iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): Array<any>;
+  export function searchTree(array: any[], iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): any[];
 
 
 
@@ -1114,7 +1114,7 @@ declare namespace XEUtils {
    * 获取对象所有属性
    * @param obj 对象
    */
-  export function keys(obj: any): Array<any>;
+  export function keys(obj: any): any[];
 
 
 
@@ -1126,7 +1126,7 @@ declare namespace XEUtils {
    * 获取对象所有值
    * @param obj 对象
    */
-  export function values(obj: any): Array<any>;
+  export function values(obj: any): any[];
 
 
 
@@ -1137,7 +1137,7 @@ declare namespace XEUtils {
    * 获取对象所有属性、值
    * @param obj 对象
    */
-  export function entries(obj: any): Array<any>;
+  export function entries(obj: any): any[];
 
 
 
@@ -1190,7 +1190,7 @@ declare namespace XEUtils {
 
 
 
-  export function eachIterate(item?: any, index?: any, obj?: any): any;
+  export function eachIterate(item: any, index: any, obj: any): any;
 
   /**
    * 通用迭代器
@@ -1352,7 +1352,7 @@ declare namespace XEUtils {
    * @param stop 结束值
    * @param step 自增值
    */
-  export function range(start: number, stop: number, step?: number): Array<any>;
+  export function range(start: number, stop: number, step?: number): any[];
 
 
 
@@ -1388,7 +1388,7 @@ declare namespace XEUtils {
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  export function min(array: Array<any>, iteratee: string | Function): number;
+  export function min(array: any[], iteratee: string | Function): number;
 
 
 
@@ -1400,7 +1400,7 @@ declare namespace XEUtils {
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  export function max(array: Array<any>, iteratee: string | Function): number;
+  export function max(array: any[], iteratee: string | Function): number;
 
 
 
