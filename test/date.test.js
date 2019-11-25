@@ -212,6 +212,18 @@ describe('Date functions', () => {
       XEUtils.toDateString('Year:2018 Month:01 Day:26')
     ).toEqual('Invalid Date')
     expect(
+      XEUtils.toDateString('2017')
+    ).toEqual('2017-01-01 00:00:00')
+    expect(
+      XEUtils.toDateString('2017-01')
+    ).toEqual('2017-01-01 00:00:00')
+    expect(
+      XEUtils.toDateString('2017-02')
+    ).toEqual('2017-02-01 00:00:00')
+    expect(
+      XEUtils.toDateString('2017-02-03')
+    ).toEqual('2017-02-03 00:00:00')
+    expect(
       XEUtils.toDateString(time)
     ).toEqual('2017-01-01 14:05:30')
     expect(

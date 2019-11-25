@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.13
+ * xe-utils.js v2.2.14
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2344,7 +2344,7 @@
             sIndex = format.indexOf(arr[0])
             if (sIndex > -1) {
               tempMatch = str.substring(sIndex, sIndex + arr[1]) || 0
-              if (item.offset) {
+              if (tempMatch && item.offset) {
                 tempMatch = parseFloat(tempMatch) + item.offset
               }
               dates.push(tempMatch)
