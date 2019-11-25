@@ -50,7 +50,7 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 
 这样按需引入方法，可以使体积达到最小
 
-单个导入，包的大小 gzip >≈ 60B 起步，按需导入，绝不放过任何一个冗余的函数  
+单个导入，包的大小 gzip >≈ 60B 起步，按需导入
 
 ```javascript
 import XEUtils from 'xe-utils/methods/xe-utils'
