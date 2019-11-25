@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "2.2.12",
+  "version": "2.2.13",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
   "unpkg": "dist/xe-utils.min.js",
@@ -41,6 +41,25 @@
     "vue-router": "^3.0.3",
     "vue-template-compiler": "^2.6.10"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuliangzhan/xe-utils.git"
+  },
+  "keywords": [
+    "utils",
+    "vxe-utils",
+    "xe-utils",
+    "tools"
+  ],
+  "author": {
+    "name": "Xu Liangzhan",
+    "email": "xu_liangzhan@163.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xuliangzhan/xe-utils/issues"
+  },
+  "homepage": "https://github.com/xuliangzhan/xe-utils#readme",
   "eslintConfig": {
     "root": true,
     "env": {

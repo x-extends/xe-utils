@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.12
+ * xe-utils.js v2.2.13
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2368,7 +2368,7 @@
             }
           }
         } else {
-          rest = new Date(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
+          rest = new Date(dates[0], dates[1], dates[2] || 1, dates[3], dates[4], dates[5], dates[6])
         }
       }
     }
