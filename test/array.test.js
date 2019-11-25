@@ -21,10 +21,16 @@ describe('Array functions', () => {
       XEUtils.uniq('')
     ).toEqual([])
     expect(
+      XEUtils.uniq(/\d/)
+    ).toEqual([])
+    expect(
       XEUtils.uniq([])
     ).toEqual([])
     expect(
       XEUtils.uniq({})
+    ).toEqual([])
+    expect(
+      XEUtils.uniq(function () {})
     ).toEqual([])
     expect(
       XEUtils.uniq('abcb')
@@ -61,10 +67,19 @@ describe('Array functions', () => {
       XEUtils.union(null)
     ).toEqual([])
     expect(
+      XEUtils.union('')
+    ).toEqual([])
+    expect(
+      XEUtils.union(/\d/)
+    ).toEqual([])
+    expect(
       XEUtils.union({})
     ).toEqual([])
     expect(
       XEUtils.union([])
+    ).toEqual([])
+    expect(
+      XEUtils.union(function () {})
     ).toEqual([])
     expect(
       XEUtils.union([11, 22, 44, 11])
@@ -79,7 +94,10 @@ describe('Array functions', () => {
 
   test('slice()', () => {
     expect(
-      XEUtils.slice(-0)
+      XEUtils.slice(0)
+    ).toEqual([])
+    expect(
+      XEUtils.slice(-1)
     ).toEqual([])
     expect(
       XEUtils.slice(123)
@@ -88,10 +106,19 @@ describe('Array functions', () => {
       XEUtils.slice(false)
     ).toEqual([])
     expect(
+      XEUtils.slice('')
+    ).toEqual([])
+    expect(
+      XEUtils.slice(/\d/)
+    ).toEqual([])
+    expect(
       XEUtils.slice({})
     ).toEqual([])
     expect(
       XEUtils.slice([])
+    ).toEqual([])
+    expect(
+      XEUtils.slice(function () {})
     ).toEqual([])
     expect(
       XEUtils.slice([11, 22])
@@ -127,7 +154,19 @@ describe('Array functions', () => {
       XEUtils.sortBy(-1)
     ).toEqual([])
     expect(
+      XEUtils.sortBy(0)
+    ).toEqual([])
+    expect(
       XEUtils.sortBy(123)
+    ).toEqual([])
+    expect(
+      XEUtils.sortBy('')
+    ).toEqual([])
+    expect(
+      XEUtils.sortBy(/\d/)
+    ).toEqual([])
+    expect(
+      XEUtils.sortBy(function () {})
     ).toEqual([])
     expect(
       XEUtils.sortBy('abc')
@@ -261,10 +300,19 @@ describe('Array functions', () => {
       XEUtils.shuffle(undefined)
     ).toEqual([])
     expect(
+      XEUtils.shuffle('')
+    ).toEqual([])
+    expect(
+      XEUtils.shuffle(/\d/)
+    ).toEqual([])
+    expect(
       XEUtils.shuffle(0)
     ).toEqual([])
     expect(
       XEUtils.shuffle(-1)
+    ).toEqual([])
+    expect(
+      XEUtils.shuffle(333)
     ).toEqual([])
     expect(
       XEUtils.shuffle(function () {})
@@ -303,6 +351,12 @@ describe('Array functions', () => {
       XEUtils.sample(-1)
     ).toEqual(undefined)
     expect(
+      XEUtils.sample(0)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.sample(456)
+    ).toEqual(undefined)
+    expect(
       XEUtils.sample([])
     ).toEqual(undefined)
     expect(
@@ -316,6 +370,12 @@ describe('Array functions', () => {
     ).toEqual([])
     expect(
       XEUtils.sample(undefined, 2)
+    ).toEqual([])
+    expect(
+      XEUtils.sample([], undefined)
+    ).toEqual([])
+    expect(
+      XEUtils.sample([], null)
     ).toEqual([])
     expect(
       XEUtils.sample({}, 2)
@@ -355,6 +415,9 @@ describe('Array functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.some({})
+    ).toEqual(false)
+    expect(
+      XEUtils.some(/\d/)
     ).toEqual(false)
     expect(
       XEUtils.some(0)
@@ -405,6 +468,9 @@ describe('Array functions', () => {
       XEUtils.every({})
     ).toEqual(true)
     expect(
+      XEUtils.every(/\W/)
+    ).toEqual(true)
+    expect(
       XEUtils.every(0)
     ).toEqual(true)
     expect(
@@ -418,6 +484,9 @@ describe('Array functions', () => {
     ).toEqual(true)
     expect(
       XEUtils.every(function () {})
+    ).toEqual(true)
+    expect(
+      XEUtils.every('')
     ).toEqual(true)
     expect(
       XEUtils.every('abc')
@@ -462,6 +531,12 @@ describe('Array functions', () => {
       XEUtils.filter([])
     ).toEqual([])
     expect(
+      XEUtils.filter(/\s/)
+    ).toEqual([])
+    expect(
+      XEUtils.filter('')
+    ).toEqual([])
+    expect(
       XEUtils.filter('abc')
     ).toEqual([])
     expect(
@@ -502,6 +577,9 @@ describe('Array functions', () => {
     ).toEqual(undefined)
     expect(
       XEUtils.find(123)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.find('')
     ).toEqual(undefined)
     expect(
       XEUtils.find('abc')
@@ -552,7 +630,13 @@ describe('Array functions', () => {
       XEUtils.findKey(123)
     ).toEqual(undefined)
     expect(
+      XEUtils.findKey(/\D/)
+    ).toEqual(undefined)
+    expect(
       XEUtils.findKey(function () {})
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findKey('')
     ).toEqual(undefined)
     expect(
       XEUtils.findKey('abc')
@@ -591,6 +675,9 @@ describe('Array functions', () => {
       XEUtils.map(123)
     ).toEqual([])
     expect(
+      XEUtils.map(/\d/)
+    ).toEqual([])
+    expect(
       XEUtils.map('abc')
     ).toEqual([])
     expect(
@@ -598,6 +685,9 @@ describe('Array functions', () => {
     ).toEqual([])
     expect(
       XEUtils.map({})
+    ).toEqual([])
+    expect(
+      XEUtils.map(function () {})
     ).toEqual([])
     expect(
       XEUtils.map([], item => item.value)
@@ -634,6 +724,12 @@ describe('Array functions', () => {
     ).toEqual(0)
     expect(
       XEUtils.sum(null)
+    ).toEqual(0)
+    expect(
+      XEUtils.sum('')
+    ).toEqual(0)
+    expect(
+      XEUtils.sum(/\w/)
     ).toEqual(0)
     expect(
       XEUtils.sum({})
@@ -673,6 +769,12 @@ describe('Array functions', () => {
     ).toEqual(0)
     expect(
       XEUtils.mean(null)
+    ).toEqual(0)
+    expect(
+      XEUtils.mean('')
+    ).toEqual(0)
+    expect(
+      XEUtils.mean(/\w/)
     ).toEqual(0)
     expect(
       XEUtils.mean([])
@@ -715,6 +817,15 @@ describe('Array functions', () => {
     ).toEqual(undefined)
     expect(
       XEUtils.reduce(-1)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.reduce(333)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.reduce('')
+    ).toEqual(undefined)
+    expect(
+      XEUtils.reduce(function () {})
     ).toEqual(undefined)
     expect(
       XEUtils.reduce(null, (previous, item) => previous + item)
@@ -765,6 +876,9 @@ describe('Array functions', () => {
       XEUtils.chunk('123')
     ).toEqual([])
     expect(
+      XEUtils.chunk(/\d/)
+    ).toEqual([])
+    expect(
       XEUtils.chunk(null)
     ).toEqual([])
     expect(
@@ -795,6 +909,12 @@ describe('Array functions', () => {
       XEUtils.zip()
     ).toEqual([])
     expect(
+      XEUtils.zip(null)
+    ).toEqual([])
+    expect(
+      XEUtils.zip(undefined)
+    ).toEqual([])
+    expect(
       XEUtils.zip(-1)
     ).toEqual([])
     expect(
@@ -805,6 +925,9 @@ describe('Array functions', () => {
     ).toEqual([])
     expect(
       XEUtils.zip('')
+    ).toEqual([])
+    expect(
+      XEUtils.zip(/\w/)
     ).toEqual([])
     expect(
       XEUtils.zip({})
@@ -825,6 +948,12 @@ describe('Array functions', () => {
       XEUtils.unzip()
     ).toEqual([])
     expect(
+      XEUtils.unzip(null)
+    ).toEqual([])
+    expect(
+      XEUtils.unzip(undefined)
+    ).toEqual([])
+    expect(
       XEUtils.unzip(-1)
     ).toEqual([])
     expect(
@@ -835,6 +964,9 @@ describe('Array functions', () => {
     ).toEqual([])
     expect(
       XEUtils.unzip('')
+    ).toEqual([])
+    expect(
+      XEUtils.unzip(/\d/)
     ).toEqual([])
     expect(
       XEUtils.unzip({})
@@ -855,6 +987,12 @@ describe('Array functions', () => {
       XEUtils.zipObject()
     ).toEqual({})
     expect(
+      XEUtils.zipObject(null)
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject(undefined)
+    ).toEqual({})
+    expect(
       XEUtils.zipObject(0)
     ).toEqual({})
     expect(
@@ -862,6 +1000,9 @@ describe('Array functions', () => {
     ).toEqual({})
     expect(
       XEUtils.zipObject(123)
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject(/\d/)
     ).toEqual({})
     expect(
       XEUtils.zipObject(null)
@@ -877,6 +1018,9 @@ describe('Array functions', () => {
     ).toEqual({})
     expect(
       XEUtils.zipObject([])
+    ).toEqual({})
+    expect(
+      XEUtils.zipObject(function () {})
     ).toEqual({})
     expect(
       XEUtils.zipObject({ a: 'aa', b: 'bb' }, [11, 22, 33])
@@ -932,6 +1076,9 @@ describe('Array functions', () => {
   })
 
   test('includeArrays()', () => {
+    expect(
+      XEUtils.includeArrays()
+    ).toEqual(false)
     expect(
       XEUtils.includeArrays(null)
     ).toEqual(false)

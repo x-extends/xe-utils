@@ -8,14 +8,14 @@ var max = require('../number/max')
  * @param {Array} arrays 数组集合
  */
 function unzip (arrays) {
-  var index, len
+  var index, maxItem, len
   var result = []
   if (arrays && arrays.length) {
     index = 0
-    len = max(arrays, function (item) {
-      return item.length || 0
-    }).length
-    for (; index < len; index++) {
+    maxItem = max(arrays, function (item) {
+      return item ? item.length : 0
+    })
+    for (len = maxItem ? maxItem.length : 0; index < len; index++) {
       result.push(map(arrays, index))
     }
   }

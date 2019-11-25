@@ -137,6 +137,12 @@ describe('Date functions', () => {
       XEUtils.toStringDate('2017-12-20')
     ).toEqual(new Date(2017, 11, 20))
     expect(
+      XEUtils.toStringDate('20|2018/12', 'dd|yyyy/MM')
+    ).toEqual(new Date(2018, 11, 20))
+    expect(
+      XEUtils.toStringDate('2018/12', 'yyyy/MM')
+    ).toEqual(new Date(2018, 11))
+    expect(
       XEUtils.toStringDate('2017-12-20 10:10:30')
     ).toEqual(new Date(2017, 11, 20, 10, 10, 30))
     expect(
