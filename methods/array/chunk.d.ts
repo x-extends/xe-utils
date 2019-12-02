@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param array 数组
  * @param size 每组大小
  */
-export declare function chunk(array: Array<any>, size: number): Array<any>;
+export declare function chunk(array: any[], size: number): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

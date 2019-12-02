@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-export declare function mapTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
+export declare function mapTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
 interface mapTreeOptions {
   children?: string;

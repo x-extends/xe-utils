@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-export declare function findTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
+export declare function findTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
 interface TerrResult { 
   index?: number;
