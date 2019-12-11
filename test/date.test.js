@@ -166,17 +166,17 @@ describe('Date functions', () => {
     expect(
       XEUtils.toStringDate('2017-12-20T10:10:30.423Z')
     ).toEqual(new Date('2017-12-20T10:10:30.423Z'))
-    // expect(
-    //   XEUtils.toStringDate(1513735830000)
-    // ).toEqual(new Date(2017, 11, 20, 10, 10, 30))
     expect(
-      XEUtils.toStringDate(20171220101030)
-    ).toEqual(new Date(2609, 2, 15, 12, 41, 41, 30))
-    expect(
-      XEUtils.toStringDate('1513735830000')
+      XEUtils.toStringDate(new Date(1513735830000).getTime())
     ).toEqual(new Date(2017, 11, 20, 10, 10, 30))
     expect(
-      XEUtils.toStringDate('20171220101030')
+      XEUtils.toStringDate(new Date(20171220101030).getTime())
+    ).toEqual(new Date(2609, 2, 15, 12, 41, 41, 30))
+    expect(
+      XEUtils.toStringDate(new Date('1513735830000').getTime())
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30))
+    expect(
+      XEUtils.toStringDate(new Date('20171220101030').getTime())
     ).toEqual(new Date(2609, 2, 15, 12, 41, 41, 30))
     expect(
       XEUtils.toStringDate('12/20/2017', 'MM/dd/yyyy')
