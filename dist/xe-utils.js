@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.15
+ * xe-utils.js v2.2.16
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -2330,12 +2330,12 @@
     * @return {String}
     */
   function toStringDate (str, format) {
-    var arr, sIndex, index, rules, len, rest, dateType, tempMatch, zStr
+    var arr, sIndex, index, rules, len, rest, isDateType, tempMatch, zStr
     var dates = []
     if (str) {
-      dateType = isDate(str)
-      if (dateType || /^[0-9]{11,13}$/.test(str)) {
-        rest = new Date(dateType ? helperGetDateTime(str) : staticParseInt(str))
+      isDateType = isDate(str)
+      if (isDateType || (!format && /^[0-9]{11,15}$/.test(str))) {
+        rest = new Date(isDateType ? helperGetDateTime(str) : staticParseInt(str))
       } else if (isString(str)) {
         format = format || setupDefaults.formatDate
         arrayEach(dateFormatRules, function (item) {
