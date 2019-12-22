@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import API from './views/API.vue'
+import API from '../views/API.vue'
 
 Vue.use(Router)
 
