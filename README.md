@@ -13,7 +13,7 @@ JavaScript 函数库、工具类
 
 ![IE](https://raw.github.com/alrra/browser-logos/master/src/archive/internet-explorer_7-8/internet-explorer_7-8_48x48.png) | ![Edge](https://raw.github.com/alrra/browser-logos/master/src/edge/edge_48x48.png) | ![Chrome](https://raw.github.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png) | ![Firefox](https://raw.github.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png) | ![Opera](https://raw.github.com/alrra/browser-logos/master/src/opera/opera_48x48.png) | ![Safari](https://raw.github.com/alrra/browser-logos/master/src/safari/safari_48x48.png)
 --- | --- | --- | --- | --- | --- |
-7+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 6.1+ ✔ |
+7+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ | 6+ ✔ |
 
 ## Docs
 
@@ -48,9 +48,8 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 
 ## Import on demand
 
-这样按需引入方法，可以使体积达到最小
-
-单个导入，包的大小 gzip >≈ 60B 起步，按需导入
+这样按需引入方法，可以使体积达到最小  
+单个导入，包的大小 gzip >≈ 60B+，按需导入
 
 ```javascript
 import XEUtils from 'xe-utils/methods/xe-utils'
@@ -82,23 +81,23 @@ import urlMethods from 'xe-utils/methods/url'
 import browseMethods from 'xe-utils/methods/browse'
 
 XEUtils.mixin(
-  // object
+  // Object
   objectMethods,
-  // array
+  // Array
   arrayMethods,
-  // base
+  // Base
   baseMethods,
-  // number
+  // Number
   numberMethods,
-  // date
+  // Date
   dateMethods,
-  // string
+  // String
   stringMethods,
-  // function
+  // Function
   functionMethods,
-  // url
+  // URL
   urlMethods,
-  // browse
+  // Browse
   browseMethods
 )
 

@@ -179,7 +179,7 @@ var locat = require('./browse/locat')
 var cookie = require('./browse/cookie')
 var browse = require('./browse/browse')
 
-XEUtils.mixin({
+assign(XEUtils, {
   // object
   assign: assign,
   extend: extend,

@@ -11,7 +11,7 @@ var assign = require('./object/assign')
 function mixin () {
   arrayEach(arguments, function (methods) {
     each(methods, function (fn, name) {
-      XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
+      XEUtils[name] = isFunction(fn) ? function () {
         var result = fn.apply(XEUtils.$context, arguments)
         XEUtils.$context = null
         return result

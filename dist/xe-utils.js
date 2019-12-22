@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.2.16
+ * xe-utils.js v2.3.0
  * (c) 2017-present Xu Liangzhan
  * ISC License.
  * @preserve
@@ -34,7 +34,7 @@
   function mixin () {
     arrayEach(arguments, function (methods) {
       each(methods, function (fn, name) {
-        XEUtils[name] = isFunction(fn) && fn._c !== false ? function () {
+        XEUtils[name] = isFunction(fn) ? function () {
           var result = fn.apply(XEUtils.$context, arguments)
           XEUtils.$context = null
           return result
@@ -3429,7 +3429,7 @@
 
   // 浏览器相关的方法
 
-  XEUtils.mixin({
+  assign(XEUtils, {
     // object
     assign: assign,
     extend: extend,

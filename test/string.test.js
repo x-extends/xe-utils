@@ -15,6 +15,9 @@ describe('String functions', () => {
       XEUtils.trim(0)
     ).toEqual('0')
     expect(
+      XEUtils.trim(123456)
+    ).toEqual('123456')
+    expect(
       XEUtils.trim(-1)
     ).toEqual('-1')
     expect(
@@ -41,6 +44,9 @@ describe('String functions', () => {
     expect(
       XEUtils.trimLeft(0)
     ).toEqual('0')
+    expect(
+      XEUtils.trimLeft(123456)
+    ).toEqual('123456')
     expect(
       XEUtils.trimLeft(-1)
     ).toEqual('-1')
@@ -69,6 +75,9 @@ describe('String functions', () => {
       XEUtils.trimRight(0)
     ).toEqual('0')
     expect(
+      XEUtils.trimRight(123456)
+    ).toEqual('123456')
+    expect(
       XEUtils.trimRight(-1)
     ).toEqual('-1')
     expect(
@@ -95,6 +104,9 @@ describe('String functions', () => {
     expect(
       XEUtils.escape(0)
     ).toEqual('0')
+    expect(
+      XEUtils.escape(123456)
+    ).toEqual('123456')
     expect(
       XEUtils.escape(-1)
     ).toEqual('-1')
@@ -123,6 +135,9 @@ describe('String functions', () => {
       XEUtils.unescape(0)
     ).toEqual('0')
     expect(
+      XEUtils.unescape(123456)
+    ).toEqual('123456')
+    expect(
       XEUtils.unescape(-1)
     ).toEqual('-1')
     expect(
@@ -150,6 +165,9 @@ describe('String functions', () => {
       XEUtils.camelCase(0)
     ).toEqual('0')
     expect(
+      XEUtils.camelCase(123456)
+    ).toEqual('123456')
+    expect(
       XEUtils.camelCase(-1)
     ).toEqual('-1')
     expect(
@@ -173,6 +191,9 @@ describe('String functions', () => {
     expect(
       XEUtils.kebabCase(0)
     ).toEqual('0')
+    expect(
+      XEUtils.kebabCase(123456)
+    ).toEqual('123456')
     expect(
       XEUtils.kebabCase(-1)
     ).toEqual('-1')
