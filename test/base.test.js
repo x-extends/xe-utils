@@ -2115,6 +2115,36 @@ describe('Base functions', () => {
 
   test('groupBy()', () => {
     expect(
+      XEUtils.groupBy()
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy(null)
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy(undefined)
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy({})
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy([])
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy(/\d/)
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy(0)
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy(-1)
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy(0, -1)
+    ).toEqual({})
+    expect(
+      XEUtils.groupBy(-1, 'type')
+    ).toEqual({})
+    expect(
       XEUtils.groupBy([{ type: 'a' }, { type: 'b' }], 'type')
     ).toEqual({ a: [{ type: 'a' }], b: [{ type: 'b' }] })
     expect(
@@ -2124,6 +2154,36 @@ describe('Base functions', () => {
 
   test('countBy()', () => {
     expect(
+      XEUtils.countBy()
+    ).toEqual({})
+    expect(
+      XEUtils.countBy(null)
+    ).toEqual({})
+    expect(
+      XEUtils.countBy(undefined)
+    ).toEqual({})
+    expect(
+      XEUtils.countBy({})
+    ).toEqual({})
+    expect(
+      XEUtils.countBy([])
+    ).toEqual({})
+    expect(
+      XEUtils.countBy(/\d/)
+    ).toEqual({})
+    expect(
+      XEUtils.countBy(0)
+    ).toEqual({})
+    expect(
+      XEUtils.countBy(-1)
+    ).toEqual({})
+    expect(
+      XEUtils.countBy(0, -1)
+    ).toEqual({})
+    expect(
+      XEUtils.countBy(-1, 'type')
+    ).toEqual({})
+    expect(
       XEUtils.countBy([{ type: 'a' }, { type: 'b' }], 'type')
     ).toEqual({ a: 1, b: 1 })
     expect(
@@ -2132,6 +2192,30 @@ describe('Base functions', () => {
   })
 
   test('clone()', () => {
+    expect(
+      XEUtils.clone()
+    ).toEqual()
+    expect(
+      XEUtils.clone(null)
+    ).toEqual(null)
+    expect(
+      XEUtils.clone(undefined)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.clone([])
+    ).toEqual([])
+    expect(
+      XEUtils.clone({})
+    ).toEqual({})
+    expect(
+      XEUtils.clone(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.clone(-1)
+    ).toEqual(-1)
+    expect(
+      XEUtils.clone(/\n/)
+    ).toEqual(/\n/)
     let v1 = { a: 11, b: { b1: 22 } }
     let v2 = XEUtils.clone(v1)
     expect(
@@ -2144,6 +2228,30 @@ describe('Base functions', () => {
   })
 
   test('clear()', () => {
+    expect(
+      XEUtils.clear()
+    ).toEqual()
+    expect(
+      XEUtils.clear(null)
+    ).toEqual(null)
+    expect(
+      XEUtils.clear(undefined)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.clear({})
+    ).toEqual({})
+    expect(
+      XEUtils.clear([])
+    ).toEqual([])
+    expect(
+      XEUtils.clear(/\d/)
+    ).toEqual(/\d/)
+    expect(
+      XEUtils.clear(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.clear(-1)
+    ).toEqual(-1)
     expect(
       XEUtils.clear([11, 22, 33, 33])
     ).toEqual([])
@@ -2200,6 +2308,24 @@ describe('Base functions', () => {
 
   test('range()', () => {
     expect(
+      XEUtils.range()
+    ).toEqual([])
+    expect(
+      XEUtils.range(null)
+    ).toEqual([])
+    expect(
+      XEUtils.range(undefined)
+    ).toEqual([])
+    expect(
+      XEUtils.range({})
+    ).toEqual([])
+    expect(
+      XEUtils.range([])
+    ).toEqual([])
+    expect(
+      XEUtils.range(/\d/)
+    ).toEqual([])
+    expect(
       XEUtils.range(-5)
     ).toEqual([])
     expect(
@@ -2212,11 +2338,44 @@ describe('Base functions', () => {
       XEUtils.range(-5, 5)
     ).toEqual([-5, -4, -3, -2, -1, 0, 1, 2, 3, 4])
     expect(
+      XEUtils.range(0, 10, 0)
+    ).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+    expect(
       XEUtils.range(0, 10, 2)
     ).toEqual([0, 2, 4, 6, 8])
+    expect(
+      XEUtils.range(1, 50, 10)
+    ).toEqual([1, 11, 21, 31, 41])
   })
 
   test('destructuring()', () => {
+    expect(
+      XEUtils.destructuring()
+    ).toEqual(undefined)
+    expect(
+      XEUtils.destructuring(undefined)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.destructuring(null)
+    ).toEqual(null)
+    expect(
+      XEUtils.destructuring({})
+    ).toEqual({})
+    expect(
+      XEUtils.destructuring([])
+    ).toEqual([])
+    expect(
+      XEUtils.destructuring(/\d/)
+    ).toEqual(/\d/)
+    expect(
+      XEUtils.destructuring(true)
+    ).toEqual(true)
+    expect(
+      XEUtils.destructuring(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.destructuring(-1)
+    ).toEqual(-1)
     expect(
       XEUtils.destructuring(null, { a: 11, b: 22, c: 33 })
     ).toEqual(null)
