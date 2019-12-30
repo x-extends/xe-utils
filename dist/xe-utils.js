@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.3.0
+ * xe-utils.js v2.3.1
  * ISC License.
  * @preserve
  */
@@ -2878,13 +2878,9 @@
    * @param {Object} obj 对象
    */
   function template (str, obj) {
-    var rest = toValString(str)
-    if (rest && obj) {
-      return rest.replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, keys) {
-        return get(obj, keys)
-      })
-    }
-    return rest
+    return toValString(str).replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, key) {
+      return get(obj, trim(key))
+    })
   }
 
   function toValString (obj) {

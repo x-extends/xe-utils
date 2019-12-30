@@ -1,6 +1,54 @@
 const XEUtils = require('../index')
 
 describe('String functions', () => {
+  test('toString()', () => {
+    expect(
+      XEUtils.toString()
+    ).toEqual('')
+    expect(
+      XEUtils.toString(null)
+    ).toEqual('')
+    expect(
+      XEUtils.toString(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.toString(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toString(-1)
+    ).toEqual('-1')
+    expect(
+      XEUtils.toString(123)
+    ).toEqual('123')
+    expect(
+      XEUtils.toString([])
+    ).toEqual('')
+    expect(
+      XEUtils.toString(/\w/)
+    ).toEqual('/\\w/')
+    expect(
+      XEUtils.toString({})
+    ).toEqual('[object Object]')
+    expect(
+      XEUtils.toString(function () {})
+    ).toEqual('function () {}')
+    expect(
+      XEUtils.toString(['3e-9'])
+    ).toEqual('3e-9')
+    expect(
+      XEUtils.toString(3e-9)
+    ).toEqual('0.000000003')
+    expect(
+      XEUtils.toString(0.000003)
+    ).toEqual('0.000003')
+    expect(
+      XEUtils.toString([123])
+    ).toEqual('123')
+    expect(
+      XEUtils.toString([123.0000006])
+    ).toEqual('123.0000006')
+  })
+
   test('trim()', () => {
     expect(
       XEUtils.trim()
@@ -444,20 +492,59 @@ describe('String functions', () => {
       XEUtils.template(-1)
     ).toEqual('-1')
     expect(
+      XEUtils.template(123)
+    ).toEqual('123')
+    expect(
+      XEUtils.template(/\d/)
+    ).toEqual('/\\d/')
+    expect(
+      XEUtils.template({})
+    ).toEqual('[object Object]')
+    expect(
+      XEUtils.template(function () {})
+    ).toEqual('function () {}')
+    expect(
       XEUtils.template([])
     ).toEqual('')
     expect(
-      XEUtils.template('{name}')
-    ).toEqual('{name}')
+      XEUtils.template('0')
+    ).toEqual('0')
+    expect(
+      XEUtils.template('[0]')
+    ).toEqual('[0]')
+    expect(
+      XEUtils.template('{{0}}')
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('name')
+    ).toEqual('name')
+    expect(
+      XEUtils.template('{name')
+    ).toEqual('{name')
+    expect(
+      XEUtils.template('name}name}')
+    ).toEqual('name}name}')
+    expect(
+      XEUtils.template('{name}{name}')
+    ).toEqual('{name}{name}')
     expect(
       XEUtils.template('{{name}}')
-    ).toEqual('{{name}}')
+    ).toEqual('undefined')
     expect(
       XEUtils.template('{{name}}', null)
-    ).toEqual('{{name}}')
+    ).toEqual('undefined')
     expect(
       XEUtils.template('{{name}}', undefined)
-    ).toEqual('{{name}}')
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('{{name}}', '')
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('{{name}}', -1)
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('{{name}}', 0)
+    ).toEqual('undefined')
     expect(
       XEUtils.template('{{name}}', [])
     ).toEqual('undefined')
@@ -465,11 +552,56 @@ describe('String functions', () => {
       XEUtils.template('{{name}}', {})
     ).toEqual('undefined')
     expect(
+      XEUtils.template('{{0}}', [null])
+    ).toEqual('null')
+    expect(
+      XEUtils.template('{{{0}}}', [null])
+    ).toEqual('{null}')
+    expect(
+      XEUtils.template('{{  }}', { name: 'test1' })
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('{{ }}')
+    ).toEqual('undefined')
+    expect(
+      XEUtils.template('{{0}}', { name: 'test1' })
+    ).toEqual('undefined')
+    expect(
       XEUtils.template('{{name}}', { name: 'test1' })
     ).toEqual('test1')
     expect(
+      XEUtils.template('{{}}', { name: 'test1' })
+    ).toEqual('{{}}')
+    expect(
+      XEUtils.template('{{{{name}}}}', { name: 'test1' })
+    ).toEqual('{{test1}}')
+    expect(
+      XEUtils.template('{{name }}', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.template('{{ name}}', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.template('{{ name }}', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.template('{{ name }}{{{ name }}}{{ name }}', { name: 'test1' })
+    ).toEqual('test1{test1}test1')
+    expect(
+      XEUtils.template('{{ 0 }}{{{ 2 }}}{{ 3 }}', [null, 11, 22, 33, 44])
+    ).toEqual('null{22}33')
+    expect(
       XEUtils.template('{{name}}-{{age}}', { name: 'test1', age: 26 })
     ).toEqual('test1-26')
+    expect(
+      XEUtils.template('{{name}}-{{age}}', [])
+    ).toEqual('undefined-undefined')
+    expect(
+      XEUtils.template('{{0}}-{{1}}', [])
+    ).toEqual('undefined-undefined')
+    expect(
+      XEUtils.template('{{0}}-{{1}}', [11, '22'])
+    ).toEqual('11-22')
     expect(
       XEUtils.template('{{name}} to {{{age}}}12{3} {{{{sex}}}}', { name: 'test1', age: 26, sex: '男' })
     ).toEqual('test1 to {26}12{3} {{男}}')

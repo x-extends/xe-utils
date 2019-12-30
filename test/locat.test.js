@@ -38,6 +38,12 @@ describe('location functions', () => {
     expect(
       XEUtils.serialize({ id: 123, name: undefined })
     ).toEqual('id=123')
+    expect(
+      XEUtils.serialize({ list: [11, 22] })
+    ).toEqual('list%5B%5D=11&list%5B%5D=22')
+    expect(
+      XEUtils.serialize({ list: [{ id: 11, name: 't1' }, { id: 44, name: 't2' }] })
+    ).toEqual('list%5B0%5D%5Bid%5D=11&list%5B0%5D%5Bname%5D=t1&list%5B1%5D%5Bid%5D=44&list%5B1%5D%5Bname%5D=t2')
   })
 
   test('unserialize()', () => {

@@ -1600,42 +1600,6 @@ describe('Base functions', () => {
     ).toEqual(true)
   })
 
-  test('toString()', () => {
-    expect(
-      XEUtils.toString()
-    ).toEqual('')
-    expect(
-      XEUtils.toString(null)
-    ).toEqual('')
-    expect(
-      XEUtils.toString(undefined)
-    ).toEqual('')
-    expect(
-      XEUtils.toString(0)
-    ).toEqual('0')
-    expect(
-      XEUtils.toString(-1)
-    ).toEqual('-1')
-    expect(
-      XEUtils.toString(1)
-    ).toEqual('1')
-    expect(
-      XEUtils.toString([])
-    ).toEqual('')
-    expect(
-      XEUtils.toString({})
-    ).toEqual('[object Object]')
-    expect(
-      XEUtils.toString([123])
-    ).toEqual('123')
-    expect(
-      XEUtils.toString([null])
-    ).toEqual('')
-    expect(
-      XEUtils.toString([undefined])
-    ).toEqual('')
-  })
-
   test('toStringJSON()', () => {
     expect(
       XEUtils.toStringJSON()
