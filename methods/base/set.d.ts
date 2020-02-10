@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param property 键、路径
  * @param value 值
  */
-export declare function set(obj: any, property: string | Array<string>, value: any): void;
+export declare function set(obj: any, property: string | string[], value: any): void;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

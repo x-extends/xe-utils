@@ -21,7 +21,7 @@ function mixin () {
 }
 
 function setup (options) {
-  assign(setupDefaults, options)
+  return assign(setupDefaults, options)
 }
 
 function XEUtils () {}

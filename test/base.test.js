@@ -1065,40 +1065,13 @@ describe('Base functions', () => {
 
   test('isLeapYear()', () => {
     expect(
-      XEUtils.isLeapYear()
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear(null)
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear(undefined)
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear([])
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear({})
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear(-1)
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear(123)
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear(0)
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear('')
-    ).toEqual(false)
-    expect(
-      XEUtils.isLeapYear('abc')
-    ).toEqual(false)
-    expect(
       XEUtils.isLeapYear('2018-12-01')
     ).toEqual(false)
     expect(
       XEUtils.isLeapYear('2020-12-01 10:30:30')
+    ).toEqual(true)
+    expect(
+      XEUtils.isLeapYear(1581305634689)
     ).toEqual(true)
     expect(
       XEUtils.isLeapYear(new Date(2012, 1, 1).getTime())

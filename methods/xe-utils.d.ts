@@ -1,5 +1,5 @@
 
-import DefaultOptions from "./setupDefaults";
+import setupDefaults from './setupDefaults'
 
 export interface XEUtilsMethods {
   /**
@@ -10,18 +10,20 @@ export interface XEUtilsMethods {
    * 设置全局参数
    * @param options 全局参数
    */
-  setup(options: DefaultOptions): void;
+  setup(options: setupDefaults): setupDefaults;
 
   /**
    * 将您自己的实用函数扩展到 XEUtils
    * @param methods 函数集
    */
   mixin(...methods: any[]): void;
+
+  [propertys: string]: any;
 }
 
 /**
  * JavaScript 函数库、工具类
  */
-export declare var XEUtils: XEUtilsMethods;
+export declare var XEUtils: XEUtilsMethods
 
-export default XEUtils;
+export default XEUtils

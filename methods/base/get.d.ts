@@ -6,7 +6,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param property 键、路径
  * @param defaultValue 默认值
  */
-export declare function get(obj: any, property: string | Array<string>, defaultValue?: any): any;
+export declare function get(obj: any, property: string | string[], defaultValue?: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

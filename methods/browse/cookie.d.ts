@@ -65,15 +65,14 @@ export interface XECookie {
    */
   getJSON(): any;
 }
-  
+
 /**
  * Cookie 操作函数
  * @param name 键/数组/对象
  * @param value 值
- * @param options 可选参数 
+ * @param options 可选参数
  */
-export declare function cookie(): XECookie;
-export declare function cookie(name: string, value?: any, options?: CookieOptions): XECookie;
+export declare function cookie(name?: string, value?: any, options?: CookieOptions): XECookie;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
@@ -81,7 +80,7 @@ declare module '../xe-utils' {
     * Cookie 操作函数
     * @param name 键/数组/对象
     * @param value 值
-    * @param options 可选参数 
+    * @param options 可选参数
     */
     cookie: typeof cookie;
   }

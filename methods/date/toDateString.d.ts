@@ -5,7 +5,7 @@ export interface ToDateStringOptions {
    * 自定义格式化模板
    * {
    *   formats: {
-   *     q: ['日', '一', '二', '三', '四', '五', '六'], 
+   *     q: ['日', '一', '二', '三', '四', '五', '六'],
    *     E: function (value, match, date) { return '三' }
    *   }
    * }

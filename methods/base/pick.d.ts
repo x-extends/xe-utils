@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param array 数组或字符串或方法
  */
-export declare function pick(obj: any, array: Array<string>): any;
+export declare function pick(obj: any, array: string[]): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

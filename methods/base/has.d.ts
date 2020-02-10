@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param obj 对象
  * @param property 键、路径
  */
-export declare function has(obj: any, property: string | Array<string>): boolean;
+export declare function has(obj: any, property: string | string[]): boolean;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

@@ -2,13 +2,13 @@ import { XEUtilsMethods } from '../xe-utils'
 
 export declare function findTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
-interface TerrResult { 
-  index?: number;
-  item?: any;
-  path?: Array<string>;
-  items?: any[];
-  parent?: any;
-  nodes?: any[];
+interface terrResult {
+  index: number;
+  item: any;
+  path: Array<string>;
+  items: any[];
+  parent: any;
+  nodes: any[];
 }
 
 interface findTreeOptions {
@@ -22,7 +22,7 @@ interface findTreeOptions {
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function findTree(array: any[], iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): TerrResult;
+export declare function findTree(array: any[], iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): terrResult;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

@@ -3,35 +3,29 @@
  */
 declare namespace XEUtils {
 
-  export interface DefaultOptions {
+  export interface setupDefaults {
     treeOptions?: any;
     formatDate?: string;
     formatString?: string;
     dateDiffRules?: any[][];
+    [propertys: string]: any;
   }
-
-
-
-
 
   /**
    * 版本信息
    */
-  export var v: string;
+  export var v: string
   /**
    * 设置全局参数
    * @param options 全局参数
    */
-  export function setup(options: DefaultOptions): void;
+  export function setup(options: setupDefaults): setupDefaults;
 
   /**
    * 将您自己的实用函数扩展到 XEUtils
    * @param methods 函数集
    */
   export function mixin(...methods: any[]): void;
-
-
-
 
   /**
    * 浅拷贝一个或者多个对象到目标对象中
@@ -40,11 +34,6 @@ declare namespace XEUtils {
   */
   export function assign(target: any, ...sources: any[]): any;
 
-
-
-
-
-
   /**
    * 浅拷贝一个或者多个对象到目标对象中
    * @param target 目标对象
@@ -52,10 +41,7 @@ declare namespace XEUtils {
   */
   export function extend(target: any, ...sources: any[]): any;
 
-
-
-
-
+  export function objectMapIterate(item: any, key: string, obj: any): any;
 
   /**
    * 指定方法后的返回值组成的新对象
@@ -63,40 +49,27 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function objectMap(obj: any, iteratee: Function, context?: any): any;
+  export function objectMap(obj: any, iteratee: typeof objectMapIterate, context ?: any): any;
 
-
-
-
-
-
-  export function objectEachIterate(item: any, index: string, obj: any): any;
+  export function objectEachIterate(item: any, key: string, obj: any): any;
 
   /**
    * 对象迭代器
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
-  export function objectEach(obj: any, iteratee: typeof objectEachIterate, context?: any): void;
+  export function objectEach(obj: any, iteratee: typeof objectEachIterate, context ?: any): void;
 
-
-
-
-
+  export function lastObjectEachIterate(item: any, key: string, obj: any): any;
 
   /**
    * 对象迭代器,从最后开始迭代
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
-  export function lastObjectEach(obj: any, iteratee: Function, context?: any): void;
-
-
-
-
-
+  export function lastObjectEach(obj: any, iteratee: typeof lastObjectEachIterate, context ?: any): void;
 
   /**
    * 数组去重
@@ -104,21 +77,11 @@ declare namespace XEUtils {
    */
   export function uniq(array: any[]): any[];
 
-
-
-
-
-
   /**
    * 将多个数的值返回唯一的并集数组
    * @param array 数组
    */
   export function union(...array: any[]): any[];
-
-
-
-
-
 
   /**
    * 数组按属性值升序
@@ -128,34 +91,19 @@ declare namespace XEUtils {
    */
   export function sortBy(array: any[], iteratee: any[] | Function | string, context?: any): any[];
 
-
-
-
-
-
   /**
    * 将一个数组随机打乱，返回一个新的数组
    * @param array 数组
     */
   export function shuffle(array: any[]): any[];
 
-
-
-
-
-
   /**
    * 从一个数组中随机返回几个元素
    * @param array 数组
    * @param number 返回个数
-   * @example 
+   * @example
    */
   export function sample(array: any[], number?: number): any[];
-
-
-
-
-
 
   /**
    * 对象中的值中的每一项运行给定函数,如果函数对任一项返回 true,则返回 true,否则返回 false
@@ -165,10 +113,7 @@ declare namespace XEUtils {
    */
   export function some(array: any[], iteratee: Function, context?: any): any[];
 
-
-
-
-
+  export function everyIterate(item: any, index: number, list: any): any;
 
   /**
    * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回 true,则返回 true,否则返回 false
@@ -176,12 +121,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function every(array: any[], iteratee: Function, context?: any): any[];
-
-
-
-
-
+  export function every(array: any[], iteratee: typeof everyIterate, context?: any): any[];
 
   /**
    * slice ( array, start, end ) 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
@@ -191,10 +131,7 @@ declare namespace XEUtils {
    */
   export function slice(array: any[], start?: number, end?: number): any[];
 
-
-
-
-
+  export function filterIterate(item: any, index: number, list: any): any;
 
   /**
    * 查找匹配第一条数据
@@ -202,12 +139,9 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function filter(array: any[], iteratee: Function, context?: any): any[];
+  export function filter(array: any[], iteratee: typeof filterIterate, context?: any): any[];
 
-
-
-
-
+  export function findIterate(item: any, index: number, list: any): any;
 
   /**
    * 查找匹配第一条数据
@@ -215,12 +149,9 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function find(array: any[], iteratee: Function, context?: any): any;
+  export function find(array: any[], iteratee: typeof findIterate, context?: any): any;
 
-
-
-
-
+  export function findKeyIterate(item: any, index: number, list: any): any;
 
   /**
    * 查找匹配第一条数据的键
@@ -228,12 +159,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function findKey(array: any[], iteratee: Function, context?: any): any;
-
-
-
-
-
+  export function findKey(array: any[], iteratee: typeof findKeyIterate, context?: any): any;
 
   /**
    * 判断对象是否包含该值,成功返回 true 否则 false
@@ -242,22 +168,12 @@ declare namespace XEUtils {
    */
   export function includes(obj: any, val: any): boolean;
 
-
-
-
-
-
   /**
    * 返回数组第一个索引值
    * @param obj 数组
    * @param val 值
    */
   export function arrayIndexOf(obj: any, val: any): number;
-
-
-
-
-
 
   /**
    * 从最后开始的索引值,返回数组第一个索引值
@@ -266,10 +182,7 @@ declare namespace XEUtils {
    */
   export function arrayLastIndexOf(obj: any, val: any): number;
 
-
-
-
-
+  export function mapIterate(item: any, index: number, list: any[]): any;
 
   /**
    * 指定方法后的返回值组成的新数组
@@ -277,12 +190,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function map(array: any[], iteratee: Function, context?: any): any[];
-
-
-
-
-
+  export function map(array: any[], iteratee: typeof mapIterate, context?: any): any[];
 
   /**
    * 求和函数，将数值相加
@@ -292,10 +200,7 @@ declare namespace XEUtils {
    */
   export function sum(obj: any, iteratee?: Function, context?: any): number;
 
-
-
-
-
+  export function meanIterate(item: any, index: number, list: any[]): any;
 
   /**
    * 求平均值函数
@@ -303,26 +208,18 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function mean(obj: any, iteratee?: Function, context?: any): number;
+  export function mean(obj: any, iteratee?: typeof meanIterate, context?: any): number;
 
-
-
-
-
+  export function reduceIterate(previous: any, item: any, index: number, list: any[]): any;
 
   /**
    * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
    * @param array 数组
    * @param iteratee 回调
    * @param initialValue 默认值
-   * @example 
+   * @example
    */
-  export function reduce(array: any[], iteratee?: Function, initialValue?: any): any;
-
-
-
-
-
+  export function reduce(array: any[], iteratee?: typeof reduceIterate, initialValue?: any): any;
 
   /**
    * 复制数组的一部分到同一数组中的另一个位置,数组大小不变
@@ -331,12 +228,7 @@ declare namespace XEUtils {
    * @param start 从该位置开始读取数据，默认为 0 。如果为负值，表示倒数
    * @param end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
    */
-  export function copyWithin(array: any[], target: number, start?: Number, end?: number): any[];
-
-
-
-
-
+  export function copyWithin(array: Array<any>, target: number, start?: Number, end?: number): Array<any>;
 
   /**
    * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
@@ -345,21 +237,11 @@ declare namespace XEUtils {
    */
   export function chunk(array: any[], size: number): any[];
 
-
-
-
-
-
   /**
    * 将每个数组中相应位置的值合并在一起
    * @param arrays 多个数组
    */
   export function zip(...arrays: any[]): any[];
-
-
-
-
-
 
   /**
    * 与 zip 相反
@@ -367,34 +249,19 @@ declare namespace XEUtils {
    */
   export function unzip(arrays: any[]): any[];
 
-
-
-
-
-
   /**
    * 将每个数组中相应位置的值合并在一起
    * @param props 键数组
    * @param values 值数组
-   * @example 
+   * @example
    */
   export function zipObject(props: any[], values: any[]): any;
-
-
-
-
-
 
   /**
    * 将对象或者伪数组转为新数组
    * @param array 对象/数组
    */
   export function toArray(obj: any): any[];
-
-
-
-
-
 
   /**
    * 判断数组是否包含另一数组
@@ -403,77 +270,49 @@ declare namespace XEUtils {
    */
   export function includeArrays(array1: any[], array2: any[]): boolean;
 
-
-
-
-
-
   /**
    * 获取数组对象中某属性值，返回一个数组
    * @param array 数组
    * @param key 键
-   * @example 
+   * @example
    */
   export function pluck(array: any[], key: string): any[];
 
-
-
-
-
-
   /**
    * 获取数组对象中某属性值，返回一个数组
    * @param array 数组
    * @param key 键
-   * @example 
+   * @example
    */
   export function invoke(list: any[], path: string[] | string | Function): any[];
 
-
-
-
-
-
   /**
    * 获取数组对象中某属性值，返回一个数组
    * @param array 数组
    * @param key 键
-   * @example 
+   * @example
    */
   export function invokeMap(list: any[], path: string[] | string | Function): any[];
 
-
-
-
-
-
-  export function arrayEachIterate(item: any, index: number, list: any[]): any;
+  export function arrayEachIterate(item: any, index: number, list: any): any;
 
   /**
    * 数组迭代器
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
   export function arrayEach(obj: any, iteratee: typeof arrayEachIterate, context?: any): void;
 
-
-
-
-
+  export function lastArrayEachIterate(item: any, index: number, list: any[]): any;
 
   /**
    * 数组迭代器,从最后开始迭代
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
-  export function lastArrayEach(obj: any, iteratee: Function, context?: any): void;
-
-
-
-
-
+  export function lastArrayEach(obj: any[], iteratee: typeof lastArrayEachIterate, context?: any): void;
 
   export interface toArrayTreeOptions {
     strict?: boolean;
@@ -492,11 +331,6 @@ declare namespace XEUtils {
    */
   export function toArrayTree(array: any[], options?: toArrayTreeOptions): any[];
 
-
-
-
-
-
   export interface toTreeArrayOptions {
     children?: string;
     data?: string;
@@ -509,20 +343,15 @@ declare namespace XEUtils {
    */
   export function toTreeArray(array: any[], options?: toTreeArrayOptions): any[];
 
+  export function findTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
-
-
-
-
-  export function findTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
-
-  interface TerrResult {
-    index?: number;
-    item?: any;
-    path?: Array<string>;
-    items?: any[];
-    parent?: any;
-    nodes?: any[];
+  interface terrResult {
+    index: number;
+    item: any;
+    path: Array<string>;
+    items: any[];
+    parent: any;
+    nodes: any[];
   }
 
   interface findTreeOptions {
@@ -536,12 +365,7 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function findTree(array: any[], iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): TerrResult;
-
-
-
-
-
+  export function findTree(array: any[], iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): terrResult;
 
   export function eachTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
@@ -558,12 +382,7 @@ declare namespace XEUtils {
    */
   export function eachTree(array: any[], iterate: typeof eachTreeIterate, options?: eachTreeOptions, context?: any): void;
 
-
-
-
-
-
-  export function mapTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
+  export function mapTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
   interface mapTreeOptions {
     children?: string;
@@ -578,11 +397,6 @@ declare namespace XEUtils {
    * @param {Object} context 上下文
    */
   export function mapTree(array: any[], iterate: typeof mapTreeIterate, options?: mapTreeOptions, context?: any): any[];
-
-
-
-
-
 
   export function filterTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
@@ -599,12 +413,7 @@ declare namespace XEUtils {
    */
   export function filterTree(array: any[], iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): any[];
 
-
-
-
-
-
-  export function searchTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
+  export function searchTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
   export interface searchTreeOptions {
     children?: string;
@@ -621,11 +430,6 @@ declare namespace XEUtils {
    */
   export function searchTree(array: any[], iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): any[];
 
-
-
-
-
-
   /**
    * 判断对象自身属性中是否具有指定的属性
    * @param obj 对象
@@ -633,21 +437,11 @@ declare namespace XEUtils {
    */
   export function hasOwnProp(obj: any, key: string | number): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 undefined 和 null
    * @param obj 对象
    */
   export function eqNull(obj: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否非数值
@@ -655,21 +449,11 @@ declare namespace XEUtils {
    */
   export function isNaN(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否为有限数值
    * @param val 值
    */
   export function isFinite(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断 Undefined
@@ -677,21 +461,11 @@ declare namespace XEUtils {
    */
   export function isUndefined(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否数组
    * @param val 值
    */
   export function isArray(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否小数
@@ -699,21 +473,11 @@ declare namespace XEUtils {
    */
   export function isFloat(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否整数
    * @param val 值
    */
   export function isInteger(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否方法
@@ -721,21 +485,11 @@ declare namespace XEUtils {
    */
   export function isFunction(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 Boolean 对象
    * @param val 值
    */
   export function isBoolean(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否String对象
@@ -743,21 +497,11 @@ declare namespace XEUtils {
    */
   export function isString(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 Number 对象
    * @param val 值
    */
   export function isNumber(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否 RegExp 对象
@@ -765,21 +509,11 @@ declare namespace XEUtils {
    */
   export function isRegExp(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 Object 对象
    * @param val 值
    */
   export function isObject(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否是一个对象
@@ -787,21 +521,11 @@ declare namespace XEUtils {
    */
   export function isPlainObject(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 Date 对象
    * @param val 值
    */
   export function isDate(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否 Error 对象
@@ -809,21 +533,11 @@ declare namespace XEUtils {
    */
   export function isError(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 TypeError 对象
    * @param val 值
    */
   export function isTypeError(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否为空对象
@@ -831,21 +545,11 @@ declare namespace XEUtils {
    */
   export function isEmpty(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否为 Null
    * @param val 值
    */
   export function isNull(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否 Symbol 对象
@@ -853,21 +557,11 @@ declare namespace XEUtils {
    */
   export function isSymbol(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 Arguments 对象
    * @param val 值
    */
   export function isArguments(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否 Element 对象
@@ -875,21 +569,11 @@ declare namespace XEUtils {
    */
   export function isElement(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 Document 对象
    * @param val 值
    */
   export function isDocument(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否 Window 对象
@@ -897,21 +581,11 @@ declare namespace XEUtils {
    */
   export function isWindow(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 FormData 对象
    * @param val 值
    */
   export function isFormData(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否 Map 对象
@@ -919,21 +593,11 @@ declare namespace XEUtils {
    */
   export function isMap(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 WeakMap 对象
    * @param val 值
    */
   export function isWeakMap(val: any): boolean;
-
-
-
-
-
 
   /**
    * 判断是否 Set 对象
@@ -941,32 +605,17 @@ declare namespace XEUtils {
    */
   export function isSet(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否 WeakSet 对象
    * @param val 值
    */
   export function isWeakSet(val: any): boolean;
 
-
-
-
-
-
   /**
    * 判断是否闰年
    * @param date 日期
    */
   export function isLeapYear(date?: Date | number | string): boolean;
-
-
-
-
-
 
   /**
    * 判断属性中的键和值是否包含在对象中
@@ -975,11 +624,6 @@ declare namespace XEUtils {
    */
   export function isMatch(obj: any, source: any): boolean;
 
-
-
-
-
-
   /**
    * 深度比较两个对象之间的值是否相等
    * @param obj1 值1
@@ -987,10 +631,7 @@ declare namespace XEUtils {
    */
   export function isEqual(obj1: any, obj2: any): boolean;
 
-
-
-
-
+  export function isEqualWithFunc(val1: any, val2: any, key: any, obj1: any, obj2: any): any;
 
   /**
    * 深度比较两个对象之间的值是否相等，使用自定义比较函数
@@ -998,12 +639,7 @@ declare namespace XEUtils {
    * @param obj2 值2
    * @param func 自定义函数
    */
-  export function isEqualWith(obj1: any, obj2: any, func?: Function): boolean;
-
-
-
-
-
+  export function isEqualWith(obj1: any, obj2: any, func?: typeof isEqualWithFunc): boolean;
 
   /**
    * 获取对象类型
@@ -1011,32 +647,17 @@ declare namespace XEUtils {
    */
   export function getType(obj: any): string;
 
-
-
-
-
-
   /**
    * 获取一个全局唯一标识
    * @param prefix 自定义前缀
    */
   export function uniqueId(prefix?: string): string;
 
-
-
-
-
-
   /**
    * 返回对象的长度
    * @param obj 对象
    */
   export function getSize(obj: any): number;
-
-
-
-
-
 
   /**
    * 返回对象第一个索引值
@@ -1045,11 +666,6 @@ declare namespace XEUtils {
    */
   export function indexOf(obj: any, val: any): any;
 
-
-
-
-
-
   /**
    * 从最后开始的索引值,返回对象第一个索引值
    * @param obj 对象
@@ -1057,36 +673,25 @@ declare namespace XEUtils {
    */
   export function lastIndexOf(obj: any, val: any): any;
 
-
-
-
-
+  export function findIndexOfIterate(item: any, index: any, obj: any): any;
 
   /**
    * 返回对象第一个索引值
    * @param obj 对象
-   * @param iteratee 迭代器/属性
+   * @param iteratee 迭代器
    * @param context 上下文
    */
-  export function findIndexOf(obj: any, iteratee: any, context?: any): any;
+  export function findIndexOf(obj: any, iteratee: typeof findIndexOfIterate, context?: any): any;
 
-
-
-
-
+  export function findLastIndexOfIterate(item: any, index: any, obj: any): any;
 
   /**
    * 从最后开始的索引值,返回对象第一个索引值
    * @param obj 对象
-   * @param iteratee 迭代器/属性
+   * @param iteratee 迭代器
    * @param context 上下文
    */
-  export function findLastIndexOf(obj: any, iteratee: any, context?: any): any;
-
-
-
-
-
+  export function findLastIndexOf(obj: any, iteratee: typeof findLastIndexOfIterate, context?: any): any;
 
   /**
    * 字符串转 JSON
@@ -1094,44 +699,23 @@ declare namespace XEUtils {
    */
   export function toStringJSON(str: string): any;
 
-
-
-
-
-
   /**
    * JSON 转字符串
    * @param obj 对象
    */
   export function toJSONString(obj: any): string;
 
-
-
-
-
-
   /**
    * 获取对象所有属性
    * @param obj 对象
    */
-  export function keys(obj: any): any[];
-
-
-
-
-
-
+  export function keys(obj: any): Array<any>;
 
   /**
    * 获取对象所有值
    * @param obj 对象
    */
-  export function values(obj: any): any[];
-
-
-
-
-
+  export function values(obj: any): Array<any>;
 
   /**
    * 获取对象所有属性、值
@@ -1139,34 +723,19 @@ declare namespace XEUtils {
    */
   export function entries(obj: any): any[];
 
-
-
-
-
-
   /**
    * 根据 keys 过滤指定的属性值，返回一个新的对象
    * @param obj 对象
    * @param array 数组或字符串或方法
    */
-  export function pick(obj: any, array: Array<string>): any;
-
-
-
-
-
+  export function pick(obj: any, array: string[]): any;
 
   /**
    * 根据 keys 排除指定的属性值，返回一个新的对象
    * @param obj 对象
    * @param array 数组或字符串或方法
    */
-  export function omit(obj: any, array: Array<string>): any;
-
-
-
-
-
+  export function omit(obj: any, array: string[]): any;
 
   /**
    * 获取对象第一个值
@@ -1174,88 +743,58 @@ declare namespace XEUtils {
    */
   export function first(obj: any): any;
 
-
-
-
-
-
   /**
    * 获取对象最后一个值
    * @param obj 对象
    */
   export function last(obj: any): any;
 
-
-
-
-
-
   export function eachIterate(item: any, index: any, obj: any): any;
 
   /**
    * 通用迭代器
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
   export function each(obj: any, iteratee: typeof eachIterate, context?: any): void;
 
-
-
-
-
-
+  export function forOfIterate(item: any, index: any, obj: any): any;
 
   /**
    * 迭代器,支持 return false 跳出循环 break
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
-  export function forOf(obj: any, iteratee: Function, context?: any): void;
+  export function forOf(obj: any, iteratee: typeof forOfIterate, context?: any): void;
 
-
-
-
-
+  export function lastForOfIterate(item: any, index: any, obj: any): any;
 
   /**
    * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
-  export function lastForOf(obj: any, iteratee: Function, context?: any): void;
+  export function lastForOf(obj: any, iteratee: typeof lastForOfIterate, context?: any): void;
 
-
-
-
-
+  export function lastEachIterate(item: any, index: any, obj: any): any;
 
   /**
    * 通用迭代器,从最后开始迭代
    * @param obj 对象
-   * @param iteratee 回调 
+   * @param iteratee 回调
    * @param context 上下文
    */
-  export function lastEach(obj: any, iteratee: Function, context?: any): void;
-
-
-
-
-
+  export function lastEach(obj: any, iteratee: typeof lastEachIterate, context?: any): void;
 
   /**
    * 检查键、路径是否是该对象的属性
    * @param obj 对象
    * @param property 键、路径
    */
-  export function has(obj: any, property: string | Array<string>): boolean;
-
-
-
-
-
+  export function has(obj: any, property: string | string[]): boolean;
 
   /**
    * 获取对象的属性的值，如果值为 undefined，则返回默认值
@@ -1263,12 +802,7 @@ declare namespace XEUtils {
    * @param property 键、路径
    * @param defaultValue 默认值
    */
-  export function get(obj: any, property: string | Array<string>, defaultValue?: any): any;
-
-
-
-
-
+  export function get(obj: any, property: string | string[], defaultValue?: any): any;
 
   /**
    * 设置对象属性上的值。如果属性不存在则创建它
@@ -1276,25 +810,19 @@ declare namespace XEUtils {
    * @param property 键、路径
    * @param value 值
    */
-  export function set(obj: any, property: string | Array<string>, value: any): void;
+  export function set(obj: any, property: string | string[], value: any): void;
 
-
-
-
-
+  export function groupByIterate(item: any, index: any, obj: any): any;
 
   /**
    * 集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组
    * @param obj 对象
-   * @param iteratee 回调/属性
+   * @param iteratee 回调/对象属性
    * @param context 上下文
    */
-  export function groupBy(obj: any, iteratee: Function, context?: any): any;
+  export function groupBy(obj: any, iteratee: string | typeof groupByIterate, context?: any): any;
 
-
-
-
-
+  export function countByIterate(item: any, index: any, obj: any): any;
 
   /**
    * 集合分组统计,返回各组中对象的数量统计
@@ -1302,12 +830,7 @@ declare namespace XEUtils {
    * @param iteratee 回调/属性
    * @param context 上下文
    */
-  export function countBy(obj: any, iteratee: Function, context?: any): any;
-
-
-
-
-
+  export function countBy(obj: any, iteratee: typeof countByIterate, context?: any): any;
 
   /**
    * 浅拷贝/深拷贝
@@ -1315,11 +838,6 @@ declare namespace XEUtils {
    * @param deep 是否深拷贝
    */
   export function clone(obj: any, deep?: boolean): any;
-
-
-
-
-
 
   /**
    * 清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
@@ -1329,22 +847,14 @@ declare namespace XEUtils {
    */
   export function clear(obj: any, defs?: any, assigns?: any): any;
 
-
-
-
-
+  export function removeIterate(item: any, index: any, obj: any): any;
 
   /**
    * 移除对象属性
    * @param obj 对象
    * @param iteratee 迭代器/值
    */
-  export function remove(obj: any, iteratee: any): any;
-
-
-
-
-
+  export function remove(obj: any, iteratee: number | string | typeof removeIterate): any;
 
   /**
    * 序号列表生成函数
@@ -1352,12 +862,7 @@ declare namespace XEUtils {
    * @param stop 结束值
    * @param step 自增值
    */
-  export function range(start: number, stop: number, step?: number): any[];
-
-
-
-
-
+  export function range(start: number, stop: number, step?: number): Array<any>;
 
   /**
    * 将一个或者多个对象值解构到目标对象
@@ -1366,11 +871,6 @@ declare namespace XEUtils {
    */
   export function destructuring(obj: any, ...target: any[]): any;
 
-
-
-
-
-
   /**
    * 获取一个指定范围内随机数
    * @param min 最小值
@@ -1378,34 +878,23 @@ declare namespace XEUtils {
    */
   export function random(min: number, max: number): number;
 
-
-
-
-
+  export function minIterate(item: any, index: number, obj: any): any;
 
   /**
    * 获取最小值
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  export function min(array: any[], iteratee: string | Function): number;
+  export function min(array: Array<any>, iteratee: string | typeof minIterate): number;
 
-
-
-
-
+  export function maxIterate(item: any, index: number, obj: any): any;
 
   /**
    * 获取最大值
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  export function max(array: any[], iteratee: string | Function): number;
-
-
-
-
-
+  export function max(array: Array<any>, iteratee: string | typeof maxIterate): number;
 
   export interface CommafyOptions {
     /**
@@ -1429,22 +918,12 @@ declare namespace XEUtils {
    */
   export function commafy(num: string | number, options?: CommafyOptions): string;
 
-
-
-
-
-
   /**
    * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串
    * @param num 数值/字符串
    * @param digits 小数保留位数
    */
   export function toFixedString(num: string | number, digits: number): string;
-
-
-
-
-
 
   /**
    * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
@@ -1453,21 +932,11 @@ declare namespace XEUtils {
    */
   export function toFixedNumber(num: string | number, digits: number): number;
 
-
-
-
-
-
   /**
    * 转数值
    * @param num 数值/字符串
    */
   export function toNumber(num: string | number): number;
-
-
-
-
-
 
   /**
    * 转整数
@@ -1475,20 +944,10 @@ declare namespace XEUtils {
    */
   export function toInteger(num: string | number): number;
 
-
-
-
-
-
   /**
    * 返回当前时间戳
    */
   export function now(): number;
-
-
-
-
-
 
   /**
    * 将日期转为时间戳
@@ -1496,11 +955,6 @@ declare namespace XEUtils {
    * @param format 解析格式 yyyy MM dd HH mm ss SSS
    */
   export function timestamp(date: string | Date | number, format?: string): number;
-
-
-
-
-
 
   /**
    * 判断两个日期是否相同
@@ -1510,11 +964,6 @@ declare namespace XEUtils {
    */
   export function isDateSame(date1: Date | number | string, date2: Date | number | string, format?: string): boolean;
 
-
-
-
-
-
   /**
    * 任意格式字符串转为日期
    * @param str 字符串/日期/时间戳
@@ -1522,17 +971,12 @@ declare namespace XEUtils {
    */
   export function toStringDate(str: string | Date | number, format?: string): Date;
 
-
-
-
-
-
   export interface ToDateStringOptions {
     /**
      * 自定义格式化模板
      * {
      *   formats: {
-     *     q: ['日', '一', '二', '三', '四', '五', '六'], 
+     *     q: ['日', '一', '二', '三', '四', '五', '六'],
      *     E: function (value, match, date) { return '三' }
      *   }
      * }
@@ -1548,11 +992,6 @@ declare namespace XEUtils {
    */
   export function toDateString(date: string | Date | number, format?: string, options?: ToDateStringOptions): string;
 
-
-
-
-
-
   /**
    * 返回前几年或后几年的日期,可以指定年初(first)、年末(last)、月份(0~11)，默认当前
    * @param date 字符串/日期/时间戳
@@ -1560,11 +999,6 @@ declare namespace XEUtils {
    * @param month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
    */
   export function getWhatYear(date: string | Date | number, year?: number | string, month?: number | string): Date;
-
-
-
-
-
 
   /**
    * 返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前
@@ -1574,11 +1008,6 @@ declare namespace XEUtils {
    */
   export function getWhatMonth(date: string | Date | number, month?: number | string, day?: number | string): Date;
 
-
-
-
-
-
   /**
    * 返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前
    * @param date 字符串/日期/时间戳
@@ -1586,11 +1015,6 @@ declare namespace XEUtils {
    * @param day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
    */
   export function getWhatWeek(date: string | Date | number, week?: number | string, day?: number | string): Date;
-
-
-
-
-
 
   /**
    * 返回前几天或后几天的日期
@@ -1600,21 +1024,11 @@ declare namespace XEUtils {
    */
   export function getWhatDay(date: string | Date | number, day?: number, mode?: number | string): Date;
 
-
-
-
-
-
   /**
    * 返回某个年份的第几天
    * @param date 字符串/日期/时间戳
    */
   export function getYearDay(date: string | Date | number): number;
-
-
-
-
-
 
   /**
    * 返回某个年份的第几周
@@ -1622,21 +1036,11 @@ declare namespace XEUtils {
    */
   export function getYearWeek(date: string | Date | number): number;
 
-
-
-
-
-
   /**
    * 返回某个月份的第几周
    * @param date 字符串/日期/时间戳
    */
   export function getMonthWeek(date: string | Date | number): number;
-
-
-
-
-
 
   /**
    * 返回某个年份的天数,可以指定前几个年或后几个年，默认当前
@@ -1645,22 +1049,12 @@ declare namespace XEUtils {
    */
   export function getDayOfYear(date: string | Date | number, year?: number): Date;
 
-
-
-
-
-
   /**
    * 返回某个月份的天数,可以指定前几个月或后几个月，默认当前
    * @param date 字符串/日期/时间戳
    * @param month 月(默认当月)、前几个月、后几个月
    */
   export function getDayOfMonth(date: string | Date | number, month: number): number;
-
-
-
-
-
 
   export interface dateDiffResult {
     /**
@@ -1709,21 +1103,11 @@ declare namespace XEUtils {
    */
   export function getDateDiff(startDate: string | Date | number, endDate: string | Date | number, rules?: any[][]): dateDiffResult;
 
-
-
-
-
-
   /**
    * 去除字符串左右两边的空格
    * @param str 字符串
    */
   export function trim(str: string): string;
-
-
-
-
-
 
   /**
    * 去除字符串左边的空格
@@ -1731,21 +1115,11 @@ declare namespace XEUtils {
    */
   export function trimLeft(str: string): string;
 
-
-
-
-
-
   /**
    * 去除字符串右边的空格
    * @param str 字符串
    */
   export function trimRight(str: string): string;
-
-
-
-
-
 
   /**
    * 转义HTML字符串，替换&, <, >, ", ', \`字符
@@ -1753,22 +1127,11 @@ declare namespace XEUtils {
    */
   export function escape(str: string): string;
 
-
-
-
-
-
   /**
    * 反转 escape
    * @param str 字符串
    */
   export function unescape(str: string): string;
-
-
-
-
-
-
 
   /**
    * 将带驼峰字符串转成字符串
@@ -1776,21 +1139,11 @@ declare namespace XEUtils {
    */
   export function camelCase(str: string): string;
 
-
-
-
-
-
   /**
    * 将字符串转成驼峰字符串
    * @param str 字符串
    */
   export function kebabCase(str: string): string;
-
-
-
-
-
 
   /**
    * 将字符串重复 n 次
@@ -1798,11 +1151,6 @@ declare namespace XEUtils {
    * @param count 次数
    */
   export function repeat(str: string, count: number): string;
-
-
-
-
-
 
   /**
    * 用指定字符从前面开始补全字符串
@@ -1812,11 +1160,6 @@ declare namespace XEUtils {
    */
   export function padStart(str: string, targetLength: number, padString?: string): string;
 
-
-
-
-
-
   /**
    * 用指定字符从后面开始补全字符串
    * @param str 字符串
@@ -1824,11 +1167,6 @@ declare namespace XEUtils {
    * @param padString 补全字符
    */
   export function padEnd(str: string, targetLength: number, padString?: string): string;
-
-
-
-
-
 
   /**
    * 判断字符串是否在源字符串的头部
@@ -1838,11 +1176,6 @@ declare namespace XEUtils {
    */
   export function startsWith(str: string, val: string, startIndex?: number): string;
 
-
-
-
-
-
   /**
    * 判断字符串是否在源字符串的头部
    * @param str 字符串
@@ -1851,11 +1184,6 @@ declare namespace XEUtils {
    */
   export function endsWith(str: string, val: string, startIndex?: number): string;
 
-
-
-
-
-
   /**
    * 解析动态字符串模板
    * @param str 字符串模板
@@ -1863,32 +1191,17 @@ declare namespace XEUtils {
    */
   export function template(str: string, obj: any): string;
 
-
-
-
-
-
   /**
    * 转字符串
    * @param obj 值
    */
   export function toString(obj: any): string;
 
-
-
-
-
-
   /**
    * 返回一个获取对象属性的函数
    * @param path 键值
    */
   export function property(path: string): Function;
-
-
-
-
-
 
   /**
    * 创建一个绑定上下文的函数
@@ -1898,11 +1211,6 @@ declare namespace XEUtils {
    */
   export function bind(callback: Function, context?: any, ...params: any[]): Function;
 
-
-
-
-
-
   /**
    * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
    * @param callback 回调
@@ -1910,11 +1218,6 @@ declare namespace XEUtils {
    * @param params 额外的参数
    */
   export function once(callback: Function, context?: any, ...params: any[]): Function;
-
-
-
-
-
 
   /**
    * 创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回
@@ -1924,11 +1227,6 @@ declare namespace XEUtils {
    */
   export function after(count: number, callback: Function, context?: any): Function;
 
-
-
-
-
-
   /**
    * 创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回
    * @param count 次数
@@ -1936,11 +1234,6 @@ declare namespace XEUtils {
    * @param context 上下文
    */
   export function before(count: number, callback: Function, context?: any): Function;
-
-
-
-
-
 
   export interface ThrottleOptions {
     /**
@@ -1961,11 +1254,6 @@ declare namespace XEUtils {
    */
   export function throttle(callback: Function, wait: number, options?: ThrottleOptions): Function;
 
-
-
-
-
-
   export interface DebounceOptions {
     /**
      * 是否在之前执行
@@ -1985,11 +1273,6 @@ declare namespace XEUtils {
    */
   export function debounce(callback: Function, wait: number, options: DebounceOptions): Function;
 
-
-
-
-
-
   /**
    * 该方法和 setTimeout 一样的效果，区别就是支持上下文和额外参数
    * @param callback 回调
@@ -1997,11 +1280,6 @@ declare namespace XEUtils {
    * @param params 额外的参数
    */
   export function delay(callback: Function, wait: number, ...params: any[]): number;
-
-
-
-
-
 
   export interface XEUrl {
     /**
@@ -2060,21 +1338,11 @@ declare namespace XEUtils {
    */
   export function parseUrl(ulr: string): XEUrl;
 
-
-
-
-
-
   /**
    * 判断字符串是否在源字符串的头部
    * @param query 序列化的对象
    */
   export function serialize(query: any): string;
-
-
-
-
-
 
   /**
    * 判断字符串是否在源字符串的头部
@@ -2082,31 +1350,15 @@ declare namespace XEUtils {
    */
   export function unserialize(str: string): any;
 
-
-
-
-
-
   /**
    * 获取上下文路径
    */
   export function getBaseURL(): string;
 
-
-
-
-
-
-
   /**
    * 获取地址栏信息
    */
   export function locat(): XEUrl;
-
-
-
-
-
 
   export interface XEBrowse {
     /**
@@ -2171,11 +1423,6 @@ declare namespace XEUtils {
    * 获取浏览器信息
    */
   export function browse(): XEBrowse;
-
-
-
-
-
 
   export interface CookieOptions {
     /**
@@ -2247,11 +1494,8 @@ declare namespace XEUtils {
    * Cookie 操作函数
    * @param name 键/数组/对象
    * @param value 值
-   * @param options 可选参数 
+   * @param options 可选参数
    */
-  export function cookie(): XECookie;
-  export function cookie(name: string, value?: any, options?: CookieOptions): XECookie;
-
-
+  export function cookie(name?: string, value?: any, options?: CookieOptions): XECookie;
 
 }
