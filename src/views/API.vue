@@ -1035,7 +1035,7 @@ export default {
             {
               name: 'throttle',
               args: 'callback, wait[, options]',
-              title: '创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数',
+              title: '节流函数；当被调用 n 毫秒后才会执行，如果在这时间内又被调用则至少每隔 n 秒毫秒调用一次该函数',
               desc: '',
               params: [],
               codes: [
@@ -1069,7 +1069,7 @@ export default {
             {
               name: 'debounce',
               args: 'callback, wait[, options]',
-              title: '创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟',
+              title: '函数去抖；当被调用 n 毫秒后才会执行，如果在这时间内又被调用则将重新计算执行时间',
               desc: '',
               params: [],
               codes: [
