@@ -12,7 +12,7 @@ export interface CommafyOptions {
   /**
    * 小数位数,默认null
    */
-  fixed: number;
+  digits: number;
 }
 
 /**

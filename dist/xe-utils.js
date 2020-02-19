@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.3.1
+ * xe-utils.js v2.3.2
  * ISC License.
  * @preserve
  */
@@ -104,12 +104,12 @@
   }
 
   /**
-  * 浅拷贝一个或者多个对象到目标对象中
-  *
-  * @param {Object} obj 目标对象
-  * @param {...Object}
-  * @return {Boolean}
-  */
+    * 浅拷贝一个或者多个对象到目标对象中
+    *
+    * @param {Object} obj 目标对象
+    * @param {...Object}
+    * @return {Boolean}
+    */
   var assign = function (target) {
     if (target) {
       var args = arguments
@@ -128,13 +128,13 @@
   var extend = assign
 
   /**
-  * 指定方法后的返回值组成的新对象
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 指定方法后的返回值组成的新对象
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function objectMap (obj, iterate, context) {
     var result = {}
     if (obj) {
@@ -169,11 +169,11 @@
   }
 
   /**
-  * 数组去重
-  *
-  * @param {Array} array 数组
-  * @return {Array}
-  */
+    * 数组去重
+    *
+    * @param {Array} array 数组
+    * @return {Array}
+    */
   function uniq (array) {
     var result = []
     each(array, function (value) {
@@ -185,11 +185,11 @@
   }
 
   /**
-  * 将多个数的值返回唯一的并集数组
-  *
-  * @param {...Array} 数组
-  * @return {Array}
-  */
+    * 将多个数的值返回唯一的并集数组
+    *
+    * @param {...Array} 数组
+    * @return {Array}
+    */
   function union () {
     var args = arguments
     var result = []
@@ -240,13 +240,13 @@
   }
 
   /**
-  * 数组按属性值升序
-  *
-  * @param {Array} arr 数组
-  * @param {Function/String/Array} iterate 方法或属性
-  * @param {Object} context 上下文
-  * @return {Array}
-  */
+    * 数组按属性值升序
+    *
+    * @param {Array} arr 数组
+    * @param {Function/String/Array} iterate 方法或属性
+    * @param {Object} context 上下文
+    * @return {Array}
+    */
   function sortBy (arr, iterate, context, STR_UNDEFINED) {
     if (arr) {
       if (iterate === STR_UNDEFINED) {
@@ -271,11 +271,11 @@
   }
 
   /**
-  * 将一个数组随机打乱，返回一个新的数组
-  *
-  * @param {Array} array 数组
-  * @return {Array}
-  */
+    * 将一个数组随机打乱，返回一个新的数组
+    *
+    * @param {Array} array 数组
+    * @return {Array}
+    */
   function shuffle (array) {
     var index
     var result = []
@@ -290,12 +290,12 @@
   }
 
   /**
-  * 从一个数组中随机返回几个元素
-  *
-  * @param {Array} array 数组
-  * @param {Number} number 个数
-  * @return {Array}
-  */
+    * 从一个数组中随机返回几个元素
+    *
+    * @param {Array} array 数组
+    * @param {Number} number 个数
+    * @return {Array}
+    */
   function sample (array, number) {
     var result = shuffle(array)
     if (arguments.length <= 1) {
@@ -308,31 +308,31 @@
   }
 
   /**
-  * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Boolean}
-  */
+    * 对象中的值中的每一项运行给定函数,如果函数对任一项返回true,则返回true,否则返回false
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Boolean}
+    */
   var some = helperCreateIterateHandle('some', 1, 0, true, false)
 
   /**
-  * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Boolean}
-  */
+    * 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回true,则返回true,否则返回false
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Boolean}
+    */
   var every = helperCreateIterateHandle('every', 1, 1, false, true)
 
   /**
- * 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
- * @param {Array/Arguments} array 数组或Arguments
- * @param {Number} startIndex 开始索引
- * @param {Number} endIndex 结束索引
- */
+   * 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
+   * @param {Array/Arguments} array 数组或Arguments
+   * @param {Number} startIndex 开始索引
+   * @param {Number} endIndex 结束索引
+   */
   function slice (array, startIndex, endIndex) {
     var result = []
     if (array) {
@@ -344,13 +344,13 @@
   }
 
   /**
-  * 根据回调过滤数据
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 根据回调过滤数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function filter (obj, iterate, context) {
     var result = []
     if (obj && iterate) {
@@ -367,32 +367,32 @@
   }
 
   /**
-  * 查找匹配第一条数据
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 查找匹配第一条数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   var find = helperCreateIterateHandle('find', 1, 3, true)
 
   /**
-  * 查找匹配第一条数据的键
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 查找匹配第一条数据的键
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   var findKey = helperCreateIterateHandle('', 0, 2, true)
 
   /**
-  * 判断对象是否包含该值,成功返回true否则false
-  *
-  * @param {Object} obj 对象
-  * @param {Object} val 值
-  * @return {Boolean}
-  */
+    * 判断对象是否包含该值,成功返回true否则false
+    *
+    * @param {Object} obj 对象
+    * @param {Object} val 值
+    * @return {Boolean}
+    */
   function includes (obj, val) {
     return indexOf(obj, val) !== -1
   }
@@ -421,13 +421,13 @@
   }
 
   /**
-  * 指定方法后的返回值组成的新数组
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Array}
-  */
+    * 指定方法后的返回值组成的新数组
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Array}
+    */
   function map (obj, iterate, context) {
     var result = []
     if (obj && arguments.length > 1) {
@@ -446,13 +446,13 @@
   }
 
   /**
-  * 求和函数，将数值相加
-  *
-  * @param {Array} array 数组
-  * @param {Function/String} iterate 方法或属性
-  * @param {Object} context 上下文
-  * @return {Number}
-  */
+    * 求和函数，将数值相加
+    *
+    * @param {Array} array 数组
+    * @param {Function/String} iterate 方法或属性
+    * @param {Object} context 上下文
+    * @return {Number}
+    */
   function sum (array, iterate, context) {
     var result = 0
     each(array, iterate ? isFunction(iterate) ? function () {
@@ -466,25 +466,25 @@
   }
 
   /**
-  * 求平均值函数
-  *
-  * @param {Array} array 数组
-  * @param {Function/String} iterate 方法或属性
-  * @param {Object} context 上下文
-  * @return {Number}
-  */
+    * 求平均值函数
+    *
+    * @param {Array} array 数组
+    * @param {Function/String} iterate 方法或属性
+    * @param {Object} context 上下文
+    * @return {Number}
+    */
   function mean (array, iterate, context) {
     return toNumber(sum(array, iterate, context) / getSize(array))
   }
 
   /**
-  * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值。
-  *
-  * @param {Array} array 数组
-  * @param {Function} callback 方法
-  * @param {Object} initialValue 初始值
-  * @return {Number}
-  */
+    * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值。
+    *
+    * @param {Array} array 数组
+    * @param {Function} callback 方法
+    * @param {Object} initialValue 初始值
+    * @return {Number}
+    */
   function reduce (array, callback, initialValue) {
     if (array) {
       var len, reduceMethod
@@ -514,14 +514,14 @@
   }
 
   /**
-  * 浅复制数组的一部分到同一数组中的另一个位置,数组大小不变
-  *
-  * @param {Array} array 数组
-  * @param {Number} target 从该位置开始替换数据
-  * @param {Number} start 从该位置开始读取数据，默认为 0 。如果为负值，表示倒数
-  * @param {Number} end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
-  * @return {Array}
-  */
+    * 浅复制数组的一部分到同一数组中的另一个位置,数组大小不变
+    *
+    * @param {Array} array 数组
+    * @param {Number} target 从该位置开始替换数据
+    * @param {Number} start 从该位置开始读取数据，默认为 0 。如果为负值，表示倒数
+    * @param {Number} end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
+    * @return {Array}
+    */
   function copyWithin (array, target, start, end) {
     if (isArray(array) && array.copyWithin) {
       return array.copyWithin(target, start, end)
@@ -550,12 +550,12 @@
   }
 
   /**
-  * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
-  *
-  * @param {Array} array 数组
-  * @param {Number} size 每组大小
-  * @return {Array}
-  */
+    * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
+    *
+    * @param {Array} array 数组
+    * @param {Number} size 每组大小
+    * @return {Array}
+    */
   function chunk (array, size) {
     var index
     var result = []
@@ -575,19 +575,19 @@
   }
 
   /**
- * 将每个数组中相应位置的值合并在一起
- *
- * @param {Array*} array 数组
- */
+   * 将每个数组中相应位置的值合并在一起
+   *
+   * @param {Array*} array 数组
+   */
   function zip () {
     return unzip(arguments)
   }
 
   /**
- * 与 zip 相反
- *
- * @param {Array} arrays 数组集合
- */
+   * 与 zip 相反
+   *
+   * @param {Array} arrays 数组集合
+   */
   function unzip (arrays) {
     var index, maxItem, len
     var result = []
@@ -604,12 +604,12 @@
   }
 
   /**
- * 根据键数组、值数组对转换为对象
- *
- * @param {Array} props 键数组
- * @param {Number} arr 值数组
- * @return {Object}
- */
+   * 根据键数组、值数组对转换为对象
+   *
+   * @param {Array} props 键数组
+   * @param {Number} arr 值数组
+   * @return {Object}
+   */
   function zipObject (props, arr) {
     var result = {}
     arr = arr || []
@@ -620,11 +620,11 @@
   }
 
   /**
- * 将对象或者伪数组转为新数组
- *
- * @param {Array} obj 数组
- * @return {Array}
- */
+   * 将对象或者伪数组转为新数组
+   *
+   * @param {Array} obj 数组
+   * @return {Array}
+   */
   function toArray (array) {
     return map(array, function (item) {
       return item
@@ -632,12 +632,12 @@
   }
 
   /**
-  * 判断数组是否包含另一数组
-  *
-  * @param {Array} array1 数组
-  * @param {Array} array2 被包含数组
-  * @return {Boolean}
-  */
+    * 判断数组是否包含另一数组
+    *
+    * @param {Array} array1 数组
+    * @param {Array} array2 被包含数组
+    * @return {Boolean}
+    */
   function includeArrays (array1, array2) {
     var len
     var index = 0
@@ -653,12 +653,12 @@
   }
 
   /**
-  * 获取数组对象中某属性值，返回一个数组
-  *
-  * @param {Array} array 数组
-  * @param {String} key 属性值
-  * @return {Array}
-  */
+    * 获取数组对象中某属性值，返回一个数组
+    *
+    * @param {Array} array 数组
+    * @param {String} key 属性值
+    * @return {Array}
+    */
   function pluck (obj, key) {
     return map(obj, key)
   }
@@ -673,13 +673,13 @@
   }
 
   /**
- * 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它
- *
- * @param {Array} list
- * @param {Array/String/Function} path
- * @param {...Object} arguments
- * @return {Array}
- */
+   * 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它
+   *
+   * @param {Array} list
+   * @param {Array/String/Function} path
+   * @param {...Object} arguments
+   * @return {Array}
+   */
   function invoke (list, path) {
     var func
     var args = arguments
@@ -737,12 +737,12 @@
   }
 
   /**
-  * 将一个带层级的数据列表转成树结构
-  *
-  * @param {Array} array 数组
-  * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
-  * @return {Array}
-  */
+    * 将一个带层级的数据列表转成树结构
+    *
+    * @param {Array} array 数组
+    * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
+    * @return {Array}
+    */
   function toArrayTree (array, options) {
     var opts = assign({}, setupDefaults.treeOptions, options)
     var optStrict = opts.strict
@@ -817,12 +817,12 @@
   }
 
   /**
-  * 将一个树结构转成数组列表
-  *
-  * @param {Array} array 数组
-  * @param {Object} options {children: 'children', data: 'data'}
-  * @return {Array}
-  */
+    * 将一个树结构转成数组列表
+    *
+    * @param {Array} array 数组
+    * @param {Object} options {children: 'children', data: 'data'}
+    * @return {Array}
+    */
   function toTreeArray (array, options) {
     return unTreeList([], array, assign({}, setupDefaults.treeOptions, options))
   }
@@ -848,14 +848,14 @@
   }
 
   /**
-  * 从树结构中查找匹配第一条数据的键、值、路径
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
-  * @param {Object} options {children: 'children'}
-  * @param {Object} context 上下文
-  * @return {Object} { item, index, items, path, parent, nodes }
-  */
+    * 从树结构中查找匹配第一条数据的键、值、路径
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Object} { item, index, items, path, parent, nodes }
+    */
   var findTree = helperCreateTreeFunc(findTreeItem)
 
   function eachTreeItem (parent, obj, iterate, context, path, node, parseChildren, opts) {
@@ -872,13 +872,13 @@
   }
 
   /**
-  * 从树结构中遍历数据的键、值、路径
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
-  * @param {Object} options {children: 'children', mapChildren: 'children}
-  * @param {Object} context 上下文
-  */
+    * 从树结构中遍历数据的键、值、路径
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
+    * @param {Object} options {children: 'children', mapChildren: 'children}
+    * @param {Object} context 上下文
+    */
   var eachTree = helperCreateTreeFunc(eachTreeItem)
 
   function mapTreeItem (parent, obj, iterate, context, path, node, parseChildren, opts) {
@@ -896,25 +896,25 @@
   }
 
   /**
-  * 从树结构中指定方法后的返回值组成的新数组
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
-  * @param {Object} options {children: 'children'}
-  * @param {Object} context 上下文
-  * @return {Object/Array}
-  */
+    * 从树结构中指定方法后的返回值组成的新数组
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Object/Array}
+    */
   var mapTree = helperCreateTreeFunc(mapTreeItem)
 
   /**
-  * 从树结构中根据回调过滤数据
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, items, path, parent) 回调
-  * @param {Object} options {children: 'children'}
-  * @param {Object} context 上下文
-  * @return {Array}
-  */
+    * 从树结构中根据回调过滤数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path, parent) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Array}
+    */
   function filterTree (obj, iterate, options, context) {
     var result = []
     if (obj && iterate) {
@@ -953,14 +953,14 @@
   }
 
   /**
-  * 从树结构中根据回调查找数据
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
-  * @param {Object} options {children: 'children'}
-  * @param {Object} context 上下文
-  * @return {Array}
-  */
+    * 从树结构中根据回调查找数据
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
+    * @param {Object} options {children: 'children'}
+    * @param {Object} context 上下文
+    * @return {Array}
+    */
   var searchTree = helperCreateTreeFunc(function (parent, obj, iterate, context, path, nodes, parseChildren, opts) {
     return searchTreeItem(0, parent, obj, iterate, context, path, nodes, parseChildren, opts)
   })
@@ -1001,21 +1001,21 @@
   }
 
   /**
-  * 判断对象自身属性中是否具有指定的属性
-  *
-  * @param {Object} obj 对象
-  * @param {String/Number} key 键值
-  * @return {Boolean}
-  */
+    * 判断对象自身属性中是否具有指定的属性
+    *
+    * @param {Object} obj 对象
+    * @param {String/Number} key 键值
+    * @return {Boolean}
+    */
   function hasOwnProp (obj, key) {
     return obj.hasOwnProperty(key)
   }
 
   /**
- * 判断是否 undefined 和 null
- * @param {Object} obj 对象
- * @return {Boolean}
- */
+   * 判断是否 undefined 和 null
+   * @param {Object} obj 对象
+   * @return {Boolean}
+   */
   function eqNull (obj) {
     return isNull(obj) || isUndefined(obj)
   }
@@ -1030,131 +1030,131 @@
   }
 
   /**
-  * 判断是否Undefined
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Undefined
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isUndefined = helperCreateInTypeof(staticStrUndefined)
 
   /**
-  * 判断是否数组
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否数组
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isArray = Array.isArray || helperCreateInInObjectString('Array')
 
   /**
-  * 判断是否小数
-  *
-  * @param {Number} obj 数值
-  * @return {Boolean}
-  */
+    * 判断是否小数
+    *
+    * @param {Number} obj 数值
+    * @return {Boolean}
+    */
   function isFloat (obj) {
     return !isNull(obj) && !isNaN(obj) && !isArray(obj) && !isInteger(obj)
   }
 
   /**
-  * 判断是否整数
-  *
-  * @param {Number, String} number 数值
-  * @return {Boolean}
-  */
+    * 判断是否整数
+    *
+    * @param {Number, String} number 数值
+    * @return {Boolean}
+    */
   var isInteger = function (obj) {
     return !isNull(obj) && !isNaN(obj) && !isArray(obj) && obj % 1 === 0
   }
 
   /**
-  * 判断是否方法
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否方法
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isFunction = helperCreateInTypeof('function')
 
   /**
-  * 判断是否Boolean对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Boolean对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isBoolean = helperCreateInTypeof('boolean')
 
   /**
-  * 判断是否String对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否String对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isString = helperCreateInTypeof('string')
 
   /**
-  * 判断是否Number对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Number对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isNumber = helperCreateInTypeof('number')
 
   /**
-  * 判断是否RegExp对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否RegExp对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isRegExp = helperCreateInInObjectString('RegExp')
 
   /**
-  * 判断是否Object对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Object对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isObject = helperCreateInTypeof('object')
 
   /**
-  * 判断是否对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   function isPlainObject (obj) {
     return obj ? obj.constructor === Object : false
   }
 
   /**
-  * 判断是否Date对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Date对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isDate = helperCreateInInObjectString('Date')
 
   /**
-  * 判断是否Error对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Error对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isError = helperCreateInInObjectString('Error')
 
   /**
-  * 判断是否TypeError对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否TypeError对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   function isTypeError (obj) {
     return obj ? obj.constructor === TypeError : false
   }
 
   /**
-  * 判断是否为空对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否为空对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   function isEmpty (obj) {
     for (var key in obj) {
       return false
@@ -1163,11 +1163,11 @@
   }
 
   /**
-  * 判断是否为Null
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否为Null
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   function isNull (obj) {
     return obj === null
   }
@@ -1175,50 +1175,50 @@
   /* eslint-disable valid-typeof */
 
   /**
-  * 判断是否Symbol对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Symbol对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var supportSymbol = typeof Symbol !== staticStrUndefined
   function isSymbol (obj) {
     return supportSymbol && Symbol.isSymbol ? Symbol.isSymbol(obj) : (typeof obj === 'symbol')
   }
 
   /**
-  * 判断是否Arguments对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Arguments对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var isArguments = helperCreateInInObjectString('Arguments')
 
   /**
-  * 判断是否Element对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Element对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   function isElement (obj) {
     return !!(obj && isString(obj.nodeName) && isNumber(obj.nodeType))
   }
 
   /**
-  * 判断是否Document对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Document对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   function isDocument (obj) {
     return !!(obj && staticDocument && obj.nodeType === 9)
   }
 
   /**
-  * 判断是否Window对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否Window对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   function isWindow (obj) {
     return staticWindow && !!(obj && obj === obj.window)
   }
@@ -1226,11 +1226,11 @@
   /* eslint-disable valid-typeof */
 
   /**
-  * 判断是否FormData对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
-  */
+    * 判断是否FormData对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+    */
   var supportFormData = typeof FormData !== staticStrUndefined
   function isFormData (obj) {
     return supportFormData && obj instanceof FormData
@@ -1239,11 +1239,11 @@
   /* eslint-disable valid-typeof */
 
   /**
-  * 判断是否Map对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
- */
+    * 判断是否Map对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
   var supportMap = typeof Map !== staticStrUndefined
   function isMap (obj) {
     return supportMap && obj instanceof Map
@@ -1252,11 +1252,11 @@
   /* eslint-disable valid-typeof */
 
   /**
-  * 判断是否WeakMap对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
- */
+    * 判断是否WeakMap对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
   var supportWeakMap = typeof WeakMap !== staticStrUndefined
   function isWeakMap (obj) {
     return supportWeakMap && obj instanceof WeakMap
@@ -1265,11 +1265,11 @@
   /* eslint-disable valid-typeof */
 
   /**
-  * 判断是否Set对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
- */
+    * 判断是否Set对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
   var supportSet = typeof Set !== staticStrUndefined
   function isSet (obj) {
     return supportSet && obj instanceof Set
@@ -1278,22 +1278,22 @@
   /* eslint-disable valid-typeof */
 
   /**
-  * 判断是否WeakSet对象
-  *
-  * @param {Object} obj 对象
-  * @return {Boolean}
- */
+    * 判断是否WeakSet对象
+    *
+    * @param {Object} obj 对象
+    * @return {Boolean}
+   */
   var supportWeakSet = typeof WeakSet !== staticStrUndefined
   function isWeakSet (obj) {
     return supportWeakSet && obj instanceof WeakSet
   }
 
   /**
-  * 判断是否闰年
-  *
-  * @param {Date} date 日期或数字
-  * @return {Boolean}
-  */
+    * 判断是否闰年
+    *
+    * @param {Date} date 日期或数字
+    * @return {Boolean}
+    */
   function isLeapYear (date) {
     var year
     var currentDate = date ? toStringDate(date) : helperNewDate()
@@ -1305,12 +1305,12 @@
   }
 
   /**
- * 判断属性中的键和值是否包含在对象中
- *
- * @param {Object/Array} obj 对象
- * @param {Object} source 值
- * @return {Boolean}
- */
+   * 判断属性中的键和值是否包含在对象中
+   *
+   * @param {Object/Array} obj 对象
+   * @param {Object} source 值
+   * @return {Boolean}
+   */
   function isMatch (obj, source) {
     var objKeys = keys(obj)
     var sourceKeys = keys(source)
@@ -1329,24 +1329,24 @@
   }
 
   /**
- * 深度比较两个对象之间的值是否相等
- *
- * @param {Object} obj1 值1
- * @param {Object} obj2 值2
- * @return {Boolean}
- */
+   * 深度比较两个对象之间的值是否相等
+   *
+   * @param {Object} obj1 值1
+   * @param {Object} obj2 值2
+   * @return {Boolean}
+   */
   function isEqual (obj1, obj2) {
     return helperEqualCompare(obj1, obj2, helperDefaultCompare)
   }
 
   /**
- * 深度比较两个对象之间的值是否相等，使用自定义比较函数
- *
- * @param {Object} obj1 值1
- * @param {Object} obj2 值2
- * @param {Function} func 自定义函数
- * @return {Boolean}
- */
+   * 深度比较两个对象之间的值是否相等，使用自定义比较函数
+   *
+   * @param {Object} obj1 值1
+   * @param {Object} obj2 值2
+   * @param {Function} func 自定义函数
+   * @return {Boolean}
+   */
   function isEqualWith (obj1, obj2, func) {
     if (isFunction(func)) {
       return helperEqualCompare(obj1, obj2, function (v1, v2, key, obj1, obj2) {
@@ -1358,11 +1358,11 @@
   }
 
   /**
-  * 获取对象类型
-  *
-  * @param {Object} obj 对象
-  * @return {String}
-  */
+    * 获取对象类型
+    *
+    * @param {Object} obj 对象
+    * @return {String}
+    */
   function getType (obj) {
     if (isNull(obj)) {
       return 'null'
@@ -1386,22 +1386,22 @@
   }
 
   /**
-  * 获取一个全局唯一标识
-  *
-  * @param {String} prefix 前缀
-  * @return {Number}
-  */
+    * 获取一个全局唯一标识
+    *
+    * @param {String} prefix 前缀
+    * @return {Number}
+    */
   var __uniqueId = 0
   function uniqueId (prefix) {
     return (prefix ? '' + prefix : 0) + ++__uniqueId
   }
 
   /**
-  * 返回对象的长度
-  *
-  * @param {Object} obj 对象
-  * @return {Number}
-  */
+    * 返回对象的长度
+    *
+    * @param {Object} obj 对象
+    * @return {Number}
+    */
   function getSize (obj) {
     var len = 0
     if (isString(obj) || isArray(obj)) {
@@ -1414,31 +1414,31 @@
   }
 
   /**
-  * 返回对象第一个索引值
-  *
-  * @param {Object} obj 对象
-  * @param {Object} val 值
-  * @return {Number}
-  */
+    * 返回对象第一个索引值
+    *
+    * @param {Object} obj 对象
+    * @param {Object} val 值
+    * @return {Number}
+    */
   var indexOf = helperCreateIndexOf('indexOf', arrayIndexOf)
 
   /**
-  * 从最后开始的索引值,返回对象第一个索引值
-  *
-  * @param {Object} array 对象
-  * @param {Object} val 值
-  * @return {Number}
-  */
+    * 从最后开始的索引值,返回对象第一个索引值
+    *
+    * @param {Object} array 对象
+    * @param {Object} val 值
+    * @return {Number}
+    */
   var lastIndexOf = helperCreateIndexOf('lastIndexOf', arrayLastIndexOf)
 
   /**
-  * 返回对象第一个索引值
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 返回对象第一个索引值
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   var findIndexOf = helperCreateiterateIndexOf(function (obj, iterate, context) {
     for (var index = 0, len = obj.length; index < len; index++) {
       if (iterate.call(context, obj[index], index, obj)) {
@@ -1449,13 +1449,13 @@
   })
 
   /**
-  * 从最后开始的索引值,返回对象第一个索引值
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 从最后开始的索引值,返回对象第一个索引值
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   var findLastIndexOf = helperCreateiterateIndexOf(function (obj, iterate, context) {
     for (var len = obj.length - 1; len >= 0; len--) {
       if (iterate.call(context, obj[len], len, obj)) {
@@ -1466,11 +1466,11 @@
   })
 
   /**
-  * 字符串转JSON
-  *
-  * @param {String} str 字符串
-  * @return {Object} 返回转换后对象
-  */
+    * 字符串转JSON
+    *
+    * @param {String} str 字符串
+    * @return {Object} 返回转换后对象
+    */
   function toStringJSON (str) {
     if (isObject(str)) {
       return str
@@ -1483,86 +1483,86 @@
   }
 
   /**
-  * JSON转字符串
-  *
-  * @param {Object} obj 对象
-  * @return {String} 返回字符串
-  */
+    * JSON转字符串
+    *
+    * @param {Object} obj 对象
+    * @return {String} 返回字符串
+    */
   function toJSONString (obj) {
     return JSON.stringify(obj) || ''
   }
 
   /**
-  * 获取对象所有属性
-  *
-  * @param {Object} obj 对象/数组
-  * @return {Array}
-  */
+    * 获取对象所有属性
+    *
+    * @param {Object} obj 对象/数组
+    * @return {Array}
+    */
   var keys = helperCreateGetObjects('keys', 1)
 
   /**
-  * 获取对象所有值
-  *
-  * @param {Object} obj 对象/数组
-  * @return {Array}
-  */
+    * 获取对象所有值
+    *
+    * @param {Object} obj 对象/数组
+    * @return {Array}
+    */
   var values = helperCreateGetObjects('values', 0)
 
   /**
-  * 获取对象所有属性、值
-  *
-  * @param {Object} obj 对象/数组
-  * @return {Array}
-  */
+    * 获取对象所有属性、值
+    *
+    * @param {Object} obj 对象/数组
+    * @return {Array}
+    */
   var entries = helperCreateGetObjects('entries', 2)
 
   /**
- * 根据 key 过滤指定的属性值，返回一个新的对象
- *
- * @param {Object} obj 对象
- * @param {String/Array} key 键数组
- * @return {Object}
- */
+   * 根据 key 过滤指定的属性值，返回一个新的对象
+   *
+   * @param {Object} obj 对象
+   * @param {String/Array} key 键数组
+   * @return {Object}
+   */
   var pick = helperCreatePickOmit(1, 0)
 
   /**
- * 根据 key 排除指定的属性值，返回一个新的对象
- *
- * @param {Object} obj 对象
- * @param {String/Array} key 键数组
- * @return {Object}
- */
+   * 根据 key 排除指定的属性值，返回一个新的对象
+   *
+   * @param {Object} obj 对象
+   * @param {String/Array} key 键数组
+   * @return {Object}
+   */
   var omit = helperCreatePickOmit(0, 1)
 
   /**
-  * 获取对象第一个值
-  *
-  * @param {Object} obj 对象/数组
-  * @return {Object}
-  */
+    * 获取对象第一个值
+    *
+    * @param {Object} obj 对象/数组
+    * @return {Object}
+    */
   function first (obj) {
     return values(obj)[0]
   }
 
   /**
-  * 获取对象最后一个值
-  *
-  * @param {Object} obj 对象/数组
-  * @return {Object}
-  */
+    * 获取对象最后一个值
+    *
+    * @param {Object} obj 对象/数组
+    * @return {Object}
+    */
   function last (obj) {
     var list = values(obj)
     return list[list.length - 1]
   }
 
   /**
-  * 迭代器
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 迭代器
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function each (obj, iterate, context) {
     if (obj) {
       return (isArray(obj) ? arrayEach : objectEach)(obj, iterate, context)
@@ -1571,13 +1571,13 @@
   }
 
   /**
-  * 迭代器,支持 return false 跳出循环 break
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 迭代器,支持 return false 跳出循环 break
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function forOf (obj, iterate, context) {
     if (obj) {
       if (isArray(obj)) {
@@ -1599,13 +1599,13 @@
   }
 
   /**
-  * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function lastForOf (obj, iterate, context) {
     if (obj) {
       var len, list
@@ -1627,13 +1627,13 @@
   }
 
   /**
-  * 迭代器,从最后开始迭代
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 迭代器,从最后开始迭代
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function lastEach (obj, iterate, context) {
     if (obj) {
       return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context)
@@ -1642,12 +1642,12 @@
   }
 
   /**
- * 检查键、路径是否是该对象的属性
- *
- * @param {Object/Array} data 对象
- * @param {String/Function} property 键、路径
- * @return {Boolean}
- */
+   * 检查键、路径是否是该对象的属性
+   *
+   * @param {Object/Array} data 对象
+   * @param {String/Function} property 键、路径
+   * @return {Boolean}
+   */
   function has (obj, property) {
     if (obj) {
       if (hasOwnProp(obj, property)) {
@@ -1697,12 +1697,12 @@
   }
 
   /**
- * 获取对象的属性的值，如果值为 undefined，则返回默认值
- * @param {Object/Array} obj 对象
- * @param {String/Function} property 键、路径
- * @param {Object} defaultValue 默认值
- * @return {Object}
- */
+   * 获取对象的属性的值，如果值为 undefined，则返回默认值
+   * @param {Object/Array} obj 对象
+   * @param {String/Function} property 键、路径
+   * @param {Object} defaultValue 默认值
+   * @return {Object}
+   */
   function get (obj, property, defaultValue) {
     if (eqNull(obj)) {
       return defaultValue
@@ -1766,11 +1766,11 @@
   }
 
   /**
- * 设置对象属性上的值。如果属性不存在则创建它
- * @param {Object/Array} obj 对象
- * @param {String/Function} property 键、路径
- * @param {Object} value 值
- */
+   * 设置对象属性上的值。如果属性不存在则创建它
+   * @param {Object/Array} obj 对象
+   * @param {String/Function} property 键、路径
+   * @param {Object} value 值
+   */
   function set (obj, property, value) {
     if (obj) {
       if (obj[property] || hasOwnProp(obj, property)) {
@@ -1794,13 +1794,13 @@
   }
 
   /**
-  * 集合分组,默认使用键值分组,如果有iterate则使用结果进行分组
-  *
-  * @param {Array} obj 对象
-  * @param {Function} iterate 回调/对象属性
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 集合分组,默认使用键值分组,如果有iterate则使用结果进行分组
+    *
+    * @param {Array} obj 对象
+    * @param {Function} iterate 回调/对象属性
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function groupBy (obj, iterate, context) {
     var groupKey
     var result = {}
@@ -1823,13 +1823,13 @@
   }
 
   /**
-  * 集合分组统计,返回各组中对象的数量统计
-  *
-  * @param {Array} obj 对象
-  * @param {Function} iterate 回调/对象属性
-  * @param {Object} context 上下文
-  * @return {Object}
-  */
+    * 集合分组统计,返回各组中对象的数量统计
+    *
+    * @param {Array} obj 对象
+    * @param {Function} iterate 回调/对象属性
+    * @param {Object} context 上下文
+    * @return {Object}
+    */
   function countBy (obj, iterate, context) {
     var result = groupBy(obj, iterate, context || this)
     objectEach(result, function (item, key) {
@@ -1851,12 +1851,12 @@
   }
 
   /**
-  * 浅拷贝/深拷贝
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Boolean} deep 是否深拷贝
-  * @return {Object}
-  */
+    * 浅拷贝/深拷贝
+    *
+    * @param {Object} obj 对象/数组
+    * @param {Boolean} deep 是否深拷贝
+    * @return {Object}
+    */
   function clone (obj, deep) {
     if (obj) {
       return deepClone(obj, deep)
@@ -1865,13 +1865,13 @@
   }
 
   /**
-  * 清空对象
-  *
-  * @param {Object} obj 对象
-  * @param {*} defs 默认值,如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
-  * @param {Object/Array} assigns 默认值
-  * @return {Object}
-  */
+    * 清空对象
+    *
+    * @param {Object} obj 对象
+    * @param {*} defs 默认值,如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)
+    * @param {Object/Array} assigns 默认值
+    * @return {Object}
+    */
   function clear (obj, defs, assigns) {
     if (obj) {
       var len
@@ -1911,13 +1911,13 @@
   }
 
   /**
-  * 移除对象属性
-  *
-  * @param {Object/Array} obj 对象/数组
-  * @param {Function/String} iterate 方法或属性
-  * @param {Object} context 上下文
-  * @return {Object/Array}
-  */
+    * 移除对象属性
+    *
+    * @param {Object/Array} obj 对象/数组
+    * @param {Function/String} iterate 方法或属性
+    * @param {Object} context 上下文
+    * @return {Object/Array}
+    */
   function remove (obj, iterate, context) {
     if (obj) {
       if (!eqNull(iterate)) {
@@ -1951,13 +1951,13 @@
   }
 
   /**
-  * 序号列表生成函数
-  *
-  * @param {Number} start 起始值
-  * @param {Number} stop 结束值
-  * @param {Number} step 自增值
-  * @return {Object}
-  */
+    * 序号列表生成函数
+    *
+    * @param {Number} start 起始值
+    * @param {Number} stop 结束值
+    * @param {Number} step 自增值
+    * @return {Object}
+    */
   function range (start, stop, step) {
     var index, len
     var result = []
@@ -1978,12 +1978,12 @@
   }
 
   /**
-  * 将一个或者多个对象值解构到目标对象
-  *
-  * @param {Object} destination 目标对象
-  * @param {...Object}
-  * @return {Boolean}
-  */
+    * 将一个或者多个对象值解构到目标对象
+    *
+    * @param {Object} destination 目标对象
+    * @param {...Object}
+    * @return {Boolean}
+    */
   function destructuring (destination, sources) {
     if (destination && sources) {
       var rest = assign.apply(this, [{}].concat(slice(arguments, 1)))
@@ -2144,62 +2144,62 @@
   }
 
   /**
-  * 获取一个指定范围内随机数
-  *
-  * @param {Number} minVal 最小值
-  * @param {Number} maxVal 最大值
-  * @return {Number}
-  */
+    * 获取一个指定范围内随机数
+    *
+    * @param {Number} minVal 最小值
+    * @param {Number} maxVal 最大值
+    * @return {Number}
+    */
   function random (minVal, maxVal) {
     return minVal >= maxVal ? minVal : ((minVal = minVal >> 0) + Math.round(Math.random() * ((maxVal || 9) - minVal)))
   }
 
   /**
-  * 获取最小值
-  *
-  * @param {Array} arr 数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @return {Number}
-  */
+    * 获取最小值
+    *
+    * @param {Array} arr 数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @return {Number}
+    */
   var min = helperCreateMinMax(function (rest, itemVal) {
     return rest > itemVal
   })
 
   /**
-  * 获取最大值
-  *
-  * @param {Array} arr 数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @return {Number}
-  */
+    * 获取最大值
+    *
+    * @param {Array} arr 数组
+    * @param {Function} iterate(item, index, obj) 回调
+    * @return {Number}
+    */
   var max = helperCreateMinMax(function (rest, itemVal) {
     return rest < itemVal
   })
 
   /**
-  * 千分位分隔符、小数点
-  *
-  * @param {String/Number} num 数值
-  * @param {Object} 参数 {spaceNumber: 分割位数(默认3), separator: 分隔符(默认,), fixed: 小数位数(默认null)}
-  * @return {String}
- */
+    * 千分位分隔符、小数点
+    *
+    * @param {String/Number} num 数值
+    * @param {Object} 参数 {spaceNumber: 分割位数(默认3), separator: 分隔符(默认,), digits: 小数位数(默认null)}
+    * @return {String}
+   */
   function commafy (num, options) {
     num = toValString(num).replace(/,/g, '')
     if (num) {
       var opts = assign({ spaceNumber: 3, separator: ',' }, options)
-      var optFixed = opts.fixed
-      var result = (optFixed ? toNumber(num).toFixed(optFixed) : num).split('.')
+      var optDigits = opts.digits || opts.fixed
+      var result = (optDigits ? toNumber(num).toFixed(optDigits) : num).split('.')
       return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
     }
     return num
   }
 
   /**
- * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串
- *
- * @param { String/Number } str 数值
- * @return {String}
- */
+   * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串
+   *
+   * @param { String/Number } str 数值
+   * @return {String}
+   */
   function toFixedString (str, digits) {
     var nums = helperFixedNumber(str, digits).split('.')
     var rest = digits ? [nums[0], '.', padEnd(nums[1] || '', digits, '0')].join('') : nums[0]
@@ -2210,30 +2210,30 @@
   }
 
   /**
- * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
- *
- * @param { String/Number } str 数值
- * @return {String}
- */
+   * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
+   *
+   * @param { String/Number } str 数值
+   * @return {String}
+   */
   function toFixedNumber (str, digits) {
     var rest = (digits ? toNumber : toInteger)(helperFixedNumber(str, digits))
     return rest === 0 ? 0 : rest
   }
 
   /**
- * 转数值
- * @param { String/Number } str 数值
- *
- * @return {Number}
- */
+   * 转数值
+   * @param { String/Number } str 数值
+   *
+   * @return {Number}
+   */
   var toNumber = helperCreateToNumber(parseFloat)
 
   /**
- * 转整数
- * @param { String/Number } str 数值
- *
- * @return {Number}
- */
+   * 转整数
+   * @param { String/Number } str 数值
+   *
+   * @return {Number}
+   */
   var toInteger = helperCreateToNumber(staticParseInt)
 
   function helperCreateMinMax (handle) {
@@ -2272,21 +2272,21 @@
   }
 
   /**
- * 返回当前时间戳
- *
- * @returns Number
- */
+   * 返回当前时间戳
+   *
+   * @returns Number
+   */
   var now = Date.now || function () {
     return helperGetDateTime(helperNewDate())
   }
 
   /**
- * 将日期格式化为时间戳
- *
-  * @param {String/Number/Date} str 日期或数字
-  * @param {String} format 解析日期格式
- * @returns Number
- */
+   * 将日期格式化为时间戳
+   *
+    * @param {String/Number/Date} str 日期或数字
+    * @param {String} format 解析日期格式
+   * @returns Number
+   */
   var timestamp = function (str, format) {
     if (str) {
       var date = toStringDate(str, format)
@@ -2296,12 +2296,12 @@
   }
 
   /**
- * 比较两个日期
- *
- * @param {Number/String/Date} date1 日期
- * @param {Number/String/Date} date2 日期
- * @param {String} format 格式化
- */
+   * 比较两个日期
+   *
+   * @param {Number/String/Date} date1 日期
+   * @param {Number/String/Date} date2 日期
+   * @param {String} format 格式化
+   */
   function isDateSame (date1, date2, format) {
     if (date1 && date2) {
       date1 = toDateString(date1, format)
@@ -2322,12 +2322,12 @@
   ]
 
   /**
-  * 字符串转为日期
-  *
-  * @param {String/Number/Date} str 日期或数字
-  * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、hh(12)HH(24)小时、mm分钟、ss秒、SSS毫秒、Z时区)
-  * @return {String}
-  */
+    * 字符串转为日期
+    *
+    * @param {String/Number/Date} str 日期或数字
+    * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、hh(12)HH(24)小时、mm分钟、ss秒、SSS毫秒、Z时区)
+    * @return {String}
+    */
   function toStringDate (str, format) {
     var arr, sIndex, index, rules, len, rest, isDateType, tempMatch, zStr
     var dates = []
@@ -2401,13 +2401,13 @@
   }
 
   /**
-  * 日期格式化为字符串
-  *
-  * @param {Date} date 日期或数字
-  * @param {String} format 输出日期格式(年份(yy|yyyy)、月份(M|MM自动补0)、天(d|dd自动补0)、12小时制(h|hh自动补0)、24小时制(H|HH自动补0)、分钟(m|mm自动补0)、秒(s|ss自动补0)、毫秒(S|SSS自动补0)、D当年的第几天、a/A上午下午、e/E星期几、w当年的第几周、W当月的第几周、q当年第几个季度、Z时区)
-  * @param {Object} options {formats: {q: ['日', '一', '二', '三', '四', '五', '六'], E: function (value, match, date) {return '三'}, }} 自定义格式化模板
-  * @return {String}
-  */
+    * 日期格式化为字符串
+    *
+    * @param {Date} date 日期或数字
+    * @param {String} format 输出日期格式(年份(yy|yyyy)、月份(M|MM自动补0)、天(d|dd自动补0)、12小时制(h|hh自动补0)、24小时制(H|HH自动补0)、分钟(m|mm自动补0)、秒(s|ss自动补0)、毫秒(S|SSS自动补0)、D当年的第几天、a/A上午下午、e/E星期几、w当年的第几周、W当月的第几周、q当年第几个季度、Z时区)
+    * @param {Object} options {formats: {q: ['日', '一', '二', '三', '四', '五', '六'], E: function (value, match, date) {return '三'}, }} 自定义格式化模板
+    * @return {String}
+    */
   function toDateString (date, format, options) {
     if (date) {
       date = toStringDate(date)
@@ -2452,13 +2452,13 @@
   }
 
   /**
-  * 返回前几年或后几年的日期
-  *
-  * @param {Date} date 日期或数字
-  * @param {Number} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
-  * @param {Number/String} month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
-  * @return {Date}
-  */
+    * 返回前几年或后几年的日期
+    *
+    * @param {Date} date 日期或数字
+    * @param {Number} year 年(默认当前年)、前几个年(数值)、后几个年(数值)
+    * @param {Number/String} month 获取哪月(null默认当前年)、年初(first)、年末(last)、指定月份（0-11）
+    * @return {Date}
+    */
   function getWhatYear (date, year, month) {
     var number
     date = toStringDate(date)
@@ -2482,13 +2482,13 @@
   }
 
   /**
-  * 返回前几月或后几月的日期
-  *
-  * @param {Date} date 日期或数字
-  * @param {Number} month 月(默认当前月)、前几个月、后几个月
-  * @param {Number/String} day 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
-  * @return {Date}
-  */
+    * 返回前几月或后几月的日期
+    *
+    * @param {Date} date 日期或数字
+    * @param {Number} month 月(默认当前月)、前几个月、后几个月
+    * @param {Number/String} day 获取哪天(null默认当前天)、月初(first)、月末(last)、指定天数(数值)
+    * @return {Date}
+    */
   function getWhatMonth (date, month, day) {
     var monthOffset = month && !isNaN(month) ? month : 0
     date = toStringDate(date)
@@ -2510,13 +2510,13 @@
   }
 
   /**
-  * 返回前几周或后几周的星期几
-  *
-  * @param {Date} date 日期
-  * @param {Number} week 周(默认当前周)、前几周、后几周
-  * @param {Number} day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
-  * @return {Date}
-  */
+    * 返回前几周或后几周的星期几
+    *
+    * @param {Date} date 日期
+    * @param {Number} week 周(默认当前周)、前几周、后几周
+    * @param {Number} day 星期天(默认0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
+    * @return {Date}
+    */
   function getWhatWeek (date, week, day) {
     var time, whatDayTime, currentDay, customDay
     date = toStringDate(date)
@@ -2534,13 +2534,13 @@
   }
 
   /**
-  * 返回前几天或后几天的日期
-  *
-  * @param {Date} date 日期或数字
-  * @param {Number} day 天(默认当天)、前几天、后几天
-  * @param {String} mode 获取时分秒(null默认当前时分秒)、日初(first)、日末(last)
-  * @return {Date}
-  */
+    * 返回前几天或后几天的日期
+    *
+    * @param {Date} date 日期或数字
+    * @param {Number} day 天(默认当天)、前几天、后几天
+    * @param {String} mode 获取时分秒(null默认当前时分秒)、日初(first)、日末(last)
+    * @return {Date}
+    */
   function getWhatDay (date, day, mode) {
     date = toStringDate(date)
     if (isDate(date) && !isNaN(day)) {
@@ -2555,11 +2555,11 @@
   }
 
   /**
-  * 返回某个年份的第几天
-  *
-  * @param {Date} date 日期或数字
-  * @return {Number}
-  */
+    * 返回某个年份的第几天
+    *
+    * @param {Date} date 日期或数字
+    * @return {Number}
+    */
   function getYearDay (date) {
     date = toStringDate(date)
     if (isDate(date)) {
@@ -2569,11 +2569,11 @@
   }
 
   /**
-  * 返回某个年份的第几周
-  *
-  * @param {Date} date 日期或数字
-  * @return {Number}
-  */
+    * 返回某个年份的第几周
+    *
+    * @param {Date} date 日期或数字
+    * @return {Number}
+    */
   function getYearWeek (date) {
     date = toStringDate(date)
     if (isDate(date)) {
@@ -2586,11 +2586,11 @@
   }
 
   /**
-  * 返回某个月的第几周
-  *
-  * @param {Date} date 日期或数字
-  * @return {Number}
-  */
+    * 返回某个月的第几周
+    *
+    * @param {Date} date 日期或数字
+    * @return {Number}
+    */
   function getMonthWeek (date) {
     var monthFirst, monthFirstWeek
     var currentDate = toStringDate(date)
@@ -2609,12 +2609,12 @@
   }
 
   /**
-  * 返回某个年份的天数
-  *
-  * @param {Date} date 日期或数字
-  * @param {Number} year 年(默认当年)、前几个年、后几个年
-  * @return {Number}
-  */
+    * 返回某个年份的天数
+    *
+    * @param {Date} date 日期或数字
+    * @param {Number} year 年(默认当年)、前几个年、后几个年
+    * @return {Number}
+    */
   function getDayOfYear (date, year) {
     date = toStringDate(date)
     if (isDate(date)) {
@@ -2624,12 +2624,12 @@
   }
 
   /**
-  * 返回某个月份的天数
-  *
-  * @param {Date} date 日期或数字
-  * @param {Number} month 月(默认当月)、前几个月、后几个月
-  * @return {Number}
-  */
+    * 返回某个月份的天数
+    *
+    * @param {Date} date 日期或数字
+    * @param {Number} month 月(默认当月)、前几个月、后几个月
+    * @return {Number}
+    */
   function getDayOfMonth (date, month) {
     date = toStringDate(date)
     if (isDate(date)) {
@@ -2639,13 +2639,13 @@
   }
 
   /**
-  * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
-  *
-  * @param {Date} startDate 开始日期
-  * @param {Date} endDate 结束日期或当期日期
-  * @param {Date} rule 自定义计算规则
-  * @return {Object}
-  */
+    * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
+    *
+    * @param {Date} startDate 开始日期
+    * @param {Date} endDate 结束日期或当期日期
+    * @param {Date} rule 自定义计算规则
+    * @return {Object}
+    */
   function getDateDiff (startDate, endDate, rules) {
     var startTime, endTime, item, diffTime, rule, len, index
     var result = { done: false, time: 0 }
@@ -2705,41 +2705,41 @@
   }
 
   /**
-  * 去除字符串左右两边的空格
-  *
-  * @param {String} str 字符串
-  * @return {String}
-  */
+    * 去除字符串左右两边的空格
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
   function trim (str) {
     return str && str.trim ? str.trim() : trimRight(trimLeft(str))
   }
 
   /**
-  * 去除字符串左边的空格
-  *
-  * @param {String} str 字符串
-  * @return {String}
-  */
+    * 去除字符串左边的空格
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
   function trimLeft (str) {
     return str && str.trimLeft ? str.trimLeft() : toValString(str).replace(/^[\s\uFEFF\xA0]+/g, '')
   }
 
   /**
-  * 去除字符串右边的空格
-  *
-  * @param {String} str 字符串
-  * @return {String}
-  */
+    * 去除字符串右边的空格
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
   function trimRight (str) {
     return str && str.trimRight ? str.trimRight() : toValString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
   }
 
   /**
-  * 转义HTML字符串，替换&, <, >, ", ', `字符
-  *
-  * @param {String} str 字符串
-  * @return {String}
-  */
+    * 转义HTML字符串，替换&, <, >, ", ', `字符
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
   var escape = helperFormatEscaper(staticEscapeMap)
 
   var unescapeMap = {}
@@ -2748,19 +2748,19 @@
   })
 
   /**
-  * 反转escape
-  *
-  * @param {String} str 字符串
-  * @return {String}
-  */
+    * 反转escape
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
   var unescape = helperFormatEscaper(unescapeMap)
 
   /**
-  * 将带字符串转成驼峰字符串,例如： project-name 转为 projectName
-  *
-  * @param {String} str 字符串
-  * @return {String}
-  */
+    * 将带字符串转成驼峰字符串,例如： project-name 转为 projectName
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
   function camelCase (str) {
     return toValString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
       return u.substring(1).toLocaleUpperCase()
@@ -2768,11 +2768,11 @@
   }
 
   /**
-  * 将带驼峰字符串转成字符串,例如： projectName 转为 project-name
-  *
-  * @param {String} str 字符串
-  * @return {String}
-  */
+    * 将带驼峰字符串转成字符串,例如： projectName 转为 project-name
+    *
+    * @param {String} str 字符串
+    * @return {String}
+    */
   function kebabCase (str) {
     return toValString(str).replace(/([A-Z])/g, function (text, u) {
       return '-' + u.toLowerCase()
@@ -2780,12 +2780,12 @@
   }
 
   /**
-  * 将字符串重复 n 次
-  *
-  * @param {String} str 字符串
-  * @param {Number} count 次数
-  * @return {String}
-  */
+    * 将字符串重复 n 次
+    *
+    * @param {String} str 字符串
+    * @param {Number} count 次数
+    * @return {String}
+    */
   function repeat (str, count) {
     var rest = toValString(str)
     if (rest.repeat) {
@@ -2796,13 +2796,13 @@
   }
 
   /**
-  * 用指定字符从前面开始补全字符串
-  *
-  * @param {String} str 字符串
-  * @param {Number} targetLength 结果长度
-  * @param {Number} padString 补全字符
-  * @return {String}
-  */
+    * 用指定字符从前面开始补全字符串
+    *
+    * @param {String} str 字符串
+    * @param {Number} targetLength 结果长度
+    * @param {Number} padString 补全字符
+    * @return {String}
+    */
   function padStart (str, targetLength, padString) {
     var rest = toValString(str)
     targetLength = targetLength >> 0
@@ -2821,13 +2821,13 @@
   }
 
   /**
-  * 用指定字符从后面开始补全字符串
-  *
-  * @param {String} str 字符串
-  * @param {Number} targetLength 结果长度
-  * @param {Number} padString 补全字符
-  * @return {String}
-  */
+    * 用指定字符从后面开始补全字符串
+    *
+    * @param {String} str 字符串
+    * @param {Number} targetLength 结果长度
+    * @param {Number} padString 补全字符
+    * @return {String}
+    */
   function padEnd (str, targetLength, padString) {
     var rest = toValString(str)
     targetLength = targetLength >> 0
@@ -2846,26 +2846,26 @@
   }
 
   /**
-  * 判断字符串是否在源字符串的头部
-  *
-  * @param {String} str 字符串
-  * @param {String/Number} val 值
-  * @param {Number} startIndex 开始索引
-  * @return {String}
-  */
+    * 判断字符串是否在源字符串的头部
+    *
+    * @param {String} str 字符串
+    * @param {String/Number} val 值
+    * @param {Number} startIndex 开始索引
+    * @return {String}
+    */
   function startsWith (str, val, startIndex) {
     var rest = toValString(str)
     return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
   }
 
   /**
-  * 判断字符串是否在源字符串的尾部
-  *
-  * @param {String} str 字符串
-  * @param {String/Number} val 值
-  * @param {Number} startIndex 开始索引
-  * @return {String}
-  */
+    * 判断字符串是否在源字符串的尾部
+    *
+    * @param {String} str 字符串
+    * @param {String/Number} val 值
+    * @param {Number} startIndex 开始索引
+    * @return {String}
+    */
   function endsWith (str, val, startIndex) {
     var rest = toValString(str)
     var argsLen = arguments.length
@@ -2873,10 +2873,10 @@
   }
 
   /**
- * 解析动态字符串模板
- * @param {String} str 字符串模板
- * @param {Object} obj 对象
- */
+   * 解析动态字符串模板
+   * @param {String} str 字符串模板
+   * @param {Object} obj 对象
+   */
   function template (str, obj) {
     return toValString(str).replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, key) {
       return get(obj, trim(key))
@@ -2903,11 +2903,11 @@
   }
 
   /**
- * 返回一个获取对象属性的函数
- *
- * @param {String} name 属性名
- * @param {Object} defs 空值
- */
+   * 返回一个获取对象属性的函数
+   *
+   * @param {String} name 属性名
+   * @param {Object} defs 空值
+   */
   function property (name, defs) {
     return function (obj) {
       return isNull(obj) ? defs : obj[name]
@@ -2915,13 +2915,13 @@
   }
 
   /**
-  * 创建一个绑定上下文的函数
-  *
-  * @param {Function} callback 函数
-  * @param {Object} context 上下文
-  * @param {*} args 额外的参数
-  * @return {Object}
-  */
+    * 创建一个绑定上下文的函数
+    *
+    * @param {Function} callback 函数
+    * @param {Object} context 上下文
+    * @param {*} args 额外的参数
+    * @return {Object}
+    */
   function bind (callback, context) {
     var args = slice(arguments, 2)
     return function () {
@@ -2930,13 +2930,13 @@
   }
 
   /**
-  * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
-  *
-  * @param {Function} callback 函数
-  * @param {Object} context 上下文
-  * @param {*} args 额外的参数
-  * @return {Object}
-  */
+    * 创建一个只能调用一次的函数,只会返回第一次执行后的结果
+    *
+    * @param {Function} callback 函数
+    * @param {Object} context 上下文
+    * @param {*} args 额外的参数
+    * @return {Object}
+    */
   function once (callback, context) {
     var done = false
     var rest = null
@@ -2952,12 +2952,12 @@
   }
 
   /**
-  * 创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回
-  *
-  * @param {Number} count 调用次数
-  * @param {Function} callback 完成回调
-  * @return {Object}
-  */
+    * 创建一个函数, 调用次数超过 count 次之后执行回调并将所有结果记住后返回
+    *
+    * @param {Number} count 调用次数
+    * @param {Function} callback 完成回调
+    * @return {Object}
+    */
   function after (count, callback, context) {
     var runCount = 0
     var rests = []
@@ -2974,12 +2974,12 @@
   }
 
   /**
-  * 创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回
-  *
-  * @param {Number} count 调用次数
-  * @param {Function} callback 完成回调
-  * @return {Object}
-  */
+    * 创建一个函数, 调用次数不超过 count 次之前执行回调并将所有结果记住后返回
+    *
+    * @param {Number} count 调用次数
+    * @param {Function} callback 完成回调
+    * @return {Object}
+    */
   function before (count, callback, context) {
     var runCount = 0
     var rests = []
@@ -2995,13 +2995,13 @@
   }
 
   /**
-  * 创建一个策略函数，当被重复调用函数的时候，至少每隔多少秒毫秒调用一次该函数
-  *
-  * @param {Function} callback 回调
-  * @param {Number} wait 多少秒毫
-  * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
-  * @return {Function}
-  */
+    * 节流函数；当被调用 n 毫秒后才会执行，如果在这时间内又被调用则至少每隔 n 秒毫秒调用一次该函数
+    *
+    * @param {Function} callback 回调
+    * @param {Number} wait 多少秒毫
+    * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
+    * @return {Function}
+    */
   function throttle (callback, wait, options) {
     var args, context
     var opts = options || {}
@@ -3044,13 +3044,13 @@
   }
 
   /**
-  * 创建一个防反跳策略函数，在函数最后一次调用多少毫秒之后才会再次执行，如果在期间内重复调用会重新计算延迟
-  *
-  * @param {Function} callback 回调
-  * @param {Number} wait 多少秒毫
-  * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
-  * @return {Function}
-  */
+    * 函数去抖；当被调用 n 毫秒后才会执行，如果在这时间内又被调用则将重新计算执行时间
+    *
+    * @param {Function} callback 回调
+    * @param {Number} wait 多少秒毫
+    * @param {Object} options 参数{leading: 是否在之前执行, trailing: 是否在之后执行}
+    * @return {Function}
+    */
   function debounce (callback, wait, options) {
     var args, context
     var opts = options || {}
@@ -3096,13 +3096,13 @@
   }
 
   /**
-  * 该方法和 setTimeout 一样的效果，区别就是支持上下文和额外参数
-  *
-  * @param {Function} callback 函数
-  * @param {Number} wait 延迟毫秒
-  * @param {*} args 额外的参数
-  * @return {Number}
- */
+    * 该方法和 setTimeout 一样的效果，区别就是支持上下文和额外参数
+    *
+    * @param {Function} callback 函数
+    * @param {Number} wait 延迟毫秒
+    * @param {*} args 额外的参数
+    * @return {Number}
+   */
   function delay (callback, wait) {
     var args = slice(arguments, 2)
     var context = this
@@ -3170,10 +3170,10 @@
   }
 
   /**
- * 查询参数序列化
- *
- * @param {Object} query 序列化的对象
- */
+   * 查询参数序列化
+   *
+   * @param {Object} query 序列化的对象
+   */
   function serialize (query) {
     var _arr
     var params = []
@@ -3191,10 +3191,10 @@
   }
 
   /**
- * 查询参数序列化
- *
- * @param {String} query 反序列化的字符串
- */
+   * 查询参数序列化
+   *
+   * @param {String} query 反序列化的字符串
+   */
   function unserialize (str) {
     var items
     var result = {}
@@ -3217,10 +3217,10 @@
   }
 
   /**
-  * 获取地址栏信息
-  *
-  * @return Object
-  */
+    * 获取地址栏信息
+    *
+    * @return Object
+    */
   function locat () {
     return staticLocation ? parseUrl(staticLocation.href) : {}
   }
@@ -3242,9 +3242,9 @@
   }
 
   /**
-  * 获取浏览器内核
-  * @return Object
-  */
+    * 获取浏览器内核
+    * @return Object
+    */
   function browse () {
     var $body, isChrome, isEdge
     var isMobile = false
@@ -3301,17 +3301,17 @@
   }
 
   /**
-  * cookie操作函数
-  * @param {String/Array/Object} name 键/数组/对象
-  * @param {String} value 值
-  * @param {Object} options 参数
-  *   @param {String} name: 键
-  *   @param {Object} value: 值
-  *   @param {String} path: 路径
-  *   @param {String} domain: 作用域
-  *   @param {Boolean} secure: 设置为安全的,只能用https协议
-  *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
-  */
+    * cookie操作函数
+    * @param {String/Array/Object} name 键/数组/对象
+    * @param {String} value 值
+    * @param {Object} options 参数
+    *   @param {String} name: 键
+    *   @param {Object} value: 值
+    *   @param {String} path: 路径
+    *   @param {String} domain: 作用域
+    *   @param {Boolean} secure: 设置为安全的,只能用https协议
+    *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
+    */
   function cookie (name, value, options) {
     if (staticDocument) {
       var opts, expires, values, result, cookies, keyIndex

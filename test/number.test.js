@@ -87,8 +87,14 @@ describe('Number functions', () => {
       XEUtils.commafy(1000000)
     ).toEqual('1,000,000')
     expect(
-      XEUtils.commafy('1000000', { fixed: 2 })
+      XEUtils.commafy('1000000', { digits: 2 })
     ).toEqual('1,000,000.00')
+    expect(
+      XEUtils.commafy('1000000', { digits: 4 })
+    ).toEqual('1,000,000.0000')
+    expect(
+      XEUtils.commafy('1000000.5678', { digits: 3 })
+    ).toEqual('1,000,000.568')
     expect(
       XEUtils.commafy(6660000000000001, { spaceNumber: 4, separator: ' ' })
     ).toEqual('6660 0000 0000 0001')
