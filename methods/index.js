@@ -124,6 +124,10 @@ var toFixedString = require('./number/toFixedString')
 var toFixedNumber = require('./number/toFixedNumber')
 var toInteger = require('./number/toInteger')
 var toNumber = require('./number/toNumber')
+var add = require('./number/add')
+var subtract = require('./number/subtract')
+var multiply = require('./number/multiply')
+var divide = require('./number/divide')
 
 // 日期相关的方法
 var getWhatYear = require('./date/getWhatYear')
@@ -301,6 +305,10 @@ assign(XEUtils, {
   toFixedNumber: toFixedNumber,
   toNumber: toNumber,
   toInteger: toInteger,
+  add: add,
+  subtract: subtract,
+  multiply: multiply,
+  divide: divide,
 
   // date
   now: now,

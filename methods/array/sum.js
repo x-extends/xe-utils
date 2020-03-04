@@ -1,5 +1,6 @@
 var isFunction = require('../base/isFunction')
 var each = require('../base/each')
+var get = require('../base/get')
 
 var toNumber = require('../number/toNumber')
 
@@ -16,7 +17,7 @@ function sum (array, iterate, context) {
   each(array, iterate ? isFunction(iterate) ? function () {
     result += toNumber(iterate.apply(context, arguments))
   } : function (val) {
-    result += toNumber(val[iterate])
+    result += toNumber(get(val, iterate))
   } : function (val) {
     result += toNumber(val)
   })

@@ -8,6 +8,10 @@ var toFixedString = require('./toFixedString')
 var toFixedNumber = require('./toFixedNumber')
 var toInteger = require('./toInteger')
 var toNumber = require('./toNumber')
+var add = require('./add')
+var subtract = require('./subtract')
+var multiply = require('./multiply')
+var divide = require('./divide')
 
 var numberExports = {
   random: random,
@@ -17,7 +21,11 @@ var numberExports = {
   toFixedString: toFixedString,
   toFixedNumber: toFixedNumber,
   toNumber: toNumber,
-  toInteger: toInteger
+  toInteger: toInteger,
+  add: add,
+  subtract: subtract,
+  multiply: multiply,
+  divide: divide
 }
 
 module.exports = numberExports

@@ -360,4 +360,217 @@ describe('Number functions', () => {
       XEUtils.toInteger('16572.3657567')
     ).toEqual(16572)
   })
+
+  test('add()', () => {
+    expect(
+      XEUtils.add(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.add(0, 0)
+    ).toEqual(0)
+    expect(
+      XEUtils.add([])
+    ).toEqual(0)
+    expect(
+      XEUtils.add({})
+    ).toEqual(0)
+    expect(
+      XEUtils.add(/\d/)
+    ).toEqual(0)
+    expect(
+      XEUtils.add(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.add(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.add('abc')
+    ).toEqual(0)
+    expect(
+      XEUtils.add('abc', '123')
+    ).toEqual(123)
+    expect(
+      XEUtils.add('22', 33)
+    ).toEqual(55)
+    expect(
+      XEUtils.add(0, 33)
+    ).toEqual(33)
+    expect(
+      XEUtils.add(2000, 500000)
+    ).toEqual(502000)
+    expect(
+      XEUtils.add(3.84, 4.78)
+    ).toEqual(8.62)
+    expect(
+      XEUtils.add(-3.33, 7.066)
+    ).toEqual(3.736)
+    expect(
+      XEUtils.add(0.4598, 5.024666)
+    ).toEqual(5.484466)
+    expect(
+      XEUtils.add(-0.4598, 5.0433)
+    ).toEqual(4.5835)
+  })
+
+  test('subtract()', () => {
+    expect(
+      XEUtils.subtract(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract(0, 0)
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract([])
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract({})
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract(/\d/)
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract('abc')
+    ).toEqual(0)
+    expect(
+      XEUtils.subtract('abc', '123')
+    ).toEqual(-123)
+    expect(
+      XEUtils.subtract('22', 33)
+    ).toEqual(-11)
+    expect(
+      XEUtils.subtract(0, 33)
+    ).toEqual(-33)
+    expect(
+      XEUtils.subtract(500000, 2000)
+    ).toEqual(498000)
+    expect(
+      XEUtils.subtract(6.66, 3.9)
+    ).toEqual(2.76)
+    expect(
+      XEUtils.subtract(3.33, 7.066)
+    ).toEqual(-3.736)
+    expect(
+      XEUtils.subtract(5.024664, 0.453)
+    ).toEqual(4.571664)
+    expect(
+      XEUtils.subtract(25.77, 3.6)
+    ).toEqual(22.17)
+  })
+
+  test('multiply()', () => {
+    expect(
+      XEUtils.multiply(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply(0, 0)
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply([])
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply({})
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply(/\d/)
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply('abc')
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply('abc', '123')
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply('22', 33)
+    ).toEqual(726)
+    expect(
+      XEUtils.multiply(0, 33)
+    ).toEqual(0)
+    expect(
+      XEUtils.multiply(500000, 2000)
+    ).toEqual(1000000000)
+    expect(
+      XEUtils.multiply(6.66, 3.7)
+    ).toEqual(24.642)
+    expect(
+      XEUtils.multiply(3.33, 0.9)
+    ).toEqual(2.997)
+    expect(
+      XEUtils.multiply(5.024664, 0.453)
+    ).toEqual(2.276172792)
+    expect(
+      XEUtils.multiply(25.77, 7.1)
+    ).toEqual(182.967)
+  })
+
+  test('divide()', () => {
+    expect(
+      XEUtils.divide(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.divide(0, 0)
+    ).toEqual(0)
+    expect(
+      XEUtils.divide([])
+    ).toEqual(0)
+    expect(
+      XEUtils.divide({})
+    ).toEqual(0)
+    expect(
+      XEUtils.divide(/\d/)
+    ).toEqual(0)
+    expect(
+      XEUtils.divide(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.divide(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.divide('abc')
+    ).toEqual(0)
+    expect(
+      XEUtils.divide('abc', '123')
+    ).toEqual(0)
+    expect(
+      XEUtils.divide('33', 11)
+    ).toEqual(3)
+    expect(
+      XEUtils.divide(0, 33)
+    ).toEqual(0)
+    expect(
+      XEUtils.divide(21, 3)
+    ).toEqual(7)
+    expect(
+      XEUtils.divide(100, 5)
+    ).toEqual(20)
+    expect(
+      XEUtils.divide(500000, 2000)
+    ).toEqual(250)
+    expect(
+      XEUtils.divide(1024.88, 0.2)
+    ).toEqual(5124.4)
+    expect(
+      XEUtils.divide(51.2, 8)
+    ).toEqual(6.4)
+    expect(
+      XEUtils.divide(2.997, 0.9)
+    ).toEqual(3.33)
+    expect(
+      XEUtils.divide(2.276172792, 0.453)
+    ).toEqual(5.024664)
+    expect(
+      XEUtils.divide(182.967, 25.77)
+    ).toEqual(7.1)
+  })
 })

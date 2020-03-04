@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.3.2
+ * xe-utils.js v2.3.3
  * ISC License.
  * @preserve
  */
@@ -458,7 +458,7 @@
     each(array, iterate ? isFunction(iterate) ? function () {
       result += toNumber(iterate.apply(context, arguments))
     } : function (val) {
-      result += toNumber(val[iterate])
+      result += toNumber(get(val, iterate))
     } : function (val) {
       result += toNumber(val)
     })
@@ -2236,6 +2236,67 @@
    */
   var toInteger = helperCreateToNumber(staticParseInt)
 
+  /**
+   * 加法运算
+   *
+   * @param { Number } num1 被加数
+   * @param { Number } num2 加数
+   * @return {Number}
+   */
+  function add (num1, num2) {
+    var addend = toNumber(num1)
+    var augend = toNumber(num2)
+    var ratio = Math.pow(10, Math.max(helperNumberDecimal(addend), helperNumberDecimal(augend)))
+    return (addend * ratio + augend * ratio) / ratio
+  }
+
+  /**
+   * 减法运算
+   *
+   * @param { Number } num1 被减数
+   * @param { Number } num2 减数
+   * @return {Number}
+   */
+  function subtract (num1, num2) {
+    var subtrahend = toNumber(num1)
+    var minuend = toNumber(num2)
+    var digit1 = helperNumberDecimal(subtrahend)
+    var digit2 = helperNumberDecimal(minuend)
+    var ratio = Math.pow(10, Math.max(digit1, digit2))
+    var precision = (digit1 >= digit2) ? digit1 : digit2
+    return parseFloat(((subtrahend * ratio - minuend * ratio) / ratio).toFixed(precision))
+  }
+
+  /**
+   * 乘法运算
+   *
+   * @param { Number } num1 数值1
+   * @param { Number } num2 数值2
+   * @return {Number}
+   */
+  function multiply (num1, num2) {
+    var multiplier = toNumber(num1)
+    var multiplicand = toNumber(num2)
+    var str1 = '' + multiplier
+    var str2 = '' + multiplicand
+    return parseInt(str1.replace('.', '')) * parseInt(str2.replace('.', '')) / Math.pow(10, helperNumberDecimal(multiplier) + helperNumberDecimal(multiplicand))
+  }
+
+  /**
+   * 除法运算
+   *
+   * @param { Number } num1 数值1
+   * @param { Number } num2 数值2
+   * @return {Number}
+   */
+  function divide (num1, num2) {
+    var divisor = toNumber(num1)
+    var dividend = toNumber(num2)
+    var str1 = '' + divisor
+    var str2 = '' + dividend
+    return multiply(str1.replace('.', '') / str2.replace('.', ''), Math.pow(10, helperNumberDecimal(dividend) - helperNumberDecimal(divisor)))
+  }
+
   function helperCreateMinMax (handle) {
     return function (arr, iterate) {
       if (arr && arr.length) {
@@ -2269,6 +2330,10 @@
 
   function helperFixedNumber (str, digits) {
     return toValString(toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1')
+  }
+
+  function helperNumberDecimal (num) {
+    return (('' + num).split('.')[1] || '').length
   }
 
   /**
@@ -3191,10 +3256,10 @@
   }
 
   /**
-   * 查询参数序列化
-   *
-   * @param {String} query 反序列化的字符串
-   */
+ * 查询参数序列化
+ *
+ * @param {String} query 反序列化的字符串
+ */
   function unserialize (str) {
     var items
     var result = {}
@@ -3217,10 +3282,10 @@
   }
 
   /**
-    * 获取地址栏信息
-    *
-    * @return Object
-    */
+  * 获取地址栏信息
+  *
+  * @return Object
+  */
   function locat () {
     return staticLocation ? parseUrl(staticLocation.href) : {}
   }
@@ -3242,9 +3307,9 @@
   }
 
   /**
-    * 获取浏览器内核
-    * @return Object
-    */
+  * 获取浏览器内核
+  * @return Object
+  */
   function browse () {
     var $body, isChrome, isEdge
     var isMobile = false
@@ -3301,17 +3366,17 @@
   }
 
   /**
-    * cookie操作函数
-    * @param {String/Array/Object} name 键/数组/对象
-    * @param {String} value 值
-    * @param {Object} options 参数
-    *   @param {String} name: 键
-    *   @param {Object} value: 值
-    *   @param {String} path: 路径
-    *   @param {String} domain: 作用域
-    *   @param {Boolean} secure: 设置为安全的,只能用https协议
-    *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
-    */
+  * cookie操作函数
+  * @param {String/Array/Object} name 键/数组/对象
+  * @param {String} value 值
+  * @param {Object} options 参数
+  *   @param {String} name: 键
+  *   @param {Object} value: 值
+  *   @param {String} path: 路径
+  *   @param {String} domain: 作用域
+  *   @param {Boolean} secure: 设置为安全的,只能用https协议
+  *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
+  */
   function cookie (name, value, options) {
     if (staticDocument) {
       var opts, expires, values, result, cookies, keyIndex
@@ -3546,6 +3611,10 @@
     toFixedNumber: toFixedNumber,
     toNumber: toNumber,
     toInteger: toInteger,
+    add: add,
+    subtract: subtract,
+    multiply: multiply,
+    divide: divide,
 
     // date
     now: now,
