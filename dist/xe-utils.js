@@ -3256,10 +3256,10 @@
   }
 
   /**
- * 查询参数序列化
- *
- * @param {String} query 反序列化的字符串
- */
+   * 查询参数序列化
+   *
+   * @param {String} query 反序列化的字符串
+   */
   function unserialize (str) {
     var items
     var result = {}
@@ -3282,10 +3282,10 @@
   }
 
   /**
-  * 获取地址栏信息
-  *
-  * @return Object
-  */
+    * 获取地址栏信息
+    *
+    * @return Object
+    */
   function locat () {
     return staticLocation ? parseUrl(staticLocation.href) : {}
   }
@@ -3307,9 +3307,9 @@
   }
 
   /**
-  * 获取浏览器内核
-  * @return Object
-  */
+    * 获取浏览器内核
+    * @return Object
+    */
   function browse () {
     var $body, isChrome, isEdge
     var isMobile = false
@@ -3366,17 +3366,17 @@
   }
 
   /**
-  * cookie操作函数
-  * @param {String/Array/Object} name 键/数组/对象
-  * @param {String} value 值
-  * @param {Object} options 参数
-  *   @param {String} name: 键
-  *   @param {Object} value: 值
-  *   @param {String} path: 路径
-  *   @param {String} domain: 作用域
-  *   @param {Boolean} secure: 设置为安全的,只能用https协议
-  *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
-  */
+    * cookie操作函数
+    * @param {String/Array/Object} name 键/数组/对象
+    * @param {String} value 值
+    * @param {Object} options 参数
+    *   @param {String} name: 键
+    *   @param {Object} value: 值
+    *   @param {String} path: 路径
+    *   @param {String} domain: 作用域
+    *   @param {Boolean} secure: 设置为安全的,只能用https协议
+    *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
+    */
   function cookie (name, value, options) {
     if (staticDocument) {
       var opts, expires, values, result, cookies, keyIndex

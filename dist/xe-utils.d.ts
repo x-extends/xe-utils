@@ -49,7 +49,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function objectMap(obj: any, iteratee: typeof objectMapIterate, context ?: any): any;
+  export function objectMap(obj: any, iteratee: typeof objectMapIterate, context?: any): any;
 
   export function objectEachIterate(item: any, key: string, obj: any): any;
 
@@ -59,7 +59,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function objectEach(obj: any, iteratee: typeof objectEachIterate, context ?: any): void;
+  export function objectEach(obj: any, iteratee: typeof objectEachIterate, context?: any): void;
 
   export function lastObjectEachIterate(item: any, key: string, obj: any): any;
 
@@ -69,7 +69,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function lastObjectEach(obj: any, iteratee: typeof lastObjectEachIterate, context ?: any): void;
+  export function lastObjectEach(obj: any, iteratee: typeof lastObjectEachIterate, context?: any): void;
 
   /**
    * 数组去重
@@ -943,6 +943,34 @@ declare namespace XEUtils {
    * @param num 数值/字符串
    */
   export function toInteger(num: string | number): number;
+
+  /**
+   * 加法运算
+   * @param num1 数值1
+   * @param num2 数值2
+   */
+  export function add(num1: number, num2: number): number;
+
+  /**
+   * 减法运算
+   * @param num1 数值1
+   * @param num2 数值2
+   */
+  export function subtract(num1: number, num2: number): number;
+
+  /**
+   * 乘法运算
+   * @param num1 数值1
+   * @param num2 数值2
+   */
+  export function multiply(num1: number, num2: number): number;
+
+  /**
+   * 除法运算
+   * @param num1 数值1
+   * @param num2 数值2
+   */
+  export function divide(num1: number, num2: number): number;
 
   /**
    * 返回当前时间戳
