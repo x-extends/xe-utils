@@ -2401,6 +2401,62 @@ export default {
                 XEUtils.toFixedString('-1234.6988', 2) // '-1234.69'
                 `
               ]
+            },
+            {
+              name: 'add',
+              args: 'num1, num2',
+              title: '加法运算',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.add(10, 20) // 30
+                XEUtils.add(3.84, 4.78) // 8.62
+                XEUtils.add(0.4598, 5.024666) // 5.484466
+                `
+              ]
+            },
+            {
+              name: 'subtract',
+              args: 'num1, num2',
+              title: '减法运算',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.subtract(20, 10) // 10
+                XEUtils.subtract(6.66, 3.9) // 2.76
+                XEUtils.subtract(5.024664, 0.453) // 4.571664
+                `
+              ]
+            },
+            {
+              name: 'multiply',
+              args: 'num1, num2',
+              title: '乘法运算',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.multiply(20, 10) // 200
+                XEUtils.multiply(6.66, 3.7) // 24.642
+                XEUtils.multiply(5.024664, 0.453) // 2.276172792
+                `
+              ]
+            },
+            {
+              name: 'divide',
+              args: 'num1, num2',
+              title: '除法运算',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.divide(20, 10) // 2
+                XEUtils.divide(2.997, 0.9) // 3.33
+                XEUtils.divide(182.967, 25.77) // 7.1
+                `
+              ]
             }
           ]
         },
