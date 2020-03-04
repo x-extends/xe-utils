@@ -124,6 +124,10 @@ export * from './number/toFixedString'
 export * from './number/toFixedNumber'
 export * from './number/toInteger'
 export * from './number/toNumber'
+export * from './number/add'
+export * from './number/subtract'
+export * from './number/multiply'
+export * from './number/divide'
 
 // date
 export * from './date/getWhatYear'
