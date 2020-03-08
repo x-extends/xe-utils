@@ -36,6 +36,7 @@ var chunk = require('./array/chunk')
 var zip = require('./array/zip')
 var unzip = require('./array/unzip')
 var zipObject = require('./array/zipObject')
+var flatten = require('./array/flatten')
 var pluck = require('./array/pluck')
 var invoke = require('./array/invoke')
 var invokeMap = require('./array/invokeMap')
@@ -215,6 +216,7 @@ assign(XEUtils, {
   zip: zip,
   unzip: unzip,
   zipObject: zipObject,
+  flatten: flatten,
   toArray: toArray,
   includeArrays: includeArrays,
   pluck: pluck,

@@ -1036,6 +1036,48 @@ describe('Array functions', () => {
     ).toEqual({ aa: 11, bb: 22, cc: undefined })
   })
 
+  test('flatten()', () => {
+    expect(
+      XEUtils.flatten()
+    ).toEqual([])
+    expect(
+      XEUtils.flatten(null)
+    ).toEqual([])
+    expect(
+      XEUtils.flatten(undefined)
+    ).toEqual([])
+    expect(
+      XEUtils.flatten(0)
+    ).toEqual([])
+    expect(
+      XEUtils.flatten('')
+    ).toEqual([])
+    expect(
+      XEUtils.flatten([])
+    ).toEqual([])
+    expect(
+      XEUtils.flatten({})
+    ).toEqual([])
+    expect(
+      XEUtils.flatten(/\d/)
+    ).toEqual([])
+    expect(
+      XEUtils.flatten(function () {})
+    ).toEqual([])
+    expect(
+      XEUtils.flatten([[1, 2, 3], [4, 5, 6], [7, 8]])
+    ).toEqual([1, 2, 3, 4, 5, 6, 7, 8])
+    expect(
+      XEUtils.flatten([1, [2, [3, [4]], 5]])
+    ).toEqual([1, 2, [3, [4]], 5])
+    expect(
+      XEUtils.flatten([1, [2, [3, [4]], 5]], true)
+    ).toEqual([1, 2, 3, 4, 5])
+    expect(
+      XEUtils.flatten([1, [2, [3, [4]], [[[5], [6, [7]]]]]], true)
+    ).toEqual([1, 2, 3, 4, 5, 6, 7])
+  })
+
   test('toArray()', () => {
     expect(
       XEUtils.toArray()

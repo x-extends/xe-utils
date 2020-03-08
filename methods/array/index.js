@@ -25,6 +25,7 @@ var chunk = require('./chunk')
 var zip = require('./zip')
 var unzip = require('./unzip')
 var zipObject = require('./zipObject')
+var flatten = require('./flatten')
 var pluck = require('./pluck')
 var invoke = require('./invoke')
 var invokeMap = require('./invokeMap')
@@ -62,6 +63,7 @@ var arrayExports = {
   zip: zip,
   unzip: unzip,
   zipObject: zipObject,
+  flatten: flatten,
   toArray: toArray,
   includeArrays: includeArrays,
   pluck: pluck,

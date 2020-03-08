@@ -619,6 +619,27 @@
     return result
   }
 
+  function flattenDeep (array, deep) {
+    var result = []
+    arrayEach(array, function (vals) {
+      result = result.concat(isArray(vals) ? (deep ? flattenDeep(vals, deep) : vals) : [vals])
+    })
+    return result
+  }
+
+  /**
+    * 平铺一层数组
+    * @param {Array} array 数组
+    * @param {Boolean} deep 是否平铺多级
+    * @return {Array}
+    */
+  function flatten (array, deep) {
+    if (isArray(array)) {
+      return flattenDeep(array, deep)
+    }
+    return []
+  }
+
   /**
    * 将对象或者伪数组转为新数组
    *
@@ -3521,6 +3542,7 @@
     zip: zip,
     unzip: unzip,
     zipObject: zipObject,
+    flatten: flatten,
     toArray: toArray,
     includeArrays: includeArrays,
     pluck: pluck,
