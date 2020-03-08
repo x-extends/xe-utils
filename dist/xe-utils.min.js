@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.3.4
+ * xe-utils.js v2.3.5
  * ISC License.
  * @preserve
  */
