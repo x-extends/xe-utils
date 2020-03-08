@@ -253,9 +253,9 @@ export function unzip(arrays: any[]): any[];
 export function zipObject(props: any[], values: any[]): any;
 
 /**
- * 平铺一层数组
+ * 将一个多维数组铺平
  * @param array 数组
- * @param deep 是否平铺多级
+ * @param deep 是否深层
  */
 export function flatten(array: any[], deep?: boolean): any[];
 

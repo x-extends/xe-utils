@@ -10,9 +10,9 @@ function flattenDeep (array, deep) {
 }
 
 /**
-  * 平铺一层数组
+  * 将一个多维数组铺平
   * @param {Array} array 数组
-  * @param {Boolean} deep 是否平铺多级
+  * @param {Boolean} deep 是否深层
   * @return {Array}
   */
 function flatten (array, deep) {

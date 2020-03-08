@@ -1526,6 +1526,19 @@ export default {
               ]
             },
             {
+              name: 'flatten',
+              args: 'array, deep',
+              title: '将一个多维数组拍平',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.flatten([[1, 2, 3], [4, 5, 6], [7, 8]])
+                // [1, 2, 3, 4, 5, 6, 7, 8]
+                `
+              ]
+            },
+            {
               name: 'chunk',
               args: 'array, size',
               title: '将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素',
