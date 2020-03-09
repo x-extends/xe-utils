@@ -2096,20 +2096,12 @@ export default {
                 // '1/1/2017'
                 XEUtils.toDateString(new Date(), 'yyyyMMddHHmmssSSS')
                 // '20170101140530099'
-                XEUtils.toDateString(new Date(), 'yyyy-MM-dd')
-                // '2017-01-01'
-                XEUtils.toDateString(new Date(), 'yy-M-d')
-                // '17-1-1'
                 XEUtils.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss.SSS')
                 // '2017-01-01 14:05:30.099'
                 XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS GMTZ')
                 // '2017-01-01 02:05:30.099 GMT+08:00'
                 XEUtils.toDateString(new Date(), 'yyyy-MM-dd hh:mm:ss.SSS GMTZZ')
                 // '2017-01-01 02:05:30.099 GMT+0800'
-                XEUtils.toDateString('2017-01-01 10:05:30', 'yyyy-M-d h:m:s.S')
-                // '2017-1-1 2:5:30.99'
-                XEUtils.toDateString(new Date(), 'yyyy-M-d H:m:s.S')
-                // '2017-1-1 14:5:30.99'
                 XEUtils.toDateString(new Date(), 'yyyy-M-d h:m:s.S')
                 // '2017-1-1 2:5:30.99'
                 XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
@@ -2118,6 +2110,8 @@ export default {
                 // '17年1月1日 14时5分30秒99毫秒,星期0 第1季度'
                 XEUtils.toDateString(new Date(), 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 ZZ 星期E e 第q季 今年第D天 a A')
                 // '2017年01月01日 02时05分30秒099毫秒 +0800 星期0 -1 第1季 今年第1天 pm PM'
+                XEUtils.toDateString(new Date(), '[yyyy-MM] yyyy-MM-dd')
+                // 'yyyy-MM 2017-01-01'
                 `
               ]
             },

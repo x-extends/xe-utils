@@ -298,6 +298,12 @@ describe('Date functions', () => {
     expect(
       XEUtils.toDateString(time, 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E e 第q季 今年第DDD天 今年第WW周 a A')
     ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期7 0 第1季 今年第001天 今年第52周 pm PM')
+    expect(
+      XEUtils.toDateString(date, 'yyyy-MM-dd [yyyy-MM-dd] [yyyy]] [[MM]')
+    ).toEqual('2017-01-01 yyyy-MM-dd yyyy] [MM')
+    expect(
+      XEUtils.toDateString(date, '[Week] yyyy-MM-dd [[yyyy-MM-dd]]')
+    ).toEqual('Week 2017-01-01 [yyyy-MM-dd]')
   })
 
   test('getWhatYear()', () => {
