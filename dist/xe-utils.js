@@ -1,6 +1,6 @@
 /**
  * xe-utils.js v2.4.0
- * ISC License.
+ * MIT License.
  * @preserve
  */
 (function (global, factory) {
