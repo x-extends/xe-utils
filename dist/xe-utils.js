@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.0
+ * xe-utils.js v2.4.1
  * MIT License.
  * @preserve
  */
@@ -1414,7 +1414,7 @@
     */
   var __uniqueId = 0
   function uniqueId (prefix) {
-    return (prefix ? '' + prefix : 0) + ++__uniqueId
+    return [prefix, ++__uniqueId].join('')
   }
 
   /**

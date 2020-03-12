@@ -6,7 +6,7 @@
   */
 var __uniqueId = 0
 function uniqueId (prefix) {
-  return (prefix ? '' + prefix : 0) + ++__uniqueId
+  return [prefix, ++__uniqueId].join('')
 }
 
 module.exports = uniqueId

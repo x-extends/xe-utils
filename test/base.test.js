@@ -1368,14 +1368,26 @@ describe('Base functions', () => {
 
   test('uniqueId()', () => {
     expect(
-      XEUtils.uniqueId()
-    ).toEqual(1)
+      XEUtils.uniqueId(undefined)
+    ).toEqual('1')
+    expect(
+      XEUtils.uniqueId(null)
+    ).toEqual('2')
     expect(
       XEUtils.uniqueId()
-    ).toEqual(2)
+    ).toEqual('3')
+    expect(
+      XEUtils.uniqueId()
+    ).toEqual('4')
+    expect(
+      XEUtils.uniqueId(0)
+    ).toEqual('05')
+    expect(
+      XEUtils.uniqueId(-1)
+    ).toEqual('-16')
     expect(
       XEUtils.uniqueId('prefix_')
-    ).toEqual('prefix_3')
+    ).toEqual('prefix_7')
   })
 
   test('getSize()', () => {
