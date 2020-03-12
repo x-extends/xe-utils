@@ -1285,6 +1285,9 @@ export default {
                 `
                 XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22])
                 // [11, 11, 22, 55, 55, 77, 99]
+                // 倒序
+                XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22]).reverse()
+                // [99, 77, 55, 55, 22, 11, 11]
                 XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
                 // [{ age: 26 }, { age: 27 }, { age: 28 }]
                 // 多字段排序

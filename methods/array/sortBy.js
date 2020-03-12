@@ -6,6 +6,7 @@ var isArray = require('../base/isArray')
 var isFunction = require('../base/isFunction')
 var isUndefined = require('../base/isUndefined')
 var isNull = require('../base/isNull')
+var eqNull = require('../base/eqNull')
 var get = require('../base/get')
 var property = require('../function/property')
 
@@ -55,9 +56,9 @@ function getSortPros (arr, list, iterate, context) {
   * @param {Object} context 上下文
   * @return {Array}
   */
-function sortBy (arr, iterate, context, STR_UNDEFINED) {
+function sortBy (arr, iterate, context) {
   if (arr) {
-    if (iterate === STR_UNDEFINED) {
+    if (eqNull(iterate)) {
       return toArray(arr).sort(sortByDef)
     }
     var compares
