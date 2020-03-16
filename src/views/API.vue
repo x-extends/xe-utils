@@ -1606,7 +1606,7 @@ export default {
                 ['属性', '描述', '默认值'],
                 ['strict', '是否严格模式，启用后会忽略错误数据', 'false'],
                 ['key', '节点键值', 'id'],
-                ['parentKey', '子节点属性', 'parentId'],
+                ['parentKey', '父节点键值', 'parentId'],
                 ['children', '数据存放属性', 'children'],
                 ['sortKey', '对树节点进行排序属性', ''],
                 ['reverse', 'sortKey不为空是有效，默认升序', 'false'],
