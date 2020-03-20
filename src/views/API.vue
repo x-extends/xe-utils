@@ -2049,6 +2049,8 @@ export default {
                 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
                 XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
                 // Fri Jan 26 2018 00:00:00 GMT+0800 (中国标准时间)
+                XEUtils.toStringDate('yyyy:2017 MM:01 dd:20', '%%%%:yyyy %%:MM %%:dd')
+                // Fri Jan 20 2017 00:00:00 GMT+0800 (中国标准时间)
                 `
               ]
             },

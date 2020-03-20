@@ -125,11 +125,26 @@ describe('Date functions', () => {
       XEUtils.toStringDate(function () {})
     ).toEqual('Invalid Date')
     expect(
+      XEUtils.toStringDate('2')
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.toStringDate('20')
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.toStringDate('201')
+    ).toEqual('Invalid Date')
+    expect(
       XEUtils.toStringDate('Year:2018 Month:01 Day:26')
     ).toEqual('Invalid Date')
     expect(
       XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
     ).toEqual(new Date(2018, 0, 26))
+    expect(
+      XEUtils.toStringDate('2020')
+    ).toEqual(new Date(2020, 0, 1, 0, 0, 0, 0))
+    expect(
+      XEUtils.toStringDate('2020-02')
+    ).toEqual(new Date(2020, 1, 1, 0, 0, 0, 0))
     expect(
       XEUtils.toStringDate(time)
     ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99))
@@ -190,6 +205,9 @@ describe('Date functions', () => {
     expect(
       XEUtils.toStringDate('12/20/2017 10:10:30.100', 'MM/dd/yyyy HH:mm:ss.SSS')
     ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 100))
+    expect(
+      XEUtils.toStringDate('yyyy:2017 MM:01 dd:20', '%%%%:yyyy %%:MM %%:dd')
+    ).toEqual(new Date(2017, 0, 20))
   })
 
   test('toDateString()', () => {
