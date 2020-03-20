@@ -100,8 +100,6 @@ XEUtils.mixin(
   // Browse
   browseMethods
 )
-
-XEUtils.toStringDate('2018-01-01 10:30:28') // Mon Jan 01 2018 10:30:28 GMT+0800 (中国标准时间)
 ```
 
 ## License
