@@ -1,5 +1,5 @@
-function helperNumberDecimal (num) {
-  return (('' + num).split('.')[1] || '').length
+function helperNumberDecimal (numStr) {
+  return (numStr.split('.')[1] || '').length
 }
 
 module.exports = helperNumberDecimal

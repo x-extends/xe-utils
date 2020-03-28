@@ -410,6 +410,18 @@ describe('Number functions', () => {
     expect(
       XEUtils.add(-0.4598, 5.0433)
     ).toEqual(4.5835)
+    expect(
+      XEUtils.add(17.67, 1.3)
+    ).toEqual(18.97)
+    expect(
+      XEUtils.add(32654.324, 9666.7)
+    ).toEqual(42321.024)
+    expect(
+      XEUtils.add(32654.111, 1e-4)
+    ).toEqual(32654.1111)
+    expect(
+      XEUtils.add(1e-7, 1e-3)
+    ).toEqual(0.0010001)
   })
 
   test('subtract()', () => {
@@ -450,6 +462,9 @@ describe('Number functions', () => {
       XEUtils.subtract(500000, 2000)
     ).toEqual(498000)
     expect(
+      XEUtils.subtract(324253.1, 23559.9)
+    ).toEqual(300693.2)
+    expect(
       XEUtils.subtract(6.66, 3.9)
     ).toEqual(2.76)
     expect(
@@ -461,6 +476,12 @@ describe('Number functions', () => {
     expect(
       XEUtils.subtract(25.77, 3.6)
     ).toEqual(22.17)
+    expect(
+      XEUtils.subtract(1e-4, 1.999)
+    ).toEqual(-1.9989)
+    expect(
+      XEUtils.subtract(1e-7, 1e-3)
+    ).toEqual(-0.0009999)
   })
 
   test('multiply()', () => {
@@ -512,6 +533,18 @@ describe('Number functions', () => {
     expect(
       XEUtils.multiply(25.77, 7.1)
     ).toEqual(182.967)
+    expect(
+      XEUtils.multiply(17.67, 100)
+    ).toEqual(1767)
+    expect(
+      XEUtils.multiply(1e-7, 3.3)
+    ).toEqual(3.3e-7)
+    expect(
+      XEUtils.multiply(3.3, 0.0000001)
+    ).toEqual(3.3e-7)
+    expect(
+      XEUtils.multiply(1e-7, 1e-3)
+    ).toEqual(1e-10)
   })
 
   test('divide()', () => {
@@ -572,5 +605,17 @@ describe('Number functions', () => {
     expect(
       XEUtils.divide(182.967, 25.77)
     ).toEqual(7.1)
+    expect(
+      XEUtils.divide(61.11109, 2)
+    ).toEqual(30.555545)
+    expect(
+      XEUtils.divide(2641.1, 1e-9)
+    ).toEqual(2641100000000)
+    expect(
+      XEUtils.divide(2641.1, 0.000000001)
+    ).toEqual(2641100000000)
+    expect(
+      XEUtils.divide(1e-7, 1e-3)
+    ).toEqual(0.0001)
   })
 })

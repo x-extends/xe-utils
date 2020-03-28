@@ -17,8 +17,6 @@ var filter = require('./filter')
 var findKey = require('./findKey')
 var includes = require('./includes')
 var find = require('./find')
-var sum = require('./sum')
-var mean = require('./mean')
 var reduce = require('./reduce')
 var copyWithin = require('./copyWithin')
 var chunk = require('./chunk')
@@ -55,8 +53,6 @@ var arrayExports = {
   arrayIndexOf: arrayIndexOf,
   arrayLastIndexOf: arrayLastIndexOf,
   map: map,
-  sum: sum,
-  mean: mean,
   reduce: reduce,
   copyWithin: copyWithin,
   chunk: chunk,

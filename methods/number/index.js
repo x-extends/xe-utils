@@ -12,6 +12,8 @@ var add = require('./add')
 var subtract = require('./subtract')
 var multiply = require('./multiply')
 var divide = require('./divide')
+var sum = require('./sum')
+var mean = require('./mean')
 
 var numberExports = {
   random: random,
@@ -25,7 +27,9 @@ var numberExports = {
   add: add,
   subtract: subtract,
   multiply: multiply,
-  divide: divide
+  divide: divide,
+  sum,
+  mean
 }
 
 module.exports = numberExports

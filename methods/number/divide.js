@@ -1,6 +1,5 @@
-var helperNumberDecimal = require('./helperNumberDecimal')
+var helperNumberDivide = require('./helperNumberDivide')
 var toNumber = require('./toNumber')
-var multiply = require('./multiply')
 
 /**
  * 除法运算
@@ -10,11 +9,7 @@ var multiply = require('./multiply')
  * @return {Number}
  */
 function divide (num1, num2) {
-  var divisor = toNumber(num1)
-  var dividend = toNumber(num2)
-  var str1 = '' + divisor
-  var str2 = '' + dividend
-  return multiply(str1.replace('.', '') / str2.replace('.', ''), Math.pow(10, helperNumberDecimal(dividend) - helperNumberDecimal(divisor)))
+  return helperNumberDivide(toNumber(num1), toNumber(num2))
 }
 
 module.exports = divide

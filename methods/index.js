@@ -28,8 +28,6 @@ var filter = require('./array/filter')
 var findKey = require('./array/findKey')
 var includes = require('./array/includes')
 var find = require('./array/find')
-var sum = require('./array/sum')
-var mean = require('./array/mean')
 var reduce = require('./array/reduce')
 var copyWithin = require('./array/copyWithin')
 var chunk = require('./array/chunk')
@@ -129,6 +127,8 @@ var add = require('./number/add')
 var subtract = require('./number/subtract')
 var multiply = require('./number/multiply')
 var divide = require('./number/divide')
+var sum = require('./number/sum')
+var mean = require('./number/mean')
 
 // 日期相关的方法
 var getWhatYear = require('./date/getWhatYear')
@@ -208,8 +208,6 @@ assign(XEUtils, {
   arrayIndexOf: arrayIndexOf,
   arrayLastIndexOf: arrayLastIndexOf,
   map: map,
-  sum: sum,
-  mean: mean,
   reduce: reduce,
   copyWithin: copyWithin,
   chunk: chunk,
@@ -311,6 +309,8 @@ assign(XEUtils, {
   subtract: subtract,
   multiply: multiply,
   divide: divide,
+  sum: sum,
+  mean: mean,
 
   // date
   now: now,

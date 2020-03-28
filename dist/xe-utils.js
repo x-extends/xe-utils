@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.2
+ * xe-utils.js v2.4.3
  * MIT License.
  * @preserve
  */
@@ -443,38 +443,6 @@
       }
     }
     return result
-  }
-
-  /**
-    * 求和函数，将数值相加
-    *
-    * @param {Array} array 数组
-    * @param {Function/String} iterate 方法或属性
-    * @param {Object} context 上下文
-    * @return {Number}
-    */
-  function sum (array, iterate, context) {
-    var result = 0
-    each(array, iterate ? isFunction(iterate) ? function () {
-      result += toNumber(iterate.apply(context, arguments))
-    } : function (val) {
-      result += toNumber(get(val, iterate))
-    } : function (val) {
-      result += toNumber(val)
-    })
-    return result
-  }
-
-  /**
-    * 求平均值函数
-    *
-    * @param {Array} array 数组
-    * @param {Function/String} iterate 方法或属性
-    * @param {Object} context 上下文
-    * @return {Number}
-    */
-  function mean (array, iterate, context) {
-    return toNumber(sum(array, iterate, context) / getSize(array))
   }
 
   /**
@@ -2265,10 +2233,7 @@
    * @return {Number}
    */
   function add (num1, num2) {
-    var addend = toNumber(num1)
-    var augend = toNumber(num2)
-    var ratio = Math.pow(10, Math.max(helperNumberDecimal(addend), helperNumberDecimal(augend)))
-    return (addend * ratio + augend * ratio) / ratio
+    return helperNumberAdd(toNumber(num1), toNumber(num2))
   }
 
   /**
@@ -2281,8 +2246,10 @@
   function subtract (num1, num2) {
     var subtrahend = toNumber(num1)
     var minuend = toNumber(num2)
-    var digit1 = helperNumberDecimal(subtrahend)
-    var digit2 = helperNumberDecimal(minuend)
+    var str1 = helperNumString(subtrahend)
+    var str2 = helperNumString(minuend)
+    var digit1 = helperNumberDecimal(str1)
+    var digit2 = helperNumberDecimal(str2)
     var ratio = Math.pow(10, Math.max(digit1, digit2))
     var precision = (digit1 >= digit2) ? digit1 : digit2
     return parseFloat(((subtrahend * ratio - minuend * ratio) / ratio).toFixed(precision))
@@ -2298,9 +2265,9 @@
   function multiply (num1, num2) {
     var multiplier = toNumber(num1)
     var multiplicand = toNumber(num2)
-    var str1 = '' + multiplier
-    var str2 = '' + multiplicand
-    return parseInt(str1.replace('.', '')) * parseInt(str2.replace('.', '')) / Math.pow(10, helperNumberDecimal(multiplier) + helperNumberDecimal(multiplicand))
+    var str1 = helperNumString(multiplier)
+    var str2 = helperNumString(multiplicand)
+    return parseInt(str1.replace('.', '')) * parseInt(str2.replace('.', '')) / Math.pow(10, helperNumberDecimal(str1) + helperNumberDecimal(str2))
   }
 
   /**
@@ -2311,11 +2278,39 @@
    * @return {Number}
    */
   function divide (num1, num2) {
-    var divisor = toNumber(num1)
-    var dividend = toNumber(num2)
-    var str1 = '' + divisor
-    var str2 = '' + dividend
-    return multiply(str1.replace('.', '') / str2.replace('.', ''), Math.pow(10, helperNumberDecimal(dividend) - helperNumberDecimal(divisor)))
+    return helperNumberDivide(toNumber(num1), toNumber(num2))
+  }
+
+  /**
+    * 求和函数，将数值相加
+    *
+    * @param {Array} array 数组
+    * @param {Function/String} iterate 方法或属性
+    * @param {Object} context 上下文
+    * @return {Number}
+    */
+  function sum (array, iterate, context) {
+    var result = 0
+    each(array, iterate ? isFunction(iterate) ? function () {
+      result = helperNumberAdd(result, iterate.apply(context, arguments))
+    } : function (val) {
+      result = helperNumberAdd(result, get(val, iterate))
+    } : function (val) {
+      result = helperNumberAdd(result, val)
+    })
+    return result
+  }
+
+  /**
+    * 求平均值函数
+    *
+    * @param {Array} array 数组
+    * @param {Function/String} iterate 方法或属性
+    * @param {Object} context 上下文
+    * @return {Number}
+    */
+  function mean (array, iterate, context) {
+    return helperNumberDivide(sum(array, iterate, context), getSize(array))
   }
 
   function helperCreateMinMax (handle) {
@@ -2350,11 +2345,37 @@
   }
 
   function helperFixedNumber (str, digits) {
-    return toValString(toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1')
+    return helperNumString(toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1')
   }
 
-  function helperNumberDecimal (num) {
-    return (('' + num).split('.')[1] || '').length
+  function helperNumberAdd (addend, augend) {
+    var str1 = helperNumString(addend)
+    var str2 = helperNumString(augend)
+    var ratio = Math.pow(10, Math.max(helperNumberDecimal(str1), helperNumberDecimal(str2)))
+    return (multiply(addend, ratio) + multiply(augend, ratio)) / ratio
+  }
+
+  function helperNumberDecimal (numStr) {
+    return (numStr.split('.')[1] || '').length
+  }
+
+  function helperNumberDivide (divisor, dividend) {
+    var str1 = helperNumString(divisor)
+    var str2 = helperNumString(dividend)
+    var divisorDecimal = helperNumberDecimal(str1)
+    var dividendDecimal = helperNumberDecimal(str2)
+    var powY = dividendDecimal - divisorDecimal
+    var isMinus = powY < 0
+    var multiplicand = Math.pow(10, isMinus ? Math.abs(powY) : powY)
+    return multiply(str1.replace('.', '') / str2.replace('.', ''), isMinus ? 1 / multiplicand : multiplicand)
+  }
+
+  function helperNumString (num) {
+    if (('' + num).indexOf('e-') >= 0) {
+      var isNegative = num < 0
+      return (isNegative ? '-' : '') + '0' + ('' + ((isNegative ? Math.abs(num) : num) + 1)).substr(1)
+    }
+    return '' + num
   }
 
   /**
@@ -3021,10 +3042,7 @@
 
   function toValString (obj) {
     if (isNumber(obj)) {
-      if (('' + obj).indexOf('e-') >= 0) {
-        var isNegative = obj < 0
-        return (isNegative ? '-' : '') + '0' + ('' + ((isNegative ? Math.abs(obj) : obj) + 1)).substr(1)
-      }
+      return helperNumString(obj)
     }
     return '' + (eqNull(obj) ? '' : obj)
   }
@@ -3584,8 +3602,6 @@
     arrayIndexOf: arrayIndexOf,
     arrayLastIndexOf: arrayLastIndexOf,
     map: map,
-    sum: sum,
-    mean: mean,
     reduce: reduce,
     copyWithin: copyWithin,
     chunk: chunk,
@@ -3687,6 +3703,8 @@
     subtract: subtract,
     multiply: multiply,
     divide: divide,
+    sum: sum,
+    mean: mean,
 
     // date
     now: now,

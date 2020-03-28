@@ -1,4 +1,4 @@
-var helperNumberDecimal = require('./helperNumberDecimal')
+var helperNumberAdd = require('./helperNumberAdd')
 var toNumber = require('./toNumber')
 
 /**
@@ -9,10 +9,7 @@ var toNumber = require('./toNumber')
  * @return {Number}
  */
 function add (num1, num2) {
-  var addend = toNumber(num1)
-  var augend = toNumber(num2)
-  var ratio = Math.pow(10, Math.max(helperNumberDecimal(addend), helperNumberDecimal(augend)))
-  return (addend * ratio + augend * ratio) / ratio
+  return helperNumberAdd(toNumber(num1), toNumber(num2))
 }
 
 module.exports = add

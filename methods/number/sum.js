@@ -1,8 +1,8 @@
+var helperNumberAdd = require('./helperNumberAdd')
+
 var isFunction = require('../base/isFunction')
 var each = require('../base/each')
 var get = require('../base/get')
-
-var toNumber = require('../number/toNumber')
 
 /**
   * 求和函数，将数值相加
@@ -15,11 +15,11 @@ var toNumber = require('../number/toNumber')
 function sum (array, iterate, context) {
   var result = 0
   each(array, iterate ? isFunction(iterate) ? function () {
-    result += toNumber(iterate.apply(context, arguments))
+    result = helperNumberAdd(result, iterate.apply(context, arguments))
   } : function (val) {
-    result += toNumber(get(val, iterate))
+    result = helperNumberAdd(result, get(val, iterate))
   } : function (val) {
-    result += toNumber(val)
+    result = helperNumberAdd(result, val)
   })
   return result
 }
