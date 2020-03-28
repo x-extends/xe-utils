@@ -126,8 +126,8 @@ export * from './number/add'
 export * from './number/subtract'
 export * from './number/multiply'
 export * from './number/divide'
-export * from './array/sum'
-export * from './array/mean'
+export * from './number/sum'
+export * from './number/mean'
 
 // date
 export * from './date/getWhatYear'

@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.3
+ * xe-utils.js v2.4.4
  * MIT License.
  * @preserve
  */
