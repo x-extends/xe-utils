@@ -6,7 +6,7 @@
   * @return {Boolean}
   */
 function hasOwnProp (obj, key) {
-  return obj.hasOwnProperty(key)
+  return obj && obj.hasOwnProperty ? obj.hasOwnProperty(key) : false
 }
 
 module.exports = hasOwnProp

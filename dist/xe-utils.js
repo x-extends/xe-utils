@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.4
+ * xe-utils.js v2.4.5
  * MIT License.
  * @preserve
  */
@@ -997,7 +997,7 @@
     * @return {Boolean}
     */
   function hasOwnProp (obj, key) {
-    return obj.hasOwnProperty(key)
+    return obj && obj.hasOwnProperty ? obj.hasOwnProperty(key) : false
   }
 
   /**
@@ -1718,6 +1718,9 @@
           for (rest = obj; index < len; index++) {
             rest = valGet(rest, props[index])
             if (eqNull(rest)) {
+              if (index === len - 1) {
+                return rest
+              }
               return
             }
           }

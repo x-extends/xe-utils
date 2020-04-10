@@ -1,6 +1,63 @@
 const XEUtils = require('../index')
 
 describe('Base functions', () => {
+  test('hasOwnProp()', () => {
+    expect(
+      XEUtils.hasOwnProp()
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(1)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp('')
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp([])
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(true)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(false)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp({})
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp({ a: 1 }, 'b')
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp({ aa: null }, 'aa.bb')
+    ).toEqual(false)
+    expect(
+      XEUtils.hasOwnProp({ a: 1 }, 'a')
+    ).toEqual(true)
+    expect(
+      XEUtils.hasOwnProp([1, 2, 3], 2)
+    ).toEqual(true)
+    expect(
+      XEUtils.hasOwnProp([1, 2, 3], '2')
+    ).toEqual(true)
+    expect(
+      XEUtils.hasOwnProp({ aa: { bb: 1 } }, 'aa.bb')
+    ).toEqual(false)
+  })
+
   test('isNaN()', () => {
     expect(
       XEUtils.isNaN()
@@ -1869,6 +1926,27 @@ describe('Base functions', () => {
       XEUtils.has(null)
     ).toEqual(false)
     expect(
+      XEUtils.has(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.has(-1)
+    ).toEqual(false)
+    expect(
+      XEUtils.has(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.has({})
+    ).toEqual(false)
+    expect(
+      XEUtils.has([])
+    ).toEqual(false)
+    expect(
+      XEUtils.has(/\d/)
+    ).toEqual(false)
+    expect(
+      XEUtils.has(function () {})
+    ).toEqual(false)
+    expect(
       XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } })
     ).toEqual(false)
     expect(
@@ -1886,6 +1964,24 @@ describe('Base functions', () => {
     expect(
       XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[3]')
     ).toEqual(false)
+    expect(
+      XEUtils.has({ aa: undefined }, 'aa.bb.cc')
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ aa: null }, 'aa.bb.cc')
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ aa: { bb: null, cc: 11 } }, 'aa.bb.cc')
+    ).toEqual(false)
+    expect(
+      XEUtils.has([0, 1, null, undefined, -1, /\d/], 6)
+    ).toEqual(false)
+    expect(
+      XEUtils.has({ aa: { bb: null } }, 'aa.bb')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ aa: { bb: { cc: undefined } } }, 'aa.bb.cc')
+    ).toEqual(true)
     expect(
       XEUtils.has('abc', '[2]')
     ).toEqual(true)
@@ -1934,6 +2030,39 @@ describe('Base functions', () => {
     expect(
       XEUtils.has({ a: { b: 11, c: 22, d: [33, 44], e: 0 } }, ['a', 'e'])
     ).toEqual(true)
+    expect(
+      XEUtils.has([0, 1, null, undefined, -1, /\d/], 0)
+    ).toEqual(true)
+    expect(
+      XEUtils.has([0, 1, null, undefined, -1, /\d/], 1)
+    ).toEqual(true)
+    expect(
+      XEUtils.has([0, 1, null, undefined, -1, /\d/], 2)
+    ).toEqual(true)
+    expect(
+      XEUtils.has([0, 1, null, undefined, -1, /\d/], '3')
+    ).toEqual(true)
+    expect(
+      XEUtils.has([0, 1, null, undefined, -1, /\d/], '4')
+    ).toEqual(true)
+    expect(
+      XEUtils.has([0, 1, null, undefined, -1, /\d/], '5')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'a')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b.c')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.f')
+    ).toEqual(true)
+    expect(
+      XEUtils.has({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.e')
+    ).toEqual(true)
   })
 
   test('get()', () => {
@@ -1945,6 +2074,27 @@ describe('Base functions', () => {
     ).toEqual(undefined)
     expect(
       XEUtils.get(null)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get(undefined)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get([])
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get({})
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get(-1)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get(0)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get(/\d/)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get(function () {})
     ).toEqual(undefined)
     expect(
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } })
@@ -2006,6 +2156,39 @@ describe('Base functions', () => {
     expect(
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'e'], '333')
     ).toEqual('333')
+    expect(
+      XEUtils.get([0, 1, null, undefined, -1, /\d/], 0)
+    ).toEqual(0)
+    expect(
+      XEUtils.get([0, 1, null, undefined, -1, /\d/], 1)
+    ).toEqual(1)
+    expect(
+      XEUtils.get([0, 1, null, undefined, -1, /\d/], 2)
+    ).toEqual(null)
+    expect(
+      XEUtils.get([0, 1, null, undefined, -1, /\d/], '3')
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get([0, 1, null, undefined, -1, /\d/], '4')
+    ).toEqual(-1)
+    expect(
+      XEUtils.get([0, 1, null, undefined, -1, /\d/], '5')
+    ).toEqual(/\d/)
+    expect(
+      XEUtils.get({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'a')
+    ).toEqual(1)
+    expect(
+      XEUtils.get({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b')
+    ).toEqual({ c: null, d: 33, cc: { f: undefined, e: 0 } })
+    expect(
+      XEUtils.get({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b.c')
+    ).toEqual(null)
+    expect(
+      XEUtils.get({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.f')
+    ).toEqual(undefined)
+    expect(
+      XEUtils.get({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.e')
+    ).toEqual(0)
   })
 
   test('set()', () => {
@@ -2015,6 +2198,15 @@ describe('Base functions', () => {
     expect(
       XEUtils.set(undefined)
     ).toEqual(undefined)
+    expect(
+      XEUtils.set('')
+    ).toEqual('')
+    expect(
+      XEUtils.set(0)
+    ).toEqual(0)
+    expect(
+      XEUtils.set(-1)
+    ).toEqual(-1)
     expect(
       XEUtils.set({})
     ).toEqual({})

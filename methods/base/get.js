@@ -38,6 +38,9 @@ function pathGet (obj, property) {
         for (rest = obj; index < len; index++) {
           rest = valGet(rest, props[index])
           if (eqNull(rest)) {
+            if (index === len - 1) {
+              return rest
+            }
             return
           }
         }
