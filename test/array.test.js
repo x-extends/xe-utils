@@ -187,12 +187,6 @@ describe('Array functions', () => {
       XEUtils.sortBy(['11', '55', '99', '77', '11', '55', '22', '0', '9'])
     ).toEqual(['0', '11', '11', '22', '55', '55', '77', '9', '99'])
     expect(
-      XEUtils.sortBy(['x', 'z', 'g', 'q', 'e', 'b', 'a', 'g', 'f', 'c', 'j'])
-    ).toEqual(['a', 'b', 'c', 'e', 'f', 'g', 'g', 'j', 'q', 'x', 'z'])
-    expect(
-      XEUtils.sortBy(['小', '何', '李', '林', '有', '好', '啊', '的', '出', '库', '徐'])
-    ).toEqual(['啊', '出', '的', '好', '何', '库', '李', '林', '小', '徐', '有'])
-    expect(
       XEUtils.sortBy([null, 'a', 'g', null, null, 'c', 'j'])
     ).toEqual(['a', 'c', 'g', 'j', null, null, null])
     expect(
