@@ -2941,9 +2941,9 @@ export default {
   computed: {
     apiList () {
       if (this.filterName) {
-        let filterName = this.filterName.toLowerCase()
-        let filterRE = new RegExp(filterName, 'gi')
-        let list = window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
+        const filterName = this.filterName.toLowerCase()
+        const filterRE = new RegExp(filterName, 'gi')
+        const list = window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
         window.XEUtils.eachTree(list, item => {
           item.name = (item.name || '').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
           item.title = (item.title || '').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
@@ -2979,7 +2979,7 @@ export default {
   },
   methods: {
     menuLinkEvent (item) {
-      let elem = document.getElementById(item.name)
+      const elem = document.getElementById(item.name)
       this.selected = item
       if (elem && elem.scrollIntoView) {
         elem.scrollIntoView()
