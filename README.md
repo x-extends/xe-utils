@@ -52,10 +52,10 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 单个导入，包的大小 gzip >≈ 60B+，按需导入
 
 ```javascript
-import XEUtils from 'xe-utils/methods/xe-utils'
-import each from 'xe-utils/methods/base/each'
-import toDateString from 'xe-utils/methods/date/toDateString'
-import toFixedNumber from 'xe-utils/methods/number/toFixedNumber'
+import XEUtils from 'xe-utils/ctor'
+import each from 'xe-utils/each'
+import toDateString from 'xe-utils/toDateString'
+import toFixedNumber from 'xe-utils/toFixedNumber'
 
 XEUtils.mixin({
   each,
@@ -69,16 +69,16 @@ XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss') // 2018-01-01 10:30:28
 按功能导入所有方法
 
 ```javascript
-import XEUtils from 'xe-utils/methods/xe-utils'
-import objectMethods from 'xe-utils/methods/object'
-import arrayMethods from 'xe-utils/methods/array'
-import baseMethods from 'xe-utils/methods/base'
-import numberMethods from 'xe-utils/methods/number'
-import dateMethods from 'xe-utils/methods/date'
-import stringMethods from 'xe-utils/methods/string'
-import functionMethods from 'xe-utils/methods/function'
-import urlMethods from 'xe-utils/methods/url'
-import webMethods from 'xe-utils/methods/web'
+import XEUtils from 'xe-utils/ctor'
+import objectMethods from 'xe-utils/object'
+import arrayMethods from 'xe-utils/array'
+import baseMethods from 'xe-utils/base'
+import numberMethods from 'xe-utils/number'
+import dateMethods from 'xe-utils/date'
+import stringMethods from 'xe-utils/string'
+import functionMethods from 'xe-utils/function'
+import urlMethods from 'xe-utils/url'
+import webMethods from 'xe-utils/web'
 
 XEUtils.mixin(
   // Object
@@ -97,7 +97,7 @@ XEUtils.mixin(
   functionMethods,
   // URL
   urlMethods,
-  // Browse
+  // Web
   webMethods
 )
 ```

@@ -1,0 +1,30 @@
+var isFunction = require('./isFunction')
+var each = require('./each')
+var property = require('./property')
+
+/**
+  * 指定方法后的返回值组成的新数组
+  *
+  * @param {Object} obj 对象/数组
+  * @param {Function} iterate(item, index, obj) 回调
+  * @param {Object} context 上下文
+  * @return {Array}
+  */
+function map (obj, iterate, context) {
+  var result = []
+  if (obj && arguments.length > 1) {
+    if (!isFunction(iterate)) {
+      iterate = property(iterate)
+    }
+    if (obj.map) {
+      return obj.map(iterate, context)
+    } else {
+      each(obj, function () {
+        result.push(iterate.apply(context, arguments))
+      })
+    }
+  }
+  return result
+}
+
+module.exports = map

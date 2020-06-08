@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.6
+ * xe-utils.js v3.0.0-alpha.0
  * MIT License.
  * @preserve
  */
@@ -30,6 +30,8 @@
     ]
   }
 
+  function XEUtils () { }
+
   function mixin () {
     arrayEach(arguments, function (methods) {
       each(methods, function (fn, name) {
@@ -46,11 +48,296 @@
     return assign(setupDefaults, options)
   }
 
-  function XEUtils () { }
-
-  XEUtils.v = 'v2'
+  XEUtils.v = 'v3'
   XEUtils.mixin = mixin
   XEUtils.setup = setup
+
+  function helperCreateGetObjects (name, getIndex) {
+    var proMethod = Object[name]
+    return function (obj) {
+      var result = []
+      if (obj) {
+        if (proMethod) {
+          return proMethod(obj)
+        }
+        each(obj, getIndex > 1 ? function (key) {
+          result.push(['' + key, obj[key]])
+        } : function () {
+          result.push(arguments[getIndex])
+        })
+      }
+      return result
+    }
+  }
+
+  function helperCreateIndexOf (name, callback) {
+    return function (obj, val) {
+      if (obj) {
+        if (typeof obj === 'string' || isArray(obj)) {
+          if (obj[name]) {
+            return obj[name](val)
+          }
+          return callback(obj, val)
+        }
+        for (var key in obj) {
+          if (hasOwnProp(obj, key)) {
+            if (val === obj[key]) {
+              return key
+            }
+          }
+        }
+      }
+      return -1
+    }
+  }
+
+  var objectToString = Object.prototype.toString
+
+  function helperCreateInInObjectString (type) {
+    return function (obj) {
+      return '[object ' + type + ']' === objectToString.call(obj)
+    }
+  }
+
+  /* eslint-disable valid-typeof */
+  function helperCreateInTypeof (type) {
+    return function (obj) {
+      return typeof obj === type
+    }
+  }
+
+  function helperCreateIterateHandle (prop, useArray, restIndex, matchValue, defaultValue) {
+    return function (obj, iterate, context) {
+      if (obj && iterate) {
+        if (prop && obj[prop]) {
+          return obj[prop](iterate, context)
+        } else {
+          if (useArray && isArray(obj)) {
+            for (var index = 0, len = obj.length; index < len; index++) {
+              if (!!iterate.call(context, obj[index], index, obj) === matchValue) {
+                return [true, false, index, obj[index]][restIndex]
+              }
+            }
+          } else {
+            for (var key in obj) {
+              if (hasOwnProp(obj, key)) {
+                if (!!iterate.call(context, obj[key], key, obj) === matchValue) {
+                  return [true, false, key, obj[key]][restIndex]
+                }
+              }
+            }
+          }
+        }
+      }
+      return defaultValue
+    }
+  }
+
+  function helperCreateiterateIndexOf (callback) {
+    return function (obj, iterate, context) {
+      if (obj && isFunction(iterate)) {
+        if (isArray(obj) || isString(obj)) {
+          return callback(obj, iterate, context)
+        }
+        for (var key in obj) {
+          if (hasOwnProp(obj, key)) {
+            if (iterate.call(context, obj[key], key, obj)) {
+              return key
+            }
+          }
+        }
+      }
+      return -1
+    }
+  }
+
+  function helperCreateMinMax (handle) {
+    return function (arr, iterate) {
+      if (arr && arr.length) {
+        var rest, itemIndex
+        arrayEach(arr, function (itemVal, index) {
+          if (iterate) {
+            itemVal = isFunction(iterate) ? iterate(itemVal, index, arr) : get(itemVal, iterate)
+          }
+          if (!eqNull(itemVal) && (eqNull(rest) || handle(rest, itemVal))) {
+            itemIndex = index
+            rest = itemVal
+          }
+        })
+        return arr[itemIndex]
+      }
+      return rest
+    }
+  }
+
+  function helperCreatePickOmit (case1, case2) {
+    return function (obj, callback) {
+      var item, index
+      var rest = {}
+      var result = []
+      var context = this
+      var args = arguments
+      var len = args.length
+      if (!isFunction(callback)) {
+        for (index = 1; index < len; index++) {
+          item = args[index]
+          result.push.apply(result, isArray(item) ? item : [item])
+        }
+        callback = 0
+      }
+      each(obj, function (val, key) {
+        if ((callback ? callback.call(context, val, key, obj) : findIndexOf(result, function (name) {
+          return name === key
+        }) > -1) ? case1 : case2) {
+          rest[key] = val
+        }
+      })
+      return rest
+    }
+  }
+
+  function helperCreateToNumber (handle) {
+    return function (str) {
+      if (str) {
+        var num = handle(str)
+        if (!isNaN(num)) {
+          return num
+        }
+      }
+      return 0
+    }
+  }
+
+  function helperCreateTreeFunc (handle) {
+    return function (obj, iterate, options, context) {
+      var opts = options || {}
+      var optChildren = opts.children || 'children'
+      return handle(null, obj, iterate, context, [], [], optChildren, opts)
+    }
+  }
+
+  function helperDefaultCompare (v1, v2) {
+    return v1 === v2
+  }
+
+  function helperDeleteProperty (obj, property) {
+    try {
+      delete obj[property]
+    } catch (e) {
+      obj[property] = undefined
+    }
+  }
+
+  function helperEqualCompare (val1, val2, compare, func, key, obj1, obj2) {
+    if (val1 === val2) {
+      return true
+    }
+    if (val1 && val2 && !isNumber(val1) && !isNumber(val2) && !isString(val1) && !isString(val2)) {
+      if (isRegExp(val1)) {
+        return compare('' + val1, '' + val2, key, obj1, obj2)
+      } if (isDate(val1) || isBoolean(val1)) {
+        return compare(+val1, +val2, key, obj1, obj2)
+      } else {
+        var result, val1Keys, val2Keys
+        var isObj1Arr = isArray(val1)
+        var isObj2Arr = isArray(val2)
+        if (isObj1Arr || isObj2Arr ? isObj1Arr && isObj2Arr : val1.constructor === val2.constructor) {
+          val1Keys = keys(val1)
+          val2Keys = keys(val2)
+          if (func) {
+            result = func(val1, val2, key)
+          }
+          if (val1Keys.length === val2Keys.length) {
+            return isUndefined(result) ? every(val1Keys, function (key, index) {
+              return key === val2Keys[index] && helperEqualCompare(val1[key], val2[val2Keys[index]], compare, func, isObj1Arr || isObj2Arr ? index : key, val1, val2)
+            }) : !!result
+          }
+          return false
+        }
+      }
+    }
+    return compare(val1, val2, key, obj1, obj2)
+  }
+
+  function helperFixedNumber (str, digits) {
+    return helperNumString(toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1')
+  }
+
+  function helperFormatEscaper (dataMap) {
+    var replaceRegexp = new RegExp('(?:' + keys(dataMap).join('|') + ')', 'g')
+    return function (str) {
+      return toValString(str).replace(replaceRegexp, function (match) {
+        return dataMap[match]
+      })
+    }
+  }
+
+  function helperGetDateFullYear (date) {
+    return date.getFullYear()
+  }
+
+  function helperGetDateMonth (date) {
+    return date.getMonth()
+  }
+
+  function helperGetDateTime (date) {
+    return date.getTime()
+  }
+
+  function helperGetHGSKeys (property) {
+    // 以最快的方式判断数组，可忽略准确性
+    return property ? (property.splice && property.join ? property : ('' + property).split('.')) : []
+  }
+
+  function helperGetLocatOrigin () {
+    return staticLocation ? (staticLocation.origin || (staticLocation.protocol + '//' + staticLocation.host)) : ''
+  }
+
+  function helperGetUTCDateTime (dates) {
+    return Date.UTC(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
+  }
+
+  function helperGetYMD (date) {
+    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate())
+  }
+
+  function helperGetYMDTime (date) {
+    return helperGetDateTime(helperGetYMD(date))
+  }
+
+  function helperNewDate () {
+    return new Date()
+  }
+
+  function helperNumberAdd (addend, augend) {
+    var str1 = helperNumString(addend)
+    var str2 = helperNumString(augend)
+    var ratio = Math.pow(10, Math.max(helperNumberDecimal(str1), helperNumberDecimal(str2)))
+    return (multiply(addend, ratio) + multiply(augend, ratio)) / ratio
+  }
+
+  function helperNumberDecimal (numStr) {
+    return (numStr.split('.')[1] || '').length
+  }
+
+  function helperNumberDivide (divisor, dividend) {
+    var str1 = helperNumString(divisor)
+    var str2 = helperNumString(dividend)
+    var divisorDecimal = helperNumberDecimal(str1)
+    var dividendDecimal = helperNumberDecimal(str2)
+    var powY = dividendDecimal - divisorDecimal
+    var isMinus = powY < 0
+    var multiplicand = Math.pow(10, isMinus ? Math.abs(powY) : powY)
+    return multiply(str1.replace('.', '') / str2.replace('.', ''), isMinus ? 1 / multiplicand : multiplicand)
+  }
+
+  function helperNumString (num) {
+    if (('' + num).indexOf('e-') >= 0) {
+      var isNegative = num < 0
+      return (isNegative ? '-' : '') + '0' + ('' + ((isNegative ? Math.abs(num) : num) + 1)).substr(1)
+    }
+    return '' + num
+  }
 
   var staticStrUndefined = 'undefined'
 
@@ -953,41 +1240,6 @@
   var searchTree = helperCreateTreeFunc(function (parent, obj, iterate, context, path, nodes, parseChildren, opts) {
     return searchTreeItem(0, parent, obj, iterate, context, path, nodes, parseChildren, opts)
   })
-
-  function helperCreateIterateHandle (prop, useArray, restIndex, matchValue, defaultValue) {
-    return function (obj, iterate, context) {
-      if (obj && iterate) {
-        if (prop && obj[prop]) {
-          return obj[prop](iterate, context)
-        } else {
-          if (useArray && isArray(obj)) {
-            for (var index = 0, len = obj.length; index < len; index++) {
-              if (!!iterate.call(context, obj[index], index, obj) === matchValue) {
-                return [true, false, index, obj[index]][restIndex]
-              }
-            }
-          } else {
-            for (var key in obj) {
-              if (hasOwnProp(obj, key)) {
-                if (!!iterate.call(context, obj[key], key, obj) === matchValue) {
-                  return [true, false, key, obj[key]][restIndex]
-                }
-              }
-            }
-          }
-        }
-      }
-      return defaultValue
-    }
-  }
-
-  function helperCreateTreeFunc (handle) {
-    return function (obj, iterate, options, context) {
-      var opts = options || {}
-      var optChildren = opts.children || 'children'
-      return handle(null, obj, iterate, context, [], [], optChildren, opts)
-    }
-  }
 
   /**
     * 判断对象自身属性中是否具有指定的属性
@@ -1989,152 +2241,6 @@
     return destination
   }
 
-  function helperCreateGetObjects (name, getIndex) {
-    var proMethod = Object[name]
-    return function (obj) {
-      var result = []
-      if (obj) {
-        if (proMethod) {
-          return proMethod(obj)
-        }
-        each(obj, getIndex > 1 ? function (key) {
-          result.push(['' + key, obj[key]])
-        } : function () {
-          result.push(arguments[getIndex])
-        })
-      }
-      return result
-    }
-  }
-
-  function helperCreateIndexOf (name, callback) {
-    return function (obj, val) {
-      if (obj) {
-        if (typeof obj === 'string' || isArray(obj)) {
-          if (obj[name]) {
-            return obj[name](val)
-          }
-          return callback(obj, val)
-        }
-        for (var key in obj) {
-          if (hasOwnProp(obj, key)) {
-            if (val === obj[key]) {
-              return key
-            }
-          }
-        }
-      }
-      return -1
-    }
-  }
-
-  var objectToString = Object.prototype.toString
-
-  function helperCreateInInObjectString (type) {
-    return function (obj) {
-      return '[object ' + type + ']' === objectToString.call(obj)
-    }
-  }
-
-  /* eslint-disable valid-typeof */
-  function helperCreateInTypeof (type) {
-    return function (obj) {
-      return typeof obj === type
-    }
-  }
-
-  function helperCreateiterateIndexOf (callback) {
-    return function (obj, iterate, context) {
-      if (obj && isFunction(iterate)) {
-        if (isArray(obj) || isString(obj)) {
-          return callback(obj, iterate, context)
-        }
-        for (var key in obj) {
-          if (hasOwnProp(obj, key)) {
-            if (iterate.call(context, obj[key], key, obj)) {
-              return key
-            }
-          }
-        }
-      }
-      return -1
-    }
-  }
-
-  function helperCreatePickOmit (case1, case2) {
-    return function (obj, callback) {
-      var item, index
-      var rest = {}
-      var result = []
-      var context = this
-      var args = arguments
-      var len = args.length
-      if (!isFunction(callback)) {
-        for (index = 1; index < len; index++) {
-          item = args[index]
-          result.push.apply(result, isArray(item) ? item : [item])
-        }
-        callback = 0
-      }
-      each(obj, function (val, key) {
-        if ((callback ? callback.call(context, val, key, obj) : findIndexOf(result, function (name) {
-          return name === key
-        }) > -1) ? case1 : case2) {
-          rest[key] = val
-        }
-      })
-      return rest
-    }
-  }
-
-  function helperDefaultCompare (v1, v2) {
-    return v1 === v2
-  }
-
-  function helperDeleteProperty (obj, property) {
-    try {
-      delete obj[property]
-    } catch (e) {
-      obj[property] = undefined
-    }
-  }
-
-  function helperEqualCompare (val1, val2, compare, func, key, obj1, obj2) {
-    if (val1 === val2) {
-      return true
-    }
-    if (val1 && val2 && !isNumber(val1) && !isNumber(val2) && !isString(val1) && !isString(val2)) {
-      if (isRegExp(val1)) {
-        return compare('' + val1, '' + val2, key, obj1, obj2)
-      } if (isDate(val1) || isBoolean(val1)) {
-        return compare(+val1, +val2, key, obj1, obj2)
-      } else {
-        var result, val1Keys, val2Keys
-        var isObj1Arr = isArray(val1)
-        var isObj2Arr = isArray(val2)
-        if (isObj1Arr || isObj2Arr ? isObj1Arr && isObj2Arr : val1.constructor === val2.constructor) {
-          val1Keys = keys(val1)
-          val2Keys = keys(val2)
-          if (func) {
-            result = func(val1, val2, key)
-          }
-          if (val1Keys.length === val2Keys.length) {
-            return isUndefined(result) ? every(val1Keys, function (key, index) {
-              return key === val2Keys[index] && helperEqualCompare(val1[key], val2[val2Keys[index]], compare, func, isObj1Arr || isObj2Arr ? index : key, val1, val2)
-            }) : !!result
-          }
-          return false
-        }
-      }
-    }
-    return compare(val1, val2, key, obj1, obj2)
-  }
-
-  function helperGetHGSKeys (property) {
-    // 以最快的方式判断数组，可忽略准确性
-    return property ? (property.splice && property.join ? property : ('' + property).split('.')) : []
-  }
-
   /**
     * 获取一个指定范围内随机数
     *
@@ -2314,71 +2420,6 @@
     */
   function mean (array, iterate, context) {
     return helperNumberDivide(sum(array, iterate, context), getSize(array))
-  }
-
-  function helperCreateMinMax (handle) {
-    return function (arr, iterate) {
-      if (arr && arr.length) {
-        var rest, itemIndex
-        arrayEach(arr, function (itemVal, index) {
-          if (iterate) {
-            itemVal = isFunction(iterate) ? iterate(itemVal, index, arr) : get(itemVal, iterate)
-          }
-          if (!eqNull(itemVal) && (eqNull(rest) || handle(rest, itemVal))) {
-            itemIndex = index
-            rest = itemVal
-          }
-        })
-        return arr[itemIndex]
-      }
-      return rest
-    }
-  }
-
-  function helperCreateToNumber (handle) {
-    return function (str) {
-      if (str) {
-        var num = handle(str)
-        if (!isNaN(num)) {
-          return num
-        }
-      }
-      return 0
-    }
-  }
-
-  function helperFixedNumber (str, digits) {
-    return helperNumString(toNumber(str)).replace(new RegExp('(\\d+.\\d{0,' + digits + '}).*'), '$1')
-  }
-
-  function helperNumberAdd (addend, augend) {
-    var str1 = helperNumString(addend)
-    var str2 = helperNumString(augend)
-    var ratio = Math.pow(10, Math.max(helperNumberDecimal(str1), helperNumberDecimal(str2)))
-    return (multiply(addend, ratio) + multiply(augend, ratio)) / ratio
-  }
-
-  function helperNumberDecimal (numStr) {
-    return (numStr.split('.')[1] || '').length
-  }
-
-  function helperNumberDivide (divisor, dividend) {
-    var str1 = helperNumString(divisor)
-    var str2 = helperNumString(dividend)
-    var divisorDecimal = helperNumberDecimal(str1)
-    var dividendDecimal = helperNumberDecimal(str2)
-    var powY = dividendDecimal - divisorDecimal
-    var isMinus = powY < 0
-    var multiplicand = Math.pow(10, isMinus ? Math.abs(powY) : powY)
-    return multiply(str1.replace('.', '') / str2.replace('.', ''), isMinus ? 1 / multiplicand : multiplicand)
-  }
-
-  function helperNumString (num) {
-    if (('' + num).indexOf('e-') >= 0) {
-      var isNegative = num < 0
-      return (isNegative ? '-' : '') + '0' + ('' + ((isNegative ? Math.abs(num) : num) + 1)).substr(1)
-    }
-    return '' + num
   }
 
   /**
@@ -2836,34 +2877,6 @@
     return result
   }
 
-  function helperGetDateFullYear (date) {
-    return date.getFullYear()
-  }
-
-  function helperGetDateMonth (date) {
-    return date.getMonth()
-  }
-
-  function helperGetDateTime (date) {
-    return date.getTime()
-  }
-
-  function helperGetUTCDateTime (dates) {
-    return Date.UTC(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
-  }
-
-  function helperGetYMD (date) {
-    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate())
-  }
-
-  function helperGetYMDTime (date) {
-    return helperGetDateTime(helperGetYMD(date))
-  }
-
-  function helperNewDate () {
-    return new Date()
-  }
-
   /**
     * 去除字符串左右两边的空格
     *
@@ -3048,15 +3061,6 @@
       return helperNumString(obj)
     }
     return '' + (eqNull(obj) ? '' : obj)
-  }
-
-  function helperFormatEscaper (dataMap) {
-    var replaceRegexp = new RegExp('(?:' + keys(dataMap).join('|') + ')', 'g')
-    return function (str) {
-      return toValString(str).replace(replaceRegexp, function (match) {
-        return dataMap[match]
-      })
-    }
   }
 
   /**
@@ -3545,7 +3549,6 @@
   }
 
   assign(cookie, {
-    _c: false,
     isKey: isCookieKey,
     set: setCookieItem,
     setItem: setCookieItem,
@@ -3556,10 +3559,6 @@
     keys: cookieKeys,
     getJSON: cookie
   })
-
-  function helperGetLocatOrigin () {
-    return staticLocation ? (staticLocation.origin || (staticLocation.protocol + '//' + staticLocation.host)) : ''
-  }
 
   // 核心
 
