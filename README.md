@@ -58,10 +58,11 @@ import toDateString from 'xe-utils/methods/date/toDateString'
 each({ a: 11, b: 22, c: 33 }, function (item, key){
   console.log(item)
 })
-// 11
-// 22
-// 33
-toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss') // 2018-01-01 10:30:28
+// > 11
+// > 22
+// > 33
+toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
+// > 2018-01-01 10:30:28
 ```
 
 ```javascript
@@ -76,7 +77,8 @@ XEUtils.mixin({
   toFixedNumber
 })
 
-XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss') // 2018-01-01 10:30:28
+XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
+// > 2018-01-01 10:30:28
 ```
 
 按功能导入所有方法
