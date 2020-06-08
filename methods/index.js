@@ -179,10 +179,10 @@ var serialize = require('./url/serialize')
 var parseUrl = require('./url/parseUrl')
 
 // 浏览器相关的方法
-var getBaseURL = require('./browse/getBaseURL')
-var locat = require('./browse/locat')
-var cookie = require('./browse/cookie')
-var browse = require('./browse/browse')
+var getBaseURL = require('./web/getBaseURL')
+var locat = require('./web/locat')
+var cookie = require('./web/cookie')
+var browse = require('./web/browse')
 
 assign(XEUtils, {
   // object
@@ -360,7 +360,7 @@ assign(XEUtils, {
   serialize: serialize,
   parseUrl: parseUrl,
 
-  // browse
+  // web
   getBaseURL: getBaseURL,
   locat: locat,
   browse: browse,

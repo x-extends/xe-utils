@@ -2721,8 +2721,8 @@ export default {
           ]
         },
         {
-          label: 'Browse',
-          value: 'browse',
+          label: 'Web',
+          value: 'web',
           expand: true,
           children: [
             {

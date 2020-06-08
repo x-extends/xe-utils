@@ -1,15 +1,3 @@
-'use strict'
+var webExports = require('../web')
 
-var getBaseURL = require('./getBaseURL')
-var locat = require('./locat')
-var browse = require('./browse')
-var cookie = require('./cookie')
-
-var browseExports = {
-  getBaseURL: getBaseURL,
-  locat: locat,
-  browse: browse,
-  cookie: cookie
-}
-
-module.exports = browseExports
+module.exports = webExports

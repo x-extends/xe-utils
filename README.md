@@ -78,7 +78,7 @@ import dateMethods from 'xe-utils/methods/date'
 import stringMethods from 'xe-utils/methods/string'
 import functionMethods from 'xe-utils/methods/function'
 import urlMethods from 'xe-utils/methods/url'
-import browseMethods from 'xe-utils/methods/browse'
+import webMethods from 'xe-utils/methods/web'
 
 XEUtils.mixin(
   // Object
@@ -98,7 +98,7 @@ XEUtils.mixin(
   // URL
   urlMethods,
   // Browse
-  browseMethods
+  webMethods
 )
 ```
 

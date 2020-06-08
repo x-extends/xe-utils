@@ -177,10 +177,10 @@ export * from './url/unserialize'
 export * from './url/serialize'
 export * from './url/parseUrl'
 
-// browse
-export * from './browse/getBaseURL'
-export * from './browse/locat'
-export * from './browse/cookie'
-export * from './browse/browse'
+// web
+export * from './web/getBaseURL'
+export * from './web/locat'
+export * from './web/cookie'
+export * from './web/browse'
 
 export default XEUtils

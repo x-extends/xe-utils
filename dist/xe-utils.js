@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.5
+ * xe-utils.js v2.4.6
  * MIT License.
  * @preserve
  */
@@ -3757,7 +3757,7 @@
     serialize: serialize,
     parseUrl: parseUrl,
 
-    // browse
+    // web
     getBaseURL: getBaseURL,
     locat: locat,
     browse: browse,
