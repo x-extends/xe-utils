@@ -52,6 +52,19 @@ XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800
 单个导入，包的大小 gzip >≈ 60B+，按需导入
 
 ```javascript
+import each from 'xe-utils/methods/base/each'
+import toDateString from 'xe-utils/methods/date/toDateString'
+
+each({ a: 11, b: 22, c: 33 }, function (item, key){
+  console.log(item)
+})
+// 11
+// 22
+// 33
+toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss') // 2018-01-01 10:30:28
+```
+
+```javascript
 import XEUtils from 'xe-utils/methods/xe-utils'
 import each from 'xe-utils/methods/base/each'
 import toDateString from 'xe-utils/methods/date/toDateString'
