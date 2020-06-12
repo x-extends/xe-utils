@@ -8,7 +8,7 @@ export declare function groupByIterate(item: any, index: any, obj: any): any;
  * @param iteratee 回调/对象属性
  * @param context 上下文
  */
-export declare function groupBy(obj: any, iteratee: string | typeof groupByIterate, context?: any): any;
+export declare function groupBy(obj: any, iteratee: string | number | typeof groupByIterate, context?: any): any;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

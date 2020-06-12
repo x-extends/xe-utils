@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "2.4.6",
+  "version": "2.4.7",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
   "unpkg": "dist/xe-utils.min.js",
@@ -15,9 +15,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "eslint dist/xe-utils.js test/**/*.js *.js",
-    "unit": "jest",
-    "test": "npm run lint && npm run unit"
+    "lint": "eslint dist/*.ts",
+    "test": "npm run lint && jest"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",

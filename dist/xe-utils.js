@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.6
+ * xe-utils.js v2.4.7
  * MIT License.
  * @preserve
  */
@@ -3327,9 +3327,9 @@
   }
 
   /**
-   * 查询参数序列化
+   * 序列化查询参数
    *
-   * @param {Object} query 序列化的对象
+   * @param {Object} query 查询参数
    */
   function serialize (query) {
     var _arr
@@ -3348,9 +3348,9 @@
   }
 
   /**
-   * 查询参数序列化
+   * 反序列化查询参数
    *
-   * @param {String} query 反序列化的字符串
+   * @param {String} query 字符串
    */
   function unserialize (str) {
     var items

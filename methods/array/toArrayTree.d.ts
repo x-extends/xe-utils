@@ -1,6 +1,6 @@
 import { XEUtilsMethods } from '../xe-utils'
 
-export interface toArrayTreeOptions {
+export interface ToArrayTreeOptions {
   strict?: boolean;
   key?: string;
   parentKey?: string;
@@ -15,7 +15,7 @@ export interface toArrayTreeOptions {
  * @param {Array} array 数组
  * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
  */
-export declare function toArrayTree(array: any[], options?: toArrayTreeOptions): any[];
+export declare function toArrayTree(array: any[], options?: ToArrayTreeOptions): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

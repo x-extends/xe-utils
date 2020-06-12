@@ -2,7 +2,7 @@ import { XEUtilsMethods } from '../xe-utils'
 
 export declare function mapTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
-interface mapTreeOptions {
+interface MapTreeOptions {
   children?: string;
   mapChildren?: string;
 }
@@ -14,7 +14,7 @@ interface mapTreeOptions {
  * @param {Object} options {children: 'children', mapChildren: 'children}
  * @param {Object} context 上下文
  */
-export declare function mapTree(array: any[], iterate: typeof mapTreeIterate, options?: mapTreeOptions, context?: any): any[];
+export declare function mapTree(array: any[], iterate: typeof mapTreeIterate, options?: MapTreeOptions, context?: any): any[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

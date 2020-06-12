@@ -1,9 +1,16 @@
 export interface setupDefaults {
-  treeOptions?: any;
+  treeOptions?: {
+    strict?: boolean;
+    parentKey?: string;
+    key?: string;
+    children?: string;
+    data?: string;
+    [key: string]: any;
+  };
   formatDate?: string;
   formatString?: string;
   dateDiffRules?: any[][];
-  [propertys: string]: any;
+  [key: string]: any;
 }
 
 export default setupDefaults
