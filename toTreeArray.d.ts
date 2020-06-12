@@ -1,4 +1,4 @@
-export interface toTreeArrayOptions {
+export interface ToTreeArrayOptions {
   children?: string;
   data?: string;
 }
@@ -6,16 +6,16 @@ export interface toTreeArrayOptions {
 /**
  * 将一个树结构转成数组列表
  * @param {Array} array 数组
- * @param {Object} options {children: 'children', data: 'data'}
+ * @param {Object} options { children: 'children', data: 'data' }
  */
-export declare function toTreeArray(array: any[], options?: toTreeArrayOptions): any[];
+export declare function toTreeArray(array: any[], options?: ToTreeArrayOptions): any[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
     /**
      * 将一个树结构转成数组列表
      * @param {Array} array 数组
-     * @param {Object} options {children: 'children', data: 'data'}
+     * @param {Object} options { children: 'children', data: 'data' }
      */
     toTreeArray: typeof toTreeArray;
   }

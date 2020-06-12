@@ -3,7 +3,8 @@
  */
 declare namespace XEUtils {
 
-  export interface setupDefaults {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  export interface SetupDefaults {
     treeOptions?: {
       strict?: boolean;
       parentKey?: string;
@@ -21,8 +22,7 @@ declare namespace XEUtils {
   /**
    * 版本信息
    */
-  export var v: string
-
+  export const v: string
   /**
    * 设置全局参数
    * @param options 全局参数
@@ -33,7 +33,7 @@ declare namespace XEUtils {
    * 将您自己的实用函数扩展到 XEUtils
    * @param methods 函数集
    */
-  export function mixin(...methods: Array<{ name: any }>): void;
+  export function mixin(...methods: Array<{name: any}>): void;
 
   /**
    * 浅拷贝一个或者多个对象到目标对象中
@@ -218,7 +218,7 @@ declare namespace XEUtils {
    * @param start 从该位置开始读取数据，默认为 0 。如果为负值，表示倒数
    * @param end 到该位置前停止读取数据，默认等于数组长度。如果为负值，表示倒数
    */
-  export function copyWithin(array: Array<any>, target: number, start?: Number, end?: number): Array<any>;
+  export function copyWithin(array: Array<any>, target: number, start?: number, end?: number): Array<any>;
 
   /**
    * 将一个数组分割成大小的组。如果数组不能被平均分配，那么最后一块将是剩下的元素
@@ -311,7 +311,7 @@ declare namespace XEUtils {
    */
   export function lastArrayEach(obj: any[], iteratee: typeof lastArrayEachIterate, context?: any): void;
 
-  export interface toArrayTreeOptions {
+  export interface ToArrayTreeOptions {
     strict?: boolean;
     key?: string;
     parentKey?: string;
@@ -326,9 +326,9 @@ declare namespace XEUtils {
    * @param {Array} array 数组
    * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
    */
-  export function toArrayTree(array: any[], options?: toArrayTreeOptions): any[];
+  export function toArrayTree(array: any[], options?: ToArrayTreeOptions): any[];
 
-  export interface toTreeArrayOptions {
+  export interface ToTreeArrayOptions {
     children?: string;
     data?: string;
   }
@@ -336,13 +336,13 @@ declare namespace XEUtils {
   /**
    * 将一个树结构转成数组列表
    * @param {Array} array 数组
-   * @param {Object} options {children: 'children', data: 'data'}
+   * @param {Object} options { children: 'children', data: 'data' }
    */
-  export function toTreeArray(array: any[], options?: toTreeArrayOptions): any[];
+  export function toTreeArray(array: any[], options?: ToTreeArrayOptions): any[];
 
   export function findTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
-  interface terrResult {
+  interface TerrResult {
     index: number;
     item: any;
     path: Array<string>;
@@ -351,7 +351,7 @@ declare namespace XEUtils {
     nodes: any[];
   }
 
-  interface findTreeOptions {
+  interface FindTreeOptions {
     children?: string;
   }
 
@@ -362,11 +362,11 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function findTree(array: any[], iterate: typeof findTreeIterate, options?: findTreeOptions, context?: any): terrResult;
+  export function findTree(array: any[], iterate: typeof findTreeIterate, options?: FindTreeOptions, context?: any): TerrResult;
 
   export function eachTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
-  export interface eachTreeOptions {
+  export interface EachTreeOptions {
     children?: string;
   }
 
@@ -377,11 +377,11 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function eachTree(array: any[], iterate: typeof eachTreeIterate, options?: eachTreeOptions, context?: any): void;
+  export function eachTree(array: any[], iterate: typeof eachTreeIterate, options?: EachTreeOptions, context?: any): void;
 
   export function mapTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
-  interface mapTreeOptions {
+  interface MapTreeOptions {
     children?: string;
     mapChildren?: string;
   }
@@ -393,11 +393,11 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children', mapChildren: 'children}
    * @param {Object} context 上下文
    */
-  export function mapTree(array: any[], iterate: typeof mapTreeIterate, options?: mapTreeOptions, context?: any): any[];
+  export function mapTree(array: any[], iterate: typeof mapTreeIterate, options?: MapTreeOptions, context?: any): any[];
 
   export function filterTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
-  export interface filterTreeOptions {
+  export interface FilterTreeOptions {
     children?: string;
   }
 
@@ -408,11 +408,11 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function filterTree(array: any[], iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): any[];
+  export function filterTree(array: any[], iterate: typeof filterTreeIterate, options?: FilterTreeOptions, context?: any): any[];
 
   export function searchTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
-  export interface searchTreeOptions {
+  export interface SearchTreeOptions {
     children?: string;
     mapChildren?: string;
     original?: boolean;
@@ -425,7 +425,7 @@ declare namespace XEUtils {
    * @param {Object} options {children: 'children'}
    * @param {Object} context 上下文
    */
-  export function searchTree(array: any[], iterate: typeof searchTreeIterate, options?: searchTreeOptions, context?: any): any[];
+  export function searchTree(array: any[], iterate: typeof searchTreeIterate, options?: SearchTreeOptions, context?: any): any[];
 
   /**
    * 判断对象自身属性中是否具有指定的属性
@@ -817,7 +817,7 @@ declare namespace XEUtils {
    * @param iteratee 回调/对象属性
    * @param context 上下文
    */
-  export function groupBy(obj: any, iteratee: string | typeof groupByIterate, context?: any): any;
+  export function groupBy(obj: any, iteratee: string | number | typeof groupByIterate, context?: any): any;
 
   export function countByIterate(item: any, index: any, obj: any): any;
 
@@ -882,7 +882,7 @@ declare namespace XEUtils {
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  export function min(array: Array<any>, iteratee: string | typeof minIterate): number;
+  export function min(array: Array<any>, iteratee: string | number | typeof minIterate): number;
 
   export function maxIterate(item: any, index: number, obj: any): any;
 
@@ -891,7 +891,7 @@ declare namespace XEUtils {
    * @param array 数组
    * @param iteratee 回调/属性
    */
-  export function max(array: Array<any>, iteratee: string | typeof maxIterate): number;
+  export function max(array: Array<any>, iteratee: string | number | typeof maxIterate): number;
 
   export interface CommafyOptions {
     /**
@@ -969,13 +969,15 @@ declare namespace XEUtils {
    */
   export function divide(num1: number, num2: number): number;
 
+  export function sumIterate(item: any, index: number, list: any[]): any;
+
   /**
    * 求和函数，将数值相加
    * @param obj 对象/数组
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function sum(obj: any, iteratee?: Function, context?: any): number;
+  export function sum(obj: any, iteratee?: typeof sumIterate | string | number, context?: any): number;
 
   export function meanIterate(item: any, index: number, list: any[]): any;
 
@@ -985,7 +987,7 @@ declare namespace XEUtils {
    * @param iteratee 回调
    * @param context 上下文
    */
-  export function mean(obj: any, iteratee?: typeof meanIterate, context?: any): number;
+  export function mean(obj: any, iteratee?: typeof meanIterate | string | number, context?: any): number;
 
   /**
    * 返回当前时间戳
@@ -1024,7 +1026,7 @@ declare namespace XEUtils {
      *   }
      * }
      */
-    formats?: any
+    formats?: any;
   }
 
   /**
@@ -1099,7 +1101,7 @@ declare namespace XEUtils {
    */
   export function getDayOfMonth(date: string | Date | number, month: number): number;
 
-  export interface dateDiffResult {
+  export interface DateDiffResult {
     /**
      * 是否计算完成（如果结束日期小于开始日期 done 为 fasle）
      */
@@ -1107,7 +1109,7 @@ declare namespace XEUtils {
     /**
      * 相差多少毫秒
      */
-    time: Number;
+    time: number;
     /**
      * 年
      */
@@ -1144,7 +1146,7 @@ declare namespace XEUtils {
    * @param endDate 结束日期或当期日期
    * @param rules 自定义计算规则
    */
-  export function getDateDiff(startDate: string | Date | number, endDate: string | Date | number, rules?: any[][]): dateDiffResult;
+  export function getDateDiff(startDate: string | Date | number, endDate: string | Date | number, rules?: any[][]): DateDiffResult;
 
   /**
    * 去除字符串左右两边的空格
@@ -1382,14 +1384,14 @@ declare namespace XEUtils {
   export function parseUrl(ulr: string): XEUrl;
 
   /**
-   * 判断字符串是否在源字符串的头部
-   * @param query 序列化的对象
+   * 序列化查询参数
+   * @param query 查询参数
    */
   export function serialize(query: any): string;
 
   /**
-   * 判断字符串是否在源字符串的头部
-   * @param str 反序列化的字符串
+   * 反序列化查询参数
+   * @param str 字符串
    */
   export function unserialize(str: string): any;
 
@@ -1540,5 +1542,4 @@ declare namespace XEUtils {
    * @param options 可选参数
    */
   export function cookie(name?: string, value?: any, options?: CookieOptions): XECookie;
-
 }

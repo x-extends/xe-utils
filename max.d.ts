@@ -5,7 +5,7 @@ export declare function maxIterate(item: any, index: number, obj: any): any;
  * @param array 数组
  * @param iteratee 回调/属性
  */
-export declare function max(array: Array<any>, iteratee: string | typeof maxIterate): number;
+export declare function max(array: Array<any>, iteratee: string | number | typeof maxIterate): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {

@@ -5,8 +5,6 @@ var staticParseInt = require('./staticParseInt')
 var helperGetUTCDateTime = require('./helperGetUTCDateTime')
 var helperGetDateTime = require('./helperGetDateTime')
 
-var arrayEach = require('./arrayEach')
-
 var isString = require('./isString')
 var isDate = require('./isDate')
 

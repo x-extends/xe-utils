@@ -6,7 +6,7 @@ export declare function meanIterate(item: any, index: number, list: any[]): any;
  * @param iteratee 回调
  * @param context 上下文
  */
-export declare function mean(obj: any, iteratee?: typeof meanIterate, context?: any): number;
+export declare function mean(obj: any, iteratee?: typeof meanIterate | string | number, context?: any): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {

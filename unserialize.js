@@ -5,9 +5,8 @@ var arrayEach = require('./arrayEach')
 var isString = require('./isString')
 
 /**
- * 查询参数序列化
- *
- * @param {String} query 反序列化的字符串
+ * 反序列化查询参数
+ * @param {String} query 字符串
  */
 function unserialize (str) {
   var items

@@ -1,6 +1,6 @@
 export declare function filterTreeIterate(item: any, index: number, items: any[], path: Array<string>, parent: any, nodes: any[]): any;
 
-export interface filterTreeOptions {
+export interface FilterTreeOptions {
   children?: string;
 }
 
@@ -11,7 +11,7 @@ export interface filterTreeOptions {
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function filterTree(array: any[], iterate: typeof filterTreeIterate, options?: filterTreeOptions, context?: any): any[];
+export declare function filterTree(array: any[], iterate: typeof filterTreeIterate, options?: FilterTreeOptions, context?: any): any[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
