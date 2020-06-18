@@ -1,5 +1,5 @@
 /**
- * xe-utils.js v2.4.7
+ * xe-utils.js v2.4.8
  * MIT License.
  * @preserve
  */
@@ -74,6 +74,8 @@
   var staticEncodeURIComponent = encodeURIComponent
 
   var staticDecodeURIComponent = decodeURIComponent
+
+  var objectToString = Object.prototype.toString
 
   var staticParseInt = parseInt
 
@@ -1830,16 +1832,45 @@
     return result
   }
 
-  function startClone (func, obj, deep) {
+  function handleObjectAndArrayClone (func, obj, deep) {
     return func(obj, deep ? function (val) {
-      return deepClone(val, deep)
+      return copyValue(val, deep)
     } : function (val) {
       return val
     })
   }
 
-  function deepClone (val, deep) {
-    return isPlainObject(val) ? startClone(objectMap, val, deep) : isArray(val) ? startClone(map, val, deep) : val
+  function handleValueClone (val, deep) {
+    if (deep && val) {
+      var Ctor = val.constructor
+      switch (objectToString.call(val)) {
+        case '[object Date]':
+        case '[object RegExp]':
+          return new Ctor(val.valueOf())
+        case '[object Set]':
+          var set = new Ctor()
+          val.forEach(function (v) {
+            set.add(v)
+          })
+          return set
+        case '[object Map]':
+          var map = new Ctor()
+          val.forEach(function (v, k) {
+            map.set(k, v)
+          })
+          return map
+      }
+    }
+    return val
+  }
+
+  function copyValue (val, deep) {
+    if (isPlainObject(val)) {
+      return handleObjectAndArrayClone(objectMap, val, deep)
+    } else if (isArray(val)) {
+      return handleObjectAndArrayClone(map, val, deep)
+    }
+    return handleValueClone(val, deep)
   }
 
   /**
@@ -1851,7 +1882,7 @@
     */
   function clone (obj, deep) {
     if (obj) {
-      return deepClone(obj, deep)
+      return copyValue(obj, deep)
     }
     return obj
   }
@@ -2027,8 +2058,6 @@
       return -1
     }
   }
-
-  var objectToString = Object.prototype.toString
 
   function helperCreateInInObjectString (type) {
     return function (obj) {

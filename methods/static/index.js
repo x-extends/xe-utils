@@ -10,6 +10,7 @@ var staticWindow = require('./staticWindow')
 var staticDocument = require('./staticDocument')
 var staticEncodeURIComponent = require('./staticEncodeURIComponent')
 var staticDecodeURIComponent = require('./staticDecodeURIComponent')
+var staticObjectToString = require('./staticObjectToString')
 var staticParseInt = require('./staticParseInt')
 var staticEscapeMap = require('./staticEscapeMap')
 var staticHGKeyRE = require('./staticHGKeyRE')
@@ -25,6 +26,7 @@ var staticExports = {
   staticDocument: staticDocument,
   staticEncodeURIComponent: staticEncodeURIComponent,
   staticDecodeURIComponent: staticDecodeURIComponent,
+  staticObjectToString: staticObjectToString,
   staticParseInt: staticParseInt,
   staticEscapeMap: staticEscapeMap,
   staticHGKeyRE: staticHGKeyRE
