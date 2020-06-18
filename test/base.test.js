@@ -2357,14 +2357,61 @@ describe('Base functions', () => {
     expect(
       XEUtils.clone(/\n/)
     ).toEqual(/\n/)
-    let v1 = { a: 11, b: { b1: 22 } }
+
+    let v1 = { 
+      num: 11,
+      str: 'abc',
+      obj: { b1: 22 },
+      date: new Date(),
+      re: /\d/,
+      set: new Set([11, 22, 33]),
+      map: new Map([['aa', 11], ['bb', 22], [33, 0]])
+    }
+
     let v2 = XEUtils.clone(v1)
     expect(
-      v1.b === v2.b
+      v1.num === v2.num
     ).toEqual(true)
+    expect(
+      v1.str === v2.str
+    ).toEqual(true)
+    expect(
+      v1.obj === v2.obj
+    ).toEqual(true)
+    expect(
+      v1.date === v2.date
+    ).toEqual(true)
+    expect(
+      v1.re === v2.re
+    ).toEqual(true)
+    expect(
+      v1.set === v2.set
+    ).toEqual(true)
+    expect(
+      v1.map === v2.map
+    ).toEqual(true)
+
     let v3 = XEUtils.clone(v1, true)
     expect(
-      v1.b === v3.b
+      v1.num === v3.num
+    ).toEqual(true)
+    expect(
+      v1.str === v3.str
+    ).toEqual(true)
+    expect(
+      v1.obj === v3.obj
+    ).toEqual(false)
+    expect(
+      v1.date === v3.date
+    ).toEqual(false)
+    expect(
+      v1.re === v3.re
+    ).toEqual(false)
+    expect(
+      v1.set === v3.set
+    ).toEqual(false)
+    expect(
+      v1.map === v3.map
     ).toEqual(false)
   })
 

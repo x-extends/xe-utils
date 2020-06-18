@@ -1,3 +1,5 @@
+var objectToString = require('./staticObjectToString')
+
 var isArray = require('./isArray')
 var isPlainObject = require('./isPlainObject')
 
@@ -5,16 +7,45 @@ var objectMap = require('./objectMap')
 
 var map = require('./map')
 
-function startClone (func, obj, deep) {
+function handleObjectAndArrayClone (func, obj, deep) {
   return func(obj, deep ? function (val) {
-    return deepClone(val, deep)
+    return copyValue(val, deep)
   } : function (val) {
     return val
   })
 }
 
-function deepClone (val, deep) {
-  return isPlainObject(val) ? startClone(objectMap, val, deep) : isArray(val) ? startClone(map, val, deep) : val
+function handleValueClone (val, deep) {
+  if (deep && val) {
+    var Ctor = val.constructor;
+    switch(objectToString.call(val)) {
+      case "[object Date]":
+      case "[object RegExp]":
+        return new Ctor(val.valueOf())
+      case "[object Set]":
+        var set = new Ctor()
+        val.forEach(function (v) {
+          set.add(v)
+        })
+        return set
+      case "[object Map]":
+        var map = new Ctor()
+        val.forEach(function (v, k) {
+          map.set(k, v)
+        })
+        return map
+    }
+  }
+  return val
+}
+
+function copyValue (val, deep) {
+  if (isPlainObject(val)) {
+    return handleObjectAndArrayClone(objectMap, val, deep)
+  } else if (isArray(val)) {
+    return handleObjectAndArrayClone(map, val, deep)
+  }
+  return handleValueClone(val, deep)
 }
 
 /**
@@ -26,7 +57,7 @@ function deepClone (val, deep) {
   */
 function clone (obj, deep) {
   if (obj) {
-    return deepClone(obj, deep)
+    return copyValue(obj, deep)
   }
   return obj
 }

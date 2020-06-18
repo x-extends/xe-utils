@@ -1,4 +1,4 @@
-var objectToString = Object.prototype.toString
+var objectToString = require('./staticObjectToString')
 
 function helperCreateInInObjectString (type) {
   return function (obj) {
