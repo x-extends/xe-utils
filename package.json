@@ -15,8 +15,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "eslint --fix dist/*.ts",
-    "test": "npm run lint && jest"
+    "format": "eslint --fix dist/*.ts",
+    "test": "jest"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.33.0",
