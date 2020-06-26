@@ -5,7 +5,7 @@
 [![npm build](https://travis-ci.org/xuliangzhan/xe-utils.svg?branch=master)](https://travis-ci.org/xuliangzhan/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
 [![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/lib/index.umd.min.js)
-[![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/xuliangzhan/xe-utils/blob/master/LICENSE)
+[![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 JavaScript 函数库、工具类
 
@@ -42,8 +42,10 @@ Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net
 ```javascript
 import XEUtils from 'xe-utils'
 
-XEUtils.toDateString(Date.now()) // 2018-01-01 10:30:28
-XEUtils.toStringDate('2018-01-01 10:30:00') // Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
+XEUtils.toDateString(Date.now())
+// > 2018-01-01 10:30:28
+XEUtils.toStringDate('2018-01-01 10:30:00')
+// > Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
 ```
 
 ## Import on demand
@@ -119,4 +121,4 @@ XEUtils.mixin(
 
 ## License
 
-MIT License, 2017-present, Xu Liangzhan
+[MIT](LICENSE) © 2017-present, Xu Liangzhan
