@@ -62,7 +62,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xuliangzhan/xe-utils.git"
+    "url": "git+https://github.com/x-extends/xe-utils.git"
   },
   "keywords": [
     "utils",
@@ -77,9 +77,9 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xuliangzhan/xe-utils/issues"
+    "url": "https://github.com/x-extends/xe-utils/issues"
   },
-  "homepage": "https://github.com/xuliangzhan/xe-utils#readme",
+  "homepage": "https://github.com/x-extends/xe-utils#readme",
   "postcss": {
     "plugins": {
       "autoprefixer": {}
