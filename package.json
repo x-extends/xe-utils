@@ -60,9 +60,6 @@
     "vuex": "^3.4.0",
     "vue-template-compiler": "^2.6.11"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/x-extends/xe-utils.git"
