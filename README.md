@@ -1,6 +1,6 @@
 # xe-utils
 
-[![gitee star](https://gitee.com/xuliangzhan_admin/xe-utils/badge/star.svg?theme=dark)](https://gitee.com/xuliangzhan_admin/xe-utils/stargazers)
+[![gitee star](https://gitee.com/x-extends/xe-utils/badge/star.svg?theme=dark)](https://gitee.com/x-extends/xe-utils/stargazers)
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.com/package/xe-utils)
 [![npm build](https://travis-ci.com/x-extends/xe-utils.svg?branch=master)](https://travis-ci.com/x-extends/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
@@ -17,7 +17,7 @@ JavaScript 函数库、工具类
 
 ## Docs
 
-[To view the document](https://x-extends.com/xe-utils/) [查看文档](https://xuliangzhan_admin.gitee.io/xe-utils/)
+[To view the document](https://x-extends.github.io/xe-utils/) [查看文档](https://x-extends.gitee.io/xe-utils/)
 
 ## Installing
 
