@@ -1,4 +1,4 @@
-const XEUtils = require('../index')
+const XEUtils = require('../func')
 
 describe('Function functions', () => {
   test('delay()', done => {

@@ -1,4 +1,4 @@
-const XEUtils = require('../index')
+const XEUtils = require('../func')
 
 describe('Date functions', () => {
   let date = new Date(2017, 0, 1, 14, 5, 30, 99)
