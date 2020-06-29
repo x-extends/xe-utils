@@ -17,7 +17,7 @@ JavaScript 函数库、工具类
 
 ## Docs
 
-[To view the document](https://xuliangzhan.com/xe-utils/) [查看文档](https://xuliangzhan_admin.gitee.io/xe-utils/)
+[To view the document](https://x-extends.com/xe-utils/) [查看文档](https://xuliangzhan_admin.gitee.io/xe-utils/)
 
 ## Installing
 
