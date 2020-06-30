@@ -2,6 +2,8 @@
 .eslintrc.js
 .travis.yml
 
+/.gitee
+/.github
 /node_modules
 /src
 /public
@@ -12,4 +14,3 @@ tsconfig.json
 package-lock.json
 babel.config.js
 vue.config.js
-
