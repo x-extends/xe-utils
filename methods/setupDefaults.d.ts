@@ -1,4 +1,4 @@
-export interface setupDefaults {
+export interface SetupDefaults {
   treeOptions?: {
     strict?: boolean;
     parentKey?: string;
@@ -13,4 +13,4 @@ export interface setupDefaults {
   [key: string]: any;
 }
 
-export default setupDefaults
+export default SetupDefaults
