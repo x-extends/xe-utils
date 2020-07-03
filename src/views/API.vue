@@ -49,8 +49,8 @@ export default {
       filterName: '',
       list: [
         {
-          label: 'Object',
-          value: 'object',
+          label: 'Base',
+          value: 'base',
           expand: true,
           children: [
             {
@@ -569,75 +569,6 @@ export default {
               ]
             },
             {
-              name: 'clear',
-              args: 'obj[, defs, assigns]',
-              title: '清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                let a = [11, 22, 33, 33]
-                XEUtils.clear(a) // []
-                XEUtils.clear(a, undefined) // [undefined, undefined, undefined, undefined]
-                XEUtils.clear(a, null) // [null, null, null, null]
-                let b = {b1: 11, b2: 22}
-                XEUtils.clear(b) // {}
-                XEUtils.clear(b, undefined) // {b1: undefined, b2: undefined}
-                XEUtils.clear(b, null) // {b1: null, b2: null}
-                `
-              ]
-            },
-            {
-              name: 'assign',
-              args: 'target, ...sources',
-              title: '将一个或多个源对象复制到目标对象中',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                const obj1 = {a: 0, b: {b1: 11}}
-                const obj2 = XEUtils.assign(obj1, {a: 11}, {c: 33})
-                // {a: 11, b: {b1: 11}, c: 33}
-
-                const obj3 = {a: 0, b: {b1: 11}}
-                const obj4 = XEUtils.assign(obj1, {a: 11, b: {b2: 22}})
-                // {a: 11, b: {b2: 22}}
-                `
-              ]
-            },
-            {
-              name: 'merge',
-              args: 'target, ...sources',
-              title: '将一个或多个源对象合并到目标对象中，和 assign 的区别是会将对象或数组类型递归合并',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                const obj1 = [{a: 11}, {b: 22}]
-                const obj2 = XEUtils.merge(obj1, [{c: 33}, {d: 44}])
-                // [{a: 11, c: 33}, {b: 22, d: 44}]
-
-                const obj3 = {a: 0, b: {b1: 11}, c: {c1: {d: 44}}}
-                const obj4 = XEUtils.merge(obj1, {a: 11, b: {b2: 22}, c: {f1: 55}})
-                // {a: 11, b: {b1: 11, b2: 22}, c: {c1: {d: 44}, f1: 55}}
-                `
-              ]
-            },
-            {
-              name: 'destructuring',
-              args: 'obj, ...target',
-              title: '将一个或者多个对象值解构到目标对象',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.destructuring({a: null}, {a: 11, b: 22, c: 33}) // {a: 11}
-                XEUtils.destructuring({a: 11, d: 44}, {a: 11, b: 22, c: 33}) // {a: 11, d: 44}
-                XEUtils.destructuring({a: 11, c: 33, d: 44}, {a: 11, b: 22, c: null, e: 55, f: 66}) // {a: 11, c: null, d: 44}
-                `
-              ]
-            },
-            {
               name: 'toStringJSON',
               args: 'str',
               title: '字符串转 JSON',
@@ -701,34 +632,6 @@ export default {
               ]
             },
             {
-              name: 'pick',
-              args: 'obj, array',
-              title: '根据 keys 过滤指定的属性值 或者 接收一个判断函数，返回一个新的对象',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.pick({name: 'test11', age: 25, height: 176}, 'name', 'height') // {name: 'test11', height: 176}
-                XEUtils.pick({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {name: 'test11', age: 25}
-                XEUtils.pick({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {age: 25, height: 176}
-                `
-              ]
-            },
-            {
-              name: 'omit',
-              args: 'obj, array',
-              title: '根据 keys 排除指定的属性值 或者 接收一个判断函数，返回一个新的对象',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.omit({name: 'test11', age: 25, height: 176}, 'name', 'height') // {age: 25}
-                XEUtils.omit({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {height: 176}
-                XEUtils.omit({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {name: 'test11'}
-                `
-              ]
-            },
-            {
               name: 'first',
               args: 'obj',
               title: '获取对象第一个值',
@@ -769,20 +672,6 @@ export default {
               ]
             },
             {
-              name: 'objectEach',
-              args: 'obj, iteratee [, context]',
-              title: '对象迭代器',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.objectEach([11, 22, 33], (item, key) => {
-                  // 对象迭代器，只能用于遍历对象，性能高于 each
-                })
-                `
-              ]
-            },
-            {
               name: 'lastEach',
               args: 'obj, iteratee [, context]',
               title: '通用迭代器，从最后开始迭代',
@@ -797,19 +686,27 @@ export default {
               ]
             },
             {
-              name: 'lastObjectEach',
-              args: 'obj, iteratee [, context]',
-              title: '通用迭代器，从最后开始迭代',
+              name: 'range',
+              args: 'start, stop, step',
+              title: '序号列表生成函数',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.lastObjectEach([11, 22, 33], (item, key) => {
-                  // 对象迭代器，只能用于遍历对象，性能高于 lastEach
-                })
+                XEUtils.range(0) // []
+                XEUtils.range(10) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+                XEUtils.range(-5, 5) // [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
+                XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
                 `
               ]
-            },
+            }
+          ]
+        },
+        {
+          label: 'Object',
+          value: 'object',
+          expand: true,
+          children: [
             {
               name: 'has',
               args: 'obj, property',
@@ -859,63 +756,64 @@ export default {
               ]
             },
             {
-              name: 'groupBy',
-              args: 'obj, iteratee [, context]',
-              title: '集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组',
+              name: 'clear',
+              args: 'obj[, defs, assigns]',
+              title: '清空对象; defs如果不传（清空所有属性）、如果传对象（清空并继承)、如果传值(给所有赋值)',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
-                XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type')
-                // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
+                let a = [11, 22, 33, 33]
+                XEUtils.clear(a) // []
+                XEUtils.clear(a, undefined) // [undefined, undefined, undefined, undefined]
+                XEUtils.clear(a, null) // [null, null, null, null]
+                let b = {b1: 11, b2: 22}
+                XEUtils.clear(b) // {}
+                XEUtils.clear(b, undefined) // {b1: undefined, b2: undefined}
+                XEUtils.clear(b, null) // {b1: null, b2: null}
                 `
               ]
             },
             {
-              name: 'countBy',
-              args: 'obj, iteratee [, context]',
-              title: '集合分组统计,返回各组中对象的数量统计',
+              name: 'assign',
+              args: 'target, ...sources',
+              title: '将一个或多个源对象复制到目标对象中',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.countBy([{type: 'a'}, {type: 'b'}], 'type') // {a: 1, b: 1}
-                XEUtils.countBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: 2, b: 1}
+                const obj1 = {a: 0, b: {b1: 11}}
+                const obj2 = XEUtils.assign(obj1, {a: 11}, {c: 33})
+                // {a: 11, b: {b1: 11}, c: 33}
+
+                const obj3 = {a: 0, b: {b1: 11}}
+                const obj4 = XEUtils.assign(obj1, {a: 11, b: {b2: 22}})
+                // {a: 11, b: {b2: 22}}
                 `
               ]
             },
             {
-              name: 'range',
-              args: 'start, stop, step',
-              title: '序号列表生成函数',
+              name: 'merge',
+              args: 'target, ...sources',
+              title: '将一个或多个源对象合并到目标对象中，和 assign 的区别是会将对象或数组类型递归合并',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.range(0) // []
-                XEUtils.range(10) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-                XEUtils.range(-5, 5) // [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4]
-                XEUtils.range(0, 10, 2) // [0, 2, 4, 6, 8]
-                `
-              ]
-            },
-            {
-              name: 'objectMap',
-              args: 'obj, iteratee [, context]',
-              title: '指定方法后的返回值组成的新对象',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a", b: "b"}
+                const obj1 = [{a: 11}, {b: 22}]
+                const obj2 = XEUtils.merge(obj1, [{c: 33}, {d: 44}])
+                // [{a: 11, c: 33}, {b: 22, d: 44}]
+
+                const obj3 = {a: 0, b: {b1: 11}, c: {c1: {d: 44}}}
+                const obj4 = XEUtils.merge(obj1, {a: 11, b: {b2: 22}, c: {f1: 55}})
+                // {a: 11, b: {b1: 11, b2: 22}, c: {c1: {d: 44}, f1: 55}}
                 `
               ]
             },
             {
               name: 'clone',
               args: 'obj, deep',
-              title: '浅拷贝/深拷贝',
+              title: '浅拷贝/深拷贝，和 assign 的区别是支持对象的递归克隆',
               desc: '',
               params: [],
               codes: [
@@ -933,26 +831,84 @@ export default {
               ]
             },
             {
-              name: 'uniq',
-              args: 'array',
-              title: ' 数组去重',
+              name: 'destructuring',
+              args: 'obj, ...target',
+              title: '将一个或者多个对象值解构到目标对象',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.uniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
+                XEUtils.destructuring({a: null}, {a: 11, b: 22, c: 33}) // {a: 11}
+                XEUtils.destructuring({a: 11, d: 44}, {a: 11, b: 22, c: 33}) // {a: 11, d: 44}
+                XEUtils.destructuring({a: 11, c: 33, d: 44}, {a: 11, b: 22, c: null, e: 55, f: 66}) // {a: 11, c: null, d: 44}
                 `
               ]
             },
             {
-              name: 'union',
-              args: '...array',
-              title: '将多个数的值返回唯一的并集数组',
+              name: 'objectEach',
+              args: 'obj, iteratee [, context]',
+              title: '对象迭代器',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.union([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
+                XEUtils.objectEach([11, 22, 33], (item, key) => {
+                  // 对象迭代器，只能用于遍历对象，性能高于 each
+                })
+                `
+              ]
+            },
+            {
+              name: 'lastObjectEach',
+              args: 'obj, iteratee [, context]',
+              title: '通用迭代器，从最后开始迭代',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.lastObjectEach([11, 22, 33], (item, key) => {
+                  // 对象迭代器，只能用于遍历对象，性能高于 lastEach
+                })
+                `
+              ]
+            },
+            {
+              name: 'objectMap',
+              args: 'obj, iteratee [, context]',
+              title: '指定方法后的返回值组成的新对象',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a", b: "b"}
+                `
+              ]
+            },
+            {
+              name: 'pick',
+              args: 'obj, array',
+              title: '根据 keys 过滤指定的属性值 或者 接收一个判断函数，返回一个新的对象',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.pick({name: 'test11', age: 25, height: 176}, 'name', 'height') // {name: 'test11', height: 176}
+                XEUtils.pick({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {name: 'test11', age: 25}
+                XEUtils.pick({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {age: 25, height: 176}
+                `
+              ]
+            },
+            {
+              name: 'omit',
+              args: 'obj, array',
+              title: '根据 keys 排除指定的属性值 或者 接收一个判断函数，返回一个新的对象',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.omit({name: 'test11', age: 25, height: 176}, 'name', 'height') // {age: 25}
+                XEUtils.omit({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {height: 176}
+                XEUtils.omit({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {name: 'test11'}
                 `
               ]
             }
@@ -961,7 +917,7 @@ export default {
         {
           label: 'Function',
           value: 'function',
-          expand: true,
+          expand: false,
           children: [
             {
               name: 'delay',
@@ -1553,6 +1509,30 @@ export default {
               ]
             },
             {
+              name: 'uniq',
+              args: 'array',
+              title: ' 数组去重',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.uniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
+                `
+              ]
+            },
+            {
+              name: 'union',
+              args: '...array',
+              title: '将多个数的值返回唯一的并集数组',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.union([11, 22], [33, 22], [44, 11]) // [11, 22, 33, 44]
+                `
+              ]
+            },
+            {
               name: 'flatten',
               args: 'array, deep',
               title: '将一个多维数组拍平',
@@ -1618,6 +1598,33 @@ export default {
                 XEUtils.invoke([123, 456], String.prototype.split, '') // [['1', '2', '3'], ['4', '5', '6']]
                 XEUtils.invoke([{a: {b: [2, 0, 1]}}, {a: {b: [2, 1]}}, {a: {b: [4, 8, 1]}}], ['a', 'b', 'sort'])
                 // [[0, 1, 2], [1, 2], [1, 4, 8]]
+                `
+              ]
+            },
+            {
+              name: 'groupBy',
+              args: 'obj, iteratee [, context]',
+              title: '集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.groupBy([{type: 'a'}, {type: 'b'}], 'type') // {a: [{type: 'a'}], b: [{type: 'b'}]}
+                XEUtils.groupBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type')
+                // {a: [{type: 'a'}, {type: 'a'}], b: [{type: 'b'}]}
+                `
+              ]
+            },
+            {
+              name: 'countBy',
+              args: 'obj, iteratee [, context]',
+              title: '集合分组统计,返回各组中对象的数量统计',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.countBy([{type: 'a'}, {type: 'b'}], 'type') // {a: 1, b: 1}
+                XEUtils.countBy([{type: 'a'}, {type: 'a'}, {type: 'b'}], 'type') // {a: 2, b: 1}
                 `
               ]
             },
