@@ -917,7 +917,7 @@ export default {
         {
           label: 'Function',
           value: 'function',
-          expand: false,
+          expand: true,
           children: [
             {
               name: 'delay',
