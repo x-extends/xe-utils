@@ -19,9 +19,9 @@ function handleAssign (destination, args, isClone) {
 }
 
 /**
-  * 浅拷贝一个或者多个对象到目标对象中
+  * 将一个或多个源对象复制到目标对象中
   *
-  * @param {Object} obj 目标对象
+  * @param {Object} target 目标对象
   * @param {...Object}
   * @return {Boolean}
   */

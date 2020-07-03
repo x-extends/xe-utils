@@ -1,22 +1,26 @@
 const XEUtils = require('../func')
 
 test('assign()', () => {
-  let obj1 = { bb: { b: 11 } }
-  let obj2 = XEUtils.assign(true, obj1, { a: 11 })
+  let obj1 = { bb: { gg: 1 } }
+  let obj2 = XEUtils.assign({}, obj1, { a: 11 })
   expect(
     obj1 === obj2
   ).toEqual(false)
   expect(
     obj1.bb === obj2.bb
-  ).toEqual(false)
-  obj1 = { bb: { b: 11 } }
-  obj2 = XEUtils.assign(obj1, { a: 11 })
+  ).toEqual(true)
+  let obj3 = { bb: { b: 11 } }
+  let obj4 = XEUtils.assign(obj3, { a: 11 })
   expect(
-    obj1.bb === obj2.bb
+    obj3.bb === obj4.bb
   ).toEqual(true)
   expect(
-    obj1.bb === obj2.bb
+    obj3.bb === obj4.bb
   ).toEqual(true)
+  let arr1 = [11, 22]
+  expect(
+    XEUtils.assign(arr1, [44, 11, 55])
+  ).toEqual([44, 11, 55])
 })
 
 test('objectMap()', () => {
