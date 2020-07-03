@@ -595,13 +595,31 @@ export default {
               params: [],
               codes: [
                 `
-                let obj2 = {a: null}
-                let obj3 = {bb: {b: 11}}
-                let obj4 = XEUtils.assign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
-                obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 22}}
+                const obj1 = {a: 0, b: {b1: 11}}
+                const obj2 = XEUtils.assign(obj1, {a: 11}, {c: 33})
+                // {a: 11, b: {b1: 11}, c: 33}
 
-                let obj3 = {bb: {b: 11}}
-                let obj4 = XEUtils.assign({}, obj3, {a: 11}) // {c: null, bb: {b: 11}}
+                const obj3 = {a: 0, b: {b1: 11}}
+                const obj4 = XEUtils.assign(obj1, {a: 11, b: {b2: 22}})
+                // {a: 11, b: {b2: 22}}
+                `
+              ]
+            },
+            {
+              name: 'merge',
+              args: 'target, ...sources',
+              title: '将一个或多个源对象合并到目标对象中，和 assign 的区别是会将对象或数组类型递归合并',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                const obj1 = [{a: 11}, {b: 22}]
+                const obj2 = XEUtils.merge(obj1, [{c: 33}, {d: 44}])
+                // [{a: 11, c: 33}, {b: 22, d: 44}]
+
+                const obj3 = {a: 0, b: {b1: 11}, c: {c1: {d: 44}}}
+                const obj4 = XEUtils.merge(obj1, {a: 11, b: {b2: 22}, c: {f1: 55}})
+                // {a: 11, b: {b1: 11, b2: 22}, c: {c1: {d: 44}, f1: 55}}
                 `
               ]
             },

@@ -9,6 +9,7 @@ var extend = require('./object/extend')
 var objectEach = require('./object/objectEach')
 var lastObjectEach = require('./object/lastObjectEach')
 var objectMap = require('./object/objectMap')
+var merge = require('./object/merge')
 
 // 数组相关的方法
 var map = require('./array/map')
@@ -191,6 +192,7 @@ assign(XEUtils, {
   objectEach: objectEach,
   lastObjectEach: lastObjectEach,
   objectMap: objectMap,
+  merge: merge,
 
   // array
   uniq: uniq,
