@@ -5,10 +5,10 @@ var XEUtils = require('./ctor')
 
 // 对象相关的方法
 var assign = require('./assign')
-var extend = require('./extend')
 var objectEach = require('./objectEach')
 var lastObjectEach = require('./lastObjectEach')
 var objectMap = require('./objectMap')
+var merge = require('./merge')
 
 // 数组相关的方法
 var map = require('./map')
@@ -187,10 +187,10 @@ var browse = require('./browse')
 assign(XEUtils, {
   // object
   assign: assign,
-  extend: extend,
   objectEach: objectEach,
   lastObjectEach: lastObjectEach,
   objectMap: objectMap,
+  merge: merge,
 
   // array
   uniq: uniq,

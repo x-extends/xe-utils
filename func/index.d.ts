@@ -5,7 +5,6 @@ export * from './ctor'
 
 // object
 export * from './assign'
-export * from './extend'
 export * from './objectEach'
 export * from './lastObjectEach'
 export * from './objectMap'

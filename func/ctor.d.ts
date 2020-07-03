@@ -1,5 +1,5 @@
 
-import setupDefaults from './setupDefaults'
+import SetupDefaults from './setupDefaults'
 
 export interface XEUtilsMethods {
   /**
@@ -10,7 +10,7 @@ export interface XEUtilsMethods {
    * 设置全局参数
    * @param options 全局参数
    */
-  setup(options: setupDefaults): setupDefaults;
+  setup(options: SetupDefaults): SetupDefaults;
 
   /**
    * 将您自己的实用函数扩展到 XEUtils
