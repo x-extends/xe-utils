@@ -589,21 +589,19 @@ export default {
             },
             {
               name: 'assign',
-              args: 'destination, ...sources',
-              title: '浅拷贝一个或者多个对象到目标对象中，如果第一值是true，则使用深拷贝',
+              args: 'target, ...sources',
+              title: '将一个或多个源对象复制到目标对象中',
               desc: '',
               params: [],
               codes: [
                 `
-                // 浅拷贝
                 let obj2 = {a: null}
                 let obj3 = {bb: {b: 11}}
                 let obj4 = XEUtils.assign(obj2, {a: 11}) // {a: 11, c: null, bb: {b: 11}}
                 obj3.bb = 22 // obj4 = {a: 11, c: null, bb: {b: 22}}
 
-                // 深拷贝
                 let obj3 = {bb: {b: 11}}
-                let obj4 = XEUtils.assign(true, obj3, {a: 11}) // {c: null, bb: {b: 11}}
+                let obj4 = XEUtils.assign({}, obj3, {a: 11}) // {c: null, bb: {b: 11}}
                 `
               ]
             },
