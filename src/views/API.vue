@@ -10,6 +10,9 @@
         </div>
       </div>
       <ul>
+        <li class="menu-item is-donation">
+          <a class="menu-link" @click="donationEvent">☕捐赠</a>
+        </li>
         <li class="menu-item" v-for="group in apiList" :key="group.id">
           <a class="menu-link" @click="group.expand = !group.expand">{{ group.label }}</a>
           <ul class="child-menu" v-show="group.expand">
@@ -33,6 +36,13 @@
           <pre>
             <code class="javascript" v-for="(code,cIndex) in item.codes" :key="cIndex">{{ code }}</code>
           </pre>
+        </div>
+      </div>
+      <div>
+        <div id="donation" class="donation-item">
+          <p>如果您觉得我们的开源软件对你有所帮助，请扫下方二维码打赏我们一杯咖啡☕</p>
+          <p>由于维护一个开源项目需要花费非常大的精力与时间，如果您正在使用该项目，您的捐赠会帮助该项目能持续发展下去</p>
+          <img src="static/donation/pay.jpg">
         </div>
       </div>
     </div>
@@ -2994,6 +3004,13 @@ export default {
       item.id = id++
     })
     this.selected = this.apiList[0].children[0]
+    this.$nextTick(() => {
+      setTimeout(() => {
+        if (this.$route.query.to) {
+          this.toView(document.getElementById(this.$route.query.to))
+        }
+      }, 100)
+    })
   },
   mounted () {
     Array.from(this.$el.querySelectorAll('pre code')).forEach((block) => {
@@ -3001,9 +3018,14 @@ export default {
     })
   },
   methods: {
+    donationEvent () {
+      this.toView(document.getElementById('donation'))
+    },
     menuLinkEvent (item) {
-      const elem = document.getElementById(item.name)
       this.selected = item
+      this.toView(document.getElementById(item.name))
+    },
+    toView (elem) {
       if (elem && elem.scrollIntoView) {
         elem.scrollIntoView()
       } else if (elem && elem.scrollIntoViewIfNeeded) {
@@ -3013,3 +3035,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.is-donation {
+  font-size: 15px;
+  font-weight: 700;
+  color: green;
+}
+.donation-item {
+  padding: 20px 0 600px 0;
+  text-align: center;
+}
+</style>
