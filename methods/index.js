@@ -165,6 +165,7 @@ var template = require('./string/template')
 var toValString = require('./string/toString')
 
 // 函数相关的方法
+var noop = require('./function/noop')
 var property = require('./function/property')
 var bind = require('./function/bind')
 var once = require('./function/once')
@@ -348,6 +349,7 @@ assign(XEUtils, {
   toString: toValString,
 
   // function
+  noop: noop,
   property: property,
   bind: bind,
   once: once,

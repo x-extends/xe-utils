@@ -163,6 +163,7 @@ export * from './string/template'
 export * from './string/toString'
 
 // function
+export * from './function//noop'
 export * from './function/property'
 export * from './function/bind'
 export * from './function/once'
