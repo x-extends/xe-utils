@@ -1,3 +1,4 @@
+export * from './noop'
 export * from './property'
 export * from './bind'
 export * from './once'

@@ -1,5 +1,6 @@
 'use strict'
 
+var noop = require('./noop')
 var property = require('./property')
 var bind = require('./bind')
 var once = require('./once')
@@ -10,6 +11,7 @@ var debounce = require('./debounce')
 var delay = require('./delay')
 
 var functionExports = {
+  noop: noop,
   property: property,
   bind: bind,
   once: once,

@@ -1,6 +1,12 @@
 const XEUtils = require('../func')
 
 describe('Function functions', () => {
+  test('noop()', () => {
+    expect(
+      [11, 22, 33].map(XEUtils.noop)
+    ).toEqual([undefined, undefined, undefined])
+  })
+
   test('delay()', done => {
     XEUtils.delay(function (name) {
       expect(

@@ -930,6 +930,19 @@ export default {
           expand: true,
           children: [
             {
+              name: 'noop',
+              args: '',
+              title: '一个空的方法，始终返回 undefined，可用于初始化值',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                [11, 22, 33].map(XEUtils.noop)
+                // [undefined, undefined, undefined]
+                `
+              ]
+            },
+            {
               name: 'delay',
               args: 'callback, wait[, ...arguments]',
               title: '该方法和 setTimeout 一样的效果，区别就是支持额外参数',
