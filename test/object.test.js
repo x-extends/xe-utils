@@ -60,6 +60,24 @@ test('merge()', () => {
     XEUtils.merge()
   ).toEqual({})
   expect(
+    XEUtils.merge(null)
+  ).toEqual({})
+  expect(
+    XEUtils.merge(undefined)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, null)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, undefined)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, 0)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, -1)
+  ).toEqual({})
+  expect(
     XEUtils.merge({}, {})
   ).toEqual({})
   expect(
