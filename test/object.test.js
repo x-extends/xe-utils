@@ -1,4 +1,4 @@
-const XEUtils = require('../index')
+const XEUtils = require('../func')
 
 test('assign()', () => {
   let obj1 = { bb: { gg: 1 } }
@@ -58,6 +58,24 @@ test('lastObjectEach()', () => {
 test('merge()', () => {
   expect(
     XEUtils.merge()
+  ).toEqual({})
+  expect(
+    XEUtils.merge(null)
+  ).toEqual({})
+  expect(
+    XEUtils.merge(undefined)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, null)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, undefined)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, 0)
+  ).toEqual({})
+  expect(
+    XEUtils.merge({}, -1)
   ).toEqual({})
   expect(
     XEUtils.merge({}, {})
