@@ -2,15 +2,15 @@ export interface CommafyOptions {
   /**
    * 分割位数,默认3
    */
-  spaceNumber: number;
+  spaceNumber?: number;
   /**
    * 分隔符,默认','
    */
-  separator: string;
+  separator?: string;
   /**
    * 小数位数,默认null
    */
-  digits: number;
+  digits?: number;
 }
 
 /**
