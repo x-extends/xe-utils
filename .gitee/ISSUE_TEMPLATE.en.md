@@ -1,14 +1,13 @@
-**(Required) Describe the bug or screenshots**
+**(Required) Describe the bug or screenshots:**
 ?
 
-**(Required) Reproduction link**
+**(Required) Reproduction link:**
 ?
 
-**(Required) Expected behavior**
+**(Required) Expected behavior:**
 ?
 
-**Please fill in the version information**
+**(Required) Please fill in the version information:**
 
 - OS: ?
 - Browser: ?
-
