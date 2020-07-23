@@ -1,4 +1,4 @@
-const XEUtils = require('../index')
+const XEUtils = require('../func')
 
 describe('Array functions', () => {
   test('uniq()', () => {
@@ -44,7 +44,7 @@ describe('Array functions', () => {
     expect(
       XEUtils.uniq([11, 33, 33, { a: 11 }, { a: 11 }])
     ).toEqual([11, 33, { a: 11 }, { a: 11 }])
-    const a1 = { a: 11 }
+    let a1 = { a: 11 }
     expect(
       XEUtils.uniq([11, 33, 33, a1, a1])
     ).toEqual([11, 33, { a: 11 }])
@@ -129,7 +129,7 @@ describe('Array functions', () => {
     expect(
       XEUtils.slice([11, 22, 33, 44], 1, 3)
     ).toEqual([22, 33])
-    const method = function () {
+    let method = function () {
       expect(
         XEUtils.slice(arguments, 1, 3)
       ).toEqual([22, 33])
@@ -1302,7 +1302,7 @@ describe('Array functions', () => {
     expect(
       XEUtils.toArrayTree(function () {})
     ).toEqual([])
-    const list1 = [
+    let list1 = [
       { id: 1, name: '111' },
       { id: 2, parentId: 1, name: '222' },
       { id: 3, name: '333' },
@@ -1336,7 +1336,7 @@ describe('Array functions', () => {
         children: []
       }
     ])
-    const list2 = [
+    let list2 = [
       { id: 1, name: '111', seq: 5 },
       { id: 2, parentId: 1, name: '222', seq: 3 },
       { id: 3, name: '333', seq: 6 },
@@ -1382,7 +1382,7 @@ describe('Array functions', () => {
         children: []
       }
     ])
-    const list3 = [
+    let list3 = [
       { id: 1, name: '111' },
       { id: 2, parentId: 1, name: '222' },
       { id: 3, name: '333' },
@@ -1423,7 +1423,7 @@ describe('Array functions', () => {
         children: []
       }
     ])
-    const list4 = [
+    let list4 = [
       { id: 1, name: '111' },
       { id: 2, parentId: 1, name: '222' },
       { id: 3, name: '333' },
@@ -1485,7 +1485,7 @@ describe('Array functions', () => {
     expect(
       XEUtils.toTreeArray(function () {})
     ).toEqual([])
-    const list1 = [
+    let list1 = [
       {
         id: 1,
         name: '111',
@@ -1519,7 +1519,7 @@ describe('Array functions', () => {
       list1[0].children[0].children[0],
       list1[1]
     ])
-    const list2 = [
+    let list2 = [
       {
         data: { id: 1, name: '111' },
         id: 1,
@@ -1559,6 +1559,54 @@ describe('Array functions', () => {
       { id: 4, parentId: 2, name: '444' },
       { id: 3, name: '333' },
       { id: 5, parentId: 22, name: '555' }
+    ])
+    let list3 = [
+      {
+        id: 1,
+        name: '111',
+        children: [
+          {
+            id: 2,
+            parentId: 1,
+            name: '222',
+            children: [
+              {
+                id: 4,
+                parentId: 2,
+                name: '444',
+                children: []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 3,
+        name: '333',
+        children: []
+      }
+    ]
+    expect(
+      XEUtils.toTreeArray(list3, { clear: true })
+    ).toEqual([
+      {
+        id: 1,
+        name: '111'
+      },
+      {
+        id: 2,
+        parentId: 1,
+        name: '222'
+      },
+      {
+        id: 4,
+        parentId: 2,
+        name: '444'
+      },
+      {
+        id: 3,
+        name: '333'
+      }
     ])
   })
 

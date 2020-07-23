@@ -5,17 +5,20 @@ var each = require('../base/each')
 var assign = require('../object/assign')
 
 function unTreeList (result, array, opts) {
-  var children
   var optChildren = opts.children
   var optData = opts.data
+  var optClear = opts.clear
   each(array, function (item) {
-    children = item[optChildren]
+    var children = item[optChildren]
     if (optData) {
       item = item[optData]
     }
     result.push(item)
-    if (children) {
+    if (children && children.length) {
       unTreeList(result, children, opts)
+    }
+    if (optClear) {
+      delete item[optChildren]
     }
   })
   return result

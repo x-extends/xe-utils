@@ -1823,7 +1823,8 @@ export default {
               params: [
                 ['属性', '描述', '默认值'],
                 ['children', '子节点属性', 'children'],
-                ['data', '数据存放属性', '']
+                ['data', '数据存放属性', ''],
+                ['clear', '同时移除子节点属性', 'false']
               ],
               codes: [
                 `
