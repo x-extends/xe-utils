@@ -5,17 +5,20 @@ var each = require('./each')
 var assign = require('./assign')
 
 function unTreeList (result, array, opts) {
-  var children
   var optChildren = opts.children
   var optData = opts.data
+  var optClear = opts.clear
   each(array, function (item) {
-    children = item[optChildren]
+    var children = item[optChildren]
     if (optData) {
       item = item[optData]
     }
     result.push(item)
-    if (children) {
+    if (children && children.length) {
       unTreeList(result, children, opts)
+    }
+    if (optClear) {
+      delete item[optChildren]
     }
   })
   return result
@@ -25,7 +28,7 @@ function unTreeList (result, array, opts) {
   * 将一个树结构转成数组列表
   *
   * @param {Array} array 数组
-  * @param {Object} options { children: 'children', data: 'data' }
+  * @param {Object} options { children: 'children', data: 'data', clear: false }
   * @return {Array}
   */
 function toTreeArray (array, options) {

@@ -1560,6 +1560,54 @@ describe('Array functions', () => {
       { id: 3, name: '333' },
       { id: 5, parentId: 22, name: '555' }
     ])
+    let list3 = [
+      {
+        id: 1,
+        name: '111',
+        children: [
+          {
+            id: 2,
+            parentId: 1,
+            name: '222',
+            children: [
+              {
+                id: 4,
+                parentId: 2,
+                name: '444',
+                children: []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        id: 3,
+        name: '333',
+        children: []
+      }
+    ]
+    expect(
+      XEUtils.toTreeArray(list3, { clear: true })
+    ).toEqual([
+      {
+        id: 1,
+        name: '111'
+      },
+      {
+        id: 2,
+        parentId: 1,
+        name: '222'
+      },
+      {
+        id: 4,
+        parentId: 2,
+        name: '444'
+      },
+      {
+        id: 3,
+        name: '333'
+      }
+    ])
   })
 
   test('findTree()', () => {
