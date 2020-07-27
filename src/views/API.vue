@@ -2388,6 +2388,45 @@ export default {
               ]
             },
             {
+              name: 'round',
+              args: 'num, digits',
+              title: '将数值四舍五入',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.round(123.455, 2) // 123.46
+                XEUtils.round(123.452, 2) // 123.45
+                `
+              ]
+            },
+            {
+              name: 'ceil',
+              args: 'num, digits',
+              title: '将数值向上舍入',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.ceil(123.455, 2) // 123.46
+                XEUtils.ceil(123.452, 2) // 123.46
+                `
+              ]
+            },
+            {
+              name: 'floor',
+              args: 'num, digits',
+              title: '将数值向下舍入',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.ceil(123.455, 2) // 123.45
+                XEUtils.ceil(123.452, 2) // 123.45
+                `
+              ]
+            },
+            {
               name: 'commafy',
               args: 'num [, options]',
               title: '数值千分位分隔符、小数点',
@@ -2395,14 +2434,14 @@ export default {
               params: [],
               codes: [
                 `
-                // 千分位格式化 1,000,000
-                XEUtils.commafy(1000000)
-                // 格式化金额 1,000,000.57
-                XEUtils.commafy('1000000.5678', { digits: 2 })
-                // 格式化银行卡 6660 0000 0000 0001
-                XEUtils.commafy(6660000000000001, {spaceNumber: 4, separator: ' '})
-                // 字符串每隔3位分割 111,111,111,111,111,111,111,111,111,111,111
-                XEUtils.commafy('111111111111111111111111111111111')
+                // 千分位格式化
+                XEUtils.commafy(1000000) // '1,000,000'
+                // 格式化金额
+                XEUtils.commafy(1000000.5678, { digits: 2 }) // '1,000,000.57'
+                // 字符串每隔4位用空格分隔
+                XEUtils.commafy('6660000000000001', {spaceNumber: 4, separator: ' '}) // '6660 0000 0000 0001'
+                // 字符串每隔3位用逗号分割
+                XEUtils.commafy('abcdeabcdeabcdeabcde', { spaceNumber: 5, separator: ' ' }) // 'abcde abcde abcde abcde'
                 `
               ]
             },
@@ -2431,41 +2470,6 @@ export default {
                 XEUtils.toInteger(123) // 123
                 XEUtils.toInteger('12.3') // 12
                 XEUtils.toInteger('abc') // 0
-                `
-              ]
-            },
-            {
-              name: 'toFixedNumber',
-              args: 'num, digits',
-              title: '和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.toFixedNumber(123) // 123
-                XEUtils.toFixedNumber(1e-8, 3) // 0
-                XEUtils.toFixedNumber('12.399') // 12
-                XEUtils.toFixedNumber('12.399', 5) // 12.399
-                XEUtils.toFixedNumber(234567.105967, 4) // 234567.1059
-                XEUtils.toFixedNumber('-1234.6988', 2) // -1234.69
-                `
-              ]
-            },
-            {
-              name: 'toFixedString',
-              args: 'num, digits',
-              title: '和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回字符串',
-              desc: '',
-              params: [],
-              codes: [
-                `
-                XEUtils.toFixedString(123) // '123'
-                XEUtils.toFixedString(1e-8, 3) // '0'
-                XEUtils.toFixedString(1e-8, 10) // '0.0000000100'
-                XEUtils.toFixedString('12.399') // '12'
-                XEUtils.toFixedString('12.399', 5) // '12.39900'
-                XEUtils.toFixedString(234567.105967, 4) // '234567.1059'
-                XEUtils.toFixedString('-1234.6988', 2) // '-1234.69'
                 `
               ]
             },

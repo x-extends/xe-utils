@@ -1,4 +1,4 @@
-const XEUtils = require('../func')
+const XEUtils = require('../index')
 
 describe('Number functions', () => {
   test('random()', () => {
@@ -70,222 +70,363 @@ describe('Number functions', () => {
     ).toEqual('12,345')
     expect(
       XEUtils.commafy('null')
-    ).toEqual('null')
+    ).toEqual('n,ull')
     expect(
       XEUtils.commafy(null)
     ).toEqual('')
     expect(
       XEUtils.commafy('undefined')
-    ).toEqual('undefined')
+    ).toEqual('und,efi,ned')
     expect(
       XEUtils.commafy(undefined)
     ).toEqual('')
     expect(
-      XEUtils.commafy('abcdefg')
-    ).toEqual('abcdefg')
+      XEUtils.commafy('cdabcdabcdabcdabcd', { spaceNumber: 4 })
+    ).toEqual('cd,abcd,abcd,abcd,abcd')
     expect(
       XEUtils.commafy(1000000)
     ).toEqual('1,000,000')
     expect(
-      XEUtils.commafy('1000000', { digits: 2 })
+      XEUtils.commafy(1000000, { digits: 2 })
     ).toEqual('1,000,000.00')
     expect(
-      XEUtils.commafy('1000000', { digits: 4 })
+      XEUtils.commafy('1000000')
+    ).toEqual('1,000,000')
+    expect(
+      XEUtils.commafy(1000000, { digits: 4 })
     ).toEqual('1,000,000.0000')
     expect(
-      XEUtils.commafy('1000000.5678', { digits: 3 })
-    ).toEqual('1,000,000.568')
+      XEUtils.commafy('1000000')
+    ).toEqual('1,000,000')
+    expect(
+      XEUtils.commafy(1000000.555, { digits: 2 })
+    ).toEqual('1,000,000.56')
+    expect(
+      XEUtils.commafy(1000000.551, { digits: 2 })
+    ).toEqual('1,000,000.55')
+    expect(
+      XEUtils.commafy(1000000.555, { digits: 2, ceil: true })
+    ).toEqual('1,000,000.56')
+    expect(
+      XEUtils.commafy(1000000.551, { digits: 2, ceil: true })
+    ).toEqual('1,000,000.56')
+    expect(
+      XEUtils.commafy(1000000.555, { digits: 2, floor: true })
+    ).toEqual('1,000,000.55')
+    expect(
+      XEUtils.commafy(1000000.551, { digits: 2, floor: true })
+    ).toEqual('1,000,000.55')
     expect(
       XEUtils.commafy(6660000000000001, { spaceNumber: 4, separator: ' ' })
     ).toEqual('6660 0000 0000 0001')
     expect(
       XEUtils.commafy('111111111111111111111111111111111')
     ).toEqual('111,111,111,111,111,111,111,111,111,111,111')
+    expect(
+      XEUtils.commafy('cdabcdabcdabcdabcd', { spaceNumber: 4, separator: ' ' })
+    ).toEqual('cd abcd abcd abcd abcd')
   })
 
-  test('toFixedString()', () => {
+  test('round()', () => {
     expect(
-      XEUtils.toFixedString(null)
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('null')
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('-0')
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('-0.0')
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString([])
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString({})
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString(function () {})
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString(true)
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('abc')
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('$123')
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('123元')
-    ).toEqual('123')
-    expect(
-      XEUtils.toFixedString(123)
-    ).toEqual('123')
-    expect(
-      XEUtils.toFixedString(null, 2)
-    ).toEqual('0.00')
-    expect(
-      XEUtils.toFixedString('1.00', 0)
-    ).toEqual('1')
-    expect(
-      XEUtils.toFixedString('0', 2)
-    ).toEqual('0.00')
-    expect(
-      XEUtils.toFixedString('0.38996', 4)
-    ).toEqual('0.3899')
-    expect(
-      XEUtils.toFixedString('8.3339', 3)
-    ).toEqual('8.333')
-    expect(
-      XEUtils.toFixedString(12.3999, 2)
-    ).toEqual('12.39')
-    expect(
-      XEUtils.toFixedString('12.3999', 6)
-    ).toEqual('12.399900')
-    expect(
-      XEUtils.toFixedString('1452349847.3979', 2)
-    ).toEqual('1452349847.39')
-    expect(
-      XEUtils.toFixedString('-1452349847.3979', 5)
-    ).toEqual('-1452349847.39790')
-    expect(
-      XEUtils.toFixedString('1452349847.3979', 20)
-    ).toEqual('1452349847.39790000000000000000')
-    expect(
-      XEUtils.toFixedString(1e-8)
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('1e-8', 6)
-    ).toEqual('0.000000')
-    expect(
-      XEUtils.toFixedString(1e-8, 8)
-    ).toEqual('0.00000001')
-    expect(
-      XEUtils.toFixedString('1e-8', 12)
-    ).toEqual('0.000000010000')
-    expect(
-      XEUtils.toFixedString(-1e-12)
-    ).toEqual('0')
-    expect(
-      XEUtils.toFixedString('-1e-8', 8)
-    ).toEqual('-0.00000001')
-    expect(
-      XEUtils.toFixedString(-123e-8, 4)
-    ).toEqual('0.0000')
-    expect(
-      XEUtils.toFixedString('-123e-8', 12)
-    ).toEqual('-0.000001230000')
-  })
-
-  test('toFixedNumber()', () => {
-    expect(
-      XEUtils.toFixedNumber(null)
+      XEUtils.round(null)
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('null')
+      XEUtils.round('null')
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('-0')
+      XEUtils.round('-0')
+    ).toEqual(-0)
+    expect(
+      XEUtils.round('-0.0')
+    ).toEqual(-0)
+    expect(
+      XEUtils.round([])
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('-0.0')
+      XEUtils.round({})
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber([])
+      XEUtils.round(function () {})
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber({})
+      XEUtils.round(true)
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber(function () {})
+      XEUtils.round('abc')
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber(true)
+      XEUtils.round('$123')
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('abc')
+      XEUtils.round(null, 2)
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('$123')
-    ).toEqual(0)
-    expect(
-      XEUtils.toFixedNumber(null, 2)
-    ).toEqual(0)
-    expect(
-      XEUtils.toFixedNumber('123元')
+      XEUtils.round('123元')
     ).toEqual(123)
     expect(
-      XEUtils.toFixedNumber(123)
+      XEUtils.round(123)
     ).toEqual(123)
     expect(
-      XEUtils.toFixedNumber('1.00', 0)
+      XEUtils.round('1.00', 0)
     ).toEqual(1)
     expect(
-      XEUtils.toFixedNumber('0', 2)
+      XEUtils.round('0', 2)
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('0.38996', 4)
-    ).toEqual(0.3899)
+      XEUtils.round('4.555', 2)
+    ).toEqual(4.56)
     expect(
-      XEUtils.toFixedNumber('8.3339', 3)
-    ).toEqual(8.333)
+      XEUtils.round('8.3339', 3)
+    ).toEqual(8.334)
     expect(
-      XEUtils.toFixedNumber(12.3999, 2)
-    ).toEqual(12.39)
+      XEUtils.round(4.555, 2)
+    ).toEqual(4.56)
     expect(
-      XEUtils.toFixedNumber('12.3999', 6)
+      XEUtils.round(52.635, 2)
+    ).toEqual(52.64)
+    expect(
+      XEUtils.round(12.3999, 2)
+    ).toEqual(12.4)
+    expect(
+      XEUtils.round('12.3999', 6)
     ).toEqual(12.3999)
     expect(
-      XEUtils.toFixedNumber('1452349847.3979', 2)
-    ).toEqual(1452349847.39)
+      XEUtils.round('1452349847.3979', 2)
+    ).toEqual(1452349847.4)
     expect(
-      XEUtils.toFixedNumber('-1452349847.3979', 5)
+      XEUtils.round('-1452349847.3979', 5)
     ).toEqual(-1452349847.3979)
     expect(
-      XEUtils.toFixedNumber('1452349847.3979', 20)
+      XEUtils.round('1452349847.3979', 8)
     ).toEqual(1452349847.3979)
     expect(
-      XEUtils.toFixedNumber(1e-8)
+      XEUtils.round(1e-8)
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('9e-8', 6)
+      XEUtils.round('9e-8', 6)
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber(9e-8, 8)
+      XEUtils.round(9e-8, 8)
     ).toEqual(9e-8)
     expect(
-      XEUtils.toFixedNumber('9e-8', 12)
+      XEUtils.round('9e-8', 12)
     ).toEqual(9e-8)
     expect(
-      XEUtils.toFixedNumber(-9e-12)
-    ).toEqual(0)
+      XEUtils.round(-9e-12)
+    ).toEqual(-0)
     expect(
-      XEUtils.toFixedNumber('-9e-8', 8)
+      XEUtils.round('-9e-8', 8)
     ).toEqual(-9e-8)
     expect(
-      XEUtils.toFixedNumber(-923e-8, 4)
+      XEUtils.round(-923e-8, 4)
+    ).toEqual(-0)
+    expect(
+      XEUtils.round('-923e-8', 10)
+    ).toEqual(-0.00000923)
+  })
+
+  test('ceil()', () => {
+    expect(
+      XEUtils.ceil(null)
     ).toEqual(0)
     expect(
-      XEUtils.toFixedNumber('-923e-8', 12)
+      XEUtils.ceil('null')
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil('-0')
+    ).toEqual(-0)
+    expect(
+      XEUtils.ceil('-0.0')
+    ).toEqual(-0)
+    expect(
+      XEUtils.ceil([])
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil({})
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil('abc')
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil('$123')
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil(null, 2)
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil('123元')
+    ).toEqual(123)
+    expect(
+      XEUtils.ceil(123)
+    ).toEqual(123)
+    expect(
+      XEUtils.ceil('1.00', 0)
+    ).toEqual(1)
+    expect(
+      XEUtils.ceil('0', 2)
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil('4.555', 2)
+    ).toEqual(4.56)
+    expect(
+      XEUtils.ceil('4.551', 2)
+    ).toEqual(4.56)
+    expect(
+      XEUtils.ceil('8.3339', 3)
+    ).toEqual(8.334)
+    expect(
+      XEUtils.ceil('8.3335', 3)
+    ).toEqual(8.334)
+    expect(
+      XEUtils.ceil(4.555, 2)
+    ).toEqual(4.56)
+    expect(
+      XEUtils.ceil(52.635, 2)
+    ).toEqual(52.64)
+    expect(
+      XEUtils.ceil(12.3999, 2)
+    ).toEqual(12.4)
+    expect(
+      XEUtils.ceil('12.3999', 6)
+    ).toEqual(12.3999)
+    expect(
+      XEUtils.ceil('1452349847.3979', 2)
+    ).toEqual(1452349847.4)
+    expect(
+      XEUtils.ceil('-1452349847.3979', 5)
+    ).toEqual(-1452349847.3979)
+    expect(
+      XEUtils.ceil('1452349847.3979', 8)
+    ).toEqual(1452349847.3979)
+    expect(
+      XEUtils.ceil(1e-8)
+    ).toEqual(1)
+    expect(
+      XEUtils.ceil('9e-8', 6)
+    ).toEqual(0.000001)
+    expect(
+      XEUtils.ceil(9e-8, 8)
+    ).toEqual(9e-8)
+    expect(
+      XEUtils.ceil('9e-8', 12)
+    ).toEqual(9e-8)
+    expect(
+      XEUtils.ceil(-9e-12)
+    ).toEqual(-0)
+    expect(
+      XEUtils.ceil('-9e-8', 8)
+    ).toEqual(-9e-8)
+    expect(
+      XEUtils.ceil(-923e-8, 4)
+    ).toEqual(-0)
+    expect(
+      XEUtils.ceil('-923e-8', 10)
+    ).toEqual(-0.00000923)
+  })
+
+  test('floor()', () => {
+    expect(
+      XEUtils.floor(null)
+    ).toEqual(0)
+    expect(
+      XEUtils.floor('null')
+    ).toEqual(0)
+    expect(
+      XEUtils.floor('-0')
+    ).toEqual(-0)
+    expect(
+      XEUtils.floor('-0.0')
+    ).toEqual(-0)
+    expect(
+      XEUtils.floor([])
+    ).toEqual(0)
+    expect(
+      XEUtils.floor({})
+    ).toEqual(0)
+    expect(
+      XEUtils.floor(function () {})
+    ).toEqual(0)
+    expect(
+      XEUtils.floor(true)
+    ).toEqual(0)
+    expect(
+      XEUtils.floor('abc')
+    ).toEqual(0)
+    expect(
+      XEUtils.floor('$123')
+    ).toEqual(0)
+    expect(
+      XEUtils.floor(null, 2)
+    ).toEqual(0)
+    expect(
+      XEUtils.floor('123元')
+    ).toEqual(123)
+    expect(
+      XEUtils.floor(123)
+    ).toEqual(123)
+    expect(
+      XEUtils.floor('1.00', 0)
+    ).toEqual(1)
+    expect(
+      XEUtils.floor('0', 2)
+    ).toEqual(0)
+    expect(
+      XEUtils.floor('4.555', 2)
+    ).toEqual(4.55)
+    expect(
+      XEUtils.floor('8.3339', 3)
+    ).toEqual(8.333)
+    expect(
+      XEUtils.floor(4.555, 2)
+    ).toEqual(4.55)
+    expect(
+      XEUtils.floor(52.635, 2)
+    ).toEqual(52.63)
+    expect(
+      XEUtils.floor(12.3999, 2)
+    ).toEqual(12.39)
+    expect(
+      XEUtils.floor('12.3999', 6)
+    ).toEqual(12.3999)
+    expect(
+      XEUtils.floor('1452349847.3979', 2)
+    ).toEqual(1452349847.39)
+    expect(
+      XEUtils.floor('-1452349847.3979', 5)
+    ).toEqual(-1452349847.3979)
+    expect(
+      XEUtils.floor('1452349847.3979', 8)
+    ).toEqual(1452349847.3979)
+    expect(
+      XEUtils.floor(1e-8)
+    ).toEqual(0)
+    expect(
+      XEUtils.floor('9e-8', 6)
+    ).toEqual(0)
+    expect(
+      XEUtils.floor(9e-8, 8)
+    ).toEqual(9e-8)
+    expect(
+      XEUtils.floor('9e-8', 12)
+    ).toEqual(9e-8)
+    expect(
+      XEUtils.floor(-9e-12)
+    ).toEqual(-1)
+    expect(
+      XEUtils.floor('-9e-8', 8)
+    ).toEqual(-9e-8)
+    expect(
+      XEUtils.floor(-923e-8, 4)
+    ).toEqual(-0.0001)
+    expect(
+      XEUtils.floor('-923e-8', 10)
     ).toEqual(-0.00000923)
   })
 

@@ -4,8 +4,9 @@ var random = require('./random')
 var max = require('./max')
 var min = require('./min')
 var commafy = require('./commafy')
-var toFixedString = require('./toFixedString')
-var toFixedNumber = require('./toFixedNumber')
+var round = require('./round')
+var ceil = require('./ceil')
+var floor = require('./floor')
 var toInteger = require('./toInteger')
 var toNumber = require('./toNumber')
 var add = require('./add')
@@ -20,8 +21,9 @@ var numberExports = {
   min: min,
   max: max,
   commafy: commafy,
-  toFixedString: toFixedString,
-  toFixedNumber: toFixedNumber,
+  round: round,
+  ceil: ceil,
+  floor: floor,
   toNumber: toNumber,
   toInteger: toInteger,
   add: add,
