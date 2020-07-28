@@ -1,5 +1,5 @@
 var helperNumberDecimal = require('./helperNumberDecimal')
-var helperNumString = require('./helperNumString')
+var toNumberString = require('./toNumberString')
 var toNumber = require('./toNumber')
 
 /**
@@ -12,8 +12,8 @@ var toNumber = require('./toNumber')
 function multiply (num1, num2) {
   var multiplier = toNumber(num1)
   var multiplicand = toNumber(num2)
-  var str1 = helperNumString(multiplier)
-  var str2 = helperNumString(multiplicand)
+  var str1 = toNumberString(multiplier)
+  var str2 = toNumberString(multiplicand)
   return parseInt(str1.replace('.', '')) * parseInt(str2.replace('.', '')) / Math.pow(10, helperNumberDecimal(str1) + helperNumberDecimal(str2))
 }
 

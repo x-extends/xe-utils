@@ -122,8 +122,10 @@ var commafy = require('./commafy')
 var round = require('./round')
 var ceil = require('./ceil')
 var floor = require('./floor')
+var toFixed = require('./toFixed')
 var toInteger = require('./toInteger')
 var toNumber = require('./toNumber')
+var toNumberString = require('./toNumberString')
 var add = require('./add')
 var subtract = require('./subtract')
 var multiply = require('./multiply')
@@ -306,7 +308,9 @@ assign(XEUtils, {
   round: round,
   ceil: ceil,
   floor: floor,
+  toFixed: toFixed,
   toNumber: toNumber,
+  toNumberString: toNumberString,
   toInteger: toInteger,
   add: add,
   subtract: subtract,

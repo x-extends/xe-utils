@@ -1,4 +1,4 @@
-const XEUtils = require('../index')
+const XEUtils = require('../func')
 
 describe('Number functions', () => {
   test('random()', () => {
@@ -307,10 +307,16 @@ describe('Number functions', () => {
     ).toEqual(1452349847.3979)
     expect(
       XEUtils.ceil(1e-8)
-    ).toEqual(1)
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil(1e-8, 8)
+    ).toEqual(0.00000001)
     expect(
       XEUtils.ceil('9e-8', 6)
-    ).toEqual(0.000001)
+    ).toEqual(0)
+    expect(
+      XEUtils.ceil(9e-8, 8)
+    ).toEqual(0.00000009)
     expect(
       XEUtils.ceil(9e-8, 8)
     ).toEqual(9e-8)
@@ -418,16 +424,139 @@ describe('Number functions', () => {
     ).toEqual(9e-8)
     expect(
       XEUtils.floor(-9e-12)
-    ).toEqual(-1)
+    ).toEqual(-0)
     expect(
       XEUtils.floor('-9e-8', 8)
     ).toEqual(-9e-8)
     expect(
       XEUtils.floor(-923e-8, 4)
-    ).toEqual(-0.0001)
+    ).toEqual(-0)
     expect(
       XEUtils.floor('-923e-8', 10)
     ).toEqual(-0.00000923)
+  })
+
+  test('toFixed()', () => {
+    expect(
+      XEUtils.toFixed()
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed('')
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(null)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(undefined)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed('abc')
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(1e-9)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(0.6)
+    ).toEqual('1')
+    expect(
+      XEUtils.toFixed(1)
+    ).toEqual('1')
+    expect(
+      XEUtils.toFixed(0.01)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(1, 2)
+    ).toEqual('1.00')
+    expect(
+      XEUtils.toFixed(0.01, 4)
+    ).toEqual((0.01).toFixed(4))
+    expect(
+      XEUtils.toFixed(0.065, 2)
+    ).toEqual((0.065).toFixed(2))
+    expect(
+      XEUtils.toFixed('0.0001', 3)
+    ).toEqual((0.0001).toFixed(3))
+    expect(
+      XEUtils.toFixed('0.0005', 3)
+    ).toEqual((0.0005).toFixed(3))
+    expect(
+      XEUtils.toFixed(-0.123, 2)
+    ).toEqual((-0.123).toFixed(2))
+    expect(
+      XEUtils.toFixed('1234.236', 10)
+    ).toEqual((1234.236).toFixed(10))
+    expect(
+      XEUtils.toFixed(1234.236, 20)
+    ).toEqual('1234.23600000000000000000')
+    expect(
+      XEUtils.toFixed(1.004, 30)
+    ).toEqual('1.004000000000000000000000000000')
+  })
+
+  test('toNumberString()', () => {
+    expect(
+      XEUtils.toNumberString('')
+    ).toEqual('')
+    expect(
+      XEUtils.toNumberString('123')
+    ).toEqual('123')
+    expect(
+      XEUtils.toNumberString(123)
+    ).toEqual('123')
+    expect(
+      XEUtils.toNumberString(123.33)
+    ).toEqual('123.33')
+    expect(
+      XEUtils.toNumberString('123.33')
+    ).toEqual('123.33')
+    expect(
+      XEUtils.toNumberString(1e-9)
+    ).toEqual('0.000000001')
+    expect(
+      XEUtils.toNumberString('1e-9')
+    ).toEqual('0.000000001')
+    expect(
+      Number(XEUtils.toNumberString('1e-9'))
+    ).toEqual(1e-9)
+    expect(
+      XEUtils.toNumberString(1e+22)
+    ).toEqual('10000000000000000000000')
+    expect(
+      XEUtils.toNumberString('1e+22')
+    ).toEqual('10000000000000000000000')
+    expect(
+      XEUtils.toNumberString(-1e+24)
+    ).toEqual('-1000000000000000000000000')
+    expect(
+      Number(XEUtils.toNumberString(-1e+24))
+    ).toEqual(-1e+24)
+    expect(
+      XEUtils.toNumberString(+1e+24)
+    ).toEqual('1000000000000000000000000')
+    expect(
+      Number(XEUtils.toNumberString(+1e+24))
+    ).toEqual(+1e+24)
+    expect(
+      XEUtils.toNumberString(1234e+22)
+    ).toEqual('12340000000000000000000000')
+    expect(
+      XEUtils.toNumberString(123.4e+22)
+    ).toEqual('1234000000000000000000000')
+    expect(
+      Number(XEUtils.toNumberString(123.4e+22))
+    ).toEqual(123.4e+22)
+    expect(
+      XEUtils.toNumberString(2536e-16)
+    ).toEqual('0.0000000000002536')
+    expect(
+      Number(XEUtils.toNumberString(2536e-16))
+    ).toEqual(2536e-16)
+    expect(
+      XEUtils.toNumberString(25.36e-16)
+    ).toEqual('0.000000000000002536')
+    expect(
+      Number(XEUtils.toNumberString(25.36e-16))
+    ).toEqual(25.36e-16)
   })
 
   test('toNumber()', () => {

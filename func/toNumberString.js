@@ -1,10 +1,13 @@
 var helperStringRepeat = require('./helperStringRepeat')
+var helperNumberOffsetPoint = require('./helperNumberOffsetPoint')
 
-function helperNumberOffsetPoint (str, offsetIndex) {
-  return str.substring(0, offsetIndex) + '.' + str.substring(offsetIndex, str.length)
-}
-
-function helperNumString(num) {
+/**
+ * 数值转字符串，科学计数转字符串
+ * @param { Number } num 数值
+ *
+ * @return {Number}
+ */
+function toNumberString(num) {
   var rest = '' + num
   var scienceMatchs = rest.match(/^([-+]?)((\d+)|((\d+)?[.](\d+)?))e([-+]{1})([0-9]+)$/)
   if (scienceMatchs) {
@@ -41,4 +44,4 @@ function helperNumString(num) {
   return rest
 }
 
-module.exports = helperNumString
+module.exports = toNumberString

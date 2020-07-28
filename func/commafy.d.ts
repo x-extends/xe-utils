@@ -22,7 +22,7 @@ export interface CommafyOptions {
   /**
    * 只对 number 类型有效，向下舍入
    */
-  floor?: floor;
+  floor?: boolean;
 }
 
 /**

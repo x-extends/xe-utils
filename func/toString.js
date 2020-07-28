@@ -1,10 +1,10 @@
 var eqNull = require('./eqNull')
 var isNumber = require('./isNumber')
-var helperNumString = require('./helperNumString')
+var toNumberString = require('./toNumberString')
 
 function toValString (obj) {
   if (isNumber(obj)) {
-    return helperNumString(obj)
+    return toNumberString(obj)
   }
   return '' + (eqNull(obj) ? '' : obj)
 }

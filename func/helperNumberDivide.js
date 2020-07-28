@@ -1,10 +1,10 @@
 var helperNumberDecimal = require('./helperNumberDecimal')
-var helperNumString = require('./helperNumString')
+var toNumberString = require('./toNumberString')
 var multiply = require('./multiply')
 
 function helperNumberDivide (divisor, dividend) {
-  var str1 = helperNumString(divisor)
-  var str2 = helperNumString(dividend)
+  var str1 = toNumberString(divisor)
+  var str2 = toNumberString(dividend)
   var divisorDecimal = helperNumberDecimal(str1)
   var dividendDecimal = helperNumberDecimal(str2)
   var powY = dividendDecimal - divisorDecimal

@@ -4,8 +4,9 @@ var floor = require('./floor')
 
 var isNumber = require('./isNumber')
 var toValString = require('./toString')
+var toFixed = require('./toFixed')
 
-var helperNumString = require('./helperNumString')
+var toNumberString = require('./toNumberString')
 
 /**
   * 千分位分隔符、小数点
@@ -19,7 +20,7 @@ function commafy(num, options) {
   var optDigits = opts.digits
   var isNum = isNumber(num)
   var rest = isNum ? (opts.ceil ? ceil : (opts.floor ? floor : round))(num, optDigits) : toValString(num).replace(/,/g, '')
-  var result = isNum ? (helperNumString(optDigits ? rest.toFixed(optDigits) : rest).split('.')): (rest ? [rest] : [])
+  var result = isNum ? (toNumberString(optDigits ? toFixed(rest, optDigits) : rest).split('.')): (rest ? [rest] : [])
   if (result.length) {
     return result[0].replace(new RegExp('(?=(?!(\\b))(.{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (result[1] ? ('.' + result[1]) : '')
   }

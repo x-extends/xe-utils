@@ -2460,6 +2460,19 @@ export default {
               ]
             },
             {
+              name: 'toNumberString',
+              args: 'num',
+              title: '数值转字符串，科学计数转字符串',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.toNumberString(1e-14) // '0.00000000000001'
+                XEUtils.toNumberString(1e+22) // '10000000000000000000000'
+                `
+              ]
+            },
+            {
               name: 'toInteger',
               args: 'num',
               title: '转整数',
