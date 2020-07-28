@@ -1,6 +1,6 @@
-var staticParseInt = require('../static/staticParseInt')
-
 var toValString = require('./toString')
+
+var helperStringRepeat = require('./helperStringRepeat')
 
 /**
   * 将字符串重复 n 次
@@ -10,12 +10,7 @@ var toValString = require('./toString')
   * @return {String}
   */
 function repeat (str, count) {
-  var rest = toValString(str)
-  if (rest.repeat) {
-    return rest.repeat(count)
-  }
-  var list = isNaN(count) ? [] : new Array(staticParseInt(count))
-  return list.join(rest) + (list.length > 0 ? rest : '')
+  return helperStringRepeat(toValString(str), count)
 }
 
 module.exports = repeat

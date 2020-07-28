@@ -1,6 +1,4 @@
-var toNumber = require('./toNumber')
-var toInteger = require('./toInteger')
-var helperFixedNumber = require('./helperFixedNumber')
+var floor = require('./floor')
 
 /**
  * 和 Number.toFixed 类似，区别就是不会对小数进行四舍五入，结果返回数值
@@ -9,8 +7,7 @@ var helperFixedNumber = require('./helperFixedNumber')
  * @return {String}
  */
 function toFixedNumber (str, digits) {
-  var rest = (digits ? toNumber : toInteger)(helperFixedNumber(str, digits))
-  return rest === 0 ? 0 : rest
+  return floor(str, digits)
 }
 
 module.exports = toFixedNumber

@@ -1,7 +1,8 @@
-var repeat = require('./repeat')
 var toValString = require('./toString')
 
 var isUndefined = require('../base/isUndefined')
+
+var helperStringRepeat = require('./helperStringRepeat')
 
 /**
   * 用指定字符从后面开始补全字符串
@@ -21,7 +22,7 @@ function padEnd (str, targetLength, padString) {
   if (targetLength > rest.length) {
     targetLength -= rest.length
     if (targetLength > padString.length) {
-      padString += repeat(padString, targetLength / padString.length)
+      padString += helperStringRepeat(padString, targetLength / padString.length)
     }
     return rest + padString.slice(0, targetLength)
   }

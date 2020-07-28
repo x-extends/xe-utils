@@ -1,4 +1,4 @@
-const XEUtils = require('../func')
+const XEUtils = require('../index')
 
 describe('Array functions', () => {
   test('uniq()', () => {

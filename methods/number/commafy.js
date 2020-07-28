@@ -1,24 +1,30 @@
-var toNumber = require('./toNumber')
+var round = require('./round')
+var ceil = require('./ceil')
+var floor = require('./floor')
 
-var assign = require('../object/assign')
+var isNumber = require('../base/isNumber')
 var toValString = require('../string/toString')
+var toFixed = require('./toFixed')
+
+var toNumberString = require('./toNumberString')
 
 /**
   * 千分位分隔符、小数点
   *
   * @param {String/Number} num 数值
-  * @param {Object} 参数 {spaceNumber: 分割位数(默认3), separator: 分隔符(默认,), digits: 小数位数(默认null)}
+  * @param {CommafyOptions} options 参数
   * @return {String}
  */
-function commafy (num, options) {
-  num = toValString(num).replace(/,/g, '')
-  if (num) {
-    var opts = assign({ spaceNumber: 3, separator: ',' }, options)
-    var optDigits = opts.digits || opts.fixed
-    var result = (optDigits ? toNumber(num).toFixed(optDigits) : num).split('.')
-    return result[0].replace(new RegExp('(?=(?!(\\b))(\\d{' + opts.spaceNumber + '})+$)', 'g'), opts.separator) + (result[1] ? '.' + result[1] : '')
+function commafy(num, options) {
+  var opts = options || {}
+  var optDigits = opts.digits
+  var isNum = isNumber(num)
+  var rest = isNum ? (opts.ceil ? ceil : (opts.floor ? floor : round))(num, optDigits) : toValString(num).replace(/,/g, '')
+  var result = isNum ? (toNumberString(optDigits ? toFixed(rest, optDigits) : rest).split('.')): (rest ? [rest] : [])
+  if (result.length) {
+    return result[0].replace(new RegExp('(?=(?!(\\b))(.{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (result[1] ? ('.' + result[1]) : '')
   }
-  return num
+  return rest
 }
 
 module.exports = commafy

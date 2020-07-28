@@ -120,10 +120,15 @@ var random = require('./number/random')
 var max = require('./number/max')
 var min = require('./number/min')
 var commafy = require('./number/commafy')
+var round = require('./number/round')
+var ceil = require('./number/ceil')
+var floor = require('./number/floor')
+var toFixed = require('./number/toFixed')
 var toFixedString = require('./number/toFixedString')
 var toFixedNumber = require('./number/toFixedNumber')
 var toInteger = require('./number/toInteger')
 var toNumber = require('./number/toNumber')
+var toNumberString = require('./number/toNumberString')
 var add = require('./number/add')
 var subtract = require('./number/subtract')
 var multiply = require('./number/multiply')
@@ -304,9 +309,14 @@ assign(XEUtils, {
   min: min,
   max: max,
   commafy: commafy,
+  round: round,
+  ceil: ceil,
+  floor: floor,
+  toFixed: toFixed,
   toFixedString: toFixedString,
   toFixedNumber: toFixedNumber,
   toNumber: toNumber,
+  toNumberString: toNumberString,
   toInteger: toInteger,
   add: add,
   subtract: subtract,
