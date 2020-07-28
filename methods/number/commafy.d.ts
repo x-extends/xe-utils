@@ -1,3 +1,5 @@
+import { XEUtilsMethods } from '../xe-utils'
+
 export interface CommafyOptions {
   /**
    * 分割位数，默认3
@@ -32,7 +34,7 @@ export interface CommafyOptions {
  */
 export declare function commafy(num: string | number, options?: CommafyOptions): string;
 
-declare module './ctor' {
+declare module '../xe-utils' {
   interface XEUtilsMethods {
     /**
      * 数值千分位分隔符、小数点

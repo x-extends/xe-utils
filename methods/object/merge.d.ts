@@ -7,7 +7,7 @@ import { XEUtilsMethods } from '../xe-utils'
 */
 export declare function merge(target: { [key: string]: any } | any[], ...sources: any[]): any;
 
-declare module './ctor' {
+declare module '../xe-utils' {
   interface XEUtilsMethods {
     /**
      * 将一个或多个源对象合并到目标对象中
