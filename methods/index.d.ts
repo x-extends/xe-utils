@@ -9,6 +9,7 @@ export * from './object/extend'
 export * from './object/objectEach'
 export * from './object/lastObjectEach'
 export * from './object/objectMap'
+export * from './object/merge'
 
 // array
 export * from './array/map'
