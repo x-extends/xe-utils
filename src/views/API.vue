@@ -2431,7 +2431,15 @@ export default {
               args: 'num [, options]',
               title: '数值千分位分隔符、小数点',
               desc: '',
-              params: [],
+              params: [
+                ['属性', '描述', '类型', '版本'],
+                ['spaceNumber', '分割位数，默认3', 'number', ''],
+                ['separator', '分隔符，默认', 'string', ''],
+                ['digits', '只对 number 类型有效，小数位数', 'number', 'v2+'],
+                ['round', '只对 number 类型有效，四舍五入，默认true', 'number', 'v2.7+'],
+                ['ceil', '只对 number 类型有效，向上舍入', 'number', 'v2.7+'],
+                ['floor', '只对 number 类型有效，向下舍入', 'number', 'v2.7+']
+              ],
               codes: [
                 `
                 // 千分位格式化
