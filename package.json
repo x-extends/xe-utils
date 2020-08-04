@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "2.7.2",
+  "version": "2.7.4",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
   "unpkg": "dist/xe-utils.min.js",
@@ -60,7 +60,8 @@
   },
   "keywords": [
     "utils",
-    "vxe-utils",
+    "js-util",
+    "js-tool",
     "xe-utils",
     "tools"
   ],
