@@ -144,6 +144,7 @@ var toStringDate = require('./date/toStringDate')
 var toDateString = require('./date/toDateString')
 var now = require('./date/now')
 var timestamp = require('./date/timestamp')
+var isValidDate = require('./date/isValidDate')
 var isDateSame = require('./date/isDateSame')
 var getWhatWeek = require('./date/getWhatWeek')
 var getYearDay = require('./date/getYearDay')
@@ -328,6 +329,7 @@ assign(XEUtils, {
   // date
   now: now,
   timestamp: timestamp,
+  isValidDate: isValidDate,
   isDateSame: isDateSame,
   toStringDate: toStringDate,
   toDateString: toDateString,

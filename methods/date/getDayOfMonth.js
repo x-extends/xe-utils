@@ -6,8 +6,7 @@ var helperGetDateTime = require('./helperGetDateTime')
 
 var getWhatMonth = require('./getWhatMonth')
 var toStringDate = require('./toStringDate')
-
-var isDate = require('../base/isDate')
+var isValidDate = require('./isValidDate')
 
 /**
   * 返回某个月份的天数
@@ -18,10 +17,10 @@ var isDate = require('../base/isDate')
   */
 function getDayOfMonth (date, month) {
   date = toStringDate(date)
-  if (isDate(date)) {
+  if (isValidDate(date)) {
     return Math.floor((helperGetDateTime(getWhatMonth(date, month, staticStrLast)) - helperGetDateTime(getWhatMonth(date, month, staticStrFirst))) / staticDayTime) + 1
   }
-  return date
+  return NaN
 }
 
 module.exports = getDayOfMonth

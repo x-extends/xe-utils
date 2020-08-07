@@ -7,7 +7,7 @@ var helperGetDateMonth = require('./helperGetDateMonth')
 var helperGetDateTime = require('./helperGetDateTime')
 
 var toStringDate = require('./toStringDate')
-var isDate = require('../base/isDate')
+var isValidDate = require('./isValidDate')
 
 /**
   * 返回前几天或后几天的日期
@@ -19,7 +19,7 @@ var isDate = require('../base/isDate')
   */
 function getWhatDay (date, day, mode) {
   date = toStringDate(date)
-  if (isDate(date) && !isNaN(day)) {
+  if (isValidDate(date) && !isNaN(day)) {
     date.setDate(date.getDate() + staticParseInt(day))
     if (mode === staticStrFirst) {
       return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate())

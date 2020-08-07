@@ -11,26 +11,26 @@ describe('Date functions', () => {
 
   test('timestamp()', () => {
     expect(
-      XEUtils.timestamp(-1)
-    ).toEqual('Invalid Date')
+      XEUtils.timestamp(-1).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.timestamp(123456)
-    ).toEqual('Invalid Date')
+      XEUtils.timestamp(123456).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.timestamp('abc')
-    ).toEqual('Invalid Date')
+      XEUtils.timestamp('abc').toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.timestamp([])
-    ).toEqual('Invalid Date')
+      XEUtils.timestamp([]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.timestamp({})
-    ).toEqual('Invalid Date')
+      XEUtils.timestamp({}).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.timestamp(/\d/)
-    ).toEqual('Invalid Date')
+      XEUtils.timestamp(/\d/).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.timestamp(function () {})
-    ).toEqual('Invalid Date')
+      XEUtils.timestamp(function () {}).toString()
+    ).toEqual('NaN')
     expect(
       XEUtils.timestamp() >= time
     ).toEqual(true)
@@ -65,7 +65,31 @@ describe('Date functions', () => {
       XEUtils.isDateSame(0, 0)
     ).toEqual(false)
     expect(
+      XEUtils.isDateSame(new Date(''))
+    ).toEqual(false)
+    expect(
+      XEUtils.isDateSame(new Date('abc'), 0)
+    ).toEqual(false)
+    expect(
+      XEUtils.isDateSame(null, new Date(''))
+    ).toEqual(false)
+    expect(
+      XEUtils.isDateSame(0, new Date('abc'))
+    ).toEqual(false)
+    expect(
+      XEUtils.isDateSame(new Date(''), new Date(''))
+    ).toEqual(false)
+    expect(
+      XEUtils.isDateSame(new Date('abc'), new Date('abc'))
+    ).toEqual(false)
+    expect(
       XEUtils.isDateSame('2018-12-01', '2018-12-11')
+    ).toEqual(false)
+    expect(
+      XEUtils.isDateSame('2017-04-01', new Date(2017, 0, 1), 'yyyy-MM')
+    ).toEqual(false)
+    expect(
+      XEUtils.isDateSame(new Date(2018, 0, 1), new Date(2018, 10, 2), 'yyyy-MM')
     ).toEqual(false)
     expect(
       XEUtils.isDateSame('2018-12-01', '2018-12-01')
@@ -73,6 +97,18 @@ describe('Date functions', () => {
     expect(
       XEUtils.isDateSame(time, '2018-12-01', 'yyyy')
     ).toEqual(false)
+    expect(
+      XEUtils.isDateSame(new Date(2017, 0, 1), '2017-01-01', 'yyyy')
+    ).toEqual(true)
+    expect(
+      XEUtils.isDateSame('2017-04-01', new Date(2017, 0, 1), 'yyyy')
+    ).toEqual(true)
+    expect(
+      XEUtils.isDateSame(new Date(2018, 0, 1), new Date(2018, 0, 1), 'yyyy')
+    ).toEqual(true)
+    expect(
+      XEUtils.isDateSame(new Date(2018, 0, 1), new Date(2018, 10, 1), 'yyyy')
+    ).toEqual(true)
     expect(
       XEUtils.isDateSame(date, XEUtils.toStringDate('01/01/2017', 'MM/dd/yyyy'), 'MM')
     ).toEqual(true)
@@ -92,49 +128,100 @@ describe('Date functions', () => {
 
   test('toStringDate()', () => {
     expect(
-      XEUtils.toStringDate(undefined)
+      XEUtils.toStringDate() instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate(undefined) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate(null) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate('') instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate(0) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate(/\d/) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate([]) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate({}) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate([2018, 1, 1]) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate({ time: 2018 }) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate('null') instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate(function () {}) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate('2') instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate('20') instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate('201') instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate('Year:2018 Month:01 Day:26') instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.toStringDate().toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate(null)
+      XEUtils.toStringDate(undefined).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate('')
+      XEUtils.toStringDate(null).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate(0)
+      XEUtils.toStringDate('').toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate(/\d/)
+      XEUtils.toStringDate(0).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate([])
+      XEUtils.toStringDate(/\d/).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate({})
+      XEUtils.toStringDate([]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate([2018, 1, 1])
+      XEUtils.toStringDate({}).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate({ time: 2018 })
+      XEUtils.toStringDate([2018, 1, 1]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate('null')
+      XEUtils.toStringDate({ time: 2018 }).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate(function () {})
+      XEUtils.toStringDate('null').toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate('2')
+      XEUtils.toStringDate(function () {}).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate('20')
+      XEUtils.toStringDate('2').toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate('201')
+      XEUtils.toStringDate('20').toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate('Year:2018 Month:01 Day:26')
+      XEUtils.toStringDate('201').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.toStringDate('Year:2018 Month:01 Day:26').toString()
     ).toEqual('Invalid Date')
     expect(
       XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
@@ -212,6 +299,9 @@ describe('Date functions', () => {
 
   test('toDateString()', () => {
     expect(
+      XEUtils.toDateString()
+    ).toEqual('')
+    expect(
       XEUtils.toDateString(undefined)
     ).toEqual('')
     expect(
@@ -249,6 +339,12 @@ describe('Date functions', () => {
     ).toEqual('Invalid Date')
     expect(
       XEUtils.toDateString('null')
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.toDateString(new Date(''))
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.toDateString(new Date('abc'))
     ).toEqual('Invalid Date')
     expect(
       XEUtils.toDateString('Year:2018 Month:01 Day:26')
@@ -326,31 +422,76 @@ describe('Date functions', () => {
 
   test('getWhatYear()', () => {
     expect(
-      XEUtils.getWhatYear(0)
+      XEUtils.getWhatYear() instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear(0) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear(-1) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear([]) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear({}) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear(null) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear(undefined) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear([2018, 1, 1]) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear({ time: 2018 }) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear('null') instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear(new Date('')) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear(new Date('abc')) instanceof Date
+    ).toEqual(true)
+    expect(
+      XEUtils.getWhatYear().toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear(-1)
+      XEUtils.getWhatYear(0).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear([])
+      XEUtils.getWhatYear(-1).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear({})
+      XEUtils.getWhatYear([]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear(null)
+      XEUtils.getWhatYear({}).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear(undefined)
+      XEUtils.getWhatYear(null).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear([2018, 1, 1])
+      XEUtils.getWhatYear(undefined).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear({ time: 2018 })
+      XEUtils.getWhatYear([2018, 1, 1]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatYear('null')
+      XEUtils.getWhatYear({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatYear('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatYear(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatYear(new Date('abc')).toString()
     ).toEqual('Invalid Date')
     expect(
       XEUtils.getWhatYear(date, -1)
@@ -365,6 +506,9 @@ describe('Date functions', () => {
       XEUtils.getWhatYear('2017-12-20', 1)
     ).toEqual(new Date(2018, 11, 20))
     expect(
+      XEUtils.getWhatYear(new Date(2017, 11, 10), 1)
+    ).toEqual(new Date(2018, 11, 10))
+    expect(
       XEUtils.getWhatYear('2017-12-20', 0, 'first')
     ).toEqual(new Date(2017, 0, 1, 0, 0, 0, 0))
     expect(
@@ -374,31 +518,40 @@ describe('Date functions', () => {
 
   test('getWhatMonth()', () => {
     expect(
-      XEUtils.getWhatMonth(0)
+      XEUtils.getWhatMonth().toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth(-1)
+      XEUtils.getWhatMonth(0).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth({})
+      XEUtils.getWhatMonth(-1).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth([])
+      XEUtils.getWhatMonth({}).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth(null)
+      XEUtils.getWhatMonth([]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth(undefined)
+      XEUtils.getWhatMonth(null).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth([2018, 1, 1])
+      XEUtils.getWhatMonth(undefined).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth({ time: 2018 })
+      XEUtils.getWhatMonth([2018, 1, 1]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatMonth('null')
+      XEUtils.getWhatMonth({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMonth('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMonth(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMonth(new Date('abc')).toString()
     ).toEqual('Invalid Date')
     expect(
       XEUtils.getWhatMonth(date, -1)
@@ -413,6 +566,9 @@ describe('Date functions', () => {
       XEUtils.getWhatMonth('2017-12-20', 1)
     ).toEqual(new Date(2018, 0, 20))
     expect(
+      XEUtils.getWhatMonth(new Date(2017, 11, 20), 1)
+    ).toEqual(new Date(2018, 0, 20))
+    expect(
       XEUtils.getWhatMonth('2017-12-20', -1, 'first')
     ).toEqual(new Date(2017, 10, 1, 0, 0, 0, 0))
     expect(
@@ -422,31 +578,40 @@ describe('Date functions', () => {
 
   test('getWhatWeek()', () => {
     expect(
-      XEUtils.getWhatWeek(0)
+      XEUtils.getWhatWeek().toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek(-1)
+      XEUtils.getWhatWeek(0).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek(null)
+      XEUtils.getWhatWeek(-1).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek(undefined)
+      XEUtils.getWhatWeek(null).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek({})
+      XEUtils.getWhatWeek(undefined).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek([])
+      XEUtils.getWhatWeek({}).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek([2018, 1, 1])
+      XEUtils.getWhatWeek([]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek({ time: 2018 })
+      XEUtils.getWhatWeek([2018, 1, 1]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatWeek('null')
+      XEUtils.getWhatWeek({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatWeek('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatWeek(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatWeek(new Date('abc')).toString()
     ).toEqual('Invalid Date')
     expect(
       XEUtils.getWhatWeek(date, -1)
@@ -456,6 +621,9 @@ describe('Date functions', () => {
     ).toEqual(new Date(2017, 0, 8, 14, 5, 30, 99))
     expect(
       XEUtils.getWhatWeek('2017-12-20', -1)
+    ).toEqual(new Date(2017, 11, 13))
+    expect(
+      XEUtils.getWhatWeek(new Date(2017, 11, 20), -1)
     ).toEqual(new Date(2017, 11, 13))
     expect(
       XEUtils.getWhatWeek('2017-12-20', 1)
@@ -470,34 +638,43 @@ describe('Date functions', () => {
 
   test('getWhatDay()', () => {
     expect(
-      XEUtils.getWhatDay(0)
+      XEUtils.getWhatDay().toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay(-1)
+      XEUtils.getWhatDay(0).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay(123)
+      XEUtils.getWhatDay(-1).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay(null)
+      XEUtils.getWhatDay(123).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay(undefined)
+      XEUtils.getWhatDay(null).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay({})
+      XEUtils.getWhatDay(undefined).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay([])
+      XEUtils.getWhatDay({}).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay([2018, 1, 1])
+      XEUtils.getWhatDay([]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay({ time: 2018 })
+      XEUtils.getWhatDay([2018, 1, 1]).toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.getWhatDay('null')
+      XEUtils.getWhatDay({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatDay('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatDay(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatDay(new Date('abc')).toString()
     ).toEqual('Invalid Date')
     expect(
       XEUtils.getWhatDay(date, -1)
@@ -508,6 +685,9 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatDay('2017-12-20', -1)
     ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatDay(new Date(2017, 11, 10), -1)
+    ).toEqual(new Date(2017, 11, 9))
     expect(
       XEUtils.getWhatDay('2017-12-20', 1)
     ).toEqual(new Date(2017, 11, 21))
@@ -521,32 +701,41 @@ describe('Date functions', () => {
 
   test('getYearDay()', () => {
     expect(
-      XEUtils.getYearDay(0)
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay().toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay(-1)
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay(0).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay(null)
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay(-1).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay(undefined)
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay(null).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay({})
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay(undefined).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay([])
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay({}).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay([2018, 1, 1])
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay([]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay({ time: 2018 })
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay([2018, 1, 1]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearDay('null')
-    ).toEqual('Invalid Date')
+      XEUtils.getYearDay({ time: 2018 }).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getYearDay('null').toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getYearDay(new Date('')).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getYearDay(new Date('abc')).toString()
+    ).toEqual('NaN')
     expect(
       XEUtils.getYearDay(date)
     ).toEqual(1)
@@ -560,32 +749,47 @@ describe('Date functions', () => {
 
   test('getYearWeek()', () => {
     expect(
-      XEUtils.getYearWeek(0)
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek().toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearWeek(null)
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek(0).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearWeek(undefined)
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek(null).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearWeek({})
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek(undefined).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearWeek([])
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek({}).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearWeek([2018, 1, 1])
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek([]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearWeek({ time: 2018 })
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek([2018, 1, 1]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getYearWeek('null')
-    ).toEqual('Invalid Date')
+      XEUtils.getYearWeek({ time: 2018 }).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getYearWeek('null').toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getYearWeek(new Date('')).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getYearWeek(new Date('abc')).toString()
+    ).toEqual('NaN')
     expect(
       XEUtils.getYearWeek(date)
     ).toEqual(52)
+    expect(
+      XEUtils.getYearWeek('2017-01-01')
+    ).toEqual(52)
+    expect(
+      XEUtils.getYearWeek('2017-01-01') === XEUtils.getYearWeek(new Date(2017, 0, 1))
+    ).toEqual(true)
     expect(
       XEUtils.getYearWeek('2017-01-20')
     ).toEqual(3)
@@ -593,10 +797,22 @@ describe('Date functions', () => {
       XEUtils.getYearWeek('2017-01-28')
     ).toEqual(4)
     expect(
+      XEUtils.getYearWeek(new Date(2017, 0, 28))
+    ).toEqual(4)
+    expect(
+      XEUtils.getYearWeek('2017-01-28') === XEUtils.getYearWeek(new Date(2017, 0, 28))
+    ).toEqual(true)
+    expect(
       XEUtils.getYearWeek('2018-05-20')
     ).toEqual(20)
     expect(
       XEUtils.getYearWeek('2018-11-20')
+    ).toEqual(47)
+    expect(
+      XEUtils.getYearWeek('2018-11-20') === XEUtils.getYearWeek(new Date(2018, 10, 20))
+    ).toEqual(true)
+    expect(
+      XEUtils.getYearWeek(new Date(2018, 10, 20))
     ).toEqual(47)
     expect(
       XEUtils.getYearWeek('2018-12-20')
@@ -605,29 +821,38 @@ describe('Date functions', () => {
 
   test('getMonthWeek()', () => {
     expect(
-      XEUtils.getMonthWeek(0)
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek().toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getMonthWeek(null)
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek(0).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getMonthWeek(undefined)
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek(null).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getMonthWeek({})
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek(undefined).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getMonthWeek([])
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek({}).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getMonthWeek([2018, 1, 1])
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek([]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getMonthWeek({ time: 2018 })
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek([2018, 1, 1]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getMonthWeek('null')
-    ).toEqual('Invalid Date')
+      XEUtils.getMonthWeek({ time: 2018 }).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getMonthWeek('null').toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getMonthWeek(new Date('')).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getMonthWeek(new Date('abc')).toString()
+    ).toEqual('NaN')
     expect(
       XEUtils.getMonthWeek(date)
     ).toEqual(4)
@@ -635,11 +860,23 @@ describe('Date functions', () => {
       XEUtils.getMonthWeek('2017-01-01')
     ).toEqual(4)
     expect(
+      XEUtils.getMonthWeek(new Date(2017, 0, 1))
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2017-01-01') === XEUtils.getMonthWeek(new Date(2017, 0, 1))
+    ).toEqual(true)
+    expect(
       XEUtils.getMonthWeek('2017-01-20')
     ).toEqual(3)
     expect(
       XEUtils.getMonthWeek('2018-05-20')
     ).toEqual(2)
+    expect(
+      XEUtils.getMonthWeek(new Date(2018, 4, 20))
+    ).toEqual(2)
+    expect(
+      XEUtils.getMonthWeek('2018-05-20') === XEUtils.getMonthWeek(new Date(2018, 4, 20))
+    ).toEqual(true)
     expect(
       XEUtils.getMonthWeek('2018-05-25')
     ).toEqual(3)
@@ -650,29 +887,38 @@ describe('Date functions', () => {
 
   test('getDayOfYear()', () => {
     expect(
-      XEUtils.getDayOfYear(0)
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear().toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getDayOfYear(null)
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear(0).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getDayOfYear(undefined)
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear(null).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getDayOfYear({})
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear(undefined).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getDayOfYear([])
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear({}).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getDayOfYear([2018, 1, 1])
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear([]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getDayOfYear({ time: 2018 })
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear([2018, 1, 1]).toString()
+    ).toEqual('NaN')
     expect(
-      XEUtils.getDayOfYear('null')
-    ).toEqual('Invalid Date')
+      XEUtils.getDayOfYear({ time: 2018 }).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfYear('null').toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfYear(new Date('')).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfYear(new Date('abc')).toString()
+    ).toEqual('NaN')
     expect(
       XEUtils.getDayOfYear(date)
     ).toEqual(365)
@@ -683,41 +929,98 @@ describe('Date functions', () => {
       XEUtils.getDayOfYear('2017-12-20')
     ).toEqual(365)
     expect(
-      XEUtils.getDayOfYear('2019-12-20', 1)
+      XEUtils.getDayOfYear(new Date(2017, 11, 20))
+    ).toEqual(365)
+    expect(
+      XEUtils.getDayOfYear('2017-12-20') === XEUtils.getDayOfYear(new Date(2017, 11, 20))
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfYear('2019-12-10', 1)
     ).toEqual(366)
     expect(
-      XEUtils.getDayOfYear('2020-12-20')
+      XEUtils.getDayOfYear(new Date(2019, 11, 10), 1)
+    ).toEqual(366)
+    expect(
+      XEUtils.getDayOfYear('2019-12-10', 1) === XEUtils.getDayOfYear(new Date(2019, 11, 10), 1)
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfYear('2020-12-10')
     ).toEqual(366)
   })
 
   test('getDayOfMonth()', () => {
     expect(
-      XEUtils.getDayOfMonth(0)
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth())
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth(-1)
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth(0))
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth(null)
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth(-1))
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth(undefined)
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth(null))
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth({})
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth(undefined))
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth([])
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth({}))
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth([2018, 1, 1])
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth([]))
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth({ time: 2018 })
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth([2018, 1, 1]))
+    ).toEqual(true)
     expect(
-      XEUtils.getDayOfMonth('null')
-    ).toEqual('Invalid Date')
+      isNaN(XEUtils.getDayOfMonth({ time: 2018 }))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfMonth('null'))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfMonth(new Date('')))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfMonth(new Date('abc')))
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfMonth().toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth(0).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth(-1).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth(null).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth(undefined).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth({}).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth([]).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth([2018, 1, 1]).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth({ time: 2018 }).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth('null').toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth(new Date('')).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfMonth(new Date('abc')).toString()
+    ).toEqual('NaN')
     expect(
       XEUtils.getDayOfMonth(date)
     ).toEqual(31)
@@ -728,14 +1031,29 @@ describe('Date functions', () => {
       XEUtils.getDayOfMonth('2017-12-20')
     ).toEqual(31)
     expect(
-      XEUtils.getDayOfMonth('2017-12-20', -1)
+      XEUtils.getDayOfMonth(new Date(2017, 11, 20))
+    ).toEqual(31)
+    expect(
+      XEUtils.getDayOfMonth('2017-12-20') === XEUtils.getDayOfMonth(new Date(2017, 11, 20))
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfMonth('2017-12-10', -1)
     ).toEqual(30)
+    expect(
+      XEUtils.getDayOfMonth(new Date(2017, 11, 10), -1)
+    ).toEqual(30)
+    expect(
+      XEUtils.getDayOfMonth('2017-12-10', -1) === XEUtils.getDayOfMonth(new Date(2017, 11, 10), -1)
+    ).toEqual(true)
     expect(
       XEUtils.getDayOfMonth('2017-12-20', 1)
     ).toEqual(31)
   })
 
   test('getDateDiff()', () => {
+    expect(
+      XEUtils.getDateDiff()
+    ).toEqual({ done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(0)
     ).toEqual({ done: false, time: 0 })
@@ -750,6 +1068,12 @@ describe('Date functions', () => {
     ).toEqual({ done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(undefined, null)
+    ).toEqual({ done: false, time: 0 })
+    expect(
+      XEUtils.getDateDiff(new Date(''))
+    ).toEqual({ done: false, time: 0 })
+    expect(
+      XEUtils.getDateDiff(new Date('abc'))
     ).toEqual({ done: false, time: 0 })
     expect(
       XEUtils.getDateDiff([])

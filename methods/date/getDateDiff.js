@@ -5,7 +5,7 @@ var helperNewDate = require('./helperNewDate')
 
 var toStringDate = require('./toStringDate')
 
-var isDate = require('../base/isDate')
+var isValidDate = require('./isValidDate')
 
 /**
   * 返回两个日期之间差距,如果结束日期小于开始日期done为fasle
@@ -20,7 +20,7 @@ function getDateDiff (startDate, endDate, rules) {
   var result = { done: false, time: 0 }
   startDate = toStringDate(startDate)
   endDate = endDate ? toStringDate(endDate) : helperNewDate()
-  if (isDate(startDate) && isDate(endDate)) {
+  if (isValidDate(startDate) && isValidDate(endDate)) {
     startTime = helperGetDateTime(startDate)
     endTime = helperGetDateTime(endDate)
     if (startTime < endTime) {

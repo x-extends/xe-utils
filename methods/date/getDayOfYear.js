@@ -1,7 +1,7 @@
 var getWhatYear = require('./getWhatYear')
 var toStringDate = require('./toStringDate')
+var isValidDate = require('./isValidDate')
 
-var isDate = require('../base/isDate')
 var isLeapYear = require('../base/isLeapYear')
 
 /**
@@ -13,10 +13,10 @@ var isLeapYear = require('../base/isLeapYear')
   */
 function getDayOfYear (date, year) {
   date = toStringDate(date)
-  if (isDate(date)) {
+  if (isValidDate(date)) {
     return isLeapYear(getWhatYear(date, year)) ? 366 : 365
   }
-  return date
+  return NaN
 }
 
 module.exports = getDayOfYear
