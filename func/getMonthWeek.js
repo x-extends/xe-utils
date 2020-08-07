@@ -7,7 +7,7 @@ var getWhatMonth = require('./getWhatMonth')
 var toStringDate = require('./toStringDate')
 var getWhatWeek = require('./getWhatWeek')
 
-var isDate = require('./isDate')
+var isValidDate = require('./isValidDate')
 
 /**
   * 返回某个月的第几周
@@ -18,7 +18,7 @@ var isDate = require('./isDate')
 function getMonthWeek (date) {
   var monthFirst, monthFirstWeek
   var currentDate = toStringDate(date)
-  if (isDate(currentDate)) {
+  if (isValidDate(currentDate)) {
     monthFirst = getWhatMonth(currentDate, 0, staticStrFirst)
     monthFirstWeek = getWhatWeek(monthFirst, 0, 1)
     if (monthFirstWeek < monthFirst) {
@@ -29,7 +29,7 @@ function getMonthWeek (date) {
     }
     return getMonthWeek(getWhatWeek(currentDate, 0, 1))
   }
-  return currentDate
+  return NaN
 }
 
 module.exports = getMonthWeek

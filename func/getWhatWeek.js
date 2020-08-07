@@ -6,7 +6,7 @@ var helperGetDateTime = require('./helperGetDateTime')
 
 var toStringDate = require('./toStringDate')
 
-var isDate = require('./isDate')
+var isValidDate = require('./isValidDate')
 
 /**
   * 返回前几周或后几周的星期几
@@ -19,7 +19,7 @@ var isDate = require('./isDate')
 function getWhatWeek (date, week, day) {
   var time, whatDayTime, currentDay, customDay
   date = toStringDate(date)
-  if (isDate(date)) {
+  if (isValidDate(date)) {
     customDay = staticParseInt(/^[0-7]$/.test(day) ? day : date.getDay())
     currentDay = date.getDay()
     time = helperGetDateTime(date)

@@ -9,7 +9,7 @@ var getYearDay = require('./getYearDay')
 
 var assign = require('./assign')
 
-var isDate = require('./isDate')
+var isValidDate = require('./isValidDate')
 var isFunction = require('./isFunction')
 
 var padStart = require('./padStart')
@@ -42,7 +42,7 @@ var dateFormatRE = /\[([^\]]+)]|y{2,4}|M{1,2}|d{1,2}|H{1,2}|h{1,2}|m{1,2}|s{1,2}
 function toDateString (date, format, options) {
   if (date) {
     date = toStringDate(date)
-    if (isDate(date)) {
+    if (isValidDate(date)) {
       var result = format || setupDefaults.formatString
       var hours = date.getHours()
       var apm = hours < 12 ? 'am' : 'pm'
@@ -124,7 +124,7 @@ function toDateString (date, format, options) {
         return skip || (parseDates[match] ? parseDates[match](match, match.length) : match)
       })
     }
-    return date
+    return 'Invalid Date'
   }
   return ''
 }

@@ -5,7 +5,7 @@ var helperGetDateFullYear = require('./helperGetDateFullYear')
 
 var getWhatMonth = require('./getWhatMonth')
 var toStringDate = require('./toStringDate')
-var isDate = require('./isDate')
+var isValidDate = require('./isValidDate')
 
 /**
   * 返回前几年或后几年的日期
@@ -18,7 +18,7 @@ var isDate = require('./isDate')
 function getWhatYear (date, year, month) {
   var number
   date = toStringDate(date)
-  if (isDate(date)) {
+  if (isValidDate(date)) {
     if (year) {
       number = year && !isNaN(year) ? year : 0
       date.setFullYear(helperGetDateFullYear(date) + number)

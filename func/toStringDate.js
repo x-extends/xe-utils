@@ -50,14 +50,14 @@ function parseStringDate (str, format) {
   *
   * @param {String/Number/Date} str 日期或数字
   * @param {String} format 解析日期格式(yyyy年份、MM月份、dd天、hh(12)HH(24)小时、mm分钟、ss秒、SSS毫秒、Z时区)
-  * @return {String}
+  * @return {Date}
   */
 function toStringDate (str, format) {
-  var rest, isDateType
+  var rest, isDType
   if (str) {
-    isDateType = isDate(str)
-    if (isDateType || (!format && /^[0-9]{11,15}$/.test(str))) {
-      rest = new Date(isDateType ? helperGetDateTime(str) : staticParseInt(str))
+    isDType = isDate(str)
+    if (isDType || (!format && /^[0-9]{11,15}$/.test(str))) {
+      rest = new Date(isDType ? helperGetDateTime(str) : staticParseInt(str))
     } else if (isString(str)) {
       var tempMatch
       var dates = parseStringDate(str, format || setupDefaults.formatDate)
@@ -81,7 +81,7 @@ function toStringDate (str, format) {
       }
     }
   }
-  return !rest || isNaN(helperGetDateTime(rest)) ? 'Invalid Date' : rest
+  return rest ? rest : new Date('')
 }
 
 module.exports = toStringDate

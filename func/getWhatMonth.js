@@ -6,7 +6,7 @@ var helperGetDateTime = require('./helperGetDateTime')
 var helperGetDateMonth = require('./helperGetDateMonth')
 
 var toStringDate = require('./toStringDate')
-var isDate = require('./isDate')
+var isValidDate = require('./isValidDate')
 
 /**
   * 返回前几月或后几月的日期
@@ -19,7 +19,7 @@ var isDate = require('./isDate')
 function getWhatMonth (date, month, day) {
   var monthOffset = month && !isNaN(month) ? month : 0
   date = toStringDate(date)
-  if (isDate(date)) {
+  if (isValidDate(date)) {
     if (day || !isNaN(day)) {
       if (day === staticStrFirst) {
         return new Date(helperGetDateFullYear(date), helperGetDateMonth(date) + monthOffset, 1)

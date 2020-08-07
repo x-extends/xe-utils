@@ -5,7 +5,7 @@ var toDateString = require('./toDateString')
  *
  * @param {Number/String/Date} date1 日期
  * @param {Number/String/Date} date2 日期
- * @param {String} format 格式化
+ * @param {String} format 对比格式
  */
 function isDateSame (date1, date2, format) {
   if (date1 && date2) {
