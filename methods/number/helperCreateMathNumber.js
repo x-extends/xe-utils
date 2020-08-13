@@ -10,13 +10,8 @@ function helperCreateMathNumber(name) {
       var nums = numStr.split('.')
       var intStr = nums[0]
       var floatStr = nums[1] || ''
-      var floatLen = floatStr.length
-      var ltDigits = digits < floatLen
-      var eqDigits = digits === floatLen
-      if (ltDigits || eqDigits) {
-        rest = intStr + '.' + floatStr.substring(0, digits + 1)
-      }
-      if (eqDigits) {
+      rest = intStr + '.' + floatStr.substring(0, digits + 1)
+      if (digits >= floatStr.length) {
         return toNumber(rest)
       }
       if (digits > 0) {
