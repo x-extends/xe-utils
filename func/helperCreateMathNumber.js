@@ -10,8 +10,14 @@ function helperCreateMathNumber(name) {
       var nums = numStr.split('.')
       var intStr = nums[0]
       var floatStr = nums[1] || ''
-      if (digits < floatStr.length) {
+      var floatLen = floatStr.length
+      var ltDigits = digits < floatLen
+      var eqDigits = digits === floatLen
+      if (ltDigits || eqDigits) {
         rest = intStr + '.' + floatStr.substring(0, digits + 1)
+      }
+      if (eqDigits) {
+        return toNumber(rest)
       }
       if (digits > 0) {
         var ratio = Math.pow(10, digits)

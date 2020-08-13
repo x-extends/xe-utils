@@ -186,6 +186,12 @@ describe('Number functions', () => {
       XEUtils.round(52.635, 2)
     ).toEqual(52.64)
     expect(
+      XEUtils.round(2222.22, 2)
+    ).toEqual(2222.22)
+    expect(
+      XEUtils.round(3333.99, 2)
+    ).toEqual(3333.99)
+    expect(
       XEUtils.round(12.3999, 2)
     ).toEqual(12.4)
     expect(
@@ -290,6 +296,12 @@ describe('Number functions', () => {
     expect(
       XEUtils.ceil(52.635, 2)
     ).toEqual(52.64)
+    expect(
+      XEUtils.ceil(2222.22, 2)
+    ).toEqual(2222.22)
+    expect(
+      XEUtils.ceil(3333.99, 2)
+    ).toEqual(3333.99)
     expect(
       XEUtils.ceil(12.3999, 2)
     ).toEqual(12.4)
@@ -396,6 +408,12 @@ describe('Number functions', () => {
       XEUtils.floor(52.635, 2)
     ).toEqual(52.63)
     expect(
+      XEUtils.floor(2222.22, 2)
+    ).toEqual(2222.22)
+    expect(
+      XEUtils.floor(3333.99, 2)
+    ).toEqual(3333.99)
+    expect(
       XEUtils.floor(12.3999, 2)
     ).toEqual(12.39)
     expect(
@@ -456,6 +474,33 @@ describe('Number functions', () => {
       XEUtils.toFixed(1e-9)
     ).toEqual('0')
     expect(
+      XEUtils.toFixed(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(-0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(-0.01)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFixed(0.01, 1)
+    ).toEqual('0.0')
+    expect(
+      XEUtils.toFixed(-0.01, 1)
+    ).toEqual('0.0')
+    expect(
+      XEUtils.toFixed(-0.01, 2)
+    ).toEqual('-0.01')
+    expect(
+      XEUtils.toFixed(0.01, 2)
+    ).toEqual('0.01')
+    expect(
+      XEUtils.toFixed(-0.01, 4)
+    ).toEqual('-0.0100')
+    expect(
+      XEUtils.toFixed(0.01, 4)
+    ).toEqual('0.0100')
+    expect(
       XEUtils.toFixed(0.6)
     ).toEqual('1')
     expect(
@@ -468,6 +513,15 @@ describe('Number functions', () => {
       XEUtils.toFixed(1, 2)
     ).toEqual('1.00')
     expect(
+      XEUtils.toFixed(9999.77, 2)
+    ).toEqual('9999.77')
+    expect(
+      XEUtils.toFixed(33.777, 2)
+    ).toEqual('33.78')
+    expect(
+      XEUtils.toFixed(33.333, 2)
+    ).toEqual('33.33')
+    expect(
       XEUtils.toFixed(0.01, 4)
     ).toEqual((0.01).toFixed(4))
     expect(
@@ -479,6 +533,12 @@ describe('Number functions', () => {
     expect(
       XEUtils.toFixed('0.0005', 3)
     ).toEqual((0.0005).toFixed(3))
+    expect(
+      XEUtils.toFixed('2222.22', 2)
+    ).toEqual('2222.22')
+    expect(
+      XEUtils.toFixed(2222.22, 2)
+    ).toEqual('2222.22')
     expect(
       XEUtils.toFixed(-0.123, 2)
     ).toEqual((-0.123).toFixed(2))
@@ -497,6 +557,27 @@ describe('Number functions', () => {
     expect(
       XEUtils.toNumberString('')
     ).toEqual('')
+    expect(
+      XEUtils.toNumberString(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toNumberString('0')
+    ).toEqual('0')
+    expect(
+      XEUtils.toNumberString(-0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toNumberString('-0')
+    ).toEqual('-0')
+    expect(
+      XEUtils.toNumberString('abc')
+    ).toEqual('abc')
+    expect(
+      XEUtils.toNumberString(-0.001)
+    ).toEqual('-0.001')
+    expect(
+      XEUtils.toNumberString('-0.001')
+    ).toEqual('-0.001')
     expect(
       XEUtils.toNumberString('123')
     ).toEqual('123')
