@@ -180,6 +180,18 @@ describe('Number functions', () => {
       XEUtils.round('8.3339', 3)
     ).toEqual(8.334)
     expect(
+      XEUtils.round(0.999, 4)
+    ).toEqual(0.999)
+    expect(
+      XEUtils.round(1.33, 3)
+    ).toEqual(1.33)
+    expect(
+      XEUtils.round(33, 2)
+    ).toEqual(33)
+    expect(
+      XEUtils.round(33.3, 2)
+    ).toEqual(33.3)
+    expect(
       XEUtils.round(4.555, 2)
     ).toEqual(4.56)
     expect(
@@ -290,6 +302,18 @@ describe('Number functions', () => {
     expect(
       XEUtils.ceil('8.3335', 3)
     ).toEqual(8.334)
+    expect(
+      XEUtils.ceil(0.999, 4)
+    ).toEqual(0.999)
+    expect(
+      XEUtils.ceil(1.33, 3)
+    ).toEqual(1.33)
+    expect(
+      XEUtils.ceil(33, 2)
+    ).toEqual(33)
+    expect(
+      XEUtils.ceil(33.3, 2)
+    ).toEqual(33.3)
     expect(
       XEUtils.ceil(4.555, 2)
     ).toEqual(4.56)
@@ -407,6 +431,18 @@ describe('Number functions', () => {
     expect(
       XEUtils.floor(52.635, 2)
     ).toEqual(52.63)
+    expect(
+      XEUtils.floor(0.999, 4)
+    ).toEqual(0.999)
+    expect(
+      XEUtils.floor(1.33, 3)
+    ).toEqual(1.33)
+    expect(
+      XEUtils.floor(33, 2)
+    ).toEqual(33)
+    expect(
+      XEUtils.floor(33.3, 2)
+    ).toEqual(33.3)
     expect(
       XEUtils.floor(2222.22, 2)
     ).toEqual(2222.22)
