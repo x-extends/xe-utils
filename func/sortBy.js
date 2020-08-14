@@ -14,7 +14,7 @@ var property = require('./property')
 //   return v1 > v2 ? 1 : -1
 // }
 
-// 支持中文、数字、字母排序 > null > undefined
+// '' < 数字 < 字符 < null < undefined
 function sortByDef (v1, v2) {
   if (isUndefined(v1)) {
     return 1
