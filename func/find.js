@@ -1,7 +1,7 @@
 var helperCreateIterateHandle = require('./helperCreateIterateHandle')
 
 /**
-  * 查找匹配第一条数据
+  * 从左至右遍历，匹配最近的一条数据
   *
   * @param {Object} obj 对象/数组
   * @param {Function} iterate(item, index, obj) 回调

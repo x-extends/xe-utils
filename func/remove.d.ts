@@ -3,16 +3,16 @@ export declare function removeIterate(item: any, index: any, obj: any): any;
 /**
  * 移除对象属性
  * @param obj 对象
- * @param iteratee 迭代器/值
+ * @param iterate 迭代器/值
  */
-export declare function remove(obj: any, iteratee: number | string | typeof removeIterate): any;
+export declare function remove(obj: any, iterate: number | string | typeof removeIterate): any;
 
 declare module './ctor' {
   interface XEUtilsMethods {
     /**
      * 移除对象属性
      * @param obj 对象
-     * @param iteratee 迭代器/值
+     * @param iterate 迭代器/值
      */
     remove: typeof remove;
   }
