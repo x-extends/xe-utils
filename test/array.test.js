@@ -597,7 +597,7 @@ describe('Array functions', () => {
       XEUtils.find(function () {})
     ).toEqual(undefined)
     expect(
-      XEUtils.find({ a: 11, b: 22, c: 33 }, item => item > 15)
+      XEUtils.find({ a: 11, b: 22, c: 33, d: 11 }, item => item > 15)
     ).toEqual(22)
     expect(
       XEUtils.find([{ value: 11 }, { value: 22 }], item => item.value === 66)
@@ -605,6 +605,57 @@ describe('Array functions', () => {
     expect(
       XEUtils.find([{ value: 11 }, { value: 22 }], item => item.value === 22)
     ).toEqual({ value: 22 })
+  })
+
+  test('findLast()', () => {
+    expect(
+      XEUtils.findLast()
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast(null)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast(undefined)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast(0)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast(-1)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast(123)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast('')
+    ).toEqual(undefined)
+    expect(
+      XEUtils.find('abc')
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast({})
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast([])
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast(function () {})
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast({ a: 11, b: 22, c: 33, d: 12 }, item => item > 15)
+    ).toEqual(33)
+    expect(
+      XEUtils.findLast({ a: 11, b: 22, c: 33, d: 12 }, item => item > 15)
+    ).toEqual(33)
+    expect(
+      XEUtils.findLast({ a: 11, b: 22, c: 33, d: 12 }, item => item > 99)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast([{ value: 11 }, { value: 22 }], item => item.value === 66)
+    ).toEqual(undefined)
+    expect(
+      XEUtils.findLast([{ a: 11, value: 22 }, { a: 22, value: 11 }, { a: 33, value: 22 }], item => item.value === 22)
+    ).toEqual({ a: 33, value: 22 })
   })
 
   test('findKey()', () => {

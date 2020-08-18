@@ -29,6 +29,7 @@ var filter = require('./array/filter')
 var findKey = require('./array/findKey')
 var includes = require('./array/includes')
 var find = require('./array/find')
+var findLast = require('./array/findLast')
 var reduce = require('./array/reduce')
 var copyWithin = require('./array/copyWithin')
 var chunk = require('./array/chunk')
@@ -212,6 +213,7 @@ assign(XEUtils, {
   slice: slice,
   filter: filter,
   find: find,
+  findLast: findLast,
   findKey: findKey,
   includes: includes,
   arrayIndexOf: arrayIndexOf,
