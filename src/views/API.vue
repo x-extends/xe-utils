@@ -251,15 +251,30 @@ export default {
             {
               name: 'isDate',
               args: 'val',
-              title: '判断是否 Date 对象',
+              title: '判断是否 Date 对象，如果是无效日期 Invalid Date 也返回 true',
               desc: '',
               params: [],
               codes: [
                 `
                 XEUtils.isDate('2017-12-20') // false
-                XEUtils.isDate({}) // false
                 XEUtils.isDate(1514096716800) // false
+                XEUtils.isDate(new Date('abc')) // Invalid Date => true
                 XEUtils.isDate(new Date()) // true
+                `
+              ]
+            },
+            {
+              name: 'isValidDate',
+              args: 'val',
+              title: '和 isDate 的区别是同时判断类型与有效日期，如果为无效日期 Invalid Date 则返回 false',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.isValidDate('2017-12-20') // false
+                XEUtils.isValidDate(1514096716800) // false
+                XEUtils.isValidDate(new Date('abc')) // Invalid Date => false
+                XEUtils.isValidDate(new Date()) // true
                 `
               ]
             },
