@@ -16,7 +16,7 @@ export interface XEUtilsMethods {
    * 将您自己的实用函数扩展到 XEUtils
    * @param methods 函数集
    */
-  mixin(...methods: any[]): void;
+  mixin(...methods: {[key: string]: any}[]): void;
 
   [propertys: string]: any;
 }
