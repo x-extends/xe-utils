@@ -1958,8 +1958,39 @@ export default {
               ],
               codes: [
                 `
-                XEUtils.findTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => item.id === 20) // {item: {id: 20}, ...}
-                XEUtils.findTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => item.id === 20, {children: 'childs'}) // {item: {id: 20}, ...}
+                var tree1 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    children: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    children: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.findTree(tree1, item => item.id === 20) // { item: {id: 20}, ... }
+
+                var tree2 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    childs: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    childs: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.findTree(tree2, item => item.id === 20, { children: 'childs' }) // { item: {id: 20}, ... }
                 `
               ]
             },
@@ -1974,12 +2005,43 @@ export default {
               ],
               codes: [
                 `
-                XEUtils.eachTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
-                  console.log(item.id)
+                var tree1 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    children: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    children: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.eachTree(tree1, item => {
+                  // ...
                 })
-                XEUtils.eachTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
-                  console.log(item.id)
-                }, {children: 'childs'})
+
+                var tree2 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    childs: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    childs: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.eachTree(tree2, item => {
+                  // ...
+                }, { children: 'childs' })
                 `
               ]
             },
@@ -1995,15 +2057,111 @@ export default {
               ],
               codes: [
                 `
-                XEUtils.mapTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => {
-                  return { id: item.id * 2 }
-                }) // [{id: 2}, {id: 4, children: [{id: 40}]}, {id: 6}]
-                XEUtils.mapTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
-                  return { id: item.id * 2 }
-                }, {children: 'childs'}) // [{id: 2}, {id: 4, children: [{id: 40}]}, {id: 6}]
-                XEUtils.mapTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => {
-                  return { id: item.id * 2 }
-                }, {children: 'childs', mapChildren: 'childs2'}) // [{id: 2}, {id: 4, childs2: [{id: 40}]}, {id: 6}]
+                var tree1 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    children: [
+                      { id: 20 }
+                    ]
+                  }, {
+                    id: 3,
+                    children: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.mapTree(tree1, item => {
+                  return {
+                    id: item.id * 2
+                  }
+                })
+                // [
+                //   { id: 2 },
+                //   {
+                //     id: 4,
+                //     children: [
+                //       { id: 40 }
+                //     ]
+                //   }, {
+                //     id: 6,
+                //     children: [
+                //       { id: 60 }
+                //     ]
+                //   }
+                // ]
+
+                var tree2 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    childs: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    childs: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.mapTree(tree2, item => {
+                  return {
+                    id: item.id * 2
+                  }
+                }, {children: 'childs'})
+                // [
+                //   { id: 2 },
+                //   {
+                //     id: 4,
+                //     childs: [
+                //       { id: 40 }
+                //     ]
+                //   },
+                //   {
+                //     id: 6,
+                //     childs: [
+                //       { id: 60 }
+                //     ]
+                //   }
+                // ]
+
+                var tree3 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    childs: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    childs: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.mapTree(tree3, item => {
+                  return {
+                    id: item.id * 2
+                  }
+                }, { children: 'childs', mapChildren: 'list' })
+                // [
+                //   { id: 2 },
+                //   {
+                //     id: 4,
+                //     list: [
+                //       { id: 40 }
+                //     ]
+                //   },
+                //   {
+                //     id: 6,
+                //     list: [
+                //       { id: 60 }
+                //     ]
+                //   }
+                // ]
                 `
               ]
             },
@@ -2018,10 +2176,48 @@ export default {
               ],
               codes: [
                 `
-                XEUtils.filterTree([{id: 1}, {id: 2, children: [{id: 20}]}, {id: 3, children: [{id: 30}]}], item => item.id === 1) 
-                // {id: 1}
-                XEUtils.filterTree([{id: 1}, {id: 2, childs: [{id: 20}]}, {id: 3, childs: [{id: 30}]}], item => item.id >= 3, {children: 'childs'}) 
-                // [{id: 20}, {id: 3, childs: [{id: 30}]}, {id: 30}]
+                var tree1 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    children: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    children: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.filterTree(tree1, item => item.id === 1) 
+                // { id: 1 }
+
+                var tree2 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    childs: [
+                      { id: 20 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    childs: [
+                      { id: 30 }
+                    ]
+                  }
+                ]
+                XEUtils.filterTree(tree2, item => item.id >= 3, {children: 'childs'}) 
+                // [
+                //   {
+                //     id: 3,
+                //     childs: [
+                //       { id: 30 }
+                //     ]
+                //   }
+                // ]
                 `
               ]
             },
@@ -2034,14 +2230,118 @@ export default {
                 ['属性', '描述', '默认值'],
                 ['children', '子节点属性', 'children'],
                 ['mapChildren', '将子节点映射到指定的属性', ''],
-                ['original', '是否保持源数据的引用', 'false']
+                ['original', '是否源对象地址引用（谨慎！源数据将被破坏）', 'false']
               ],
               codes: [
                 `
-                XEUtils.searchTree([{ id: 1 }, { id: 2, children: [{ id: 0 }] }, { id: 3, children: [{ id: 30 }] }], item => item.id > 1)
-                // [{ id: 2, children: [{ id: 0, children: [] }] }, { id: 3, children: [{ id: 30, children: [] }] }]
-                XEUtils.searchTree([{ id: 1 }, { id: 2, childs: [{ id: 0 }] }, { id: 3, childs: [{ id: 30 }] }], item => item.id >= 2, { children: 'childs' })
-                // [{ id: 2, childs: [{ id: 0, childs: [] }] }, { id: 3, childs: [{ id: 30, childs: [] }] }]
+                var tree1 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    children: [
+                      { id: 0 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    children: [
+                      {
+                        id: 30,
+                        children: [
+                          { id: 3001 }
+                        ]
+                      },
+                      { id: 31 }
+                    ]
+                  }
+                ]
+                XEUtils.searchTree(tree1, item => item.id === 3)
+                // [
+                //   {
+                //     id: 3,
+                //     children: [
+                //       {
+                //         id: 30,
+                //         children: [
+                //           { id: 3001 }
+                //         ]
+                //       },
+                //       { id: 31 }
+                //     ]
+                //   }
+                // ]
+
+                var tree2 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    childs: [
+                      { id: 0 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    childs: [
+                      {
+                        id: 30,
+                        childs: [
+                          { id: 3001 }
+                        ]
+                      },
+                      { id: 31 }
+                    ]
+                  }
+                ]
+                XEUtils.searchTree(tree2, item => item.id === 30, { children: 'childs' })
+                // [
+                //   {
+                //     id: 3,
+                //     childs: [
+                //       {
+                //         id: 30,
+                //         childs: [
+                //           { id: 3001 }
+                //         ]
+                //       }
+                //     ]
+                //   }
+                // ]
+
+                var tree3 = [
+                  { id: 1 },
+                  {
+                    id: 2,
+                    childs: [
+                      { id: 0 }
+                    ]
+                  },
+                  {
+                    id: 3,
+                    childs: [
+                      {
+                        id: 30,
+                        childs: [
+                          { id: 3001 }
+                        ]
+                      },
+                      { id: 31 }
+                    ]
+                  }
+                ]
+                XEUtils.searchTree(tree3, item => item.id === 30, { children: 'childs', mapChildren: 'list' })
+                // [
+                //   {
+                //     id: 3,
+                //     list: [
+                //       {
+                //         id: 30,
+                //         list: [
+                //           { id: 3001 }
+                //         ]
+                //       }
+                //     ]
+                //   }
+                // ]
                 `
               ]
             }
