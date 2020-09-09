@@ -17,12 +17,26 @@ var toNumberString = require('./toNumberString')
  */
 function commafy(num, options) {
   var opts = options || {}
-  var optDigits = opts.digits || opts.fixed
+  var optDigits = opts.digits
   var isNum = isNumber(num)
-  var rest = isNum ? (opts.ceil ? ceil : (opts.floor ? floor : round))(num, optDigits) : toValString(num).replace(/,/g, '')
-  var result = isNum ? (toNumberString(optDigits ? toFixed(rest, optDigits) : rest).split('.')): (rest ? [rest] : [])
+  var rest, result, isNegative, intStr, floatStr
+  if (isNum) {
+    rest = (opts.ceil ? ceil : (opts.floor ? floor : round))(num, optDigits)
+    result = toNumberString(optDigits ? toFixed(rest, optDigits) : rest).split('.')
+    intStr = result[0]
+    floatStr = result[1]
+    isNegative = intStr && rest < 0
+    if (isNegative) {
+      intStr = intStr.substring(1, intStr.length)
+    }
+  } else {
+    // 如果为字符串，仅用于分隔
+    rest = toValString(num).replace(/,/g, '')
+    result = rest ? [rest] : []
+    intStr = result[0]
+  }
   if (result.length) {
-    return result[0].replace(new RegExp('(?=(?!(\\b))(.{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (result[1] ? ('.' + result[1]) : '')
+    return (isNegative ? '-' : '') + intStr.replace(new RegExp('(?=(?!(\\b))(.{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (floatStr ? ('.' + floatStr) : '')
   }
   return rest
 }
