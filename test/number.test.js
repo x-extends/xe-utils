@@ -84,6 +84,45 @@ describe('Number functions', () => {
       XEUtils.commafy('cdabcdabcdabcdabcd', { spaceNumber: 4 })
     ).toEqual('cd,abcd,abcd,abcd,abcd')
     expect(
+      XEUtils.commafy(1e3)
+    ).toEqual('1,000')
+    expect(
+      XEUtils.commafy(1e11)
+    ).toEqual('100,000,000,000')
+    expect(
+      XEUtils.commafy(-1e3)
+    ).toEqual('-1,000')
+    expect(
+      XEUtils.commafy(-1e11)
+    ).toEqual('-100,000,000,000')
+    expect(
+      XEUtils.commafy(-0.0001)
+    ).toEqual('0')
+    expect(
+      XEUtils.commafy(-0.0001, { digits: 2 })
+    ).toEqual('0.00')
+    expect(
+      XEUtils.commafy(-0.0001, { digits: 4 })
+    ).toEqual('-0.0001')
+    expect(
+      XEUtils.commafy(-100)
+    ).toEqual('-100')
+    expect(
+      XEUtils.commafy(-1000)
+    ).toEqual('-1,000')
+    expect(
+      XEUtils.commafy(-33.222)
+    ).toEqual('-33')
+    expect(
+      XEUtils.commafy(-332536.222, { digits: 2 })
+    ).toEqual('-332,536.22')
+    expect(
+      XEUtils.commafy(123)
+    ).toEqual('123')
+    expect(
+      XEUtils.commafy(100000)
+    ).toEqual('100,000')
+    expect(
       XEUtils.commafy(1000000)
     ).toEqual('1,000,000')
     expect(
@@ -97,6 +136,12 @@ describe('Number functions', () => {
     ).toEqual('1,000,000.0000')
     expect(
       XEUtils.commafy('1000000')
+    ).toEqual('1,000,000')
+    expect(
+      XEUtils.commafy('1000000.22')
+    ).toEqual('1,000,000.22')
+    expect(
+      XEUtils.commafy(1000000.22)
     ).toEqual('1,000,000')
     expect(
       XEUtils.commafy(1000000.555, { digits: 2 })
