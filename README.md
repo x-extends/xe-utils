@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.com/package/xe-utils)
 [![npm build](https://travis-ci.com/x-extends/vxe-utils.svg?branch=master)](https://travis-ci.com/x-extends/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
-[![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/lib/index.umd.min.js)
+[![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.umd.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/lib/xe-utils.umd.min.js)
 [![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
 JavaScript 函数库、工具类
