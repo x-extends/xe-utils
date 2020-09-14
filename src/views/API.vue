@@ -3235,19 +3235,15 @@ export default {
                 XEUtils.cookie([{name: 'name', value: 'value', domain: 'xxx.com', path: '/', expires: 7, secure: true}])
 
                 // 判断name是否存在
-                XEUtils.cookie.isKey(name)
+                XEUtils.cookie.has(name)
                 // 添加
-                XEUtils.cookie.setItem(name, value, option)
-                XEUtils.cookie.setItem(name, value, option).setItem(name, value, option)
+                XEUtils.cookie.set(name, value, option)
+                XEUtils.cookie.set(name, value, option).set(name, value, option)
                 // 根据name获取
-                XEUtils.cookie.getItem(name)
+                XEUtils.cookie.get(name)
                 // 删除
-                XEUtils.cookie.removeItem(name)
-                XEUtils.cookie.removeItem(name, {path: '/'})
-                // 获取所有name
-                XEUtils.cookie.keys()
-                // 获取所有
-                XEUtils.cookie.getJSON()
+                XEUtils.cookie.remove(name)
+                XEUtils.cookie.remove(name, {path: '/'})
                 `
               ]
             }

@@ -30,7 +30,7 @@ export interface XECookie {
    * 根据 name 判断 Cookie 是否存在
    * @param name 键
    */
-  hasItem(name: string): boolean;
+  has(name: string): boolean;
 
   /**
    * 添加 Cookie
@@ -38,20 +38,20 @@ export interface XECookie {
    * @param value 值
    * @param options 可选参数
    */
-  setItem(name: string, value: any, options?: CookieOptions): this;
+  set(name: string, value: any, options?: CookieOptions): this;
 
   /**
    * 根据 name 获取 Cookie
    * @param name 键
    */
-  getItem(name: string): string;
+  get(name: string): string;
 
   /**
    * 根据 name 删除 Cookie
    * @param name 键
    * @param options 可选参数
    */
-  removeItem(name: string, options?: CookieOptions): number;
+  remove(name: string, options?: CookieOptions): number;
 
   /**
    * 获取 Cookie 所有键
