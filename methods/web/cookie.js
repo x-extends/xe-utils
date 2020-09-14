@@ -114,6 +114,10 @@ function hasCookieItem (key) {
   return includes(cookieKeys(), key)
 }
 
+function getCookieItem (name, key) {
+  return cookie(name, key)
+}
+
 function setCookieItem (name, key, options) {
   cookie(name, key, options)
   return cookie
@@ -130,10 +134,10 @@ function cookieKeys () {
 assign(cookie, {
   _c: false,
   isKey: hasCookieItem,
-  hasItem: hasCookieItem,
+  has: hasCookieItem,
   set: setCookieItem,
   setItem: setCookieItem,
-  get: cookie,
+  get: getCookieItem,
   getItem: cookie,
   remove: removeCookieItem,
   removeItem: removeCookieItem,
