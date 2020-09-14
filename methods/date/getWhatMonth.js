@@ -1,6 +1,8 @@
 var staticStrFirst = require('../static/staticStrFirst')
 var staticStrLast = require('../static/staticStrLast')
 
+var isNumber = require('../base/isNumber')
+
 var helperGetDateFullYear = require('./helperGetDateFullYear')
 var helperGetDateTime = require('./helperGetDateTime')
 var helperGetDateMonth = require('./helperGetDateMonth')
