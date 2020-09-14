@@ -1,19 +1,13 @@
 /**
- * 获取数组对象中某属性值，返回一个数组
- * @param array 数组
- * @param key 键
+ * 在list的每个元素上执行方法,任何传递的额外参数都会在调用方法的时候传递给它
+ * @param list 数组
+ * @param path
  * @example
  */
 export declare function invoke(list: any[], path: string[] | string | Function): any[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 获取数组对象中某属性值，返回一个数组
-     * @param array 数组
-     * @param key 键
-     * @example
-     */
     invoke: typeof invoke;
   }
 }

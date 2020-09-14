@@ -1,15 +1,11 @@
 /**
  * 数组去重
- * @param array 数组
+ * @param list 数组
  */
-export declare function uniq(array: any[]): any[];
+export declare function uniq<T>(list: T[]): T[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 数组去重
-     * @param array 数组
-     */
     uniq: typeof uniq;
   }
 }

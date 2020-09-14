@@ -1,21 +1,10 @@
-export declare function lastForOfIterate(item: any, index: any, obj: any): any;
-
 /**
- * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
- * @param obj 对象
- * @param iterate 回调
- * @param context 上下文
+ * 已废弃
  */
-export declare function lastForOf(obj: any, iterate: typeof lastForOfIterate, context?: any): void;
+export declare function lastForOf(obj: any, iterate: (item: any, index: any, obj: any) => boolean, context?: any): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
-     * @param obj 对象
-     * @param iterate 回调
-     * @param context 上下文
-     */
     lastForOf: typeof lastForOf;
   }
 }

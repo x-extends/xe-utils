@@ -2,14 +2,10 @@
  * 判断是否 Boolean 对象
  * @param val 值
  */
-export declare function isBoolean(val: any): boolean;
+export declare function isBoolean(val: any): val is Boolean;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 判断是否 Boolean 对象
-     * @param val 值
-     */
     isBoolean: typeof isBoolean;
   }
 }

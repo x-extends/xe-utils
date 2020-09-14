@@ -1,21 +1,13 @@
-export declare function arrayEachIterate(item: any, index: number, list: any): any;
-
 /**
  * 数组迭代器
- * @param obj 对象
+ * @param list 对象
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function arrayEach(obj: any, iterate: typeof arrayEachIterate, context?: any): void;
+export declare function arrayEach<T>(list: T[], iterate: (item: T, index: number, list: T[]) => void, context?: any): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 数组迭代器
-     * @param obj 对象
-     * @param iterate 回调
-     * @param context 上下文
-     */
     arrayEach: typeof arrayEach;
   }
 }

@@ -110,7 +110,7 @@ function cookie (name, value, options) {
   return false
 }
 
-function isCookieKey (key) {
+function hasCookieItem (key) {
   return includes(cookieKeys(), key)
 }
 
@@ -128,7 +128,8 @@ function cookieKeys () {
 }
 
 assign(cookie, {
-  isKey: isCookieKey,
+  isKey: hasCookieItem,
+  hasItem: hasCookieItem,
   set: setCookieItem,
   setItem: setCookieItem,
   get: cookie,

@@ -2,14 +2,10 @@
  * 数值转字符串，科学计数转字符串
  * @param num 数值
  */
-export declare function toNumberString(num: number): number;
+export declare function toNumberString(num: number): string;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 数值转字符串，科学计数转字符串
-     * @param num 数值
-     */
     toNumberString: typeof toNumberString;
   }
 }

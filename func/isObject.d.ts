@@ -2,14 +2,10 @@
  * 判断是否 Object 对象
  * @param val 值
  */
-export declare function isObject(val: any): boolean;
+export declare function isObject(val: any): val is Object;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 判断是否 Object 对象
-     * @param val 值
-     */
     isObject: typeof isObject;
   }
 }

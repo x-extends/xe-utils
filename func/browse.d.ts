@@ -64,9 +64,6 @@ export declare function browse(): XEBrowse;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 获取浏览器信息
-     */
     browse: typeof browse;
   }
 }

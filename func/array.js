@@ -27,7 +27,6 @@ var zipObject = require('./zipObject')
 var flatten = require('./flatten')
 var pluck = require('./pluck')
 var invoke = require('./invoke')
-var invokeMap = require('./invokeMap')
 var toArrayTree = require('./toArrayTree')
 var toTreeArray = require('./toTreeArray')
 var findTree = require('./findTree')
@@ -66,7 +65,6 @@ var arrayExports = {
   includeArrays: includeArrays,
   pluck: pluck,
   invoke: invoke,
-  invokeMap: invokeMap,
   arrayEach: arrayEach,
   lastArrayEach: lastArrayEach,
   toArrayTree: toArrayTree,

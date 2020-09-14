@@ -1,4 +1,3 @@
-export declare function reduceIterate(previous: any, item: any, index: number, list: any[]): any;
 
 /**
  * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
@@ -7,17 +6,10 @@ export declare function reduceIterate(previous: any, item: any, index: number, l
  * @param initialValue 默认值
  * @example
  */
-export declare function reduce(array: any[], iterate?: typeof reduceIterate, initialValue?: any): any;
+export declare function reduce<T, U>(array: T[], iterate?: (previous: U, item: T, index: number, list: T[]) => U, initialValue?: U): U;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值
-     * @param array 数组
-     * @param iterate 回调
-     * @param initialValue 默认值
-     * @example
-     */
     reduce: typeof reduce;
   }
 }

@@ -1,4 +1,3 @@
-export declare function findTreeIterate(item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]): any;
 
 interface TerrResult {
   index: number;
@@ -15,22 +14,15 @@ interface FindTreeOptions {
 
 /**
  * 从树结构中查找匹配第一条数据的键、值、路径
- * @param {Object} obj 对象/数组
+ * @param {Object} list 数组
  * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function findTree(array: any[], iterate: typeof findTreeIterate, options?: FindTreeOptions, context?: any): TerrResult;
+export declare function findTree<T>(list: T[], iterate: (item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => boolean, options?: FindTreeOptions, context?: any): TerrResult;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 从树结构中查找匹配第一条数据的键、值、路径
-     * @param {Object} obj 对象/数组
-     * @param {Function} iterate(item, index, items, path, parent, nodes) 回调
-     * @param {Object} options {children: 'children'}
-     * @param {Object} context 上下文
-     */
     findTree: typeof findTree;
   }
 }

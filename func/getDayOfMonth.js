@@ -13,7 +13,7 @@ var isValidDate = require('./isValidDate')
   * 返回某个月份的天数
   *
   * @param {Date} date 日期或数字
-  * @param {Number} month 月(默认当月)、前几个月、后几个月
+  * @param {Number} offset 月(默认当月)、前几个月、后几个月
   * @return {Number}
   */
 function getDayOfMonth (date, month) {

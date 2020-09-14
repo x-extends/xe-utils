@@ -15,16 +15,10 @@ export interface DebounceOptions {
  * @param wait 毫秒
  * @param options 可选参数
  */
-export declare function debounce(callback: Function, wait: number, options: DebounceOptions): Function;
+export declare function debounce(callback: Function, wait: number, options?: DebounceOptions): Function;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 函数去抖；当被调用 n 毫秒后才会执行，如果在这时间内又被调用则将重新计算执行时间
-     * @param callback 回调
-     * @param wait 毫秒
-     * @param options 可选参数
-     */
     debounce: typeof debounce;
   }
 }

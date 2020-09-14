@@ -2,14 +2,10 @@
  * 判断 Undefined
  * @param val 值
  */
-export declare function isUndefined(val: any): boolean;
+export declare function isUndefined(val: any): val is undefined;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 判断 Undefined
-     * @param val 值
-     */
     isUndefined: typeof isUndefined;
   }
 }

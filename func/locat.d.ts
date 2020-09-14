@@ -7,9 +7,6 @@ export declare function locat(): XEUrl;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 获取地址栏信息
-     */
     locat: typeof locat;
   }
 }

@@ -6,10 +6,6 @@ export declare function kebabCase(str: string): string;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 将字符串转成驼峰字符串
-     * @param str 字符串
-     */
     kebabCase: typeof kebabCase;
   }
 }

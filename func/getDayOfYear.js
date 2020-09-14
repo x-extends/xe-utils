@@ -8,7 +8,7 @@ var isLeapYear = require('./isLeapYear')
   * 返回某个年份的天数
   *
   * @param {Date} date 日期或数字
-  * @param {Number} year 年(默认当年)、前几个年、后几个年
+  * @param {Number} offset 年(默认当年)、前几个年、后几个年
   * @return {Number}
   */
 function getDayOfYear (date, year) {

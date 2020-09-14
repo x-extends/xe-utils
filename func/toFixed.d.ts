@@ -7,11 +7,6 @@ export declare function toFixed(num: string | number, digits?: number): string;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 对数字进行四舍五入
-     * @param num 数值/字符串
-     * @param digits 小数保留位数
-     */
     toFixed: typeof toFixed;
   }
 }

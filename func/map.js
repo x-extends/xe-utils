@@ -1,6 +1,4 @@
-var isFunction = require('./isFunction')
 var each = require('./each')
-var property = require('./property')
 
 /**
   * 指定方法后的返回值组成的新数组
@@ -13,9 +11,6 @@ var property = require('./property')
 function map (obj, iterate, context) {
   var result = []
   if (obj && arguments.length > 1) {
-    if (!isFunction(iterate)) {
-      iterate = property(iterate)
-    }
     if (obj.map) {
       return obj.map(iterate, context)
     } else {

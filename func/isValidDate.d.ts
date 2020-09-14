@@ -2,14 +2,10 @@
  * 判断是否有效的Date对象
  * @param val 值
  */
-export declare function isValidDate(val: any): boolean;
+export declare function isValidDate(val: any): val is Date;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 判断是否有效的Date对象
-     * @param val 值
-     */
     isValidDate: typeof isValidDate;
   }
 }

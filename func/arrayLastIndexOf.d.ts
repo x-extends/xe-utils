@@ -1,15 +1,15 @@
 /**
  * 从最后开始的索引值,返回数组第一个索引值
- * @param obj 数组
+ * @param list 数组
  * @param val 值
  */
-export declare function arrayLastIndexOf(obj: any, val: any): number;
+export declare function arrayLastIndexOf(list: any, val: any): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {
     /**
      * 从最后开始的索引值,返回数组第一个索引值
-     * @param obj 数组
+     * @param list 数组
      * @param val 值
      */
     arrayLastIndexOf: typeof arrayLastIndexOf;

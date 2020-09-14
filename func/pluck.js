@@ -1,4 +1,5 @@
 var map = require('./map')
+var property = require('./property')
 
 /**
   * 获取数组对象中某属性值，返回一个数组
@@ -8,7 +9,7 @@ var map = require('./map')
   * @return {Array}
   */
 function pluck (obj, key) {
-  return map(obj, key)
+  return map(obj, property(key))
 }
 
 module.exports = pluck

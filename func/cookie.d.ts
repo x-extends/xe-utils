@@ -30,7 +30,7 @@ export interface XECookie {
    * 根据 name 判断 Cookie 是否存在
    * @param name 键
    */
-  isKey(name: string): boolean;
+  hasItem(name: string): boolean;
 
   /**
    * 添加 Cookie
@@ -66,20 +66,32 @@ export interface XECookie {
 
 /**
  * Cookie 操作函数
+ */
+export declare function cookie(): XECookie;
+
+/**
+ * Cookie 操作函数
+ * @param name 键/数组/对象
+ */
+export declare function cookie(name: string): XECookie;
+
+/**
+ * Cookie 操作函数
+ * @param name 键/数组/对象
+ * @param value 值
+ */
+export declare function cookie(name: string, value: any): XECookie;
+
+/**
+ * Cookie 操作函数
  * @param name 键/数组/对象
  * @param value 值
  * @param options 可选参数
  */
-export declare function cookie(name?: string, value?: any, options?: CookieOptions): XECookie;
+export declare function cookie(name: string, value: any, options: CookieOptions): XECookie;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-    * Cookie 操作函数
-    * @param name 键/数组/对象
-    * @param value 值
-    * @param options 可选参数
-    */
     cookie: typeof cookie;
   }
 }

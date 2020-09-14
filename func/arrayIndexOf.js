@@ -1,9 +1,9 @@
-function arrayIndexOf (obj, val) {
-  if (obj.indexOf) {
-    return obj.indexOf(val)
+function arrayIndexOf (list, val) {
+  if (list.indexOf) {
+    return list.indexOf(val)
   }
-  for (var index = 0, len = obj.length; index < len; index++) {
-    if (val === obj[index]) {
+  for (var index = 0, len = list.length; index < len; index++) {
+    if (val === list[index]) {
       return index
     }
   }

@@ -1,9 +1,9 @@
-function arrayLastIndexOf (obj, val) {
-  if (obj.lastIndexOf) {
-    return obj.lastIndexOf(val)
+function arrayLastIndexOf (list, val) {
+  if (list.lastIndexOf) {
+    return list.lastIndexOf(val)
   }
-  for (var len = obj.length - 1; len >= 0; len--) {
-    if (val === obj[len]) {
+  for (var len = list.length - 1; len >= 0; len--) {
+    if (val === list[len]) {
       return len
     }
   }

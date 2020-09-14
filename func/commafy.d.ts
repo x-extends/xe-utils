@@ -34,11 +34,6 @@ export declare function commafy(num: string | number, options?: CommafyOptions):
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 数值千分位分隔符、小数点
-     * @param num 数值/字符串
-     * @param options 可选参数
-     */
     commafy: typeof commafy;
   }
 }

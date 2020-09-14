@@ -57,10 +57,6 @@ export declare function parseUrl(ulr: string): XEUrl;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 解析 URL 参数
-     * @param ulr 字符串
-     */
     parseUrl: typeof parseUrl;
   }
 }

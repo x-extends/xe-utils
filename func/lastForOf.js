@@ -2,12 +2,7 @@ var isArray = require('./isArray')
 var keys = require('./hasOwnProp')
 
 /**
-  * 迭代器,从最后开始迭代,支持 return false 跳出循环 break
-  *
-  * @param {Object} obj 对象/数组
-  * @param {Function} iterate(item, index, obj) 回调
-  * @param {Object} context 上下文
-  * @return {Object}
+  * 已废弃
   */
 function lastForOf (obj, iterate, context) {
   if (obj) {

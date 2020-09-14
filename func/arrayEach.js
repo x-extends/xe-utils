@@ -1,10 +1,10 @@
-function arrayEach (obj, iterate, context) {
-  if (obj) {
-    if (obj.forEach) {
-      obj.forEach(iterate, context)
+function arrayEach (list, iterate, context) {
+  if (list) {
+    if (list.forEach) {
+      list.forEach(iterate, context)
     } else {
-      for (var index = 0, len = obj.length; index < len; index++) {
-        iterate.call(context, obj[index], index, obj)
+      for (var index = 0, len = list.length; index < len; index++) {
+        iterate.call(context, list[index], index, list)
       }
     }
   }

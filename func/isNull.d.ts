@@ -2,14 +2,10 @@
  * 判断是否为 Null
  * @param val 值
  */
-export declare function isNull(val: any): boolean;
+export declare function isNull(val: any): val is null;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 判断是否为 Null
-     * @param val 值
-     */
     isNull: typeof isNull;
   }
 }

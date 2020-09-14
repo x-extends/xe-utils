@@ -1,4 +1,3 @@
-export declare function objectMapIterate(item: any, key: string, obj: any): any;
 
 /**
  * 指定方法后的返回值组成的新对象
@@ -6,16 +5,10 @@ export declare function objectMapIterate(item: any, key: string, obj: any): any;
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function objectMap(obj: any, iterate: typeof objectMapIterate, context ?: any): any;
+export declare function objectMap<T, U>(obj: T, iterate: (item: any, key: string, obj: T) => U, context ?: any): U;
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 指定方法后的返回值组成的新对象
-     * @param obj 对象
-     * @param iterate 回调
-     * @param context 上下文
-     */
     objectMap: typeof objectMap;
   }
 }
