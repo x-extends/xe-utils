@@ -20,14 +20,12 @@ function getWhatMonth (date, month, day) {
   var monthOffset = month && !isNaN(month) ? month : 0
   date = toStringDate(date)
   if (isValidDate(date)) {
-    if (day || !isNaN(day)) {
-      if (day === staticStrFirst) {
-        return new Date(helperGetDateFullYear(date), helperGetDateMonth(date) + monthOffset, 1)
-      } else if (day === staticStrLast) {
-        return new Date(helperGetDateTime(getWhatMonth(date, monthOffset + 1, staticStrFirst)) - 1)
-      } else {
-        date.setDate(day)
-      }
+    if (day === staticStrFirst) {
+      return new Date(helperGetDateFullYear(date), helperGetDateMonth(date) + monthOffset, 1)
+    } else if (day === staticStrLast) {
+      return new Date(helperGetDateTime(getWhatMonth(date, monthOffset + 1, staticStrFirst)) - 1)
+    } else if (isNumber(day)) {
+      date.setDate(day)
     }
     if (monthOffset) {
       date.setMonth(helperGetDateMonth(date) + monthOffset)

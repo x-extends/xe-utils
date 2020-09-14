@@ -1,4 +1,4 @@
-var map = require('./map')
+var pluck = require('./pluck')
 
 var max = require('../number/max')
 
@@ -16,7 +16,7 @@ function unzip (arrays) {
       return item ? item.length : 0
     })
     for (len = maxItem ? maxItem.length : 0; index < len; index++) {
-      result.push(map(arrays, index))
+      result.push(pluck(arrays, index))
     }
   }
   return result
