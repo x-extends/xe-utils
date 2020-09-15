@@ -1673,7 +1673,7 @@ export default {
               desc: '',
               params: [
                 ['属性', '描述', '默认值'],
-                ['strict', '是否严格模式，启用后会忽略错误数据', 'false'],
+                ['strict', '是否严格模式，会去掉父子关联不存在数据，当子节点为空时将没有 children 属性', 'false'],
                 ['key', '节点键值', 'id'],
                 ['parentKey', '父节点键值', 'parentId'],
                 ['children', '数据存放属性', 'children'],

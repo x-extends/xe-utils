@@ -33,6 +33,9 @@ describe('Number functions', () => {
       XEUtils.min([22, null, 77, 11])
     ).toEqual(11)
     expect(
+      XEUtils.min([0, 1, null, -1, undefined])
+    ).toEqual(-1)
+    expect(
       XEUtils.min([22, 66, 77, 11])
     ).toEqual(11)
     expect(
@@ -47,6 +50,9 @@ describe('Number functions', () => {
     expect(
       XEUtils.max([22, 66, null, 11])
     ).toEqual(66)
+    expect(
+      XEUtils.max([0, 1, null, -1, undefined])
+    ).toEqual(1)
     expect(
       XEUtils.max([22, 66, 77, 11])
     ).toEqual(77)
