@@ -43,9 +43,9 @@ Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net
 import XEUtils from 'xe-utils'
 
 XEUtils.toDateString(Date.now())
-// > 2018-01-01 10:30:28
+// 2018-01-01 10:30:28
 XEUtils.toStringDate('2018-01-01 10:30:00')
-// > Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
+// Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
 ```
 
 ## Import on demand
@@ -60,11 +60,11 @@ import toDateString from 'xe-utils/toDateString'
 each({ a: 11, b: 22, c: 33 }, function (item, key){
   console.log(item)
 })
-// > 11
-// > 22
-// > 33
+// 11
+// 22
+// 33
 toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
-// > 2018-01-01 10:30:28
+// 2018-01-01 10:30:28
 ```
 
 ```javascript
@@ -79,7 +79,7 @@ XEUtils.mixin({
   toFixedNumber
 })
 XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
-// > 2018-01-01 10:30:28
+// 2018-01-01 10:30:28
 ```
 
 按功能导入所有方法
