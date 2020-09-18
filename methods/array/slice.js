@@ -1,3 +1,5 @@
+var toNumber = require('../number/toNumber')
+
 /**
  * 裁剪 Arguments 或数组 array，从 start 位置开始到 end 结束，但不包括 end 本身的位置
  * @param {Array/Arguments} array 数组或Arguments
@@ -6,8 +8,14 @@
  */
 function slice (array, startIndex, endIndex) {
   var result = []
+  var argsSize = arguments.length
   if (array) {
-    for (startIndex = startIndex || 0, endIndex = endIndex || array.length; startIndex < endIndex; startIndex++) {
+    startIndex = argsSize >= 2 ? toNumber(startIndex) : 0
+    endIndex = argsSize >= 3 ? toNumber(endIndex) : array.length
+    if (array.slice) {
+      return array.slice(startIndex, endIndex)
+    }
+    for (; startIndex < endIndex; startIndex++) {
       result.push(array[startIndex])
     }
   }

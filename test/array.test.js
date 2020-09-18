@@ -124,11 +124,20 @@ describe('Array functions', () => {
       XEUtils.slice([11, 22])
     ).toEqual([11, 22])
     expect(
+      XEUtils.slice([11, 22, 33, 44], 0)
+    ).toEqual([11, 22, 33, 44])
+    expect(
+      XEUtils.slice([11, 22, 33, 44], 0, 0)
+    ).toEqual([])
+    expect(
       XEUtils.slice([11, 22, 33, 44], 1)
     ).toEqual([22, 33, 44])
     expect(
       XEUtils.slice([11, 22, 33, 44], 1, 3)
     ).toEqual([22, 33])
+    expect(
+      XEUtils.slice([11, 22, 33, 44], 0, 1)
+    ).toEqual([11])
     let method = function () {
       expect(
         XEUtils.slice(arguments, 1, 3)
