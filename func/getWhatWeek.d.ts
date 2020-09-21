@@ -11,7 +11,7 @@ export declare function getWhatWeek(date: string | Date | number, offset: number
  * @param offset 周偏移量(默认0)、前几周、后几周
  * @param day 星期天(0)、星期一(1)、星期二(2)、星期三(3)、星期四(4)、星期五(5)、星期六(6)
  */
-export declare function getWhatWeek(date: string | Date | number, offset: number, day: 0 | 1 | 2 | 3 | 4 | 5 | 6): Date;
+export declare function getWhatWeek(date: string | Date | number, offset: number, day: number): Date;
 
 declare module './ctor' {
   interface XEUtilsMethods {

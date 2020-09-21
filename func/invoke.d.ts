@@ -4,7 +4,7 @@
  * @param path
  * @example
  */
-export declare function invoke(list: any[], path: string[] | string | Function): any[];
+export declare function invoke(list: any[], path: string[] | string | ((...args: any[]) => any)): any[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
