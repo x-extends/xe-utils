@@ -1,3 +1,5 @@
+var setupDefaults = require('./setupDefaults')
+
 var toValString = require('./toString')
 var trim = require('./trim')
 
@@ -5,12 +7,13 @@ var get = require('./get')
 
 /**
  * 解析动态字符串模板
- * @param {String} str 字符串模板
- * @param {Object} obj 对象
+ * @param {atring} str 字符串模板
+ * @param {any | any[]} args 对象
+ * @param {any} options 
  */
-function template (str, obj) {
-  return toValString(str).replace(/\{{2}([.\w[\]\s]+)\}{2}/g, function (match, key) {
-    return get(obj, trim(key))
+function template (str, args, options) {
+  return toValString(str).replace((options || setupDefaults).tmplRE || /\{{2}([.\w[\]\s]+)\}{2}/g, function (match, key) {
+    return get(args, trim(key))
   })
 }
 
