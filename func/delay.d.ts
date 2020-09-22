@@ -4,7 +4,7 @@
  * @param wait 延迟毫秒
  * @param params 额外的参数
  */
-export declare function delay(callback: Function, wait: number, ...params: any[]): number;
+export declare function delay<C>(callback: (this: C, ...args: any[]) => any, wait: number, ...params: any[]): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {

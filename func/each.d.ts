@@ -5,7 +5,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function each<T>(list: T[], iterate: (item: T, index: number, list: T[]) => void, context?: any): void;
+export declare function each<T, C>(list: T[], iterate: (this: C, item: T, index: number, list: T[]) => void, context?: CSSKeyframeRule): void;
 
 /**
  * 通用迭代器
@@ -13,7 +13,7 @@ export declare function each<T>(list: T[], iterate: (item: T, index: number, lis
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function each<T>(obj: T, iterate: (item: any, key: string, obj: T) => void, context?: any): void;
+export declare function each<T, C>(obj: T, iterate: (this: C, item: any, key: string, obj: T) => void, context?: C): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {

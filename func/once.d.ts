@@ -4,7 +4,7 @@
  * @param context 上下文
  * @param params 额外的参数
  */
-export declare function once(callback: (...args: any[]) => any, context?: any, ...params: any[]): (...args: any[]) => any;
+export declare function once<S, C>(callback: (this: S, ...args: any[]) => any, context?: C, ...params: any[]): (this: S | C, ...args: any[]) => any;
 
 declare module './ctor' {
   interface XEUtilsMethods {

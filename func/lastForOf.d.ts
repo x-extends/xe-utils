@@ -1,7 +1,7 @@
 /**
  * 已废弃
  */
-export declare function lastForOf(obj: any, iterate: (item: any, index: any, obj: any) => boolean, context?: any): void;
+export declare function lastForOf<C>(obj: any, iterate: (this: C, item: any, index: any, obj: any) => boolean, context?: C): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {

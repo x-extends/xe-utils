@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function findKey<T>(list: T[], iterate: (item: T, index: number, list: T[])=> boolean, context?: any): number;
+export declare function findKey<T, C>(list: T[], iterate: (this: C, item: T, index: number, list: T[])=> boolean, context?: C): number;
 
 /**
  * 查找匹配第一条数据的键
@@ -12,7 +12,7 @@ export declare function findKey<T>(list: T[], iterate: (item: T, index: number, 
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function findKey<T>(obj: T, iterate: (item: any, key: string, obj: T)=> boolean, context?: any): any;
+export declare function findKey<T, C>(obj: T, iterate: (this: C, item: any, key: string, obj: T)=> boolean, context?: C): any;
 
 declare module './ctor' {
   interface XEUtilsMethods {

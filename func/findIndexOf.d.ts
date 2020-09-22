@@ -4,7 +4,7 @@
  * @param iterate 迭代器
  * @param context 上下文
  */
-export declare function findIndexOf<T>(list: T[], iterate: (item: T, index: any, obj: T[]) => boolean, context?: any): number;
+export declare function findIndexOf<T, C>(list: T[], iterate: (this: C, item: T, index: any, obj: T[]) => boolean, context?: C): number;
 
 /**
  * 返回对象第一个索引值
@@ -12,7 +12,7 @@ export declare function findIndexOf<T>(list: T[], iterate: (item: T, index: any,
  * @param iterate 迭代器
  * @param context 上下文
  */
-export declare function findIndexOf<T>(obj: T, iterate: (item: any, key: string, obj: T) => boolean, context?: any): number;
+export declare function findIndexOf<T, C>(obj: T, iterate: (this: C, item: any, key: string, obj: T) => boolean, context?: C): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {

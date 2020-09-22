@@ -5,7 +5,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function filter<T>(array: T[], iterate: (item: T, index: number, list: T[]) => boolean, context?: any): T[];
+export declare function filter<T, C>(array: T[], iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): T[];
 
 /**
  * 查找匹配第一条数据
@@ -13,7 +13,7 @@ export declare function filter<T>(array: T[], iterate: (item: T, index: number, 
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function filter<T>(obj: T, iterate: (item: any, key: string, list: T) => boolean, context?: any): any;
+export declare function filter<T, C>(obj: T, iterate: (this: C, item: any, key: string, list: T) => boolean, context?: C): any;
 
 declare module './ctor' {
   interface XEUtilsMethods {

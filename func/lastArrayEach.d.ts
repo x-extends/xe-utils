@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function lastArrayEach<T>(obj: T[], iterate: (item: T, index: number, list: T[]) => void, context?: any): void;
+export declare function lastArrayEach<T, C>(obj: T[], iterate: (this: C, item: T, index: number, list: T[]) => void, context?: C): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {

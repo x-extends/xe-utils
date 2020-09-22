@@ -4,7 +4,7 @@
  * @param callback 回调
  * @param context 上下文
  */
-export declare function before(count: number, callback: (rests: any[], ...args: any[]) => any, context?: any): (...args: any[]) => any;
+export declare function before<S, C>(count: number, callback: (this: S, rests: any[], ...args: any[]) => any, context?: C): (this: C | S, ...args: any[]) => any;
 
 declare module './ctor' {
   interface XEUtilsMethods {

@@ -10,7 +10,7 @@ interface MapTreeOptions {
  * @param {Object} options {children: 'children', mapChildren: 'children}
  * @param {Object} context 上下文
  */
-export declare function mapTree<T, U>(array: T[], iterate: (item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => U, options?: MapTreeOptions, context?: any): U[];
+export declare function mapTree<T, U, C>(array: T[], iterate: (this: C, item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => U, options?: MapTreeOptions, context?: C): U[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
