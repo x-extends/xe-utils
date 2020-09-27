@@ -3,6 +3,7 @@ var hasOwnProp = require('./hasOwnProp')
 
 /**
   * 已废弃，被 some, every 替换
+  * @deprecated
   */
 function forOf (obj, iterate, context) {
   if (obj) {

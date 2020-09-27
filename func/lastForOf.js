@@ -3,6 +3,7 @@ var keys = require('./hasOwnProp')
 
 /**
   * 已废弃
+  * @deprecated
   */
 function lastForOf (obj, iterate, context) {
   if (obj) {

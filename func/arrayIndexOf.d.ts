@@ -4,6 +4,7 @@
  * @param val 值
  */
 export declare function arrayIndexOf(list: any[], val: any): number;
+export declare function arrayIndexOf(list: any, val: any): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {
