@@ -1,4 +1,8 @@
 var toValString = require('./toString')
+var helperStringSubstring = require('./helperStringSubstring')
+var helperStringLowerCase = require('./helperStringLowerCase')
+
+var kebabCacheMaps = {}
 
 /**
   * 将带驼峰字符串转成字符串,例如： projectName 转为 project-name
@@ -7,9 +11,27 @@ var toValString = require('./toString')
   * @return {String}
   */
 function kebabCase (str) {
-  return toValString(str).replace(/([A-Z])/g, function (text, u) {
-    return '-' + u.toLowerCase()
+  str = toValString(str)
+  if (kebabCacheMaps[str]) {
+    return kebabCacheMaps[str]
+  }
+  str = str.replace(/([a-z]?)([A-Z]+)([a-z]?)/g, function (text, prevLower, upper, nextLower, index) {
+    var upperLen = upper.length
+    if (upperLen > 1) {
+      if (prevLower) {
+        prevLower += '-'
+      }
+      if (nextLower) {
+        return (prevLower || '') + helperStringLowerCase(helperStringSubstring(upper, 0, upperLen - 1)) + '-' + helperStringLowerCase(helperStringSubstring(upper, upperLen - 1, upperLen)) + nextLower
+      }
+    }
+    return (prevLower || '') + (index ? '-' : '') + helperStringLowerCase(upper) + (nextLower || '')
   })
+  str = str.replace(/([-]+)/g, function (text, flag, index) {
+    return index && index + flag.length < str.length ? '-' : ''
+  })
+  kebabCacheMaps[str] =  str
+  return str
 }
 
 module.exports = kebabCase

@@ -1,5 +1,6 @@
 var setupDefaults = require('./setupDefaults')
 
+var helperStringUpperCase = require('./helperStringUpperCase')
 var helperGetDateFullYear = require('./helperGetDateFullYear')
 var helperGetDateMonth = require('./helperGetDateMonth')
 
@@ -108,7 +109,7 @@ function toDateString (date, format, options) {
           return handleCustomTemplate(date, formats, match, apm)
         },
         A: function (match) {
-          return handleCustomTemplate(date, formats, match, apm.toLocaleUpperCase())
+          return handleCustomTemplate(date, formats, match, helperStringUpperCase(apm))
         },
         e: function (match) {
           return handleCustomTemplate(date, formats, match, date.getDay())

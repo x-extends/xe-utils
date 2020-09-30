@@ -1,4 +1,9 @@
 var toValString = require('./toString')
+var helperStringSubstring = require('./helperStringSubstring')
+var helperStringUpperCase = require('./helperStringUpperCase')
+var helperStringLowerCase = require('./helperStringLowerCase')
+
+var camelCacheMaps = {}
 
 /**
   * 将带字符串转成驼峰字符串,例如： project-name 转为 projectName
@@ -7,8 +12,31 @@ var toValString = require('./toString')
   * @return {String}
   */
 function camelCase (str) {
-  return toValString(str).replace(/(-[a-zA-Z])/g, function (text, u) {
-    return u.substring(1).toLocaleUpperCase()
+  str = toValString(str)
+  if (camelCacheMaps[str]) {
+    return camelCacheMaps[str]
+  }
+  var strLen = str.length
+  str = str.replace(/([-]+)/g, function (text, flag, index) {
+    return index && index + flag.length < strLen ? '-' : ''
+  })
+  strLen = str.length
+  return camelCacheMaps[str] = str.replace(/([A-Z]+)/g, function (text, upper, index) {
+    var upperLen = upper.length
+    upper = helperStringLowerCase(upper)
+    if (index) {
+      if (upperLen > 2 && index + upperLen < strLen) {
+        return helperStringUpperCase(helperStringSubstring(upper, 0, 1)) + helperStringSubstring(upper, 1, upperLen - 1) + helperStringUpperCase(helperStringSubstring(upper, upperLen - 1, upperLen))
+      }
+      return helperStringUpperCase(helperStringSubstring(upper, 0, 1)) + helperStringSubstring(upper, 1, upperLen)
+    } else {
+      if (upperLen > 1 && index + upperLen < strLen) {
+        return helperStringSubstring(upper, 0, upperLen - 1) + helperStringUpperCase(helperStringSubstring(upper, upperLen - 1, upperLen))
+      }
+    }
+    return upper
+  }).replace(/(-[a-zA-Z])/g, function (text, upper) {
+    return helperStringUpperCase(helperStringSubstring(upper, 1, upper.length))
   })
 }
 
