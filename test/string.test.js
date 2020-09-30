@@ -298,13 +298,46 @@ describe('String functions', () => {
     ).toEqual('123456')
     expect(
       XEUtils.camelCase(-1)
-    ).toEqual('-1')
+    ).toEqual('1')
     expect(
       XEUtils.camelCase([])
     ).toEqual('')
     expect(
+      XEUtils.camelCase('---project')
+    ).toEqual('project')
+    expect(
+      XEUtils.camelCase('---project----')
+    ).toEqual('project')
+    expect(
+      XEUtils.camelCase('proJect----')
+    ).toEqual('proJect')
+    expect(
+      XEUtils.camelCase('-project-')
+    ).toEqual('project')
+    expect(
+      XEUtils.camelCase('---project-name')
+    ).toEqual('projectName')
+    expect(
+      XEUtils.camelCase('--project-name--')
+    ).toEqual('projectName')
+    expect(
+      XEUtils.camelCase('--project----name--')
+    ).toEqual('projectName')
+    expect(
       XEUtils.camelCase('project-name')
     ).toEqual('projectName')
+    expect(
+      XEUtils.camelCase('projectName')
+    ).toEqual('projectName')
+    expect(
+      XEUtils.camelCase('AABBC')
+    ).toEqual('aabbc')
+    expect(
+      XEUtils.camelCase('AaBBC')
+    ).toEqual('aaBbc')
+    expect(
+      XEUtils.camelCase('AaBBCdfGG')
+    ).toEqual('aaBbCdfGg')
   })
 
   test('kebabCase()', () => {
@@ -328,13 +361,82 @@ describe('String functions', () => {
     ).toEqual('123456')
     expect(
       XEUtils.kebabCase(-1)
-    ).toEqual('-1')
+    ).toEqual('1')
+    expect(
+      XEUtils.kebabCase('----1')
+    ).toEqual('1')
     expect(
       XEUtils.kebabCase([])
     ).toEqual('')
     expect(
+      XEUtils.kebabCase('aaaa')
+    ).toEqual('aaaa')
+    expect(
+      XEUtils.kebabCase('aaaBBBccc')
+    ).toEqual('aaa-bb-bccc')
+    expect(
+      XEUtils.kebabCase('BBBffGG')
+    ).toEqual('bb-bff-gg')
+    expect(
       XEUtils.kebabCase('projectName')
     ).toEqual('project-name')
+    expect(
+      XEUtils.kebabCase('ProjectName')
+    ).toEqual('project-name')
+    expect(
+      XEUtils.kebabCase('-ProjectName-')
+    ).toEqual('project-name')
+    expect(
+      XEUtils.kebabCase('Enter')
+    ).toEqual('enter')
+    expect(
+      XEUtils.kebabCase('AABBC')
+    ).toEqual('aabbc')
+    expect(
+      XEUtils.kebabCase('a-bC')
+    ).toEqual('a-b-c')
+    expect(
+      XEUtils.kebabCase('Ac-cc')
+    ).toEqual('ac-cc')
+    expect(
+      XEUtils.kebabCase('AAc-cc')
+    ).toEqual('a-ac-cc')
+    expect(
+      XEUtils.kebabCase('AAA-cc')
+    ).toEqual('aaa-cc')
+    expect(
+      XEUtils.kebabCase('AAAc-cc')
+    ).toEqual('aa-ac-cc')
+    expect(
+      XEUtils.kebabCase('AAA-BBB')
+    ).toEqual('aaa-bbb')
+    expect(
+      XEUtils.kebabCase('AAA-BBbBB')
+    ).toEqual('aaa-b-bb-bb')
+    expect(
+      XEUtils.kebabCase('--aaa--bb--')
+    ).toEqual('aaa-bb')
+    expect(
+      XEUtils.kebabCase('a-b-C')
+    ).toEqual('a-b-c')
+    expect(
+      XEUtils.kebabCase('a-b-----C')
+    ).toEqual('a-b-c')
+    expect(
+      XEUtils.kebabCase('a-b-----CDF')
+    ).toEqual('a-b-cdf')
+    expect(
+      XEUtils.kebabCase('aaDddddDDDff')
+    ).toEqual('aa-ddddd-dd-dff')
+    expect(
+      XEUtils.kebabCase('aaBBffHHHggt--H-HHH-hjJ-J')
+    ).toEqual('aa-b-bff-hh-hggt-h-hhh-hj-j-j')
+    expect(
+      XEUtils.kebabCase('a-b--bbBBB-bB--xxDDff')
+    ).toEqual('a-b-bb-bbb-b-b-xx-d-dff')
+    expect(
+      XEUtils.kebabCase('aAA-bBBBB---bF--Fs')
+    ).toEqual('a-aa-b-bbbb-b-f-fs')
   })
 
   test('repeat()', () => {
