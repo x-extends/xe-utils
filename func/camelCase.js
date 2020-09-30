@@ -17,11 +17,11 @@ function camelCase (str) {
     return camelCacheMaps[str]
   }
   var strLen = str.length
-  str = str.replace(/([-]+)/g, function (text, flag, index) {
+  var rest = str.replace(/([-]+)/g, function (text, flag, index) {
     return index && index + flag.length < strLen ? '-' : ''
   })
-  strLen = str.length
-  return camelCacheMaps[str] = str.replace(/([A-Z]+)/g, function (text, upper, index) {
+  strLen = rest.length
+  rest = rest.replace(/([A-Z]+)/g, function (text, upper, index) {
     var upperLen = upper.length
     upper = helperStringLowerCase(upper)
     if (index) {
@@ -38,6 +38,8 @@ function camelCase (str) {
   }).replace(/(-[a-zA-Z])/g, function (text, upper) {
     return helperStringUpperCase(helperStringSubstring(upper, 1, upper.length))
   })
+  camelCacheMaps[str] = rest
+  return rest
 }
 
 module.exports = camelCase

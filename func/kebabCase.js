@@ -15,7 +15,7 @@ function kebabCase (str) {
   if (kebabCacheMaps[str]) {
     return kebabCacheMaps[str]
   }
-  str = str.replace(/([a-z]?)([A-Z]+)([a-z]?)/g, function (text, prevLower, upper, nextLower, index) {
+  var rest = str.replace(/([a-z]?)([A-Z]+)([a-z]?)/g, function (text, prevLower, upper, nextLower, index) {
     var upperLen = upper.length
     if (upperLen > 1) {
       if (prevLower) {
@@ -27,11 +27,11 @@ function kebabCase (str) {
     }
     return (prevLower || '') + (index ? '-' : '') + helperStringLowerCase(upper) + (nextLower || '')
   })
-  str = str.replace(/([-]+)/g, function (text, flag, index) {
-    return index && index + flag.length < str.length ? '-' : ''
+  rest = rest.replace(/([-]+)/g, function (text, flag, index) {
+    return index && index + flag.length < rest.length ? '-' : ''
   })
-  kebabCacheMaps[str] =  str
-  return str
+  kebabCacheMaps[str] =  rest
+  return rest
 }
 
 module.exports = kebabCase
