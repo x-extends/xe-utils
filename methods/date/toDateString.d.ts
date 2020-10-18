@@ -19,7 +19,7 @@ export interface ToDateStringOptions {
  * @param format 格式化 默认：yyyy-MM-dd HH:mm:ss.SSS
  * @param options 可选参数
  */
-export declare function toDateString(date: string | Date | number, format?: string, options?: ToDateStringOptions): string;
+export declare function toDateString(date: any, format?: string, options?: ToDateStringOptions): string;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {

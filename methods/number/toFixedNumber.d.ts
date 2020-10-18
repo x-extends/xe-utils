@@ -5,7 +5,7 @@ import { XEUtilsMethods } from '../xe-utils'
  * @param num 数值/字符串
  * @param digits 小数保留位数
  */
-export declare function toFixedNumber(num: string | number, digits: number): number;
+export declare function toFixedNumber(num: any, digits: number): number;
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
