@@ -2,6 +2,7 @@
  * 转字符串
  * @param obj 值
  */
+export declare function toString(obj: number | string | any[]): string;
 export declare function toString(obj: any): string;
 
 declare module './ctor' {

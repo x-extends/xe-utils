@@ -3,6 +3,7 @@
  * @param str 字符串
  */
 export declare function unserialize(str: string): any;
+export declare function unserialize(str: any): any;
 
 declare module './ctor' {
   interface XEUtilsMethods {

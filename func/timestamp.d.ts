@@ -4,6 +4,7 @@
  * @param format 解析格式 yyyy MM dd HH mm ss SSS
  */
 export declare function timestamp(date: string | Date | number, format?: string): number;
+export declare function timestamp(date: any, format?: string): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {

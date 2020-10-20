@@ -3,6 +3,7 @@
  * @param str 字符串
  */
 export declare function trimRight(str: string): string;
+export declare function trimRight(str: any): string;
 
 declare module './ctor' {
   interface XEUtilsMethods {

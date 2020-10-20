@@ -10,6 +10,7 @@ export interface ToTreeArrayOptions {
  * @param {Object} options { children: 'children', data: 'data', clear: false }
  */
 export declare function toTreeArray<T>(list: T[], options?: ToTreeArrayOptions): T[];
+export declare function toTreeArray(list: any, options?: ToTreeArrayOptions): any[];
 
 declare module './ctor' {
   interface XEUtilsMethods {

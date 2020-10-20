@@ -1,15 +1,11 @@
 /**
  * 将一个数组随机打乱，返回一个新的数组
- * @param array 数组
+ * @param list 数组
   */
-export declare function shuffle(array: any[]): any[];
+export declare function shuffle<T>(list: T[]): T[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
-    /**
-     * 将一个数组随机打乱，返回一个新的数组
-     * @param array 数组
-      */
     shuffle: typeof shuffle;
   }
 }
