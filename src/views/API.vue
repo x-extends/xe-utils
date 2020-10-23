@@ -1286,36 +1286,41 @@ export default {
               ]
             },
             {
-              name: 'sortBy',
-              args: 'arr, iteratee [, context]',
-              title: '数组按属性值升序',
+              name: 'orderBy | sortBy',
+              args: 'arr, fieldConfs [, context]',
+              title: '将数组进行排序',
               desc: '',
-              params: [],
+              params: [
+                ['属性', '描述', '可选值', '默认值'],
+                ['field', '字段名或自定义方法，如果为空则取当前项的值', '', ''],
+                ['order', '排序方式', 'asc,desc', 'asc']
+              ],
               codes: [
                 `
                 // 数值排序
-                XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22])
+                XEUtils.orderBy([11, 55, 99, 77, 11, 55, 22])
                 // [11, 11, 22, 55, 55, 77, 99]
                 // 字母排序
-                XEUtils.sortBy(['x', 'z', 'g', 'q', 'e', 'b', 'a', 'g', 'f', 'c', 'j'])
+                XEUtils.orderBy(['x', 'z', 'g', 'q', 'e', 'b', 'a', 'g', 'f', 'c', 'j'])
                 // ["a", "b", "c", "e", "f", "g", "g", "j", "q", "x", "z"]
                 // 中文排序
-                XEUtils.sortBy(['小', '何', '李', '林', '有', '好', '啊', '的', '出', '库', '徐'])
+                XEUtils.orderBy(['小', '何', '李', '林', '有', '好', '啊', '的', '出', '库', '徐'])
                 // ['啊', '出', '的', '好', '何', '库', '李', '林', '小', '徐', '有']
                 // 倒序
-                XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22]).reverse()
+                XEUtils.orderBy([11, 55, 99, 77, 11, 55, 22], { order: 'desc' })
                 // [99, 77, 55, 55, 22, 11, 11]
                 // 深层对象
-                XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
+                XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
+                XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], { field: 'age', order: 'desc' })
                 // [{ age: 26 }, { age: 27 }, { age: 28 }]
                 // 多字段排序
-                XEUtils.sortBy([
+                XEUtils.orderBy([
                   { name: 'x', age: 26 },
                   { name: 'd', age: 27 },
                   { name: 'z', age: 26 },
                   { name: 'z', age: 24 },
                   { name: 'z', age: 25 }
-                ], ['age', 'name'])
+                ], [{ field: 'age', order: 'asc' }, { field: 'name', order: 'desc' }])
                 /*
                 [{ name: 'z', age: 24 },
                 { name: 'z', age: 25 },
@@ -1324,12 +1329,12 @@ export default {
                 { name: 'd', age: 27 }]
                 */
                 // 自定义组合排序
-                XEUtils.sortBy([
+                XEUtils.orderBy([
                   { name: 'x', age: 26 },
                   { name: 'd', age: 27 },
                   { name: 'x', age: 26 },
                   { name: 'z', age: 26 }
-                ], [item => item.name, item => item.age])
+                ], [{ field: item => item.name, order: 'asc' }, { field: item => item.age, order: 'desc' }])
                 /*
                 [{ name: 'd', age: 27 },
                 { name: 'x', age: 26 },

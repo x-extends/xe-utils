@@ -10,6 +10,7 @@ var uniq = require('./uniq')
 var union = require('./union')
 var toArray = require('./toArray')
 var sortBy = require('./sortBy')
+var orderBy = require('./orderBy')
 var shuffle = require('./shuffle')
 var sample = require('./sample')
 var slice = require('./slice')
@@ -41,6 +42,7 @@ var arrayExports = {
   uniq: uniq,
   union: union,
   sortBy: sortBy,
+  orderBy: orderBy,
   shuffle: shuffle,
   sample: sample,
   some: some,
