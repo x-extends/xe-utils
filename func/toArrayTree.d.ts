@@ -1,11 +1,17 @@
+import { OrderByFieldConfs } from './orderBy'
+
 export interface ToArrayTreeOptions {
   strict?: boolean;
   key?: string;
   parentKey?: string;
   children?: string;
-  sortKey?: string;
-  reverse?: string;
+  sortKey?: OrderByFieldConfs;
   data?: string;
+  /**
+   * 已废弃，被 sortKey: { ...,order: 'desc' } 替换
+   * @deprecated
+   */
+  reverse?: boolean;
 }
 
 /**

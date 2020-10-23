@@ -1,7 +1,7 @@
 var setupDefaults = require('./setupDefaults')
 
 var map = require('./map')
-var sortBy = require('./sortBy')
+var orderBy = require('./orderBy')
 
 var clone = require('./clone')
 var includes = require('./includes')
@@ -39,7 +39,7 @@ function toArrayTree (array, options) {
   var idList, id, treeData, parentId
 
   if (optSortKey) {
-    array = sortBy(clone(array), optSortKey)
+    array = orderBy(clone(array), optSortKey)
     if (optReverse) {
       array = array.reverse()
     }

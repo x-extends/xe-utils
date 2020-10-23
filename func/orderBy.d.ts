@@ -3,6 +3,8 @@ interface OrderBySortConfs<T, C> {
   order?: 'order' | 'desc' | null;
 }
 
+export type OrderByFieldConfs = null | string | OrderBySortConfs<T, C> | (string | OrderBySortConfs<T, C>)[] | ((this: C, item: T, index: number, list: T[]) => any);
+
 /**
  * 将数组进行排序
  * @param array 数组
