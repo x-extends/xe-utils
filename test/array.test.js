@@ -146,90 +146,90 @@ describe('Array functions', () => {
     method(11, 22, 33, 44)
   })
 
-  test('sortBy()', () => {
+  test('orderBy()', () => {
     expect(
-      XEUtils.sortBy()
+      XEUtils.orderBy()
     ).toEqual([])
     expect(
-      XEUtils.sortBy(null)
+      XEUtils.orderBy(null)
     ).toEqual([])
     expect(
-      XEUtils.sortBy(undefined)
+      XEUtils.orderBy(undefined)
     ).toEqual([])
     expect(
-      XEUtils.sortBy({})
+      XEUtils.orderBy({})
     ).toEqual([])
     expect(
-      XEUtils.sortBy(-1)
+      XEUtils.orderBy(-1)
     ).toEqual([])
     expect(
-      XEUtils.sortBy(0)
+      XEUtils.orderBy(0)
     ).toEqual([])
     expect(
-      XEUtils.sortBy(123)
+      XEUtils.orderBy(123)
     ).toEqual([])
     expect(
-      XEUtils.sortBy('')
+      XEUtils.orderBy('')
     ).toEqual([])
     expect(
-      XEUtils.sortBy(/\d/)
+      XEUtils.orderBy(/\d/)
     ).toEqual([])
     expect(
-      XEUtils.sortBy(function () {})
+      XEUtils.orderBy(function () { })
     ).toEqual([])
     expect(
-      XEUtils.sortBy('abc')
+      XEUtils.orderBy('abc')
     ).toEqual(['a', 'b', 'c'])
     expect(
-      XEUtils.sortBy(['b', 'j', 'a', 'c'])
+      XEUtils.orderBy(['b', 'j', 'a', 'c'])
     ).toEqual(['a', 'b', 'c', 'j'])
     expect(
-      XEUtils.sortBy([11, 55, 99, 22, 9, 1, 10])
+      XEUtils.orderBy([11, 55, 99, 22, 9, 1, 10])
     ).toEqual([1, 9, 10, 11, 22, 55, 99])
     expect(
-      XEUtils.sortBy([11, 55, 99, 77, 11, 55, 22, 10, 9, 111], [])
+      XEUtils.orderBy([11, 55, 99, 77, 11, 55, 22, 10, 9, 111], [])
     ).toEqual([11, 55, 99, 77, 11, 55, 22, 10, 9, 111])
     expect(
-      XEUtils.sortBy([120, 103, 10, 13, 22, 23, 24, 33, 55, 8, 9, 30, 40, 90, 99, 88, 77, 0, 1, 2, 3, 11, 12, 4, 5, 6, 7, 66, 44, 77, 100])
+      XEUtils.orderBy([120, 103, 10, 13, 22, 23, 24, 33, 55, 8, 9, 30, 40, 90, 99, 88, 77, 0, 1, 2, 3, 11, 12, 4, 5, 6, 7, 66, 44, 77, 100])
     ).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 22, 23, 24, 30, 33, 40, 44, 55, 66, 77, 77, 88, 90, 99, 100, 103, 120])
     expect(
-      XEUtils.sortBy(['11', '55', '99', '77', '11', '55', '22', '0', '9'])
+      XEUtils.orderBy(['11', '55', '99', '77', '11', '55', '22', '0', '9'])
     ).toEqual(['0', '11', '11', '22', '55', '55', '77', '9', '99'])
     expect(
-      XEUtils.sortBy(['x', 'z', 'g', 'q', 'e', 'b', 'a', 'g', 'f', 'c', 'j'])
+      XEUtils.orderBy(['x', 'z', 'g', 'q', 'e', 'b', 'a', 'g', 'f', 'c', 'j'])
     ).toEqual(['a', 'b', 'c', 'e', 'f', 'g', 'g', 'j', 'q', 'x', 'z'])
     expect(
-      XEUtils.sortBy([null, 'a', 'g', null, null, 'c', 'j'])
+      XEUtils.orderBy([null, 'a', 'g', null, null, 'c', 'j'])
     ).toEqual(['a', 'c', 'g', 'j', null, null, null])
     expect(
-      XEUtils.sortBy([null, 'a', 'g', null, undefined, null, 'c', undefined, 0, 'j'])
+      XEUtils.orderBy([null, 'a', 'g', null, undefined, null, 'c', undefined, 0, 'j'])
     ).toEqual([0, 'a', 'c', 'g', 'j', null, null, null, undefined, undefined])
     expect(
-      XEUtils.sortBy([{ a: null }, { a: 'g' }, { a: undefined }, { a: 'a' }, { a: null }, { a: null }, { a: 'j' }, { a: 'c' }], 'a')
+      XEUtils.orderBy([{ a: null }, { a: 'g' }, { a: undefined }, { a: 'a' }, { a: null }, { a: null }, { a: 'j' }, { a: 'c' }], 'a')
     ).toEqual([{ a: 'a' }, { a: 'c' }, { a: 'g' }, { a: 'j' }, { a: null }, { a: null }, { a: null }, { a: undefined }])
     expect(
-      XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
+      XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
     ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
-      XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], ['age'])
+      XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], ['age'])
     ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
-      XEUtils.sortBy([{ a: { b: 66 } }, { a: { b: 33 } }, { a: { b: 11 } }], 'a.b')
+      XEUtils.orderBy([{ a: { b: 66 } }, { a: { b: 33 } }, { a: { b: 11 } }], 'a.b')
     ).toEqual([{ a: { b: 11 } }, { a: { b: 33 } }, { a: { b: 66 } }])
     expect(
-      XEUtils.sortBy([{ a: { b: 66 } }, { a: { b: 33 } }, { a: { b: 11 } }], ['a.b'])
+      XEUtils.orderBy([{ a: { b: 66 } }, { a: { b: 33 } }, { a: { b: 11 } }], ['a.b'])
     ).toEqual([{ a: { b: 11 } }, { a: { b: 33 } }, { a: { b: 66 } }])
     expect(
-      XEUtils.sortBy([{ a: { b: 66 }, c: 6 }, { a: { b: 33 }, c: 9 }, { a: { b: 11 }, c: 6 }], ['c', 'a.b'])
+      XEUtils.orderBy([{ a: { b: 66 }, c: 6 }, { a: { b: 33 }, c: 9 }, { a: { b: 11 }, c: 6 }], ['c', 'a.b'])
     ).toEqual([{ a: { b: 11 }, c: 6 }, { a: { b: 66 }, c: 6 }, { a: { b: 33 }, c: 9 }])
     expect(
-      XEUtils.sortBy([{ age: 27 }, { age: 26 }, { age: 28 }], item => item.age)
+      XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], item => item.age)
     ).toEqual([{ age: 26 }, { age: 27 }, { age: 28 }])
     expect(
-      XEUtils.sortBy([{ name: 'x' }, { name: 'l' }, { name: 'a' }], [item => item.name])
+      XEUtils.orderBy([{ name: 'x' }, { name: 'l' }, { name: 'a' }], [item => item.name])
     ).toEqual([{ name: 'a' }, { name: 'l' }, { name: 'x' }])
     expect(
-      XEUtils.sortBy([
+      XEUtils.orderBy([
         { name: 'x', age: 25 },
         { name: 'd', age: 27 },
         { name: 'z', age: 27 },
@@ -246,7 +246,7 @@ describe('Array functions', () => {
       { name: 'z', age: 27 }
     ])
     expect(
-      XEUtils.sortBy([
+      XEUtils.orderBy([
         { name: 'x', age: 26 },
         { name: 'd', age: 27 },
         { name: 'z', age: 26 },
@@ -259,7 +259,7 @@ describe('Array functions', () => {
       { name: 'd', age: 27 }
     ])
     expect(
-      XEUtils.sortBy([
+      XEUtils.orderBy([
         { name: 'x', age: 26 },
         { name: 'd', age: 27 },
         { name: 'x', age: 26 },
@@ -272,12 +272,12 @@ describe('Array functions', () => {
       { name: 'z', age: 26 }
     ])
     expect(
-      XEUtils.sortBy([
+      XEUtils.orderBy([
         { name: 'x', age: 26 },
         { name: 'd', age: 27 },
         { name: 'z', age: 26 },
         { name: 'z', age: 26 }]
-      , ['age', item => item.name])
+        , ['age', item => item.name])
     ).toEqual([
       { name: 'x', age: 26 },
       { name: 'z', age: 26 },
@@ -285,7 +285,7 @@ describe('Array functions', () => {
       { name: 'd', age: 27 }
     ])
     expect(
-      XEUtils.sortBy([
+      XEUtils.orderBy([
         { name: 'x', age: 26, height: 176 },
         { name: 'd', age: 27, height: 176 },
         { name: 'z', age: 26, height: 178 },
@@ -298,6 +298,105 @@ describe('Array functions', () => {
       { name: 'x', age: 26, height: 176 },
       { name: 'z', age: 26, height: 176 },
       { name: 'z', age: 26, height: 178 }
+    ])
+    expect(
+      XEUtils.orderBy([
+        { name: 'x', age: 26, height: 176 },
+        { name: 'd', age: 27, height: 176 },
+        { name: 'z', age: 26, height: 178 },
+        { name: 'z', age: 26, height: 176 },
+        { name: 'd', age: 27, height: 175 }
+      ], [{ field: 'name' }, { field: 'age' }, { field: 'height' }])
+    ).toEqual([
+      { name: 'd', age: 27, height: 175 },
+      { name: 'd', age: 27, height: 176 },
+      { name: 'x', age: 26, height: 176 },
+      { name: 'z', age: 26, height: 176 },
+      { name: 'z', age: 26, height: 178 }
+    ])
+    expect(
+      XEUtils.orderBy([
+        { name: 'x', age: 26, height: 176 },
+        { name: 'd', age: 27, height: 176 },
+        { name: 'z', age: 26, height: 178 },
+        { name: 'z', age: 26, height: 176 },
+        { name: 'x', age: 30, height: 176 },
+        { name: 'd', age: 27, height: 175 },
+        { name: 'd', age: 21, height: 165 },
+        { name: 'x', age: 22, height: 196 }
+      ], [{ field: 'name', order: 'asc' }, { field: 'age', order: 'asc' }, { field: 'height', order: 'asc' }])
+    ).toEqual([
+      { name: 'd', age: 21, height: 165 },
+      { name: 'd', age: 27, height: 175 },
+      { name: 'd', age: 27, height: 176 },
+      { name: 'x', age: 22, height: 196 },
+      { name: 'x', age: 26, height: 176 },
+      { name: 'x', age: 30, height: 176 },
+      { name: 'z', age: 26, height: 176 },
+      { name: 'z', age: 26, height: 178 }
+    ])
+    expect(
+      XEUtils.orderBy([
+        { name: 'x', age: 26, height: 176 },
+        { name: 'd', age: 27, height: 176 },
+        { name: 'z', age: 26, height: 178 },
+        { name: 'z', age: 26, height: 176 },
+        { name: 'x', age: 30, height: 176 },
+        { name: 'd', age: 27, height: 175 },
+        { name: 'd', age: 21, height: 165 },
+        { name: 'x', age: 22, height: 196 }
+      ], [{ field: 'name', order: 'asc' }, { field: 'age', order: 'desc' }])
+    ).toEqual([
+      { name: 'd', age: 27, height: 176 },
+      { name: 'd', age: 27, height: 175 },
+      { name: 'd', age: 21, height: 165 },
+      { name: 'x', age: 30, height: 176 },
+      { name: 'x', age: 26, height: 176 },
+      { name: 'x', age: 22, height: 196 },
+      { name: 'z', age: 26, height: 178 },
+      { name: 'z', age: 26, height: 176 }
+    ])
+    expect(
+      XEUtils.orderBy([
+        { name: 'x', age: 26, height: 176 },
+        { name: 'd', age: 27, height: 176 },
+        { name: 'z', age: 26, height: 178 },
+        { name: 'z', age: 26, height: 176 },
+        { name: 'x', age: 30, height: 176 },
+        { name: 'd', age: 27, height: 175 },
+        { name: 'd', age: 21, height: 165 },
+        { name: 'x', age: 22, height: 196 }
+      ], [{ field: 'name', order: 'asc' }, { field: 'age', order: 'desc' }, { field: 'height', order: 'asc' }])
+    ).toEqual([
+      { name: 'd', age: 27, height: 175 },
+      { name: 'd', age: 27, height: 176 },
+      { name: 'd', age: 21, height: 165 },
+      { name: 'x', age: 30, height: 176 },
+      { name: 'x', age: 26, height: 176 },
+      { name: 'x', age: 22, height: 196 },
+      { name: 'z', age: 26, height: 176 },
+      { name: 'z', age: 26, height: 178 }
+    ])
+    expect(
+      XEUtils.orderBy([
+        { name: 'x', age: 26, height: 176 },
+        { name: 'd', age: 27, height: 176 },
+        { name: 'z', age: 26, height: 178 },
+        { name: 'z', age: 26, height: 176 },
+        { name: 'x', age: 30, height: 176 },
+        { name: 'd', age: 27, height: 175 },
+        { name: 'd', age: 21, height: 165 },
+        { name: 'x', age: 22, height: 196 }
+      ], [{ field: 'name', order: 'asc' }, { field: 'age', order: 'desc' }, { field: 'height', order: 'desc' }])
+    ).toEqual([
+      { name: 'd', age: 27, height: 176 },
+      { name: 'd', age: 27, height: 175 },
+      { name: 'd', age: 21, height: 165 },
+      { name: 'x', age: 30, height: 176 },
+      { name: 'x', age: 26, height: 176 },
+      { name: 'x', age: 22, height: 196 },
+      { name: 'z', age: 26, height: 178 },
+      { name: 'z', age: 26, height: 176 }
     ])
   })
 

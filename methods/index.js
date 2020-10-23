@@ -22,6 +22,7 @@ var uniq = require('./array/uniq')
 var union = require('./array/union')
 var toArray = require('./array/toArray')
 var sortBy = require('./array/sortBy')
+var orderBy = require('./array/orderBy')
 var shuffle = require('./array/shuffle')
 var sample = require('./array/sample')
 var slice = require('./array/slice')
@@ -206,6 +207,7 @@ assign(XEUtils, {
   uniq: uniq,
   union: union,
   sortBy: sortBy,
+  orderBy: orderBy,
   shuffle: shuffle,
   sample: sample,
   some: some,
