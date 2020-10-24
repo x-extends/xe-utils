@@ -1,5 +1,5 @@
 import orderBy from './orderBy'
 
-declare const sortBy = orderBy
+const sortBy: typeof orderBy
 
 export default sortBy

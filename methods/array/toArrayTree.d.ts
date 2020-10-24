@@ -7,7 +7,7 @@ export interface ToArrayTreeOptions {
   key?: string;
   parentKey?: string;
   children?: string;
-  sortKey?: OrderByFieldConfs;
+  sortKey?: OrderByFieldConfs<any, any>;
   data?: string;
   /**
    * 已废弃，被 sortKey: { ...,order: 'desc' } 替换
