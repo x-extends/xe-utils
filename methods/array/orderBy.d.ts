@@ -5,7 +5,7 @@ interface OrderBySortConfs<T, C> {
   order?: 'order' | 'desc' | null;
 }
 
-export type OrderByFieldConfs = null | string | OrderBySortConfs<T, C> | (string | OrderBySortConfs<T, C>)[] | ((this: C, item: T, index: number, list: T[]) => any);
+export type OrderByFieldConfs<T, C> = null | string | OrderBySortConfs<T, C> | (string | OrderBySortConfs<T, C>)[] | ((this: C, item: T, index: number, list: T[]) => any);
 
 /**
  * 将数组进行排序
@@ -13,9 +13,7 @@ export type OrderByFieldConfs = null | string | OrderBySortConfs<T, C> | (string
  * @param fieldConfs 排序规则
  * @param context 上下文
  */
-export declare function orderBy<T, C>(array: T[], fieldConfs: string | OrderBySortConfs<T, C>, context?: C): T[];
-export declare function orderBy<T, C>(array: T[], multifield: (string | OrderBySortConfs<T, C>)[], context?: C): T[];
-export declare function orderBy<T, C>(array: T[], iterate: ((this: C, item: T, index: number, list: T[]) => any), context?: C): T[];
+export declare function orderBy<T, C>(array: T[], fieldConfs: OrderByFieldConfs<T, C>, context?: C): T[];
 
 declare module '../xe-utils' {
   interface XEUtilsMethods {
