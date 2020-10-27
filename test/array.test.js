@@ -306,7 +306,7 @@ describe('Array functions', () => {
         { name: 'z', age: 26, height: 178 },
         { name: 'z', age: 26, height: 176 },
         { name: 'd', age: 27, height: 175 }
-      ], [{ field: 'name' }, { field: 'age' }, { field: 'height' }])
+      ], [['name'], ['age'], ['height']])
     ).toEqual([
       { name: 'd', age: 27, height: 175 },
       { name: 'd', age: 27, height: 176 },
@@ -345,7 +345,7 @@ describe('Array functions', () => {
         { name: 'd', age: 27, height: 175 },
         { name: 'd', age: 21, height: 165 },
         { name: 'x', age: 22, height: 196 }
-      ], [{ field: 'name', order: 'asc' }, { field: 'age', order: 'desc' }])
+      ], [['name', 'asc'], ['age', 'desc']])
     ).toEqual([
       { name: 'd', age: 27, height: 176 },
       { name: 'd', age: 27, height: 175 },
@@ -387,7 +387,7 @@ describe('Array functions', () => {
         { name: 'd', age: 27, height: 175 },
         { name: 'd', age: 21, height: 165 },
         { name: 'x', age: 22, height: 196 }
-      ], [{ field: 'name', order: 'asc' }, { field: 'age', order: 'desc' }, { field: 'height', order: 'desc' }])
+      ], [['name', 'asc'], [ 'age', 'desc'], ['height', 'desc' ]])
     ).toEqual([
       { name: 'd', age: 27, height: 176 },
       { name: 'd', age: 27, height: 175 },

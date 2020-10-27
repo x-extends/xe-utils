@@ -44,18 +44,26 @@ function getSortConfs (arr, list, fieldConfs, context) {
   var sortConfs = []
   fieldConfs = isArray(fieldConfs) ? fieldConfs : [fieldConfs]
   arrayEach(fieldConfs, function (handle, index) {
-    var hasObj = isPlainObject(handle)
-    var field = hasObj ? handle.field : handle
-    var confs = {
-      field: field,
-      order: hasObj ? handle.order : ORDER_PROP_ASC
+    if (handle) {
+      var field = handle
+      var order
+      if (isArray(handle)) {
+        field = handle[0]
+        order = handle[1]
+      } else if (isPlainObject(handle)) {
+        field = handle.field
+        order = handle.order
+      }
+      sortConfs.push({
+        field: field,
+        order: order || ORDER_PROP_ASC
+      })
+      arrayEach(list, isFunction(field) ? function (item, key) {
+        item[index] = field.call(context, item.data, key, arr)
+      } : function (item) {
+        item[index] = field ? get(item.data, field) : item.data
+      })
     }
-    sortConfs.push(confs)
-    arrayEach(list, isFunction(field) ? function (item, key) {
-      item[index] = field.call(context, item.data, key, arr)
-    } : function (item) {
-      item[index] = field ? get(item.data, field) : item.data
-    })
   })
   return sortConfs
 }
