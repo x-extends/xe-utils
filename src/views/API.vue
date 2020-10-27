@@ -1290,11 +1290,6 @@ export default {
               args: 'arr, fieldConfs [, context]',
               title: '将数组进行排序',
               desc: '',
-              params: [
-                ['属性', '描述', '可选值', '默认值'],
-                ['field', '字段名或自定义方法，如果为空则取当前项的值', '', ''],
-                ['order', '排序方式', 'asc,desc', 'asc']
-              ],
               codes: [
                 `
                 // 数值排序
@@ -1311,7 +1306,7 @@ export default {
                 // [99, 77, 55, 55, 22, 11, 11]
                 // 深层对象
                 XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
-                XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], { field: 'age', order: 'desc' })
+                XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], ['age', 'desc'])
                 // [{ age: 26 }, { age: 27 }, { age: 28 }]
                 // 多字段排序
                 XEUtils.orderBy([
@@ -1320,7 +1315,7 @@ export default {
                   { name: 'z', age: 26 },
                   { name: 'z', age: 24 },
                   { name: 'z', age: 25 }
-                ], [{ field: 'age', order: 'asc' }, { field: 'name', order: 'desc' }])
+                ], [['age', 'asc'], ['name', 'desc']])
                 /*
                 [{ name: 'z', age: 24 },
                 { name: 'z', age: 25 },
@@ -1334,7 +1329,7 @@ export default {
                   { name: 'd', age: 27 },
                   { name: 'x', age: 26 },
                   { name: 'z', age: 26 }
-                ], [{ field: item => item.name, order: 'asc' }, { field: item => item.age, order: 'desc' }])
+                ], [[item => item.name, 'asc'], [field: item => item.age, 'desc']])
                 /*
                 [{ name: 'd', age: 27 },
                 { name: 'x', age: 26 },
