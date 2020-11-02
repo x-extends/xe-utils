@@ -17,7 +17,7 @@ var toNumberString = require('./toNumberString')
  */
 function commafy(num, options) {
   var opts = options || {}
-  var optDigits = opts.digits
+  var optDigits = opts.digits || opts.fixed
   var isNum = isNumber(num)
   var rest, result, isNegative, intStr, floatStr
   if (isNum) {

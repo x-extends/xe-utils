@@ -60,6 +60,9 @@ describe('Number functions', () => {
 
   test('commafy()', () => {
     expect(
+      XEUtils.commafy(1000000, { fixed: 2 }) // 已废弃 fixed
+    ).toEqual('1,000,000.00')
+    expect(
       XEUtils.commafy(0)
     ).toEqual('0')
     expect(
