@@ -2,7 +2,7 @@
  * 判断是否是一个对象
  * @param val 值
  */
-export declare function isPlainObject(val: any): val is Object;
+export declare function isPlainObject(val: any): val is object;
 
 declare module './ctor' {
   interface XEUtilsMethods {

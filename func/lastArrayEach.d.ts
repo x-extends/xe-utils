@@ -6,6 +6,8 @@
  */
 export declare function lastArrayEach<T, C>(list: T[], iterate: (this: C, item: T, index: number, list: T[]) => void, context?: C): void;
 export declare function lastArrayEach<T, C>(list: T, iterate: (this: C, item: any, index: number, list: T) => void, context?: C): void;
+export declare function lastArrayEach<C>(list: any[], iterate: (this: C, item: any, index: number, list: any[]) => void, context?: C): void;
+export declare function lastArrayEach<C>(list: any, iterate: (this: C, item: any, index: number, list: any) => void, context?: C): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {

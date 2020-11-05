@@ -6,6 +6,7 @@
  * @param context 上下文
  */
 export declare function objectEach<T>(obj: T, iterate: (item: any, key: string, obj: T) => void, context ?: any): void;
+export declare function objectEach(obj: any, iterate: (item: any, key: string, obj: any) => void, context ?: any): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {
