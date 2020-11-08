@@ -4,7 +4,7 @@
  * @param key 键
  * @example
  */
-export declare function pluck(array: any[], key: string): any[];
+export declare function pluck(array: any[], key: string | number): any[];
 
 declare module './ctor' {
   interface XEUtilsMethods {

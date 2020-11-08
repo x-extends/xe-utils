@@ -4,7 +4,7 @@
  * @param val 值
  * @param startIndex 开始索引
  */
-export declare function startsWith(str: string, val: string, startIndex?: number): string;
+export declare function startsWith(str: number | string | null, val: string, startIndex?: number): string;
 
 declare module './ctor' {
   interface XEUtilsMethods {

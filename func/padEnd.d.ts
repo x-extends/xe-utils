@@ -5,6 +5,7 @@
  * @param padString 补全字符
  */
 export declare function padEnd(str: string, targetLength: number, padString?: string): string;
+export declare function padEnd(str: any, targetLength: number, padString?: any): string;
 
 declare module './ctor' {
   interface XEUtilsMethods {

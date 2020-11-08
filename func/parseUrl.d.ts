@@ -54,6 +54,7 @@ export interface XEUrl {
  * @param ulr 字符串
  */
 export declare function parseUrl(ulr: string): XEUrl;
+export declare function parseUrl(ulr: any): XEUrl;
 
 declare module './ctor' {
   interface XEUtilsMethods {
