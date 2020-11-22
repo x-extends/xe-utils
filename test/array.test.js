@@ -387,7 +387,7 @@ describe('Array functions', () => {
         { name: 'd', age: 27, height: 175 },
         { name: 'd', age: 21, height: 165 },
         { name: 'x', age: 22, height: 196 }
-      ], [['name', 'asc'], [ 'age', 'desc'], ['height', 'desc' ]])
+      ], [['name', 'asc'], ['age', 'desc'], ['height', 'desc']])
     ).toEqual([
       { name: 'd', age: 27, height: 176 },
       { name: 'd', age: 27, height: 175 },
@@ -1891,5 +1891,15 @@ describe('Array functions', () => {
     expect(
       XEUtils.searchTree([{ id: 1 }, { id: 2, childs: [{ id: 0 }] }, { id: 3, childs: [{ id: 30 }] }], item => item.id >= 2, { children: 'childs' })
     ).toEqual([{ id: 2, childs: [{ id: 0, childs: [] }] }, { id: 3, childs: [{ id: 30, childs: [] }] }])
+    expect(
+      XEUtils.searchTree([
+        { id: 1 },
+        { id: 2, childs: [{ id: 0 }] },
+        { id: 3, childs: [{ id: 30 }] }
+      ], item => item.id >= 2, { children: 'childs', data: '_item' })
+    ).toEqual([
+      { id: 2, childs: [{ id: 0, childs: [], _item: { id: 0 } }], _item: { id: 2, childs: [{ id: 0 }] } },
+      { id: 3, childs: [{ id: 30, childs: [], _item: { id: 30 } }], _item: { id: 3, childs: [{ id: 30 }] } }
+    ])
   })
 })
