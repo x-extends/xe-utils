@@ -6,6 +6,7 @@ export interface SearchTreeOptions {
   children?: string;
   mapChildren?: string;
   original?: boolean;
+  data?: string;
 }
 
 /**
