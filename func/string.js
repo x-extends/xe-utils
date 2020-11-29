@@ -13,6 +13,7 @@ var kebabCase = require('./kebabCase')
 var startsWith = require('./startsWith')
 var endsWith = require('./endsWith')
 var template = require('./template')
+var toFormatString = require('./toFormatString')
 var toValString = require('./toString')
 
 var stringExports = {
@@ -29,6 +30,7 @@ var stringExports = {
   startsWith: startsWith,
   endsWith: endsWith,
   template: template,
+  toFormatString: toFormatString,
   toString: toValString
 }
 

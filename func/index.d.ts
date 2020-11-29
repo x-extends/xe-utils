@@ -163,6 +163,7 @@ export * from './kebabCase'
 export * from './startsWith'
 export * from './endsWith'
 export * from './template'
+export * from './toFormatString'
 export * from './toString'
 
 // function
