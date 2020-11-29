@@ -801,4 +801,136 @@ describe('String functions', () => {
       XEUtils.template('{{name}} to {{{age}}}12{3} {{{{sex}}}}', { name: 'test1', age: 26, sex: '男' })
     ).toEqual('test1 to {26}12{3} {{男}}')
   })
+
+  test('format()', () => {
+    expect(
+      XEUtils.toFormatString()
+    ).toEqual('')
+    expect(
+      XEUtils.toFormatString(null)
+    ).toEqual('')
+    expect(
+      XEUtils.toFormatString(undefined)
+    ).toEqual('')
+    expect(
+      XEUtils.toFormatString(0)
+    ).toEqual('0')
+    expect(
+      XEUtils.toFormatString(-1)
+    ).toEqual('-1')
+    expect(
+      XEUtils.toFormatString(123)
+    ).toEqual('123')
+    expect(
+      XEUtils.toFormatString(/\d/)
+    ).toEqual('/\\d/')
+    expect(
+      XEUtils.toFormatString({})
+    ).toEqual('[object Object]')
+    expect(
+      XEUtils.toFormatString(function () { })
+    ).toEqual('function () {}')
+    expect(
+      XEUtils.toFormatString([])
+    ).toEqual('')
+    expect(
+      XEUtils.toFormatString('0')
+    ).toEqual('0')
+    expect(
+      XEUtils.toFormatString('[0]')
+    ).toEqual('[0]')
+    expect(
+      XEUtils.toFormatString('{{0}}')
+    ).toEqual('{undefined}')
+    expect(
+      XEUtils.toFormatString('name')
+    ).toEqual('name')
+    expect(
+      XEUtils.toFormatString('{name')
+    ).toEqual('{name')
+    expect(
+      XEUtils.toFormatString('name}name}')
+    ).toEqual('name}name}')
+    expect(
+      XEUtils.toFormatString('{name}{name}')
+    ).toEqual('undefinedundefined')
+    expect(
+      XEUtils.toFormatString('{name}')
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', null)
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', undefined)
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', '')
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', -1)
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', 0)
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', [])
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', {})
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{0}', [null])
+    ).toEqual('null')
+    expect(
+      XEUtils.toFormatString('{{0}}', [null])
+    ).toEqual('{null}')
+    expect(
+      XEUtils.toFormatString('{  }', { name: 'test1' })
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{{ }}')
+    ).toEqual('{undefined}')
+    expect(
+      XEUtils.toFormatString('{0}', { name: 'test1' })
+    ).toEqual('undefined')
+    expect(
+      XEUtils.toFormatString('{name}', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.toFormatString('{}', { name: 'test1' })
+    ).toEqual('{}')
+    expect(
+      XEUtils.toFormatString('{{{name}}}', { name: 'test1' })
+    ).toEqual('{{test1}}')
+    expect(
+      XEUtils.toFormatString('{name }', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.toFormatString('{ name}', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.toFormatString('{ name }', { name: 'test1' })
+    ).toEqual('test1')
+    expect(
+      XEUtils.toFormatString('{ name }{{ name }}{ name }', { name: 'test1' })
+    ).toEqual('test1{test1}test1')
+    expect(
+      XEUtils.toFormatString('{ 0 }{{ 2 }}{ 3 }', [null, 11, 22, 33, 44])
+    ).toEqual('null{22}33')
+    expect(
+      XEUtils.toFormatString('{name}-{age}', { name: 'test1', age: 26 })
+    ).toEqual('test1-26')
+    expect(
+      XEUtils.toFormatString('{name}-{age}', [])
+    ).toEqual('undefined-undefined')
+    expect(
+      XEUtils.toFormatString('{0}-{1}', [])
+    ).toEqual('undefined-undefined')
+    expect(
+      XEUtils.toFormatString('{0}-{1}', [11, '22'])
+    ).toEqual('11-22')
+    expect(
+      XEUtils.toFormatString('{name} to {{age}}12{3} {{{sex}}}', { name: 'test1', age: 26, sex: '男', 3: 'xx' })
+    ).toEqual('test1 to {26}12xx {{男}}')
+  })
 })

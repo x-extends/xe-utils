@@ -170,6 +170,7 @@ var kebabCase = require('./string/kebabCase')
 var startsWith = require('./string/startsWith')
 var endsWith = require('./string/endsWith')
 var template = require('./string/template')
+var toFormatString = require('./string/toFormatString')
 var toValString = require('./string/toString')
 
 // 函数相关的方法
@@ -362,6 +363,7 @@ assign(XEUtils, {
   startsWith: startsWith,
   endsWith: endsWith,
   template: template,
+  toFormatString: toFormatString,
   toString: toValString,
 
   // function
