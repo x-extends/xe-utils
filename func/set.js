@@ -46,11 +46,20 @@ function set (obj, property, value) {
       var props = helperGetHGSKeys(property)
       var len = props.length
       for (var index = 0; index < len; index++) {
+        if(isPrototypePolluted(props[index])) continue
         rest = valSet(rest, props[index], index === len - 1, value)
       }
     }
   }
   return obj
+}
+
+/**
+ * Blacklist certain keys to prevent Prototype Pollution
+ * @param {string} key
+ */
+function isPrototypePolluted(key) {
+  return ['__proto__', 'constructor', 'prototype'].includes(key)
 }
 
 module.exports = set
