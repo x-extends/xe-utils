@@ -1,4 +1,4 @@
-import { XEUtils } from './ctor'
+import XEUtils from './ctor'
 
 // object
 export * from './assign'

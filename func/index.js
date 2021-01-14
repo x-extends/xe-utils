@@ -1,7 +1,7 @@
 'use strict'
 
 // 核心
-var { XEUtils } = require('./ctor')
+var XEUtils = require('./ctor')
 
 // 对象相关的方法
 var assign = require('./assign')
