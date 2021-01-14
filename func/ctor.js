@@ -26,8 +26,6 @@ function setup (options) {
   return assign(setupDefaults, options)
 }
 
-XEUtils.XEUtils = XEUtils
-
 XEUtils.VERSION = '@VERSION'
 XEUtils.mixin = mixin
 XEUtils.setup = setup

@@ -24,6 +24,6 @@ export interface XEUtilsMethods {
 /**
  * JavaScript 函数库、工具类
  */
-export declare var XEUtils: XEUtilsMethods
+declare var XEUtils: XEUtilsMethods
 
 export default XEUtils

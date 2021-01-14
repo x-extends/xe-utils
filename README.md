@@ -68,7 +68,7 @@ toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
 ```
 
 ```javascript
-import { XEUtils } from 'xe-utils/ctor'
+import XEUtils from 'xe-utils/ctor'
 import each from 'xe-utils/each'
 import toDateString from 'xe-utils/toDateString'
 import toFixedNumber from 'xe-utils/toFixedNumber'
@@ -85,7 +85,7 @@ XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
 按功能导入所有方法
 
 ```javascript
-import { XEUtils } from 'xe-utils/ctor'
+import XEUtils from 'xe-utils/ctor'
 import objectMethods from 'xe-utils/object'
 import arrayMethods from 'xe-utils/array'
 import baseMethods from 'xe-utils/base'
