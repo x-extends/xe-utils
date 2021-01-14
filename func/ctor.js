@@ -8,7 +8,7 @@ var isFunction = require('./isFunction')
 
 var assign = require('./assign')
 
-function XEUtils () {}
+var XEUtils = function () {}
 
 function mixin () {
   arrayEach(arguments, function (methods) {
@@ -26,7 +26,9 @@ function setup (options) {
   return assign(setupDefaults, options)
 }
 
-XEUtils.v = 'v3'
+XEUtils.XEUtils = XEUtils
+
+XEUtils.VERSION = '@VERSION'
 XEUtils.mixin = mixin
 XEUtils.setup = setup
 

@@ -1,7 +1,4 @@
-import XEUtils from './ctor'
-
-// core
-export * from './ctor'
+import { XEUtils } from './ctor'
 
 // object
 export * from './assign'
