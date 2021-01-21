@@ -1306,7 +1306,7 @@ export default {
                 // [99, 77, 55, 55, 22, 11, 11]
                 // 深层对象
                 XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
-                XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], ['age', 'desc'])
+                XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], [['age', 'desc']])
                 // [{ age: 26 }, { age: 27 }, { age: 28 }]
                 // 多字段排序
                 XEUtils.orderBy([
