@@ -1294,20 +1294,24 @@ export default {
                 `
                 // 数值排序
                 XEUtils.orderBy([11, 55, 99, 77, 11, 55, 22])
-                // [11, 11, 22, 55, 55, 77, 99]
-                // 字母排序
-                XEUtils.orderBy(['x', 'z', 'g', 'q', 'e', 'b', 'a', 'g', 'f', 'c', 'j'])
-                // ["a", "b", "c", "e", "f", "g", "g", "j", "q", "x", "z"]
-                // 中文排序
-                XEUtils.orderBy(['小', '何', '李', '林', '有', '好', '啊', '的', '出', '库', '徐'])
-                // ['啊', '出', '的', '好', '何', '库', '李', '林', '小', '徐', '有']
-                // 倒序
+                // [11,11,22,55,55,77,99]
                 XEUtils.orderBy([11, 55, 99, 77, 11, 55, 22], { order: 'desc' })
                 // [99, 77, 55, 55, 22, 11, 11]
+
+                // 字母排序
+                XEUtils.orderBy(['x', 'z', 'g', 'q', 'e', 'b', 'a', 'g', 'f', 'c', 'j'])
+                // ["a","b","c","e","f","g","g","j","q","x","z"]
+
+                // 中文排序
+                XEUtils.orderBy(['小', '何', '李', '林', '有', '好', '啊', '的', '出', '库', '徐'])
+                // ["啊","出","的","好","何","库","李","林","小","徐","有"]
+
                 // 深层对象
                 XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], 'age')
+                // [{"age":26},{"age":27},{"age":28}]
                 XEUtils.orderBy([{ age: 27 }, { age: 26 }, { age: 28 }], [['age', 'asc']])
-                // [{ age: 26 }, { age: 27 }, { age: 28 }]
+                // [{"age":26},{"age":27},{"age":28}]
+
                 // 多字段排序
                 XEUtils.orderBy([
                   { name: 'x', age: 26 },
@@ -1316,26 +1320,16 @@ export default {
                   { name: 'z', age: 24 },
                   { name: 'z', age: 25 }
                 ], [['age', 'asc'], ['name', 'desc']])
-                /*
-                [{ name: 'z', age: 24 },
-                { name: 'z', age: 25 },
-                { name: 'x', age: 26 },
-                { name: 'z', age: 26 },
-                { name: 'd', age: 27 }]
-                */
+                // [{"name":"z","age":24},{"name":"z","age":25},{"name":"z","age":26},{"name":"x","age":26},{"name":"d","age":27}]
+                
                 // 自定义组合排序
                 XEUtils.orderBy([
                   { name: 'x', age: 26 },
                   { name: 'd', age: 27 },
                   { name: 'x', age: 26 },
                   { name: 'z', age: 26 }
-                ], [[item => item.name, 'asc'], [field: item => item.age, 'desc']])
-                /*
-                [{ name: 'd', age: 27 },
-                { name: 'x', age: 26 },
-                { name: 'x', age: 26 },
-                { name: 'z', age: 26 }]
-                */
+                ], [[item => item.name, 'asc'], [item => item.age, 'desc']])
+                // [{"name":"d","age":27},{"name":"x","age":26},{"name":"x","age":26},{"name":"z","age":26}]
                 `
               ]
             },
