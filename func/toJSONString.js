@@ -1,3 +1,5 @@
+var eqNull = require('./eqNull')
+
 /**
   * JSON转字符串
   *
@@ -5,7 +7,7 @@
   * @return {String} 返回字符串
   */
 function toJSONString (obj) {
-  return JSON.stringify(obj) || ''
+  return eqNull(obj) ? '' : JSON.stringify(obj)
 }
 
 module.exports = toJSONString

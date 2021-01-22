@@ -3,6 +3,7 @@ var staticParseInt = require('./staticParseInt')
 var helperGetHGSKeys = require('./helperGetHGSKeys')
 
 var hasOwnProp = require('./hasOwnProp')
+var includes = require('./includes')
 
 var sKeyRE = /(.+)\[(\d+)\]$/
 
@@ -39,7 +40,7 @@ function valSet (obj, key, isSet, value) {
  */
 function set (obj, property, value) {
   if (obj) {
-    if (obj[property] || hasOwnProp(obj, property)) {
+    if ((obj[property] || hasOwnProp(obj, property)) && !isPrototypePolluted(property)) {
       obj[property] = value
     } else {
       var rest = obj
@@ -59,7 +60,7 @@ function set (obj, property, value) {
  * @param {string} key
  */
 function isPrototypePolluted(key) {
-  return ['__proto__', 'constructor', 'prototype'].includes(key)
+  return includes(['__proto__', 'constructor', 'prototype'], key)
 }
 
 module.exports = set

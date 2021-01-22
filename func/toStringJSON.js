@@ -1,4 +1,4 @@
-var isObject = require('./isObject')
+var isPlainObject = require('./isPlainObject')
 var isString = require('./isString')
 
 /**
@@ -8,7 +8,7 @@ var isString = require('./isString')
   * @return {Object} 返回转换后对象
   */
 function toStringJSON (str) {
-  if (isObject(str)) {
+  if (isPlainObject(str)) {
     return str
   } else if (isString(str)) {
     try {

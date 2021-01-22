@@ -1,4 +1,4 @@
-var indexOf = require('./indexOf')
+var hasOwnProp = require('./hasOwnProp')
 
 /**
   * 判断对象是否包含该值,成功返回true否则false
@@ -8,7 +8,19 @@ var indexOf = require('./indexOf')
   * @return {Boolean}
   */
 function includes (obj, val) {
-  return indexOf(obj, val) !== -1
+  if (obj) {
+    if (obj.includes) {
+      return obj.includes(val)
+    }
+    for (var key in obj) {
+      if (hasOwnProp(obj, key)) {
+        if (val === obj[key]) {
+          return true
+        }
+      }
+    }
+  }
+  return false
 }
 
 module.exports = includes

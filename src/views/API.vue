@@ -10,9 +10,6 @@
         </div>
       </div>
       <ul>
-        <li class="menu-item is-donation">
-          <a class="menu-link" @click="donationEvent">☕捐赠</a>
-        </li>
         <li class="menu-item" v-for="group in apiList" :key="group.id">
           <a class="menu-link" @click="group.expand = !group.expand">{{ group.label }}</a>
           <ul class="child-menu" v-show="group.expand">
@@ -1321,7 +1318,7 @@ export default {
                   { name: 'z', age: 25 }
                 ], [['age', 'asc'], ['name', 'desc']])
                 // [{"name":"z","age":24},{"name":"z","age":25},{"name":"z","age":26},{"name":"x","age":26},{"name":"d","age":27}]
-                
+
                 // 自定义组合排序
                 XEUtils.orderBy([
                   { name: 'x', age: 26 },

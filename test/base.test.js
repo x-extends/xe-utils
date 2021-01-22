@@ -1620,6 +1620,21 @@ describe('Base functions', () => {
 
   test('includes()', () => {
     expect(
+      XEUtils.includes()
+    ).toEqual(false)
+    expect(
+      XEUtils.includes(null)
+    ).toEqual(false)
+    expect(
+      XEUtils.includes(undefined)
+    ).toEqual(false)
+    expect(
+      XEUtils.includes(0)
+    ).toEqual(false)
+    expect(
+      XEUtils.includes(-1)
+    ).toEqual(false)
+    expect(
       XEUtils.includes([11])
     ).toEqual(false)
     expect(
@@ -1650,6 +1665,15 @@ describe('Base functions', () => {
       XEUtils.toStringJSON(0)
     ).toEqual({})
     expect(
+      XEUtils.toStringJSON(-1)
+    ).toEqual({})
+    expect(
+      XEUtils.toStringJSON(null)
+    ).toEqual({})
+    expect(
+      XEUtils.toStringJSON(undefined)
+    ).toEqual({})
+    expect(
       XEUtils.toStringJSON('')
     ).toEqual({})
     expect(
@@ -1662,8 +1686,20 @@ describe('Base functions', () => {
 
   test('toJSONString()', () => {
     expect(
+      XEUtils.toJSONString()
+    ).toEqual('')
+    expect(
+      XEUtils.toJSONString(null)
+    ).toEqual('')
+    expect(
+      XEUtils.toJSONString(undefined)
+    ).toEqual('')
+    expect(
       XEUtils.toJSONString('')
     ).toEqual('""')
+    expect(
+      XEUtils.toJSONString(-1)
+    ).toEqual('-1')
     expect(
       XEUtils.toJSONString(0)
     ).toEqual('0')
@@ -1687,6 +1723,9 @@ describe('Base functions', () => {
     ).toEqual([])
     expect(
       XEUtils.keys('')
+    ).toEqual([])
+    expect(
+      XEUtils.keys([])
     ).toEqual([])
     expect(
       XEUtils.keys(false)
@@ -1750,6 +1789,12 @@ describe('Base functions', () => {
   test('entries()', () => {
     expect(
       XEUtils.entries()
+    ).toEqual([])
+    expect(
+      XEUtils.entries(null)
+    ).toEqual([])
+    expect(
+      XEUtils.entries(undefined)
     ).toEqual([])
     expect(
       XEUtils.entries('')
@@ -2252,6 +2297,33 @@ describe('Base functions', () => {
     expect(
       XEUtils.set({ a: {} }, ['a', 'd[0]', 'f', 'h[0]'], 55)
     ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
+
+    var obj1 = {}
+    XEUtils.set(obj1, '__proto__.attr1', 1)
+    expect(
+      obj1.attr1 === 1
+    ).toEqual(true)
+    expect(
+      ({}).attr1 !== 1
+    ).toEqual(true)
+
+    var obj2 = {}
+    XEUtils.set(obj2, 'constructor', 1)
+    expect(
+      obj2.constructor !== 1
+    ).toEqual(true)
+
+    var FN3 = function FN3(){}
+    var obj3 = new FN3()
+    XEUtils.set(obj3, 'prototype.a3', 1)
+    expect(
+      obj3.a3 === 1
+    ).toEqual(true)
+    var obj4 = new FN3()
+    expect(
+      obj4.a3 !== 1
+    ).toEqual(true)
+
   })
 
   test('groupBy()', () => {
