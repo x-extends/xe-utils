@@ -357,6 +357,12 @@ describe('Number functions', () => {
       XEUtils.ceil(0.999, 4)
     ).toEqual(0.999)
     expect(
+      XEUtils.ceil(0.00001, 1)
+    ).toEqual(0.1)
+    expect(
+      XEUtils.ceil(0.10001, 1)
+    ).toEqual(0.2)
+    expect(
       XEUtils.ceil(1.33, 3)
     ).toEqual(1.33)
     expect(
@@ -372,13 +378,25 @@ describe('Number functions', () => {
       XEUtils.ceil(52.635, 2)
     ).toEqual(52.64)
     expect(
+      XEUtils.ceil(52.63001, 2)
+    ).toEqual(52.64)
+    expect(
       XEUtils.ceil(2222.22, 2)
     ).toEqual(2222.22)
     expect(
       XEUtils.ceil(3333.99, 2)
     ).toEqual(3333.99)
     expect(
+      XEUtils.ceil(3333.0000099, 3)
+    ).toEqual(3333.001)
+    expect(
+      XEUtils.ceil(3333.0009, 5)
+    ).toEqual(3333.0009)
+    expect(
       XEUtils.ceil(12.3999, 2)
+    ).toEqual(12.4)
+    expect(
+      XEUtils.ceil(12.3909, 2)
     ).toEqual(12.4)
     expect(
       XEUtils.ceil('12.3999', 6)
@@ -400,7 +418,7 @@ describe('Number functions', () => {
     ).toEqual(0.00000001)
     expect(
       XEUtils.ceil('9e-8', 6)
-    ).toEqual(0)
+    ).toEqual(0.000001)
     expect(
       XEUtils.ceil(9e-8, 8)
     ).toEqual(0.00000009)
