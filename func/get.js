@@ -16,16 +16,16 @@ function get (obj, property, defaultValue) {
   if (eqNull(obj)) {
     return defaultValue
   }
-  var result = pathGet(obj, property)
+  var result = getValueByPath(obj, property)
   return isUndefined(result) ? defaultValue : result
 }
 
-function valGet (obj, key) {
+function getDeepProps (obj, key) {
   var matchs = key ? key.match(staticHGKeyRE) : ''
   return matchs ? (matchs[1] ? (obj[matchs[1]] ? obj[matchs[1]][matchs[2]] : undefined) : obj[matchs[2]]) : obj[key]
 }
 
-function pathGet (obj, property) {
+function getValueByPath (obj, property) {
   if (obj) {
     var rest, props, len
     var index = 0
@@ -36,7 +36,7 @@ function pathGet (obj, property) {
       len = props.length
       if (len) {
         for (rest = obj; index < len; index++) {
-          rest = valGet(rest, props[index])
+          rest = getDeepProps(rest, props[index])
           if (eqNull(rest)) {
             if (index === len - 1) {
               return rest
