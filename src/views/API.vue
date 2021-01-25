@@ -2737,7 +2737,21 @@ export default {
               codes: [
                 `
                 XEUtils.ceil(123.455, 2) // 123.45
-                XEUtils.ceil(123.452, 2) // 123.45
+                XEUtils.ceil(123.452, 2) // 123.42
+                `
+              ]
+            },
+            {
+              name: 'toFixed',
+              args: 'num, digits',
+              title: '将数值四舍五入，并格式化为字符串',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                XEUtils.toFixed(123.455, 2) // 123.45
+                XEUtils.toFixed(123.452, 2) // 123.45
+                XEUtils.toFixed(123.452, 4) // 123.4520
                 `
               ]
             },

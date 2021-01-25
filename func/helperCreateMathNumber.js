@@ -2,9 +2,9 @@ var toNumber = require('./toNumber')
 var toNumberString = require('./toNumberString')
 
 function helperCreateMathNumber(name) {
-  var isCeil = name === 'ceil'
   return function (num, digits) {
     var numRest = toNumber(num)
+    var rest = numRest
     if (numRest) {
       digits = digits >> 0
       var numStr = toNumberString(numRest)
@@ -12,17 +12,19 @@ function helperCreateMathNumber(name) {
       var intStr = nums[0]
       var floatStr = nums[1] || ''
       var fStr = floatStr.substring(0, digits + 1)
-      var rest = intStr + (fStr ? ('.' + fStr) : '')
+      var subRest = intStr + (fStr ? ('.' + fStr) : '')
       if (digits >= floatStr.length) {
-        return toNumber(rest)
+        return toNumber(subRest)
       }
+      subRest = numRest
       if (digits > 0) {
         var ratio = Math.pow(10, digits)
-        return Math[name]((isCeil ? numRest : rest) * ratio) / ratio
+        rest = Math[name](subRest * ratio) / ratio
+      } else {
+        rest = Math[name](subRest)
       }
-      return Math[name](rest)
     }
-    return numRest
+    return rest
   }
 }
 
