@@ -386,6 +386,15 @@ describe('Date functions', () => {
       XEUtils.toDateString(date, 'yy-M-d')
     ).toEqual('17-1-1')
     expect(
+      XEUtils.toDateString(date, 'yyyy-MM-dd 00:00:00')
+    ).toEqual('2017-01-01 00:00:00')
+    expect(
+      XEUtils.toDateString(date, 'yyyy-MM-dd 00:00:00.000')
+    ).toEqual('2017-01-01 00:00:00.000')
+    expect(
+      XEUtils.toDateString(date, 'yyyy-MM-dd 23:59:59.999')
+    ).toEqual('2017-01-01 23:59:59.999')
+    expect(
       XEUtils.toDateString(date, 'yyyy-MM-dd HH:mm:ss.SSS')
     ).toEqual('2017-01-01 14:05:30.099')
     expect(
