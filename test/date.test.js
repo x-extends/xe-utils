@@ -583,6 +583,24 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatMonth('2017-12-20', 1, 'last')
     ).toEqual(new Date(2018, 0, 31, 23, 59, 59, 999))
+    expect(
+      XEUtils.getWhatMonth('2021-01-31', -1)
+    ).toEqual(new Date(2020, 11, 31))
+    expect(
+      XEUtils.getWhatMonth('2021-01-31', -2)
+    ).toEqual(new Date(2020, 10, 30))
+    expect(
+      XEUtils.getWhatMonth('2021-01-31', 1)
+    ).toEqual(new Date(2021, 1, 28))
+    expect(
+      XEUtils.getWhatMonth('2021-01-31', 1, 'last')
+    ).toEqual(new Date(2021, 1, 28, 23, 59, 59, 999))
+    expect(
+      XEUtils.getWhatMonth('2021-01-31', 2)
+    ).toEqual(new Date(2021, 2, 31))
+    expect(
+      XEUtils.getWhatMonth('2021-01-31', 12)
+    ).toEqual(new Date(2022, 0, 31))
   })
 
   test('getWhatWeek()', () => {
