@@ -393,6 +393,54 @@ describe('String functions', () => {
       XEUtils.kebabCase('aaaa')
     ).toEqual('aaaa')
     expect(
+      XEUtils.kebabCase('aaBa')
+    ).toEqual('aa-ba')
+    expect(
+      XEUtils.kebabCase('aAba')
+    ).toEqual('a-aba')
+    expect(
+      XEUtils.kebabCase('aaAba')
+    ).toEqual('aa-aba')
+    expect(
+      XEUtils.kebabCase('aaaAba')
+    ).toEqual('aaa-aba')
+    expect(
+      XEUtils.kebabCase('aABba')
+    ).toEqual('a-a-bba')
+    expect(
+      XEUtils.kebabCase('ABaa')
+    ).toEqual('abaa')
+    expect(
+      XEUtils.kebabCase('ABCaa')
+    ).toEqual('abcaa')
+    expect(
+      XEUtils.kebabCase('ABCaaF')
+    ).toEqual('ab-caa-f')
+    expect(
+      XEUtils.kebabCase('ABCaaFG')
+    ).toEqual('ab-caa-fg')
+    expect(
+      XEUtils.kebabCase('ABCaaFGK')
+    ).toEqual('ab-caa-fgk')
+    expect(
+      XEUtils.kebabCase('aABaa')
+    ).toEqual('a-a-baa')
+    expect(
+      XEUtils.kebabCase('AB')
+    ).toEqual('ab')
+    expect(
+      XEUtils.kebabCase('ABC')
+    ).toEqual('abc')
+    expect(
+      XEUtils.kebabCase('ABCD')
+    ).toEqual('abcd')
+    expect(
+      XEUtils.kebabCase('AaB')
+    ).toEqual('aa-b')
+    expect(
+      XEUtils.kebabCase('AaBBBB')
+    ).toEqual('aa-bbbb')
+    expect(
       XEUtils.kebabCase('aaaBBBccc')
     ).toEqual('aaa-bb-bccc')
     expect(
