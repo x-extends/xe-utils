@@ -4,7 +4,6 @@
  * @param val 值
  */
 export declare function arrayLastIndexOf(list: any[], val: any): number;
-export declare function arrayLastIndexOf(list: any, val: any): number;
 
 declare module './ctor' {
   interface XEUtilsMethods {
