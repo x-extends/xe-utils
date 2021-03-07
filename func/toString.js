@@ -1,12 +1,3 @@
-var eqNull = require('./eqNull')
-var isNumber = require('./isNumber')
-var toNumberString = require('./toNumberString')
+var toValueString = require('./toValueString')
 
-function toValString (obj) {
-  if (isNumber(obj)) {
-    return toNumberString(obj)
-  }
-  return '' + (eqNull(obj) ? '' : obj)
-}
-
-module.exports = toValString
+module.exports = toValueString

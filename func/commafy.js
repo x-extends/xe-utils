@@ -3,7 +3,7 @@ var ceil = require('./ceil')
 var floor = require('./floor')
 
 var isNumber = require('./isNumber')
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 var toFixed = require('./toFixed')
 
 var toNumberString = require('./toNumberString')
@@ -30,7 +30,7 @@ function commafy(num, options) {
       intStr = intStr.substring(1, intStr.length)
     }
   } else {
-    rest = toValString(num).replace(/,/g, '')
+    rest = toValueString(num).replace(/,/g, '')
     result = rest ? [rest] : []
     intStr = result[0]
   }

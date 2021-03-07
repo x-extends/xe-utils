@@ -1,126 +1,126 @@
 const XEUtils = require('../func')
 
 describe('String functions', () => {
-  test('toString()', () => {
+  test('toValueString()', () => {
     expect(
-      XEUtils.toString()
+      XEUtils.toValueString()
     ).toEqual('')
     expect(
-      XEUtils.toString(null)
+      XEUtils.toValueString(null)
     ).toEqual('')
     expect(
-      XEUtils.toString(undefined)
+      XEUtils.toValueString(undefined)
     ).toEqual('')
     expect(
-      XEUtils.toString('')
+      XEUtils.toValueString('')
     ).toEqual('')
     expect(
-      XEUtils.toString(0)
+      XEUtils.toValueString(0)
     ).toEqual('0')
     expect(
-      XEUtils.toString(-1)
+      XEUtils.toValueString(-1)
     ).toEqual('-1')
     expect(
-      XEUtils.toString(123)
+      XEUtils.toValueString(123)
     ).toEqual('123')
     expect(
-      XEUtils.toString([])
+      XEUtils.toValueString([])
     ).toEqual('')
     expect(
-      XEUtils.toString(/\w/)
+      XEUtils.toValueString(/\w/)
     ).toEqual('/\\w/')
     expect(
-      XEUtils.toString({})
+      XEUtils.toValueString({})
     ).toEqual('[object Object]')
     expect(
-      XEUtils.toString(function () { })
+      XEUtils.toValueString(function () { })
     ).toEqual('function () {}')
     expect(
-      XEUtils.toString(['3e-9'])
+      XEUtils.toValueString(['3e-9'])
     ).toEqual('3e-9')
     expect(
-      XEUtils.toString(1e-8)
+      XEUtils.toValueString(1e-8)
     ).toEqual('0.00000001')
     expect(
-      XEUtils.toString(-11e-10)
+      XEUtils.toValueString(-11e-10)
     ).toEqual('-0.0000000011')
     expect(
-      XEUtils.toString(-11e+10)
+      XEUtils.toValueString(-11e+10)
     ).toEqual('-110000000000')
     expect(
-      XEUtils.toString(-11e+20)
+      XEUtils.toValueString(-11e+20)
     ).toEqual('-1100000000000000000000')
     expect(
-      Number(XEUtils.toString(-11e+20))
+      Number(XEUtils.toValueString(-11e+20))
     ).toEqual(-11e+20)
     expect(
-      XEUtils.toString(+11e-10)
+      XEUtils.toValueString(+11e-10)
     ).toEqual('0.0000000011')
     expect(
-      XEUtils.toString(+11e+10)
+      XEUtils.toValueString(+11e+10)
     ).toEqual('110000000000')
     expect(
-      Number(XEUtils.toString(+11e+10))
+      Number(XEUtils.toValueString(+11e+10))
     ).toEqual(+11e+10)
     expect(
-      XEUtils.toString(+11e+20)
+      XEUtils.toValueString(+11e+20)
     ).toEqual('1100000000000000000000')
     expect(
-      XEUtils.toString(123456e-3)
+      XEUtils.toValueString(123456e-3)
     ).toEqual('123.456')
     expect(
-      XEUtils.toString(123456e+3)
+      XEUtils.toValueString(123456e+3)
     ).toEqual('123456000')
     expect(
-      XEUtils.toString(4567.890e-4)
+      XEUtils.toValueString(4567.890e-4)
     ).toEqual('0.456789')
     expect(
-      Number(XEUtils.toString(4567.890e-4))
+      Number(XEUtils.toValueString(4567.890e-4))
     ).toEqual(4567.890e-4)
     expect(
-      XEUtils.toString(4567.890e+4)
+      XEUtils.toValueString(4567.890e+4)
     ).toEqual('45678900')
     expect(
-      Number(XEUtils.toString(4567.890e+4))
+      Number(XEUtils.toValueString(4567.890e+4))
     ).toEqual(4567.890e+4)
     expect(
-      XEUtils.toString(-4567.890e-14)
+      XEUtils.toValueString(-4567.890e-14)
     ).toEqual('-0.0000000000456789')
     expect(
-      XEUtils.toString(+4567.890e+14)
+      XEUtils.toValueString(+4567.890e+14)
     ).toEqual('456789000000000000')
     expect(
-      XEUtils.toString(+4567.890e+18)
+      XEUtils.toValueString(+4567.890e+18)
     ).toEqual('4567890000000000000000')
     expect(
-      XEUtils.toString(3e-9)
+      XEUtils.toValueString(3e-9)
     ).toEqual('0.000000003')
     expect(
-      Number(XEUtils.toString(3e-9))
+      Number(XEUtils.toValueString(3e-9))
     ).toEqual(3e-9)
     expect(
-      XEUtils.toString(3e+9)
+      XEUtils.toValueString(3e+9)
     ).toEqual('3000000000')
     expect(
-      XEUtils.toString(3e+22)
+      XEUtils.toValueString(3e+22)
     ).toEqual('30000000000000000000000')
     expect(
-      Number(XEUtils.toString(3e+22))
+      Number(XEUtils.toValueString(3e+22))
     ).toEqual(3e+22)
     expect(
-      XEUtils.toString(123e-25)
+      XEUtils.toValueString(123e-25)
     ).toEqual('0.0000000000000000000000123')
     expect(
-      XEUtils.toString(123e+25)
+      XEUtils.toValueString(123e+25)
     ).toEqual('1230000000000000000000000000')
     expect(
-      XEUtils.toString(0.000003)
+      XEUtils.toValueString(0.000003)
     ).toEqual('0.000003')
     expect(
-      XEUtils.toString([123])
+      XEUtils.toValueString([123])
     ).toEqual('123')
     expect(
-      XEUtils.toString([123.0000006])
+      XEUtils.toValueString([123.0000006])
     ).toEqual('123.0000006')
   })
 

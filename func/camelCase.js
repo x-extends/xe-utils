@@ -1,4 +1,4 @@
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 var helperStringSubstring = require('./helperStringSubstring')
 var helperStringUpperCase = require('./helperStringUpperCase')
 var helperStringLowerCase = require('./helperStringLowerCase')
@@ -12,7 +12,7 @@ var camelCacheMaps = {}
   * @return {String}
   */
 function camelCase (str) {
-  str = toValString(str)
+  str = toValueString(str)
   if (camelCacheMaps[str]) {
     return camelCacheMaps[str]
   }

@@ -167,7 +167,7 @@ var startsWith = require('./startsWith')
 var endsWith = require('./endsWith')
 var template = require('./template')
 var toFormatString = require('./toFormatString')
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 
 // 函数相关的方法
 var noop = require('./noop')
@@ -356,7 +356,8 @@ assign(XEUtils, {
   endsWith: endsWith,
   template: template,
   toFormatString: toFormatString,
-  toString: toValString,
+  toString: toValueString,
+  toValueString: toValueString,
 
   // function
   noop: noop,

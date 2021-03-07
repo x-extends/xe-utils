@@ -1,4 +1,4 @@
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 var helperStringSubstring = require('./helperStringSubstring')
 var helperStringLowerCase = require('./helperStringLowerCase')
 
@@ -11,7 +11,7 @@ var kebabCacheMaps = {}
   * @return {String}
   */
 function kebabCase (str) {
-  str = toValString(str)
+  str = toValueString(str)
   if (kebabCacheMaps[str]) {
     return kebabCacheMaps[str]
   }

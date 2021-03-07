@@ -2888,17 +2888,17 @@ export default {
           expand: true,
           children: [
             {
-              name: 'toString',
+              name: 'toValueString',
               args: 'obj',
               title: '转字符串',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.toString(0) // '0'
-                XEUtils.toString(1e-5) // '0.00001'
-                XEUtils.toString(null) // ''
-                XEUtils.toString(undefined) // ''
+                XEUtils.toValueString(0) // '0'
+                XEUtils.toValueString(1e-5) // '0.00001'
+                XEUtils.toValueString(null) // ''
+                XEUtils.toValueString(undefined) // ''
                 `
               ]
             },

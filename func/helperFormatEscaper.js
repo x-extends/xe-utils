@@ -1,10 +1,10 @@
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 var keys = require('./keys')
 
 function helperFormatEscaper (dataMap) {
   var replaceRegexp = new RegExp('(?:' + keys(dataMap).join('|') + ')', 'g')
   return function (str) {
-    return toValString(str).replace(replaceRegexp, function (match) {
+    return toValueString(str).replace(replaceRegexp, function (match) {
       return dataMap[match]
     })
   }

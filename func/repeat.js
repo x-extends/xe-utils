@@ -1,4 +1,4 @@
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 
 var helperStringRepeat = require('./helperStringRepeat')
 
@@ -10,7 +10,7 @@ var helperStringRepeat = require('./helperStringRepeat')
   * @return {String}
   */
 function repeat (str, count) {
-  return helperStringRepeat(toValString(str), count)
+  return helperStringRepeat(toValueString(str), count)
 }
 
 module.exports = repeat

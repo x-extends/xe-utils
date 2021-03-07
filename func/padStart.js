@@ -1,4 +1,4 @@
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 
 var isUndefined = require('./isUndefined')
 
@@ -13,7 +13,7 @@ var helperStringRepeat = require('./helperStringRepeat')
   * @return {String}
   */
 function padStart (str, targetLength, padString) {
-  var rest = toValString(str)
+  var rest = toValueString(str)
   targetLength = targetLength >> 0
   padString = isUndefined(padString) ? ' ' : '' + padString
   if (rest.padStart) {

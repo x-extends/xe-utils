@@ -162,6 +162,7 @@ export * from './endsWith'
 export * from './template'
 export * from './toFormatString'
 export * from './toString'
+export * from './toValueString'
 
 // function
 export * from './property'

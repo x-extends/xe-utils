@@ -1,4 +1,4 @@
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 
 /**
   * 去除字符串右边的空格
@@ -7,7 +7,7 @@ var toValString = require('./toString')
   * @return {String}
   */
 function trimRight (str) {
-  return str && str.trimRight ? str.trimRight() : toValString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
+  return str && str.trimRight ? str.trimRight() : toValueString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
 }
 
 module.exports = trimRight

@@ -14,7 +14,7 @@ var startsWith = require('./startsWith')
 var endsWith = require('./endsWith')
 var template = require('./template')
 var toFormatString = require('./toFormatString')
-var toValString = require('./toString')
+var toValueString = require('./toValueString')
 
 var stringExports = {
   trim: trim,
@@ -31,7 +31,8 @@ var stringExports = {
   endsWith: endsWith,
   template: template,
   toFormatString: toFormatString,
-  toString: toValString
+  toString: toValueString,
+  toValueString: toValueString
 }
 
 module.exports = stringExports
