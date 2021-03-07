@@ -1,4 +1,3 @@
-
 import SetupDefaults from './setupDefaults'
 
 /**

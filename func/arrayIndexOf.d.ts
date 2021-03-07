@@ -3,6 +3,7 @@
  * @param list 数组
  * @param val 值
  */
+export declare function arrayIndexOf<T>(list: ArrayLike<T>, val: any): number;
 export declare function arrayIndexOf(list: any[], val: any): number;
 
 declare module './ctor' {
