@@ -1,11 +1,10 @@
-
-interface TerrResult {
+interface TerrResult<T = any> {
   index: number;
-  item: any;
+  item: T;
   path: Array<string>;
-  items: any[];
-  parent: any;
-  nodes: any[];
+  items: T[];
+  parent: T;
+  nodes: T[];
 }
 
 interface FindTreeOptions {
@@ -19,7 +18,7 @@ interface FindTreeOptions {
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function findTree<T, C>(list: T[], iterate: (this: C, item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => boolean, options?: FindTreeOptions, context?: C): TerrResult;
+export declare function findTree<T, C>(list: T[], iterate: (this: C, item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => boolean, options?: FindTreeOptions, context?: C): TerrResult<T>;
 
 declare module './ctor' {
   interface XEUtilsMethods {
