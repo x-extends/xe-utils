@@ -15,6 +15,9 @@ function kebabCase (str) {
   if (kebabCacheMaps[str]) {
     return kebabCacheMaps[str]
   }
+  if (/^[A-Z]+$/.test(str)) {
+    return helperStringLowerCase(str)
+  }
   var rest = str.replace(/^([a-z])([A-Z]+)([a-z]+)$/, function (text, prevLower, upper, nextLower) {
     var upperLen = upper.length
     if (upperLen > 1) {
@@ -22,7 +25,8 @@ function kebabCase (str) {
     }
     return helperStringLowerCase(prevLower + '-' + upper + nextLower)
   }).replace(/^([A-Z]+)([a-z]+)?$/, function (text, upper, nextLower) {
-    return helperStringLowerCase(upper + (nextLower || ''))
+    var upperLen = upper.length
+    return helperStringLowerCase(helperStringSubstring(upper, 0, upperLen - 1) + '-' + helperStringSubstring(upper, upperLen - 1, upperLen) + (nextLower || ''))
   }).replace(/([a-z]?)([A-Z]+)([a-z]?)/g, function (text, prevLower, upper, nextLower, index) {
     var upperLen = upper.length
     if (upperLen > 1) {

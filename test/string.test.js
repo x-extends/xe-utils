@@ -409,10 +409,10 @@ describe('String functions', () => {
     ).toEqual('a-a-bba')
     expect(
       XEUtils.kebabCase('ABaa')
-    ).toEqual('abaa')
+    ).toEqual('a-baa')
     expect(
       XEUtils.kebabCase('ABCaa')
-    ).toEqual('abcaa')
+    ).toEqual('ab-caa')
     expect(
       XEUtils.kebabCase('ABCaaF')
     ).toEqual('ab-caa-f')
@@ -426,6 +426,24 @@ describe('String functions', () => {
       XEUtils.kebabCase('aABaa')
     ).toEqual('a-a-baa')
     expect(
+      XEUtils.kebabCase('VXETable')
+    ).toEqual('vxe-table')
+    expect(
+      XEUtils.kebabCase('Aaa')
+    ).toEqual('aaa')
+    expect(
+      XEUtils.kebabCase('AAaa')
+    ).toEqual('a-aaa')
+    expect(
+      XEUtils.kebabCase('AAAaa')
+    ).toEqual('aa-aaa')
+    expect(
+      XEUtils.kebabCase('AAAAaa')
+    ).toEqual('aaa-aaa')
+    expect(
+      XEUtils.kebabCase('AAAAAaa')
+    ).toEqual('aaaa-aaa')
+    expect(
       XEUtils.kebabCase('AB')
     ).toEqual('ab')
     expect(
@@ -434,6 +452,9 @@ describe('String functions', () => {
     expect(
       XEUtils.kebabCase('ABCD')
     ).toEqual('abcd')
+    expect(
+      XEUtils.kebabCase('ABCDE')
+    ).toEqual('abcde')
     expect(
       XEUtils.kebabCase('AaB')
     ).toEqual('aa-b')
