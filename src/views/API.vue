@@ -2736,8 +2736,8 @@ export default {
               params: [],
               codes: [
                 `
-                XEUtils.ceil(123.455, 2) // 123.45
-                XEUtils.ceil(123.452, 2) // 123.42
+                XEUtils.floor(123.455, 2) // 123.45
+                XEUtils.floor(123.452, 2) // 123.45
                 `
               ]
             },
