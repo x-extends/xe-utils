@@ -1,4 +1,4 @@
-interface MapTreeOptions {
+export interface MapTreeOptions {
   children?: string;
   mapChildren?: string;
 }
