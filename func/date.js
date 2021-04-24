@@ -1,6 +1,7 @@
 'use strict'
 
 var getWhatYear = require('./getWhatYear')
+var getWhatQuarter = require('./getWhatQuarter')
 var getWhatMonth = require('./getWhatMonth')
 var getWhatDay = require('./getWhatDay')
 var toStringDate = require('./toStringDate')
@@ -25,6 +26,7 @@ var dateExports = {
   toStringDate: toStringDate,
   toDateString: toDateString,
   getWhatYear: getWhatYear,
+  getWhatQuarter: getWhatQuarter,
   getWhatMonth: getWhatMonth,
   getWhatWeek: getWhatWeek,
   getWhatDay: getWhatDay,

@@ -1,4 +1,5 @@
 export * from './getWhatYear'
+export * from './getWhatQuarter'
 export * from './getWhatMonth'
 export * from './getWhatDay'
 export * from './toStringDate'

@@ -136,6 +136,7 @@ var mean = require('./mean')
 
 // 日期相关的方法
 var getWhatYear = require('./getWhatYear')
+var getWhatQuarter = require('./getWhatQuarter')
 var getWhatMonth = require('./getWhatMonth')
 var getWhatDay = require('./getWhatDay')
 var toStringDate = require('./toStringDate')
@@ -331,6 +332,7 @@ assign(XEUtils, {
   toStringDate: toStringDate,
   toDateString: toDateString,
   getWhatYear: getWhatYear,
+  getWhatQuarter: getWhatQuarter,
   getWhatMonth: getWhatMonth,
   getWhatWeek: getWhatWeek,
   getWhatDay: getWhatDay,

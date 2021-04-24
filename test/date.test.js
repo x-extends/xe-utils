@@ -555,6 +555,90 @@ describe('Date functions', () => {
     ).toEqual(new Date(2017, 11, 31, 23, 59, 59, 999))
   })
 
+  test('getWhatQuarter()', () => {
+    expect(
+      XEUtils.getWhatQuarter().toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter(0).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter(-1).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter({}).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter([]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter(null).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter(undefined).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter([2018, 1, 1]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter(new Date('abc')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatQuarter(date, -1)
+    ).toEqual(new Date(2016, 9, 1, 14, 5, 30, 99))
+    expect(
+      XEUtils.getWhatQuarter(time, 1)
+    ).toEqual(new Date(2017, 3, 1, 14, 5, 30, 99))
+    expect(
+      XEUtils.getWhatQuarter('2017-12-20', -1)
+    ).toEqual(new Date(2017, 6, 20))
+    expect(
+      XEUtils.getWhatQuarter('2017-12-20', 1)
+    ).toEqual(new Date(2018, 0, 20))
+    expect(
+      XEUtils.getWhatQuarter(new Date(2017, 11, 20), 1)
+    ).toEqual(new Date(2018, 0, 20))
+    expect(
+      XEUtils.getWhatQuarter(new Date(2017, 11, 20), 3)
+    ).toEqual(new Date(2018, 6, 20))
+    expect(
+      XEUtils.getWhatQuarter('2017-12-20', -1, 'first')
+    ).toEqual(new Date(2017, 6, 1, 0, 0, 0, 0))
+    expect(
+      XEUtils.getWhatQuarter('2017-12-20', 1, 'last')
+    ).toEqual(new Date(2018, 0, 31, 23, 59, 59, 999))
+    expect(
+      XEUtils.getWhatQuarter('2021-01-31', -1)
+    ).toEqual(new Date(2020, 9, 31))
+    expect(
+      XEUtils.getWhatQuarter('2021-01-31', -3)
+    ).toEqual(new Date(2020, 3, 30))
+    expect(
+      XEUtils.getWhatQuarter('2021-01-31', 1)
+    ).toEqual(new Date(2021, 3, 30))
+    expect(
+      XEUtils.getWhatQuarter('2021-01-31', 1, 'last')
+    ).toEqual(new Date(2021, 3, 30, 23, 59, 59, 999))
+    expect(
+      XEUtils.getWhatQuarter('2021-01-31', 6)
+    ).toEqual(new Date(2022, 6, 31))
+    expect(
+      XEUtils.getWhatQuarter('2021-01-31', -6)
+    ).toEqual(new Date(2019, 6, 31))
+    expect(
+      XEUtils.getWhatQuarter('2021-01-31', 12)
+    ).toEqual(new Date(2024, 0, 31))
+  })
+
   test('getWhatMonth()', () => {
     expect(
       XEUtils.getWhatMonth().toString()
