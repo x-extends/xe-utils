@@ -218,11 +218,11 @@ describe('Date functions', () => {
       XEUtils.toStringDate('20').toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate('201').toString()
-    ).toEqual('Invalid Date')
-    expect(
       XEUtils.toStringDate('Year:2018 Month:01 Day:26').toString()
     ).toEqual('Invalid Date')
+    expect(
+      XEUtils.toStringDate('201')
+    ).toEqual(new Date(201, 0, 1))
     expect(
       XEUtils.toStringDate('Year:2018 Month:01 Day:26', 'Year:yyyy Month:MM Day:dd')
     ).toEqual(new Date(2018, 0, 26))
@@ -232,6 +232,9 @@ describe('Date functions', () => {
     expect(
       XEUtils.toStringDate('2020-02')
     ).toEqual(new Date(2020, 1, 1, 0, 0, 0, 0))
+    expect(
+      XEUtils.toStringDate('2020-02-02')
+    ).toEqual(new Date(2020, 1, 2, 0, 0, 0, 0))
     expect(
       XEUtils.toStringDate(time)
     ).toEqual(new Date(2017, 0, 1, 14, 5, 30, 99))
@@ -254,6 +257,15 @@ describe('Date functions', () => {
       XEUtils.toStringDate('2017-12-20 10:10:30')
     ).toEqual(new Date(2017, 11, 20, 10, 10, 30))
     expect(
+      XEUtils.toStringDate('2017-12-20 10:10:30.9')
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 900))
+    expect(
+      XEUtils.toStringDate('2017-12-20 10:10:30.99')
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 990))
+    expect(
+      XEUtils.toStringDate('2017-12-20 10:10:30.999')
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 999))
+    expect(
       XEUtils.toStringDate('2017-12-20T10:10:30.423+0800')
     ).toEqual(new Date('2017-12-20T10:10:30.423+08:00'))
     expect(
@@ -266,7 +278,25 @@ describe('Date functions', () => {
       XEUtils.toStringDate('2017-12-20T10:10:30.423+10:00')
     ).toEqual(new Date('2017-12-20T10:10:30.423+10:00'))
     expect(
-      XEUtils.toStringDate('2017-12-20T10:10:30.423Z')
+      XEUtils.toStringDate('2017-12-20T10:10:30.42+10:00')
+    ).toEqual(new Date('2017-12-20T10:10:30.420+10:00'))
+    expect(
+      XEUtils.toStringDate('2017-12-20T10:10:30.42+10:00')
+    ).toEqual(new Date('2017-12-20T10:10:30.420+10:00'))
+    expect(
+      XEUtils.toStringDate('2017-12-20T10:10:30.4Z')
+    ).toEqual(new Date('2017-12-20T10:10:30.4Z'))
+    expect(
+      XEUtils.toStringDate('2017/12/20 10:10:30.4Z')
+    ).toEqual(new Date('2017-12-20T10:10:30.400Z'))
+    expect(
+      XEUtils.toStringDate('2017-12-20T10:10:30.43Z')
+    ).toEqual(new Date('2017-12-20T10:10:30.43Z'))
+    expect(
+      XEUtils.toStringDate('2017-12-20T10:10:30.43Z')
+    ).toEqual(new Date('2017-12-20T10:10:30.430Z'))
+    expect(
+      XEUtils.toStringDate('2017/12/20T10:10:30.423Z')
     ).toEqual(new Date('2017-12-20T10:10:30.423Z'))
     expect(
       XEUtils.toStringDate(1513735830000)

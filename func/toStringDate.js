@@ -8,22 +8,69 @@ var helperGetDateTime = require('./helperGetDateTime')
 var isString = require('./isString')
 var isDate = require('./isDate')
 
-var dateFormatRules = [
+var d2RE = '.{1}(\\d{2})'
+var parseREs = ['(\\d{3,4})', d2RE, d2RE, d2RE, d2RE, d2RE, '.{1}(\\d+)', '(([zZ])|([-+]\\d{2}:?\\d{2}))']
+var defaultFormatRules = []
+for (var len = parseREs.length - 1; len >= 0; len--) {
+  var rule = ''
+  for (var i = 0; i < len + 1; i++) {
+    rule += parseREs[i]
+  }
+  defaultFormatRules.push(new RegExp('^' + rule + '$'))
+}
+
+function parseDefaultRules (str) {
+  var fMatchs, rests = []
+  for (var dfrIndex = 0, dfrLen = defaultFormatRules.length; dfrIndex < dfrLen; dfrIndex++) {
+    fMatchs = str.match(defaultFormatRules[dfrIndex])
+    if (fMatchs) {
+      var yyyy = fMatchs[1]
+      var MM = fMatchs[2]
+      var SSS = fMatchs[7]
+      if (yyyy) {
+        rests[0] = yyyy
+      }
+      if (MM) {
+        rests[1] = staticParseInt(MM) - 1
+      }
+      rests[2] = fMatchs[3]
+      rests[3] = fMatchs[4]
+      rests[4] = fMatchs[5]
+      rests[5] = fMatchs[6]
+      if (SSS) {
+        var sLen = SSS.length
+        if (sLen === 1) {
+          SSS = SSS + '00'
+        } else if (sLen === 2) {
+          SSS = SSS + '0'
+        } else {
+          SSS = SSS.substring(0, 3)
+        }
+        rests[6] = SSS
+      }
+      rests[7] = fMatchs[8]
+      break
+    }
+  }
+  return rests
+}
+
+var customFormatRules = [
   { rules: [['yyyy', 4]] },
   { rules: [['MM', 2], ['M', 1]], offset: -1 },
   { rules: [['dd', 2], ['d', 1]] },
   { rules: [['HH', 2], ['H', 1]] },
   { rules: [['mm', 2], ['m', 1]] },
   { rules: [['ss', 2], ['s', 1]] },
-  { rules: [['SSS', 3], ['S', 1]] },
+  { rules: [['SSS', 3], ['SS', 2], ['S', 1]] },
   { rules: [['ZZ', 5], ['Z', 6], ['Z', 5], ['Z', 1]] }
 ]
 
-function parseStringDate (str, format) {
+function parseCustomRules (str, format) {
   var arr, sIndex, fIndex, fLen, fItem, rules, rIndex, rLen, tempMatch
-  var dates = [0, 0, 1, 0, 0, 0, 0]
-  for (fIndex = 0, fLen = dateFormatRules.length; fIndex < fLen; fIndex++) {
-    fItem = dateFormatRules[fIndex]
+  var rests = []
+  for (fIndex = 0, fLen = customFormatRules.length; fIndex < fLen; fIndex++) {
+    fItem = customFormatRules[fIndex]
     for (rIndex = 0, rules = fItem.rules, rLen = rules.length; rIndex < rLen; rIndex++) {
       arr = rules[rIndex]
       sIndex = format.indexOf(arr[0])
@@ -33,16 +80,16 @@ function parseStringDate (str, format) {
           if (fItem.offset) {
             tempMatch = staticParseInt(tempMatch) + fItem.offset
           }
-          dates[fIndex] = tempMatch
+          rests[fIndex] = tempMatch
           break
         }
       }
       if (rIndex === rLen - 1) {
-        return dates
+        return rests
       }
     }
   }
-  return dates
+  return rests
 }
 
 /**
@@ -60,23 +107,23 @@ function toStringDate (str, format) {
       rest = new Date(isDType ? helperGetDateTime(str) : staticParseInt(str))
     } else if (isString(str)) {
       var tempMatch
-      var dates = parseStringDate(str, format || setupDefaults.formatDate)
-      var zStr = dates[7]
-      if (dates[0]) {
+      var rests = format ? parseCustomRules(str, format) : parseDefaultRules(str)
+      var zStr = rests[7]
+      if (rests[0]) {
         // 解析时区
         if (zStr) {
           // 如果为UTC 时间
           if (zStr[0] === 'z' || zStr[0] === 'Z') {
-            rest = new Date(helperGetUTCDateTime(dates))
+            rest = new Date(helperGetUTCDateTime(rests))
           } else {
             // 如果指定时区，时区转换
-            tempMatch = zStr.match(/([-+]{1})(\d{2}):?(\d{2})/)
+            tempMatch = zStr.match(/([-+])(\d{2}):?(\d{2})/)
             if (tempMatch) {
-              rest = new Date(helperGetUTCDateTime(dates) - (tempMatch[1] === '-' ? -1 : 1) * staticParseInt(tempMatch[2]) * 3600000 + staticParseInt(tempMatch[3]) * 60000)
+              rest = new Date(helperGetUTCDateTime(rests) - (tempMatch[1] === '-' ? -1 : 1) * staticParseInt(tempMatch[2]) * 3600000 + staticParseInt(tempMatch[3]) * 60000)
             }
           }
         } else {
-          rest = new Date(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
+          rest = new Date(rests[0] || 0, rests[1] || 0, rests[2] || 1, rests[3] || 0, rests[4] || 0, rests[5] || 0, rests[6] || 0)
         }
       }
     }

@@ -7,7 +7,6 @@ export interface SetupDefaults {
     data?: string;
     [key: string]: any;
   };
-  formatDate?: string;
   formatString?: string;
   dateDiffRules?: any[][];
   [key: string]: any;

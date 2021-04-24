@@ -1,14 +1,12 @@
 'use strict'
 
-var formatString = 'yyyy-MM-dd HH:mm:ss'
 var setupDefaults = {
   treeOptions: {
     parentKey: 'parentId',
     key: 'id',
     children: 'children'
   },
-  formatDate: formatString + '.SSSZ',
-  formatString: formatString,
+  formatString: 'yyyy-MM-dd HH:mm:ss',
   dateDiffRules: [
     ['yyyy', 31536000000],
     ['MM', 2592000000],
