@@ -2764,7 +2764,7 @@ export default {
                 ['属性', '描述', '类型', '版本'],
                 ['spaceNumber', '分割位数，默认3', 'number', ''],
                 ['separator', '分隔符，默认', 'string', ''],
-                ['fixed', 'v2 中已废弃，请使用 digits', 'number', 'v1'],
+                // ['fixed', 'v2 中已废弃，请使用 digits', 'number', 'v1'],
                 ['digits', '只对 number 类型有效，小数位数', 'number', 'v2+'],
                 ['round', '只对 number 类型有效，四舍五入，默认true', 'boolean', 'v2.7+'],
                 ['ceil', '只对 number 类型有效，向上舍入', 'boolean', 'v2.7+'],
