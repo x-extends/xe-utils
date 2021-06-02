@@ -681,7 +681,7 @@ export default {
             },
             {
               name: 'each',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '通用迭代器',
               desc: '',
               params: [],
@@ -695,7 +695,7 @@ export default {
             },
             {
               name: 'lastEach',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '通用迭代器，从最后开始迭代',
               desc: '',
               params: [],
@@ -868,7 +868,7 @@ export default {
             },
             {
               name: 'objectEach',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '对象迭代器',
               desc: '',
               params: [],
@@ -882,7 +882,7 @@ export default {
             },
             {
               name: 'lastObjectEach',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '通用迭代器，从最后开始迭代',
               desc: '',
               params: [],
@@ -896,7 +896,7 @@ export default {
             },
             {
               name: 'objectMap',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '指定方法后的返回值组成的新对象',
               desc: '',
               params: [],
@@ -1118,7 +1118,7 @@ export default {
           children: [
             {
               name: 'arrayEach',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '数组迭代器',
               desc: '',
               params: [],
@@ -1132,7 +1132,7 @@ export default {
             },
             {
               name: 'lastArrayEach',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: ' 数组迭代器，从最后开始迭代',
               desc: '',
               params: [],
@@ -1189,7 +1189,7 @@ export default {
             },
             {
               name: 'findIndexOf',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '返回对象第一个索引值',
               desc: '',
               params: [],
@@ -1228,7 +1228,7 @@ export default {
             },
             {
               name: 'findLastIndexOf',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '从最后开始的索引值,返回对象第一个索引值',
               desc: '',
               params: [],
@@ -1269,7 +1269,7 @@ export default {
             },
             {
               name: 'remove',
-              args: 'obj, iteratee',
+              args: 'obj, iterate',
               title: '移除对象属性',
               desc: '',
               params: [],
@@ -1356,7 +1356,7 @@ export default {
             },
             {
               name: 'some',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '对象中的值中的每一项运行给定函数,如果函数对任一项返回 true,则返回 true,否则返回 false',
               desc: '',
               params: [],
@@ -1368,7 +1368,7 @@ export default {
             },
             {
               name: 'every',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: ' 对象中的值中的每一项运行给定函数,如果该函数对每一项都返回 true,则返回 true,否则返回 false',
               desc: '',
               params: [],
@@ -1380,7 +1380,7 @@ export default {
             },
             {
               name: 'filter',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '根据回调过滤数据',
               desc: '',
               params: [],
@@ -1392,7 +1392,7 @@ export default {
             },
             {
               name: 'find',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '查找匹配第一条数据',
               desc: '',
               params: [],
@@ -1404,7 +1404,7 @@ export default {
             },
             {
               name: 'findKey',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '查找匹配第一条数据的键',
               desc: '',
               params: [],
@@ -1417,7 +1417,7 @@ export default {
             },
             {
               name: 'map',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '指定方法后的返回值组成的新数组',
               desc: '',
               params: [],
@@ -1442,7 +1442,7 @@ export default {
             },
             {
               name: 'sum',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '求和函数，将数值相加',
               desc: '',
               params: [],
@@ -1456,7 +1456,7 @@ export default {
             },
             {
               name: 'mean',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: ' 求平均值函数',
               desc: '',
               params: [],
@@ -1488,7 +1488,7 @@ export default {
             },
             {
               name: 'reduce',
-              args: 'array, iteratee [, initialValue]',
+              args: 'array, iterate [, initialValue]',
               title: '接收一个函数作为累加器，数组中的每个值（从左到右）开始合并，最终为一个值',
               desc: '',
               params: [],
@@ -1632,8 +1632,8 @@ export default {
             },
             {
               name: 'groupBy',
-              args: 'obj, iteratee [, context]',
-              title: '集合分组,默认使用键值分组,如果有 iteratee 则使用结果进行分组',
+              args: 'obj, iterate [, context]',
+              title: '集合分组,默认使用键值分组,如果有 iterate 则使用结果进行分组',
               desc: '',
               params: [],
               codes: [
@@ -1646,7 +1646,7 @@ export default {
             },
             {
               name: 'countBy',
-              args: 'obj, iteratee [, context]',
+              args: 'obj, iterate [, context]',
               title: '集合分组统计,返回各组中对象的数量统计',
               desc: '',
               params: [],
@@ -2676,7 +2676,7 @@ export default {
             },
             {
               name: 'min',
-              args: 'array [, iteratee]',
+              args: 'array [, iterate]',
               title: '获取最小值',
               desc: '',
               params: [],
@@ -2690,7 +2690,7 @@ export default {
             },
             {
               name: 'max',
-              args: 'array [, iteratee]',
+              args: 'array [, iterate]',
               title: '获取最大值',
               desc: '',
               params: [],
