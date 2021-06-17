@@ -1,5 +1,3 @@
-var setupDefaults = require('./setupDefaults')
-
 var staticParseInt = require('./staticParseInt')
 
 var helperGetUTCDateTime = require('./helperGetUTCDateTime')
@@ -8,88 +6,141 @@ var helperGetDateTime = require('./helperGetDateTime')
 var isString = require('./isString')
 var isDate = require('./isDate')
 
-var d2RE = '.{1}(\\d{2})'
-var parseREs = ['(\\d{3,4})', d2RE, d2RE, d2RE, d2RE, d2RE, '.{1}(\\d+)', '(([zZ])|([-+]\\d{2}:?\\d{2}))']
-var defaultFormatRules = []
-for (var len = parseREs.length - 1; len >= 0; len--) {
-  var rule = ''
-  for (var i = 0; i < len + 1; i++) {
-    rule += parseREs[i]
-  }
-  defaultFormatRules.push(new RegExp('^' + rule + '$'))
+function getParseRule (txt) {
+  return '(\\d{' + txt + '})'
 }
 
+function toParseMs (num) {
+  if (num < 10) {
+    return num * 100
+  } else if (num < 100) {
+    return num * 10
+  }
+  return num
+}
+
+function toParseNum (num) {
+  return isNaN(num) ? num : staticParseInt(num)
+}
+
+var d2 = getParseRule('2')
+var d1or2 = getParseRule('1,2')
+var d1or3 = getParseRule('1,3')
+var d3or4 = getParseRule('3,4')
+var place = '.{1}'
+var d1Or2RE = place + d1or2
+var dzZ = '(([zZ])|([-+]\\d{2}:?\\d{2}))'
+
+var defaulParseStrs = [d3or4, d1Or2RE, d1Or2RE, d1Or2RE, d1Or2RE, d1Or2RE, place + d1or3, dzZ]
+var defaulParseREs = []
+
+for (var len = defaulParseStrs.length - 1; len >= 0; len--) {
+  var rule = ''
+  for (var i = 0; i < len + 1; i++) {
+    rule += defaulParseStrs[i]
+  }
+  defaulParseREs.push(new RegExp('^' + rule + '$'))
+}
+
+/**
+ * 解析默认格式
+ */
 function parseDefaultRules (str) {
-  var fMatchs, rests = []
-  for (var dfrIndex = 0, dfrLen = defaultFormatRules.length; dfrIndex < dfrLen; dfrIndex++) {
-    fMatchs = str.match(defaultFormatRules[dfrIndex])
-    if (fMatchs) {
-      var yyyy = fMatchs[1]
-      var MM = fMatchs[2]
-      var SSS = fMatchs[7]
-      if (yyyy) {
-        rests[0] = yyyy
-      }
-      if (MM) {
-        rests[1] = staticParseInt(MM) - 1
-      }
-      rests[2] = fMatchs[3]
-      rests[3] = fMatchs[4]
-      rests[4] = fMatchs[5]
-      rests[5] = fMatchs[6]
-      if (SSS) {
-        var sLen = SSS.length
-        if (sLen === 1) {
-          SSS = SSS + '00'
-        } else if (sLen === 2) {
-          SSS = SSS + '0'
-        } else {
-          SSS = SSS.substring(0, 3)
-        }
-        rests[6] = SSS
-      }
-      rests[7] = fMatchs[8]
+  var matchRest, resMaps = {}
+  for (var i = 0, dfrLen = defaulParseREs.length; i < dfrLen; i++) {
+    matchRest = str.match(defaulParseREs[i])
+    if (matchRest) {
+      resMaps.y = matchRest[1]
+      resMaps.M = matchRest[2]
+      resMaps.d = matchRest[3]
+      resMaps.H = matchRest[4]
+      resMaps.m = matchRest[5]
+      resMaps.s = matchRest[6]
+      resMaps.S = matchRest[7]
+      resMaps.Z = matchRest[8]
       break
     }
   }
-  return rests
+  return resMaps
 }
 
-var customFormatRules = [
-  { rules: [['yyyy', 4]] },
-  { rules: [['MM', 2], ['M', 1]], offset: -1 },
-  { rules: [['dd', 2], ['d', 1]] },
-  { rules: [['HH', 2], ['H', 1]] },
-  { rules: [['mm', 2], ['m', 1]] },
-  { rules: [['ss', 2], ['s', 1]] },
-  { rules: [['SSS', 3], ['SS', 2], ['S', 1]] },
-  { rules: [['ZZ', 5], ['Z', 6], ['Z', 5], ['Z', 1]] }
+var customParseStrs = [
+  ['yyyy', d3or4],
+  ['yy', d2],
+  ['MM', d2],
+  ['M', d1or2],
+  ['dd', d2],
+  ['d', d1or2],
+  ['HH', d2],
+  ['H', d1or2],
+  ['mm', d2],
+  ['m', d1or2],
+  ['ss', d2],
+  ['s', d1or2],
+  ['SSS', getParseRule('3')],
+  ['S', d1or3],
+  ['Z', dzZ]
 ]
+var parseRuleMaps = {}
+var parseRuleKeys = ['\\[([^\\]]+)\\]']
 
+for (var i = 0; i < customParseStrs.length; i++) {
+  var itemRule = customParseStrs[i]
+  parseRuleMaps[itemRule[0]] = itemRule[1] + '?'
+  parseRuleKeys.push(itemRule[0])
+}
+
+var customParseRes = new RegExp(parseRuleKeys.join('|'), 'g')
+var cacheFormatMaps = {}
+
+/**
+ * 解析自定义格式
+ */
 function parseCustomRules (str, format) {
-  var arr, sIndex, fIndex, fLen, fItem, rules, rIndex, rLen, tempMatch
-  var rests = []
-  for (fIndex = 0, fLen = customFormatRules.length; fIndex < fLen; fIndex++) {
-    fItem = customFormatRules[fIndex]
-    for (rIndex = 0, rules = fItem.rules, rLen = rules.length; rIndex < rLen; rIndex++) {
-      arr = rules[rIndex]
-      sIndex = format.indexOf(arr[0])
-      if (sIndex > -1) {
-        tempMatch = str.substring(sIndex, sIndex + arr[1])
-        if (tempMatch && tempMatch.length === arr[1]) {
-          if (fItem.offset) {
-            tempMatch = staticParseInt(tempMatch) + fItem.offset
-          }
-          rests[fIndex] = tempMatch
-          break
-        }
+  var cacheItem = cacheFormatMaps[format]
+  if (!cacheItem) {
+    var posIndexs = []
+    var re = format.replace(/([$(){}*+.?\\^|])/g, "\\$1").replace(customParseRes, function (text, val) {
+      var firstChar = text.charAt(0)
+      // 如果为转义符号:[关键字]
+      if (firstChar === '[') {
+        return val
       }
-      if (rIndex === rLen - 1) {
-        return rests
-      }
+      posIndexs.push(firstChar)
+      return parseRuleMaps[text]
+    })
+    cacheItem = cacheFormatMaps[format] = {
+      _i: posIndexs,
+      _r: new RegExp(re)
     }
   }
-  return rests
+  var resMaps = {}
+  var matchRest = str.match(cacheItem._r)
+  if (matchRest) {
+    var _i = cacheItem._i
+    for (var i = 1, len = matchRest.length; i < len; i++) {
+      resMaps[_i[i - 1]] = matchRest[i]
+    }
+    return resMaps
+  }
+  return resMaps
+}
+
+/**
+ * 解析时区
+ */
+function parseTimeZone (resMaps) {
+  // 如果为UTC 时间
+  if (/^[zZ]/.test(resMaps.Z)) {
+    return new Date(helperGetUTCDateTime(resMaps))
+  } else {
+    // 如果指定时区，时区转换
+    var matchRest = resMaps.Z.match(/([-+])(\d{2}):?(\d{2})/)
+    if (matchRest) {
+      return new Date(helperGetUTCDateTime(resMaps) - (matchRest[1] === '-' ? -1 : 1) * staticParseInt(matchRest[2]) * 3600000 + staticParseInt(matchRest[3]) * 60000)
+    }
+  }
+  return new Date('')
 }
 
 /**
@@ -100,35 +151,29 @@ function parseCustomRules (str, format) {
   * @return {Date}
   */
 function toStringDate (str, format) {
-  var rest, isDType
   if (str) {
-    isDType = isDate(str)
+    var isDType = isDate(str)
     if (isDType || (!format && /^[0-9]{11,15}$/.test(str))) {
-      rest = new Date(isDType ? helperGetDateTime(str) : staticParseInt(str))
-    } else if (isString(str)) {
-      var tempMatch
-      var rests = format ? parseCustomRules(str, format) : parseDefaultRules(str)
-      var zStr = rests[7]
-      if (rests[0]) {
-        // 解析时区
-        if (zStr) {
-          // 如果为UTC 时间
-          if (zStr[0] === 'z' || zStr[0] === 'Z') {
-            rest = new Date(helperGetUTCDateTime(rests))
-          } else {
-            // 如果指定时区，时区转换
-            tempMatch = zStr.match(/([-+])(\d{2}):?(\d{2})/)
-            if (tempMatch) {
-              rest = new Date(helperGetUTCDateTime(rests) - (tempMatch[1] === '-' ? -1 : 1) * staticParseInt(tempMatch[2]) * 3600000 + staticParseInt(tempMatch[3]) * 60000)
-            }
-          }
+      return new Date(isDType ? helperGetDateTime(str) : staticParseInt(str))
+    }
+    if (isString(str)) {
+      var resMaps = format ? parseCustomRules(str, format) : parseDefaultRules(str)
+      if (resMaps.y) {
+        if (resMaps.M) {
+          resMaps.M = toParseNum(resMaps.M) - 1
+        }
+        if (resMaps.S) {
+          resMaps.S = toParseMs(toParseNum(resMaps.S))
+        }
+        if (resMaps.Z) {
+          return parseTimeZone(resMaps)
         } else {
-          rest = new Date(rests[0] || 0, rests[1] || 0, rests[2] || 1, rests[3] || 0, rests[4] || 0, rests[5] || 0, rests[6] || 0)
+          return new Date(resMaps.y, resMaps.M || 0, resMaps.d || 1, resMaps.H || 0, resMaps.m || 0, resMaps.s || 0, resMaps.S || 0)
         }
       }
     }
   }
-  return rest ? rest : new Date('')
+  return new Date('')
 }
 
 module.exports = toStringDate

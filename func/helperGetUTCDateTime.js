@@ -1,5 +1,5 @@
-function helperGetUTCDateTime (dates) {
-  return Date.UTC(dates[0], dates[1], dates[2], dates[3], dates[4], dates[5], dates[6])
+function helperGetUTCDateTime (resMaps) {
+  return Date.UTC(resMaps.y, resMaps.M || 0, resMaps.d || 1, resMaps.H || 0, resMaps.m || 0, resMaps.s || 0, resMaps.S || 0)
 }
 
 module.exports = helperGetUTCDateTime
