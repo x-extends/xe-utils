@@ -285,6 +285,9 @@ describe('Number functions', () => {
       XEUtils.round(12.3999, 2)
     ).toEqual(12.4)
     expect(
+      XEUtils.round(158335.645, 2)
+    ).toEqual(158335.65)
+    expect(
       XEUtils.round('12.3999', 6)
     ).toEqual(12.3999)
     expect(
@@ -1085,6 +1088,9 @@ describe('Number functions', () => {
     expect(
       XEUtils.multiply(5.024664, 0.453)
     ).toEqual(2.276172792)
+    expect(
+      XEUtils.multiply(158335.645, 100)
+    ).toEqual(15833564.5)
     expect(
       XEUtils.multiply(25.77, 7.1)
     ).toEqual(182.967)

@@ -1,3 +1,5 @@
+var helperMultiply = require('./helperMultiply')
+
 var toNumber = require('./toNumber')
 var toNumberString = require('./toNumberString')
 
@@ -19,7 +21,7 @@ function helperCreateMathNumber(name) {
       subRest = numRest
       if (digits > 0) {
         var ratio = Math.pow(10, digits)
-        rest = Math[name](subRest * ratio) / ratio
+        rest = Math[name](helperMultiply(subRest, ratio)) / ratio
       } else {
         rest = Math[name](subRest)
       }
