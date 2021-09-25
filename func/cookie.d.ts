@@ -25,7 +25,33 @@ export interface CookieOptions {
   expires?: string;
 }
 
-export interface XECookie {
+/**
+ * Cookie 操作函数
+ */
+export declare function CookieFunc(): cookie;
+
+/**
+ * Cookie 操作函数
+ * @param name 键/数组/对象
+ */
+export declare function CookieFunc(name: string): cookie;
+
+/**
+ * Cookie 操作函数
+ * @param name 键/数组/对象
+ * @param value 值
+ */
+export declare function CookieFunc(name: string, value: any): cookie;
+
+/**
+ * Cookie 操作函数
+ * @param name 键/数组/对象
+ * @param value 值
+ * @param options 可选参数
+ */
+export declare function CookieFunc(name: string, value: any, options: CookieOptions): cookie;
+
+export type cookie = typeof CookieFunc & {
   /**
    * 根据 name 判断 Cookie 是否存在
    * @param name 键
@@ -38,7 +64,7 @@ export interface XECookie {
    * @param value 值
    * @param options 可选参数
    */
-  set(name: string, value: any, options?: CookieOptions): this;
+  set(name: string, value: any, options?: CookieOptions): cookie;
 
   /**
    * 根据 name 获取 Cookie
@@ -64,35 +90,9 @@ export interface XECookie {
   getJSON(): any;
 }
 
-/**
- * Cookie 操作函数
- */
-export declare function cookie(): XECookie;
-
-/**
- * Cookie 操作函数
- * @param name 键/数组/对象
- */
-export declare function cookie(name: string): XECookie;
-
-/**
- * Cookie 操作函数
- * @param name 键/数组/对象
- * @param value 值
- */
-export declare function cookie(name: string, value: any): XECookie;
-
-/**
- * Cookie 操作函数
- * @param name 键/数组/对象
- * @param value 值
- * @param options 可选参数
- */
-export declare function cookie(name: string, value: any, options: CookieOptions): XECookie;
-
 declare module './ctor' {
   interface XEUtilsMethods {
-    cookie: typeof cookie;
+    cookie: cookie;
   }
 }
 

@@ -110,25 +110,29 @@ function cookie (name, value, options) {
   return false
 }
 
-function hasCookieItem (key) {
-  return includes(cookieKeys(), key)
+function hasCookieItem (value) {
+  return includes(cookieKeys(), value)
 }
 
-function getCookieItem (name, key) {
-  return cookie(name, key)
+function getCookieItem (name) {
+  return cookie(name)
 }
 
-function setCookieItem (name, key, options) {
-  cookie(name, key, options)
+function setCookieItem (name, value, options) {
+  cookie(name, value, options)
   return cookie
 }
 
 function removeCookieItem (name, options) {
-  cookie(name, 0, assign({ expires: -1 }, setupDefaults.cookies, options))
+  cookie(name, '', assign({ expires: -1 }, setupDefaults.cookies, options))
 }
 
 function cookieKeys () {
   return keys(cookie())
+}
+
+function cookieJson () {
+  return cookie()
 }
 
 assign(cookie, {
@@ -136,11 +140,11 @@ assign(cookie, {
   set: setCookieItem,
   setItem: setCookieItem,
   get: getCookieItem,
-  getItem: cookie,
+  getItem: getCookieItem,
   remove: removeCookieItem,
   removeItem: removeCookieItem,
   keys: cookieKeys,
-  getJSON: cookie
+  getJSON: cookieJson
 })
 
 module.exports = cookie
