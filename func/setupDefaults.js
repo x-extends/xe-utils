@@ -1,6 +1,9 @@
 'use strict'
 
 var setupDefaults = {
+  cookies: {
+    path: '/'
+  },
   treeOptions: {
     parentKey: 'parentId',
     key: 'id',
