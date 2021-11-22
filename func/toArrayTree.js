@@ -22,7 +22,7 @@ function strictTree (array, optChildren) {
   * 将一个带层级的数据列表转成树结构
   *
   * @param {Array} array 数组
-  * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: 'data'}
+  * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', mapChildren: 'children', data: 'data'}
   * @return {Array}
   */
 function toArrayTree (array, options) {
@@ -31,6 +31,7 @@ function toArrayTree (array, options) {
   var optKey = opts.key
   var optParentKey = opts.parentKey
   var optChildren = opts.children
+  var optMapChildren = opts.mapChildren
   var optSortKey = opts.sortKey
   var optReverse = opts.reverse
   var optData = opts.data
@@ -66,6 +67,9 @@ function toArrayTree (array, options) {
     treeData[optKey] = id
     treeData[optParentKey] = parentId
     treeData[optChildren] = treeMap[id]
+    if (optMapChildren) {
+      treeData[optMapChildren] = treeMap[id]
+    }
 
     if (!optStrict || (optStrict && !parentId)) {
       if (!includes(idList, parentId)) {

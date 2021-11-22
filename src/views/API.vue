@@ -1667,7 +1667,8 @@ export default {
                 ['strict', '是否严格模式，会去掉父子关联不存在数据，当子节点为空时将没有 children 属性', 'false'],
                 ['key', '节点键值', 'id'],
                 ['parentKey', '父节点键值', 'parentId'],
-                ['children', '数据存放属性', 'children'],
+                ['children', '子节点属性', 'children'],
+                ['mapChildren', '子节点映射属性', ''],
                 ['sortKey', '对树节点进行排序属性', ''],
                 ['reverse', 'sortKey不为空是有效，默认升序', 'false'],
                 ['data', '数据存放属性', 'null']
