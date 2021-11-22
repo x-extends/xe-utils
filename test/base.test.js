@@ -2530,6 +2530,20 @@ describe('Base functions', () => {
     expect(
       XEUtils.clear({ b1: 11, b2: 22 }, null)
     ).toEqual({ b1: null, b2: null })
+
+    class MyTest {
+      constructor () {
+        this.abc = 1
+      }
+    }
+    const test1 = [new MyTest()]
+    const test2 = XEUtils.clone(test1)
+    const test3 = XEUtils.clone(test1, true)
+    test1[0].abc = null
+    expect(test1[0] === test2[0]).toEqual(true)
+    expect(test1[0].abc === test2[0].abc).toEqual(true)
+    expect(test1[0] === test3[0]).toEqual(false)
+    expect(test1[0].abc === test3[0].abc).toEqual(false)
   })
 
   test('remove()', () => {

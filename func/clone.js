@@ -1,51 +1,57 @@
 var objectToString = require('./staticObjectToString')
 
 var isArray = require('./isArray')
-var isPlainObject = require('./isPlainObject')
+var objectEach = require('./objectEach')
+var arrayEach = require('./arrayEach')
 
-var objectMap = require('./objectMap')
-
-var map = require('./map')
-
-function handleObjectAndArrayClone (func, obj, deep) {
-  return func(obj, deep ? function (val) {
-    return copyValue(val, deep)
-  } : function (val) {
-    return val
-  })
+function getCtorObject (val, args) {
+  var Ctor = val.__proto__.constructor
+  return args ? new Ctor(args) : new Ctor()
 }
 
-function handleValueClone (val, deep) {
-  if (deep && val) {
-    var Ctor = val.constructor;
+function handleValueClone (item, isDeep) {
+  return isDeep ? copyValue(item, isDeep) : item
+}
+
+function copyValue (val, isDeep) {
+  if (val) {
     switch(objectToString.call(val)) {
+      case "[object Object]":
+      case "[object Arguments]": {
+        var restObj = getCtorObject(val)
+        objectEach(val, function (item, key) {
+          restObj[key] = handleValueClone(item, isDeep)
+        })
+        return restObj
+      }
       case "[object Date]":
-      case "[object RegExp]":
-        return new Ctor(val.valueOf())
-      case "[object Set]":
-        var set = new Ctor()
-        val.forEach(function (v) {
-          set.add(v)
+      case "[object RegExp]": {
+        return getCtorObject(val, val.valueOf())
+      }
+      case "[object Array]": {
+        var restArr = []
+        arrayEach(val, function (item) {
+          restArr.push(handleValueClone(item, isDeep))
         })
-        return set
-      case "[object Map]":
-        var map = new Ctor()
-        val.forEach(function (v, k) {
-          map.set(k, v)
+        return restArr
+      }
+      case "[object Set]": {
+        var restSet = getCtorObject(val)
+        restSet.forEach(function (item) {
+          restSet.add(handleValueClone(item, isDeep))
         })
-        return map
+        return restSet
+      }
+      case "[object Map]": {
+        var restMap = getCtorObject(val)
+        restMap.forEach(function (item, key) {
+          restMap.set(handleValueClone(item, isDeep))
+        })
+        return restMap
+      }
     }
   }
   return val
-}
-
-function copyValue (val, deep) {
-  if (isPlainObject(val)) {
-    return handleObjectAndArrayClone(objectMap, val, deep)
-  } else if (isArray(val)) {
-    return handleObjectAndArrayClone(map, val, deep)
-  }
-  return handleValueClone(val, deep)
 }
 
 /**
