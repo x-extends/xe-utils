@@ -105,7 +105,7 @@ describe('Base functions', () => {
       XEUtils.isNaN(/\d/)
     ).toEqual(false)
     expect(
-      XEUtils.isNaN(function () {})
+      XEUtils.isNaN(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isNaN(NaN)
@@ -132,7 +132,7 @@ describe('Base functions', () => {
       XEUtils.isFinite([])
     ).toEqual(false)
     expect(
-      XEUtils.isFinite(function () {})
+      XEUtils.isFinite(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isFinite(/\d/)
@@ -180,7 +180,7 @@ describe('Base functions', () => {
       XEUtils.isUndefined([])
     ).toEqual(false)
     expect(
-      XEUtils.isUndefined(function () {})
+      XEUtils.isUndefined(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isUndefined(/\d/)
@@ -220,7 +220,7 @@ describe('Base functions', () => {
       XEUtils.isArray({})
     ).toEqual(false)
     expect(
-      XEUtils.isArray(function () {})
+      XEUtils.isArray(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isArray(0)
@@ -256,7 +256,7 @@ describe('Base functions', () => {
       XEUtils.isFloat([])
     ).toEqual(false)
     expect(
-      XEUtils.isFloat(function () {})
+      XEUtils.isFloat(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isFloat(/1\.3/)
@@ -367,7 +367,7 @@ describe('Base functions', () => {
       XEUtils.isFunction({})
     ).toEqual(false)
     expect(
-      XEUtils.isFunction(function () {})
+      XEUtils.isFunction(function () { })
     ).toEqual(true)
   })
 
@@ -421,7 +421,7 @@ describe('Base functions', () => {
       XEUtils.isString(/\d/)
     ).toEqual(false)
     expect(
-      XEUtils.isString(function () {})
+      XEUtils.isString(function () { })
     ).toEqual(false)
     if (typeof Symbol !== 'undefined') {
       expect(
@@ -453,7 +453,7 @@ describe('Base functions', () => {
       XEUtils.isNumber([])
     ).toEqual(false)
     expect(
-      XEUtils.isNumber(function () {})
+      XEUtils.isNumber(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isNumber(/123/)
@@ -486,7 +486,7 @@ describe('Base functions', () => {
       XEUtils.isRegExp({})
     ).toEqual(false)
     expect(
-      XEUtils.isRegExp(function () {})
+      XEUtils.isRegExp(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isRegExp(-1)
@@ -513,7 +513,7 @@ describe('Base functions', () => {
       XEUtils.isObject('null')
     ).toEqual(false)
     expect(
-      XEUtils.isObject(function () {})
+      XEUtils.isObject(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isObject(-1)
@@ -554,7 +554,7 @@ describe('Base functions', () => {
       XEUtils.isPlainObject(/\d/)
     ).toEqual(false)
     expect(
-      XEUtils.isPlainObject(function () {})
+      XEUtils.isPlainObject(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isPlainObject([])
@@ -646,7 +646,7 @@ describe('Base functions', () => {
       XEUtils.isError('')
     ).toEqual(false)
     expect(
-      XEUtils.isError(function () {})
+      XEUtils.isError(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isError(new TypeError('error'))
@@ -682,7 +682,7 @@ describe('Base functions', () => {
       XEUtils.isTypeError('')
     ).toEqual(false)
     expect(
-      XEUtils.isTypeError(function () {})
+      XEUtils.isTypeError(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isTypeError(new Error('error'))
@@ -736,7 +736,7 @@ describe('Base functions', () => {
       XEUtils.isEmpty(/\d/)
     ).toEqual(true)
     expect(
-      XEUtils.isEmpty(function () {})
+      XEUtils.isEmpty(function () { })
     ).toEqual(true)
   })
 
@@ -751,7 +751,7 @@ describe('Base functions', () => {
       XEUtils.isNull(false)
     ).toEqual(false)
     expect(
-      XEUtils.isNull(function () {})
+      XEUtils.isNull(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isNull(/null/)
@@ -802,7 +802,7 @@ describe('Base functions', () => {
       XEUtils.isSymbol(false)
     ).toEqual(false)
     expect(
-      XEUtils.isSymbol(function () {})
+      XEUtils.isSymbol(function () { })
     ).toEqual(false)
     expect(
       XEUtils.isSymbol('a')
@@ -843,7 +843,7 @@ describe('Base functions', () => {
       XEUtils.isArguments(false)
     ).toEqual(false)
     expect(
-      XEUtils.isArguments(function () {})
+      XEUtils.isArguments(function () { })
     ).toEqual(false)
     let method = function () {
       expect(
@@ -882,7 +882,7 @@ describe('Base functions', () => {
       XEUtils.isElement([])
     ).toEqual(false)
     expect(
-      XEUtils.isElement(function () {})
+      XEUtils.isElement(function () { })
     ).toEqual(false)
   })
 
@@ -915,7 +915,7 @@ describe('Base functions', () => {
       XEUtils.isDocument([])
     ).toEqual(false)
     expect(
-      XEUtils.isDocument(function () {})
+      XEUtils.isDocument(function () { })
     ).toEqual(false)
   })
 
@@ -948,7 +948,7 @@ describe('Base functions', () => {
       XEUtils.isWindow([])
     ).toEqual(false)
     expect(
-      XEUtils.isWindow(function () {})
+      XEUtils.isWindow(function () { })
     ).toEqual(false)
   })
 
@@ -1233,7 +1233,7 @@ describe('Base functions', () => {
       XEUtils.isEqual(false, true)
     ).toEqual(false)
     expect(
-      XEUtils.isEqual({}, function () {})
+      XEUtils.isEqual({}, function () { })
     ).toEqual(false)
     expect(
       XEUtils.isEqual({}, [])
@@ -1305,7 +1305,7 @@ describe('Base functions', () => {
       XEUtils.isEqualWith(false, true)
     ).toEqual(false)
     expect(
-      XEUtils.isEqualWith({}, function () {})
+      XEUtils.isEqualWith({}, function () { })
     ).toEqual(false)
     expect(
       XEUtils.isEqualWith({}, [])
@@ -1408,7 +1408,7 @@ describe('Base functions', () => {
       XEUtils.getType(new TypeError())
     ).toEqual('error')
     expect(
-      XEUtils.getType(function () {})
+      XEUtils.getType(function () { })
     ).toEqual('function')
     let method = function () {
       expect(
@@ -1470,7 +1470,7 @@ describe('Base functions', () => {
       XEUtils.getSize(10)
     ).toEqual(0)
     expect(
-      XEUtils.getSize(function () {})
+      XEUtils.getSize(function () { })
     ).toEqual(0)
     expect(
       XEUtils.getSize('123')
@@ -1503,7 +1503,7 @@ describe('Base functions', () => {
       XEUtils.indexOf({})
     ).toEqual(-1)
     expect(
-      XEUtils.indexOf(function () {})
+      XEUtils.indexOf(function () { })
     ).toEqual(-1)
     expect(
       XEUtils.indexOf([11, 22, 33, 22])
@@ -1989,7 +1989,7 @@ describe('Base functions', () => {
       XEUtils.has(/\d/)
     ).toEqual(false)
     expect(
-      XEUtils.has(function () {})
+      XEUtils.has(function () { })
     ).toEqual(false)
     expect(
       XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } })
@@ -2020,6 +2020,9 @@ describe('Base functions', () => {
     ).toEqual(false)
     expect(
       XEUtils.has([0, 1, null, undefined, -1, /\d/], 6)
+    ).toEqual(false)
+    expect(
+      XEUtils.has([[[11]]], '[0][0][1]')
     ).toEqual(false)
     expect(
       XEUtils.has({ aa: { bb: null } }, 'aa.bb')
@@ -2108,6 +2111,9 @@ describe('Base functions', () => {
     expect(
       XEUtils.has({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.e')
     ).toEqual(true)
+    expect(
+      XEUtils.has([[[11]]], '[0][0][0]')
+    ).toEqual(true)
   })
 
   test('get()', () => {
@@ -2139,7 +2145,7 @@ describe('Base functions', () => {
       XEUtils.get(/\d/)
     ).toEqual(undefined)
     expect(
-      XEUtils.get(function () {})
+      XEUtils.get(function () { })
     ).toEqual(undefined)
     expect(
       XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } })
@@ -2165,6 +2171,24 @@ describe('Base functions', () => {
     expect(
       XEUtils.get([11, 22, 33], 1)
     ).toEqual(22)
+    expect(
+      XEUtils.get([[11, 22]], '[0][1]')
+    ).toEqual(22)
+    expect(
+      XEUtils.get({ a: [[11, 22]] }, 'a[0][1]')
+    ).toEqual(22)
+    expect(
+      XEUtils.get({ a: [[11, { bb: [33, 44, 55] }]] }, 'a[0][1].bb[1]')
+    ).toEqual(44)
+    expect(
+      XEUtils.get([[11, 22, [33, [44, 55]]]], '[0][2][1][0]')
+    ).toEqual(44)
+    expect(
+      XEUtils.get({ a: [[11, 22, [33, [44, 55]]]] }, 'a[0][2][1][0]')
+    ).toEqual(44)
+    expect(
+      XEUtils.get({ a: [[11, 22, [33, [{ cc: 88 }, 55]]]] }, 'a[0][2][1][0].cc')
+    ).toEqual(88)
     expect(
       XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)
     ).toEqual({ a: 33, b: 44 })
@@ -2283,6 +2307,12 @@ describe('Base functions', () => {
       XEUtils.set({}, 'a.d[0].f.h[0]', 55)
     ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
     expect(
+      XEUtils.set({}, 'a[0][2]', 11)
+    ).toEqual({ a: [[undefined, undefined, 11]] })
+    expect(
+      XEUtils.set({}, 'a[0][2].b[1]', 22)
+    ).toEqual({ a: [[undefined, undefined, { b: [undefined, 22] }]] })
+    expect(
       XEUtils.set({}, ['a'], 11)
     ).toEqual({ a: 11 })
     expect(
@@ -2297,6 +2327,12 @@ describe('Base functions', () => {
     expect(
       XEUtils.set({ a: {} }, ['a', 'd[0]', 'f', 'h[0]'], 55)
     ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
+    expect(
+      XEUtils.set([], '[1][5][2]', 55)
+    ).toEqual([undefined, [undefined, undefined, undefined, undefined, undefined, [undefined, undefined, 55]]])
+    expect(
+      XEUtils.set([], '[1][5][2].b.c[1].t[2]', 66)
+    ).toEqual([undefined, [undefined, undefined, undefined, undefined, undefined, [undefined, undefined, { b: { c: [undefined, { t: [undefined, undefined, 66] }] } }]]])
 
     var obj1 = {}
     XEUtils.set(obj1, '__proto__.attr1', 1)
@@ -2313,7 +2349,7 @@ describe('Base functions', () => {
       obj2.constructor !== 1
     ).toEqual(true)
 
-    var FN3 = function FN3(){}
+    var FN3 = function FN3() { }
     var obj3 = new FN3()
     XEUtils.set(obj3, 'prototype.a3', 1)
     expect(
@@ -2430,7 +2466,7 @@ describe('Base functions', () => {
       XEUtils.clone(/\n/)
     ).toEqual(/\n/)
 
-    let v1 = { 
+    let v1 = {
       num: 11,
       str: 'abc',
       obj: { b1: 22 },
@@ -2532,7 +2568,7 @@ describe('Base functions', () => {
     ).toEqual({ b1: null, b2: null })
 
     class MyTest {
-      constructor () {
+      constructor() {
         this.abc = 1
       }
     }

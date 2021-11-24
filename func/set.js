@@ -4,26 +4,39 @@ var helperGetHGSKeys = require('./helperGetHGSKeys')
 
 var hasOwnProp = require('./hasOwnProp')
 
-var sKeyRE = /(.+)\[(\d+)\]$/
+var sKeyRE = /(.+)?\[(\d+)\]$/
 
-function setDeepProps (obj, key, isSet, value) {
+function setDeepProps (obj, key, isEnd, nextKey, value) {
   if (obj[key]) {
-    if (isSet) {
+    if (isEnd) {
       obj[key] = value
     }
   } else {
     var index
-    var matchs = key ? key.match(sKeyRE) : null
-    var rest = isSet ? value : {}
-    if (matchs) {
-      index = staticParseInt(matchs[2])
-      if (obj[matchs[1]]) {
-        obj[matchs[1]][index] = rest
+    var rest
+    var currMatchs = key ? key.match(sKeyRE) : null
+    if (isEnd) {
+      rest = value
+    } else {
+      var nextMatchs = nextKey ? nextKey.match(sKeyRE) : null
+      rest = nextMatchs && !nextMatchs[1] ? new Array(staticParseInt(nextMatchs[2]) + 1) : {}
+    }
+    if (currMatchs) {
+      if (currMatchs[1]) {
+        // 如果为对象中数组
+        index = staticParseInt(currMatchs[2])
+        if (obj[currMatchs[1]]) {
+          obj[currMatchs[1]][index] = rest
+        } else {
+          obj[currMatchs[1]] = new Array(index + 1)
+          obj[currMatchs[1]][index] = rest
+        }
       } else {
-        obj[matchs[1]] = new Array(index + 1)
-        obj[matchs[1]][index] = rest
+        // 如果为数组
+        obj[currMatchs[2]] = rest
       }
     } else {
+      // 如果为对象
       obj[key] = rest
     }
     return rest
@@ -46,8 +59,11 @@ function set (obj, property, value) {
       var props = helperGetHGSKeys(property)
       var len = props.length
       for (var index = 0; index < len; index++) {
-        if (isPrototypePolluted(props[index])) continue
-        rest = setDeepProps(rest, props[index], index === len - 1, value)
+        if (isPrototypePolluted(props[index])) {
+          continue
+        }
+        var isEnd = index === len - 1
+        rest = setDeepProps(rest, props[index], isEnd, isEnd ? null : props[index + 1], value)
       }
     }
   }

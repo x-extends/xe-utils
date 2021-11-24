@@ -40,7 +40,7 @@ Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net
 ### Import all methods
 
 ```javascript
-import XEUtils from 'xe-utils'
+import _XEUtils_ from 'xe-utils'
 
 XEUtils.toDateString(Date.now())
 // 2018-01-01 10:30:28
