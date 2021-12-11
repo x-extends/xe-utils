@@ -278,6 +278,12 @@ describe('Date functions', () => {
       XEUtils.toStringDate('2017-12-20 10:10:30.999')
     ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 999))
     expect(
+      XEUtils.toStringDate('2017-12-20 10:10:30.2880929')
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 288))
+    expect(
+      XEUtils.toStringDate('2017-12-20 10:10:30.9999999')
+    ).toEqual(new Date(2017, 11, 20, 10, 10, 30, 999))
+    expect(
       XEUtils.toStringDate('2017-12-20T10:10:30.4+0800')
     ).toEqual(new Date('2017-12-20T10:10:30.400+08:00'))
     expect(
@@ -495,13 +501,13 @@ describe('Date functions', () => {
     ).toEqual('2017-1-2 2:5:30.99 1 1')
     expect(
       XEUtils.toDateString(time, 'yyyy年MM月dd日 HH时mm分ss秒S毫秒,星期E 第q季度')
-    ).toEqual('2017年01月01日 14时05分30秒99毫秒,星期7 第1季度')
+    ).toEqual('2017年01月01日 14时05分30秒99毫秒,星期0 第1季度')
     expect(
       XEUtils.toDateString(time, 'yy年M月d日 HH时m分s秒S毫秒,星期E 第q季度 今年第D天 今年第W周')
-    ).toEqual('17年1月1日 14时5分30秒99毫秒,星期7 第1季度 今年第1天 今年第52周')
+    ).toEqual('17年1月1日 14时5分30秒99毫秒,星期0 第1季度 今年第1天 今年第52周')
     expect(
       XEUtils.toDateString(time, 'yyyy年MM月dd日 hh时mm分ss秒SSS毫秒 星期E e 第q季 今年第DDD天 今年第WW周 a A')
-    ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期7 0 第1季 今年第001天 今年第52周 pm PM')
+    ).toEqual('2017年01月01日 02时05分30秒099毫秒 星期0 0 第1季 今年第001天 今年第52周 pm PM')
     expect(
       XEUtils.toDateString(date, 'yyyy-MM-dd [yyyy-MM-dd] [yyyy]] [[MM]')
     ).toEqual('2017-01-01 yyyy-MM-dd yyyy] [MM')
@@ -826,6 +832,358 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatWeek('2017-12-20', 1, 0)
     ).toEqual(new Date(2017, 11, 31))
+
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 0, 0)
+    ).toEqual(new Date(2017, 10, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 0, 0)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 0, 0)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 0, 0)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 0, 0)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 0, 0)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 0, 0)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 0, 0)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 2, 0)
+    ).toEqual(new Date(2017, 10, 28))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 2, 0)
+    ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 2, 0)
+    ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 2, 0)
+    ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 2, 0)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 2, 0)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 2, 0)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 2, 0)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-31', 0, 2, 0)
+    ).toEqual(new Date(2018, 0, 2))
+
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 3))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 0, 1)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 3, 1)
+    ).toEqual(new Date(2017, 10, 29))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 3, 1)
+    ).toEqual(new Date(2017, 11, 20))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 3, 1)
+    ).toEqual(new Date(2017, 11, 20))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 3, 1)
+    ).toEqual(new Date(2017, 11, 20))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 3, 1)
+    ).toEqual(new Date(2017, 11, 20))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 3, 1)
+    ).toEqual(new Date(2017, 11, 27))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 3, 1)
+    ).toEqual(new Date(2017, 11, 27))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 3, 1)
+    ).toEqual(new Date(2017, 11, 27))
+
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 3))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 0, 2)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 4, 2)
+    ).toEqual(new Date(2017, 10, 30))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 4, 2)
+    ).toEqual(new Date(2017, 11, 14))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 4, 2)
+    ).toEqual(new Date(2017, 11, 21))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 4, 2)
+    ).toEqual(new Date(2017, 11, 21))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 4, 2)
+    ).toEqual(new Date(2017, 11, 21))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 4, 2)
+    ).toEqual(new Date(2017, 11, 28))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 4, 2)
+    ).toEqual(new Date(2017, 11, 28))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 4, 2)
+    ).toEqual(new Date(2017, 11, 28))
+
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 3))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 0, 3)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 2))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 16))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 16))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 23))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 23))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 23))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 30))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 6, 3)
+    ).toEqual(new Date(2017, 11, 30))
+
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 3))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 0, 4)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 2, 4)
+    ).toEqual(new Date(2017, 11, 5))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 2, 4)
+    ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 2, 4)
+    ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 2, 4)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 2, 4)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 2, 4)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 2, 4)
+    ).toEqual(new Date(2018, 0, 2))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 2, 4)
+    ).toEqual(new Date(2018, 0, 2))
+
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 3))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 0, 5)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 2))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 16))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 16))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 23))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 23))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 23))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 30))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 6, 5)
+    ).toEqual(new Date(2017, 11, 30))
+
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 0, 6)
+    ).toEqual(new Date(2017, 10, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-15', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 10))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 17))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 0, 6)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-01', 0, 2, 6)
+    ).toEqual(new Date(2017, 10, 28))
+    expect(
+      XEUtils.getWhatWeek('2017-12-15', 0, 2, 6)
+    ).toEqual(new Date(2017, 11, 12))
+    expect(
+      XEUtils.getWhatWeek('2017-12-18', 0, 2, 6)
+    ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatWeek('2017-12-19', 0, 2, 6)
+    ).toEqual(new Date(2017, 11, 19))
+    expect(
+      XEUtils.getWhatWeek('2017-12-23', 0, 2, 6)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-24', 0, 2, 6)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-26', 0, 2, 6)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 2, 6)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 2, 6)
+    ).toEqual(new Date(2018, 0, 2))
   })
 
   test('getWhatDay()', () => {
@@ -1009,6 +1367,27 @@ describe('Date functions', () => {
     expect(
       XEUtils.getYearWeek('2018-12-20')
     ).toEqual(51)
+    expect(
+      XEUtils.getYearWeek('2013-01-01', 1)
+    ).toEqual(53)
+    expect(
+      XEUtils.getYearWeek('2013-01-07', 1)
+    ).toEqual(1)
+    expect(
+      XEUtils.getYearWeek('2013-01-27', 1)
+    ).toEqual(3)
+    expect(
+      XEUtils.getYearWeek('2021-01-01', 1)
+    ).toEqual(52)
+    expect(
+      XEUtils.getYearWeek('2021-01-10', 1)
+    ).toEqual(1)
+    expect(
+      XEUtils.getYearWeek('2021-01-31', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getYearWeek('2021-12-08', 1)
+    ).toEqual(49)
   })
 
   test('getMonthWeek()', () => {
@@ -1075,6 +1454,202 @@ describe('Date functions', () => {
     expect(
       XEUtils.getMonthWeek('2018-05-29')
     ).toEqual(4)
+
+    expect(
+      XEUtils.getMonthWeek('2018-05-01', 0)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-05-28', 0)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-29', 0)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-30', 0)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-31', 0)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-01', 0)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-02', 0)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-03', 0)
+    ).toEqual(1)
+    expect(
+      XEUtils.getMonthWeek('2018-06-04', 0)
+    ).toEqual(1)
+
+    expect(
+      XEUtils.getMonthWeek('2018-05-01', 1)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-05-28', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-29', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-30', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-31', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-01', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-02', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-03', 1)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-04', 1)
+    ).toEqual(1)
+
+    expect(
+      XEUtils.getMonthWeek('2018-05-01', 2)
+    ).toEqual(1)
+    expect(
+      XEUtils.getMonthWeek('2018-05-28', 2)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-29', 2)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-05-30', 2)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-05-31', 2)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-01', 2)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-02', 2)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-03', 2)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-04', 2)
+    ).toEqual(5)
+
+    expect(
+      XEUtils.getMonthWeek('2018-05-01', 3)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-28', 3)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-29', 3)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-30', 3)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-05-31', 3)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-01', 3)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-02', 3)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-03', 3)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-04', 3)
+    ).toEqual(5)
+
+    expect(
+      XEUtils.getMonthWeek('2018-05-01', 4)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-28', 4)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-29', 4)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-30', 4)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-31', 4)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-01', 4)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-02', 4)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-03', 4)
+    ).toEqual(5)
+    expect(
+      XEUtils.getMonthWeek('2018-06-04', 4)
+    ).toEqual(5)
+
+    expect(
+      XEUtils.getMonthWeek('2018-05-01', 5)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-28', 5)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-29', 5)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-30', 5)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-31', 5)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-01', 5)
+    ).toEqual(1)
+    expect(
+      XEUtils.getMonthWeek('2018-06-02', 5)
+    ).toEqual(1)
+    expect(
+      XEUtils.getMonthWeek('2018-06-03', 5)
+    ).toEqual(1)
+    expect(
+      XEUtils.getMonthWeek('2018-06-04', 5)
+    ).toEqual(1)
+
+    expect(
+      XEUtils.getMonthWeek('2018-05-01', 6)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-28', 6)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-29', 6)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-30', 6)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-05-31', 6)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-01', 6)
+    ).toEqual(4)
+    expect(
+      XEUtils.getMonthWeek('2018-06-02', 6)
+    ).toEqual(1)
+    expect(
+      XEUtils.getMonthWeek('2018-06-03', 6)
+    ).toEqual(1)
+    expect(
+      XEUtils.getMonthWeek('2018-06-04', 6)
+    ).toEqual(1)
   })
 
   test('getDayOfYear()', () => {

@@ -27,9 +27,7 @@ function handleCustomTemplate (date, formats, match, value) {
   return value
 }
 
-function formatDayE (day) {
-  return day === 0 ? 7 : day
-}
+var dateFormatRE = /\[([^\]]+)]|y{2,4}|M{1,2}|d{1,2}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|S{1,3}|Z{1,2}|W{1,2}|D{1,3}|[aAeEq]/g
 
 /**
   * 日期格式化为字符串，转义符号 []
@@ -39,15 +37,14 @@ function formatDayE (day) {
   * @param {Object} options {formats: {q: ['日', '一', '二', '三', '四', '五', '六'], E: function (value, match, date) {return '三'}, }} 自定义格式化模板
   * @return {String}
   */
-var dateFormatRE = /\[([^\]]+)]|y{2,4}|M{1,2}|d{1,2}|H{1,2}|h{1,2}|m{1,2}|s{1,2}|S{1,3}|Z{1,2}|W{1,2}|D{1,3}|[aAeEq]/g
 function toDateString (date, format, options) {
   if (date) {
     date = toStringDate(date)
     if (isValidDate(date)) {
-      var result = format || setupDefaults.formatString
+      var result = format || setupDefaults.parseDateFormat || setupDefaults.formatString
       var hours = date.getHours()
       var apm = hours < 12 ? 'am' : 'pm'
-      var formats = assign({}, setupDefaults.formatStringMatchs, options ? options.formats : null)
+      var formats = assign({}, setupDefaults.parseDateRules || setupDefaults.formatStringMatchs, options ? options.formats : null)
       var fy = function (match, length) {
         return ('' + helperGetDateFullYear(date)).substr(4 - length)
       }
@@ -77,7 +74,7 @@ function toDateString (date, format, options) {
         return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + padStart(zoneHours, 2, '0') + (length === 1 ? ':' : '') + '00')
       }
       var fW = function (match, length) {
-        return padStart(handleCustomTemplate(date, formats, match, getYearWeek(date)), length, '0')
+        return padStart(handleCustomTemplate(date, formats, match, getYearWeek(date, (options ? options.firstDay : null) || setupDefaults.firstDayOfWeek)), length, '0')
       }
       var fD = function (match, length) {
         return padStart(handleCustomTemplate(date, formats, match, getYearDay(date)), length, '0')
@@ -115,7 +112,7 @@ function toDateString (date, format, options) {
           return handleCustomTemplate(date, formats, match, date.getDay())
         },
         E: function (match) {
-          return handleCustomTemplate(date, formats, match, formatDayE(date.getDay()))
+          return handleCustomTemplate(date, formats, match, date.getDay())
         },
         q: function (match) {
           return handleCustomTemplate(date, formats, match, Math.floor((helperGetDateMonth(date) + 3) / 3))

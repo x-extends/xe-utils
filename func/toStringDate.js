@@ -23,15 +23,15 @@ function toParseNum (num) {
   return isNaN(num) ? num : staticParseInt(num)
 }
 
-var d2 = getParseRule('2')
+var d2 = getParseRule(2)
 var d1or2 = getParseRule('1,2')
-var d1or3 = getParseRule('1,3')
+var d1or7 = getParseRule('1,7')
 var d3or4 = getParseRule('3,4')
 var place = '.{1}'
 var d1Or2RE = place + d1or2
 var dzZ = '(([zZ])|([-+]\\d{2}:?\\d{2}))'
 
-var defaulParseStrs = [d3or4, d1Or2RE, d1Or2RE, d1Or2RE, d1Or2RE, d1Or2RE, place + d1or3, dzZ]
+var defaulParseStrs = [d3or4, d1Or2RE, d1Or2RE, d1Or2RE, d1Or2RE, d1Or2RE, place + d1or7, dzZ]
 var defaulParseREs = []
 
 for (var len = defaulParseStrs.length - 1; len >= 0; len--) {
@@ -77,8 +77,8 @@ var customParseStrs = [
   ['m', d1or2],
   ['ss', d2],
   ['s', d1or2],
-  ['SSS', getParseRule('3')],
-  ['S', d1or3],
+  ['SSS', getParseRule(3)],
+  ['S', d1or7],
   ['Z', dzZ]
 ]
 var parseRuleMaps = {}
@@ -163,7 +163,8 @@ function toStringDate (str, format) {
           resMaps.M = toParseNum(resMaps.M) - 1
         }
         if (resMaps.S) {
-          resMaps.S = toParseMs(toParseNum(resMaps.S))
+          // 如果7位则是微秒，只精确到3位毫秒
+          resMaps.S = toParseMs(toParseNum(resMaps.S.substring(0, 3)))
         }
         if (resMaps.Z) {
           return parseTimeZone(resMaps)

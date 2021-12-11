@@ -2399,11 +2399,15 @@ export default {
               codes: [
                 `
                 XEUtils.toStringDate('12/20/2017')
-                // 如果解析错误则返回 'Invalid Date'
+                // 如果解析错误则返回 new Date('Invalid Date')
                 XEUtils.toStringDate('2017-12-20')
-                // Wed Dec 20 2017 00:00:00 GMT+0800 (中国标准时间)
+                // new Date(2017, 11, 20)
                 XEUtils.toStringDate('2017-12-20 10:10:30')
-                // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
+                // new Date(2017, 11, 20, 10, 10, 30)
+                XEUtils.toStringDate('2017-12-20 10:10:30.568')
+                // new Date(2017, 11, 20, 10, 10, 30, 568)
+                XEUtils.toStringDate('2017-12-20 10:10:30.2514766')
+                // new Date(2017, 11, 20, 10, 10, 30, 251)
                 XEUtils.toStringDate('2017-12-20T10:10:30.738+0800')
                 // Wed Dec 20 2017 10:10:30 GMT+0800 (中国标准时间)
                 XEUtils.toStringDate('2017-12-20T10:10:30.738+01:00')
@@ -2424,7 +2428,7 @@ export default {
             {
               name: 'toDateString',
               args: 'date [, format, options]',
-              title: '日期格式化为任意格式字符串',
+              title: '日期格式化为任意格式字符串（需要注意如果使用了年的第几周等特殊格式，可能会导致跨年偏移，应该避免和年份同时使用）',
               desc: '',
               params: [
                 ['属性', '描述', '备注', '值的范围'],
@@ -2489,7 +2493,7 @@ export default {
             },
             {
               name: 'getWhatYear',
-              args: 'date, year [, month]',
+              args: 'date, offsetYear [, offsetMonth]',
               title: '返回前几年或后几年的日期,可以指定年的最初时间(first)、年的最后时间(last)、年的月份(0~11)，默认当前',
               desc: '',
               params: [],
@@ -2506,7 +2510,7 @@ export default {
             },
             {
               name: 'getWhatMonth',
-              args: 'date, month [, day]',
+              args: 'date, offsetMonth [, offsetDay]',
               title: '返回前几月或后几月的日期,可以指定月初(first)、月末(last)、天数，默认当前',
               desc: '',
               params: [],
@@ -2523,8 +2527,8 @@ export default {
             },
             {
               name: 'getWhatWeek',
-              args: 'date, week [, day]',
-              title: '返回前几周或后几周的日期,可以指定星期几(0~6)，默认当前',
+              args: 'date, offsetWeek [, offsetDay, startDay]',
+              title: '返回前几周或后几周的日期,可以指定星期几(0~6)与周视图的起始天(0~6，默认1)，默认当前',
               desc: '',
               params: [],
               codes: [
@@ -2533,14 +2537,15 @@ export default {
                 XEUtils.getWhatWeek(1513735830000, -1) // Sun Dec 17 2017 00:00:00 GMT+0800 (中国标准时间)
                 XEUtils.getWhatWeek('2017-12-20', -1) // Sun Dec 17 2017 00:00:00 GMT+0800 (中国标准时间)
                 XEUtils.getWhatWeek('2017-12-20', 1) // Sun Dec 31 2017 00:00:00 GMT+0800 (中国标准时间)
-                XEUtils.getWhatWeek('2017-12-20', -1, 5) // Fri Dec 15 2017 00:00:00 GMT+0800 (中国标准时间)
-                XEUtils.getWhatWeek('2017-12-20', 1, 0) // Sun Dec 31 2017 00:00:00 GMT+0800 (中国标准时间)
+                XEUtils.getWhatWeek('2017-12-20', -1, 5, 1) // Fri Dec 15 2017 00:00:00 GMT+0800 (中国标准时间)
+                XEUtils.getWhatWeek('2017-12-20', 0, 0, 0) // Sun Dec 17 2017 00:00:00 GMT+0800 (中国标准时间)
+                XEUtils.getWhatWeek('2017-12-20', 1, 0, 0) // Sun Dec 24 2017 00:00:00 GMT+0800 (中国标准时间)
                 `
               ]
             },
             {
               name: 'getWhatDay',
-              args: 'date, day [, mode]',
+              args: 'date, offsetDay [, offsetMode]',
               title: '返回前几天或后几天的日期,可以指定当天最初时间(first)、当天的最后时间(last)',
               desc: '',
               params: [],
@@ -2557,7 +2562,7 @@ export default {
             },
             {
               name: 'getDayOfYear',
-              args: 'date [, year]',
+              args: 'date [, offsetYear]',
               title: '返回某个年份的天数,可以指定前几个年或后几个年，默认当前',
               desc: '',
               params: [],
@@ -3269,14 +3274,36 @@ export default {
                   cookies: {
                     path: '/'
                   },
-                  treeOptions: {strict: false, parentKey: 'parentId', key: 'id', children: 'children', data: null},
-                  formatDate: 'yyyy-MM-dd HH:mm:ss.SSS',
-                  formatString: 'yyyy-MM-dd HH:mm:ss',
-                  formatStringMatchs : {
-                    E: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-                    q: [null, '第一季度', '第二季度', '第三季度', '第四季度']
+                  treeOptions: {
+                    strict: false,
+                    parentKey: 'parentId',
+                    key: 'id',
+                    children: 'children',
+                    data: null
                   },
-                  commafys: {spaceNumber: 3, separator: ',', fixed: 0}
+                  parseDateFormat: 'yyyy-MM-dd HH:mm:ss',
+                  parseDateRules : {
+                    q: {
+                      1: '1', // 第一季
+                      2: '2', // 第二季
+                      3: '3', // 第三季
+                      4: '4' // 第四季
+                    },
+                    E: {
+                      0: '7', // 星期天
+                      1: '1', // 星期一
+                      2: '2', // 星期二
+                      3: '3', // 星期三
+                      4: '4', // 星期四
+                      5: '5', // 星期五
+                      6: '6' // 星期六
+                    }
+                  },
+                  commafyOptions: {
+                    spaceNumber: 3,
+                    separator: ',',
+                    fixed: 0
+                  }
                 })
                 `
               ]

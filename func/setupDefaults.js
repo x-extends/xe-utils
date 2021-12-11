@@ -9,7 +9,8 @@ var setupDefaults = {
     key: 'id',
     children: 'children'
   },
-  formatString: 'yyyy-MM-dd HH:mm:ss',
+  parseDateFormat: 'yyyy-MM-dd HH:mm:ss',
+  firstDayOfWeek: 1,
   dateDiffRules: [
     ['yyyy', 31536000000],
     ['MM', 2592000000],

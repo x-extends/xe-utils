@@ -1,14 +1,40 @@
+import { FirstDayOfWeek } from "./getWhatWeek"
+
+export type ToDateStringFormats = {
+  /**
+   * 用于格式化季度  
+   * 例如：[null, '第一季度', '第二季度', '第三季度', '第四季度']
+   */
+  q?: string[] | {
+    1: string
+    2: string
+    3: string
+    4: string
+  } | ((value: string | number, match: string, date: Date) => string);
+  /**
+   * 用于格式化周
+   * 例如：['日', '一', '二', '三', '四', '五', '六']
+   */
+  E?: string[] | {
+    0: string
+    1: string
+    2: string
+    3: string
+    4: string
+    5: string
+    6: string
+  } | ((value: string | number, match: string, date: Date) => string);
+}
+
 export interface ToDateStringOptions {
   /**
-   * 自定义格式化模板
-   * {
-   *   formats: {
-   *     q: ['日', '一', '二', '三', '四', '五', '六'],
-   *     E: function (value, match, date) { return '三' }
-   *   }
-   * }
+   * 默认周视图的起始天
    */
-  formats?: any
+  firstDay?: FirstDayOfWeek;
+  /**
+   * 自定义格式化模板
+   */
+  formats?: ToDateStringFormats
 }
 
 /**

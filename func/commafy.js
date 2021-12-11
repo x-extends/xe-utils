@@ -1,3 +1,5 @@
+var setupDefaults = require('./setupDefaults')
+
 var round = require('./round')
 var ceil = require('./ceil')
 var floor = require('./floor')
@@ -7,6 +9,7 @@ var toValueString = require('./toValueString')
 var toFixed = require('./toFixed')
 
 var toNumberString = require('./toNumberString')
+var assign = require('./assign')
 
 /**
   * 千分位分隔符、小数点
@@ -16,7 +19,7 @@ var toNumberString = require('./toNumberString')
   * @return {String}
  */
 function commafy(num, options) {
-  var opts = options || {}
+  var opts = assign({}, setupDefaults.commafyOptions, options)
   var optDigits = opts.digits
   var isNum = isNumber(num)
   var rest, result, isNegative, intStr, floatStr
