@@ -8,7 +8,7 @@ var getWhatWeek = require('./getWhatWeek')
 
 var helperGetDateTime = require('./helperGetDateTime')
 
-function createGetDateMonthWeek (getStartDate) {
+function helperCreateGetDateWeek (getStartDate) {
   return function (date, firstDay) {
     var viewStartDay = isNumber(firstDay) ? firstDay : setupDefaults.firstDayOfWeek
     var targetDate = getWhatWeek(date, 0, viewStartDay, viewStartDay)
@@ -28,4 +28,4 @@ function createGetDateMonthWeek (getStartDate) {
   }
 }
 
-module.exports = createGetDateMonthWeek
+module.exports = helperCreateGetDateWeek
