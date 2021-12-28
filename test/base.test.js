@@ -2301,14 +2301,32 @@ describe('Base functions', () => {
       XEUtils.set({}, 'a.d[0]', 33)
     ).toEqual({ a: { d: [33] } })
     expect(
+      XEUtils.set({ a: [{ a: 4 }] }, 'a[1]', 33)
+    ).toEqual({ a: [{ a: 4 }, 33] })
+    expect(
+      XEUtils.set({ a: [] }, 'a[0].b', 5)
+    ).toEqual({ a: [{ b: 5 }] })
+    expect(
+      XEUtils.set({ a: [{ a: 4 }] }, 'a[0].b', 5)
+    ).toEqual({ a: [{ a: 4, b: 5 }] })
+    expect(
       XEUtils.set({ a: {} }, 'a.d[0].f.h', 44)
     ).toEqual({ a: { d: [{ f: { h: 44 } }] } })
     expect(
       XEUtils.set({}, 'a.d[0].f.h[0]', 55)
     ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
     expect(
+      XEUtils.set({ a: { d: [{ a: { h: [55] } }] } }, 'a.d[0].f.h[0]', 55)
+    ).toEqual({ a: { d: [{ a: { h: [55] }, f: { h: [55] } }] } })
+    expect(
       XEUtils.set({}, 'a[0][2]', 11)
     ).toEqual({ a: [[undefined, undefined, 11]] })
+    expect(
+      XEUtils.set({ a: [0, 1, 2] }, 'a[0][2]', 11)
+    ).toEqual({ a: [[undefined, undefined, 11], 1, 2] })
+    expect(
+      XEUtils.set({ a: [[22], 1, 2] }, 'a[0][2]', 11)
+    ).toEqual({ a: [[22, undefined, 11], 1, 2] })
     expect(
       XEUtils.set({}, 'a[0][2].b[1]', 22)
     ).toEqual({ a: [[undefined, undefined, { b: [undefined, 22] }]] })

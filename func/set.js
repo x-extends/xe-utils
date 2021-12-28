@@ -19,14 +19,27 @@ function setDeepProps (obj, key, isEnd, nextKey, value) {
       rest = value
     } else {
       var nextMatchs = nextKey ? nextKey.match(sKeyRE) : null
-      rest = nextMatchs && !nextMatchs[1] ? new Array(staticParseInt(nextMatchs[2]) + 1) : {}
+      if (nextMatchs && !nextMatchs[1]) {
+        // 如果下一个属性为数组类型
+        rest = new Array(staticParseInt(nextMatchs[2]) + 1)
+      } else {
+        rest = {}
+      }
     }
     if (currMatchs) {
       if (currMatchs[1]) {
         // 如果为对象中数组
         index = staticParseInt(currMatchs[2])
         if (obj[currMatchs[1]]) {
-          obj[currMatchs[1]][index] = rest
+          if (isEnd) {
+            obj[currMatchs[1]][index] = rest
+          } else {
+            if (obj[currMatchs[1]][index]) {
+              rest = obj[currMatchs[1]][index]
+            } else {
+              obj[currMatchs[1]][index] = rest
+            }
+          }
         } else {
           obj[currMatchs[1]] = new Array(index + 1)
           obj[currMatchs[1]][index] = rest
