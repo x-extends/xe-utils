@@ -2483,6 +2483,15 @@ describe('Base functions', () => {
     expect(
       XEUtils.clone(/\n/)
     ).toEqual(/\n/)
+    expect(
+      XEUtils.clone([11, 22, { bb: 22}])
+    ).toEqual([11, 22, { bb: 22}])
+    expect(
+      XEUtils.clone({ aa: 11, bb: [{ hh: 44 }] })
+    ).toEqual({ aa: 11, bb: [{ hh: 44 }] })
+    expect(
+      XEUtils.clone([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
+    ).toEqual([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
 
     let v1 = {
       num: 11,
@@ -2538,6 +2547,50 @@ describe('Base functions', () => {
     ).toEqual(false)
     expect(
       v1.map === v3.map
+    ).toEqual(false)
+
+    function Func1 () {
+      this.hhh = 22
+    }
+    Func1.prototype.val = 11
+
+    const f1 = new Func1()
+    const f2 = XEUtils.clone(f1, true)
+
+    class Demo1 {
+      constructor () {
+        this.name = 1
+      }
+    }
+    const d1 = new Demo1()
+    const d2 = XEUtils.clone(d1, true)
+    expect(
+      d2 instanceof Demo1
+    ).toEqual(true)
+    expect(d2.name).toEqual(1)
+    expect(
+      d1.name === d2.name
+    ).toEqual(true)
+    expect(
+      d1 === d2
+    ).toEqual(false)
+
+    class Test1 {
+      constructor (name) {
+        this.name = name
+      }
+    }
+    const t1 = new Test1(123)
+    const t2 = XEUtils.clone(t1, true)
+    expect(
+      t2 instanceof Test1
+    ).toEqual(true)
+    expect(t2.name).toEqual(123)
+    expect(
+      t1.name === t2.name
+    ).toEqual(true)
+    expect(
+      t1 === t2
     ).toEqual(false)
   })
 

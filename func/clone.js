@@ -1,10 +1,9 @@
 var objectToString = require('./staticObjectToString')
 
-var isArray = require('./isArray')
 var objectEach = require('./objectEach')
 var arrayEach = require('./arrayEach')
 
-function getCtorObject (val, args) {
+function getCativeCtor (val, args) {
   var Ctor = val.__proto__.constructor
   return args ? new Ctor(args) : new Ctor()
 }
@@ -16,9 +15,8 @@ function handleValueClone (item, isDeep) {
 function copyValue (val, isDeep) {
   if (val) {
     switch(objectToString.call(val)) {
-      case "[object Object]":
-      case "[object Arguments]": {
-        var restObj = getCtorObject(val)
+      case "[object Object]": {
+        var restObj = Object.create(val)
         objectEach(val, function (item, key) {
           restObj[key] = handleValueClone(item, isDeep)
         })
@@ -26,9 +24,10 @@ function copyValue (val, isDeep) {
       }
       case "[object Date]":
       case "[object RegExp]": {
-        return getCtorObject(val, val.valueOf())
+        return getCativeCtor(val, val.valueOf())
       }
-      case "[object Array]": {
+      case "[object Array]":
+      case "[object Arguments]":  {
         var restArr = []
         arrayEach(val, function (item) {
           restArr.push(handleValueClone(item, isDeep))
@@ -36,14 +35,14 @@ function copyValue (val, isDeep) {
         return restArr
       }
       case "[object Set]": {
-        var restSet = getCtorObject(val)
+        var restSet = getCativeCtor(val)
         restSet.forEach(function (item) {
           restSet.add(handleValueClone(item, isDeep))
         })
         return restSet
       }
       case "[object Map]": {
-        var restMap = getCtorObject(val)
+        var restMap = getCativeCtor(val)
         restMap.forEach(function (item, key) {
           restMap.set(handleValueClone(item, isDeep))
         })
