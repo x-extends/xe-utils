@@ -1,6 +1,6 @@
 interface OrderBySortConfs<T, C> {
   field?: string | ((this: C, item: T, index: number, list: T[]) => any) | null;
-  order?: 'order' | 'desc' | null;
+  order?: 'asc' | 'desc' | null;
 }
 
 export type OrderByFieldConfs<T, C> = null | string | any[][] | OrderBySortConfs<T, C> | (string | OrderBySortConfs<T, C>)[] | ((this: C, item: T, index: number, list: T[]) => any);
