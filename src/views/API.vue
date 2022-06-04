@@ -3365,8 +3365,8 @@ export default {
       if (this.filterName) {
         const filterName = this.filterName.toLowerCase()
         const filterRE = new RegExp(filterName, 'gi')
-        const list = window.XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
-        window.XEUtils.eachTree(list, item => {
+        const list = XEUtils.searchTree(this.list, item => (item.name || '').toLowerCase().indexOf(filterName) > -1 || (item.title || '').toLowerCase().indexOf(filterName) > -1, { children: 'children' })
+        XEUtils.eachTree(list, item => {
           item.name = (item.name || '').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
           item.title = (item.title || '').replace(filterRE, match => `<span class="keyword-lighten">${match}</span>`)
         }, { children: 'children' })
@@ -3389,7 +3389,7 @@ export default {
   },
   created () {
     let id = 1
-    window.XEUtils.eachTree(this.apiList, item => {
+    XEUtils.eachTree(this.apiList, item => {
       item.id = id++
     })
     this.selected = this.apiList[0].children[0]
