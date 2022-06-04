@@ -2751,7 +2751,7 @@ export default {
               params: [],
               codes: [
                 `
-                XEUtils.toFixed(123.455, 2) // 123.45
+                XEUtils.toFixed(123.455, 2) // 123.46
                 XEUtils.toFixed(123.452, 2) // 123.45
                 XEUtils.toFixed(123.452, 4) // 123.4520
                 `
