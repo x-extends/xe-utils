@@ -4,7 +4,7 @@
   * @param {Number} start 起始值
   * @param {Number} stop 结束值
   * @param {Number} step 自增值
-  * @return {Object}
+  * @return {Array}
   */
 function range (start, stop, step) {
   var index, len
