@@ -7,21 +7,20 @@
   * @return {Function}
   */
 function throttle (callback, wait, options) {
-  var args, context
   var opts = options || {}
   var runFlag = false
   var timeout = 0
   var optLeading = 'leading' in opts ? opts.leading : true
   var optTrailing = 'trailing' in opts ? opts.trailing : false
-  var runFn = function () {
+  var runFn = function (args, context) {
     runFlag = true
     callback.apply(context, args)
     timeout = setTimeout(endFn, wait)
   }
-  var endFn = function () {
+  var endFn = function (args, context) {
     timeout = 0
     if (!runFlag && optTrailing === true) {
-      runFn()
+      runFn(args, context)
     }
   }
   var cancelFn = function () {
@@ -37,9 +36,9 @@ function throttle (callback, wait, options) {
     runFlag = false
     if (timeout === 0) {
       if (optLeading === true) {
-        runFn()
+        runFn(args, context)
       } else if (optTrailing === true) {
-        timeout = setTimeout(endFn, wait)
+        timeout = setTimeout(() => endFn(args, context), wait)
       }
     }
   }
