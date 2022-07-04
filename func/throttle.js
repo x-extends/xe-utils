@@ -31,8 +31,8 @@ function throttle (callback, wait, options) {
     return rest
   }
   var throttled = function () {
-    args = arguments
-    context = this
+    const args = arguments
+    const context = this
     runFlag = false
     if (timeout === 0) {
       if (optLeading === true) {
