@@ -10,26 +10,31 @@ function debounce (callback, wait, options) {
   var args, context
   var opts = options || {}
   var runFlag = false
+  var isDestroy = false
   var timeout = 0
   var isLeading = typeof options === 'boolean'
   var optLeading = 'leading' in opts ? opts.leading : isLeading
   var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
   var runFn = function () {
-    runFlag = true
-    timeout = 0
-    callback.apply(context, args)
+    if (!isDestroy) {
+      runFlag = true
+      timeout = 0
+      callback.apply(context, args)
+    }
   }
   var endFn = function () {
     if (optLeading === true) {
       timeout = 0
     }
-    if (!runFlag && optTrailing === true) {
+    if (!isDestroy && !runFlag && optTrailing === true) {
       runFn()
     }
   }
   var cancelFn = function () {
     var rest = timeout !== 0
     clearTimeout(timeout)
+    args = null
+    context = null
     timeout = 0
     return rest
   }

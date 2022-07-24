@@ -10,23 +10,28 @@ function throttle (callback, wait, options) {
   var args, context
   var opts = options || {}
   var runFlag = false
+  var isDestroy = false
   var timeout = 0
   var optLeading = 'leading' in opts ? opts.leading : true
   var optTrailing = 'trailing' in opts ? opts.trailing : false
   var runFn = function () {
-    runFlag = true
-    callback.apply(context, args)
-    timeout = setTimeout(endFn, wait)
+    if (!isDestroy) {
+      runFlag = true
+      callback.apply(context, args)
+      timeout = setTimeout(endFn, wait)
+    }
   }
   var endFn = function () {
     timeout = 0
-    if (!runFlag && optTrailing === true) {
+    if (!isDestroy && !runFlag && optTrailing === true) {
       runFn()
     }
   }
   var cancelFn = function () {
     var rest = timeout !== 0
     clearTimeout(timeout)
+    args = null
+    context = null
     runFlag = false
     timeout = 0
     return rest
