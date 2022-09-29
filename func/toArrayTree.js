@@ -37,7 +37,8 @@ function toArrayTree (array, options) {
   var optData = opts.data
   var result = []
   var treeMap = {}
-  var idList, id, treeData, parentId
+  var idsMap = {}
+  var id, treeData, parentId
 
   if (optSortKey) {
     array = orderBy(clone(array), optSortKey)
@@ -46,8 +47,9 @@ function toArrayTree (array, options) {
     }
   }
 
-  idList = map(array, function (item) {
-    return item[optKey]
+  each(array, function (item) {
+    id = item[optKey]
+    idsMap[id] = true
   })
 
   each(array, function (item) {
@@ -72,7 +74,7 @@ function toArrayTree (array, options) {
     }
 
     if (!optStrict || (optStrict && !parentId)) {
-      if (!includes(idList, parentId)) {
+      if (!idsMap[parentId]) {
         result.push(treeData)
       }
     }
