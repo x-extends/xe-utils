@@ -44,7 +44,7 @@ function copyValue (val, isDeep) {
       case "[object Map]": {
         var restMap = getCativeCtor(val)
         restMap.forEach(function (item, key) {
-          restMap.set(handleValueClone(item, isDeep))
+          restMap.set(key, handleValueClone(item, isDeep))
         })
         return restMap
       }
