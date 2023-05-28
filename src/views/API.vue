@@ -1539,13 +1539,20 @@ export default {
             },
             {
               name: 'uniq',
-              args: 'array',
+              args: 'array, [callback, context]',
               title: ' 数组去重',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.uniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
+                XEUtils.uniq([11, 22, 33, 33, 22, 55])
+                // [11, 22, 33, 55]
+
+                XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, bb: 44}], 'a')
+                // [{a: 1, b: 11}, {a: 4, b: 33}, {a: 5, bb: 44}]
+
+                XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}], (item) => item.a)
+                // [{a: 1, b: 11}, {a: 4, b: 33}, {a: 5, bb: 44}]
                 `
               ]
             },
@@ -2636,7 +2643,7 @@ export default {
             },
             {
               name: 'getDateDiff',
-              args: 'startDate, endDate [, rules]',
+              args: 'startDate, endDate',
               title: '返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle',
               desc: '',
               params: [],
@@ -3413,6 +3420,12 @@ export default {
     menuLinkEvent (item) {
       this.selected = item
       this.toView(document.getElementById(item.name))
+      this.$router.replace({
+        name: 'API',
+        query: {
+          to: item.name
+        }
+      })
     },
     toView (elem) {
       if (elem && elem.scrollIntoView) {

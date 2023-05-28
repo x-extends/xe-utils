@@ -48,6 +48,15 @@ describe('Array functions', () => {
     expect(
       XEUtils.uniq([11, 33, 33, a1, a1])
     ).toEqual([11, 33, { a: 11 }])
+    expect(
+      XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, bb: 44}], 'a')
+    ).toEqual([{a: 1, b: 11}, {a: 4, b: 33}, {a: 5, bb: 44}])
+    expect(
+      XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}], 'b')
+    ).toEqual([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}])
+    expect(
+      XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}], (item) => item.b <= 22 ? 1 : 2)
+    ).toEqual([{a: 1, b: 11}, {a: 4, b: 33}])
   })
 
   test('union()', () => {
