@@ -3420,7 +3420,7 @@ export default {
     menuLinkEvent (item) {
       this.selected = item
       this.toView(document.getElementById(item.name))
-      this.$router.replace({
+      this.$router.push({
         name: 'API',
         query: {
           to: item.name
