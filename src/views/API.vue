@@ -2164,62 +2164,62 @@ export default {
                 `
               ]
             },
-            {
-              name: 'filterTree',
-              args: 'obj, iterate[, options, context]',
-              title: '从树结构中根据回调过滤数据',
-              desc: '',
-              params: [
-                ['属性', '描述', '默认值'],
-                ['children', '子节点属性', 'children']
-              ],
-              codes: [
-                `
-                var tree1 = [
-                  { id: 1 },
-                  {
-                    id: 2,
-                    children: [
-                      { id: 20 }
-                    ]
-                  },
-                  {
-                    id: 3,
-                    children: [
-                      { id: 30 }
-                    ]
-                  }
-                ]
-                XEUtils.filterTree(tree1, item => item.id === 1) 
-                // { id: 1 }
+            // {
+            //   name: 'filterTree',
+            //   args: 'obj, iterate[, options, context]',
+            //   title: '从树结构中根据回调过滤数据并生成新的 children 属性',
+            //   desc: '',
+            //   params: [
+            //     ['属性', '描述', '默认值'],
+            //     ['children', '子节点属性', 'children']
+            //   ],
+            //   codes: [
+            //     `
+            //     var tree1 = [
+            //       { id: 1 },
+            //       {
+            //         id: 2,
+            //         children: [
+            //           { id: 20 }
+            //         ]
+            //       },
+            //       {
+            //         id: 3,
+            //         children: [
+            //           { id: 30 }
+            //         ]
+            //       }
+            //     ]
+            //     XEUtils.filterTree(tree1, item => item.id === 1) 
+            //     // { id: 1 }
 
-                var tree2 = [
-                  { id: 1 },
-                  {
-                    id: 2,
-                    childs: [
-                      { id: 20 }
-                    ]
-                  },
-                  {
-                    id: 3,
-                    childs: [
-                      { id: 30 }
-                    ]
-                  }
-                ]
-                XEUtils.filterTree(tree2, item => item.id >= 3, {children: 'childs'}) 
-                // [
-                //   {
-                //     id: 3,
-                //     childs: [
-                //       { id: 30 }
-                //     ]
-                //   }
-                // ]
-                `
-              ]
-            },
+            //     var tree2 = [
+            //       { id: 1 },
+            //       {
+            //         id: 2,
+            //         childs: [
+            //           { id: 20 }
+            //         ]
+            //       },
+            //       {
+            //         id: 3,
+            //         childs: [
+            //           { id: 30 }
+            //         ]
+            //       }
+            //     ]
+            //     XEUtils.filterTree(tree2, item => item.id >= 3, {children: 'childs'}) 
+            //     // [
+            //     //   {
+            //     //     id: 3,
+            //     //     childs: [
+            //     //       { id: 30 }
+            //     //     ]
+            //     //   }
+            //     // ]
+            //     `
+            //   ]
+            // },
             {
               name: 'searchTree',
               args: 'obj, iterate[, options, context]',
@@ -2229,7 +2229,7 @@ export default {
                 ['属性', '描述', '默认值'],
                 ['children', '子节点属性', 'children'],
                 ['mapChildren', '将子节点映射到指定的属性', ''],
-                ['original', '是否源对象地址引用（谨慎！源数据将被破坏）', 'false']
+                ['original', '是否源对象地址引用（如果为true，则创建新的对象）', 'false']
               ],
               codes: [
                 `
