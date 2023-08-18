@@ -2190,9 +2190,8 @@ export default {
             //         ]
             //       }
             //     ]
-            //     XEUtils.filterTree(tree1, item => item.id === 1) 
+            //     XEUtils.filterTree(tree1, item => item.id === 1)
             //     // { id: 1 }
-
             //     var tree2 = [
             //       { id: 1 },
             //       {
@@ -2208,7 +2207,7 @@ export default {
             //         ]
             //       }
             //     ]
-            //     XEUtils.filterTree(tree2, item => item.id >= 3, {children: 'childs'}) 
+            //     XEUtils.filterTree(tree2, item => item.id >= 3, {children: 'childs'})
             //     // [
             //     //   {
             //     //     id: 3,

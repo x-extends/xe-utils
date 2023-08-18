@@ -4,7 +4,7 @@ var map = require('./map')
 var orderBy = require('./orderBy')
 
 var clone = require('./clone')
-var includes = require('./includes')
+var eqNull = require('./eqNull')
 var each = require('./each')
 var remove = require('./remove')
 
@@ -12,7 +12,7 @@ var assign = require('./assign')
 
 function strictTree (array, optChildren) {
   each(array, function (item) {
-    if (item.children && !item.children.length) {
+    if (item[optChildren] && !item[optChildren].length) {
       remove(item, optChildren)
     }
   })
@@ -73,7 +73,7 @@ function toArrayTree (array, options) {
       treeData[optMapChildren] = treeMap[id]
     }
 
-    if (!optStrict || (optStrict && !parentId)) {
+    if (!optStrict || (optStrict && eqNull(parentId))) {
       if (!idsMap[parentId]) {
         result.push(treeData)
       }
