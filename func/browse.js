@@ -28,6 +28,8 @@ function isBrowseType (type) {
 function browse () {
   var $body, isChrome, isEdge
   var isMobile = false
+  var isLocalStorage = false
+  var isSessionStorage = false
   var result = {
     isNode: false,
     isMobile: isMobile,
@@ -46,6 +48,12 @@ function browse () {
         result['-' + core] = !!$body[core + 'MatchesSelector']
       })
     }
+    try {
+      isLocalStorage = isBrowseStorage(staticWindow.localStorage)
+    } catch(e) {}
+    try {
+      isSessionStorage = isBrowseStorage(staticWindow.sessionStorage)
+    } catch(e) {}
     assign(result, {
       edge: isEdge,
       firefox: isBrowseType('Firefox'),
@@ -53,8 +61,8 @@ function browse () {
       safari: !isChrome && !isEdge && isBrowseType('Safari'),
       isMobile: isMobile,
       isPC: !isMobile,
-      isLocalStorage: isBrowseStorage(staticWindow.localStorage),
-      isSessionStorage: isBrowseStorage(staticWindow.sessionStorage)
+      isLocalStorage: isLocalStorage,
+      isSessionStorage: isSessionStorage
     })
   }
   return result
