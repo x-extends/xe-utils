@@ -4,18 +4,19 @@ var arrayEach = require('./arrayEach')
 
 var assign = require('./assign')
 
-function searchTreeItem (parentAllow, parent, obj, iterate, context, path, node, parseChildren, opts) {
-  var paths, nodes, rest, isAllow, hasChild
+function searchTreeItem (matchParent, parent, obj, iterate, context, path, node, parseChildren, opts) {
+  var paths, nodes, rest, isMatch, hasChild
   var rests = []
   var hasOriginal = opts.original
   var sourceData = opts.data
   var mapChildren = opts.mapChildren || parseChildren
+  var isEvery = opts.isEvery
   arrayEach(obj, function (item, index) {
     paths = path.concat(['' + index])
     nodes = node.concat([item])
-    isAllow = parentAllow || iterate.call(context, item, index, obj, paths, parent, nodes)
+    isMatch = (matchParent && !isEvery) || iterate.call(context, item, index, obj, paths, parent, nodes)
     hasChild = parseChildren && item[parseChildren]
-    if (isAllow || hasChild) {
+    if (isMatch || hasChild) {
       if (hasOriginal) {
         rest = item
       } else {
@@ -24,11 +25,11 @@ function searchTreeItem (parentAllow, parent, obj, iterate, context, path, node,
           rest[sourceData] = item
         }
       }
-      rest[mapChildren] = searchTreeItem(isAllow, item, item[parseChildren], iterate, context, paths, nodes, parseChildren, opts)
-      if (isAllow || rest[mapChildren].length) {
+      rest[mapChildren] = searchTreeItem(isMatch, item, item[parseChildren], iterate, context, paths, nodes, parseChildren, opts)
+      if (isMatch || rest[mapChildren].length) {
         rests.push(rest)
       }
-    } else if (isAllow) {
+    } else if (isMatch) {
       rests.push(rest)
     }
   })
