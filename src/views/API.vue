@@ -2226,6 +2226,7 @@ export default {
               desc: '',
               params: [
                 ['属性', '描述', '默认值'],
+                ['isEvery', '是否匹配每一项', 'false'],
                 ['children', '子节点属性', 'children'],
                 ['mapChildren', '将子节点映射到指定的属性', ''],
                 ['original', '是否源对象地址引用（如果为true，则创建新的对象）', 'false']
