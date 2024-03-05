@@ -2501,6 +2501,9 @@ describe('Base functions', () => {
     expect(
       XEUtils.clone([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
     ).toEqual([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
+    expect(
+      XEUtils.clone(Object.create(null))
+    ).toEqual(Object.create(null))
 
     let v1 = {
       num: 11,

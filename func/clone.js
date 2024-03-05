@@ -16,7 +16,7 @@ function copyValue (val, isDeep) {
   if (val) {
     switch(objectToString.call(val)) {
       case "[object Object]": {
-        var restObj = Object.create(val.__proto__ || null)
+        var restObj = Object.create(Object.getPrototypeOf(val))
         objectEach(val, function (item, key) {
           restObj[key] = handleValueClone(item, isDeep)
         })
