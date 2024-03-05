@@ -798,6 +798,9 @@ describe('Number functions', () => {
       XEUtils.toNumberString('123.33')
     ).toEqual('123.33')
     expect(
+      XEUtils.toNumberString('12,345.33')
+    ).toEqual('12,345.33')
+    expect(
       XEUtils.toNumberString(1e-9)
     ).toEqual('0.000000001')
     expect(
@@ -875,6 +878,15 @@ describe('Number functions', () => {
     expect(
       XEUtils.toNumber('12.3')
     ).toEqual(12.3)
+    expect(
+      XEUtils.toNumber('12,345')
+    ).toEqual(12345)
+    expect(
+      XEUtils.toNumber('12,345.33')
+    ).toEqual(12345.33)
+    expect(
+      XEUtils.toNumber('12,345,678.33')
+    ).toEqual(12345678.33)
     expect(
       XEUtils.toNumber('12456456.66663')
     ).toEqual(12456456.66663)

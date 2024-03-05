@@ -4,7 +4,7 @@ var map = require('./map')
 var orderBy = require('./orderBy')
 
 var clone = require('./clone')
-var includes = require('./includes')
+var eqNull = require('./eqNull')
 var each = require('./each')
 var remove = require('./remove')
 
@@ -12,7 +12,7 @@ var assign = require('./assign')
 
 function strictTree (array, optChildren) {
   each(array, function (item) {
-    if (item.children && !item.children.length) {
+    if (item[optChildren] && !item[optChildren].length) {
       remove(item, optChildren)
     }
   })
@@ -37,7 +37,8 @@ function toArrayTree (array, options) {
   var optData = opts.data
   var result = []
   var treeMap = {}
-  var idList, id, treeData, parentId
+  var idsMap = {}
+  var id, treeData, parentId
 
   if (optSortKey) {
     array = orderBy(clone(array), optSortKey)
@@ -46,8 +47,9 @@ function toArrayTree (array, options) {
     }
   }
 
-  idList = map(array, function (item) {
-    return item[optKey]
+  each(array, function (item) {
+    id = item[optKey]
+    idsMap[id] = true
   })
 
   each(array, function (item) {
@@ -71,8 +73,8 @@ function toArrayTree (array, options) {
       treeData[optMapChildren] = treeMap[id]
     }
 
-    if (!optStrict || (optStrict && !parentId)) {
-      if (!includes(idList, parentId)) {
+    if (!optStrict || (optStrict && eqNull(parentId))) {
+      if (!idsMap[parentId]) {
         result.push(treeData)
       }
     }

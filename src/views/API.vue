@@ -1539,13 +1539,20 @@ export default {
             },
             {
               name: 'uniq',
-              args: 'array',
+              args: 'array, [callback, context]',
               title: ' 数组去重',
               desc: '',
               params: [],
               codes: [
                 `
-                XEUtils.uniq([11, 22, 33, 33, 22, 55]) // [11, 22, 33, 55]
+                XEUtils.uniq([11, 22, 33, 33, 22, 55])
+                // [11, 22, 33, 55]
+
+                XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, bb: 44}], 'a')
+                // [{a: 1, b: 11}, {a: 4, b: 33}, {a: 5, bb: 44}]
+
+                XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}], (item) => item.a)
+                // [{a: 1, b: 11}, {a: 4, b: 33}, {a: 5, bb: 44}]
                 `
               ]
             },
@@ -2157,62 +2164,61 @@ export default {
                 `
               ]
             },
-            {
-              name: 'filterTree',
-              args: 'obj, iterate[, options, context]',
-              title: '从树结构中根据回调过滤数据',
-              desc: '',
-              params: [
-                ['属性', '描述', '默认值'],
-                ['children', '子节点属性', 'children']
-              ],
-              codes: [
-                `
-                var tree1 = [
-                  { id: 1 },
-                  {
-                    id: 2,
-                    children: [
-                      { id: 20 }
-                    ]
-                  },
-                  {
-                    id: 3,
-                    children: [
-                      { id: 30 }
-                    ]
-                  }
-                ]
-                XEUtils.filterTree(tree1, item => item.id === 1) 
-                // { id: 1 }
-
-                var tree2 = [
-                  { id: 1 },
-                  {
-                    id: 2,
-                    childs: [
-                      { id: 20 }
-                    ]
-                  },
-                  {
-                    id: 3,
-                    childs: [
-                      { id: 30 }
-                    ]
-                  }
-                ]
-                XEUtils.filterTree(tree2, item => item.id >= 3, {children: 'childs'}) 
-                // [
-                //   {
-                //     id: 3,
-                //     childs: [
-                //       { id: 30 }
-                //     ]
-                //   }
-                // ]
-                `
-              ]
-            },
+            // {
+            //   name: 'filterTree',
+            //   args: 'obj, iterate[, options, context]',
+            //   title: '从树结构中根据回调过滤数据并生成新的 children 属性',
+            //   desc: '',
+            //   params: [
+            //     ['属性', '描述', '默认值'],
+            //     ['children', '子节点属性', 'children']
+            //   ],
+            //   codes: [
+            //     `
+            //     var tree1 = [
+            //       { id: 1 },
+            //       {
+            //         id: 2,
+            //         children: [
+            //           { id: 20 }
+            //         ]
+            //       },
+            //       {
+            //         id: 3,
+            //         children: [
+            //           { id: 30 }
+            //         ]
+            //       }
+            //     ]
+            //     XEUtils.filterTree(tree1, item => item.id === 1)
+            //     // { id: 1 }
+            //     var tree2 = [
+            //       { id: 1 },
+            //       {
+            //         id: 2,
+            //         childs: [
+            //           { id: 20 }
+            //         ]
+            //       },
+            //       {
+            //         id: 3,
+            //         childs: [
+            //           { id: 30 }
+            //         ]
+            //       }
+            //     ]
+            //     XEUtils.filterTree(tree2, item => item.id >= 3, {children: 'childs'})
+            //     // [
+            //     //   {
+            //     //     id: 3,
+            //     //     childs: [
+            //     //       { id: 30 }
+            //     //     ]
+            //     //   }
+            //     // ]
+            //     `
+            //   ]
+            // },
             {
               name: 'searchTree',
               args: 'obj, iterate[, options, context]',
@@ -2220,9 +2226,10 @@ export default {
               desc: '',
               params: [
                 ['属性', '描述', '默认值'],
+                ['isEvery', '是否匹配每一项', 'false'],
                 ['children', '子节点属性', 'children'],
                 ['mapChildren', '将子节点映射到指定的属性', ''],
-                ['original', '是否源对象地址引用（谨慎！源数据将被破坏）', 'false']
+                ['original', '是否源对象地址引用（如果为true，则创建新的对象）', 'false']
               ],
               codes: [
                 `
@@ -2636,7 +2643,7 @@ export default {
             },
             {
               name: 'getDateDiff',
-              args: 'startDate, endDate [, rules]',
+              args: 'startDate, endDate',
               title: '返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle',
               desc: '',
               params: [],
@@ -3413,6 +3420,12 @@ export default {
     menuLinkEvent (item) {
       this.selected = item
       this.toView(document.getElementById(item.name))
+      this.$router.push({
+        name: 'API',
+        query: {
+          to: item.name
+        }
+      })
     },
     toView (elem) {
       if (elem && elem.scrollIntoView) {

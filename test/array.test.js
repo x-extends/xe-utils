@@ -48,6 +48,15 @@ describe('Array functions', () => {
     expect(
       XEUtils.uniq([11, 33, 33, a1, a1])
     ).toEqual([11, 33, { a: 11 }])
+    expect(
+      XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, bb: 44}], 'a')
+    ).toEqual([{a: 1, b: 11}, {a: 4, b: 33}, {a: 5, bb: 44}])
+    expect(
+      XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}], 'b')
+    ).toEqual([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}])
+    expect(
+      XEUtils.uniq([{a: 1, b: 11}, {a: 1, b: 22}, {a: 4, b: 33}, {a: 5, b: 44}], (item) => item.b <= 22 ? 1 : 2)
+    ).toEqual([{a: 1, b: 11}, {a: 4, b: 33}])
   })
 
   test('union()', () => {
@@ -1892,6 +1901,9 @@ describe('Array functions', () => {
       XEUtils.searchTree([{ id: 1 }, { id: 2, childs: [{ id: 0 }] }, { id: 3, childs: [{ id: 30 }] }], item => item.id >= 2, { children: 'childs' })
     ).toEqual([{ id: 2, childs: [{ id: 0, childs: [] }] }, { id: 3, childs: [{ id: 30, childs: [] }] }])
     expect(
+      XEUtils.searchTree([{ id: 1 }, { id: 2, childs: [{ id: 0 }] }, { id: 3, childs: [{ id: 30 }] }], item => item.id >= 2, { children: 'childs', isEvery: true })
+    ).toEqual([{ id: 2, childs: [] }, { id: 3, childs: [{ id: 30, childs: [] }] }])
+    expect(
       XEUtils.searchTree([
         { id: 1 },
         { id: 2, childs: [{ id: 0 }] },
@@ -1899,6 +1911,16 @@ describe('Array functions', () => {
       ], item => item.id >= 2, { children: 'childs', data: '_item' })
     ).toEqual([
       { id: 2, childs: [{ id: 0, childs: [], _item: { id: 0 } }], _item: { id: 2, childs: [{ id: 0 }] } },
+      { id: 3, childs: [{ id: 30, childs: [], _item: { id: 30 } }], _item: { id: 3, childs: [{ id: 30 }] } }
+    ])
+    expect(
+      XEUtils.searchTree([
+        { id: 1 },
+        { id: 2, childs: [{ id: 0 }] },
+        { id: 3, childs: [{ id: 30 }] }
+      ], item => item.id >= 2, { children: 'childs', data: '_item', isEvery: true })
+    ).toEqual([
+      { id: 2, childs: [], _item: { id: 2, childs: [{ id: 0 }] } },
       { id: 3, childs: [{ id: 30, childs: [], _item: { id: 30 } }], _item: { id: 3, childs: [{ id: 30 }] } }
     ])
   })

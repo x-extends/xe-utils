@@ -1,5 +1,4 @@
 import { CommafyOptions } from "./commafy"
-import { GetDateDiffRules } from "./getDateDiff"
 import { FirstDayOfWeek } from "./getWhatWeek"
 import { ToDateStringFormats } from "./toDateString"
 
@@ -31,11 +30,6 @@ export interface SetupDefaults {
    * 用于 getWhatWeek()、getYearWeek()、toDateString()
    */
   firstDayOfWeek?: FirstDayOfWeek;
-  /**
-   * 默认日期差异规则配置  
-   * 用于 getDateDiff()
-   */
-  dateDiffRules?: GetDateDiffRules;
   /**
    * 分隔函数配置  
    * 用于 commafy()
