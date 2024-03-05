@@ -2481,6 +2481,15 @@ describe('Base functions', () => {
       XEUtils.clone(-1)
     ).toEqual(-1)
     expect(
+      XEUtils.clone(Object.create(null))
+    ).toEqual(Object.create(null))
+    expect(
+      XEUtils.clone(Object.create({}))
+    ).toEqual(Object.create({}))
+    expect(
+      XEUtils.clone(Object.create([]))
+    ).toEqual(Object.create([]))
+    expect(
       XEUtils.clone(/\n/)
     ).toEqual(/\n/)
     expect(
