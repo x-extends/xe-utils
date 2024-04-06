@@ -7,40 +7,49 @@
   * @return {Function}
   */
 function throttle (callback, wait, options) {
-  var args, context
+  var args = null
+  var context = null
   var opts = options || {}
   var runFlag = false
-  var isDestroy = false
-  var timeout = 0
+  var timeout = null
   var optLeading = 'leading' in opts ? opts.leading : true
   var optTrailing = 'trailing' in opts ? opts.trailing : false
-  var runFn = function () {
-    if (!isDestroy) {
-      runFlag = true
-      callback.apply(context, args)
-      timeout = setTimeout(endFn, wait)
-    }
+
+  var gcFn = function () {
+    args = null
+    context = null
   }
+
+  var runFn = function () {
+    runFlag = true
+    callback.apply(context, args)
+    timeout = setTimeout(endFn, wait)
+    gcFn()
+  }
+  
   var endFn = function () {
-    timeout = 0
-    if (!isDestroy && !runFlag && optTrailing === true) {
+    timeout = null
+    if (!runFlag && optTrailing === true) {
       runFn()
     }
   }
+
   var cancelFn = function () {
-    var rest = timeout !== 0
-    clearTimeout(timeout)
-    args = null
-    context = null
+    var rest = timeout !== null
+    if (rest) {
+      clearTimeout(timeout)
+    }
+    gcFn()
+    timeout = null
     runFlag = false
-    timeout = 0
     return rest
   }
+
   var throttled = function () {
     args = arguments
     context = this
     runFlag = false
-    if (timeout === 0) {
+    if (timeout === null) {
       if (optLeading === true) {
         runFn()
       } else if (optTrailing === true) {
@@ -48,7 +57,9 @@ function throttle (callback, wait, options) {
       }
     }
   }
+
   throttled.cancel = cancelFn
+
   return throttled
 }
 

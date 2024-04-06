@@ -7,42 +7,51 @@
   * @return {Function}
   */
 function debounce (callback, wait, options) {
-  var args, context
+  var args = null
+  var context = null
   var opts = options || {}
   var runFlag = false
-  var isDestroy = false
-  var timeout = 0
+  var timeout = null
   var isLeading = typeof options === 'boolean'
   var optLeading = 'leading' in opts ? opts.leading : isLeading
   var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
-  var runFn = function () {
-    if (!isDestroy) {
-      runFlag = true
-      timeout = 0
-      callback.apply(context, args)
-    }
+
+  var gcFn = function () {
+    args = null
+    context = null
   }
+
+  var runFn = function () {
+    runFlag = true
+    callback.apply(context, args)
+    gcFn()
+  }
+
   var endFn = function () {
     if (optLeading === true) {
-      timeout = 0
+      timeout = null
     }
-    if (!isDestroy && !runFlag && optTrailing === true) {
+    if (!runFlag && optTrailing === true) {
       runFn()
     }
   }
+
   var cancelFn = function () {
-    var rest = timeout !== 0
-    clearTimeout(timeout)
-    args = null
-    context = null
-    timeout = 0
+    var rest = timeout !== null
+    if (rest) {
+      clearTimeout(timeout)
+    }
+    gcFn()
+    timeout = null
+    runFlag = false
     return rest
   }
+
   var debounced = function () {
     runFlag = false
     args = arguments
     context = this
-    if (timeout === 0) {
+    if (timeout === null) {
       if (optLeading === true) {
         runFn()
       }
@@ -51,7 +60,9 @@ function debounce (callback, wait, options) {
     }
     timeout = setTimeout(endFn, wait)
   }
+
   debounced.cancel = cancelFn
+
   return debounced
 }
 
