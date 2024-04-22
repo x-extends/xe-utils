@@ -7,7 +7,7 @@ var staticWindow = require('./staticWindow')
   * @return {Boolean}
   */
 function isWindow (obj) {
-  return staticWindow && !!(obj && obj === obj.window)
+  return !!(staticWindow && !!(obj && obj === obj.window))
 }
 
 module.exports = isWindow
