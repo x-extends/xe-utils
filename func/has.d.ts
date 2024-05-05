@@ -3,7 +3,7 @@
  * @param obj 对象
  * @param property 键、路径
  */
-export declare function has(obj: any, property: string | string[]): boolean;
+export declare function has(obj: any, property: undefined | null | number | number[] | string | string[]): boolean;
 
 declare module './ctor' {
   interface XEUtilsMethods {

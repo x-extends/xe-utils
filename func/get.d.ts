@@ -4,8 +4,8 @@
  * @param property 键、路径
  * @param defaultValue 默认值
  */
-export declare function get<T extends object, K extends keyof T>(obj: T, property: string | string[], defaultValue?: any): T[K];
-export declare function get(obj: any, property: string | string[], defaultValue?: any): any;
+export declare function get<T extends object, K extends keyof T>(obj: T, property: undefined | null | number | number[] | string | string[], defaultValue?: any): T[K];
+export declare function get(obj: any, property: undefined | null | number | number[] | string | string[], defaultValue?: any): any;
 
 declare module './ctor' {
   interface XEUtilsMethods {
