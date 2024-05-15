@@ -118,6 +118,12 @@ XEUtils.mixin(
 )
 ```
 
+## Contributors
+
+Thank you to everyone who contributed to this project.
+
+[![xe-utils](https://contrib.rocks/image?repo=x-extends/xe-utils)](https://github.com/x-extends/xe-utils/graphs/contributors)
+
 ## License
 
 [MIT](LICENSE) © 2017-present, Xu Liangzhan
