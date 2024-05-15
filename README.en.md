@@ -1,6 +1,6 @@
 # xe-utils
 
-简体中文 | [English](README.en.md)  
+[简体中文](README.md) | English  
 
 [![gitee star](https://gitee.com/x-extends/xe-utils/badge/star.svg?theme=dark)](https://gitee.com/x-extends/xe-utils/stargazers)
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.com/package/xe-utils)
@@ -9,7 +9,7 @@
 [![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.umd.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/dist/xe-utils.umd.min.js)
 [![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
-JavaScript 函数库、工具类
+JavaScript libraries, utility
 
 ## Browser Support
 
@@ -19,7 +19,7 @@ JavaScript 函数库、工具类
 
 ## Docs
 
-[To view the document](https://x-extends.github.io/xe-utils/) [查看文档](https://vxetable.cn/xe-utils)
+[To view the document](https://x-extends.github.io/xe-utils/) [View document](https://vxetable.cn/xe-utils)
 
 ## Installing
 
@@ -47,13 +47,13 @@ import _XEUtils_ from 'xe-utils'
 XEUtils.toDateString(Date.now())
 // 2018-01-01 10:30:28
 XEUtils.toStringDate('2018-01-01 10:30:00')
-// Mon Jan 01 2018 10:30:00 GMT+0800 (中国标准时间)
+// Mon Jan 01 2018 10:30:00 GMT+0800
 ```
 
 ## Import on demand
 
-这样按需引入方法，可以使体积达到最小  
-单个导入，包的大小 gzip >≈ 60B+，按需导入
+In this way, the volume can be minimized by introducing methods as needed.  
+Import a single package, the size of the package gzip >≈ 60B+, import on demand.  
 
 ```javascript
 import each from 'xe-utils/each'
@@ -84,7 +84,7 @@ XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
 // 2018-01-01 10:30:28
 ```
 
-按功能导入所有方法
+Import all methods by function.
 
 ```javascript
 import XEUtils from 'xe-utils/ctor'
