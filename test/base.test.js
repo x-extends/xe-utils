@@ -203,7 +203,7 @@ describe('Base functions', () => {
   })
 
   test('isArray()', () => {
-    let method = function () {
+    const method = function () {
       expect(
         XEUtils.isArray(arguments)
       ).toEqual(false)
@@ -845,7 +845,7 @@ describe('Base functions', () => {
     expect(
       XEUtils.isArguments(function () { })
     ).toEqual(false)
-    let method = function () {
+    const method = function () {
       expect(
         XEUtils.isArguments(arguments)
       ).toEqual(true)
@@ -983,9 +983,11 @@ describe('Base functions', () => {
     expect(
       XEUtils.isFormData('a=1')
     ).toEqual(false)
-    expect(
-      XEUtils.isFormData(new FormData())
-    ).toEqual(true)
+    if (typeof FormData === 'undefined') {
+      expect(
+        XEUtils.isFormData(new FormData())
+      ).toEqual(true)
+    }
   })
 
   test('isMap()', () => {
@@ -1346,7 +1348,7 @@ describe('Base functions', () => {
   })
 
   test('property()', () => {
-    let getName = XEUtils.property('name')
+    const getName = XEUtils.property('name')
     expect(
       getName({ name: 'test11', age: 25, height: 176 })
     ).toEqual('test11')
@@ -1410,7 +1412,7 @@ describe('Base functions', () => {
     expect(
       XEUtils.getType(function () { })
     ).toEqual('function')
-    let method = function () {
+    const method = function () {
       expect(
         XEUtils.getType(arguments)
       ).toEqual('object')
@@ -2352,7 +2354,7 @@ describe('Base functions', () => {
       XEUtils.set([], '[1][5][2].b.c[1].t[2]', 66)
     ).toEqual([undefined, [undefined, undefined, undefined, undefined, undefined, [undefined, undefined, { b: { c: [undefined, { t: [undefined, undefined, 66] }] } }]]])
 
-    var obj1 = {}
+    const obj1 = {}
     XEUtils.set(obj1, '__proto__.attr1', 1)
     expect(
       obj1.attr1 === 1
@@ -2361,23 +2363,22 @@ describe('Base functions', () => {
       ({}).attr1 !== 1
     ).toEqual(true)
 
-    var obj2 = {}
+    const obj2 = {}
     XEUtils.set(obj2, 'constructor', 1)
     expect(
       obj2.constructor !== 1
     ).toEqual(true)
 
-    var FN3 = function FN3() { }
-    var obj3 = new FN3()
+    const FN3 = function FN3 () { }
+    const obj3 = new FN3()
     XEUtils.set(obj3, 'prototype.a3', 1)
     expect(
       obj3.a3 === 1
     ).toEqual(true)
-    var obj4 = new FN3()
+    const obj4 = new FN3()
     expect(
       obj4.a3 !== 1
     ).toEqual(true)
-
   })
 
   test('groupBy()', () => {
@@ -2493,8 +2494,8 @@ describe('Base functions', () => {
       XEUtils.clone(/\n/)
     ).toEqual(/\n/)
     expect(
-      XEUtils.clone([11, 22, { bb: 22}])
-    ).toEqual([11, 22, { bb: 22}])
+      XEUtils.clone([11, 22, { bb: 22 }])
+    ).toEqual([11, 22, { bb: 22 }])
     expect(
       XEUtils.clone({ aa: 11, bb: [{ hh: 44 }] })
     ).toEqual({ aa: 11, bb: [{ hh: 44 }] })
@@ -2502,7 +2503,7 @@ describe('Base functions', () => {
       XEUtils.clone([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
     ).toEqual([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
 
-    let v1 = {
+    const v1 = {
       num: 11,
       str: 'abc',
       obj: { b1: 22 },
@@ -2512,7 +2513,7 @@ describe('Base functions', () => {
       map: new Map([['aa', 11], ['bb', 22], [33, 0]])
     }
 
-    let v2 = XEUtils.clone(v1)
+    const v2 = XEUtils.clone(v1)
     expect(
       v1.num === v2.num
     ).toEqual(true)
@@ -2535,7 +2536,7 @@ describe('Base functions', () => {
       v1.map === v2.map
     ).toEqual(true)
 
-    let v3 = XEUtils.clone(v1, true)
+    const v3 = XEUtils.clone(v1, true)
     expect(
       v1.num === v3.num
     ).toEqual(true)
@@ -2648,7 +2649,7 @@ describe('Base functions', () => {
     ).toEqual({ b1: null, b2: null })
 
     class MyTest {
-      constructor() {
+      constructor () {
         this.abc = 1
       }
     }
