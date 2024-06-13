@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "3.5.26",
+  "version": "3.5.27",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
   "unpkg": "dist/xe-utils.umd.min.js",
