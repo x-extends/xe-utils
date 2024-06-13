@@ -4,7 +4,6 @@
 
 [![gitee star](https://gitee.com/x-extends/xe-utils/badge/star.svg?theme=dark)](https://gitee.com/x-extends/xe-utils/stargazers)
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.com/package/xe-utils)
-[![npm build](https://app.travis-ci.com/x-extends/vxe-utils.svg?branch=master)](https://app.travis-ci.com/x-extends/xe-utils)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
 [![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
