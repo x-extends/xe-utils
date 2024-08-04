@@ -3,7 +3,7 @@
  * @param array 数组
  * @param size 每组大小
  */
-export declare function chunk<T>(array: T[], size: number): T[][];
+export declare function chunk<T>(array: T[] | undefined, size: number): T[][];
 
 declare module './ctor' {
   interface XEUtilsMethods {

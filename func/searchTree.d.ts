@@ -1,5 +1,5 @@
-
 export interface SearchTreeOptions {
+  isEvery?: boolean
   children?: string;
   mapChildren?: string;
   original?: boolean;
