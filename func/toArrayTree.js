@@ -64,10 +64,16 @@ function toArrayTree (array, options) {
 
     parentId = item[optParentKey]
     treeMap[id] = treeMap[id] || []
-    treeMap[parentId] = treeMap[parentId] || []
-    treeMap[parentId].push(treeData)
     treeData[optKey] = id
     treeData[optParentKey] = parentId
+
+    if (id === parentId) {
+      parentId = null
+      console.log('Fix infinite Loop.', item)
+    }
+
+    treeMap[parentId] = treeMap[parentId] || []
+    treeMap[parentId].push(treeData)
     treeData[optChildren] = treeMap[id]
     if (optMapChildren) {
       treeData[optMapChildren] = treeMap[id]
