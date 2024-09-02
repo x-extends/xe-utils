@@ -1,47 +1,61 @@
 <template>
   <div class="page-container">
-    <div class="aside">
-      <div class="header">
-        <h1 class="title">
-          <a href="https://github.com/xuliangzhan/xe-utils">xe-utils</a>
-        </h1>
-        <div class="search-wrapper">
-          <input class="search-input" v-model="filterName" type="search" placeholder="API 搜索">
-        </div>
+    <div class="page-header">
+      <div class="header-left">
+        <a class="logo" href="/">
+          <img src="/logo.png">
+          <span class="title">XE Utils</span>
+        </a>
+        <a :href='`https://gitee.com/x-extends/xe-utils/stargazers`'>
+          <img :src='`https://gitee.com/x-extends/xe-utils/badge/star.svg?theme=gvp`' alt='star'>
+        </a>
+        <a :href="`http://npm-stat.com/charts.html?package=xe-utils`">
+          <img :src="`https://img.shields.io/npm/dm/xe-utils.svg`">
+        </a>
+        <a :href="`https://github.com/x-extends/xe-utils/stargazers`">
+          <img :src="`https://img.shields.io/github/stars/x-extends/xe-utils.svg`">
+        </a>
       </div>
-      <ul>
-        <li class="menu-item" v-for="group in apiList" :key="group.id">
-          <a class="menu-link" @click="group.expand = !group.expand">{{ group.label }}</a>
-          <ul class="child-menu" v-show="group.expand">
-            <li class="menu-item" v-for="item in group.children" :key="item.id" :class="{active: selected === item}">
-              <a class="menu-link" @click="menuLinkEvent(item)" v-html="item.name"></a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+      <div class="header-middle"></div>
+      <div class="header-right">
+      </div>
     </div>
-    <div class="body">
-      <div v-for="group in apiList" :key="group.id">
-        <div class="api-item" v-for="item in group.children" :key="item.id">
-          <p class="title" :id="item.name" v-html="`${item.name } (${ item.args }) ${ item.title}`"></p>
-          <p class="desc" v-html="item.desc"></p>
-          <table class="param-table" border="0" v-if="item.params && item.params.length">
-            <tr v-for="(rows, pIndex) in item.params" :key="pIndex">
-              <td v-for="(val, vIndex) in rows" :key="vIndex">{{ val }}</td>
-            </tr>
-          </table>
-          <pre>
-            <code class="javascript" v-for="(code,cIndex) in item.codes" :key="cIndex">{{ code }}</code>
-          </pre>
+    <div class="page-body">
+      <div class="aside">
+        <div class="header">
+          <div class="search-wrapper">
+            <input class="search-input" v-model="filterName" type="search" placeholder="API 搜索">
+          </div>
+        </div>
+        <ul>
+          <li class="menu-item" v-for="group in apiList" :key="group.id">
+            <a class="menu-link" @click="group.expand = !group.expand">{{ group.label }}</a>
+            <ul class="child-menu" v-show="group.expand">
+              <li class="menu-item" v-for="item in group.children" :key="item.id" :class="{active: selected === item}">
+                <a class="menu-link" @click="menuLinkEvent(item)" v-html="item.name"></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="body">
+        <div class="body-inner">
+          <div v-for="group in apiList" :key="group.id">
+            <div class="api-item" v-for="item in group.children" :key="item.id">
+              <p class="title" :id="item.name" v-html="`${item.name } (${ item.args }) ${ item.title}`"></p>
+              <p class="desc" v-html="item.desc"></p>
+              <table class="param-table" border="0" v-if="item.params && item.params.length">
+                <tr v-for="(rows, pIndex) in item.params" :key="pIndex">
+                  <td v-for="(val, vIndex) in rows" :key="vIndex">{{ val }}</td>
+                </tr>
+              </table>
+              <pre>
+                <code class="javascript" v-for="(code,cIndex) in item.codes" :key="cIndex">{{ code }}</code>
+              </pre>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- <div>
-        <div id="donation" class="donation-item">
-          <p>如果您觉得我们的开源软件对你有所帮助，请扫下方二维码打赏我们一杯咖啡☕</p>
-          <p>由于维护一个开源项目需要花费非常大的精力与时间，如果您正在使用该项目，您的捐赠会帮助该项目能持续发展下去</p>
-          <img src="static/donation/pay.jpg">
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -55,6 +69,37 @@ export default {
       selected: null,
       filterName: '',
       list: [
+        {
+          label: '开发指南',
+          value: 'insert',
+          expand: true,
+          children: [
+            {
+              name: 'NPM 安装',
+              args: '',
+              title: '使用 npm 的方式安装',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                npm install xe-utils
+                `
+              ]
+            },
+            {
+              name: 'CDN 安装',
+              args: '',
+              title: '可以通过第三方开放的 CDN 来引用',
+              desc: '',
+              params: [],
+              codes: [
+                `
+                ${decodeURIComponent('%3Cscript%20src%3D%22https%3A%2F%2Fcdn.jsdelivr.net%2Fnpm%2Fxe-utils%22%3E%3C%2Fscript%3E')}
+                `
+              ]
+            }
+          ]
+        },
         {
           label: 'Base',
           value: 'base',

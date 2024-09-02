@@ -8,6 +8,18 @@ export default new Router({
   mode: 'hash',
   routes: [
     {
+      path: '*',
+      redirect: {
+        name: 'API'
+      }
+    },
+    {
+      path: '/',
+      redirect: {
+        name: 'API'
+      }
+    },
+    {
       path: '/',
       name: 'API',
       component: API
