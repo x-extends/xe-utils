@@ -18,7 +18,7 @@ JavaScript libraries, utility
 
 ## Docs
 
-[To view the document](https://x-extends.github.io/xe-utils/) [View document](https://vxetable.cn/xe-utils)
+[To view the document](https://vxeui.com/xe-utils/)
 
 ## Installing
 
