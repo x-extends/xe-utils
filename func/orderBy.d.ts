@@ -11,7 +11,7 @@ export type OrderByFieldConfs<T, C> = null | string | any[][] | OrderBySortConfs
  * @param fieldConfs 排序规则
  * @param context 上下文
  */
-export declare function orderBy<T, C>(array: T[], fieldConfs: OrderByFieldConfs<T, C>, context?: C): T[];
+export declare function orderBy<T, C = any>(array: T[], fieldConfs: OrderByFieldConfs<T, C>, context?: C): T[];
 
 declare module './ctor' {
   interface XEUtilsMethods {

@@ -4,7 +4,7 @@
  * @param callback 回调
  * @param context 上下文
  */
-export declare function after<C>(count: number, callback: (this: C, ...args: any[]) => any, context?: C): (this: any,...args: any[]) => any;
+export declare function after<C = any>(count: number, callback: (this: C, ...args: any[]) => any, context?: C): (this: any,...args: any[]) => any;
 
 declare module './ctor' {
   interface XEUtilsMethods {

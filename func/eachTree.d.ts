@@ -9,9 +9,9 @@ export interface EachTreeOptions {
  * @param {Object} options {children: 'children'}
  * @param {Object} context 上下文
  */
-export declare function eachTree<T, C>(list: T[], iterate: (this: C, item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => void, options?: EachTreeOptions, context?: C): void;
-export declare function eachTree<C>(list: any[], iterate: (this: C, item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]) => void, options?: EachTreeOptions, context?: C): void;
-export declare function eachTree<C>(list: any, iterate: (this: C, item: any, index: number, items: any, path: string[], parent: any, nodes: any) => void, options?: EachTreeOptions, context?: C): void;
+export declare function eachTree<T, C = any>(list: T[], iterate: (this: C, item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => void, options?: EachTreeOptions, context?: C): void;
+export declare function eachTree<C = any>(list: any[], iterate: (this: C, item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]) => void, options?: EachTreeOptions, context?: C): void;
+export declare function eachTree<C = any>(list: any, iterate: (this: C, item: any, index: number, items: any, path: string[], parent: any, nodes: any) => void, options?: EachTreeOptions, context?: C): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {

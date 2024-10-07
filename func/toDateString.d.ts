@@ -1,8 +1,8 @@
-import { FirstDayOfWeek } from "./getWhatWeek"
+import { FirstDayOfWeek } from './getWhatWeek'
 
 export type ToDateStringFormats = {
   /**
-   * 用于格式化季度  
+   * 用于格式化季度
    * 例如：[null, '第一季度', '第二季度', '第三季度', '第四季度']
    */
   q?: string[] | {

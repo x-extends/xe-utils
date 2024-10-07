@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function map<T, U, C>(list: T[], iterate: (this: C, item: T, index: number, list: T[]) => U, context?: C): U[];
+export declare function map<T, U, C = any>(list: T[], iterate: (this: C, item: T, index: number, list: T[]) => U, context?: C): U[];
 
 declare module './ctor' {
   interface XEUtilsMethods {

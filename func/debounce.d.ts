@@ -15,7 +15,7 @@ export interface DebounceOptions {
  * @param wait 毫秒
  * @param options 可选参数
  */
-export declare function debounce<C>(callback: (this: C, ...args: any[]) => any, wait: number, options?: DebounceOptions): (this: C, ...args: any[]) => any;
+export declare function debounce<C = any>(callback: (this: C, ...args: any[]) => any, wait: number, options?: DebounceOptions): (this: C, ...args: any[]) => any;
 
 declare module './ctor' {
   interface XEUtilsMethods {

@@ -10,9 +10,9 @@ export interface MapTreeOptions {
  * @param {Object} options {children: 'children', mapChildren: 'children}
  * @param {Object} context 上下文
  */
-export declare function mapTree<T, U, C>(array: T[], iterate: (this: C, item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => U, options?: MapTreeOptions, context?: C): U[];
-export declare function mapTree<U, C>(array: any[], iterate: (this: C, item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]) => U, options?: MapTreeOptions, context?: C): U[];
-export declare function mapTree<U, C>(array: any, iterate: (this: C, item: any, index: number, items: any, path: string[], parent: any, nodes: any) => U, options?: MapTreeOptions, context?: C): U[];
+export declare function mapTree<T, U, C = any>(array: T[], iterate: (this: C, item: T, index: number, items: T[], path: string[], parent: T, nodes: T[]) => U, options?: MapTreeOptions, context?: C): U[];
+export declare function mapTree<U, C = any>(array: any[], iterate: (this: C, item: any, index: number, items: any[], path: string[], parent: any, nodes: any[]) => U, options?: MapTreeOptions, context?: C): U[];
+export declare function mapTree<U, C = any>(array: any, iterate: (this: C, item: any, index: number, items: any, path: string[], parent: any, nodes: any) => U, options?: MapTreeOptions, context?: C): U[];
 
 declare module './ctor' {
   interface XEUtilsMethods {

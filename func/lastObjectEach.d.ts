@@ -4,8 +4,8 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function lastObjectEach<T, C>(obj: T, iterate: (this: C, item: any, key: string, obj: T) => void, context?: C): void;
-export declare function lastObjectEach<C>(obj: any, iterate: (this: C, item: any, key: string, obj: any) => void, context?: C): void;
+export declare function lastObjectEach<T, C = any>(obj: T, iterate: (this: C, item: any, key: string, obj: T) => void, context?: C): void;
+export declare function lastObjectEach<C = any>(obj: any, iterate: (this: C, item: any, key: string, obj: any) => void, context?: C): void;
 
 declare module './ctor' {
   interface XEUtilsMethods {

@@ -15,7 +15,7 @@ export interface ThrottleOptions {
  * @param wait 毫秒
  * @param options 可选参数
  */
-export declare function throttle<C>(callback: (this: C, ...args: any[]) => any, wait: number, options?: ThrottleOptions): (this: C, ...args: any[]) => any;
+export declare function throttle<C = any>(callback: (this: C, ...args: any[]) => any, wait: number, options?: ThrottleOptions): (this: C, ...args: any[]) => any;
 
 declare module './ctor' {
   interface XEUtilsMethods {
