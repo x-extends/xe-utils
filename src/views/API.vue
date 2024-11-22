@@ -2812,8 +2812,8 @@ export default {
             {
               name: 'commafy',
               args: 'num [, options]',
-              title: '数值千分位分隔符、小数点',
-              desc: '',
+              title: '数值与字符串分隔函数',
+              desc: '如果为数值，则按照金额千位分隔，如果为字符串则按照指定位数分隔',
               params: [
                 ['属性', '描述', '类型', '版本'],
                 ['spaceNumber', '分割位数，默认3', 'number', ''],
