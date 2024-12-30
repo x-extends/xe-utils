@@ -1,21 +1,27 @@
 var setupDefaults = require('./setupDefaults')
 
-var each = require('./each')
+var arrayEach = require('./arrayEach')
 
 var assign = require('./assign')
 
-function unTreeList (result, array, opts) {
+function unTreeList (result, parentItem, array, opts) {
+  var optKey = opts.key
+  var optParentKey = opts.parentKey
   var optChildren = opts.children
   var optData = opts.data
+  var optUpdated = opts.updated
   var optClear = opts.clear
-  each(array, function (item) {
-    var children = item[optChildren]
+  arrayEach(array, function (item) {
+    var childList = item[optChildren]
     if (optData) {
       item = item[optData]
     }
+    if (optUpdated !== false) {
+      item[optParentKey] = parentItem ? parentItem[optKey] : null
+    }
     result.push(item)
-    if (children && children.length) {
-      unTreeList(result, children, opts)
+    if (childList && childList.length) {
+      unTreeList(result, item, childList, opts)
     }
     if (optClear) {
       delete item[optChildren]
@@ -32,7 +38,7 @@ function unTreeList (result, array, opts) {
   * @return {Array}
   */
 function toTreeArray (array, options) {
-  return unTreeList([], array, assign({}, setupDefaults.treeOptions, options))
+  return unTreeList([], null, array, assign({}, setupDefaults.treeOptions, options))
 }
 
 module.exports = toTreeArray
