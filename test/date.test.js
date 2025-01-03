@@ -514,6 +514,62 @@ describe('Date functions', () => {
     expect(
       XEUtils.toDateString(date, '[Week] yyyy-MM-dd [[yyyy-MM-dd]]')
     ).toEqual('Week 2017-01-01 [yyyy-MM-dd]')
+
+    // 周日视图
+    expect(
+      XEUtils.toDateString('2024-12-31', 'W', { firstDay: 0 })
+    ).toEqual('1')
+    expect(
+      XEUtils.toDateString('2025-01-01', 'W', { firstDay: 0 })
+    ).toEqual('1')
+
+    // 周一视图
+    expect(
+      XEUtils.toDateString('2024-12-31', 'W', { firstDay: 1 })
+    ).toEqual('1')
+    expect(
+      XEUtils.toDateString('2025-01-01', 'W', { firstDay: 1 })
+    ).toEqual('1')
+
+    // 周二视图
+    expect(
+      XEUtils.toDateString('2024-12-31', 'W', { firstDay: 2 })
+    ).toEqual('1')
+    expect(
+      XEUtils.toDateString('2025-01-01', 'W', { firstDay: 2 })
+    ).toEqual('1')
+
+    // 周三视图
+    expect(
+      XEUtils.toDateString('2024-12-31', 'W', { firstDay: 3 })
+    ).toEqual('52')
+    expect(
+      XEUtils.toDateString('2025-01-01', 'W', { firstDay: 3 })
+    ).toEqual('1')
+
+    // 周四视图
+    expect(
+      XEUtils.toDateString('2024-12-31', 'W', { firstDay: 4 })
+    ).toEqual('52')
+    expect(
+      XEUtils.toDateString('2025-01-01', 'W', { firstDay: 4 })
+    ).toEqual('52')
+
+    // 周五视图
+    expect(
+      XEUtils.toDateString('2024-12-31', 'W', { firstDay: 5 })
+    ).toEqual('53')
+    expect(
+      XEUtils.toDateString('2025-01-01', 'W', { firstDay: 5 })
+    ).toEqual('53')
+
+    // 周六视图
+    expect(
+      XEUtils.toDateString('2024-12-31', 'W', { firstDay: 6 })
+    ).toEqual('53')
+    expect(
+      XEUtils.toDateString('2025-01-01', 'W', { firstDay: 6 })
+    ).toEqual('53')
   })
 
   test('getWhatYear()', () => {
