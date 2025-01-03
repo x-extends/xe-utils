@@ -9,6 +9,8 @@ var helperCreateGetDateWeek = require('./helperCreateGetDateWeek')
   */
 var getYearWeek = helperCreateGetDateWeek(function (targetDate) {
   return new Date(targetDate.getFullYear(), 0, 1)
+}, function (date1, date2) {
+  return date1.getFullYear() !== date2.getFullYear()
 })
 
 module.exports = getYearWeek
