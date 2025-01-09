@@ -69,7 +69,6 @@ function toArrayTree (array, options) {
 
     if (id === parentId) {
       parentId = null
-      console.log('Fix infinite Loop.', item)
     }
 
     treeMap[parentId] = treeMap[parentId] || []
