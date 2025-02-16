@@ -5,7 +5,7 @@
 [![gitee star](https://gitee.com/x-extends/xe-utils/badge/star.svg?theme=dark)](https://gitee.com/x-extends/xe-utils/stargazers)
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.com/package/xe-utils)
 [![NodeJS with Webpack](https://github.com/x-extends/xe-utils/actions/workflows/webpack.yml/badge.svg)](https://github.com/x-extends/xe-utils/actions/workflows/webpack.yml)
-[![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/index.umd.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/dist/index.umd.min.js)
+[![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/dist/xe-utils.umd.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/dist/dist/xe-utils.umd.min.js)
 [![npm downloads](https://img.shields.io/npm/dm/xe-utils.svg?style=flat-square)](http://npm-stat.com/charts.html?package=xe-utils)
 [![npm license](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE)
 
