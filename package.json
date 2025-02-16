@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "3.7.0",
+  "version": "3.7.1",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
   "unpkg": "dist/xe-utils.umd.min.js",
@@ -48,10 +48,10 @@
     "sass": "^1.75.0",
     "sass-loader": "^14.2.0",
     "typescript": "~4.5.5",
-    "vue": "^2.7.16",
+    "vue": "^2.6.14",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0",
-    "vue-template-compiler": "^2.7.16"
+    "vue-template-compiler": "^2.6.14"
   },
   "repository": {
     "type": "git",

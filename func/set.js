@@ -1,6 +1,7 @@
 var staticParseInt = require('./staticParseInt')
 
 var helperGetHGSKeys = require('./helperGetHGSKeys')
+var helperCheckCopyKey = require('./helperCheckCopyKey')
 
 var hasOwnProp = require('./hasOwnProp')
 
@@ -64,7 +65,7 @@ function setDeepProps (obj, key, isEnd, nextKey, value) {
  * @param {Object} value 值
  */
 function set (obj, property, value) {
-  if (obj) {
+  if (obj && helperCheckCopyKey(property)) {
     if ((obj[property] || hasOwnProp(obj, property)) && !isPrototypePolluted(property)) {
       obj[property] = value
     } else {

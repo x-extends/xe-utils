@@ -2,10 +2,14 @@ var isArray = require('./isArray')
 var isPlainObject = require('./isPlainObject')
 var each = require('./each')
 
+var helperCheckCopyKey = require('./helperCheckCopyKey')
+
 function handleMerge (target, source) {
   if ((isPlainObject(target) && isPlainObject(source)) || (isArray(target) && isArray(source))) {
-    each(source, function (obj, key) {
-      target[key] = handleMerge(target[key], obj)
+    each(source, function (val, key) {
+      if (helperCheckCopyKey(key, val)) {
+        target[key] = handleMerge(target[key], val)
+      }
     })
     return target
   }
@@ -19,7 +23,7 @@ function handleMerge (target, source) {
   * @param {...Object}
   * @return {Boolean}
   */
- var merge = function (target) {
+var merge = function (target) {
   if (!target) {
     target = {}
   }
