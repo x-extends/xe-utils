@@ -1,23 +1,23 @@
 const XEUtils = require('../func')
 
 test('assign()', () => {
-  let obj1 = { bb: { gg: 1 } }
-  let obj2 = XEUtils.assign({}, obj1, { a: 11 })
+  const obj1 = { bb: { gg: 1 } }
+  const obj2 = XEUtils.assign({}, obj1, { a: 11 })
   expect(
     obj1 === obj2
   ).toEqual(false)
   expect(
     obj1.bb === obj2.bb
   ).toEqual(true)
-  let obj3 = { bb: { b: 11 } }
-  let obj4 = XEUtils.assign(obj3, { a: 11 })
+  const obj3 = { bb: { b: 11 } }
+  const obj4 = XEUtils.assign(obj3, { a: 11 })
   expect(
     obj3.bb === obj4.bb
   ).toEqual(true)
   expect(
     obj3.bb === obj4.bb
   ).toEqual(true)
-  let arr1 = [11, 22]
+  const arr1 = [11, 22]
   expect(
     XEUtils.assign(arr1, [44, 11, 55])
   ).toEqual([44, 11, 55])
@@ -36,7 +36,7 @@ test('objectMap()', () => {
 })
 
 test('objectEach()', () => {
-  let rest = []
+  const rest = []
   XEUtils.each({ a: 11, b: 22, c: 33, d: 44 }, (item, key, obj) => {
     rest.push([item, key])
   })
@@ -46,7 +46,7 @@ test('objectEach()', () => {
 })
 
 test('lastObjectEach()', () => {
-  let rest = []
+  const rest = []
   XEUtils.lastObjectEach({ a: 11, b: 22, c: 33, d: 44 }, (item, key, obj) => {
     rest.push([item, key])
   })
@@ -112,4 +112,13 @@ test('merge()', () => {
   expect(
     obj2
   ).toEqual({ a: { a1: 11, a2: { bb1: 44, bdd: 55 }, a3: 44 }, bb: [{ vv: 11, cc: 11 }], f: 33, v: [88] })
+
+  const obj3 = { b: [{}] }
+  const val3 = { a: () => {} }
+  expect(
+    XEUtils.merge(obj3, val3).a === val3.a
+  ).toEqual(true)
+  expect(
+    XEUtils.merge(obj3, val3).b === obj3.b
+  ).toEqual(true)
 })

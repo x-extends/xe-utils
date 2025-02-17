@@ -1,5 +1,6 @@
 var isArray = require('./isArray')
 var isPlainObject = require('./isPlainObject')
+var isFunction = require('./isFunction')
 var each = require('./each')
 
 var helperCheckCopyKey = require('./helperCheckCopyKey')
@@ -7,8 +8,8 @@ var helperCheckCopyKey = require('./helperCheckCopyKey')
 function handleMerge (target, source) {
   if ((isPlainObject(target) && isPlainObject(source)) || (isArray(target) && isArray(source))) {
     each(source, function (val, key) {
-      if (helperCheckCopyKey(key, val)) {
-        target[key] = handleMerge(target[key], val)
+      if (helperCheckCopyKey(key)) {
+        target[key] = isFunction(source) ? val : handleMerge(target[key], val)
       }
     })
     return target

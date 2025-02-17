@@ -2377,6 +2377,13 @@ describe('Base functions', () => {
     expect(
       obj4.a3 !== 1
     ).toEqual(true)
+
+    const obj5 = {}
+    const val5 = () => {}
+    XEUtils.set(obj5, 'aa', val5)
+    expect(
+      obj5.aa === val5
+    ).toEqual(true)
   })
 
   test('groupBy()', () => {
