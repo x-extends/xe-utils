@@ -3,12 +3,20 @@ import SetupDefaults from './setupDefaults'
 /**
  * 版本信息
  */
-export const VERSION: string;
+export const version: string
 
 /**
- * 设置全局参数
+ * 设置全局配置
  * @param options 全局参数
  */
+export function setConfig(options: SetupDefaults): SetupDefaults;
+
+/**
+ * 获取全局配置
+ */
+export function getConfig(): SetupDefaults;
+
+export const VERSION: string
 export function setup(options: SetupDefaults): SetupDefaults;
 
 /**
@@ -18,9 +26,13 @@ export function setup(options: SetupDefaults): SetupDefaults;
 export function mixin(...methods: {[key: string]: any}[]): void;
 
 export interface XEUtilsMethods {
+  version: typeof version;
+  setConfig: typeof setConfig;
+  getConfig: typeof getConfig;
+  mixin: typeof mixin;
+
   VERSION: typeof VERSION;
   setup: typeof setup;
-  mixin: typeof mixin;
 
   [propertys: string]: any;
 }
@@ -28,6 +40,6 @@ export interface XEUtilsMethods {
 /**
  * JavaScript 函数库、工具类
  */
-declare var XEUtils: XEUtilsMethods
+declare let XEUtils: XEUtilsMethods
 
 export default XEUtils

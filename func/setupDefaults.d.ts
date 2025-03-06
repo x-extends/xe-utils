@@ -4,7 +4,11 @@ import { ToDateStringFormats } from "./toDateString"
 
 export interface SetupDefaults {
   /**
-   * 默认树的转换配置  
+   * 全局唯一标识
+   */
+  keyId?: number
+  /**
+   * 默认树的转换配置
    * 用于 toArrayTree()、toTreeArray()
    */
   treeOptions?: {
@@ -16,22 +20,22 @@ export interface SetupDefaults {
     [key: string]: any;
   };
   /**
-   * 默认解析的日期格式  
+   * 默认解析的日期格式
    * 用于 toDateString()
    */
   parseDateFormat?: string;
   /**
-   * 默认格式化日期的规则  
+   * 默认格式化日期的规则
    * 用于 toDateString()
    */
   parseDateRules?: ToDateStringFormats;
   /**
-   * 默认周视图的起始天  
+   * 默认周视图的起始天
    * 用于 getWhatWeek()、getYearWeek()、toDateString()
    */
   firstDayOfWeek?: FirstDayOfWeek;
   /**
-   * 分隔函数配置  
+   * 分隔函数配置
    * 用于 commafy()
    */
   commafyOptions?: CommafyOptions;

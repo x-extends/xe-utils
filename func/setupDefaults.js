@@ -1,6 +1,7 @@
 'use strict'
 
 var setupDefaults = {
+  keyId: 1,
   cookies: {
     path: '/'
   },

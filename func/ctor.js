@@ -22,12 +22,21 @@ function mixin () {
   })
 }
 
-function setup (options) {
+function setConfig (options) {
   return assign(setupDefaults, options)
 }
 
-XEUtils.VERSION = '@VERSION'
+function getConfig () {
+  return setupDefaults
+}
+
+var version = '@VERSION'
+
+XEUtils.VERSION = version
+XEUtils.version = version
 XEUtils.mixin = mixin
-XEUtils.setup = setup
+XEUtils.setup = setConfig
+XEUtils.setConfig = setConfig
+XEUtils.getConfig = getConfig
 
 module.exports = XEUtils
