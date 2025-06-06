@@ -4,7 +4,7 @@
       <div class="header-left">
         <a class="logo" href="/">
           <img src="/logo.png">
-          <span class="title">XE Utils</span>
+          <span class="title">函数库工具类</span>
         </a>
         <a :href='`https://gitee.com/x-extends/xe-utils/stargazers`'>
           <img :src='`https://gitee.com/x-extends/xe-utils/badge/star.svg?theme=gvp`' alt='star'>
