@@ -1,6 +1,6 @@
 var setupDefaults = require('./setupDefaults')
+var helperLog = require('./helperLog')
 
-var map = require('./map')
 var orderBy = require('./orderBy')
 
 var clone = require('./clone')
@@ -36,7 +36,7 @@ function toArrayTree (array, options) {
   var optReverse = opts.reverse
   var optData = opts.data
   var result = []
-  var treeMap = {}
+  var treeMaps = {}
   var idsMap = {}
   var id, treeData, parentId
 
@@ -49,6 +49,9 @@ function toArrayTree (array, options) {
 
   each(array, function (item) {
     id = item[optKey]
+    if (idsMap[id]) {
+      helperLog('warn', 'Duplicate primary key=' + id)
+    }
     idsMap[id] = true
   })
 
@@ -63,20 +66,20 @@ function toArrayTree (array, options) {
     }
 
     parentId = item[optParentKey]
-    treeMap[id] = treeMap[id] || []
+    treeMaps[id] = treeMaps[id] || []
     treeData[optKey] = id
     treeData[optParentKey] = parentId
 
     if (id === parentId) {
       parentId = null
-      console.log('Fix infinite Loop.', item)
+      helperLog('warn', 'Error infinite Loop. key=' + id + ' parentKey=' + id)
     }
 
-    treeMap[parentId] = treeMap[parentId] || []
-    treeMap[parentId].push(treeData)
-    treeData[optChildren] = treeMap[id]
+    treeMaps[parentId] = treeMaps[parentId] || []
+    treeMaps[parentId].push(treeData)
+    treeData[optChildren] = treeMaps[id]
     if (optMapChildren) {
-      treeData[optMapChildren] = treeMap[id]
+      treeData[optMapChildren] = treeMaps[id]
     }
 
     if (!optStrict || (optStrict && eqNull(parentId))) {
