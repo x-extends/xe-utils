@@ -2505,8 +2505,14 @@ describe('Base functions', () => {
       XEUtils.clone({ aa: 11, bb: [{ hh: 44 }] })
     ).toEqual({ aa: 11, bb: [{ hh: 44 }] })
     expect(
-      XEUtils.clone([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
-    ).toEqual([['11', /\d/], [[11, [[new Date()], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
+      XEUtils.clone(['11', /\d/])
+    ).toEqual(['11', /\d/])
+    expect(
+      XEUtils.clone([new Date(2025, 0, 1)])
+    ).toEqual([new Date(2025, 0, 1)])
+    expect(
+      XEUtils.clone([['112', /[0-9]/, 12], [[11, [[new Date(2025, 2, 1)], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
+    ).toEqual([['112', /[0-9]/, 12], [[11, [[new Date(2025, 2, 1)], 22, [{ aa: 33 }, 44]]], { jj: 99 }], { uu: 88 }])
 
     const v1 = {
       num: 11,
