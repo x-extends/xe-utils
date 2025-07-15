@@ -12,8 +12,8 @@ function throttle (callback, wait, options) {
   var opts = options || {}
   var runFlag = false
   var timeout = null
-  var optLeading = 'leading' in opts ? opts.leading : true
-  var optTrailing = 'trailing' in opts ? opts.trailing : false
+  var optLeading = opts ? opts.leading : true
+  var optTrailing = opts ? opts.trailing : false
 
   var gcFn = function () {
     args = null
@@ -26,11 +26,17 @@ function throttle (callback, wait, options) {
     timeout = setTimeout(endFn, wait)
     gcFn()
   }
-  
+
   var endFn = function () {
     timeout = null
-    if (!runFlag && optTrailing === true) {
-      runFn()
+    if (!runFlag) {
+      if (optTrailing === true) {
+        runFn()
+      } else{
+        gcFn()
+      }
+    } else{
+      gcFn()
     }
   }
 

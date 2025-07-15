@@ -13,8 +13,8 @@ function debounce (callback, wait, options) {
   var runFlag = false
   var timeout = null
   var isLeading = typeof options === 'boolean'
-  var optLeading = 'leading' in opts ? opts.leading : isLeading
-  var optTrailing = 'trailing' in opts ? opts.trailing : !isLeading
+  var optLeading = opts ? opts.leading : isLeading
+  var optTrailing = opts ? opts.trailing : !isLeading
 
   var gcFn = function () {
     args = null
@@ -31,8 +31,14 @@ function debounce (callback, wait, options) {
     if (optLeading === true) {
       timeout = null
     }
-    if (!runFlag && optTrailing === true) {
-      runFn()
+    if (!runFlag) {
+      if (optTrailing === true) {
+        runFn()
+      } else {
+        gcFn()
+      }
+    } else {
+      gcFn()
     }
   }
 
