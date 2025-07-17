@@ -1,3 +1,5 @@
+var assign = require('./assign')
+
 /**
   * 函数去抖；当被调用 n 毫秒后才会执行，如果在这时间内又被调用则将重新计算执行时间
   *
@@ -9,12 +11,11 @@
 function debounce (callback, wait, options) {
   var args = null
   var context = null
-  var opts = options || {}
+  var opts = typeof options === 'boolean' ? { leading: options, trailing: !options } : assign({ leading: false, trailing: true }, options)
   var runFlag = false
   var timeout = null
-  var isLeading = typeof options === 'boolean'
-  var optLeading = opts ? opts.leading : isLeading
-  var optTrailing = opts ? opts.trailing : !isLeading
+  var optLeading = opts.leading
+  var optTrailing = opts.trailing
 
   var gcFn = function () {
     args = null
@@ -31,15 +32,15 @@ function debounce (callback, wait, options) {
     if (optLeading === true) {
       timeout = null
     }
-    if (!runFlag) {
-      if (optTrailing === true) {
-        runFn()
-      } else {
-        gcFn()
-      }
-    } else {
+    if (runFlag) {
       gcFn()
+      return
     }
+    if (optTrailing === true) {
+      runFn()
+      return
+    }
+    gcFn()
   }
 
   var cancelFn = function () {
