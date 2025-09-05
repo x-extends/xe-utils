@@ -24,7 +24,7 @@ var dateDiffRules = [
   */
 function getDateDiff (startDate, endDate) {
   var startTime, endTime, item, diffTime, len, index
-  var result = { done: false, time: 0 }
+  var result = { done: false, status: false, time: 0 }
   startDate = toStringDate(startDate)
   endDate = endDate ? toStringDate(endDate) : helperNewDate()
   if (isValidDate(startDate) && isValidDate(endDate)) {
@@ -33,6 +33,7 @@ function getDateDiff (startDate, endDate) {
     if (startTime < endTime) {
       diffTime = result.time = endTime - startTime
       result.done = true
+      result.status = true
       for (index = 0, len = dateDiffRules.length; index < len; index++) {
         item = dateDiffRules[index]
         if (diffTime >= item[1]) {

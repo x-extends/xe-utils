@@ -2436,63 +2436,63 @@ describe('Date functions', () => {
   test('getDateDiff()', () => {
     expect(
       XEUtils.getDateDiff()
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(0)
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(-1)
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(null)
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(undefined)
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(undefined, null)
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(new Date(''))
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(new Date('abc'))
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff([])
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(null, '2017-12-21')
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff([], {})
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff({ time: 2018 }, '2017-12-21')
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(0, '2017-12-21')
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff([2018, 1, 1], '2017-12-21')
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff([2018, 1, 1], 0)
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
     expect(
       XEUtils.getDateDiff(new Date(2017, 0, 1, 14, 5, 30).getTime(), new Date(2017, 0, 1, 15, 1, 48).getTime())
-    ).toEqual({ done: true, time: 3378000, yyyy: 0, MM: 0, dd: 0, HH: 0, mm: 56, ss: 18, S: 0 })
+    ).toEqual({ status: true, done: true, time: 3378000, yyyy: 0, MM: 0, dd: 0, HH: 0, mm: 56, ss: 18, S: 0 })
     expect(
       XEUtils.getDateDiff(new Date(2017, 0, 1, 14, 5, 30), new Date(2017, 0, 1, 15, 1, 48))
-    ).toEqual({ done: true, time: 3378000, yyyy: 0, MM: 0, dd: 0, HH: 0, mm: 56, ss: 18, S: 0 })
+    ).toEqual({ status: true, done: true, time: 3378000, yyyy: 0, MM: 0, dd: 0, HH: 0, mm: 56, ss: 18, S: 0 })
     expect(
       XEUtils.getDateDiff('2017-11-20', '2017-12-21')
-    ).toEqual({ done: true, time: 2678400000, yyyy: 0, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 })
+    ).toEqual({ status: true, done: true, time: 2678400000, yyyy: 0, MM: 1, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 })
     expect(
       XEUtils.getDateDiff('2017-12-20', '2017-12-21')
-    ).toEqual({ done: true, time: 86400000, yyyy: 0, MM: 0, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 })
+    ).toEqual({ status: true, done: true, time: 86400000, yyyy: 0, MM: 0, dd: 1, HH: 0, mm: 0, ss: 0, S: 0 })
     expect(
       XEUtils.getDateDiff('2018-01-01', '2017-12-21')
-    ).toEqual({ done: false, time: 0 })
+    ).toEqual({ status: false, done: false, time: 0 })
   })
 })

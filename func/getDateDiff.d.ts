@@ -1,6 +1,11 @@
 export interface DateDiffResult {
   /**
-   * 是否计算完成（如果结束日期小于开始日期 done 为 fasle）
+   * 是否计算完成（如果结束日期小于开始日期 status 为 fasle）
+   */
+  status: boolean;
+  /**
+   * 已废弃，请使用 status
+   * @deprecated
    */
   done: boolean;
   /**
