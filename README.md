@@ -3,6 +3,7 @@
 简体中文 | [English](README.en.md)  
 
 [![gitee star](https://gitee.com/x-extends/xe-utils/badge/star.svg?theme=dark)](https://gitee.com/x-extends/xe-utils/stargazers)
+[![gitcode star](https://gitcode.com/x-extends/xe-utils/star/badge.svg)](https://gitcode.com/x-extends/xe-utils/stargazers)
 [![npm version](https://img.shields.io/npm/v/xe-utils.svg?style=flat-square)](https://www.npmjs.com/package/xe-utils)
 [![NodeJS with Webpack](https://github.com/x-extends/xe-utils/actions/workflows/webpack.yml/badge.svg)](https://github.com/x-extends/xe-utils/actions/workflows/webpack.yml)
 [![gzip size: JS](http://img.badgesize.io/https://unpkg.com/xe-utils/dist/xe-utils.umd.min.js?compression=gzip&label=gzip%20size:%20JS)](https://unpkg.com/xe-utils/dist/xe-utils.umd.min.js)
