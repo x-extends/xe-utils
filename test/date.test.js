@@ -1305,6 +1305,195 @@ describe('Date functions', () => {
     ).toEqual(new Date(2017, 11, 20, 23, 59, 59, 999))
   })
 
+  test('getWhatHours()', () => {
+    expect(
+      XEUtils.getWhatHours().toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(0).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(-1).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(123).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(null).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(undefined).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours({}).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours([]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours([2018, 1, 1]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(new Date('abc')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatHours(date, -1)
+    ).toEqual(new Date(2017, 0, 1, 13, 5, 30, 99))
+    expect(
+      XEUtils.getWhatHours(time, 1)
+    ).toEqual(new Date(2017, 0, 1, 15, 5, 30, 99))
+    expect(
+      XEUtils.getWhatHours('2017-12-20 12', -1)
+    ).toEqual(new Date(2017, 11, 20, 11))
+    expect(
+      XEUtils.getWhatHours(new Date(2017, 11, 10, 12), -1)
+    ).toEqual(new Date(2017, 11, 10, 11))
+    expect(
+      XEUtils.getWhatHours('2017-12-20 12', 1)
+    ).toEqual(new Date(2017, 11, 20, 13))
+    expect(
+      XEUtils.getWhatHours('2017-12-20 12', 0, 'first')
+    ).toEqual(new Date(2017, 11, 20, 12, 0, 0, 0))
+    expect(
+      XEUtils.getWhatHours('2017-12-20 12', 0, 'last')
+    ).toEqual(new Date(2017, 11, 20, 12, 59, 59, 999))
+  })
+
+  test('getWhatMinutes()', () => {
+    expect(
+      XEUtils.getWhatMinutes().toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(0).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(-1).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(123).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(null).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(undefined).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes({}).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes([]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes([2018, 1, 1]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(new Date('abc')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatMinutes(date, -1)
+    ).toEqual(new Date(2017, 0, 1, 14, 4, 30, 99))
+    expect(
+      XEUtils.getWhatMinutes(time, 1)
+    ).toEqual(new Date(2017, 0, 1, 14, 6, 30, 99))
+    expect(
+      XEUtils.getWhatMinutes('2017-12-20 12:30', -1)
+    ).toEqual(new Date(2017, 11, 20, 12, 29))
+    expect(
+      XEUtils.getWhatMinutes(new Date(2017, 11, 10, 12, 30), -1)
+    ).toEqual(new Date(2017, 11, 10, 12, 29))
+    expect(
+      XEUtils.getWhatMinutes('2017-12-20 12:30', 1)
+    ).toEqual(new Date(2017, 11, 20, 12, 31))
+    expect(
+      XEUtils.getWhatMinutes('2017-12-20 12:30', 0, 'first')
+    ).toEqual(new Date(2017, 11, 20, 12, 30, 0, 0))
+    expect(
+      XEUtils.getWhatMinutes('2017-12-20 12:30', 0, 'last')
+    ).toEqual(new Date(2017, 11, 20, 12, 30, 59, 999))
+  })
+
+  test('getWhatSeconds()', () => {
+    expect(
+      XEUtils.getWhatSeconds().toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(0).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(-1).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(123).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(null).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(undefined).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds({}).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds([]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds([2018, 1, 1]).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds({ time: 2018 }).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds('null').toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(new Date('')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(new Date('abc')).toString()
+    ).toEqual('Invalid Date')
+    expect(
+      XEUtils.getWhatSeconds(date, -1)
+    ).toEqual(new Date(2017, 0, 1, 14, 5, 29, 99))
+    expect(
+      XEUtils.getWhatSeconds(time, 1)
+    ).toEqual(new Date(2017, 0, 1, 14, 5, 31, 99))
+    expect(
+      XEUtils.getWhatSeconds('2017-12-20 12:30:40', -1)
+    ).toEqual(new Date(2017, 11, 20, 12, 30, 39))
+    expect(
+      XEUtils.getWhatSeconds(new Date(2017, 11, 10, 12, 30, 40), -1)
+    ).toEqual(new Date(2017, 11, 10,  12, 30, 39))
+    expect(
+      XEUtils.getWhatSeconds('2017-12-20 12:30:40', 1)
+    ).toEqual(new Date(2017, 11, 20, 12, 30, 41))
+    expect(
+      XEUtils.getWhatSeconds('2017-12-20 12:30:40', 0, 'first')
+    ).toEqual(new Date(2017, 11, 20, 12, 30, 40, 0))
+    expect(
+      XEUtils.getWhatSeconds('2017-12-20 12:30:40', 0, 'last')
+    ).toEqual(new Date(2017, 11, 20, 12, 30, 40, 999))
+  })
+
   test('getYearDay()', () => {
     expect(
       XEUtils.getYearDay().toString()
