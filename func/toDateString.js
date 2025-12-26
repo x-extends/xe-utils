@@ -46,7 +46,7 @@ function toDateString (date, format, options) {
       var apm = hours < 12 ? 'am' : 'pm'
       var formats = assign({}, setupDefaults.parseDateRules || setupDefaults.formatStringMatchs, options ? options.formats : null)
       var fy = function (match, length) {
-        return ('' + helperGetDateFullYear(date)).substr(4 - length)
+        return ('' + helperGetDateFullYear(date)).substring(4 - length)
       }
       var fM = function (match, length) {
         return padStart(helperGetDateMonth(date) + 1, length, '0')

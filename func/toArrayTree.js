@@ -7,7 +7,6 @@ var clone = require('./clone')
 var eqNull = require('./eqNull')
 var each = require('./each')
 var remove = require('./remove')
-var slice = require('./slice')
 
 var assign = require('./assign')
 
@@ -80,7 +79,7 @@ function toArrayTree (array, options) {
     treeMaps[parentId].push(treeData)
     treeData[optChildren] = treeMaps[id]
     if (optMapChildren) {
-      treeData[optMapChildren] = slice(treeMaps[id], 0)
+      treeData[optMapChildren] = treeMaps[id]
     }
 
     if (!optStrict || (optStrict && eqNull(parentId))) {
