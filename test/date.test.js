@@ -522,6 +522,12 @@ describe('Date functions', () => {
     expect(
       XEUtils.toDateString('2025-01-01', 'W', { firstDay: 0 })
     ).toEqual('1')
+    expect(
+      XEUtils.toDateString('2025-12-28', 'W', { firstDay: 0 })
+    ).toEqual('53')
+    expect(
+      XEUtils.toDateString('2026-01-03', 'W', { firstDay: 0 })
+    ).toEqual('53')
 
     // 周一视图
     expect(

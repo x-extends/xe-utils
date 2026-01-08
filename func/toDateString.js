@@ -12,6 +12,7 @@ var assign = require('./assign')
 
 var isValidDate = require('./isValidDate')
 var isFunction = require('./isFunction')
+var eqNull = require('./eqNull')
 
 var padStart = require('./padStart')
 
@@ -41,10 +42,11 @@ function toDateString (date, format, options) {
   if (date) {
     date = toStringDate(date)
     if (isValidDate(date)) {
+      var opts = options || {}
       var result = format || setupDefaults.parseDateFormat || setupDefaults.formatString
       var hours = date.getHours()
       var apm = hours < 12 ? 'am' : 'pm'
-      var formats = assign({}, setupDefaults.parseDateRules || setupDefaults.formatStringMatchs, options ? options.formats : null)
+      var formats = assign({}, setupDefaults.parseDateRules || setupDefaults.formatStringMatchs, opts.formats)
       var fy = function (match, length) {
         return ('' + helperGetDateFullYear(date)).substring(4 - length)
       }
@@ -74,7 +76,7 @@ function toDateString (date, format, options) {
         return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + padStart(zoneHours, 2, '0') + (length === 1 ? ':' : '') + '00')
       }
       var fW = function (match, length) {
-        return padStart(handleCustomTemplate(date, formats, match, getYearWeek(date, (options ? options.firstDay : null) || setupDefaults.firstDayOfWeek)), length, '0')
+        return padStart(handleCustomTemplate(date, formats, match, getYearWeek(date, eqNull(opts.firstDay) ? setupDefaults.firstDayOfWeek : opts.firstDay)), length, '0')
       }
       var fD = function (match, length) {
         return padStart(handleCustomTemplate(date, formats, match, getYearDay(date)), length, '0')
