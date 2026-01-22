@@ -1,5 +1,3 @@
-'use strict'
-
 var hasOwnProp = require('./hasOwnProp')
 var isArray = require('./isArray')
 var isNull = require('./isNull')

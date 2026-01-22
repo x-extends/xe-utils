@@ -1,5 +1,3 @@
-'use strict'
-
 var setupDefaults = require('./setupDefaults')
 
 var arrayEach = require('./arrayEach')

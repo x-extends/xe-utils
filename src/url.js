@@ -1,5 +1,3 @@
-'use strict'
-
 var unserialize = require('./unserialize')
 var parseUrl = require('./parseUrl')
 var serialize = require('./serialize')

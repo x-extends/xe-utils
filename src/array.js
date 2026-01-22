@@ -1,5 +1,3 @@
-'use strict'
-
 var map = require('./map')
 var some = require('./some')
 var every = require('./every')

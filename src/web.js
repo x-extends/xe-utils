@@ -1,5 +1,3 @@
-'use strict'
-
 var getBaseURL = require('./getBaseURL')
 var locat = require('./locat')
 var browse = require('./browse')

@@ -1,5 +1,3 @@
-'use strict'
-
 // 核心
 var XEUtils = require('./ctor')
 

@@ -1,5 +1,3 @@
-'use strict'
-
 var padEnd = require('./padEnd')
 var padStart = require('./padStart')
 var repeat = require('./repeat')

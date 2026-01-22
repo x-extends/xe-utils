@@ -1,5 +1,3 @@
-'use strict'
-
 var staticStrUndefined = require('./staticStrUndefined')
 var staticStrLast = require('./staticStrLast')
 var staticStrFirst = require('./staticStrFirst')

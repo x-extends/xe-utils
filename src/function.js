@@ -1,5 +1,3 @@
-'use strict'
-
 var noop = require('./noop')
 var property = require('./property')
 var bind = require('./bind')

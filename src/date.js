@@ -1,5 +1,3 @@
-'use strict'
-
 var getWhatYear = require('./getWhatYear')
 var getWhatQuarter = require('./getWhatQuarter')
 var getWhatMonth = require('./getWhatMonth')
