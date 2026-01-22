@@ -1,8 +1,9 @@
 {
   "name": "xe-utils",
-  "version": "3.9.1",
+  "version": "4.0.0",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
+  "module": "es/index.esm.js",
   "unpkg": "lib/index.umd.min.js",
   "jsdelivr": "lib/index.umd.min.js",
   "typings": "index.d.ts",
