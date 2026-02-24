@@ -1,4 +1,4 @@
-const XEUtils = require('../func')
+const XEUtils = require('../src')
 
 describe('Date functions', () => {
   const date = new Date(2017, 0, 1, 14, 5, 30, 99)
@@ -457,6 +457,12 @@ describe('Date functions', () => {
     expect(
       XEUtils.toDateString(date)
     ).toEqual('2017-01-01 14:05:30')
+    expect(
+      XEUtils.toDateString('2026-02-10@14:30:20')
+    ).toEqual('2026-02-10 14:30:20')
+    expect(
+      XEUtils.toDateString('2026-02-10 14:30:20(GMT+08:00)')
+    ).toEqual('2026-02-10 14:30:20')
     expect(
       XEUtils.toDateString(time, 'MM/dd/yyyy')
     ).toEqual('01/01/2017')

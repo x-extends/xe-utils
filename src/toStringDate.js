@@ -39,7 +39,7 @@ for (var len = defaulParseStrs.length - 1; len >= 0; len--) {
   for (var i = 0; i < len + 1; i++) {
     rule += defaulParseStrs[i]
   }
-  defaulParseREs.push(new RegExp('^' + rule + '$'))
+  defaulParseREs.push(new RegExp('^' + rule))
 }
 
 /**

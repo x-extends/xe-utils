@@ -1,4 +1,4 @@
-const XEUtils = require('../func')
+const XEUtils = require('../src')
 
 describe('Number functions', () => {
   test('random()', () => {

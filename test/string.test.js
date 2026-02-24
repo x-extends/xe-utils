@@ -1,4 +1,4 @@
-const XEUtils = require('../func')
+const XEUtils = require('../src')
 
 describe('String functions', () => {
   test('toValueString()', () => {

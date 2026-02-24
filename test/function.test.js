@@ -1,4 +1,4 @@
-const XEUtils = require('../func')
+const XEUtils = require('../src')
 
 function awaitFn (time = 0) {
   return new Promise(resolve => {

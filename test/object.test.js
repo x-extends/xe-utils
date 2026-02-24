@@ -1,4 +1,4 @@
-const XEUtils = require('../func')
+const XEUtils = require('../src')
 
 test('assign()', () => {
   const obj1 = { bb: { gg: 1 } }
