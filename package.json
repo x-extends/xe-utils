@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
   "module": "es/index.esm.js",

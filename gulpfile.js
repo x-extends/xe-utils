@@ -26,11 +26,29 @@ gulp.task('build_commonjs_var', () => {
 
 gulp.task('build_commonjs', gulp.series('build_cm_js', 'build_commonjs_var'))
 
-gulp.task('build_escode', gulp.series(async function () {
+gulp.task('build_esall', function () {
   return gulp.src('src/*.js')
     .pipe(replace(/'@VERSION'/, `'${pack.version}'`))
     .pipe(replace(/var\s([a-zA-Z_]+)\s=\srequire\(('[a-zA-Z_./]+')\)/g,'import $1 from $2'))
     .pipe(replace('module.exports = ', `export default `))
+    .pipe(gulp.dest(esmOutDir))
+})
+
+
+gulp.task('build_es_code', gulp.series('build_esall', function () {
+  const indexCode = fs.readFileSync('src/index.js', 'utf-8')
+  let exportStr = ''
+  const exportRest = indexCode.match(/\{[\s\S]*\}/)
+  if (exportRest) {
+    exportStr = exportRest[0].replace(/([a-zA-Z]+):\s([a-zA-Z]+)/g, (text, n, v) => {
+      if (n === v) {
+        return `${n}`
+      }
+      return `${v} as ${n}`
+    })
+  }
+  return gulp.src(`${esmOutDir}/index.js`)
+    .pipe(replace('export default', `export ${exportStr}\n\nexport default `))
     .pipe(gulp.dest(esmOutDir))
 }))
 
@@ -45,7 +63,7 @@ gulp.task('build_es_var', () => {
     .pipe(gulp.dest(esmOutDir))
 })
 
-gulp.task('build_es', gulp.series('build_escode', 'build_d_ts', 'build_es_var', function () {
+gulp.task('build_es', gulp.series('build_es_code', 'build_d_ts', 'build_es_var', function () {
   return gulp.src(`${esmOutDir}/index.js`)
     .pipe(rename({
       basename: 'index',
