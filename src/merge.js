@@ -2,6 +2,7 @@ var isArray = require('./isArray')
 var isPlainObject = require('./isPlainObject')
 var isFunction = require('./isFunction')
 var each = require('./each')
+var clone = require('./clone')
 
 var helperCheckCopyKey = require('./helperCheckCopyKey')
 
@@ -14,7 +15,7 @@ function handleMerge (target, source) {
     })
     return target
   }
-  return source
+  return clone(source, true)
 }
 
 /**
@@ -30,8 +31,8 @@ var merge = function (target) {
   }
   var args = arguments
   var len = args.length
-  for (var source, index = 1; index < len; index++) {
-    source = args[index]
+  for (var source, i = 1; i < len; i++) {
+    source = args[i]
     if (source) {
       handleMerge(target, source)
     }
