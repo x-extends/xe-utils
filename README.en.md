@@ -33,6 +33,7 @@ Using nodejs
 
 ```javascript
 const XEUtils = require('xe-utils')
+// const _ = require('xe-utils')
 ```
 
 Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
@@ -44,11 +45,11 @@ Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net
 ### Import all methods
 
 ```javascript
-import XEUtils from 'xe-utils'
+import _ from 'xe-utils'
 
-XEUtils.toDateString(Date.now())
+_.toDateString(Date.now())
 // 2018-01-01 10:30:28
-XEUtils.toStringDate('2018-01-01 10:30:00')
+_.toStringDate('2018-01-01 10:30:00')
 // Mon Jan 01 2018 10:30:00 GMT+0800
 ```
 
