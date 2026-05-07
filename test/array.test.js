@@ -286,7 +286,7 @@ describe('Array functions', () => {
         { name: 'd', age: 27 },
         { name: 'z', age: 26 },
         { name: 'z', age: 26 }]
-      , ['age', item => item.name])
+        , ['age', item => item.name])
     ).toEqual([
       { name: 'x', age: 26 },
       { name: 'z', age: 26 },
@@ -1651,6 +1651,52 @@ describe('Array functions', () => {
         data: { id: 3, name: '333' },
         id: 3,
         children: []
+      }
+    ])
+
+    const list5 = [
+      { id: 'root', parentId: null, label: '根节点 root' },
+      { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点' },
+      { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点' },
+      { id: 1, parentId: 'root', label: '数字 1 节点' },
+      { id: '1', parentId: 'root', label: '字符串 "1" 节点' }
+    ]
+    expect(
+      XEUtils.toArrayTree(list5, { parentKey: 'parentId', key: 'id', children: 'children' })
+    ).toEqual([
+      {
+        id: 'root',
+        parentId: null,
+        label: '根节点 root',
+        children: [
+          { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点', children: [] },
+          { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点', children: [] },
+          { id: 1, parentId: 'root', label: '数字 1 节点', children: [] },
+          { id: '1', parentId: 'root', label: '字符串 "1" 节点', children: [] }
+        ]
+      }
+    ])
+
+    const list6 = [
+      { id: 'root', parentId: undefined, label: '根节点 root' },
+      { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点' },
+      { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点' },
+      { id: 1, parentId: 'root', label: '数字 1 节点' },
+      { id: '1', parentId: 'root', label: '字符串 "1" 节点' }
+    ]
+    expect(
+      XEUtils.toArrayTree(list6, { strict: true, parentKey: 'parentId', key: 'id', children: 'children' })
+    ).toEqual([
+      {
+        id: 'root',
+        parentId: undefined,
+        label: '根节点 root',
+        children: [
+          { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点' },
+          { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点' },
+          { id: 1, parentId: 'root', label: '数字 1 节点' },
+          { id: '1', parentId: 'root', label: '字符串 "1" 节点' }
+        ]
       }
     ])
   })

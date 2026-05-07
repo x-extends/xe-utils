@@ -36,9 +36,11 @@ function toArrayTree (array, options) {
   var optReverse = opts.reverse
   var optData = opts.data
   var result = []
-  var treeMaps = {}
-  var idsMap = {}
-  var id, treeData, parentId
+  var defTreeMaps = {}
+  var empTreeMaps = {}
+  var idDefMaps = {}
+  var idEmpMaps = {}
+  var id, treeData, parentId, idMaps, isIdNull, isPdNull, idTreeMaps, pdTreeMaps
 
   if (optSortKey) {
     array = orderBy(clone(array), optSortKey)
@@ -49,14 +51,16 @@ function toArrayTree (array, options) {
 
   each(array, function (item) {
     id = item[optKey]
-    if (idsMap[id]) {
+    idMaps = eqNull(id) ? idEmpMaps : idDefMaps
+    if (idMaps[id]) {
       helperLog('warn', 'Duplicate primary key=' + id)
     }
-    idsMap[id] = true
+    idMaps[id] = true
   })
 
   each(array, function (item) {
     id = item[optKey]
+    isIdNull = eqNull(id)
 
     if (optData) {
       treeData = {}
@@ -65,8 +69,13 @@ function toArrayTree (array, options) {
       treeData = item
     }
 
+
     parentId = item[optParentKey]
-    treeMaps[id] = treeMaps[id] || []
+    isPdNull = eqNull(parentId)
+
+    idTreeMaps = isIdNull ? empTreeMaps : defTreeMaps
+
+    idTreeMaps[id] = idTreeMaps[id] || []
     treeData[optKey] = id
     treeData[optParentKey] = parentId
 
@@ -75,15 +84,18 @@ function toArrayTree (array, options) {
       helperLog('warn', 'Error infinite Loop. key=' + id + ' parentKey=' + id)
     }
 
-    treeMaps[parentId] = treeMaps[parentId] || []
-    treeMaps[parentId].push(treeData)
-    treeData[optChildren] = treeMaps[id]
+    pdTreeMaps = isPdNull ? empTreeMaps : defTreeMaps
+    idMaps = isPdNull ? idEmpMaps : idDefMaps
+
+    pdTreeMaps[parentId] = pdTreeMaps[parentId] || []
+    pdTreeMaps[parentId].push(treeData)
+    treeData[optChildren] = idTreeMaps[id]
     if (optMapChildren) {
-      treeData[optMapChildren] = treeMaps[id]
+      treeData[optMapChildren] = idTreeMaps[id]
     }
 
-    if (!optStrict || (optStrict && eqNull(parentId))) {
-      if (!idsMap[parentId]) {
+    if (!optStrict || (optStrict && isPdNull)) {
+      if (!idMaps[parentId]) {
         result.push(treeData)
       }
     }
