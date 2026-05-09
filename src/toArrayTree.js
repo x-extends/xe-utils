@@ -54,7 +54,7 @@ function toArrayTree (array, options) {
   }
 
 
-  if (optRootValues) {
+  if (optRootValues && optRootValues.length) {
     each(optRootValues, function (v) {
       rootIdMaps[v] = 1
     })
@@ -105,7 +105,7 @@ function toArrayTree (array, options) {
       treeData[optMapChildren] = idTreeMaps[id]
     }
 
-    if (optRootValues) {
+    if (optRootValues && optRootValues.length) {
       if (rootIdMaps[id]) {
         result.push(treeData)
       }

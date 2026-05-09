@@ -1753,6 +1753,27 @@ describe('Array functions', () => {
     ]
     expect(
       XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: [] })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      },
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点' },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点' }
+        ]
+      }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: [-1] })
     ).toEqual([])
     expect(
       XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: null })
