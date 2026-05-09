@@ -1659,7 +1659,7 @@ describe('Array functions', () => {
       { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点' },
       { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点' },
       { id: 1, parentId: 'root', label: '数字 1 节点' },
-      { id: '1', parentId: 'root', label: '字符串 "1" 节点' }
+      { id: '2', parentId: 'root', label: '字符串 "2" 节点' }
     ]
     expect(
       XEUtils.toArrayTree(list5, { parentKey: 'parentId', key: 'id', children: 'children' })
@@ -1672,32 +1672,246 @@ describe('Array functions', () => {
           { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点', children: [] },
           { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点', children: [] },
           { id: 1, parentId: 'root', label: '数字 1 节点', children: [] },
-          { id: '1', parentId: 'root', label: '字符串 "1" 节点', children: [] }
+          { id: '2', parentId: 'root', label: '字符串 "2" 节点', children: [] }
         ]
       }
     ])
 
-    const list6 = [
-      { id: 'root', parentId: undefined, label: '根节点 root' },
-      { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点' },
-      { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点' },
-      { id: 1, parentId: 'root', label: '数字 1 节点' },
-      { id: '1', parentId: 'root', label: '字符串 "1" 节点' }
+    const list7 = [
+      { id: 0, parentId: undefined, label: '根节点 0' },
+      { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+      { id: '2', parentId: null, label: '主键为字符串 "2" 的子节点' },
+      { id: 3, parentId: '2', label: '数字 3 节点' },
+      { id: '4', parentId: '2', label: '字符串 "4" 节点' }
     ]
     expect(
-      XEUtils.toArrayTree(list6, { strict: true, parentKey: 'parentId', key: 'id', children: 'children' })
+      XEUtils.toArrayTree(list7, { strict: true, parentKey: 'parentId', key: 'id', children: 'children' })
     ).toEqual([
       {
-        id: 'root',
+        id: 0,
         parentId: undefined,
-        label: '根节点 root',
+        label: '根节点 0',
         children: [
-          { id: 'null', parentId: 'root', label: '主键为字符串 "null" 的子节点' },
-          { id: 'undefined', parentId: 'root', label: '主键为字符串 "undefined" 的子节点' },
-          { id: 1, parentId: 'root', label: '数字 1 节点' },
-          { id: '1', parentId: 'root', label: '字符串 "1" 节点' }
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      },
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点' },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点' }
         ]
       }
+    ])
+    expect(
+      XEUtils.toArrayTree(list7, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootParentValue: null })
+    ).toEqual([
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点' },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点' }
+        ]
+      }
+    ])
+    expect(
+      XEUtils.toArrayTree(list7, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootParentValue: 9 })
+    ).toEqual([])
+    expect(
+      XEUtils.toArrayTree(list7, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootParentValue: undefined })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      },
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点' },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点' }
+        ]
+      }
+    ])
+
+
+    const list8 = [
+      { id: 0, parentId: undefined, label: '根节点 0' },
+      { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+      { id: '2', parentId: null, label: '主键为字符串 "2" 的子节点' },
+      { id: 3, parentId: '2', label: '数字 3 节点' },
+      { id: '4', parentId: '2', label: '字符串 "4" 节点' }
+    ]
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: [] })
+    ).toEqual([])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: null })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      },
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点' },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点' }
+        ]
+      }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: undefined })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      },
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点' },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点' }
+        ]
+      }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: ['1'] })
+    ).toEqual([
+      { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: [1] })
+    ).toEqual([
+      { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: [0] })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: ['0'] })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { strict: true, parentKey: 'parentId', key: 'id', children: 'children', rootValues: ['0', '2'] })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+        ]
+      },
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点' },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点' }
+        ]
+      }
+    ])
+    expect(
+      XEUtils.toArrayTree(list8, { parentKey: 'parentId', key: 'id', children: 'children', rootValues: ['0', '2'] })
+    ).toEqual([
+      {
+        id: 0,
+        parentId: undefined,
+        label: '根节点 0',
+        children: [
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点', children: [] },
+        ]
+      },
+      {
+        id: '2',
+        parentId: null,
+        label: '主键为字符串 "2" 的子节点',
+        children: [
+          { id: 3, parentId: '2', label: '数字 3 节点', children: [] },
+          { id: '4', parentId: '2', label: '字符串 "4" 节点', children: [] }
+        ]
+      }
+    ])
+
+
+    const list9 = [
+      { id: 1, name: '111' },
+      { id: 2, parentId: 1, name: '222' },
+      { id: 3, name: '333' },
+      { id: 4, parentId: 2, name: '444' },
+      { id: 5, parentId: 22, name: '555' }
+    ]
+    expect(
+      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children'  })
+    ).toEqual([
+      {
+        id: 1,
+        parentId: undefined,
+        name: '111',
+        children: [
+          {
+            id: 2,
+            name: '222',
+            parentId: 1,
+            children: [
+              { id: 4, name: '444', parentId: 2, children: [] }
+            ]
+          }
+        ]
+      },
+      { id: 3, name: '333', parentId: undefined, children: [] },
+      { id: 5, parentId: 22, name: '555', children: [] }
+    ])
+    expect(
+      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children' , rootParentValue: 22 })
+    ).toEqual([
+      { id: 5, parentId: 22, name: '555', children: [] }
+    ])
+    expect(
+      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children' , rootValues: [3, 5] })
+    ).toEqual([
+      { id: 3, name: '333', parentId: undefined, children: [] },
+      { id: 5, parentId: 22, name: '555', children: [] }
     ])
   })
 

@@ -32,6 +32,8 @@ function toArrayTree (array, options) {
   var optParentKey = opts.parentKey
   var optChildren = opts.children
   var optMapChildren = opts.mapChildren
+  var optRootValues = opts.rootValues
+  var optRootParentVal = opts.rootParentValue
   var optSortKey = opts.sortKey
   var optReverse = opts.reverse
   var optData = opts.data
@@ -40,6 +42,8 @@ function toArrayTree (array, options) {
   var empTreeMaps = {}
   var idDefMaps = {}
   var idEmpMaps = {}
+  var rootIdMaps = {}
+  var isDefaultRootParentVal = optRootParentVal === undefined
   var id, treeData, parentId, idMaps, isIdNull, isPdNull, idTreeMaps, pdTreeMaps
 
   if (optSortKey) {
@@ -47,6 +51,13 @@ function toArrayTree (array, options) {
     if (optReverse) {
       array = array.reverse()
     }
+  }
+
+
+  if (optRootValues) {
+    each(optRootValues, function (v) {
+      rootIdMaps[v] = 1
+    })
   }
 
   each(array, function (item) {
@@ -94,8 +105,18 @@ function toArrayTree (array, options) {
       treeData[optMapChildren] = idTreeMaps[id]
     }
 
-    if (!optStrict || (optStrict && isPdNull)) {
-      if (!idMaps[parentId]) {
+    if (optRootValues) {
+      if (rootIdMaps[id]) {
+        result.push(treeData)
+      }
+    } else if (isDefaultRootParentVal) {
+      if (!optStrict || (optStrict && isPdNull)) {
+        if (!idMaps[parentId]) {
+          result.push(treeData)
+        }
+      }
+    } else {
+      if (parentId === optRootParentVal) {
         result.push(treeData)
       }
     }

@@ -4,12 +4,22 @@ export interface ToArrayTreeOptions<T> {
   strict?: boolean;
   key?: string;
   parentKey?: string;
+  /**
+   * 支持指定根节点的值。
+   * 优先级最高
+   */
+  rootValues?: (string | number)[]
+  /**
+   * 支持指定根节点的值。
+   * 默认情况下，如果 strict=false，则 parentKey 值不存节点内的算根节点，如果 strict=true，则 parentKey 值等于 null 的算根节点。
+   */
+  rootParentValue?: string | number | null
   children?: string;
   mapChildren?: string;
   sortKey?: OrderByFieldConfs<T, any>;
   data?: string;
   /**
-   * 已废弃，被 sortKey: { ...,order: 'desc' } 替换
+   * 已废弃，被 sortKey: { field: 'name', order: 'desc' } 替换
    * @deprecated
    */
   reverse?: boolean;
