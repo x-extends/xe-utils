@@ -30,7 +30,7 @@ export interface ToArrayTreeOptions<T> {
  * @param {Array} list 数组
  * @param {Object} options {strict: false, parentKey: 'parentId', key: 'id', children: 'children', mapChildren: '', data: 'data'}
  */
-export declare function toArrayTree<T>(list: T[], options?: ToArrayTreeOptions<T>): T[];
+export declare function toArrayTree<T>(list: T[] | undefined, options?: ToArrayTreeOptions<T>): T[];
 export declare function toArrayTree(list: any, options?: ToArrayTreeOptions<any>): any[];
 
 declare module './ctor' {

@@ -3,7 +3,7 @@
  * @param date 字符串/日期/时间戳
  * @param offset 指定小时(null默认当前分)、0时(first)、23时(last)
  */
-export declare function getWhatDay(date: string | Date | number, offset: number): Date;
+export declare function getWhatDay(date: string | Date | number | null | undefined, offset: number): Date;
 
 /**
  * 返回前几天或后几天的日期
@@ -11,7 +11,7 @@ export declare function getWhatDay(date: string | Date | number, offset: number)
  * @param offset 天偏移量(默认0)、前几天、后几天
  * @param mode 指定小时(null默认当前分)、0时(first)、23时(last)
  */
-export declare function getWhatDay(date: string | Date | number, offset: number, mode: 'first' | 'last'): Date;
+export declare function getWhatDay(date: string | Date | number | null | undefined, offset: number, mode: 'first' | 'last'): Date;
 
 declare module './ctor' {
   interface XEUtilsMethods {

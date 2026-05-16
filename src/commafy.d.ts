@@ -30,7 +30,7 @@ export interface CommafyOptions {
  * @param num 数值/字符串
  * @param options 可选参数
  */
-export declare function commafy(num: string | number, options?: CommafyOptions): string;
+export declare function commafy(num: string | number | null | undefined, options?: CommafyOptions): string;
 
 declare module './ctor' {
   interface XEUtilsMethods {

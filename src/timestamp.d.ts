@@ -3,7 +3,7 @@
  * @param date 字符串/日期/时间戳
  * @param format 解析格式 yyyy MM dd HH mm ss SSS
  */
-export declare function timestamp(date: string | Date | number, format?: string | null | undefined): number;
+export declare function timestamp(date: string | Date | number | null | undefined, format?: string | null | undefined): number;
 export declare function timestamp(date: any, format?: string | null | undefined): number;
 
 declare module './ctor' {

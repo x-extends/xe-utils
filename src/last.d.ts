@@ -2,7 +2,7 @@
  * 获取对象最后一个值
  * @param list 数组
  */
-export declare function last<T>(list: T[] | ArrayLike<T>): T;
+export declare function last<T>(list: T[] | ArrayLike<T> | undefined): T;
 
 /**
  * 获取对象最后一个值

@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function findLast<T, C = any>(array: T[], iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): T;
+export declare function findLast<T, C = any>(array: T[] | undefined, iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): T;
 
 /**
  * 从右至左遍历，匹配最近的一条数据

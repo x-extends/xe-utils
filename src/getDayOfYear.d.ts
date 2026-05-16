@@ -3,7 +3,7 @@
  * @param date 字符串/日期/时间戳
  * @param offset 年偏移量(默认0)、前几个年、后几个年
  */
-export declare function getDayOfYear(date: string | Date | number, offset: number): Date;
+export declare function getDayOfYear(date: string | Date | number | null | undefined, offset: number): Date;
 
 declare module './ctor' {
   interface XEUtilsMethods {

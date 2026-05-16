@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function find<T, C = any>(list: T[], iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): T;
+export declare function find<T, C = any>(list: T[] | undefined, iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): T;
 
 /**
  * 从左至右遍历，匹配最近的一条数据

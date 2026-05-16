@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function findKey<T, C = any>(list: T[], iterate: (this: C, item: T, index: number, list: T[])=> boolean, context?: C): number;
+export declare function findKey<T, C = any>(list: T[] | undefined, iterate: (this: C, item: T, index: number, list: T[])=> boolean, context?: C): number;
 
 /**
  * 查找匹配第一条数据的键

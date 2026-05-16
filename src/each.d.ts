@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function each<T, C = any>(list: T[] | ArrayLike<T>, iterate: (this: C, item: T, index: number, list: T[]) => void, context?: CSSKeyframeRule): void;
+export declare function each<T, C = any>(list: T[] | ArrayLike<T> | undefined, iterate: (this: C, item: T, index: number, list: T[]) => void, context?: CSSKeyframeRule): void;
 
 /**
  * 通用迭代器

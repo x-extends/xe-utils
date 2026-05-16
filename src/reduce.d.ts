@@ -6,7 +6,7 @@
  * @param initialValue 默认值
  * @example
  */
-export declare function reduce<T, U>(array: T[], iterate?: (previous: U, item: T, index: number, list: T[]) => U, initialValue?: U): U;
+export declare function reduce<T, U>(array: T[] | undefined, iterate?: (previous: U, item: T, index: number, list: T[]) => U, initialValue?: U): U;
 
 declare module './ctor' {
   interface XEUtilsMethods {

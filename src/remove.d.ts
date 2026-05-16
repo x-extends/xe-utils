@@ -3,7 +3,7 @@
  * @param list 对象
  * @param iterate 迭代器/值
  */
-export declare function remove<T, C>(list: T[], iterate: number | string | ((this: C, item: T, index: number, list: T[]) => boolean), context?: C): T[];
+export declare function remove<T, C>(list: T[] | undefined, iterate: number | string | ((this: C, item: T, index: number, list: T[]) => boolean), context?: C): T[];
 
 /**
  * 移除对象属性

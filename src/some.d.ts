@@ -4,7 +4,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function some<T>(list: T[], iterate: (item: T, index: number, list: T[]) => boolean, context?: any): boolean;
+export declare function some<T>(list: T[] | undefined, iterate: (item: T, index: number, list: T[]) => boolean, context?: any): boolean;
 
 declare module './ctor' {
   interface XEUtilsMethods {

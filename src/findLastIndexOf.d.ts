@@ -4,7 +4,7 @@
  * @param iterate 迭代器
  * @param context 上下文
  */
-export declare function findLastIndexOf<T, C = any>(list: T[], iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): number;
+export declare function findLastIndexOf<T, C = any>(list: T[] | undefined, iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): number;
 
 /**
  * 从最后开始的索引值,返回对象第一个索引值

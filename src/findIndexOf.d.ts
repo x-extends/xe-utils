@@ -4,7 +4,7 @@
  * @param iterate 迭代器
  * @param context 上下文
  */
-export declare function findIndexOf<T, C = any>(list: T[], iterate: (this: C, item: T, index: any, obj: T[]) => boolean, context?: C): number;
+export declare function findIndexOf<T, C = any>(list: T[] | undefined, iterate: (this: C, item: T, index: any, obj: T[]) => boolean, context?: C): number;
 
 /**
  * 返回对象第一个索引值

@@ -47,14 +47,14 @@ export interface DateDiffResult {
  * @param startDate 开始日期
  * @param endDate 结束日期或当期日期
  */
-export declare function getDateDiff(startDate: string | Date | number, endDate: string | Date | number): DateDiffResult;
+export declare function getDateDiff(startDate: string | Date | number | null | undefined, endDate: string | Date | number): DateDiffResult;
 
 /**
  * 返回两个日期之间差距,如果结束日期小于开始日期 done 为 fasle
  * @param startDate 开始日期
  * @param endDate 结束日期或当期日期
  */
-export declare function getDateDiff(startDate: string | Date | number, endDate: string | Date | number): DateDiffResult;
+export declare function getDateDiff(startDate: string | Date | number | null | undefined, endDate: string | Date | number): DateDiffResult;
 
 declare module './ctor' {
   interface XEUtilsMethods {

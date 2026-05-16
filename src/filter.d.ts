@@ -5,7 +5,7 @@
  * @param iterate 回调
  * @param context 上下文
  */
-export declare function filter<T, C = any>(array: T[], iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): T[];
+export declare function filter<T, C = any>(array: T[] | undefined, iterate: (this: C, item: T, index: number, list: T[]) => boolean, context?: C): T[];
 
 /**
  * 查找匹配第一条数据

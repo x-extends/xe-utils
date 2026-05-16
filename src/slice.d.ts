@@ -4,7 +4,7 @@
  * @param start 迭代器/属性
  * @param end 上下文
  */
-export declare function slice<T>(array: T[], start: number, end?: number): T[];
+export declare function slice<T>(array: T[] | undefined, start: number, end?: number): T[];
 
 declare module './ctor' {
   interface XEUtilsMethods {
