@@ -4,9 +4,13 @@ const del = require('del')
 const replace = require('gulp-replace')
 const rename = require('gulp-rename')
 const pack = require('./package.json')
+const { rollup } = require('rollup')
+const commonjs = require('@rollup/plugin-commonjs')
 
+const exportModuleName = 'XEUtils'
 const esmOutDir = 'es'
 const commOutDir = 'lib'
+const distOutDir = 'dist'
 
 // 已废弃
 const oldOutDir = 'dist'
@@ -63,7 +67,27 @@ gulp.task('build_es_var', () => {
     .pipe(gulp.dest(esmOutDir))
 })
 
-gulp.task('build_es', gulp.series('build_es_code', 'build_d_ts', 'build_es_var', function () {
+gulp.task('build_es', gulp.series('build_es_code', 'build_d_ts', 'build_es_var', async function () {
+  const rollupConfig = {
+    input:`${esmOutDir}/index.js`,
+    output: {
+      file: `${distOutDir}/all.esm.js`,
+      format: 'esm',
+      name: exportModuleName,
+      globals: {
+        vue: 'Vue',
+        'xe-utils': 'XEUtils'
+      }
+    },
+    plugins: [commonjs()],
+    external: []
+  }
+
+  fs.mkdirSync(distOutDir, { recursive: true })
+  const bundle = await rollup(rollupConfig)
+  const { output } = await bundle.generate(rollupConfig.output)
+  fs.writeFileSync(`${distOutDir}/all.esm.js`, output[0].code, 'utf-8')
+
   return gulp.src(`${esmOutDir}/index.js`)
     .pipe(rename({
       basename: 'index',

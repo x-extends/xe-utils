@@ -262,7 +262,16 @@ describe('Number functions', () => {
     ).toEqual(-52.64)
     expect(
       XEUtils.round(-52.635, 2)
+    ).toEqual(-52.64)
+    expect(
+      XEUtils.round(-52.634, 2, false)
     ).toEqual(-52.63)
+    expect(
+      XEUtils.round(-52.635, 2, false)
+    ).toEqual(-52.63)
+    expect(
+      XEUtils.round(-52.636, 2, false)
+    ).toEqual(-52.64)
     expect(
       XEUtils.round(-52.634, 2)
     ).toEqual(-52.63)
@@ -721,7 +730,16 @@ describe('Number functions', () => {
     ).toEqual((0.065).toFixed(4))
     expect(
       XEUtils.toFixed(-0.065, 2)
+    ).toEqual('-0.07')
+    expect(
+      XEUtils.toFixed(-0.064, 2, false)
     ).toEqual('-0.06')
+    expect(
+      XEUtils.toFixed(-0.065, 2, false)
+    ).toEqual('-0.06')
+    expect(
+      XEUtils.toFixed(-0.066, 2, false)
+    ).toEqual('-0.07')
     expect(
       XEUtils.toFixed(-0.065, 3)
     ).toEqual('-0.065')

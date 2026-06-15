@@ -7,13 +7,14 @@ var helperNumberOffsetPoint = require('./helperNumberOffsetPoint')
 /**
   * 将数值四舍五入并格式化为固定小数位的字符串
   *
- * @param {string|number} num 数值
- * @param {number} digits 小数保留位数
+  * @param {string|number} num 数值
+  * @param {number} digits 小数保留位数
+  * @param {number} awayZero 是否远离零四舍五入
   * @return {String}
   */
-function toFixed (num, digits) {
+function toFixed (num, digits, awayZero) {
   digits = digits >> 0
-  var str = toValueString(round(num, digits))
+  var str = toValueString(round(num, digits, awayZero))
   var nums = str.split('.')
   var intStr = nums[0]
   var floatStr = nums[1] || ''
