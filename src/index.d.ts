@@ -148,6 +148,7 @@ export * from './getYearDay'
 export * from './getYearWeek'
 export * from './getMonthWeek'
 export * from './getDayOfYear'
+export * from './getDayOfQuarter'
 export * from './getDayOfMonth'
 export * from './getDateDiff'
 

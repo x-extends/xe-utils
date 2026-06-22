@@ -14,7 +14,7 @@ export declare function getWhatWeek(date: string | Date | number | null | undefi
  * @param offsetDay 获取星期几（星期天0、星期一1、星期二2、星期三3、星期四4、星期五5、星期六6）
  * @param firstDay 周视图的起始天，默认星期一
  */
-export declare function getWhatWeek(date: string | Date | number | null | undefined, offsetWeek?: number, offsetDay?: FirstDayOfWeek, firstDay?: FirstDayOfWeek): Date;
+export declare function getWhatWeek(date: string | Date | number | null | undefined, offsetWeek?: number, offsetDay?: FirstDayOfWeek | 'first' | 'last', firstDay?: FirstDayOfWeek): Date;
 
 declare module './ctor' {
   interface XEUtilsMethods {

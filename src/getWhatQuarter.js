@@ -28,7 +28,7 @@ function getWhatQuarter (date, offset, day) {
   var currMonth, monthOffset = offset && !isNaN(offset) ? offset * 3 : 0
   date = toStringDate(date)
   if (isValidDate(date)) {
-    currMonth = (getQuarterNumber(date) - 1) * 3
+    currMonth = ((getQuarterNumber(date) - 1) * 3) + (day === 'last' ? 2 : 0)
     date.setMonth(currMonth)
     return getWhatMonth(date, monthOffset, day)
   }

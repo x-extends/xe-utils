@@ -11,10 +11,10 @@ var isLeapYear = require('./isLeapYear')
   * @param {Number} offset 年(默认当年)、前几个年、后几个年
   * @return {Number}
   */
-function getDayOfYear (date, year) {
+function getDayOfYear (date, offsetNum) {
   date = toStringDate(date)
   if (isValidDate(date)) {
-    return isLeapYear(getWhatYear(date, year)) ? 366 : 365
+    return isLeapYear(getWhatYear(date, offsetNum)) ? 366 : 365
   }
   return NaN
 }

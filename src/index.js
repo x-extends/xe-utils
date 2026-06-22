@@ -151,6 +151,7 @@ var getYearDay = require('./getYearDay')
 var getYearWeek = require('./getYearWeek')
 var getMonthWeek = require('./getMonthWeek')
 var getDayOfYear = require('./getDayOfYear')
+var getDayOfQuarter = require('./getDayOfQuarter')
 var getDayOfMonth = require('./getDayOfMonth')
 var getDateDiff = require('./getDateDiff')
 
@@ -344,6 +345,7 @@ assign(XEUtils, {
   getYearWeek: getYearWeek,
   getMonthWeek: getMonthWeek,
   getDayOfYear: getDayOfYear,
+  getDayOfQuarter: getDayOfQuarter,
   getDayOfMonth: getDayOfMonth,
   getDateDiff: getDateDiff,
 

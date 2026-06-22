@@ -22,16 +22,26 @@ var isNumber = require('./isNumber')
 function getWhatWeek (date, offsetWeek, offsetDay, firstDay) {
   date = toStringDate(date)
   if (isValidDate(date)) {
-    var hasCustomDay = isNumber(offsetDay)
     var hasStartDay = isNumber(firstDay)
     var whatDayTime = helperGetDateTime(date)
+    var viewStartDay = hasStartDay ? firstDay : setupDefaults.firstDayOfWeek
+    var currentDay = date.getDay()
+    var isValidDay = false
+    var offsetNum, customDay
+    if (offsetDay === 'first') {
+      isValidDay = true
+      customDay = viewStartDay
+    } else if (offsetDay === 'last') {
+      isValidDay = true
+      customDay = (viewStartDay + 6) % 7
+    } else {
+      customDay = isNumber(offsetDay) ? offsetDay : currentDay
+      isValidDay = true
+    }
     // 如果指定了天或周视图起始天
-    if (hasCustomDay || hasStartDay) {
-      var viewStartDay = hasStartDay ? firstDay : setupDefaults.firstDayOfWeek
-      var currentDay = date.getDay()
-      var customDay = hasCustomDay ? offsetDay : currentDay
+    if (isValidDay) {
       if (currentDay !== customDay) {
-        var offsetNum = 0
+        offsetNum = 0
         if (viewStartDay > currentDay) {
           offsetNum = -(7 - viewStartDay + currentDay)
         } else if (viewStartDay < currentDay) {

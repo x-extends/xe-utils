@@ -29,7 +29,7 @@ describe('Date functions', () => {
       XEUtils.timestamp(/\d/).toString()
     ).toEqual('NaN')
     expect(
-      XEUtils.timestamp(function () {}).toString()
+      XEUtils.timestamp(function () { }).toString()
     ).toEqual('NaN')
     expect(
       XEUtils.timestamp() >= time
@@ -161,7 +161,7 @@ describe('Date functions', () => {
       XEUtils.toStringDate('null') instanceof Date
     ).toEqual(true)
     expect(
-      XEUtils.toStringDate(function () {}) instanceof Date
+      XEUtils.toStringDate(function () { }) instanceof Date
     ).toEqual(true)
     expect(
       XEUtils.toStringDate('2') instanceof Date
@@ -209,7 +209,7 @@ describe('Date functions', () => {
       XEUtils.toStringDate('null').toString()
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toStringDate(function () {}).toString()
+      XEUtils.toStringDate(function () { }).toString()
     ).toEqual('Invalid Date')
     expect(
       XEUtils.toStringDate('2').toString()
@@ -416,7 +416,7 @@ describe('Date functions', () => {
       XEUtils.toDateString([])
     ).toEqual('Invalid Date')
     expect(
-      XEUtils.toDateString(function () {})
+      XEUtils.toDateString(function () { })
     ).toEqual('Invalid Date')
     expect(
       XEUtils.toDateString([2018, 1, 1])
@@ -740,7 +740,7 @@ describe('Date functions', () => {
     ).toEqual(new Date(2017, 6, 1, 0, 0, 0, 0))
     expect(
       XEUtils.getWhatQuarter('2017-12-20', 1, 'last')
-    ).toEqual(new Date(2018, 0, 31, 23, 59, 59, 999))
+    ).toEqual(new Date(2018, 2, 31, 23, 59, 59, 999))
     expect(
       XEUtils.getWhatQuarter('2021-01-31', -1)
     ).toEqual(new Date(2020, 9, 31))
@@ -752,7 +752,7 @@ describe('Date functions', () => {
     ).toEqual(new Date(2021, 3, 30))
     expect(
       XEUtils.getWhatQuarter('2021-01-31', 1, 'last')
-    ).toEqual(new Date(2021, 3, 30, 23, 59, 59, 999))
+    ).toEqual(new Date(2021, 5, 30, 23, 59, 59, 999))
     expect(
       XEUtils.getWhatQuarter('2021-01-31', 6)
     ).toEqual(new Date(2022, 6, 31))
@@ -926,6 +926,12 @@ describe('Date functions', () => {
       XEUtils.getWhatWeek('2017-12-30', 0, 0, 0)
     ).toEqual(new Date(2017, 11, 24))
     expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'first', 0)
+    ).toEqual(new Date(2017, 11, 24))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'last', 0)
+    ).toEqual(new Date(2017, 11, 30))
+    expect(
       XEUtils.getWhatWeek('2017-12-01', 0, 2, 0)
     ).toEqual(new Date(2017, 10, 28))
     expect(
@@ -978,6 +984,12 @@ describe('Date functions', () => {
       XEUtils.getWhatWeek('2017-12-30', 0, 0, 1)
     ).toEqual(new Date(2017, 11, 31))
     expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'first', 1)
+    ).toEqual(new Date(2017, 11, 25))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'last', 1)
+    ).toEqual(new Date(2017, 11, 31))
+    expect(
       XEUtils.getWhatWeek('2017-12-01', 0, 3, 1)
     ).toEqual(new Date(2017, 10, 29))
     expect(
@@ -1026,6 +1038,12 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatWeek('2017-12-30', 0, 0, 2)
     ).toEqual(new Date(2017, 11, 31))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'first', 2)
+    ).toEqual(new Date(2017, 11, 26))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'last', 2)
+    ).toEqual(new Date(2018, 0, 1))
     expect(
       XEUtils.getWhatWeek('2017-12-01', 0, 4, 2)
     ).toEqual(new Date(2017, 10, 30))
@@ -1099,6 +1117,12 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatWeek('2017-12-30', 0, 6, 3)
     ).toEqual(new Date(2017, 11, 30))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 'first', 3)
+    ).toEqual(new Date(2017, 11, 27))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'last', 3)
+    ).toEqual(new Date(2018, 0, 2))
 
     expect(
       XEUtils.getWhatWeek('2017-12-01', 0, 0, 4)
@@ -1148,6 +1172,12 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatWeek('2017-12-30', 0, 2, 4)
     ).toEqual(new Date(2018, 0, 2))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 'first', 4)
+    ).toEqual(new Date(2017, 11, 28))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'last', 4)
+    ).toEqual(new Date(2018, 0, 3))
 
     expect(
       XEUtils.getWhatWeek('2017-12-01', 0, 0, 5)
@@ -1197,6 +1227,12 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatWeek('2017-12-30', 0, 6, 5)
     ).toEqual(new Date(2017, 11, 30))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 'first', 5)
+    ).toEqual(new Date(2017, 11, 29))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'last', 5)
+    ).toEqual(new Date(2018, 0, 4))
 
     expect(
       XEUtils.getWhatWeek('2017-12-01', 0, 0, 6)
@@ -1252,6 +1288,15 @@ describe('Date functions', () => {
     expect(
       XEUtils.getWhatWeek('2017-12-30', 0, 2, 6)
     ).toEqual(new Date(2018, 0, 2))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 'first', 6)
+    ).toEqual(new Date(2017, 11, 23))
+    expect(
+      XEUtils.getWhatWeek('2017-12-29', 0, 'last', 6)
+    ).toEqual(new Date(2017, 11, 29))
+    expect(
+      XEUtils.getWhatWeek('2017-12-30', 0, 'last', 6)
+    ).toEqual(new Date(2018, 0, 5))
   })
 
   test('getWhatDay()', () => {
@@ -1494,7 +1539,7 @@ describe('Date functions', () => {
     ).toEqual(new Date(2017, 11, 20, 12, 30, 39))
     expect(
       XEUtils.getWhatSeconds(new Date(2017, 11, 10, 12, 30, 40), -1)
-    ).toEqual(new Date(2017, 11, 10,  12, 30, 39))
+    ).toEqual(new Date(2017, 11, 10, 12, 30, 39))
     expect(
       XEUtils.getWhatSeconds('2017-12-20 12:30:40', 1)
     ).toEqual(new Date(2017, 11, 20, 12, 30, 41))
@@ -2530,6 +2575,120 @@ describe('Date functions', () => {
     expect(
       XEUtils.getDayOfYear('2020-12-10')
     ).toEqual(366)
+    expect(
+      XEUtils.getDayOfYear('2020-12-10') === 366
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfYear('2026-06-22') === 365
+    ).toEqual(true)
+    expect(
+      XEUtils.isNumber(XEUtils.getDayOfYear('2026-06-22'))
+    ).toEqual(true)
+  })
+
+  test('getDayOfQuarter()', () => {
+    expect(
+      isNaN(XEUtils.getDayOfQuarter())
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter(0))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter(-1))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter(null))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter(undefined))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter({}))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter([]))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter([2018, 1, 1]))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter({ time: 2018 }))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter('null'))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter(new Date('')))
+    ).toEqual(true)
+    expect(
+      isNaN(XEUtils.getDayOfQuarter(new Date('abc')))
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfQuarter().toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter(0).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter(-1).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter(null).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter(undefined).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter({}).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter([]).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter([2018, 1, 1]).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter({ time: 2018 }).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter('null').toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter(new Date('')).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter(new Date('abc')).toString()
+    ).toEqual('NaN')
+    expect(
+      XEUtils.getDayOfQuarter(date)
+    ).toEqual(90)
+    expect(
+      XEUtils.getDayOfQuarter(time)
+    ).toEqual(90)
+    expect(
+      XEUtils.getDayOfQuarter('2017-12-20')
+    ).toEqual(92)
+    expect(
+      XEUtils.getDayOfQuarter(new Date(2017, 11, 20))
+    ).toEqual(92)
+    expect(
+      XEUtils.getDayOfQuarter('2017-12-20') === XEUtils.getDayOfQuarter(new Date(2017, 11, 20))
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfQuarter('2017-12-10', -1)
+    ).toEqual(92)
+    expect(
+      XEUtils.getDayOfQuarter(new Date(2017, 11, 10), -1)
+    ).toEqual(92)
+    expect(
+      XEUtils.getDayOfQuarter('2017-12-10', -1) === XEUtils.getDayOfQuarter(new Date(2017, 11, 10), -1)
+    ).toEqual(true)
+    expect(
+      XEUtils.getDayOfQuarter('2017-12-20', 1)
+    ).toEqual(90)
+    expect(
+      XEUtils.getDayOfQuarter('2016-06-27')
+    ).toEqual(91)
   })
 
   test('getDayOfMonth()', () => {
