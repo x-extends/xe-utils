@@ -4,6 +4,7 @@ var helperGetUTCDateTime = require('./helperGetUTCDateTime')
 var helperGetDateTime = require('./helperGetDateTime')
 
 var isString = require('./isString')
+var isNumber = require('./isNumber')
 var isDate = require('./isDate')
 
 function getParseRule (txt) {
@@ -153,7 +154,7 @@ function parseTimeZone (resMaps) {
 function toStringDate (str, format) {
   if (str) {
     var isDType = isDate(str)
-    if (isDType || (!format && /^[0-9]{11,15}$/.test(str))) {
+    if (isDType || ((!format || isNumber(str)) && /^[0-9]{11,15}$/.test(str))) {
       return new Date(isDType ? helperGetDateTime(str) : staticParseInt(str))
     }
     if (isString(str)) {
