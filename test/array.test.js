@@ -115,9 +115,6 @@ describe('Array functions', () => {
       XEUtils.slice(false)
     ).toEqual([])
     expect(
-      XEUtils.slice('')
-    ).toEqual([])
-    expect(
       XEUtils.slice(/\d/)
     ).toEqual([])
     expect(
@@ -153,6 +150,26 @@ describe('Array functions', () => {
       ).toEqual([22, 33])
     }
     method(11, 22, 33, 44)
+
+    
+    expect(
+      XEUtils.slice('')
+    ).toEqual('')
+    expect(
+      XEUtils.slice('a', 0)
+    ).toEqual('a')
+    expect(
+      XEUtils.slice('abcdefg', -1)
+    ).toEqual('g')
+    expect(
+      XEUtils.slice('abcdefg', -3)
+    ).toEqual('efg')
+    expect(
+      XEUtils.slice('abcdefg', 1)
+    ).toEqual('bcdefg')
+    expect(
+      XEUtils.slice('abcdefg', 1, 3)
+    ).toEqual('bc')
   })
 
   test('orderBy()', () => {
