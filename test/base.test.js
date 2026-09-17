@@ -1934,6 +1934,18 @@ describe('Base functions', () => {
     expect(
       rest
     ).toEqual([['1', '0'], ['2', '1'], ['3', '2'], ['4', '3'], ['5', '4']])
+
+    const test3Map = Object.create(null)
+    test3Map.a = 11
+    test3Map.e = 55
+    test3Map.c = 33
+    rest = []
+    XEUtils.each(test3Map, (val, key, obj) => {
+      rest.push([val, key])
+    })
+    expect(
+      rest
+    ).toEqual([[11, 'a'], [55, 'e'], [33, 'c']])
   })
 
   test('lastEach()', () => {

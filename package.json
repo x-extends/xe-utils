@@ -1,6 +1,6 @@
 {
   "name": "xe-utils",
-  "version": "4.0.13",
+  "version": "4.0.14",
   "description": "JavaScript 函数库、工具类",
   "main": "index.js",
   "module": "es/index.esm.js",
@@ -24,9 +24,9 @@
   "devDependencies": {
     "@rollup/plugin-commonjs": "^29.0.0",
     "@types/node": "20.14.8",
-    "@babel/core": "~7.28.6",
-    "@babel/preset-env": "~7.28.6",
-    "@babel/runtime": "~7.28.6",
+    "@babel/core": "~7.29.7",
+    "@babel/preset-env": "~7.29.7",
+    "@babel/runtime": "~7.29.7",
     "@typescript-eslint/eslint-plugin": "~4.6.1",
     "@typescript-eslint/parser": "~4.6.1",
     "del": "~6.0.0",
