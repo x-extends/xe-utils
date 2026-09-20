@@ -12,7 +12,7 @@ type LastEachIteratee<V, K, C, T = unknown> = (
  * @param context 上下文
  */
 declare function lastEach<T, Ctx = unknown>(
-  collection: T[],
+  collection: T[] | null | undefined,
   iteratee: LastEachIteratee<T, number, T[], Ctx>,
   context?: Ctx
 ): void;
@@ -24,7 +24,7 @@ declare function lastEach<T, Ctx = unknown>(
  * @param context 上下文
  */
 declare function lastEach<T, Ctx = unknown>(
-  collection: Set<T>,
+  collection: Set<T> | null | undefined,
   iteratee: LastEachIteratee<T, T, Set<T>, Ctx>,
   context?: Ctx
 ): void;
@@ -36,7 +36,7 @@ declare function lastEach<T, Ctx = unknown>(
  * @param context 上下文
  */
 declare function lastEach<K, V, Ctx = unknown>(
-  collection: Map<K, V>,
+  collection: Map<K, V> | null | undefined,
   iteratee: LastEachIteratee<V, K, Map<K, V>, Ctx>,
   context?: Ctx
 ): void;
@@ -48,7 +48,7 @@ declare function lastEach<K, V, Ctx = unknown>(
  * @param context 上下文
  */
 declare function lastEach<T extends object, Ctx = unknown>(
-  collection: T,
+  collection: T | null | undefined,
   iteratee: LastEachIteratee<T[keyof T], Extract<keyof T, string>, T, Ctx>,
   context?: Ctx
 ): void;

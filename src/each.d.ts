@@ -12,7 +12,7 @@ type EachIteratee<V, K, C, T = unknown> = (
  * @param context 上下文
  */
 declare function each<T, Ctx = unknown>(
-  collection: T[],
+  collection: T[] | null | undefined,
   iteratee: EachIteratee<T, number, T[], Ctx>,
   context?: Ctx
 ): void;
@@ -24,7 +24,7 @@ declare function each<T, Ctx = unknown>(
  * @param context 上下文
  */
 declare function each<T, Ctx = unknown>(
-  collection: Set<T>,
+  collection: Set<T> | null | undefined,
   iteratee: EachIteratee<T, T, Set<T>, Ctx>,
   context?: Ctx
 ): void;
@@ -36,7 +36,7 @@ declare function each<T, Ctx = unknown>(
  * @param context 上下文
  */
 declare function each<K, V, Ctx = unknown>(
-  collection: Map<K, V>,
+  collection: Map<K, V> | null | undefined,
   iteratee: EachIteratee<V, K, Map<K, V>, Ctx>,
   context?: Ctx
 ): void;
@@ -48,7 +48,7 @@ declare function each<K, V, Ctx = unknown>(
  * @param context 上下文
  */
 declare function each<T extends object, Ctx = unknown>(
-  collection: T,
+  collection: T | null | undefined,
   iteratee: EachIteratee<T[keyof T], Extract<keyof T, string>, T, Ctx>,
   context?: Ctx
 ): void;
