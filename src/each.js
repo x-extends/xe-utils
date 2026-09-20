@@ -1,6 +1,10 @@
 var isArray = require('./isArray')
+var isMap = require('./isMap')
+var isSet = require('./isSet')
 var arrayEach = require('./arrayEach')
 var objectEach = require('./objectEach')
+var mapEach = require('./mapEach')
+var setEach = require('./setEach')
 
 /**
   * 迭代器
@@ -12,7 +16,15 @@ var objectEach = require('./objectEach')
   */
 function each (obj, iterate, context) {
   if (obj) {
-    return (isArray(obj) ? arrayEach : objectEach)(obj, iterate, context)
+    if (isArray(obj)) {
+      arrayEach(obj, iterate, context)
+    } else if (isMap(obj)) {
+      mapEach(obj, iterate, context)
+    } else if (isSet(obj)) {
+      setEach(obj, iterate, context)
+    } else {
+      objectEach(obj, iterate, context)
+    }
   }
   return obj
 }

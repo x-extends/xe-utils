@@ -1,6 +1,10 @@
 var isArray = require('./isArray')
 var lastArrayEach = require('./lastArrayEach')
 var lastObjectEach = require('./lastObjectEach')
+var lastMapEach = require('./lastMapEach')
+var lastSetEach = require('./lastSetEach')
+var isSet = require('./isSet')
+var isMap = require('./isMap')
 
 /**
   * 迭代器,从最后开始迭代
@@ -12,7 +16,15 @@ var lastObjectEach = require('./lastObjectEach')
   */
 function lastEach (obj, iterate, context) {
   if (obj) {
-    return (isArray(obj) ? lastArrayEach : lastObjectEach)(obj, iterate, context)
+    if (isArray(obj)) {
+      lastArrayEach(obj, iterate, context)
+    } else if (isMap(obj)) {
+      lastMapEach(obj, iterate, context)
+    } else if (isSet(obj)) {
+      lastSetEach(obj, iterate, context)
+    } else {
+      lastObjectEach(obj, iterate, context)
+    }
   }
   return obj
 }

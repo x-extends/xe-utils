@@ -1935,17 +1935,39 @@ describe('Base functions', () => {
       rest
     ).toEqual([['1', '0'], ['2', '1'], ['3', '2'], ['4', '3'], ['5', '4']])
 
-    const test3Map = Object.create(null)
-    test3Map.a = 11
-    test3Map.e = 55
-    test3Map.c = 33
+    const test3Obj = Object.create(null)
+    test3Obj.a = 11
+    test3Obj.e = 55
+    test3Obj.c = 33
     rest = []
-    XEUtils.each(test3Map, (val, key, obj) => {
+    XEUtils.each(test3Obj, (val, key, obj) => {
       rest.push([val, key])
     })
     expect(
       rest
     ).toEqual([[11, 'a'], [55, 'e'], [33, 'c']])
+
+    const test4Map = new Map([
+      [11, 'aa'],
+      [22, 'bb'],
+      [33, 'cc']
+    ])
+    rest = []
+    XEUtils.each(test4Map, (val, key, obj) => {
+      rest.push([val, key])
+    })
+    expect(
+      rest
+    ).toEqual([['aa', 11], ['bb', 22], ['cc', 33]])
+
+    const test5Set = new Set(['aa', 'cc', 'aa', 'bb', 'cc', 'ee'])
+    rest = []
+    XEUtils.each(test5Set, (val, key, obj) => {
+      rest.push(val)
+    })
+    expect(
+      rest
+    ).toEqual(['aa', 'cc', 'bb', 'ee'])
   })
 
   test('lastEach()', () => {
@@ -1970,6 +1992,40 @@ describe('Base functions', () => {
     expect(
       rest
     ).toEqual([['5', '4'], ['4', '3'], ['3', '2'], ['2', '1'], ['1', '0']])
+
+
+    const test3Obj = Object.create(null)
+    test3Obj.a = 11
+    test3Obj.e = 55
+    test3Obj.c = 33
+    rest = []
+    XEUtils.lastEach(test3Obj, (val, key, obj) => {
+      rest.push([val, key])
+    })
+    expect(
+      rest
+    ).toEqual([[33, 'c'], [55, 'e'], [11, 'a']])
+    const test4Map = new Map([
+      [11, 'aa'],
+      [22, 'bb'],
+      [33, 'cc']
+    ])
+    rest = []
+    XEUtils.lastEach(test4Map, (val, key, obj) => {
+      rest.push([val, key])
+    })
+    expect(
+      rest
+    ).toEqual([['cc', 33], ['bb', 22], ['aa', 11]])
+
+    const test5Set = new Set(['aa', 'cc', 'aa', 'bb', 'cc', 'ee'])
+    rest = []
+    XEUtils.lastEach(test5Set, (val, key, obj) => {
+      rest.push(val)
+    })
+    expect(
+      rest
+    ).toEqual(['ee', 'bb', 'cc', 'aa'])
   })
 
   test('has()', () => {

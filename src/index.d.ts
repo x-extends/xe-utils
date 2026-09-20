@@ -5,6 +5,10 @@ export * from './assign'
 export * from './objectEach'
 export * from './lastObjectEach'
 export * from './objectMap'
+export * from './mapEach'
+export * from './lastMapEach'
+export * from './setEach'
+export * from './lastSetEach'
 export * from './merge'
 
 // array
