@@ -1,9 +1,7 @@
-var isFunction = require('./isFunction')
-
 var objectHasOwnProperty = Object.prototype.hasOwnProperty
 var objHasOwn = Object.hasOwn
 
-var handleObjHasOwn = isFunction(objHasOwn) ? objHasOwn: function(obj, key) {
+var handleObjHasOwn = objHasOwn ? objHasOwn: function(obj, key) {
   return objectHasOwnProperty.call(obj, key)
 }
 
