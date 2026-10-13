@@ -589,8 +589,11 @@ XEUtils.objectMap({a: {type: 'a'}, b: {type: 'b'}}, item => item.type) // {a: "a
 #### `pick(obj, array)`
 根据 `keys` 过滤指定的属性值，或者接收一个判断函数，返回一个新的对象。
 
+指定 `keys` 时，返回对象的属性顺序与 `array` 的顺序一致；接收判断函数时保持源对象的属性顺序。
+
 ```javascript
 XEUtils.pick({name: 'test11', age: 25, height: 176}, 'name', 'height') // {name: 'test11', height: 176}
+XEUtils.pick({name: 'test11', age: 25, height: 176}, ['height', 'name']) // {height: 176, name: 'test11'}
 XEUtils.pick({name: 'test11', age: 25, height: 176}, ['name', 'age']) // {name: 'test11', age: 25}
 XEUtils.pick({name: 'test11', age: 25, height: 176}, val => XEUtils.isNumber(val)) // {age: 25, height: 176}
 ```
