@@ -122,3 +122,69 @@ test('merge()', () => {
     XEUtils.merge(obj3, val3).b === obj3.b
   ).toEqual(true)
 })
+
+test('pick()', () => {
+  const obj1 = { aa: 11, bb: 22, cc: 33, dd: 44 }
+  expect(
+    XEUtils.pick(obj1, ['cc', 'aa', 'dd'])
+  ).toEqual({ cc: 33, aa: 11, dd: 44 })
+  // 结果属性顺序与传入的 key 顺序保持一致
+  expect(
+    Object.keys(XEUtils.pick(obj1, ['cc', 'aa', 'dd']))
+  ).toEqual(['cc', 'aa', 'dd'])
+  expect(
+    Object.keys(XEUtils.pick(obj1, ['dd', 'bb']))
+  ).toEqual(['dd', 'bb'])
+  // 支持多个字符串参数
+  expect(
+    Object.keys(XEUtils.pick(obj1, 'cc', 'aa'))
+  ).toEqual(['cc', 'aa'])
+  // 不存在的 key 被忽略
+  expect(
+    XEUtils.pick(obj1, ['zz', 'aa'])
+  ).toEqual({ aa: 11 })
+  expect(
+    Object.keys(XEUtils.pick(obj1, ['zz', 'aa']))
+  ).toEqual(['aa'])
+  // 重复的 key 只保留一次
+  expect(
+    XEUtils.pick(obj1, ['aa', 'aa', 'bb'])
+  ).toEqual({ aa: 11, bb: 22 })
+  expect(
+    Object.keys(XEUtils.pick(obj1, ['aa', 'aa', 'bb']))
+  ).toEqual(['aa', 'bb'])
+  // 边界值
+  expect(
+    XEUtils.pick(obj1, [])
+  ).toEqual({})
+  expect(
+    XEUtils.pick({}, ['aa'])
+  ).toEqual({})
+  expect(
+    XEUtils.pick(null, ['aa'])
+  ).toEqual({})
+  // 回调函数保持源对象顺序
+  expect(
+    Object.keys(XEUtils.pick(obj1, (val, key) => key !== 'aa'))
+  ).toEqual(['bb', 'cc', 'dd'])
+})
+
+test('omit()', () => {
+  const obj1 = { aa: 11, bb: 22, cc: 33, dd: 44 }
+  expect(
+    XEUtils.omit(obj1, ['bb'])
+  ).toEqual({ aa: 11, cc: 33, dd: 44 })
+  // 排除时保持源对象顺序
+  expect(
+    Object.keys(XEUtils.omit(obj1, ['bb']))
+  ).toEqual(['aa', 'cc', 'dd'])
+  expect(
+    Object.keys(XEUtils.omit(obj1, 'cc', 'aa'))
+  ).toEqual(['bb', 'dd'])
+  expect(
+    XEUtils.omit(obj1, [])
+  ).toEqual(obj1)
+  expect(
+    XEUtils.omit(null, ['aa'])
+  ).toEqual({})
+})
