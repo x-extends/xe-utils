@@ -32,8 +32,7 @@ npm install xe-utils
 Using nodejs
 
 ```javascript
-const XEUtils = require('xe-utils')
-// const _ = require('xe-utils')
+const _ = require('xe-utils')
 ```
 
 Get on [unpkg](https://unpkg.com/xe-utils/) and [cdnjs](https://cdn.jsdelivr.net/npm/xe-utils/)
@@ -73,24 +72,24 @@ toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
 ```
 
 ```javascript
-import XEUtils from 'xe-utils/ctor'
+import _ from 'xe-utils/ctor'
 import each from 'xe-utils/each'
 import toDateString from 'xe-utils/toDateString'
 import toFixedNumber from 'xe-utils/toFixedNumber'
 
-XEUtils.mixin({
+_.mixin({
   each,
   toDateString,
   toFixedNumber
 })
-XEUtils.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
+_.toDateString(Date.now(), 'yyyy-MM-dd HH:mm:ss')
 // 2018-01-01 10:30:28
 ```
 
 Import all methods by function.
 
 ```javascript
-import XEUtils from 'xe-utils/ctor'
+import _ from 'xe-utils/ctor'
 import objectMethods from 'xe-utils/object'
 import arrayMethods from 'xe-utils/array'
 import baseMethods from 'xe-utils/base'
@@ -101,7 +100,7 @@ import functionMethods from 'xe-utils/function'
 import urlMethods from 'xe-utils/url'
 import webMethods from 'xe-utils/web'
 
-XEUtils.mixin(
+_.mixin(
   // Object
   objectMethods,
   // Array
