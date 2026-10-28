@@ -2,7 +2,7 @@ var keys = require('./keys')
 var findIndexOf = require('./findIndexOf')
 var isEqual = require('./isEqual')
 
-var some = require('./some')
+var every = require('./every')
 var includeArrays = require('./includeArrays')
 
 /**
@@ -17,7 +17,7 @@ function isMatch (obj, source) {
   var sourceKeys = keys(source)
   if (sourceKeys.length) {
     if (includeArrays(objKeys, sourceKeys)) {
-      return some(sourceKeys, function (key2) {
+      return every(sourceKeys, function (key2) {
         return findIndexOf(objKeys, function (key1) {
           return key1 === key2 && isEqual(obj[key1], source[key2])
         }) > -1

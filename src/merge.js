@@ -10,7 +10,7 @@ function handleMerge (target, source) {
   if ((isPlainObject(target) && isPlainObject(source)) || (isArray(target) && isArray(source))) {
     each(source, function (val, key) {
       if (helperCheckCopyKey(key)) {
-        target[key] = isFunction(source) ? val : handleMerge(target[key], val)
+        target[key] = isFunction(val) ? val : handleMerge(target[key], val)
       }
     })
     return target

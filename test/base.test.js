@@ -1193,6 +1193,8 @@ describe('Base functions', () => {
     expect(
       XEUtils.isMatch({ aa: 11, bb: [1, 2, 3] }, { bb: [1, 2, 3] })
     ).toEqual(true)
+    expect(XEUtils.isMatch({ a: 11, bb: 22 }, { aa: 11, bb: 22 })).toEqual(false)
+    expect(XEUtils.isMatch({ a: 1, b: 2 }, { a: 1, b: 999 })).toBe(false)
   })
 
   test('isEqual()', () => {

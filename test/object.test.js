@@ -21,6 +21,8 @@ test('assign()', () => {
   expect(
     XEUtils.assign(arr1, [44, 11, 55])
   ).toEqual([44, 11, 55])
+  expect(XEUtils.assign(true, { a: 1 })).toEqual({ a: 1 })
+  expect(XEUtils.assign(true, [11, 22])).toEqual([11, 22])
 })
 
 test('objectMap()', () => {
@@ -114,11 +116,16 @@ test('merge()', () => {
   ).toEqual({ a: { a1: 11, a2: { bb1: 44, bdd: 55 }, a3: 44 }, bb: [{ vv: 11, cc: 11 }], f: 33, v: [88] })
 
   const obj3 = { b: [{}] }
-  const val3 = { a: () => {} }
+  const val3 = { a: () => { } }
   expect(
     XEUtils.merge(obj3, val3).a === val3.a
   ).toEqual(true)
   expect(
     XEUtils.merge(obj3, val3).b === obj3.b
   ).toEqual(true)
+
+  const fn1 = function () { return 1 }
+  const fn2 = function () { return 2 }
+  const obj = XEUtils.merge({ fn: fn1 }, { fn: fn2 })
+  expect(obj.fn).toBe(fn2)
 })

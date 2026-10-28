@@ -3,6 +3,7 @@ var helperNumberAdd = require('./helperNumberAdd')
 var isFunction = require('./isFunction')
 var isArray = require('./isArray')
 var each = require('./each')
+var slice = require('./slice')
 var get = require('./get')
 
 /**
@@ -15,7 +16,7 @@ var get = require('./get')
   */
 function sum (array, iterate, context) {
   var result = 0
-  each(array && array.length > 2 && isArray(array) ? array.sort() : array, iterate ? isFunction(iterate) ? function () {
+  each(array && array.length > 2 && isArray(array) ? slice(array, 0).sort() : array, iterate ? isFunction(iterate) ? function () {
     result = helperNumberAdd(result, iterate.apply(context, arguments))
   } : function (val) {
     result = helperNumberAdd(result, get(val, iterate))

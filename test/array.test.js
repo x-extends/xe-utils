@@ -151,7 +151,7 @@ describe('Array functions', () => {
     }
     method(11, 22, 33, 44)
 
-    
+
     expect(
       XEUtils.slice('')
     ).toEqual('')
@@ -964,6 +964,10 @@ describe('Array functions', () => {
         1.69, 13, 13, 1.68, 14.5, 1.75, 485, 0.26710027
       ])
     ).toEqual(true)
+
+    const numList = [11, 33, 88, 99, 3, 55, 6, 1, 5]
+    expect(XEUtils.sum(numList)).toEqual(301)
+    expect(numList).toEqual([11, 33, 88, 99, 3, 55, 6, 1, 5])
   })
 
   test('mean()', () => {
@@ -1920,7 +1924,7 @@ describe('Array functions', () => {
       { id: 5, parentId: 22, name: '555' }
     ]
     expect(
-      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children'  })
+      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children' })
     ).toEqual([
       {
         id: 1,
@@ -1941,12 +1945,12 @@ describe('Array functions', () => {
       { id: 5, parentId: 22, name: '555', children: [] }
     ])
     expect(
-      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children' , rootParentValue: 22 })
+      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children', rootParentValue: 22 })
     ).toEqual([
       { id: 5, parentId: 22, name: '555', children: [] }
     ])
     expect(
-      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children' , rootValues: [3, 5] })
+      XEUtils.toArrayTree(list9, { parentKey: 'parentId', key: 'id', children: 'children', rootValues: [3, 5] })
     ).toEqual([
       { id: 3, name: '333', parentId: undefined, children: [] },
       { id: 5, parentId: 22, name: '555', children: [] }

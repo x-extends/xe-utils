@@ -30,7 +30,7 @@ var assign = function (target) {
     var args = arguments
     if (target === true) {
       if (args.length > 1) {
-        target = isArray(target[1]) ? [] : {}
+        target = isArray(args[1]) ? [] : {}
         return handleAssign(target, args, true)
       }
     } else {
