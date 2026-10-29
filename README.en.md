@@ -21,7 +21,7 @@ JavaScript libraries, utility
 
 ## Docs
 
-[To view the document](https://vxeui.com/xe-utils/)
+[To view the document](https://util.vxeui.com)
 
 ## Installing
 

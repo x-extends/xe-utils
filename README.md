@@ -21,7 +21,7 @@ JavaScript 函数库、工具类
 
 ## Docs
 
-[查看文档](https://vxeui.com/xe-utils/)
+[查看文档](https://util.vxeui.com)
 
 ## Installing
 
