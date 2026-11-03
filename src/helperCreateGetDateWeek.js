@@ -48,7 +48,7 @@ function helperCreateGetDateWeek (getStartDate, checkCrossDate) {
         }
       }
       var firstWeekEndTime = firstWeekStartTime + staticDayTime * 6
-      var firstWeekEndDate = new Date(targetWeekEndTime)
+      var firstWeekEndDate = new Date(firstWeekEndTime)
       var offsetNum = 1
       if (checkCrossDate(firstWeekStartDate, firstWeekEndDate)) {
         offsetNum = 0

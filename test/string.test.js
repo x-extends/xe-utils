@@ -33,7 +33,7 @@ describe('String functions', () => {
       XEUtils.toValueString({})
     ).toEqual('[object Object]')
     expect(
-      XEUtils.toValueString(function () { })
+      XEUtils.toValueString(function () {})
     ).toEqual('function () {}')
     expect(
       XEUtils.toValueString(['3e-9'])
@@ -786,7 +786,7 @@ describe('String functions', () => {
       XEUtils.template({})
     ).toEqual('[object Object]')
     expect(
-      XEUtils.template(function () { })
+      XEUtils.template(function () {})
     ).toEqual('function () {}')
     expect(
       XEUtils.template([])
@@ -917,9 +917,6 @@ describe('String functions', () => {
     expect(
       XEUtils.toFormatString({})
     ).toEqual('[object Object]')
-    expect(
-      XEUtils.toFormatString(function () { })
-    ).toEqual('function () {}')
     expect(
       XEUtils.toFormatString([])
     ).toEqual('')

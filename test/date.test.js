@@ -1683,6 +1683,17 @@ describe('Date functions', () => {
       XEUtils.getYearWeek('2018-12-20')
     ).toEqual(51)
 
+    // 默认星期一
+    expect(XEUtils.getYearWeek('2020-12-27')).toEqual(52)
+    expect(XEUtils.getYearWeek('2020-12-28')).toEqual(53)
+    expect(XEUtils.getYearWeek('2020-12-29')).toEqual(53)
+    expect(XEUtils.getYearWeek('2020-12-30')).toEqual(53)
+    expect(XEUtils.getYearWeek('2020-12-31')).toEqual(53)
+    expect(XEUtils.getYearWeek('2021-01-01')).toEqual(53)
+    expect(XEUtils.getYearWeek('2021-01-02')).toEqual(53)
+    expect(XEUtils.getYearWeek('2021-01-03')).toEqual(53)
+    expect(XEUtils.getYearWeek('2021-01-04')).toEqual(1)
+
     // 周日视图
     expect(XEUtils.getYearWeek('2019-12-28', 0)).toEqual(52)
     expect(XEUtils.getYearWeek('2019-12-29', 0)).toEqual(1)
