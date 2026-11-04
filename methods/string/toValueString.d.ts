@@ -1,0 +1,15 @@
+/**
+ * 转字符串
+ * @param obj 值
+ */
+ export declare function toValueString(obj: number | string | any[] | null | undefined): string;
+ export declare function toValueString(obj: any): string;
+ 
+declare module '../xe-utils' {
+  interface XEUtilsMethods {
+    toValueString: typeof toValueString;
+  }
+}
+ 
+ export default toValueString
+ 

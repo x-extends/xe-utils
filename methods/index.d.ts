@@ -171,6 +171,7 @@ export * from './string/endsWith'
 export * from './string/template'
 export * from './string/toFormatString'
 export * from './string/toString'
+export * from './string/toValueString'
 
 // function
 export * from './function//noop'
