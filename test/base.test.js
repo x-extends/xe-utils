@@ -1,3 +1,5 @@
+/* eslint-disable prefer-regex-literals */
+
 const XEUtils = require('../src')
 
 describe('Base functions', () => {
@@ -1908,7 +1910,7 @@ describe('Base functions', () => {
     expect(
       XEUtils.omit({ name: 'test11', age: 25, height: 176 }, val => XEUtils.isNumber(val))
     ).toEqual({ name: 'test11' })
-    
+
     const obj1 = { aa: 11, bb: 22, cc: 33, dd: 44 }
     expect(
       XEUtils.omit(obj1, ['bb'])
@@ -2098,7 +2100,6 @@ describe('Base functions', () => {
     expect(
       rest
     ).toEqual([['5', '4'], ['4', '3'], ['3', '2'], ['2', '1'], ['1', '0']])
-
 
     const test3Obj = Object.create(null)
     test3Obj.a = 11

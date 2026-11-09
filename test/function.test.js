@@ -28,7 +28,7 @@ describe('Function functions', () => {
         complete({ data: url })
       }, 200)
     }
-    let finish = XEUtils.after(3, function (rests) {
+    const finish = XEUtils.after(3, function (rests) {
       expect(
         rests
       ).toEqual([{ data: '/api/list1' }, { data: '/api/list2' }, { data: '/api/list3' }])
@@ -40,7 +40,7 @@ describe('Function functions', () => {
   })
 
   test('before()', done => {
-    let meeting = XEUtils.before(4, function (rests, val) {
+    const meeting = XEUtils.before(4, function (rests, val) {
       if (val === 222) {
         expect(
           rests
@@ -55,7 +55,7 @@ describe('Function functions', () => {
   })
 
   test('bind()', () => {
-    let rest = XEUtils.bind(function (val) {
+    const rest = XEUtils.bind(function (val) {
       return this.name + ' = ' + val
     }, { name: 'test' })
     expect(
@@ -67,7 +67,7 @@ describe('Function functions', () => {
   })
 
   test('once()', () => {
-    let rest = XEUtils.once(function (val) {
+    const rest = XEUtils.once(function (val) {
       return this.name + ' = ' + val
     }, { name: 'test' })
     expect(
@@ -81,7 +81,7 @@ describe('Function functions', () => {
   test('debounce()', async () => {
     let flag1 = 0
     const rest1 = []
-    let cb1 = XEUtils.debounce(function () {
+    const cb1 = XEUtils.debounce(function () {
       flag1++
     }, 300, { leading: false, trailing: false })
     cb1()
@@ -106,7 +106,7 @@ describe('Function functions', () => {
     let flag2 = 0
     let args2 = null
     const rest2 = []
-    let cb2 = XEUtils.debounce(function (...args) {
+    const cb2 = XEUtils.debounce(function (...args) {
       flag2++
       args2 = args
     }, 300, { leading: false, trailing: true })
@@ -140,7 +140,7 @@ describe('Function functions', () => {
     let flag3 = 0
     let args3 = null
     const rest3 = []
-    let cb3 = XEUtils.debounce(function (...args) {
+    const cb3 = XEUtils.debounce(function (...args) {
       flag3++
       args3 = args
     }, 300, { leading: false, trailing: true })
@@ -174,7 +174,7 @@ describe('Function functions', () => {
     let flag4 = 0
     let args4 = null
     const rest4 = []
-    let cb4 = XEUtils.debounce(function (...args) {
+    const cb4 = XEUtils.debounce(function (...args) {
       flag4++
       args4 = args
     }, 300, { leading: true, trailing: true })
@@ -208,7 +208,7 @@ describe('Function functions', () => {
     let flag5 = 0
     let args5 = null
     const rest5 = []
-    let cb5 = XEUtils.debounce(function (...args) {
+    const cb5 = XEUtils.debounce(function (...args) {
       flag5++
       args5 = args
     }, 300)
@@ -243,23 +243,23 @@ describe('Function functions', () => {
 
     expect(rest1).toEqual([0, 0, 0, 0, 0])
     expect(rest2).toEqual(
-      [[0,null],[0,null],[0,null],[0,null],[1,[]],[1,[]],[2,[]]]
+      [[0, null], [0, null], [0, null], [0, null], [1, []], [1, []], [2, []]]
     )
     expect(rest3).toEqual(
-      [[0,null],[0,null],[0,null],[0,null],[1,[]],[1,[]],[2,[]]]
+      [[0, null], [0, null], [0, null], [0, null], [1, []], [1, []], [2, []]]
     )
     expect(rest4).toEqual(
-      [[1,["a"]],[1,["a"]],[1,["a"]],[1,["a"]],[3,["e"]],[3,["e"]],[5,["g"]]]
+      [[1, ['a']], [1, ['a']], [1, ['a']], [1, ['a']], [3, ['e']], [3, ['e']], [5, ['g']]]
     )
     expect(rest5).toEqual(
-      [[0,null],[0,null],[0,null],[0,null],[1,["d"]],[1,["d"]],[2,["f"]]]
+      [[0, null], [0, null], [0, null], [0, null], [1, ['d']], [1, ['d']], [2, ['f']]]
     )
   })
 
   test('throttle()', async () => {
-     let flag1 = 0
+    let flag1 = 0
     const rest1 = []
-    let cb1 = XEUtils.throttle(function () {
+    const cb1 = XEUtils.throttle(function () {
       flag1++
     }, 300, { leading: false, trailing: false })
     cb1()
@@ -284,7 +284,7 @@ describe('Function functions', () => {
     let flag2 = 0
     let args2 = null
     const rest2 = []
-    let cb2 = XEUtils.throttle(function (...args) {
+    const cb2 = XEUtils.throttle(function (...args) {
       flag2++
       args2 = args
     }, 300, { leading: false, trailing: true })
@@ -318,7 +318,7 @@ describe('Function functions', () => {
     let flag3 = 0
     let args3 = null
     const rest3 = []
-    let cb3 = XEUtils.throttle(function (...args) {
+    const cb3 = XEUtils.throttle(function (...args) {
       flag3++
       args3 = args
     }, 300, { leading: false, trailing: true })
@@ -352,7 +352,7 @@ describe('Function functions', () => {
     let flag4 = 0
     let args4 = null
     const rest4 = []
-    let cb4 = XEUtils.throttle(function (...args) {
+    const cb4 = XEUtils.throttle(function (...args) {
       flag4++
       args4 = args
     }, 300, { leading: true, trailing: true })
@@ -386,7 +386,7 @@ describe('Function functions', () => {
     let flag5 = 0
     let args5 = null
     const rest5 = []
-    let cb5 = XEUtils.throttle(function (...args) {
+    const cb5 = XEUtils.throttle(function (...args) {
       flag5++
       args5 = args
     }, 300)
@@ -421,16 +421,16 @@ describe('Function functions', () => {
 
     expect(rest1).toEqual([0, 0, 0, 0, 0])
     expect(rest2).toEqual(
-      [[0,null],[0,null],[0,null],[1,[]],[2,[]],[2,[]],[3,[]]]
+      [[0, null], [0, null], [0, null], [1, []], [2, []], [2, []], [3, []]]
     )
     expect(rest3).toEqual(
-      [[0,null],[0,null],[0,null],[1,[]],[2,[]],[2,[]],[3,[]]]
+      [[0, null], [0, null], [0, null], [1, []], [2, []], [2, []], [3, []]]
     )
     expect(rest4).toEqual(
-      [[1,["a"]],[1,["a"]],[1,["a"]],[2,["c"]],[4,["e"]],[4,["e"]],[6,["g"]]]
+      [[1, ['a']], [1, ['a']], [1, ['a']], [2, ['c']], [4, ['e']], [4, ['e']], [6, ['g']]]
     )
     expect(rest5).toEqual(
-      [[1,["a"]],[1,["a"]],[1,["a"]],[2,["c"]],[4,["e"]],[4,["e"]],[6,["g"]]]
+      [[1, ['a']], [1, ['a']], [1, ['a']], [2, ['c']], [4, ['e']], [4, ['e']], [6, ['g']]]
     )
   })
 })

@@ -1,4 +1,6 @@
-const XEUtils = require('../src')
+/* eslint-disable array-callback-return */
+
+const XEUtils = require('../lib')
 
 describe('Array functions', () => {
   test('uniq()', () => {
@@ -151,7 +153,6 @@ describe('Array functions', () => {
     }
     method(11, 22, 33, 44)
 
-
     expect(
       XEUtils.slice('')
     ).toEqual('')
@@ -303,7 +304,7 @@ describe('Array functions', () => {
         { name: 'd', age: 27 },
         { name: 'z', age: 26 },
         { name: 'z', age: 26 }]
-        , ['age', item => item.name])
+      , ['age', item => item.name])
     ).toEqual([
       { name: 'x', age: 26 },
       { name: 'z', age: 26 },
@@ -1713,7 +1714,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       },
       {
@@ -1750,7 +1751,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       },
       {
@@ -1763,7 +1764,6 @@ describe('Array functions', () => {
         ]
       }
     ])
-
 
     const list8 = [
       { id: 0, parentId: undefined, label: '根节点 0' },
@@ -1780,7 +1780,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       },
       {
@@ -1804,7 +1804,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       },
       {
@@ -1825,7 +1825,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       },
       {
@@ -1856,7 +1856,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       }
     ])
@@ -1868,7 +1868,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       }
     ])
@@ -1880,7 +1880,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点' }
         ]
       },
       {
@@ -1901,7 +1901,7 @@ describe('Array functions', () => {
         parentId: undefined,
         label: '根节点 0',
         children: [
-          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点', children: [] },
+          { id: '1', parentId: 0, label: '主键为字符串 "1" 的子节点', children: [] }
         ]
       },
       {
@@ -1914,7 +1914,6 @@ describe('Array functions', () => {
         ]
       }
     ])
-
 
     const list9 = [
       { id: 1, name: '111' },

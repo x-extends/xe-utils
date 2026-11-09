@@ -11,7 +11,7 @@ type LastSetEachIteratee<V, K, C, T = unknown> = (
  * @param iteratee 回调
  * @param context 上下文
  */
-declare function lastSetEach<T, Ctx = unknown>(
+export declare function lastSetEach<T, Ctx = unknown>(
   collection: Set<T>,
   iteratee: LastSetEachIteratee<T, T, Set<T>, Ctx>,
   context?: Ctx

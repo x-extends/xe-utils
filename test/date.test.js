@@ -383,16 +383,16 @@ describe('Date functions', () => {
       XEUtils.toStringDate('oo MM:01 dd:20 yyyy:2017 oo', 'oo [MM]:M [dd]:d [yyyy]:yyyy oo')
     ).toEqual(new Date(2017, 0, 20))
     expect(
-      XEUtils.toStringDate(time),
+      XEUtils.toStringDate(time)
     ).toEqual(date)
     expect(
-      XEUtils.toStringDate(time, 'yyyy-MM-dd'),
+      XEUtils.toStringDate(time, 'yyyy-MM-dd')
     ).toEqual(date)
     expect(
-      XEUtils.toStringDate(time, 'MM/dd/yyyy'),
+      XEUtils.toStringDate(time, 'MM/dd/yyyy')
     ).toEqual(date)
     expect(
-      XEUtils.toStringDate(time, 'yyyy/MM/dd HH:mm:ss'),
+      XEUtils.toStringDate(time, 'yyyy/MM/dd HH:mm:ss')
     ).toEqual(date)
   })
 

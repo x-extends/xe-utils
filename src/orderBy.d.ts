@@ -1,9 +1,9 @@
 interface OrderBySortConfs<T, C> {
-  field?: string | ((this: C, item: T, index: number, list: T[]) => any) | null;
-  order?: 'asc' | 'desc' | null;
+  field?: string | number | ((this: C, item: T, index: number, list: T[]) => any) | null;
+  order?: 'asc' | 'desc' | '' | null;
 }
 
-export type OrderByFieldConfs<T, C> = null | string | any[][] | OrderBySortConfs<T, C> | (string | OrderBySortConfs<T, C>)[] | ((this: C, item: T, index: number, list: T[]) => any);
+export type OrderByFieldConfs<T, C> = null | string | number | any[][] | OrderBySortConfs<T, C> | (string | OrderBySortConfs<T, C>)[] | ((this: C, item: T, index: number, list: T[]) => any);
 
 /**
  * 将数组进行排序

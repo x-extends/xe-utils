@@ -40,6 +40,6 @@ export interface XEUtilsMethods {
 /**
  * JavaScript 函数库、工具类
  */
-declare let XEUtils: XEUtilsMethods
+export declare let XEUtils: XEUtilsMethods
 
 export default XEUtils

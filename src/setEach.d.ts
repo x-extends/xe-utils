@@ -11,7 +11,7 @@ type SetEachIteratee<V, K, C, T = unknown> = (
  * @param iteratee 回调
  * @param context 上下文
  */
-declare function setEach<T, Ctx = unknown>(
+export declare function setEach<T, Ctx = unknown>(
   collection: Set<T>,
   iteratee: SetEachIteratee<T, T, Set<T>, Ctx>,
   context?: Ctx

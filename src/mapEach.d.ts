@@ -11,7 +11,7 @@ type MapEachIteratee<V, K, C, T = unknown> = (
  * @param iteratee 回调
  * @param context 上下文
  */
-declare function mapEach<K, V, Ctx = unknown>(
+export declare function mapEach<K, V, Ctx = unknown>(
   collection: Map<K, V>,
   iteratee: MapEachIteratee<V, K, Map<K, V>, Ctx>,
   context?: Ctx

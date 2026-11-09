@@ -11,7 +11,7 @@ type LastMapEachIteratee<V, K, C, T = unknown> = (
  * @param iteratee 回调
  * @param context 上下文
  */
-declare function lastMapEach<K, V, Ctx = unknown>(
+export declare function lastMapEach<K, V, Ctx = unknown>(
   collection: Map<K, V>,
   iteratee: LastMapEachIteratee<V, K, Map<K, V>, Ctx>,
   context?: Ctx
