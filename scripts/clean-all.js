@@ -62,17 +62,14 @@ function cleanRootCopies () {
 
 // ---------- 2. 删除构建产物目录 ----------
 
-// 直接删除整个目录，不重建；带安全检查
 function removeDir (dir) {
   const abs = path.resolve(dir)
   const rel = path.relative(ROOT, abs)
 
-  // 安全检查：必须在项目内
   if (!rel || rel === '..' || rel.startsWith('..' + path.sep) || path.isAbsolute(rel)) {
     throw new Error(`[clean-all] 拒绝删除（不在项目内）: ${abs}`)
   }
 
-  // 安全检查：一级目录不能是受保护目录
   const top = rel.split(path.sep)[0]
   if (PROTECTED.has(top)) {
     throw new Error(`[clean-all] 拒绝删除（受保护目录）: ${abs}`)
