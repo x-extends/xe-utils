@@ -9,8 +9,8 @@ const { cleanDir } = require('./clean-dir')
 
 const SRC = config.libDir
 const OUT = config.outDir
-const ES2 = config.esDir
-const LIB_OUT = config.libDir // ← 直接用 libDir
+const ESM = config.esDir
+const LIB_OUT = config.libDir
 
 const UTILS_FUNCS = ['static', 'object', 'array', 'base', 'number', 'date', 'string', 'function', 'url', 'web']
 
@@ -170,12 +170,16 @@ async function main () {
   fs.copyFileSync(minFile, indexMin)
 
   // 4. all.esm.js —— 从 es/index.js 打包
-  const esIndex = path.join(ES2, 'index.js')
+  const esIndex = path.join(ESM, 'index.js')
   if (!fs.existsSync(esIndex)) {
     throw new Error(`找不到 ESM 入口: ${esIndex}（请先运行 build-esm）`)
   }
   const allEsmFile = path.join(OUT, 'all.esm.js')
   await buildAllEsm(esIndex, allEsmFile)
+
+  // 4.1 再复制一份到 es/index.esm.js
+  const esIndexEsm = path.join(ESM, 'index.esm.js')
+  fs.copyFileSync(allEsmFile, esIndexEsm)
 
   // 5. d.ts
   const dtsPaths = collectDtsPaths()
@@ -189,6 +193,7 @@ async function main () {
     fs.copyFileSync(f, path.join(LIB_OUT, path.basename(f)))
   }
 
+  // 输出
   const size = (f) => (fs.statSync(f).size / 1024).toFixed(2) + ' KB'
   const rel = (f) => path.relative(process.cwd(), f)
   console.log(`[build-umd] ✓ ${jsPaths.length} 个 js, ${dtsPaths.length} 个 d.ts`)
@@ -197,6 +202,7 @@ async function main () {
   console.log(`  → ${rel(indexPlain)}        (${size(indexPlain)})`)
   console.log(`  → ${rel(indexMin)}          (${size(indexMin)})`)
   console.log(`  → ${rel(allEsmFile)}         (${size(allEsmFile)})`)
+  console.log(`  → ${rel(esIndexEsm)}         (${size(esIndexEsm)})`)
   console.log(`  → ${rel(dtsFile)}`)
   console.log(`  → ${rel(LIB_OUT)}/  (4 个 UMD 副本)`)
 }
