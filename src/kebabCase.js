@@ -42,7 +42,7 @@ function kebabCase (str) {
   rest = rest.replace(/([-]+)/g, function (text, flag, index) {
     return index && index + flag.length < rest.length ? '-' : ''
   })
-  kebabCacheMaps[str] =  rest
+  kebabCacheMaps[str] = rest
   return rest
 }
 

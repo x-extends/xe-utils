@@ -1,11 +1,8 @@
 var objectToString = require('./staticObjectToString')
 
-var objectEach = require('./objectEach')
-var arrayEach = require('./arrayEach')
-
 function getCativeCtor (val, args) {
-  var Ctor = val.__proto__.constructor
-  return args ? new Ctor(args) : new Ctor()
+  var Ctor = Object.getPrototypeOf(val).constructor
+  return args !== undefined ? new Ctor(args) : new Ctor()
 }
 
 function handleValueClone (item, isDeep) {
@@ -13,41 +10,56 @@ function handleValueClone (item, isDeep) {
 }
 
 function copyValue (val, isDeep) {
-  if (val) {
-    switch(objectToString.call(val)) {
-      case "[object Object]": {
-        var restObj = Object.create(Object.getPrototypeOf(val))
-        objectEach(val, function (item, key) {
-          restObj[key] = handleValueClone(item, isDeep)
-        })
-        return restObj
+  // 基本类型直接返回
+  if (!val || typeof val !== 'object') {
+    return val
+  }
+
+  // 优先用 Array.isArray 分流
+  if (Array.isArray(val)) {
+    var len = val.length
+    var restArr = new Array(len)
+    for (var i = 0; i < len; i++) {
+      restArr[i] = handleValueClone(val[i], isDeep)
+    }
+    return restArr
+  }
+
+  switch (objectToString.call(val)) {
+    case '[object Object]': {
+      var restObj = Object.create(Object.getPrototypeOf(val))
+      var keys = Object.keys(val)
+      for (var k = 0, klen = keys.length; k < klen; k++) {
+        var key = keys[k]
+        restObj[key] = handleValueClone(val[key], isDeep)
       }
-      case "[object Date]":
-      case "[object RegExp]": {
-        return getCativeCtor(val, val.valueOf())
+      return restObj
+    }
+    case '[object Date]':
+    case '[object RegExp]': {
+      return getCativeCtor(val, val.valueOf())
+    }
+    case '[object Arguments]': {
+      var aLen = val.length
+      var restArgs = new Array(aLen)
+      for (var j = 0; j < aLen; j++) {
+        restArgs[j] = handleValueClone(val[j], isDeep)
       }
-      case "[object Array]":
-      case "[object Arguments]":  {
-        var restArr = []
-        arrayEach(val, function (item) {
-          restArr.push(handleValueClone(item, isDeep))
-        })
-        return restArr
-      }
-      case "[object Set]": {
-        var restSet = getCativeCtor(val)
-        restSet.forEach(function (item) {
-          restSet.add(handleValueClone(item, isDeep))
-        })
-        return restSet
-      }
-      case "[object Map]": {
-        var restMap = getCativeCtor(val)
-        restMap.forEach(function (item, key) {
-          restMap.set(key, handleValueClone(item, isDeep))
-        })
-        return restMap
-      }
+      return restArgs
+    }
+    case '[object Set]': {
+      var restSet = getCativeCtor(val)
+      val.forEach(function (item) {
+        restSet.add(handleValueClone(item, isDeep))
+      })
+      return restSet
+    }
+    case '[object Map]': {
+      var restMap = getCativeCtor(val)
+      val.forEach(function (item, key) {
+        restMap.set(key, handleValueClone(item, isDeep))
+      })
+      return restMap
     }
   }
   return val
@@ -61,10 +73,7 @@ function copyValue (val, isDeep) {
   * @return {Object}
   */
 function clone (obj, deep) {
-  if (obj) {
-    return copyValue(obj, deep)
-  }
-  return obj
+  return copyValue(obj, deep)
 }
 
 module.exports = clone

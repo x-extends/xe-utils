@@ -9,31 +9,30 @@ var keys = require('./keys')
   * @return {Number}
   */
 function reduce (array, callback, initialValue) {
-  if (array) {
-    var len, reduceMethod
-    var index = 0
-    var context = null
-    var previous = initialValue
-    var isInitialVal = arguments.length > 2
-    var keyList = keys(array)
-    if (array.length && array.reduce) {
-      reduceMethod = function () {
-        return callback.apply(context, arguments)
-      }
-      if (isInitialVal) {
-        return array.reduce(reduceMethod, previous)
-      }
-      return array.reduce(reduceMethod)
-    }
-    if (isInitialVal) {
-      index = 1
-      previous = array[keyList[0]]
-    }
-    for (len = keyList.length; index < len; index++) {
-      previous = callback.call(context, previous, array[keyList[index]], index, array)
-    }
-    return previous
+  if (!array) {
+    return
   }
+  var isInitialVal = arguments.length > 2
+  // 数组快路径：直接委托原生 reduce，callback 以 null 上下文 apply 调用
+  if (array.length && array.reduce) {
+    var fn = function (previous, item, index) {
+      return callback(previous, item, index, array)
+    }
+    return isInitialVal ? array.reduce(fn, initialValue) : array.reduce(fn)
+  }
+  // 对象/类数组：基于 keyList 手动累加
+  var keyList = keys(array)
+  var len = keyList.length
+  var index = 0
+  var previous = initialValue
+  if (isInitialVal) {
+    previous = array[keyList[0]]
+    index = 1
+  }
+  for (; index < len; index++) {
+    previous = callback(previous, array[keyList[index]], index, array)
+  }
+  return previous
 }
 
 module.exports = reduce

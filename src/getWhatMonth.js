@@ -1,6 +1,5 @@
 var staticStrFirst = require('./staticStrFirst')
 var staticStrLast = require('./staticStrLast')
-var staticDayTime = require('./staticDayTime')
 
 var helperGetDateFullYear = require('./helperGetDateFullYear')
 var helperGetDateTime = require('./helperGetDateTime')
@@ -19,26 +18,35 @@ var isNumber = require('./isNumber')
   * @return {Date}
   */
 function getWhatMonth (date, offsetMonth, offsetDay) {
-  var monthNum = offsetMonth && !isNaN(offsetMonth) ? offsetMonth : 0
+  var monthNum = offsetMonth && !isNaN(offsetMonth) ? Number(offsetMonth) : 0
   date = toStringDate(date)
-  if (isValidDate(date)) {
-    if (offsetDay === staticStrFirst) {
-      return new Date(helperGetDateFullYear(date), helperGetDateMonth(date) + monthNum, 1)
-    } else if (offsetDay === staticStrLast) {
-      return new Date(helperGetDateTime(getWhatMonth(date, monthNum + 1, staticStrFirst)) - 1)
-    } else if (isNumber(offsetDay)) {
-      date.setDate(offsetDay)
-    }
-    if (monthNum) {
-      var currDate = date.getDate()
-      date.setMonth(helperGetDateMonth(date) + monthNum)
-      if (currDate !== date.getDate()) {
-        // 当为指定天数，且被跨月了，则默认单月最后一天
-        date.setDate(1)
-        return new Date(helperGetDateTime(date) - staticDayTime)
-      }
+  if (!isValidDate(date)) {
+    return date
+  }
+  var year = helperGetDateFullYear(date)
+  var month = helperGetDateMonth(date)
+  // 月初
+  if (offsetDay === staticStrFirst) {
+    return new Date(year, month + monthNum, 1, 0, 0, 0, 0)
+  }
+  // 月末
+  if (offsetDay === staticStrLast) {
+    return new Date(year, month + monthNum + 1, 0, 23, 59, 59, 999)
+  }
+  // 指定天数
+  if (isNumber(offsetDay) && offsetDay > 0) {
+    date.setDate(offsetDay)
+  }
+  // 偏移月份
+  if (monthNum) {
+    var currDate = date.getDate()
+    date.setMonth(month + monthNum)
+    // 跨月溢出，回退到目标月最后一天
+    if (currDate !== date.getDate()) {
+      date.setDate(0)
     }
   }
+
   return date
 }
 

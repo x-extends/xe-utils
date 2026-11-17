@@ -1,6 +1,8 @@
 var staticStrFirst = require('./staticStrFirst')
 var staticStrLast = require('./staticStrLast')
 
+var staticParseInt = require('./staticParseInt')
+
 var helperGetDateFullYear = require('./helperGetDateFullYear')
 
 var getWhatMonth = require('./getWhatMonth')
@@ -16,24 +18,29 @@ var isValidDate = require('./isValidDate')
   * @return {Date}
   */
 function getWhatYear (date, offset, month) {
-  var number
   date = toStringDate(date)
-  if (isValidDate(date)) {
-    if (offset) {
-      number = offset && !isNaN(offset) ? offset : 0
-      date.setFullYear(helperGetDateFullYear(date) + number)
-    }
-    if (month || !isNaN(month)) {
-      if (month === staticStrFirst) {
-        return new Date(helperGetDateFullYear(date), 0, 1)
-      } else if (month === staticStrLast) {
-        date.setMonth(11)
-        return getWhatMonth(date, 0, staticStrLast)
-      } else {
-        date.setMonth(month)
-      }
-    }
+  if (!isValidDate(date)) {
+    return date
   }
+
+  if (offset != null) {
+    var number = staticParseInt(offset) || 0
+    date.setFullYear(helperGetDateFullYear(date) + number)
+  }
+
+  if (month === staticStrFirst) {
+    return new Date(helperGetDateFullYear(date), 0, 1)
+  }
+
+  if (month === staticStrLast) {
+    date.setMonth(11)
+    return getWhatMonth(date, 0, staticStrLast)
+  }
+
+  if (month != null && !isNaN(month)) {
+    date.setMonth(staticParseInt(month))
+  }
+
   return date
 }
 

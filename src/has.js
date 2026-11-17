@@ -1,8 +1,8 @@
-var staticHGKeyRE = require('./staticHGKeyRE')
-
-var helperGetHGSKeys = require('./helperGetHGSKeys')
-
 var hasOwnProp = require('./hasOwnProp')
+
+var staticParsePathNames = require('./staticParsePathNames')
+var staticParsePathIdxs = require('./staticParsePathIdxs')
+var helperParsePath = require('./helperParsePath')
 
 /**
  * 检查键、路径是否是该对象的属性
@@ -16,34 +16,27 @@ function has (obj, property) {
     if (hasOwnProp(obj, property)) {
       return true
     } else {
-      var prop, arrIndex, objProp, matchs, rest, isHas
-      var props = helperGetHGSKeys(property)
-      var index = 0
-      var len = props.length
-      for (rest = obj; index < len; index++) {
-        isHas = false
-        prop = props[index]
-        matchs = prop ? prop.match(staticHGKeyRE) : ''
-        if (matchs) {
-          arrIndex = matchs[1]
-          objProp = matchs[2]
-          if (arrIndex) {
-            if (rest[arrIndex]) {
-              if (hasOwnProp(rest[arrIndex], objProp)) {
-                isHas = true
-                rest = rest[arrIndex][objProp]
-              }
-            }
-          } else {
-            if (hasOwnProp(rest, objProp)) {
-              isHas = true
-              rest = rest[objProp]
-            }
+      var len = helperParsePath(property)
+      var rest = obj
+      for (var index = 0; index < len; index++) {
+        var key = staticParsePathNames[index]
+        var idx = staticParsePathIdxs[index]
+        var isHas = false
+        if (key === null) {
+          if (hasOwnProp(rest, idx)) {
+            isHas = true
+            rest = rest[idx]
+          }
+        } else if (idx !== -1) {
+          var parent = rest[key]
+          if (parent && hasOwnProp(parent, idx)) {
+            isHas = true
+            rest = parent[idx]
           }
         } else {
-          if (hasOwnProp(rest, prop)) {
+          if (hasOwnProp(rest, key)) {
             isHas = true
-            rest = rest[prop]
+            rest = rest[key]
           }
         }
         if (isHas) {

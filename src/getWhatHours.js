@@ -4,7 +4,6 @@ var staticParseInt = require('./staticParseInt')
 
 var helperGetDateFullYear = require('./helperGetDateFullYear')
 var helperGetDateMonth = require('./helperGetDateMonth')
-var helperGetDateTime = require('./helperGetDateTime')
 
 var toStringDate = require('./toStringDate')
 var isValidDate = require('./isValidDate')
@@ -19,13 +18,18 @@ var isValidDate = require('./isValidDate')
   */
 function getWhatHours (date, offset, mode) {
   date = toStringDate(date)
-  if (isValidDate(date) && !isNaN(offset)) {
-    date.setHours(date.getHours() + staticParseInt(offset))
-    if (mode === staticStrFirst) {
-      return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate(), date.getHours())
-    } else if (mode === staticStrLast) {
-      return new Date(helperGetDateTime(getWhatHours(date, 1, staticStrFirst)) - 1)
-    }
+  if (!isValidDate(date)) {
+    return date
+  }
+  var hourOffset = staticParseInt(offset)
+  if (!isNaN(hourOffset)) {
+    date.setHours(date.getHours() + hourOffset)
+  }
+  if (mode === staticStrFirst) {
+    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate(), date.getHours(), 0, 0, 0)
+  }
+  if (mode === staticStrLast) {
+    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate(), date.getHours(), 59, 59, 999)
   }
   return date
 }

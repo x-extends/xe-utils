@@ -11,7 +11,8 @@ var staticDecodeURIComponent = require('./staticDecodeURIComponent')
 var staticObjectToString = require('./staticObjectToString')
 var staticParseInt = require('./staticParseInt')
 var staticEscapeMap = require('./staticEscapeMap')
-var staticHGKeyRE = require('./staticHGKeyRE')
+var staticParsePathNames = require('.//staticParsePathNames')
+var staticParsePathIdxs = require('./staticParsePathIdxs')
 
 var staticExports = {
   staticStrUndefined: staticStrUndefined,
@@ -27,7 +28,8 @@ var staticExports = {
   staticObjectToString: staticObjectToString,
   staticParseInt: staticParseInt,
   staticEscapeMap: staticEscapeMap,
-  staticHGKeyRE: staticHGKeyRE
+  staticParsePathNames: staticParsePathNames,
+  staticParsePathIdxs: staticParsePathIdxs
 }
 
 module.exports = staticExports

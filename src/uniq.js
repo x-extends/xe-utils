@@ -5,11 +5,11 @@ var property = require('./property')
 
 /**
  * 数组去重
- * 
+ *
  * @param {*} array  数组
  * @param {*} iterate 字段或回调
- * @param {*} context 
- * @returns 
+ * @param {*} context
+ * @returns
  */
 function uniq (array, iterate, context) {
   var result = []

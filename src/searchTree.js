@@ -1,22 +1,39 @@
 var helperCreateTreeFunc = require('./helperCreateTreeFunc')
 
-var arrayEach = require('./arrayEach')
-
 var assign = require('./assign')
 
-function searchTreeItem (matchParent, parent, obj, iterate, context, path, node, parseChildren, opts) {
-  var paths, nodes, rest, isMatch, hasChild
+function searchTreeItem (matchParent, parent, obj, iterate, context, path, nodes, parseChildren, opts) {
   var rests = []
+  if (!obj) {
+    return rests
+  }
+  var len = obj.length
+  if (!len) {
+    return rests
+  }
+
   var hasOriginal = opts.original
   var sourceData = opts.data
   var mapChildren = opts.mapChildren || parseChildren
   var isEvery = opts.isEvery
-  arrayEach(obj, function (item, index) {
-    paths = path.concat(['' + index])
-    nodes = node.concat([item])
-    isMatch = (matchParent && !isEvery) || iterate.call(context, item, index, obj, paths, parent, nodes)
-    hasChild = parseChildren && item[parseChildren]
-    if (isMatch || hasChild) {
+  var hasContext = context != null
+  var count = 0
+  var index, item, paths, items, isMatch, childData, rest, children
+
+  for (index = 0; index < len; index++) {
+    item = obj[index]
+    paths = path.concat('' + index)
+    items = nodes.concat(item)
+
+    if (hasContext) {
+      isMatch = (matchParent && !isEvery) || iterate.call(context, item, index, obj, paths, parent, items)
+    } else {
+      isMatch = (matchParent && !isEvery) || iterate(item, index, obj, paths, parent, items)
+    }
+
+    childData = parseChildren ? item[parseChildren] : undefined
+
+    if (isMatch || childData) {
       if (hasOriginal) {
         rest = item
       } else {
@@ -25,14 +42,13 @@ function searchTreeItem (matchParent, parent, obj, iterate, context, path, node,
           rest[sourceData] = item
         }
       }
-      rest[mapChildren] = searchTreeItem(isMatch, item, item[parseChildren], iterate, context, paths, nodes, parseChildren, opts)
-      if (isMatch || rest[mapChildren].length) {
-        rests.push(rest)
+      children = searchTreeItem(isMatch, item, childData, iterate, context, paths, items, parseChildren, opts)
+      rest[mapChildren] = children
+      if (isMatch || children.length) {
+        rests[count++] = rest
       }
-    } else if (isMatch) {
-      rests.push(rest)
     }
-  })
+  }
   return rests
 }
 

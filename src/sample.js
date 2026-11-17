@@ -1,4 +1,5 @@
-var shuffle = require('./shuffle')
+var random = require('./random')
+var values = require('./values')
 
 /**
   * 从一个数组中随机返回几个元素
@@ -8,14 +9,25 @@ var shuffle = require('./shuffle')
   * @return {Array}
   */
 function sample (array, number) {
-  var result = shuffle(array)
+  var list = values(array)
+  var len = list.length
+  // 单参形态：随机返回其中一个元素，空集合返回 undefined
   if (arguments.length <= 1) {
-    return result[0]
+    return len ? list[len > 1 ? random(0, len - 1) : 0] : undefined
   }
-  if (number < result.length) {
-    result.length = number || 0
+  if (len) {
+    var k = number < len ? (number || 0) : len
+    if (k < 0) k = 0
+    for (var i = 0; i < k; i++) {
+      var j = i > 0 ? random(i, len - 1) : random(0, len - 1)
+      var tmp = list[i]
+      list[i] = list[j]
+      list[j] = tmp
+    }
+    list.length = k
+    return list
   }
-  return result
+  return []
 }
 
 module.exports = sample

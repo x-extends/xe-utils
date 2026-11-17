@@ -11,11 +11,13 @@ var XEUtils = function () {}
 function mixin () {
   arrayEach(arguments, function (methods) {
     each(methods, function (fn, name) {
-      XEUtils[name] = isFunction(fn) ? function () {
-        var result = fn.apply(XEUtils.$context, arguments)
-        XEUtils.$context = null
-        return result
-      } : fn
+      XEUtils[name] = isFunction(fn)
+        ? function () {
+          var result = fn.apply(XEUtils.$context, arguments)
+          XEUtils.$context = null
+          return result
+        }
+        : fn
     })
   })
 }

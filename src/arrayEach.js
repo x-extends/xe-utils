@@ -1,10 +1,13 @@
 function arrayEach (list, iterate, context) {
   if (list) {
-    if (list.forEach) {
-      list.forEach(iterate, context)
-    } else {
-      for (var index = 0, len = list.length; index < len; index++) {
+    var index, len = list.length
+    if (context != null) {
+      for (index = 0; index < len; index++) {
         iterate.call(context, list[index], index, list)
+      }
+    } else {
+      for (index = 0; index < len; index++) {
+        iterate(list[index], index, list)
       }
     }
   }

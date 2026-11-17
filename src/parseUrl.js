@@ -8,6 +8,10 @@ function parseURLQuery (uri) {
   return unserialize(uri.split('?')[1] || '')
 }
 
+/**
+ * 解析 URL 参数
+ * @param ulr 字符串
+ */
 function parseUrl (url) {
   var hashs, portText, searchs, parsed
   var href = '' + url

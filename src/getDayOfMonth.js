@@ -1,13 +1,12 @@
-var staticDayTime = require('./staticDayTime')
-var staticStrFirst = require('./staticStrFirst')
-var staticStrLast = require('./staticStrLast')
+var helperGetDateFullYear = require('./helperGetDateFullYear')
+var helperGetDateMonth = require('./helperGetDateMonth')
+var helperHasLeapYear = require('./helperHasLeapYear')
 
-var helperGetDateTime = require('./helperGetDateTime')
-
-var getWhatMonth = require('./getWhatMonth')
 var toStringDate = require('./toStringDate')
-
 var isValidDate = require('./isValidDate')
+
+// 月份天数常量表
+var staticMonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 /**
   * 返回某个月份的天数
@@ -19,7 +18,15 @@ var isValidDate = require('./isValidDate')
 function getDayOfMonth (date, offsetNum) {
   date = toStringDate(date)
   if (isValidDate(date)) {
-    return Math.floor((helperGetDateTime(getWhatMonth(date, offsetNum, staticStrLast)) - helperGetDateTime(getWhatMonth(date, offsetNum, staticStrFirst))) / staticDayTime) + 1
+    var year = helperGetDateFullYear(date)
+    var month = helperGetDateMonth(date) + (offsetNum || 0)
+    // 规范化月份到 0-11 范围，并调整年份
+    if (month < 0 || month > 11) {
+      year += Math.floor(month / 12)
+      month = ((month % 12) + 12) % 12
+    }
+    // 查表获取天数，闰年2月返回29
+    return month === 1 && helperHasLeapYear(year) ? 29 : staticMonthDays[month]
   }
   return NaN
 }

@@ -7,7 +7,10 @@ var toValueString = require('./toValueString')
   * @return {String}
   */
 function trimRight (str) {
-  return str && str.trimRight ? str.trimRight() : toValueString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
+  if (str && str.trimRight) {
+    return str.trimRight()
+  }
+  return toValueString(str).replace(/[\s\uFEFF\xA0]+$/g, '')
 }
 
 module.exports = trimRight

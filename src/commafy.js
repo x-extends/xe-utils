@@ -18,7 +18,7 @@ var assign = require('./assign')
   * @param {CommafyOptions} options 参数
   * @return {String}
  */
-function commafy(num, options) {
+function commafy (num, options) {
   var opts = assign({}, setupDefaults.commafyOptions, options)
   var optDigits = opts.digits
   var isNum = isNumber(num)

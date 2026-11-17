@@ -46,7 +46,9 @@ function toDateString (date, format, options) {
       var result = format || setupDefaults.parseDateFormat || setupDefaults.formatString
       var hours = date.getHours()
       var apm = hours < 12 ? 'am' : 'pm'
-      var formats = assign({}, setupDefaults.parseDateRules || setupDefaults.formatStringMatchs, opts.formats)
+      var baseFormats = setupDefaults.parseDateRules || setupDefaults.formatStringMatchs
+      var formats = opts.formats ? assign({}, baseFormats, opts.formats) : (baseFormats || {})
+      var firstDay = eqNull(opts.firstDay) ? setupDefaults.firstDayOfWeek : opts.firstDay
       var fy = function (match, length) {
         return ('' + helperGetDateFullYear(date)).substring(4 - length)
       }
@@ -60,7 +62,7 @@ function toDateString (date, format, options) {
         return padStart(hours, length, '0')
       }
       var fh = function (match, length) {
-        return padStart(hours <= 12 ? hours : hours - 12, length, '0')
+        return padStart(hours % 12 || 12, length, '0')
       }
       var fm = function (match, length) {
         return padStart(date.getMinutes(), length, '0')
@@ -72,11 +74,16 @@ function toDateString (date, format, options) {
         return padStart(date.getMilliseconds(), length, '0')
       }
       var fZ = function (match, length) {
-        var zoneHours = date.getTimezoneOffset() / 60 * -1
-        return handleCustomTemplate(date, formats, match, (zoneHours >= 0 ? '+' : '-') + padStart(zoneHours, 2, '0') + (length === 1 ? ':' : '') + '00')
+        // 支持半小时/45 分钟时区（如 +05:30、+05:45）
+        var offset = date.getTimezoneOffset()
+        var absOffset = Math.abs(offset)
+        var zoneHours = Math.floor(absOffset / 60)
+        var zoneMinutes = absOffset % 60
+        var sign = offset <= 0 ? '+' : '-'
+        return handleCustomTemplate(date, formats, match, sign + padStart(zoneHours, 2, '0') + (length === 1 ? ':' : '') + padStart(zoneMinutes, 2, '0'))
       }
       var fW = function (match, length) {
-        return padStart(handleCustomTemplate(date, formats, match, getYearWeek(date, eqNull(opts.firstDay) ? setupDefaults.firstDayOfWeek : opts.firstDay)), length, '0')
+        return padStart(handleCustomTemplate(date, formats, match, getYearWeek(date, firstDay)), length, '0')
       }
       var fD = function (match, length) {
         return padStart(handleCustomTemplate(date, formats, match, getYearDay(date)), length, '0')

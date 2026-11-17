@@ -1,20 +1,8 @@
-var getWhatMonth = require('./getWhatMonth')
+var staticStrFirst = require('./staticStrFirst')
+var staticStrLast = require('./staticStrLast')
 
 var toStringDate = require('./toStringDate')
-
 var isValidDate = require('./isValidDate')
-
-function getQuarterNumber (date) {
-  var month = date.getMonth()
-  if (month < 3) {
-    return 1
-  } else if (month < 6) {
-    return 2
-  } else if (month < 9) {
-    return 3
-  }
-  return 4
-}
 
 /**
   * 返回前几季度或后几季度的日期
@@ -24,15 +12,32 @@ function getQuarterNumber (date) {
   * @param {Number} day 获取哪天：月初(first)、月末(last)、指定天数(数值)，如果为空，但超过指定月份的天数时，则默认单月最后一天
   * @return {Date}
   */
-function getWhatQuarter (date, offset, day) {
-  var currMonth, monthOffset = offset && !isNaN(offset) ? offset * 3 : 0
+function getWhatQuarter(date, offset, day) {
+  var monthOffset = (offset != null && !isNaN(offset)) ? Number(offset) * 3 : 0
   date = toStringDate(date)
-  if (isValidDate(date)) {
-    currMonth = ((getQuarterNumber(date) - 1) * 3) + (day === 'last' ? 2 : 0)
-    date.setMonth(currMonth)
-    return getWhatMonth(date, monthOffset, day)
+  if (!isValidDate(date)) {
+    return date
   }
-  return date
+  var year = date.getFullYear()
+  var month = date.getMonth()
+  var quarterStart = Math.floor(month / 3) * 3
+  // 月初
+  if (day === staticStrFirst) {
+    var targetMonth = quarterStart + monthOffset
+    return new Date(year, targetMonth, 1, 0, 0, 0, 0)
+  }
+  // 月末
+  if (day === staticStrLast) {
+    var targetEndMonth = quarterStart + 2 + monthOffset
+    return new Date(year, targetEndMonth + 1, 0, 23, 59, 59, 999)
+  }
+  // 目标季度首月 + 原始日期，溢出则回退到月末
+  var targetMonth = quarterStart + monthOffset
+  var result = new Date(year, targetMonth, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds())
+  if (date.getDate() !== result.getDate()) {
+    result.setDate(0)
+  }
+  return result
 }
 
 module.exports = getWhatQuarter

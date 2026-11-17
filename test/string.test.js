@@ -527,6 +527,36 @@ describe('String functions', () => {
     expect(
       XEUtils.kebabCase('aAA-bBBBB---bF--Fs')
     ).toEqual('a-aa-b-bbbb-b-f-fs')
+
+    // 1. 数字与字母混合的驼峰
+    expect(XEUtils.kebabCase('item1Name')).toEqual('item1-name')
+    expect(XEUtils.kebabCase('version2Update')).toEqual('version2-update')
+    expect(XEUtils.kebabCase('123ABC')).toEqual('123-abc')
+    expect(XEUtils.kebabCase('3DModel')).toEqual('3d-model')
+    expect(XEUtils.kebabCase('VXETable')).toEqual('vxe-table')
+
+    // 2. 其他 JavaScript 基本数据类型 (验证 toValueString 的转换行为)
+    expect(XEUtils.kebabCase(false)).toEqual('false')
+    expect(XEUtils.kebabCase(true)).toEqual('true')
+    expect(XEUtils.kebabCase(NaN)).toEqual('na-n')
+    expect(XEUtils.kebabCase({})).toEqual('[object -object]') // 内部 Object.prototype.toString 的行为
+
+    // 3. 已经是 Kebab-case 或包含特殊字符 (验证其幂等性和字符保留能力)
+    expect(XEUtils.kebabCase('already-kebab-case')).toEqual('already-kebab-case')
+    expect(XEUtils.kebabCase('a')).toEqual('a')
+    expect(XEUtils.kebabCase('test@case')).toEqual('test@case')
+    expect(XEUtils.kebabCase('user.name')).toEqual('user.name')
+    expect(XEUtils.kebabCase('user:name')).toEqual('user:name')
+
+    // 4. 下划线与空格命名 (⚠️ 重要行为记录)
+    expect(XEUtils.kebabCase('user_name')).toEqual('user_name')
+    expect(XEUtils.kebabCase('user__name')).toEqual('user__name')
+    expect(XEUtils.kebabCase('user name')).toEqual('user name')
+    expect(XEUtils.kebabCase('user  name')).toEqual('user  name')
+
+    // 5. 极端混合符号测试
+    expect(XEUtils.kebabCase('a_bC')).toEqual('a_b-c')
+    expect(XEUtils.kebabCase('test-case_name')).toEqual('test-case_name')
   })
 
   test('repeat()', () => {

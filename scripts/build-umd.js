@@ -196,7 +196,7 @@ async function main () {
   // 输出
   const size = (f) => (fs.statSync(f).size / 1024).toFixed(2) + ' KB'
   const rel = (f) => path.relative(process.cwd(), f)
-  console.log(`[build-umd] ✓ ${jsPaths.length} 个 js, ${dtsPaths.length} 个 d.ts`)
+  console.log(`[build-umd] ✓ ${jsPaths.length} js, ${dtsPaths.length} d.ts`)
   console.log(`  → ${rel(plainFile)}        (${size(plainFile)})`)
   console.log(`  → ${rel(minFile)}          (${size(minFile)})`)
   console.log(`  → ${rel(indexPlain)}        (${size(indexPlain)})`)
@@ -204,7 +204,7 @@ async function main () {
   console.log(`  → ${rel(allEsmFile)}         (${size(allEsmFile)})`)
   console.log(`  → ${rel(esIndexEsm)}         (${size(esIndexEsm)})`)
   console.log(`  → ${rel(dtsFile)}`)
-  console.log(`  → ${rel(LIB_OUT)}/  (4 个 UMD 副本)`)
+  console.log(`  → ${rel(LIB_OUT)} umd`)
 }
 
 main().catch((e) => { console.error('[build-umd] ✗', e.message); process.exit(1) })

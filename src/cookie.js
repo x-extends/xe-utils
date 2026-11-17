@@ -12,13 +12,16 @@ var keys = require('./keys')
 
 var assign = require('./assign')
 
-var arrayEach = require('./arrayEach')
-
 var helperNewDate = require('./helperNewDate')
 var helperGetDateTime = require('./helperGetDateTime')
 var getWhatYear = require('./getWhatYear')
 var getWhatMonth = require('./getWhatMonth')
 var getWhatDay = require('./getWhatDay')
+
+var COOKIE_ATTRS = ['expires', 'path', 'domain', 'secure']
+
+var UNIT_RE = /^([0-9]+)(y|M|d|H|h|m|s)$/
+var TS_RE = /^[0-9]{11,13}$/
 
 function toCookieUnitTime (unit, expires) {
   var num = parseFloat(expires)
@@ -40,78 +43,72 @@ function toCookieUTCString (date) {
   return (isDate(date) ? date : new Date(date)).toUTCString()
 }
 
-/**
-  * cookie操作函数
-  * @param {String/Array/Object} name 键/数组/对象
-  * @param {String} value 值
-  * @param {Object} options 参数
-  *   @param {String} name: 键
-  *   @param {Object} value: 值
-  *   @param {String} path: 路径
-  *   @param {String} domain: 作用域
-  *   @param {Boolean} secure: 设置为安全的,只能用https协议
-  *   @param {Number} expires: 过期时间,可以指定日期或者字符串，默认天
-  */
+function normalizeExpires (expires) {
+  if (isNaN(expires)) {
+    return expires.replace(UNIT_RE, function (text, num, unit) {
+      return toCookieUTCString(toCookieUnitTime(unit, num))
+    })
+  }
+  if (TS_RE.test(expires) || isDate(expires)) {
+    return toCookieUTCString(expires)
+  }
+  return toCookieUTCString(toCookieUnitTime('d', expires))
+}
+
 function cookie (name, value, options) {
-  if (staticDocument) {
-    var opts, expires, values, result, cookies, keyIndex
-    var inserts = []
-    var args = arguments
-    if (isArray(name)) {
-      inserts = name
-    } else if (args.length > 1) {
-      inserts = [assign({ name: name, value: value }, options)]
-    } else if (isObject(name)) {
-      inserts = [name]
-    }
-    if (inserts.length > 0) {
-      arrayEach(inserts, function (obj) {
-        opts = assign({}, setupDefaults.cookies, obj)
-        values = []
-        if (opts.name) {
-          expires = opts.expires
-          values.push(staticEncodeURIComponent(opts.name) + '=' + staticEncodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
-          if (expires) {
-            if (isNaN(expires)) {
-              // UTCString || Unit
-              expires = expires.replace(/^([0-9]+)(y|M|d|H|h|m|s)$/, function (text, num, unit) {
-                return toCookieUTCString(toCookieUnitTime(unit, num))
-              })
-            } else if (/^[0-9]{11,13}$/.test(expires) || isDate(expires)) {
-              // Date || now
-              expires = toCookieUTCString(expires)
-            } else {
-              // day
-              expires = toCookieUTCString(toCookieUnitTime('d', expires))
-            }
-            opts.expires = expires
+  if (!staticDocument) {
+    return false
+  }
+  var args = arguments
+  var inserts
+  if (isArray(name)) {
+    inserts = name
+  } else if (args.length > 1) {
+    inserts = [assign({ name: name, value: value }, options)]
+  } else if (isObject(name)) {
+    inserts = [name]
+  }
+
+  // 写模式
+  if (inserts && inserts.length > 0) {
+    for (var i = 0; i < inserts.length; i++) {
+      var obj = inserts[i]
+      var opts = assign({}, setupDefaults.cookies, obj)
+      if (opts.name) {
+        var values = []
+        var expires = opts.expires
+        values.push(staticEncodeURIComponent(opts.name) + '=' + staticEncodeURIComponent(isObject(opts.value) ? JSON.stringify(opts.value) : opts.value))
+        if (expires) {
+          opts.expires = normalizeExpires(expires)
+        }
+        for (var a = 0; a < COOKIE_ATTRS.length; a++) {
+          var key = COOKIE_ATTRS[a]
+          if (!isUndefined(opts[key])) {
+            values.push(opts[key] && key === 'secure' ? key : (key + '=' + opts[key]))
           }
-          arrayEach(['expires', 'path', 'domain', 'secure'], function (key) {
-            if (!isUndefined(opts[key])) {
-              values.push(opts[key] && key === 'secure' ? key : (key + '=' + opts[key]))
-            }
-          })
         }
         staticDocument.cookie = values.join('; ')
-      })
-      return true
-    } else {
-      result = {}
-      cookies = staticDocument.cookie
-      if (cookies) {
-        arrayEach(cookies.split('; '), function (val) {
-          keyIndex = val.indexOf('=')
-          result[staticDecodeURIComponent(val.substring(0, keyIndex))] = staticDecodeURIComponent(val.substring(keyIndex + 1) || '')
-        })
       }
-      return args.length === 1 ? result[name] : result
+    }
+    return true
+  }
+
+  // 读模式
+  var result = {}
+  var cookies = staticDocument.cookie
+  if (cookies) {
+    var parts = cookies.split('; ')
+    for (var j = 0; j < parts.length; j++) {
+      var val = parts[j]
+      var keyIndex = val.indexOf('=')
+      result[staticDecodeURIComponent(val.substring(0, keyIndex))] = staticDecodeURIComponent(val.substring(keyIndex + 1) || '')
     }
   }
-  return false
+  return args.length === 1 ? result[name] : result
 }
 
 function hasCookieItem (value) {
-  return includes(cookieKeys(), value)
+  return includes(keys(cookie()), value)
 }
 
 function getCookieItem (name) {

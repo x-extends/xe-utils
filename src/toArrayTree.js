@@ -1,21 +1,22 @@
 var setupDefaults = require('./setupDefaults')
 var helperLog = require('./helperLog')
+var helperCreateEmptyObj = require('./helperCreateEmptyObj')
 
 var orderBy = require('./orderBy')
 
-var clone = require('./clone')
 var eqNull = require('./eqNull')
-var each = require('./each')
-var remove = require('./remove')
+var isArray = require('./isArray')
 
 var assign = require('./assign')
 
 function strictTree (array, optChildren) {
-  each(array, function (item) {
-    if (item[optChildren] && !item[optChildren].length) {
-      remove(item, optChildren)
+  for (var i = 0, len = array.length; i < len; i++) {
+    var item = array[i]
+    var children = item[optChildren]
+    if (children && !children.length) {
+      delete item[optChildren]
     }
-  })
+  }
 }
 
 /**
@@ -38,38 +39,47 @@ function toArrayTree (array, options) {
   var optReverse = opts.reverse
   var optData = opts.data
   var result = []
-  var defTreeMaps = {}
-  var empTreeMaps = {}
-  var idDefMaps = {}
-  var idEmpMaps = {}
-  var rootIdMaps = {}
+  var defTreeMaps = helperCreateEmptyObj()
+  var empTreeMaps = helperCreateEmptyObj()
+  var idDefMaps = helperCreateEmptyObj()
+  var idEmpMaps = helperCreateEmptyObj()
+  var rootIdMaps = helperCreateEmptyObj()
   var isDefaultRootParentVal = optRootParentVal === undefined
-  var id, treeData, parentId, idMaps, isIdNull, isPdNull, idTreeMaps, pdTreeMaps
+  var hasRootValues = optRootValues && optRootValues.length > 0
+  var mapChildrenDiff = optMapChildren && optMapChildren !== optChildren
+  var i, len, item, id, treeData, parentId, idMaps, isIdNull, isPdNull, idTreeMaps, pdTreeMaps
 
   if (optSortKey) {
-    array = orderBy(clone(array), optSortKey)
+    array = orderBy(array, optSortKey)
     if (optReverse) {
       array = array.reverse()
     }
   }
 
-
-  if (optRootValues && optRootValues.length) {
-    each(optRootValues, function (v) {
-      rootIdMaps[v] = 1
-    })
+  if (!isArray(array)) {
+    return result
   }
 
-  each(array, function (item) {
+  len = array.length
+
+  if (hasRootValues) {
+    for (i = 0; i < optRootValues.length; i++) {
+      rootIdMaps[optRootValues[i]] = 1
+    }
+  }
+
+  for (i = 0; i < len; i++) {
+    item = array[i]
     id = item[optKey]
     idMaps = eqNull(id) ? idEmpMaps : idDefMaps
     if (idMaps[id]) {
       helperLog('warn', 'Duplicate primary key=' + id)
     }
     idMaps[id] = true
-  })
+  }
 
-  each(array, function (item) {
+  for (i = 0; i < len; i++) {
+    item = array[i]
     id = item[optKey]
     isIdNull = eqNull(id)
 
@@ -79,7 +89,6 @@ function toArrayTree (array, options) {
     } else {
       treeData = item
     }
-
 
     parentId = item[optParentKey]
     isPdNull = eqNull(parentId)
@@ -101,11 +110,11 @@ function toArrayTree (array, options) {
     pdTreeMaps[parentId] = pdTreeMaps[parentId] || []
     pdTreeMaps[parentId].push(treeData)
     treeData[optChildren] = idTreeMaps[id]
-    if (optMapChildren) {
+    if (mapChildrenDiff) {
       treeData[optMapChildren] = idTreeMaps[id]
     }
 
-    if (optRootValues && optRootValues.length) {
+    if (hasRootValues) {
       if (rootIdMaps[id]) {
         result.push(treeData)
       }
@@ -120,7 +129,7 @@ function toArrayTree (array, options) {
         result.push(treeData)
       }
     }
-  })
+  }
 
   if (optStrict) {
     strictTree(array, optChildren)

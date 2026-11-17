@@ -1,61 +1,12 @@
-var staticParseInt = require('./staticParseInt')
-
-var helperGetHGSKeys = require('./helperGetHGSKeys')
 var helperCheckCopyKey = require('./helperCheckCopyKey')
-
 var hasOwnProp = require('./hasOwnProp')
 
-var sKeyRE = /(.+)?\[(\d+)\]$/
+var staticParsePathNames = require('./staticParsePathNames')
+var staticParsePathIdxs = require('./staticParsePathIdxs')
+var helperParsePath = require('./helperParsePath')
 
-function setDeepProps (obj, key, isEnd, nextKey, value) {
-  if (obj[key]) {
-    if (isEnd) {
-      obj[key] = value
-    }
-  } else {
-    var index
-    var rest
-    var currMatchs = key ? key.match(sKeyRE) : null
-    if (isEnd) {
-      rest = value
-    } else {
-      var nextMatchs = nextKey ? nextKey.match(sKeyRE) : null
-      if (nextMatchs && !nextMatchs[1]) {
-        // 如果下一个属性为数组类型
-        rest = new Array(staticParseInt(nextMatchs[2]) + 1)
-      } else {
-        rest = {}
-      }
-    }
-    if (currMatchs) {
-      if (currMatchs[1]) {
-        // 如果为对象中数组
-        index = staticParseInt(currMatchs[2])
-        if (obj[currMatchs[1]]) {
-          if (isEnd) {
-            obj[currMatchs[1]][index] = rest
-          } else {
-            if (obj[currMatchs[1]][index]) {
-              rest = obj[currMatchs[1]][index]
-            } else {
-              obj[currMatchs[1]][index] = rest
-            }
-          }
-        } else {
-          obj[currMatchs[1]] = new Array(index + 1)
-          obj[currMatchs[1]][index] = rest
-        }
-      } else {
-        // 如果为数组
-        obj[currMatchs[2]] = rest
-      }
-    } else {
-      // 如果为对象
-      obj[key] = rest
-    }
-    return rest
-  }
-  return obj[key]
+function setIsPrototypePolluted (key) {
+  return key === '__proto__' || key === 'constructor' || key === 'prototype'
 }
 
 /**
@@ -65,31 +16,64 @@ function setDeepProps (obj, key, isEnd, nextKey, value) {
  * @param {Object} value 值
  */
 function set (obj, property, value) {
-  if (obj && helperCheckCopyKey(property)) {
-    if ((obj[property] || hasOwnProp(obj, property)) && !isPrototypePolluted(property)) {
-      obj[property] = value
-    } else {
-      var rest = obj
-      var props = helperGetHGSKeys(property)
-      var len = props.length
-      for (var index = 0; index < len; index++) {
-        if (isPrototypePolluted(props[index])) {
-          continue
-        }
-        var isEnd = index === len - 1
-        rest = setDeepProps(rest, props[index], isEnd, isEnd ? null : props[index + 1], value)
+  if (!obj || !helperCheckCopyKey(property)) return obj
+
+  // 快路径：已存在的简单属性直接赋值
+  if ((obj[property] || hasOwnProp(obj, property)) && !setIsPrototypePolluted(property)) {
+    obj[property] = value
+    return obj
+  }
+
+  var len = helperParsePath(property)
+  if (len === 0) {
+    return obj
+  }
+
+  var cur = obj
+  for (var i = 0; i < len; i++) {
+    var isEnd = i === len - 1
+    var key = staticParsePathNames[i]
+    var idx = staticParsePathIdxs[i]
+    // 下一段是纯下标 [n] 则建数组，否则建对象
+    var nextIsIndex = !isEnd && staticParsePathNames[i + 1] === null
+    var nextIdx = isEnd ? 0 : staticParsePathIdxs[i + 1]
+
+    if (key === null) {
+      // 纯下标段 [n]：原版无条件覆盖（不复用已存在值），容器类型由下一段决定
+      var ra = isEnd ? value : (nextIsIndex ? new Array(nextIdx + 1) : {})
+      cur[idx] = ra
+      cur = ra
+    } else if (idx === -1) {
+      // 普通属性
+      if (setIsPrototypePolluted(key)) continue
+      if (cur[key]) {
+        if (isEnd) cur[key] = value
+        cur = cur[key]
+      } else {
+        var ro = isEnd ? value : (nextIsIndex ? new Array(nextIdx + 1) : {})
+        cur[key] = ro
+        cur = ro
       }
+    } else {
+      // 对象内数组元素 foo[n]
+      var r = isEnd ? value : (nextIsIndex ? new Array(nextIdx + 1) : {})
+      if (cur[key]) {
+        if (isEnd) {
+          cur[key][idx] = value
+        } else if (cur[key][idx]) {
+          cur = cur[key][idx]
+          continue
+        } else {
+          cur[key][idx] = r
+        }
+      } else {
+        cur[key] = new Array(idx + 1)
+        cur[key][idx] = r
+      }
+      cur = r
     }
   }
   return obj
-}
-
-/**
- * Blacklist certain keys to prevent Prototype Pollution
- * @param {string} key
- */
-function isPrototypePolluted(key) {
-  return key === '__proto__' || key === 'constructor' || key === 'prototype'
 }
 
 module.exports = set

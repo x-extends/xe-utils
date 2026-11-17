@@ -1,27 +1,23 @@
 var staticParseInt = require('./staticParseInt')
 
-var helperGetUTCDateTime = require('./helperGetUTCDateTime')
+var helperCreateEmptyObj = require('./helperCreateEmptyObj')
 var helperGetDateTime = require('./helperGetDateTime')
 
 var isString = require('./isString')
 var isNumber = require('./isNumber')
 var isDate = require('./isDate')
+var padEnd = require('./padEnd')
 
 function getParseRule (txt) {
   return '(\\d{' + txt + '})'
 }
 
-function toParseMs (num) {
-  if (num < 10) {
-    return num * 100
-  } else if (num < 100) {
-    return num * 10
-  }
-  return num
-}
-
 function toParseNum (num) {
   return isNaN(num) ? num : staticParseInt(num)
+}
+
+function getObjUTCDateTime (resMaps) {
+  return Date.UTC(staticParseInt(resMaps.y), resMaps.M ? staticParseInt(resMaps.M) : 0, resMaps.d ? staticParseInt(resMaps.d) : 1, resMaps.H ? staticParseInt(resMaps.H) : 0, resMaps.m ? staticParseInt(resMaps.m) : 0, resMaps.s ? staticParseInt(resMaps.s) : 0, resMaps.S ? staticParseInt(resMaps.S) : 0)
 }
 
 var d2 = getParseRule(2)
@@ -47,7 +43,8 @@ for (var len = defaulParseStrs.length - 1; len >= 0; len--) {
  * 解析默认格式
  */
 function parseDefaultRules (str) {
-  var matchRest, resMaps = {}
+  var matchRest
+  var resMaps = { y: '', M: '', d: '', H: '', m: '', s: '', S: '', Z: '' }
   for (var i = 0, dfrLen = defaulParseREs.length; i < dfrLen; i++) {
     matchRest = str.match(defaulParseREs[i])
     if (matchRest) {
@@ -78,7 +75,7 @@ var customParseStrs = [
   ['m', d1or2],
   ['ss', d2],
   ['s', d1or2],
-  ['SSS', getParseRule(3)],
+  ['SSS', getParseRule('1,3')],
   ['S', d1or7],
   ['Z', dzZ]
 ]
@@ -92,7 +89,8 @@ for (var i = 0; i < customParseStrs.length; i++) {
 }
 
 var customParseRes = new RegExp(parseRuleKeys.join('|'), 'g')
-var cacheFormatMaps = {}
+// 防原型污染
+var cacheFormatMaps = helperCreateEmptyObj()
 
 /**
  * 解析自定义格式
@@ -101,7 +99,7 @@ function parseCustomRules (str, format) {
   var cacheItem = cacheFormatMaps[format]
   if (!cacheItem) {
     var posIndexs = []
-    var re = format.replace(/([$(){}*+.?\\^|])/g, "\\$1").replace(customParseRes, function (text, val) {
+    var re = format.replace(/([$(){}*+.?\\^|])/g, '\\$1').replace(customParseRes, function (text, val) {
       var firstChar = text.charAt(0)
       // 如果为转义符号:[关键字]
       if (firstChar === '[') {
@@ -133,15 +131,17 @@ function parseCustomRules (str, format) {
 function parseTimeZone (resMaps) {
   // 如果为UTC 时间
   if (/^[zZ]/.test(resMaps.Z)) {
-    return new Date(helperGetUTCDateTime(resMaps))
-  } else {
-    // 如果指定时区，时区转换
-    var matchRest = resMaps.Z.match(/([-+])(\d{2}):?(\d{2})/)
-    if (matchRest) {
-      return new Date(helperGetUTCDateTime(resMaps) - (matchRest[1] === '-' ? -1 : 1) * staticParseInt(matchRest[2]) * 3600000 + staticParseInt(matchRest[3]) * 60000)
-    }
+    return new Date(getObjUTCDateTime(resMaps))
   }
-  return new Date('')
+  // 如果指定时区，时区转换
+  var matchRest = resMaps.Z.match(/([-+])(\d{2}):?(\d{2})/)
+  if (matchRest) {
+    // 符号作用于整段偏移（含分钟），修复 +05:30 少算 1 小时的问题
+    var sign = matchRest[1] === '-' ? -1 : 1
+    var offsetMs = sign * (staticParseInt(matchRest[2]) * 3600000 + staticParseInt(matchRest[3]) * 60000)
+    return new Date(getObjUTCDateTime(resMaps) - offsetMs)
+  }
+  return new Date(NaN)
 }
 
 /**
@@ -165,17 +165,17 @@ function toStringDate (str, format) {
         }
         if (resMaps.S) {
           // 如果7位则是微秒，只精确到3位毫秒
-          resMaps.S = toParseMs(toParseNum(resMaps.S.substring(0, 3)))
+          resMaps.S = staticParseInt(resMaps.S.length > 3 ? resMaps.S.substring(0, 3) : padEnd(resMaps.S, 3, '0'))
         }
         if (resMaps.Z) {
           return parseTimeZone(resMaps)
         } else {
-          return new Date(resMaps.y, resMaps.M || 0, resMaps.d || 1, resMaps.H || 0, resMaps.m || 0, resMaps.s || 0, resMaps.S || 0)
+          return new Date(staticParseInt(resMaps.y), resMaps.M || 0, resMaps.d ? staticParseInt(resMaps.d) : 1, resMaps.H ? staticParseInt(resMaps.H) : 0, resMaps.m ? staticParseInt(resMaps.m) : 0, resMaps.s ? staticParseInt(resMaps.s) : 0, resMaps.S || 0)
         }
       }
     }
   }
-  return new Date('')
+  return new Date(NaN)
 }
 
 module.exports = toStringDate

@@ -1,6 +1,7 @@
 var isDate = require('./isDate')
 var toStringDate = require('./toStringDate')
 
+var helperHasLeapYear = require('./helperHasLeapYear')
 var helperNewDate = require('./helperNewDate')
 
 /**
@@ -14,7 +15,7 @@ function isLeapYear (date) {
   var currentDate = date ? toStringDate(date) : helperNewDate()
   if (isDate(currentDate)) {
     year = currentDate.getFullYear()
-    return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
+    return helperHasLeapYear(year)
   }
   return false
 }

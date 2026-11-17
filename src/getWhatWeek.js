@@ -26,7 +26,7 @@ function getWhatWeek (date, offsetWeek, offsetDay, firstDay) {
     var whatDayTime = helperGetDateTime(date)
     var viewStartDay = hasStartDay ? firstDay : setupDefaults.firstDayOfWeek
     var currentDay = date.getDay()
-    var isValidDay = false
+    var isValidDay
     var offsetNum, customDay
     if (offsetDay === 'first') {
       isValidDay = true

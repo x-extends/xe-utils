@@ -2136,429 +2136,351 @@ describe('Base functions', () => {
   })
 
   test('has()', () => {
-    expect(
-      XEUtils.has()
-    ).toEqual(false)
-    expect(
-      XEUtils.has('123')
-    ).toEqual(false)
-    expect(
-      XEUtils.has(null)
-    ).toEqual(false)
-    expect(
-      XEUtils.has(undefined)
-    ).toEqual(false)
-    expect(
-      XEUtils.has(-1)
-    ).toEqual(false)
-    expect(
-      XEUtils.has(0)
-    ).toEqual(false)
-    expect(
-      XEUtils.has({})
-    ).toEqual(false)
-    expect(
-      XEUtils.has([])
-    ).toEqual(false)
-    expect(
-      XEUtils.has(/\d/)
-    ).toEqual(false)
-    expect(
-      XEUtils.has(function () { })
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } })
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, null)
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, undefined)
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, '')
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, [])
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[3]')
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ aa: undefined }, 'aa.bb.cc')
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ aa: null }, 'aa.bb.cc')
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ aa: { bb: null, cc: 11 } }, 'aa.bb.cc')
-    ).toEqual(false)
-    expect(
-      XEUtils.has([0, 1, null, undefined, -1, /\d/], 6)
-    ).toEqual(false)
-    expect(
-      XEUtils.has([[[11]]], '[0][0][1]')
-    ).toEqual(false)
-    expect(
-      XEUtils.has({ aa: { bb: null } }, 'aa.bb')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ aa: { bb: { cc: undefined } } }, 'aa.bb.cc')
-    ).toEqual(true)
-    expect(
-      XEUtils.has('abc', '[2]')
-    ).toEqual(true)
-    expect(
-      XEUtils.has('abc', [0])
-    ).toEqual(true)
-    expect(
-      XEUtils.has([11, 22, 33], 1)
-    ).toEqual(true)
-    expect(
-      XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)
-    ).toEqual(true)
-    expect(
-      XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1]')
-    ).toEqual(true)
-    expect(
-      XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 0, c: 22, d: [33, 44] } }, 'a.b')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] }, 'a.d': 333 }, 'a.d')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { c: 22, d: [33, 44] }, 'a.b': 333 }, 'a.b')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [null] } }, 'a.d[0]')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, { f: 66 }] } }, 'a.d[1].f')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44, 55, undefined] } }, 'a.d[3]')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: undefined, d: [33, 44] } }, ['a', 'c'])
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: { b: 11, c: 22, d: [33, 44], e: 0 } }, ['a', 'e'])
-    ).toEqual(true)
-    expect(
-      XEUtils.has([0, 1, null, undefined, -1, /\d/], 0)
-    ).toEqual(true)
-    expect(
-      XEUtils.has([0, 1, null, undefined, -1, /\d/], 1)
-    ).toEqual(true)
-    expect(
-      XEUtils.has([0, 1, null, undefined, -1, /\d/], 2)
-    ).toEqual(true)
-    expect(
-      XEUtils.has([0, 1, null, undefined, -1, /\d/], '3')
-    ).toEqual(true)
-    expect(
-      XEUtils.has([0, 1, null, undefined, -1, /\d/], '4')
-    ).toEqual(true)
-    expect(
-      XEUtils.has([0, 1, null, undefined, -1, /\d/], '5')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'a')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b.c')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.f')
-    ).toEqual(true)
-    expect(
-      XEUtils.has({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.e')
-    ).toEqual(true)
-    expect(
-      XEUtils.has([[[11]]], '[0][0][0]')
-    ).toEqual(true)
+    // ========== 返回 false 的场景 ==========
+    // 无参 / 单参基础类型
+    expect(XEUtils.has()).toEqual(false)
+    expect(XEUtils.has('123')).toEqual(false)
+    expect(XEUtils.has(null)).toEqual(false)
+    expect(XEUtils.has(undefined)).toEqual(false)
+    expect(XEUtils.has(-1)).toEqual(false)
+    expect(XEUtils.has(0)).toEqual(false)
+    expect(XEUtils.has({})).toEqual(false)
+    expect(XEUtils.has([])).toEqual(false)
+    expect(XEUtils.has(/\d/)).toEqual(false)
+    expect(XEUtils.has(function () { })).toEqual(false)
+
+    // 布尔、NaN、BigInt 等基础类型单参
+    expect(XEUtils.has(true)).toEqual(false)
+    expect(XEUtils.has(NaN)).toEqual(false)
+    expect(XEUtils.has(1n)).toEqual(false)
+
+    // 对象 + 无效路径（空/非法路径值）
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } })).toEqual(false)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, null)).toEqual(false)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, undefined)).toEqual(false)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, '')).toEqual(false)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, [])).toEqual(false)
+
+    // 非法路径类型
+    expect(XEUtils.has({ a: 1 }, true)).toEqual(false)
+    expect(XEUtils.has({ a: 1 }, 1.5)).toEqual(false)
+    expect(XEUtils.has({ a: 1 }, () => 'a')).toEqual(false)
+
+    // 索引越界 / 路径断链
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[3]')).toEqual(false)
+    expect(XEUtils.has({ aa: undefined }, 'aa.bb.cc')).toEqual(false)
+    expect(XEUtils.has({ aa: null }, 'aa.bb.cc')).toEqual(false)
+    expect(XEUtils.has({ aa: { bb: null, cc: 11 } }, 'aa.bb.cc')).toEqual(false)
+    expect(XEUtils.has([0, 1, null, undefined, -1, /\d/], 6)).toEqual(false)
+    expect(XEUtils.has([[[11]]], '[0][0][1]')).toEqual(false)
+
+    // 数组边界越界、负索引
+    expect(XEUtils.has([1, 2, 3], 3)).toEqual(false) // 索引等于数组长度
+    expect(XEUtils.has([1, 2, 3], -1)).toEqual(false) // 负索引（默认不支持）
+
+    // 稀疏数组空位（区别于显式 undefined）
+    // eslint-disable-next-line no-sparse-arrays
+    expect(XEUtils.has([1, , 3], 1)).toEqual(false)
+
+    // 无效路径语法
+    expect(XEUtils.has({ a: { b: 1 } }, 'a..b')).toEqual(false)
+    expect(XEUtils.has({ a: { b: 1 } }, '.a.b')).toEqual(false)
+    expect(XEUtils.has({ a: { b: 1 } }, 'a.b.')).toEqual(false)
+    expect(XEUtils.has({ a: { b: 1 } }, 'a...b')).toEqual(false)
+    expect(XEUtils.has({ a: { b: 1 } }, 'a[0].')).toEqual(false)
+
+    // 原型链属性（仅判断自身属性，不沿原型链查找）
+    expect(XEUtils.has({}, 'toString')).toEqual(false)
+    expect(XEUtils.has([], 'push')).toEqual(false)
+    expect(XEUtils.has('abc', 'trim')).toEqual(false)
+
+    // 中间节点是基本类型时深层访问
+    expect(XEUtils.has({ a: 123 }, 'a.b')).toEqual(false)
+    expect(XEUtils.has(123, 'a.b')).toEqual(false)
+
+    // ========== 返回 true 的场景 ==========
+    // 值为 null/undefined 但属性自身存在
+    expect(XEUtils.has({ aa: { bb: null } }, 'aa.bb')).toEqual(true)
+    expect(XEUtils.has({ aa: { bb: { cc: undefined } } }, 'aa.bb.cc')).toEqual(true)
+
+    // 字符串索引访问
+    expect(XEUtils.has('abc', '[2]')).toEqual(true)
+    expect(XEUtils.has('abc', [0])).toEqual(true)
+
+    // 字符串/数组的 length 自身属性
+    expect(XEUtils.has('abc', 'length')).toEqual(true)
+    expect(XEUtils.has([1, 2, 3], 'length')).toEqual(true)
+
+    // 数组索引访问
+    expect(XEUtils.has([11, 22, 33], 1)).toEqual(true)
+    expect(XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)).toEqual(true)
+    expect(XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1]')).toEqual(true)
+    expect(XEUtils.has([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')).toEqual(true)
+
+    // 对象单层/深层路径
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a')).toEqual(true)
+    expect(XEUtils.has({ a: { b: 0, c: 22, d: [33, 44] } }, 'a.b')).toEqual(true)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] }, 'a.d': 333 }, 'a.d')).toEqual(true)
+    expect(XEUtils.has({ a: { c: 22, d: [33, 44] }, 'a.b': 333 }, 'a.b')).toEqual(true)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')).toEqual(true)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [null] } }, 'a.d[0]')).toEqual(true)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, { f: 66 }] } }, 'a.d[1].f')).toEqual(true)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44, 55, undefined] } }, 'a.d[3]')).toEqual(true)
+
+    // 数组形式路径
+    expect(XEUtils.has({ a: { b: 11, c: undefined, d: [33, 44] } }, ['a', 'c'])).toEqual(true)
+    expect(XEUtils.has({ a: { b: 11, c: 22, d: [33, 44], e: 0 } }, ['a', 'e'])).toEqual(true)
+    expect(XEUtils.has({ a: { b: [11, 22] } }, ['a', 'b', '0'])).toEqual(true)
+    expect(XEUtils.has([{ a: { b: 33 } }], ['0', 'a', 'b'])).toEqual(true)
+
+    // 数组各类值的索引存在性
+    expect(XEUtils.has([0, 1, null, undefined, -1, /\d/], 0)).toEqual(true)
+    expect(XEUtils.has([0, 1, null, undefined, -1, /\d/], '3')).toEqual(true)
+
+    // 多维数组
+    expect(XEUtils.has([[[11]]], '[0][0][0]')).toEqual(true)
+
+    // 空字符串键名
+    expect(XEUtils.has({ '': 123 }, '')).toEqual(true)
+
+    // 类数组对象数字索引
+    expect(XEUtils.has({ 0: 'a', 1: 'b', length: 2 }, 0)).toEqual(true)
+    expect(XEUtils.has({ 0: 'a', 1: 'b', length: 2 }, '1')).toEqual(true)
+
+    // 纯净对象（无原型链）
+    const pureObj = Object.create(null)
+    pureObj.key = 1
+    expect(XEUtils.has(pureObj, 'key')).toEqual(true)
+
+    // 不可枚举自身属性
+    const hiddenObj = {}
+    Object.defineProperty(hiddenObj, 'inner', { value: 100, enumerable: false })
+    expect(XEUtils.has(hiddenObj, 'inner')).toEqual(true)
+
+    // ===== 补充：Symbol 键 =====
+    const symKey = Symbol('s')
+    const symObj = {}
+    symObj[symKey] = 1
+    expect(XEUtils.has(symObj, symKey)).toEqual(true) // 自身 Symbol 键命中
+
+    // ===== 补充：对象套数组套对象套数组（交替深链）=====
+    const deepNest = { a: [{ b: [{ c: [10, { d: [99, 88] }] }] }] }
+    expect(XEUtils.has(deepNest, 'a[0].b[0].c[1].d[0]')).toEqual(true)
+    expect(XEUtils.has(deepNest, 'a[0].b[0].c[1].d')).toEqual(true) // 末段是数组本身
+    expect(XEUtils.has(deepNest, 'a[0].b[0].c[1].d[5]')).toEqual(false) // 末段越界
+    expect(XEUtils.has(deepNest, 'a[0].b[2].c')).toEqual(false) // 中间数组越界断链
+    expect(XEUtils.has(deepNest, 'a[0].b[0].c[1].d[0].x')).toEqual(false) // 越过标量叶子
+    expect(XEUtils.has(deepNest, ['a', '0', 'b', '0', 'c', '1', 'd', '0'])).toEqual(true)
+
+    // ===== 补充：连续数组（多维）=====
+    const arr3d = [[[10, 20], [30, 40]], [50]]
+    expect(XEUtils.has(arr3d, '[0][0][1]')).toEqual(true)
+    expect(XEUtils.has(arr3d, '[0][1][0]')).toEqual(true)
+    expect(XEUtils.has(arr3d, '[1][0]')).toEqual(true)
+    expect(XEUtils.has(arr3d, '[0][1][1]')).toEqual(true)
+    expect(XEUtils.has(arr3d, '[1][1]')).toEqual(false)
+    expect(XEUtils.has(arr3d, '[2][0]')).toEqual(false)
+
+    // ===== 补充：连续对象（多层）=====
+    const objDeep = { a: { b: { c: { d: { e: 42 } } } } }
+    expect(XEUtils.has(objDeep, 'a.b.c.d.e')).toEqual(true)
+    expect(XEUtils.has(objDeep, 'a.b.c.d.e.f')).toEqual(false) // 越过标量叶子
+    expect(XEUtils.has(objDeep, ['a', 'b', 'c', 'd', 'e'])).toEqual(true)
+
+    // ===== 补充：连续数组 + 连续对象交替 =====
+    const mix = [[{ a: { b: [[{ c: 1 }]] } }]]
+    expect(XEUtils.has(mix, '[0][0].a.b[0][0].c')).toEqual(true)
+    expect(XEUtils.has(mix, '[0][0].a.b[1][0].c')).toEqual(false)
   })
 
   test('get()', () => {
-    expect(
-      XEUtils.get()
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get('123')
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get(null)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get(undefined)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get([])
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get({})
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get(-1)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get(0)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get(/\d/)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get(function () { })
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } })
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, null)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, undefined)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, '')
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, [])
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get('abc', '[2]')
-    ).toEqual('c')
-    expect(
-      XEUtils.get('abc', [0])
-    ).toEqual('a')
-    expect(
-      XEUtils.get([11, 22, 33], 1)
-    ).toEqual(22)
-    expect(
-      XEUtils.get([[11, 22]], '[0][1]')
-    ).toEqual(22)
-    expect(
-      XEUtils.get({ a: [[11, 22]] }, 'a[0][1]')
-    ).toEqual(22)
-    expect(
-      XEUtils.get({ a: [[11, { bb: [33, 44, 55] }]] }, 'a[0][1].bb[1]')
-    ).toEqual(44)
-    expect(
-      XEUtils.get([[11, 22, [33, [44, 55]]]], '[0][2][1][0]')
-    ).toEqual(44)
-    expect(
-      XEUtils.get({ a: [[11, 22, [33, [44, 55]]]] }, 'a[0][2][1][0]')
-    ).toEqual(44)
-    expect(
-      XEUtils.get({ a: [[11, 22, [33, [{ cc: 88 }, 55]]]] }, 'a[0][2][1][0].cc')
-    ).toEqual(88)
-    expect(
-      XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)
-    ).toEqual({ a: 33, b: 44 })
-    expect(
-      XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1]')
-    ).toEqual({ a: 33, b: 44 })
-    expect(
-      XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')
-    ).toEqual(44)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a')
-    ).toEqual({ b: 11, c: 22, d: [33, 44] })
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.b')
-    ).toEqual(11)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] }, 'a.b': 333 }, 'a.b')
-    ).toEqual(333)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')
-    ).toEqual([33, 44])
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[0]')
-    ).toEqual(33)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, { f: 66 }] } }, 'a.d[1].f')
-    ).toEqual(66)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[3]', '111')
-    ).toEqual('111')
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'c'], '222')
-    ).toEqual(22)
-    expect(
-      XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'e'], '333')
-    ).toEqual('333')
-    expect(
-      XEUtils.get([0, 1, null, undefined, -1, /\d/], 0)
-    ).toEqual(0)
-    expect(
-      XEUtils.get([0, 1, null, undefined, -1, /\d/], 1)
-    ).toEqual(1)
-    expect(
-      XEUtils.get([0, 1, null, undefined, -1, /\d/], 2)
-    ).toEqual(null)
-    expect(
-      XEUtils.get([0, 1, null, undefined, -1, /\d/], '3')
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get([0, 1, null, undefined, -1, /\d/], '4')
-    ).toEqual(-1)
-    expect(
-      XEUtils.get([0, 1, null, undefined, -1, /\d/], '5')
-    ).toEqual(/\d/)
-    expect(
-      XEUtils.get({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'a')
-    ).toEqual(1)
-    expect(
-      XEUtils.get({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b')
-    ).toEqual({ c: null, d: 33, cc: { f: undefined, e: 0 } })
-    expect(
-      XEUtils.get({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b.c')
-    ).toEqual(null)
-    expect(
-      XEUtils.get({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.f')
-    ).toEqual(undefined)
-    expect(
-      XEUtils.get({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.e')
-    ).toEqual(0)
+    expect(XEUtils.get()).toEqual(undefined)
+    expect(XEUtils.get('123')).toEqual(undefined)
+    expect(XEUtils.get(null)).toEqual(undefined)
+    expect(XEUtils.get(undefined)).toEqual(undefined)
+    expect(XEUtils.get([])).toEqual(undefined)
+    expect(XEUtils.get({})).toEqual(undefined)
+    expect(XEUtils.get(-1)).toEqual(undefined)
+    expect(XEUtils.get(0)).toEqual(undefined)
+    expect(XEUtils.get(/\d/)).toEqual(undefined)
+    expect(XEUtils.get(function () { })).toEqual(undefined)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } })).toEqual(undefined)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, null)).toEqual(undefined)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, undefined)).toEqual(undefined)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, '')).toEqual(undefined)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, [])).toEqual(undefined)
+    expect(XEUtils.get('abc', '[2]')).toEqual('c')
+    expect(XEUtils.get('abc', [0])).toEqual('a')
+    expect(XEUtils.get([11, 22, 33], 1)).toEqual(22)
+    expect(XEUtils.get([[11, 22]], '[0][1]')).toEqual(22)
+    expect(XEUtils.get({ a: [[11, 22]] }, 'a[0][1]')).toEqual(22)
+    expect(XEUtils.get({ a: [[11, { bb: [33, 44, 55] }]] }, 'a[0][1].bb[1]')).toEqual(44)
+    expect(XEUtils.get([[[11, 22, [33, [44, 55]]]]], '[0][0][2][1][0]')).toEqual(44)
+    expect(XEUtils.get({ a: [[11, 22, [33, [44, 55]]]] }, 'a[0][2][1][0]')).toEqual(44)
+    expect(XEUtils.get({ a: [[11, 22, [33, [{ cc: 88 }, 55]]]] }, 'a[0][2][1][0].cc')).toEqual(88)
+    expect(XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], 1)).toEqual({ a: 33, b: 44 })
+    expect(XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1]')).toEqual({ a: 33, b: 44 })
+    expect(XEUtils.get([{ a: 11, b: 22 }, { a: 33, b: 44 }], '[1].b')).toEqual(44)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a')).toEqual({ b: 11, c: 22, d: [33, 44] })
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.b')).toEqual(11)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] }, 'a.b': 333 }, 'a.b')).toEqual(333)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d')).toEqual([33, 44])
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[0]')).toEqual(33)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, { f: 66 }] } }, 'a.d[1].f')).toEqual(66)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, 'a.d[3]', '111')).toEqual('111')
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'c'], '222')).toEqual(22)
+    expect(XEUtils.get({ a: { b: 11, c: 22, d: [33, 44] } }, ['a', 'e'], '333')).toEqual('333')
+    expect(XEUtils.get([0, 1, null, undefined, -1, /\d/], 0)).toEqual(0)
+    expect(XEUtils.get([0, 1, null, undefined, -1, /\d/], '3')).toEqual(undefined)
+    expect(XEUtils.get([0, 1, null, undefined, -1, /\d/], '5')).toEqual(/\d/)
+    expect(XEUtils.get({ a: 1, b: { c: null, d: 33, cc: { f: undefined, e: 0 } } }, 'b.cc.e')).toEqual(0)
+    expect(XEUtils.get({ a: 1, b: { c: null, cc: { f: undefined, e: 0 } } }, 'b.cc.f')).toEqual(undefined)
+
+    // 默认值（defaultValue）Falsy 边界
+    expect(XEUtils.get({ a: 0 }, 'a', 99)).toEqual(0)
+    expect(XEUtils.get({ a: false }, 'a', 99)).toEqual(false)
+    expect(XEUtils.get({ a: '' }, 'a', 99)).toEqual('')
+    expect(XEUtils.get({ a: null }, 'a', 99)).toEqual(null) // null !== undefined，原样返回
+    expect(XEUtils.get({}, 'missing', 0)).toEqual(0)
+    expect(XEUtils.get({}, 'missing', null)).toEqual(null)
+
+    // 特殊键名与完整键名优先匹配
+    expect(XEUtils.get({ 'a.b.c': 999 }, 'a.b.c')).toEqual(999)
+    expect(XEUtils.get({ 'a[0]': 888 }, 'a[0]')).toEqual(888)
+    expect(XEUtils.get({ '': 'empty key' }, '')).toEqual('empty key')
+
+    // 深层遇 null/undefined 提前终止
+    expect(XEUtils.get({ a: { b: null } }, 'a.b.c', 'default')).toEqual('default')
+    expect(XEUtils.get({ a: null }, 'a.b.c.d', 'default')).toEqual('default')
+
+    // 原型链属性访问（get 支持原型链）
+    function TestClass () {
+      this.x = 10
+    }
+    TestClass.prototype.y = 20
+    const instance = new TestClass()
+    expect(XEUtils.get(instance, 'y')).toEqual(20)
+
+    // 字符串索引越界
+    expect(XEUtils.get('hello', '10', 'out')).toEqual('out')
+    expect(XEUtils.get('hello', 10, 'out')).toEqual('out')
+
+    // 非法空段路径 → 默认值
+    expect(XEUtils.get({ a: { b: 1 } }, 'a..b', 'no')).toEqual('no')
+    expect(XEUtils.get({ a: { b: 1 } }, '.a.b', 'no')).toEqual('no')
+    expect(XEUtils.get({ a: { b: 1 } }, 'a.b.', 'no')).toEqual('no')
+
+    // ===== 补充：对象套数组套对象套数组（交替深链）=====
+    const deepNest = { a: [{ b: [{ c: [10, { d: [99, 88] }] }] }] }
+    expect(XEUtils.get(deepNest, 'a[0].b[0].c[1].d[0]')).toEqual(99)
+    expect(XEUtils.get(deepNest, 'a[0].b[0].c[1].d[1]')).toEqual(88)
+    expect(XEUtils.get(deepNest, 'a[0].b[0].c[0]')).toEqual(10)
+    expect(XEUtils.get(deepNest, ['a', '0', 'b', '0', 'c', '1', 'd', '0'])).toEqual(99)
+    expect(XEUtils.get(deepNest, 'a[0].b[0].c[1].d[5]', 'no')).toEqual('no')
+    expect(XEUtils.get(deepNest, 'a[2].b[0]', 'no')).toEqual('no')
+    expect(XEUtils.get(deepNest, 'a[0].b[0].c[1].d[0].x', 'no')).toEqual('no')
+
+    // ===== 补充：连续数组（多维）=====
+    const arr3d = [[[10, 20], [30, 40]], [50]]
+    expect(XEUtils.get(arr3d, '[0][0][1]')).toEqual(20)
+    expect(XEUtils.get(arr3d, '[0][1][0]')).toEqual(30)
+    expect(XEUtils.get(arr3d, '[1][0]')).toEqual(50)
+    expect(XEUtils.get(arr3d, '[1][1]', 'no')).toEqual('no')
+    expect(XEUtils.get(arr3d, '[0][0][5]', 'no')).toEqual('no')
+
+    // ===== 补充：连续对象（多层）=====
+    const objDeep = { a: { b: { c: { d: { e: 42 } } } } }
+    expect(XEUtils.get(objDeep, 'a.b.c.d.e')).toEqual(42)
+    expect(XEUtils.get(objDeep, 'a.b.c')).toEqual({ d: { e: 42 } })
+    expect(XEUtils.get(objDeep, 'a.b.x.y', 'no')).toEqual('no')
+    expect(XEUtils.get(objDeep, ['a', 'b', 'c', 'd', 'e'])).toEqual(42)
+
+    // ===== 补充：连续数组 + 连续对象交替 =====
+    const mix = [[{ a: { b: [[{ c: 1 }]] } }]]
+    expect(XEUtils.get(mix, '[0][0].a.b[0][0].c')).toEqual(1)
+    expect(XEUtils.get(mix, '[0][0].a.b[1][0].c', 'no')).toEqual('no')
   })
 
   test('set()', () => {
-    expect(
-      XEUtils.set(null)
-    ).toEqual(null)
-    expect(
-      XEUtils.set(undefined)
-    ).toEqual(undefined)
-    expect(
-      XEUtils.set('')
-    ).toEqual('')
-    expect(
-      XEUtils.set(0)
-    ).toEqual(0)
-    expect(
-      XEUtils.set(-1)
-    ).toEqual(-1)
-    expect(
-      XEUtils.set({})
-    ).toEqual({})
-    expect(
-      XEUtils.set([])
-    ).toEqual([])
-    expect(
-      XEUtils.set({ a: 11 }, null)
-    ).toEqual({ a: 11 })
-    expect(
-      XEUtils.set([11])
-    ).toEqual([11], null)
-    expect(
-      XEUtils.set({}, 'a', 11)
-    ).toEqual({ a: 11 })
-    expect(
-      XEUtils.sum(XEUtils.set({ b: 22 }, 'a', 11))
-    ).toEqual(33)
-    expect(
-      XEUtils.set({}, 'a.b', 11)
-    ).toEqual({ a: { b: 11 } })
-    expect(
-      XEUtils.set({}, 'a.d[0]', 33)
-    ).toEqual({ a: { d: [33] } })
-    expect(
-      XEUtils.set({ a: [{ a: 4 }] }, 'a[1]', 33)
-    ).toEqual({ a: [{ a: 4 }, 33] })
-    expect(
-      XEUtils.set({ a: [] }, 'a[0].b', 5)
-    ).toEqual({ a: [{ b: 5 }] })
-    expect(
-      XEUtils.set({ a: [{ a: 4 }] }, 'a[0].b', 5)
-    ).toEqual({ a: [{ a: 4, b: 5 }] })
-    expect(
-      XEUtils.set({ a: {} }, 'a.d[0].f.h', 44)
-    ).toEqual({ a: { d: [{ f: { h: 44 } }] } })
-    expect(
-      XEUtils.set({}, 'a.d[0].f.h[0]', 55)
-    ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
-    expect(
-      XEUtils.set({ a: { d: [{ a: { h: [55] } }] } }, 'a.d[0].f.h[0]', 55)
-    ).toEqual({ a: { d: [{ a: { h: [55] }, f: { h: [55] } }] } })
-    expect(
-      XEUtils.set({}, 'a[0][2]', 11)
-    ).toEqual({ a: [[undefined, undefined, 11]] })
-    expect(
-      XEUtils.set({ a: [0, 1, 2] }, 'a[0][2]', 11)
-    ).toEqual({ a: [[undefined, undefined, 11], 1, 2] })
-    expect(
-      XEUtils.set({ a: [[22], 1, 2] }, 'a[0][2]', 11)
-    ).toEqual({ a: [[22, undefined, 11], 1, 2] })
-    expect(
-      XEUtils.set({}, 'a[0][2].b[1]', 22)
-    ).toEqual({ a: [[undefined, undefined, { b: [undefined, 22] }]] })
-    expect(
-      XEUtils.set({}, ['a'], 11)
-    ).toEqual({ a: 11 })
-    expect(
-      XEUtils.sum(XEUtils.set({ c: 33 }, ['a'], 11))
-    ).toEqual(44)
-    expect(
-      XEUtils.set({}, ['a', 'c'], 22)
-    ).toEqual({ a: { c: 22 } })
-    expect(
-      XEUtils.set({}, ['a', 'd[0]', 'f', 'h'], 44)
-    ).toEqual({ a: { d: [{ f: { h: 44 } }] } })
-    expect(
-      XEUtils.set({ a: {} }, ['a', 'd[0]', 'f', 'h[0]'], 55)
-    ).toEqual({ a: { d: [{ f: { h: [55] } }] } })
-    expect(
-      XEUtils.set([], '[1][5][2]', 55)
-    ).toEqual([undefined, [undefined, undefined, undefined, undefined, undefined, [undefined, undefined, 55]]])
-    expect(
-      XEUtils.set([], '[1][5][2].b.c[1].t[2]', 66)
-    ).toEqual([undefined, [undefined, undefined, undefined, undefined, undefined, [undefined, undefined, { b: { c: [undefined, { t: [undefined, undefined, 66] }] } }]]])
+    expect(XEUtils.set(null)).toEqual(null)
+    expect(XEUtils.set(undefined)).toEqual(undefined)
+    expect(XEUtils.set('')).toEqual('')
+    expect(XEUtils.set(0)).toEqual(0)
+    expect(XEUtils.set(-1)).toEqual(-1)
+    expect(XEUtils.set({})).toEqual({})
+    expect(XEUtils.set([])).toEqual([])
+    expect(XEUtils.set({ a: 11 }, null)).toEqual({ a: 11 })
+    expect(XEUtils.set({}, 'a', 11)).toEqual({ a: 11 })
+    expect(XEUtils.sum(XEUtils.set({ b: 22 }, 'a', 11))).toEqual(33)
+    expect(XEUtils.set({}, 'a.b', 11)).toEqual({ a: { b: 11 } })
+    expect(XEUtils.set({}, 'a.d[0]', 33)).toEqual({ a: { d: [33] } })
+    expect(XEUtils.set({ a: [{ a: 4 }] }, 'a[1]', 33)).toEqual({ a: [{ a: 4 }, 33] })
+    expect(XEUtils.set({ a: [] }, 'a[0].b', 5)).toEqual({ a: [{ b: 5 }] })
+    expect(XEUtils.set({ a: [{ a: 4 }] }, 'a[0].b', 5)).toEqual({ a: [{ a: 4, b: 5 }] })
+    expect(XEUtils.set({ a: {} }, 'a.d[0].f.h', 44)).toEqual({ a: { d: [{ f: { h: 44 } }] } })
+    expect(XEUtils.set({}, 'a.d[0].f.h[0]', 55)).toEqual({ a: { d: [{ f: { h: [55] } }] } })
+    expect(XEUtils.set({}, 'a[0][2]', 11)).toEqual({ a: [[undefined, undefined, 11]] })
+    expect(XEUtils.set({ a: [0, 1, 2] }, 'a[0][2]', 11)).toEqual({ a: [[undefined, undefined, 11], 1, 2] })
+    expect(XEUtils.set({ a: [[22], 1, 2] }, 'a[0][2]', 11)).toEqual({ a: [[22, undefined, 11], 1, 2] })
+    expect(XEUtils.set({}, 'a[0][2].b[1]', 22)).toEqual({ a: [[undefined, undefined, { b: [undefined, 22] }]] })
+    expect(XEUtils.set({}, ['a'], 11)).toEqual({ a: 11 })
+    expect(XEUtils.sum(XEUtils.set({ c: 33 }, ['a'], 11))).toEqual(44)
+    expect(XEUtils.set({}, ['a', 'c'], 22)).toEqual({ a: { c: 22 } })
+    expect(XEUtils.set({}, ['a', 'd[0]', 'f', 'h'], 44)).toEqual({ a: { d: [{ f: { h: 44 } }] } })
+    expect(XEUtils.set({ a: {} }, ['a', 'd[0]', 'f', 'h[0]'], 55)).toEqual({ a: { d: [{ f: { h: [55] } }] } })
+    expect(XEUtils.set([], '[1][5][2]', 55)).toEqual([undefined, [undefined, undefined, undefined, undefined, undefined, [undefined, undefined, 55]]])
 
+    // 原型污染防护
     const obj1 = {}
     XEUtils.set(obj1, '__proto__.attr1', 1)
-    expect(
-      obj1.attr1 === 1
-    ).toEqual(true)
-    expect(
-      ({}).attr1 !== 1
-    ).toEqual(true)
+    expect(obj1.attr1 === 1).toEqual(true)
+    expect(({}).attr1 !== 1).toEqual(true)
 
     const obj2 = {}
     XEUtils.set(obj2, 'constructor', 1)
-    expect(
-      obj2.constructor !== 1
-    ).toEqual(true)
+    expect(obj2.constructor !== 1).toEqual(true)
 
     const FN3 = function FN3 () { }
     const obj3 = new FN3()
     XEUtils.set(obj3, 'prototype.a3', 1)
-    expect(
-      obj3.a3 === 1
-    ).toEqual(true)
+    expect(obj3.a3 === 1).toEqual(true)
     const obj4 = new FN3()
-    expect(
-      obj4.a3 !== 1
-    ).toEqual(true)
+    expect(obj4.a3 !== 1).toEqual(true)
 
     const obj5 = {}
-    const val5 = () => {}
+    const val5 = () => { }
     XEUtils.set(obj5, 'aa', val5)
-    expect(
-      obj5.aa === val5
-    ).toEqual(true)
+    expect(obj5.aa === val5).toEqual(true)
+
+    // 返回原对象引用
+    const oRef = {}
+    expect(XEUtils.set(oRef, 'a', 1) === oRef).toEqual(true)
+
+    // ===== 补充：对象套数组套对象套数组（交替深链）=====
+    expect(XEUtils.set({}, 'a[0].b[1].c[0].d', 7))
+      .toEqual({ a: [{ b: [undefined, { c: [{ d: 7 }] }] }] })
+    expect(XEUtils.set({ a: [{ b: [{ c: [] }] }] }, 'a[0].b[0].c[2].e', 5))
+      .toEqual({ a: [{ b: [{ c: [undefined, undefined, { e: 5 }] }] }] })
+    expect(XEUtils.set({ a: [{ b: [{ c: [1, 2] }] }] }, 'a[0].b[0].c[1]', 99))
+      .toEqual({ a: [{ b: [{ c: [1, 99] }] }] })
+    expect(XEUtils.set({ a: [{ keep: 1 }] }, 'a[0].b[0]', 2))
+      .toEqual({ a: [{ keep: 1, b: [2] }] })
+
+    // ===== 补充：连续数组（多维）=====
+    expect(XEUtils.set([], '[2][1][3]', 9))
+      .toEqual([undefined, undefined, [undefined, [undefined, undefined, undefined, 9]]])
+    expect(XEUtils.set([[1, 2]], '[0][2][1]', 7))
+      .toEqual([[undefined, undefined, [undefined, 7]]])
+
+    // ===== 补充：连续对象（多层）=====
+    expect(XEUtils.set({}, 'a.b.c.d.e.f', 1))
+      .toEqual({ a: { b: { c: { d: { e: { f: 1 } } } } } })
+    expect(XEUtils.set({ a: { b: { keep: 1 } } }, 'a.b.c.d', 2))
+      .toEqual({ a: { b: { keep: 1, c: { d: 2 } } } })
+
+    // ===== 补充：连续数组 + 连续对象交替 =====
+    expect(XEUtils.set([], '[0][1].x[2].y[0]', 3))
+      .toEqual([[undefined, { x: [undefined, undefined, { y: [3] }] }]])
   })
 
   test('groupBy()', () => {
