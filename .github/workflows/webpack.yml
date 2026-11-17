@@ -26,3 +26,4 @@ jobs:
       run: |
         npm run update
         npm run test
+        npm run test:all-tz
