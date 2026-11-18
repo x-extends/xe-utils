@@ -1,4 +1,6 @@
 var helperNumberDecimal = require('./helperNumberDecimal')
+var helperMathPow = require('./helperMathPow')
+
 var toNumberString = require('./toNumberString')
 var toNumber = require('./toNumber')
 var toFixed = require('./toFixed')
@@ -17,7 +19,7 @@ function subtract (num1, num2) {
   var str2 = toNumberString(minuend)
   var digit1 = helperNumberDecimal(str1)
   var digit2 = helperNumberDecimal(str2)
-  var ratio = Math.pow(10, Math.max(digit1, digit2))
+  var ratio = helperMathPow(10, Math.max(digit1, digit2))
   var precision = (digit1 >= digit2) ? digit1 : digit2
   return parseFloat(toFixed((subtrahend * ratio - minuend * ratio) / ratio, precision))
 }

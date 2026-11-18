@@ -1,4 +1,5 @@
 var helperStringSubstring = require('./helperStringSubstring')
+var helperArraySlice = require('./helperArraySlice')
 
 var toNumber = require('./toNumber')
 var isString = require('./isString')
@@ -18,7 +19,7 @@ function slice (data, startIndex, endIndex) {
   endIndex = argsSize >= 3 ? toNumber(endIndex) : data.length
   // 数组 / 字符串等原生支持 slice 的类型直接走原生，最快且负索引语义与规范一致
   if (data.slice) {
-    return data.slice(startIndex, endIndex)
+    return helperArraySlice(data, startIndex, endIndex)
   }
   // 类数组对象（如旧版 arguments、无 slice 的自定义集合）回退
   if (isString(data)) {

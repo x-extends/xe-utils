@@ -2,6 +2,8 @@ var staticParsePathNames = require('./staticParsePathNames')
 var staticParsePathIdxs = require('./staticParsePathIdxs')
 
 var helperStringIndexOf = require('./helperStringIndexOf')
+var helperStringCharCodeAt = require('./helperStringCharCodeAt')
+var helperArraySlice = require('./helperArraySlice')
 
 var isString = require('./isString')
 
@@ -12,7 +14,7 @@ function isDigits (s) {
     return false
   }
   for (var k = 0; k < l; k++) {
-    var c = s.charCodeAt(k)
+    var c = helperStringCharCodeAt(s, k)
     if (c < 48 || c > 57) {
       return false
     }
@@ -22,12 +24,12 @@ function isDigits (s) {
 
 function pushSeg (seg) {
   var l = seg.length
-  if (l > 0 && seg.charCodeAt(l - 1) === 93 /* ] */) {
+  if (l > 0 && helperStringCharCodeAt(seg, l - 1) === 93 /* ] */) {
     var b = seg.lastIndexOf('[')
     if (b >= 0) {
-      var idxStr = seg.slice(b + 1, l - 1)
+      var idxStr = helperArraySlice(seg, b + 1, l - 1)
       if (isDigits(idxStr)) {
-        staticParsePathNames.push(b > 0 ? seg.slice(0, b) : null)
+        staticParsePathNames.push(b > 0 ? helperArraySlice(seg, 0, b) : null)
         staticParsePathIdxs.push(+idxStr)
         return
       }
@@ -75,17 +77,17 @@ function helperParsePath (property) {
   var len = s.length
   var nameStart = 0
   while (i < len) {
-    var c = s.charCodeAt(i)
+    var c = helperStringCharCodeAt(s, i)
     if (c === 46 /* . */) {
       if (i <= nameStart) {
-        if (i === 0 || s.charCodeAt(i - 1) === 46 /* . */) {
+        if (i === 0 || helperStringCharCodeAt(s, i - 1) === 46 /* . */) {
           return resetNone()
         }
         i++
         nameStart = i
         continue
       }
-      pushSeg(s.slice(nameStart, i))
+      pushSeg(helperArraySlice(s, nameStart, i))
       i++
       nameStart = i
       continue
@@ -94,20 +96,20 @@ function helperParsePath (property) {
       var j = i + 1
       var idx = 0
       while (j < len) {
-        var cc = s.charCodeAt(j)
+        var cc = helperStringCharCodeAt(s, j)
         if (cc < 48 || cc > 57) {
           break
         }
         idx = idx * 10 + (cc - 48)
         j++
       }
-      if (j < len && s.charCodeAt(j) === 93 /* ] */) {
-        var nm = i > nameStart ? s.slice(nameStart, i) : null
+      if (j < len && helperStringCharCodeAt(s, j) === 93 /* ] */) {
+        var nm = i > nameStart ? helperArraySlice(s, nameStart, i) : null
         staticParsePathNames.push(nm)
         staticParsePathIdxs.push(idx)
         i = j + 1
         nameStart = i
-        if (i < len && s.charCodeAt(i) !== 46) nameStart = i
+        if (i < len && helperStringCharCodeAt(s, i) !== 46) nameStart = i
         continue
       }
       i++
@@ -116,11 +118,11 @@ function helperParsePath (property) {
     i++
   }
   // 尾部点(a.b. / a[0].)：以分隔符结尾导致末段为空 => 非法路径
-  if (len > 0 && s.charCodeAt(len - 1) === 46 /* . */) {
+  if (len > 0 && helperStringCharCodeAt(s, len - 1) === 46 /* . */) {
     return resetNone()
   }
   if (len > nameStart) {
-    pushSeg(s.slice(nameStart, len))
+    pushSeg(helperArraySlice(s, nameStart, len))
   }
   return staticParsePathNames.length
 }

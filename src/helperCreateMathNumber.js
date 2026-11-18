@@ -1,6 +1,7 @@
 var helperMultiply = require('./helperMultiply')
 var helperMathAbs = require('./helperMathAbs')
 var helperStringSubstring = require('./helperStringSubstring')
+var helperMathPow = require('./helperMathPow')
 
 var toNumber = require('./toNumber')
 var toNumberString = require('./toNumberString')
@@ -22,7 +23,7 @@ function helperCreateMathNumber (name, isRoundFn) {
       }
       subRest = numRest
       if (decimalPlaces > 0) {
-        var ratio = Math.pow(10, decimalPlaces)
+        var ratio = helperMathPow(10, decimalPlaces)
         var tmplNum = helperMultiply(subRest, ratio)
         rest = isRoundFn && subRest < 0 && awayZero !== false ? -(Math[name](helperMathAbs(tmplNum)) / ratio) : (Math[name](tmplNum) / ratio)
       } else {

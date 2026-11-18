@@ -1,3 +1,5 @@
+var helperArraySlice = require('./helperArraySlice')
+
 var isArray = require('./isArray')
 
 /**
@@ -15,7 +17,7 @@ function chunk (array, size) {
     if (arrLen >= 0 && array.length > arrLen) {
       index = 0
       while (index < array.length) {
-        result.push(array.slice(index, index + arrLen))
+        result.push(helperArraySlice(array, index, index + arrLen))
         index += arrLen
       }
     } else {

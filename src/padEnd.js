@@ -3,6 +3,7 @@ var isString = require('./isString')
 var isUndefined = require('./isUndefined')
 
 var helperStringRepeat = require('./helperStringRepeat')
+var helperArraySlice = require('./helperArraySlice')
 
 var fnPadEnd = String.prototype.padEnd
 
@@ -39,7 +40,7 @@ function padEnd (str, targetLength, padString) {
   if (targetLength > padStrLen) {
     padString += helperStringRepeat(padString, targetLength / padStrLen)
   }
-  return rest + padString.slice(0, targetLength)
+  return rest + helperArraySlice(padString, 0, targetLength)
 }
 
 module.exports = padEnd

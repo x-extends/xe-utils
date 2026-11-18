@@ -1,3 +1,5 @@
+var helperMathRound = require('./helperMathRound')
+
 /**
   * 获取一个指定范围内随机数
   *
@@ -6,7 +8,7 @@
   * @return {Number}
   */
 function random (minVal, maxVal) {
-  return minVal >= maxVal ? minVal : ((minVal = minVal >> 0) + Math.round(Math.random() * ((maxVal || 9) - minVal)))
+  return minVal >= maxVal ? minVal : ((minVal = minVal >> 0) + helperMathRound(Math.random() * ((maxVal || 9) - minVal)))
 }
 
 module.exports = random

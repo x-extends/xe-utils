@@ -3,6 +3,7 @@ var isString = require('./isString')
 var isUndefined = require('./isUndefined')
 
 var helperStringRepeat = require('./helperStringRepeat')
+var helperArraySlice = require('./helperArraySlice')
 
 // 缓存原生方法引用，避免每次原型链查找
 var fnPadStart = String.prototype.padStart
@@ -42,7 +43,7 @@ function padStart (str, targetLength, padString) {
   if (targetLength > padStrLen) {
     padString += helperStringRepeat(padString, targetLength / padStrLen)
   }
-  return padString.slice(0, targetLength) + rest
+  return helperArraySlice(padString, 0, targetLength) + rest
 }
 
 module.exports = padStart

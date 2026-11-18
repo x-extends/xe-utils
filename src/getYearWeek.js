@@ -4,6 +4,7 @@ var staticWeekTime = require('./staticWeekTime')
 var helperGetUTCDateTime = require('./helperGetUTCDateTime')
 var helperGetUTCWeekStartTime = require('./helperGetUTCWeekStartTime')
 var helperNewDateByTime = require('./helperNewDateByTime')
+var helperMathRound = require('./helperMathRound')
 
 var setupDefaults = require('./setupDefaults')
 var isNumber = require('./isNumber')
@@ -39,7 +40,7 @@ function getYearWeek (date, firstDay) {
     firstWeekStartTime += staticWeekTime
   }
 
-  return Math.round((targetWeekStartTime - firstWeekStartTime) / staticWeekTime) + 1
+  return helperMathRound((targetWeekStartTime - firstWeekStartTime) / staticWeekTime) + 1
 }
 
 module.exports = getYearWeek

@@ -1,3 +1,5 @@
+var helperArraySlice = require('./helperArraySlice')
+
 var isArray = require('./isArray')
 
 /**
@@ -24,7 +26,7 @@ function copyWithin (array, target, start, end) {
       startIndex = startIndex >= 0 ? startIndex : len + startIndex
       endIndex = endIndex >= 0 ? endIndex : len + endIndex
       if (startIndex < endIndex) {
-        for (replaceIndex = 0, replaceArray = array.slice(startIndex, endIndex); targetIndex < len; targetIndex++) {
+        for (replaceIndex = 0, replaceArray = helperArraySlice(array, startIndex, endIndex); targetIndex < len; targetIndex++) {
           if (replaceArray.length <= replaceIndex) {
             break
           }

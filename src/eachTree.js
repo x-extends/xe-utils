@@ -1,4 +1,6 @@
 var helperCreateTreeFunc = require('./helperCreateTreeFunc')
+var helperArraySlice = require('./helperArraySlice')
+
 var each = require('./each')
 
 function eachTreeItem (parent, obj, iterate, context, path, node, parseChildren, opts) {
@@ -8,9 +10,9 @@ function eachTreeItem (parent, obj, iterate, context, path, node, parseChildren,
   var hasContext = context != null
 
   each(obj, function (item, index) {
-    var paths = path.slice()
+    var paths = helperArraySlice(path, 0)
     paths.push('' + index)
-    var nodes = node.slice()
+    var nodes = helperArraySlice(node, 0)
     nodes.push(item)
 
     if (hasContext) {
