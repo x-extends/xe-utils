@@ -13,13 +13,16 @@ describe('Function functions', () => {
     ).toEqual([undefined, undefined, undefined])
   })
 
-  test('delay()', done => {
+  test('delay()', () => {
+    jest.useFakeTimers()
+    let result
     XEUtils.delay(function (name) {
-      expect(
-        name
-      ).toEqual('test11')
-      done()
+      result = name
     }, 300, 'test11')
+
+    jest.advanceTimersByTime(300)
+    expect(result).toEqual('test11')
+    jest.useRealTimers()
   })
 
   test('after()', done => {
@@ -78,7 +81,9 @@ describe('Function functions', () => {
     ).toEqual('test = 222')
   })
 
-  test('debounce()', async () => {
+  test('debounce()', () => {
+    jest.useFakeTimers()
+
     let flag1 = 0
     const rest1 = []
     const cb1 = XEUtils.debounce(function () {
@@ -239,24 +244,52 @@ describe('Function functions', () => {
       rest5.push([flag5, args5])
     }, 1350)
 
-    await awaitFn(2000)
+    jest.advanceTimersByTime(2000)
 
     expect(rest1).toEqual([0, 0, 0, 0, 0])
-    expect(rest2).toEqual(
-      [[0, null], [0, null], [0, null], [0, null], [1, []], [1, []], [2, []]]
-    )
-    expect(rest3).toEqual(
-      [[0, null], [0, null], [0, null], [0, null], [1, []], [1, []], [2, []]]
-    )
-    expect(rest4).toEqual(
-      [[1, ['a']], [1, ['a']], [1, ['a']], [1, ['a']], [3, ['e']], [3, ['e']], [5, ['g']]]
-    )
-    expect(rest5).toEqual(
-      [[0, null], [0, null], [0, null], [0, null], [1, ['d']], [1, ['d']], [2, ['f']]]
-    )
+    expect(rest2).toEqual([
+      [0, null],
+      [0, null],
+      [0, null],
+      [0, null],
+      [1, []],
+      [1, []],
+      [2, []]
+    ])
+    expect(rest3).toEqual([
+      [0, null],
+      [0, null],
+      [0, null],
+      [0, null],
+      [1, []],
+      [1, []],
+      [2, []]
+    ])
+    expect(rest4).toEqual([
+      [1, ['a']],
+      [1, ['a']],
+      [1, ['a']],
+      [1, ['a']],
+      [3, ['e']],
+      [3, ['e']],
+      [5, ['g']]
+    ])
+    expect(rest5).toEqual([
+      [0, null],
+      [0, null],
+      [0, null],
+      [0, null],
+      [1, ['d']],
+      [1, ['d']],
+      [2, ['f']]
+    ])
+
+    jest.useRealTimers()
   })
 
-  test('throttle()', async () => {
+  test('throttle()', () => {
+    jest.useFakeTimers()
+
     let flag1 = 0
     const rest1 = []
     const cb1 = XEUtils.throttle(function () {
@@ -417,20 +450,47 @@ describe('Function functions', () => {
       rest5.push([flag5, args5])
     }, 1350)
 
-    await awaitFn(2000)
+    // 快进时间，把所有定时器跑完
+    jest.advanceTimersByTime(2000)
 
     expect(rest1).toEqual([0, 0, 0, 0, 0])
-    expect(rest2).toEqual(
-      [[0, null], [0, null], [0, null], [1, []], [2, []], [2, []], [3, []]]
-    )
-    expect(rest3).toEqual(
-      [[0, null], [0, null], [0, null], [1, []], [2, []], [2, []], [3, []]]
-    )
-    expect(rest4).toEqual(
-      [[1, ['a']], [1, ['a']], [1, ['a']], [2, ['c']], [4, ['e']], [4, ['e']], [6, ['g']]]
-    )
-    expect(rest5).toEqual(
-      [[1, ['a']], [1, ['a']], [1, ['a']], [2, ['c']], [4, ['e']], [4, ['e']], [6, ['g']]]
-    )
+    expect(rest2).toEqual([
+      [0, null],
+      [0, null],
+      [0, null],
+      [1, []],
+      [2, []],
+      [2, []],
+      [3, []]
+    ])
+    expect(rest3).toEqual([
+      [0, null],
+      [0, null],
+      [0, null],
+      [1, []],
+      [2, []],
+      [2, []],
+      [3, []]
+    ])
+    expect(rest4).toEqual([
+      [1, ['a']],
+      [1, ['a']],
+      [1, ['a']],
+      [2, ['c']],
+      [4, ['e']],
+      [4, ['e']],
+      [6, ['g']]
+    ])
+    expect(rest5).toEqual([
+      [1, ['a']],
+      [1, ['a']],
+      [1, ['a']],
+      [2, ['c']],
+      [4, ['e']],
+      [4, ['e']],
+      [6, ['g']]
+    ])
+
+    jest.useRealTimers()
   })
 })
