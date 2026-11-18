@@ -1,6 +1,8 @@
 var staticParsePathNames = require('./staticParsePathNames')
 var staticParsePathIdxs = require('./staticParsePathIdxs')
 
+var helperStringIndexOf = require('./helperStringIndexOf')
+
 var isString = require('./isString')
 
 // 纯数字判定
@@ -11,8 +13,8 @@ function isDigits (s) {
   }
   for (var k = 0; k < l; k++) {
     var c = s.charCodeAt(k)
-    if (c < 48 || c > 57){
-       return false
+    if (c < 48 || c > 57) {
+      return false
     }
   }
   return true
@@ -62,7 +64,7 @@ function helperParsePath (property) {
     if (property === '') {
       return 0
     }
-    if (property.indexOf('.') === -1 && property.indexOf('[') === -1) {
+    if (helperStringIndexOf(property, '.') === -1 && helperStringIndexOf(property, '[') === -1) {
       staticParsePathNames.push(property)
       staticParsePathIdxs.push(-1)
       return 1

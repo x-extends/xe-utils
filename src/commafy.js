@@ -1,5 +1,8 @@
 var setupDefaults = require('./setupDefaults')
 
+var helperStringSubstring = require('./helperStringSubstring')
+var helperStringReplace = require('./helperStringReplace')
+
 var round = require('./round')
 var ceil = require('./ceil')
 var floor = require('./floor')
@@ -30,15 +33,15 @@ function commafy (num, options) {
     floatStr = result[1]
     isNegative = intStr && rest < 0
     if (isNegative) {
-      intStr = intStr.substring(1, intStr.length)
+      intStr = helperStringSubstring(intStr, 1, intStr.length)
     }
   } else {
-    rest = toValueString(num).replace(/,/g, '')
+    rest = helperStringReplace(toValueString(num), /,/g, '')
     result = rest ? [rest] : []
     intStr = result[0]
   }
   if (result.length) {
-    return (isNegative ? '-' : '') + intStr.replace(new RegExp('(?=(?!(\\b))(.{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (floatStr ? ('.' + floatStr) : '')
+    return (isNegative ? '-' : '') + helperStringReplace(intStr, new RegExp('(?=(?!(\\b))(.{' + (opts.spaceNumber || 3) + '})+$)', 'g'), (opts.separator || ',')) + (floatStr ? ('.' + floatStr) : '')
   }
   return rest
 }

@@ -1,9 +1,9 @@
 var staticStrFirst = require('./staticStrFirst')
 var staticStrLast = require('./staticStrLast')
 
-var helperGetDateFullYear = require('./helperGetDateFullYear')
-var helperGetDateTime = require('./helperGetDateTime')
-var helperGetDateMonth = require('./helperGetDateMonth')
+var helperDateGetFullYear = require('./helperDateGetFullYear')
+var helperDateGetMonth = require('./helperDateGetMonth')
+var helperDateGetDate = require('./helperDateGetDate')
 
 var toStringDate = require('./toStringDate')
 var isValidDate = require('./isValidDate')
@@ -23,8 +23,8 @@ function getWhatMonth (date, offsetMonth, offsetDay) {
   if (!isValidDate(date)) {
     return date
   }
-  var year = helperGetDateFullYear(date)
-  var month = helperGetDateMonth(date)
+  var year = helperDateGetFullYear(date)
+  var month = helperDateGetMonth(date)
   // 月初
   if (offsetDay === staticStrFirst) {
     return new Date(year, month + monthNum, 1, 0, 0, 0, 0)
@@ -39,10 +39,10 @@ function getWhatMonth (date, offsetMonth, offsetDay) {
   }
   // 偏移月份
   if (monthNum) {
-    var currDate = date.getDate()
+    var currDate = helperDateGetDate(date)
     date.setMonth(month + monthNum)
     // 跨月溢出，回退到目标月最后一天
-    if (currDate !== date.getDate()) {
+    if (currDate !== helperDateGetDate(date)) {
       date.setDate(0)
     }
   }

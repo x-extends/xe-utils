@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var slice = require('./slice')
 
 /**
@@ -12,7 +14,7 @@ function delay (callback, wait) {
   var args = slice(arguments, 2)
   var context = this
   return setTimeout(function () {
-    callback.apply(context, args)
+    helperFunctionApply(callback, context, args)
   }, wait)
 }
 

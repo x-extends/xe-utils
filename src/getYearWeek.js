@@ -3,6 +3,7 @@ var staticWeekTime = require('./staticWeekTime')
 
 var helperGetUTCDateTime = require('./helperGetUTCDateTime')
 var helperGetUTCWeekStartTime = require('./helperGetUTCWeekStartTime')
+var helperNewDateByTime = require('./helperNewDateByTime')
 
 var setupDefaults = require('./setupDefaults')
 var isNumber = require('./isNumber')
@@ -27,7 +28,7 @@ function getYearWeek (date, firstDay) {
   var targetWeekStartTime = helperGetUTCWeekStartTime(targetTime, viewStartDay)
 
   // 周中点（周起点 + 3 天）决定这一周归属哪一年
-  var belongYear = new Date(targetWeekStartTime + staticDayTime * 3).getUTCFullYear()
+  var belongYear = helperNewDateByTime(targetWeekStartTime + staticDayTime * 3).getUTCFullYear()
 
   // 归属年的 1 月 1 日
   var yearStartTime = Date.UTC(belongYear, 0, 1)

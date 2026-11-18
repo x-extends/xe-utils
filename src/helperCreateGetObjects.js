@@ -8,11 +8,13 @@ function helperCreateGetObjects (name, getIndex) {
       if (proMethod) {
         return proMethod(obj)
       }
-      each(obj, getIndex > 1 ? function (key) {
-        result.push(['' + key, obj[key]])
-      } : function () {
-        result.push(arguments[getIndex])
-      })
+      each(obj, getIndex > 1
+        ? function (key) {
+          result.push(['' + key, obj[key]])
+        }
+        : function () {
+          result.push(arguments[getIndex])
+        })
     }
     return result
   }

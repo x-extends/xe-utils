@@ -1,7 +1,15 @@
 var setupDefaults = require('./setupDefaults')
 var staticDocument = require('./staticDocument')
+
 var staticDecodeURIComponent = require('./staticDecodeURIComponent')
 var staticEncodeURIComponent = require('./staticEncodeURIComponent')
+
+var helperStringReplace = require('./helperStringReplace')
+var helperStringSubstring = require('./helperStringSubstring')
+var helperNewEmptyDate = require('./helperNewEmptyDate')
+var helperDateGetTime = require('./helperDateGetTime')
+var helperStringIndexOf = require('./helperStringIndexOf')
+var helperNewDateByTime = require('./helperNewDateByTime')
 
 var isArray = require('./isArray')
 var isObject = require('./isObject')
@@ -12,8 +20,6 @@ var keys = require('./keys')
 
 var assign = require('./assign')
 
-var helperNewDate = require('./helperNewDate')
-var helperGetDateTime = require('./helperGetDateTime')
 var getWhatYear = require('./getWhatYear')
 var getWhatMonth = require('./getWhatMonth')
 var getWhatDay = require('./getWhatDay')
@@ -25,12 +31,12 @@ var TS_RE = /^[0-9]{11,13}$/
 
 function toCookieUnitTime (unit, expires) {
   var num = parseFloat(expires)
-  var nowdate = helperNewDate()
-  var time = helperGetDateTime(nowdate)
+  var nowdate = helperNewEmptyDate()
+  var time = helperDateGetTime(nowdate)
   switch (unit) {
-    case 'y': return helperGetDateTime(getWhatYear(nowdate, num))
-    case 'M': return helperGetDateTime(getWhatMonth(nowdate, num))
-    case 'd': return helperGetDateTime(getWhatDay(nowdate, num))
+    case 'y': return helperDateGetTime(getWhatYear(nowdate, num))
+    case 'M': return helperDateGetTime(getWhatMonth(nowdate, num))
+    case 'd': return helperDateGetTime(getWhatDay(nowdate, num))
     case 'h':
     case 'H': return time + num * 60 * 60 * 1000
     case 'm': return time + num * 60 * 1000
@@ -39,13 +45,13 @@ function toCookieUnitTime (unit, expires) {
   return time
 }
 
-function toCookieUTCString (date) {
-  return (isDate(date) ? date : new Date(date)).toUTCString()
+function toCookieUTCString (dateOrTime) {
+  return (isDate(dateOrTime) ? dateOrTime : helperNewDateByTime(dateOrTime)).toUTCString()
 }
 
 function normalizeExpires (expires) {
   if (isNaN(expires)) {
-    return expires.replace(UNIT_RE, function (text, num, unit) {
+    return helperStringReplace(expires, UNIT_RE, function (text, num, unit) {
       return toCookieUTCString(toCookieUnitTime(unit, num))
     })
   }
@@ -100,8 +106,8 @@ function cookie (name, value, options) {
     var parts = cookies.split('; ')
     for (var j = 0; j < parts.length; j++) {
       var val = parts[j]
-      var keyIndex = val.indexOf('=')
-      result[staticDecodeURIComponent(val.substring(0, keyIndex))] = staticDecodeURIComponent(val.substring(keyIndex + 1) || '')
+      var keyIndex = helperStringIndexOf(val, '=')
+      result[staticDecodeURIComponent(helperStringSubstring(val, 0, keyIndex))] = staticDecodeURIComponent(helperStringSubstring(val, keyIndex + 1) || '')
     }
   }
   return args.length === 1 ? result[name] : result

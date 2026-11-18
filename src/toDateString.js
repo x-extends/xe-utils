@@ -1,8 +1,17 @@
 var setupDefaults = require('./setupDefaults')
 
+var staticInvalidDate = require('./staticInvalidDate')
+
 var helperStringUpperCase = require('./helperStringUpperCase')
-var helperGetDateFullYear = require('./helperGetDateFullYear')
-var helperGetDateMonth = require('./helperGetDateMonth')
+var helperDateGetFullYear = require('./helperDateGetFullYear')
+var helperDateGetMonth = require('./helperDateGetMonth')
+var helperDateGetDate = require('./helperDateGetDate')
+var helperStringSubstring = require('./helperStringSubstring')
+var helperDateGetMinutes = require('./helperDateGetMinutes')
+var helperDateGetSeconds = require('./helperDateGetSeconds')
+var helperStringReplace = require('./helperStringReplace')
+var helperMathFloor = require('./helperMathFloor')
+var helperMathAbs = require('./helperMathAbs')
 
 var toStringDate = require('./toStringDate')
 var getYearWeek = require('./getYearWeek')
@@ -50,13 +59,13 @@ function toDateString (date, format, options) {
       var formats = opts.formats ? assign({}, baseFormats, opts.formats) : (baseFormats || {})
       var firstDay = eqNull(opts.firstDay) ? setupDefaults.firstDayOfWeek : opts.firstDay
       var fy = function (match, length) {
-        return ('' + helperGetDateFullYear(date)).substring(4 - length)
+        return helperStringSubstring('' + helperDateGetFullYear(date), 4 - length)
       }
       var fM = function (match, length) {
-        return padStart(helperGetDateMonth(date) + 1, length, '0')
+        return padStart(helperDateGetMonth(date) + 1, length, '0')
       }
       var fd = function (match, length) {
-        return padStart(date.getDate(), length, '0')
+        return padStart(helperDateGetDate(date), length, '0')
       }
       var fH = function (match, length) {
         return padStart(hours, length, '0')
@@ -65,10 +74,10 @@ function toDateString (date, format, options) {
         return padStart(hours % 12 || 12, length, '0')
       }
       var fm = function (match, length) {
-        return padStart(date.getMinutes(), length, '0')
+        return padStart(helperDateGetMinutes(date), length, '0')
       }
       var fs = function (match, length) {
-        return padStart(date.getSeconds(), length, '0')
+        return padStart(helperDateGetSeconds(date), length, '0')
       }
       var fS = function (match, length) {
         return padStart(date.getMilliseconds(), length, '0')
@@ -76,8 +85,8 @@ function toDateString (date, format, options) {
       var fZ = function (match, length) {
         // 支持半小时/45 分钟时区（如 +05:30、+05:45）
         var offset = date.getTimezoneOffset()
-        var absOffset = Math.abs(offset)
-        var zoneHours = Math.floor(absOffset / 60)
+        var absOffset = helperMathAbs(offset)
+        var zoneHours = helperMathFloor(absOffset / 60)
         var zoneMinutes = absOffset % 60
         var sign = offset <= 0 ? '+' : '-'
         return handleCustomTemplate(date, formats, match, sign + padStart(zoneHours, 2, '0') + (length === 1 ? ':' : '') + padStart(zoneMinutes, 2, '0'))
@@ -124,14 +133,14 @@ function toDateString (date, format, options) {
           return handleCustomTemplate(date, formats, match, date.getDay())
         },
         q: function (match) {
-          return handleCustomTemplate(date, formats, match, Math.floor((helperGetDateMonth(date) + 3) / 3))
+          return handleCustomTemplate(date, formats, match, helperMathFloor((helperDateGetMonth(date) + 3) / 3))
         }
       }
-      return result.replace(dateFormatRE, function (match, skip) {
+      return helperStringReplace(result, dateFormatRE, function (match, skip) {
         return skip || (parseDates[match] ? parseDates[match](match, match.length) : match)
       })
     }
-    return 'Invalid Date'
+    return staticInvalidDate
   }
   return ''
 }

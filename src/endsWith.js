@@ -1,3 +1,6 @@
+var helperStringIndexOf = require('./helperStringIndexOf')
+var helperStringSubstring = require('./helperStringSubstring')
+
 var toValueString = require('./toValueString')
 
 /**
@@ -11,7 +14,7 @@ var toValueString = require('./toValueString')
 function endsWith (str, val, startIndex) {
   var rest = toValueString(str)
   var argsLen = arguments.length
-  return argsLen > 1 && (argsLen > 2 ? rest.substring(0, startIndex).indexOf(val) === startIndex - 1 : rest.indexOf(val) === rest.length - 1)
+  return argsLen > 1 && (argsLen > 2 ? helperStringIndexOf(helperStringSubstring(rest, 0, startIndex), val) === startIndex - 1 : helperStringIndexOf(rest, val) === rest.length - 1)
 }
 
 module.exports = endsWith

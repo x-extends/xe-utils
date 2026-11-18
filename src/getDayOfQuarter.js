@@ -1,7 +1,9 @@
 var staticDayTime = require('./staticDayTime')
 
-var toStringDate = require('./toStringDate')
+var helperDateGetFullYear = require('./helperDateGetFullYear')
+var helperDateGetMonth = require('./helperDateGetMonth')
 
+var toStringDate = require('./toStringDate')
 var isValidDate = require('./isValidDate')
 
 /**
@@ -15,20 +17,20 @@ function getDayOfQuarter (date, offsetNum) {
   date = toStringDate(date)
   if (isValidDate(date)) {
     var oNum = offsetNum && !isNaN(offsetNum) ? offsetNum : 0
-    var year = date.getFullYear()
-    var month = date.getMonth()
+    var year = helperDateGetFullYear(date)
+    var month = helperDateGetMonth(date)
 
     // 计算当前季度的起始月份 (0, 3, 6, 9 分别代表一、二、三、四季度)
     var quarterStartMonth = month - (month % 3)
     var targetDate = new Date(year, quarterStartMonth + oNum * 3, 1)
-    
-    var targetYear = targetDate.getFullYear();
-    var targetQuarterStartMonth = targetDate.getMonth();
+
+    var targetYear = helperDateGetFullYear(targetDate)
+    var targetQuarterStartMonth = helperDateGetMonth(targetDate)
 
     // 使用 UTC 计算时间戳。避免夏令时误差
     var startTimestamp = Date.UTC(targetYear, targetQuarterStartMonth, 1)
     var endTimestamp = Date.UTC(targetYear, targetQuarterStartMonth + 3, 1)
-    
+
     return (endTimestamp - startTimestamp) / staticDayTime
   }
   return NaN

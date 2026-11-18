@@ -1,3 +1,5 @@
+var helperStringSubstring = require('./helperStringSubstring')
+
 var toNumber = require('./toNumber')
 var isString = require('./isString')
 
@@ -20,7 +22,7 @@ function slice (data, startIndex, endIndex) {
   }
   // 类数组对象（如旧版 arguments、无 slice 的自定义集合）回退
   if (isString(data)) {
-    return data.substring(startIndex < 0 ? Math.max(0, data.length + startIndex) : startIndex, endIndex)
+    return helperStringSubstring(data, startIndex < 0 ? Math.max(0, data.length + startIndex) : startIndex, endIndex)
   }
   if (startIndex < 0) {
     startIndex = Math.max(0, data.length + startIndex)

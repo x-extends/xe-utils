@@ -1,7 +1,11 @@
 var staticParseInt = require('./staticParseInt')
 
 var helperCreateEmptyObj = require('./helperCreateEmptyObj')
-var helperGetDateTime = require('./helperGetDateTime')
+var helperDateGetTime = require('./helperDateGetTime')
+var helperStringSubstring = require('./helperStringSubstring')
+var helperNewDateByTime = require('./helperNewDateByTime')
+var helperStringReplace = require('./helperStringReplace')
+var helperStringMatch = require('./helperStringMatch')
 
 var isString = require('./isString')
 var isNumber = require('./isNumber')
@@ -46,7 +50,7 @@ function parseDefaultRules (str) {
   var matchRest
   var resMaps = { y: '', M: '', d: '', H: '', m: '', s: '', S: '', Z: '' }
   for (var i = 0, dfrLen = defaulParseREs.length; i < dfrLen; i++) {
-    matchRest = str.match(defaulParseREs[i])
+    matchRest = helperStringMatch(str, defaulParseREs[i])
     if (matchRest) {
       resMaps.y = matchRest[1]
       resMaps.M = matchRest[2]
@@ -99,7 +103,7 @@ function parseCustomRules (str, format) {
   var cacheItem = cacheFormatMaps[format]
   if (!cacheItem) {
     var posIndexs = []
-    var re = format.replace(/([$(){}*+.?\\^|])/g, '\\$1').replace(customParseRes, function (text, val) {
+    var re = helperStringReplace(helperStringReplace(format, /([$(){}*+.?\\^|])/g, '\\$1'), customParseRes, function (text, val) {
       var firstChar = text.charAt(0)
       // 如果为转义符号:[关键字]
       if (firstChar === '[') {
@@ -114,7 +118,7 @@ function parseCustomRules (str, format) {
     }
   }
   var resMaps = {}
-  var matchRest = str.match(cacheItem._r)
+  var matchRest = helperStringMatch(str, cacheItem._r)
   if (matchRest) {
     var _i = cacheItem._i
     for (var i = 1, len = matchRest.length; i < len; i++) {
@@ -131,17 +135,17 @@ function parseCustomRules (str, format) {
 function parseTimeZone (resMaps) {
   // 如果为UTC 时间
   if (/^[zZ]/.test(resMaps.Z)) {
-    return new Date(getObjUTCDateTime(resMaps))
+    return helperNewDateByTime(getObjUTCDateTime(resMaps))
   }
   // 如果指定时区，时区转换
-  var matchRest = resMaps.Z.match(/([-+])(\d{2}):?(\d{2})/)
+  var matchRest = helperStringMatch(resMaps.Z, /([-+])(\d{2}):?(\d{2})/)
   if (matchRest) {
     // 符号作用于整段偏移（含分钟），修复 +05:30 少算 1 小时的问题
     var sign = matchRest[1] === '-' ? -1 : 1
     var offsetMs = sign * (staticParseInt(matchRest[2]) * 3600000 + staticParseInt(matchRest[3]) * 60000)
-    return new Date(getObjUTCDateTime(resMaps) - offsetMs)
+    return helperNewDateByTime(getObjUTCDateTime(resMaps) - offsetMs)
   }
-  return new Date(NaN)
+  return helperNewDateByTime(NaN)
 }
 
 /**
@@ -155,7 +159,7 @@ function toStringDate (str, format) {
   if (str) {
     var isDType = isDate(str)
     if (isDType || ((!format || isNumber(str)) && /^[0-9]{11,15}$/.test(str))) {
-      return new Date(isDType ? helperGetDateTime(str) : staticParseInt(str))
+      return helperNewDateByTime(isDType ? helperDateGetTime(str) : staticParseInt(str))
     }
     if (isString(str)) {
       var resMaps = format ? parseCustomRules(str, format) : parseDefaultRules(str)
@@ -165,7 +169,7 @@ function toStringDate (str, format) {
         }
         if (resMaps.S) {
           // 如果7位则是微秒，只精确到3位毫秒
-          resMaps.S = staticParseInt(resMaps.S.length > 3 ? resMaps.S.substring(0, 3) : padEnd(resMaps.S, 3, '0'))
+          resMaps.S = staticParseInt(resMaps.S.length > 3 ? helperStringSubstring(resMaps.S, 0, 3) : padEnd(resMaps.S, 3, '0'))
         }
         if (resMaps.Z) {
           return parseTimeZone(resMaps)
@@ -175,7 +179,7 @@ function toStringDate (str, format) {
       }
     }
   }
-  return new Date(NaN)
+  return helperNewDateByTime(NaN)
 }
 
 module.exports = toStringDate

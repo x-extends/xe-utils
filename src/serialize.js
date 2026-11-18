@@ -1,5 +1,7 @@
 var staticEncodeURIComponent = require('./staticEncodeURIComponent')
 
+var helperStringReplace = require('./helperStringReplace')
+
 var each = require('./each')
 var isArray = require('./isArray')
 var isNull = require('./isNull')
@@ -38,7 +40,7 @@ function serialize (query) {
       }
     }
   })
-  return params.join('&').replace(/%20/g, '+')
+  return helperStringReplace(params.join('&'), /%20/g, '+')
 }
 
 module.exports = serialize

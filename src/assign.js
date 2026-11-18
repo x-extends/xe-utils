@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var arrayEach = require('./arrayEach')
 var keys = require('./keys')
 var isArray = require('./isArray')
@@ -9,11 +11,13 @@ function handleAssign (destination, args, isClone) {
   var len = args.length
   for (var source, index = 1; index < len; index++) {
     source = args[index]
-    arrayEach(keys(args[index]), isClone ? function (key) {
-      destination[key] = clone(source[key], isClone)
-    } : function (key) {
-      destination[key] = source[key]
-    })
+    arrayEach(keys(args[index]), isClone
+      ? function (key) {
+        destination[key] = clone(source[key], isClone)
+      }
+      : function (key) {
+        destination[key] = source[key]
+      })
   }
   return destination
 }
@@ -34,7 +38,7 @@ var assign = function (target) {
         return handleAssign(target, args, true)
       }
     } else {
-      return objectAssignFns ? objectAssignFns.apply(Object, args) : handleAssign(target, args)
+      return objectAssignFns ? helperFunctionApply(objectAssignFns, Object, args) : handleAssign(target, args)
     }
   }
   return target

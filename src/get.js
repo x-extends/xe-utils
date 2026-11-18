@@ -3,9 +3,11 @@ var isUndefined = require('./isUndefined')
 var eqNull = require('./eqNull')
 var isString = require('./isString')
 
+var helperParsePath = require('./helperParsePath')
+var helperStringIndexOf = require('./helperStringIndexOf')
+
 var staticParsePathNames = require('./staticParsePathNames')
 var staticParsePathIdxs = require('./staticParsePathIdxs')
-var helperParsePath = require('./helperParsePath')
 
 function getValueByPath (obj, property) {
   if (!obj) {
@@ -16,7 +18,7 @@ function getValueByPath (obj, property) {
     return val
   }
   // 快路径：仅「字符串 + 非空 + 不含 '.' + 不含 '['」
-  if (property && isString(property) && property.indexOf('.') === -1 && property.indexOf('[') === -1) {
+  if (property && isString(property) && helperStringIndexOf(property, '.') === -1 && helperStringIndexOf(property, '[') === -1) {
     return
   }
 

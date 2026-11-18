@@ -1,3 +1,6 @@
+var helperStringIndexOf = require('./helperStringIndexOf')
+var helperStringSubstring = require('./helperStringSubstring')
+
 var toValueString = require('./toValueString')
 
 /**
@@ -10,7 +13,7 @@ var toValueString = require('./toValueString')
   */
 function startsWith (str, val, startIndex) {
   var rest = toValueString(str)
-  return (arguments.length === 1 ? rest : rest.substring(startIndex)).indexOf(val) === 0
+  return helperStringIndexOf(arguments.length === 1 ? rest : helperStringSubstring(rest, startIndex), val) === 0
 }
 
 module.exports = startsWith

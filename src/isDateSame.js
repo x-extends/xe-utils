@@ -1,3 +1,5 @@
+var staticInvalidDate = require('./staticInvalidDate')
+
 var toDateString = require('./toDateString')
 
 /**
@@ -10,7 +12,7 @@ var toDateString = require('./toDateString')
 function isDateSame (date1, date2, format) {
   if (date1 && date2) {
     date1 = toDateString(date1, format)
-    return date1 !== 'Invalid Date' && date1 === toDateString(date2, format)
+    return date1 !== staticInvalidDate && date1 === toDateString(date2, format)
   }
   return false
 }

@@ -2,8 +2,12 @@ var staticStrFirst = require('./staticStrFirst')
 var staticStrLast = require('./staticStrLast')
 var staticParseInt = require('./staticParseInt')
 
-var helperGetDateFullYear = require('./helperGetDateFullYear')
-var helperGetDateMonth = require('./helperGetDateMonth')
+var helperDateGetFullYear = require('./helperDateGetFullYear')
+var helperDateGetMonth = require('./helperDateGetMonth')
+var helperDateGetDate = require('./helperDateGetDate')
+var helperDateGetHours = require('./helperDateGetHours')
+var helperDateGetMinutes = require('./helperDateGetMinutes')
+var helperDateGetSeconds = require('./helperDateGetSeconds')
 
 var toStringDate = require('./toStringDate')
 var isValidDate = require('./isValidDate')
@@ -23,13 +27,13 @@ function getWhatSeconds (date, offset, mode) {
   }
   var secondOffset = staticParseInt(offset)
   if (!isNaN(secondOffset)) {
-    date.setSeconds(date.getSeconds() + secondOffset)
+    date.setSeconds(helperDateGetSeconds(date) + secondOffset)
   }
   if (mode === staticStrFirst) {
-    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 0)
+    return new Date(helperDateGetFullYear(date), helperDateGetMonth(date), helperDateGetDate(date), helperDateGetHours(date), helperDateGetMinutes(date), helperDateGetSeconds(date), 0)
   }
   if (mode === staticStrLast) {
-    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), 999)
+    return new Date(helperDateGetFullYear(date), helperDateGetMonth(date), helperDateGetDate(date), helperDateGetHours(date), helperDateGetMinutes(date), helperDateGetSeconds(date), 999)
   }
   return date
 }

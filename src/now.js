@@ -1,5 +1,5 @@
-var helperGetDateTime = require('./helperGetDateTime')
-var helperNewDate = require('./helperNewDate')
+var helperDateGetTime = require('./helperDateGetTime')
+var helperNewEmptyDate = require('./helperNewEmptyDate')
 
 /**
  * 返回当前时间戳
@@ -7,7 +7,7 @@ var helperNewDate = require('./helperNewDate')
  * @returns Number
  */
 var now = Date.now || function () {
-  return helperGetDateTime(helperNewDate())
+  return helperDateGetTime(helperNewEmptyDate())
 }
 
 module.exports = now

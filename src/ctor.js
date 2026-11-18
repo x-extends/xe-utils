@@ -1,5 +1,7 @@
 var setupDefaults = require('./setupDefaults')
 
+var helperFunctionApply = require('./helperFunctionApply')
+
 var arrayEach = require('./arrayEach')
 var each = require('./each')
 var isFunction = require('./isFunction')
@@ -13,7 +15,7 @@ function mixin () {
     each(methods, function (fn, name) {
       XEUtils[name] = isFunction(fn)
         ? function () {
-          var result = fn.apply(XEUtils.$context, arguments)
+          var result = helperFunctionApply(fn, XEUtils.$context, arguments)
           XEUtils.$context = null
           return result
         }

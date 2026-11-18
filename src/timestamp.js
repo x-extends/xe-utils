@@ -1,4 +1,4 @@
-var helperGetDateTime = require('./helperGetDateTime')
+var helperDateGetTime = require('./helperDateGetTime')
 
 var now = require('./now')
 var toStringDate = require('./toStringDate')
@@ -15,7 +15,7 @@ var isDate = require('./isDate')
 var timestamp = function (str, format) {
   if (str) {
     var date = toStringDate(str, format)
-    return isDate(date) ? helperGetDateTime(date) : date
+    return isDate(date) ? helperDateGetTime(date) : date
   }
   return now()
 }

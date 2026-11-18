@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var assign = require('./assign')
 var isFunction = require('./isFunction')
 
@@ -49,7 +51,7 @@ function throttle (callback, wait, options) {
   function runFn () {
     runFlag = true
     if (isFunction(callback)) {
-      callback.apply(context, args)
+      helperFunctionApply(callback, context, args)
     }
     timeout = track(setTimeout(endFn, wait))
     gcFn()

@@ -1,6 +1,6 @@
-import { CommafyOptions } from "./commafy"
-import { FirstDayOfWeek } from "./getWhatWeek"
-import { ToDateStringFormats } from "./toDateString"
+import { CommafyOptions } from './commafy'
+import { FirstDayOfWeek } from './getWhatWeek'
+import { ToDateStringFormats } from './toDateString'
 
 export interface SetupDefaults {
   /**
@@ -39,6 +39,10 @@ export interface SetupDefaults {
    * 用于 commafy()
    */
   commafyOptions?: CommafyOptions;
+  /**
+   * 自定义错误回调
+   */
+  onError?: boolean
 
   /**
    * 已被 parseDateRules 替换

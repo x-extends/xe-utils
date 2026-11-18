@@ -1,4 +1,5 @@
 var helperNumberAdd = require('./helperNumberAdd')
+var helperFunctionApply = require('./helperFunctionApply')
 
 var isFunction = require('./isFunction')
 var isArray = require('./isArray')
@@ -19,7 +20,7 @@ function sum (array, iterate, context) {
   each(array && array.length > 2 && isArray(array) ? slice(array, 0).sort() : array, iterate
     ? (isFunction(iterate)
         ? function () {
-          result = helperNumberAdd(result, iterate.apply(context, arguments))
+          result = helperNumberAdd(result, helperFunctionApply(iterate, context, arguments))
         }
         : function (val) {
           result = helperNumberAdd(result, get(val, iterate))

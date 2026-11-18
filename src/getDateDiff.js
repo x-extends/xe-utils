@@ -1,7 +1,8 @@
 var staticDayTime = require('./staticDayTime')
 
-var helperGetDateTime = require('./helperGetDateTime')
-var helperNewDate = require('./helperNewDate')
+var helperDateGetTime = require('./helperDateGetTime')
+var helperNewEmptyDate = require('./helperNewEmptyDate')
+var helperMathFloor = require('./helperMathFloor')
 
 var toStringDate = require('./toStringDate')
 
@@ -17,14 +18,14 @@ var isValidDate = require('./isValidDate')
 function getDateDiff (startDate, endDate) {
   var result = { done: false, status: false, time: 0 }
   startDate = toStringDate(startDate)
-  endDate = endDate ? toStringDate(endDate) : helperNewDate()
+  endDate = endDate ? toStringDate(endDate) : helperNewEmptyDate()
 
   if (!isValidDate(startDate) || !isValidDate(endDate)) {
     return result
   }
 
-  var startTime = helperGetDateTime(startDate)
-  var endTime = helperGetDateTime(endDate)
+  var startTime = helperDateGetTime(startDate)
+  var endTime = helperDateGetTime(endDate)
 
   if (startTime >= endTime) {
     return result
@@ -35,23 +36,22 @@ function getDateDiff (startDate, endDate) {
   result.done = true
   result.status = true
 
-  // 直接计算，避免循环
-  result.yyyy = Math.floor(diffTime / 31536000000)
+  result.yyyy = helperMathFloor(diffTime / 31536000000)
   diffTime -= result.yyyy * 31536000000
 
-  result.MM = Math.floor(diffTime / 2592000000)
+  result.MM = helperMathFloor(diffTime / 2592000000)
   diffTime -= result.MM * 2592000000
 
-  result.dd = Math.floor(diffTime / staticDayTime)
+  result.dd = helperMathFloor(diffTime / staticDayTime)
   diffTime -= result.dd * staticDayTime
 
-  result.HH = Math.floor(diffTime / 3600000)
+  result.HH = helperMathFloor(diffTime / 3600000)
   diffTime -= result.HH * 3600000
 
-  result.mm = Math.floor(diffTime / 60000)
+  result.mm = helperMathFloor(diffTime / 60000)
   diffTime -= result.mm * 60000
 
-  result.ss = Math.floor(diffTime / 1000)
+  result.ss = helperMathFloor(diffTime / 1000)
   diffTime -= result.ss * 1000
 
   result.S = diffTime

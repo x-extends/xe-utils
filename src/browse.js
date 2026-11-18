@@ -2,6 +2,8 @@ var staticStrUndefined = require('./staticStrUndefined')
 var staticDocument = require('./staticDocument')
 var staticWindow = require('./staticWindow')
 
+var helperStringIndexOf = require('./helperStringIndexOf')
+
 var assign = require('./assign')
 var arrayEach = require('./arrayEach')
 
@@ -18,7 +20,7 @@ function isBrowseStorage (storage) {
 }
 
 function isBrowseType (type) {
-  return navigator.userAgent.indexOf(type) > -1
+  return helperStringIndexOf(navigator.userAgent, type) > -1
 }
 
 /**
@@ -50,10 +52,10 @@ function browse () {
     }
     try {
       isLocalStorage = isBrowseStorage(staticWindow.localStorage)
-    } catch(e) {}
+    } catch (e) {}
     try {
       isSessionStorage = isBrowseStorage(staticWindow.sessionStorage)
-    } catch(e) {}
+    } catch (e) {}
     assign(result, {
       edge: isEdge,
       firefox: isBrowseType('Firefox'),

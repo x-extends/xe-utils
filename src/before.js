@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var slice = require('./slice')
 
 /**
@@ -16,7 +18,7 @@ function before (count, callback, context) {
     runCount++
     if (runCount < count) {
       rests.push(args[0])
-      callback.apply(context, [rests].concat(slice(args)))
+      helperFunctionApply(callback, context, [rests].concat(slice(args)))
     }
   }
 }

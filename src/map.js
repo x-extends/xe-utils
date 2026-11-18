@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var each = require('./each')
 
 /**
@@ -15,7 +17,7 @@ function map (obj, iterate, context) {
       return obj.map(iterate, context)
     } else {
       each(obj, function () {
-        result.push(iterate.apply(context, arguments))
+        result.push(helperFunctionApply(iterate, context, arguments))
       })
     }
   }

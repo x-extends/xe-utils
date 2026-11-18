@@ -1,6 +1,7 @@
-var helperGetDateFullYear = require('./helperGetDateFullYear')
-var helperGetDateMonth = require('./helperGetDateMonth')
+var helperDateGetFullYear = require('./helperDateGetFullYear')
+var helperDateGetMonth = require('./helperDateGetMonth')
 var helperHasLeapYear = require('./helperHasLeapYear')
+var helperMathFloor = require('./helperMathFloor')
 
 var toStringDate = require('./toStringDate')
 var isValidDate = require('./isValidDate')
@@ -18,11 +19,11 @@ var staticMonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 function getDayOfMonth (date, offsetNum) {
   date = toStringDate(date)
   if (isValidDate(date)) {
-    var year = helperGetDateFullYear(date)
-    var month = helperGetDateMonth(date) + (offsetNum || 0)
+    var year = helperDateGetFullYear(date)
+    var month = helperDateGetMonth(date) + (offsetNum || 0)
     // 规范化月份到 0-11 范围，并调整年份
     if (month < 0 || month > 11) {
-      year += Math.floor(month / 12)
+      year += helperMathFloor(month / 12)
       month = ((month % 12) + 12) % 12
     }
     // 查表获取天数，闰年2月返回29

@@ -3,6 +3,7 @@ var staticWeekTime = require('./staticWeekTime')
 
 var helperGetUTCDateTime = require('./helperGetUTCDateTime')
 var helperGetUTCWeekStartTime = require('./helperGetUTCWeekStartTime')
+var helperNewDateByTime = require('./helperNewDateByTime')
 
 var setupDefaults = require('./setupDefaults')
 var isNumber = require('./isNumber')
@@ -27,7 +28,7 @@ function getMonthWeek (date, firstDay) {
   var targetWeekStartTime = helperGetUTCWeekStartTime(targetTime, viewStartDay)
 
   // 周中点决定这一周归属哪个月
-  var midDate = new Date(targetWeekStartTime + staticDayTime * 3)
+  var midDate = helperNewDateByTime(targetWeekStartTime + staticDayTime * 3)
   var belongYear = midDate.getUTCFullYear()
   var belongMonth = midDate.getUTCMonth()
 

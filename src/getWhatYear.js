@@ -3,7 +3,7 @@ var staticStrLast = require('./staticStrLast')
 
 var staticParseInt = require('./staticParseInt')
 
-var helperGetDateFullYear = require('./helperGetDateFullYear')
+var helperDateGetFullYear = require('./helperDateGetFullYear')
 
 var getWhatMonth = require('./getWhatMonth')
 var toStringDate = require('./toStringDate')
@@ -25,11 +25,11 @@ function getWhatYear (date, offset, month) {
 
   if (offset != null) {
     var number = staticParseInt(offset) || 0
-    date.setFullYear(helperGetDateFullYear(date) + number)
+    date.setFullYear(helperDateGetFullYear(date) + number)
   }
 
   if (month === staticStrFirst) {
-    return new Date(helperGetDateFullYear(date), 0, 1)
+    return new Date(helperDateGetFullYear(date), 0, 1)
   }
 
   if (month === staticStrLast) {

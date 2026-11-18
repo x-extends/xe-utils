@@ -1,7 +1,6 @@
 var objectHasOwnProperty = Object.prototype.hasOwnProperty
-var objHasOwn = Object.hasOwn
 
-var handleObjHasOwn = objHasOwn ? objHasOwn: function(obj, key) {
+var handleObjHasOwn = Object.hasOwn || function (obj, key) {
   return objectHasOwnProperty.call(obj, key)
 }
 
@@ -12,7 +11,7 @@ var handleObjHasOwn = objHasOwn ? objHasOwn: function(obj, key) {
   * @param {String/Number} key 键值
   * @return {Boolean}
   */
-function hasOwnProp(obj, key) {
+function hasOwnProp (obj, key) {
   if (obj == null) {
     return false
   }

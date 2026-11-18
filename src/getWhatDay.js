@@ -2,8 +2,9 @@ var staticStrFirst = require('./staticStrFirst')
 var staticStrLast = require('./staticStrLast')
 var staticParseInt = require('./staticParseInt')
 
-var helperGetDateFullYear = require('./helperGetDateFullYear')
-var helperGetDateMonth = require('./helperGetDateMonth')
+var helperDateGetFullYear = require('./helperDateGetFullYear')
+var helperDateGetMonth = require('./helperDateGetMonth')
+var helperDateGetDate = require('./helperDateGetDate')
 
 var toStringDate = require('./toStringDate')
 var isValidDate = require('./isValidDate')
@@ -23,14 +24,14 @@ function getWhatDay (date, offset, mode) {
   }
   var dayOffset = staticParseInt(offset)
   if (!isNaN(dayOffset)) {
-    date.setDate(date.getDate() + dayOffset)
+    date.setDate(helperDateGetDate(date) + dayOffset)
   }
   if (mode === staticStrFirst) {
-    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate()
+    return new Date(helperDateGetFullYear(date), helperDateGetMonth(date), helperDateGetDate(date)
     )
   }
   if (mode === staticStrLast) {
-    return new Date(helperGetDateFullYear(date), helperGetDateMonth(date), date.getDate(), 23, 59, 59, 999)
+    return new Date(helperDateGetFullYear(date), helperDateGetMonth(date), helperDateGetDate(date), 23, 59, 59, 999)
   }
 
   return date

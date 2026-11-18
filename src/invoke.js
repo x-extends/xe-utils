@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var map = require('./map')
 
 var isArray = require('./isArray')
@@ -42,7 +44,7 @@ function invoke (list, path) {
     }
     func = context[path] || path
     if (func && func.apply) {
-      return func.apply(context, params)
+      return helperFunctionApply(func, context, params)
     }
   })
 }

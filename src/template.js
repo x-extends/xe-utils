@@ -1,5 +1,7 @@
 var setupDefaults = require('./setupDefaults')
 
+var helperStringReplace = require('./helperStringReplace')
+
 var toValueString = require('./toValueString')
 var trim = require('./trim')
 
@@ -12,7 +14,7 @@ var get = require('./get')
  * @param {any} options
  */
 function template (str, args, options) {
-  return toValueString(str).replace((options || setupDefaults).tmplRE || /\{{2}([.\w[\]\s]+)\}{2}/g, function (match, key) {
+  return helperStringReplace(toValueString(str), (options || setupDefaults).tmplRE || /\{{2}([.\w[\]\s]+)\}{2}/g, function (match, key) {
     return get(args, trim(key))
   })
 }

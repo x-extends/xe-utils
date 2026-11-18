@@ -3,6 +3,7 @@ var isFunction = require('./isFunction')
 var hasOwnProp = require('./hasOwnProp')
 
 var helperCreateEmptyObj = require('./helperCreateEmptyObj')
+var helperFunctionApply = require('./helperFunctionApply')
 
 /**
   * 函数去抖；当被调用 n 毫秒后才会执行，如果在这时间内又被调用则将重新计算执行时间
@@ -35,7 +36,7 @@ function debounce (callback, wait, options) {
     runFlag = true
     // 泄漏加固：callback 抛异常也不中断，保证 gcFn 断开 args/context 引用
     try {
-      callback.apply(context, args)
+      helperFunctionApply(callback, context, args)
     } finally {
       gcFn()
     }

@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var slice = require('./slice')
 
 /**
@@ -11,7 +13,7 @@ var slice = require('./slice')
 function bind (callback, context) {
   var args = slice(arguments, 2)
   return function () {
-    return callback.apply(context, slice(arguments).concat(args))
+    return helperFunctionApply(callback, context, slice(arguments).concat(args))
   }
 }
 

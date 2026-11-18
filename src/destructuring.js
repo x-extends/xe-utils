@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var keys = require('./keys')
 
 var slice = require('./slice')
@@ -15,7 +17,7 @@ var assign = require('./assign')
   */
 function destructuring (destination, sources) {
   if (destination && sources) {
-    var rest = assign.apply(this, [{}].concat(slice(arguments, 1)))
+    var rest = helperFunctionApply(assign, this, [{}].concat(slice(arguments, 1)))
     var restKeys = keys(rest)
     arrayEach(keys(destination), function (key) {
       if (includes(restKeys, key)) {

@@ -1,3 +1,5 @@
+var helperFunctionApply = require('./helperFunctionApply')
+
 var isFunction = require('./isFunction')
 var isArray = require('./isArray')
 var each = require('./each')
@@ -17,14 +19,18 @@ function helperCreatePickOmit (case1, case2) {
     if (isFilterKeys) {
       for (index = 1; index < len; index++) {
         item = args[index]
-        result.push.apply(result, isArray(item) ? item : [item])
+        helperFunctionApply(result.push, result, isArray(item) ? item : [item])
       }
       callback = 0
     }
     each(obj, function (val, key) {
-      if ((callback ? callback.call(context, val, key, obj) : findIndexOf(result, function (name) {
-        return name === key
-      }) > -1) ? case1 : case2) {
+      if ((callback
+        ? callback.call(context, val, key, obj)
+        : findIndexOf(result, function (name) {
+          return name === key
+        }) > -1)
+        ? case1
+        : case2) {
         rest[key] = val
       }
     })

@@ -1,5 +1,5 @@
 var isDate = require('./isDate')
-var helperGetDateTime = require('./helperGetDateTime')
+var helperDateGetTime = require('./helperDateGetTime')
 
 /**
   * 判断是否有效的Date对象
@@ -8,7 +8,7 @@ var helperGetDateTime = require('./helperGetDateTime')
   * @return {boolean}
   */
 function isValidDate (val) {
-  return isDate(val) && !isNaN(helperGetDateTime(val))
+  return isDate(val) && !isNaN(helperDateGetTime(val))
 }
 
 module.exports = isValidDate

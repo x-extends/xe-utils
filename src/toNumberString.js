@@ -1,5 +1,7 @@
 var helperStringRepeat = require('./helperStringRepeat')
 var helperNumberOffsetPoint = require('./helperNumberOffsetPoint')
+var helperMathAbs = require('./helperMathAbs')
+var helperStringMatch = require('./helperStringMatch')
 
 /**
  * 数值转字符串，科学计数转字符串
@@ -7,9 +9,9 @@ var helperNumberOffsetPoint = require('./helperNumberOffsetPoint')
  *
  * @return {Number}
  */
-function toNumberString(num) {
+function toNumberString (num) {
   var rest = '' + num
-  var scienceMatchs = rest.match(/^([-+]?)((\d+)|((\d+)?[.](\d+)?))e([-+]{1})([0-9]+)$/)
+  var scienceMatchs = helperStringMatch(rest, /^([-+]?)((\d+)|((\d+)?[.](\d+)?))e([-+]{1})([0-9]+)$/)
   if (scienceMatchs) {
     var isNegative = num < 0
     var absFlag = isNegative ? '-' : ''
@@ -32,12 +34,12 @@ function toNumberString(num) {
     }
     if (intNumStr) {
       if (intOffsetIndex > 0) {
-        return absFlag + '0.' + helperStringRepeat('0', Math.abs(intOffsetIndex)) + intNumStr
+        return absFlag + '0.' + helperStringRepeat('0', helperMathAbs(intOffsetIndex)) + intNumStr
       }
       return absFlag + helperNumberOffsetPoint(intNumStr, intOffsetIndex)
     }
     if (dIntOffsetIndex > 0) {
-      return absFlag + '0.' + helperStringRepeat('0', Math.abs(dIntOffsetIndex)) + dIntNumStr + dFloatNumStr
+      return absFlag + '0.' + helperStringRepeat('0', helperMathAbs(dIntOffsetIndex)) + dIntNumStr + dFloatNumStr
     }
     return absFlag + helperNumberOffsetPoint(dIntNumStr, dIntOffsetIndex) + dFloatNumStr
   }

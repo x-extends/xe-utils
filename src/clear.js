@@ -1,4 +1,5 @@
 var helperDeleteProperty = require('./helperDeleteProperty')
+var helperFunctionApply = require('./helperFunctionApply')
 
 var isPlainObject = require('./isPlainObject')
 var isObject = require('./isObject')
@@ -21,11 +22,13 @@ function clear (obj, defs, assigns) {
     var isDefs = arguments.length > 1 && (isNull(defs) || !isObject(defs))
     var extds = isDefs ? assigns : defs
     if (isPlainObject(obj)) {
-      objectEach(obj, isDefs ? function (val, key) {
-        obj[key] = defs
-      } : function (val, key) {
-        helperDeleteProperty(obj, key)
-      })
+      objectEach(obj, isDefs
+        ? function (val, key) {
+          obj[key] = defs
+        }
+        : function (val, key) {
+          helperDeleteProperty(obj, key)
+        })
       if (extds) {
         assign(obj, extds)
       }
@@ -40,7 +43,7 @@ function clear (obj, defs, assigns) {
         obj.length = 0
       }
       if (extds) {
-        obj.push.apply(obj, extds)
+        helperFunctionApply(obj.push, obj, extds)
       }
     }
   }

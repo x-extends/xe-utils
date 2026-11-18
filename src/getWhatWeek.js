@@ -2,8 +2,11 @@ var setupDefaults = require('./setupDefaults')
 
 var staticDayTime = require('./staticDayTime')
 var staticWeekTime = require('./staticWeekTime')
+var staticStrFirst = require('./staticStrFirst')
+var staticStrLast = require('./staticStrLast')
 
-var helperGetDateTime = require('./helperGetDateTime')
+var helperDateGetTime = require('./helperDateGetTime')
+var helperNewDateByTime = require('./helperNewDateByTime')
 
 var toStringDate = require('./toStringDate')
 
@@ -23,15 +26,15 @@ function getWhatWeek (date, offsetWeek, offsetDay, firstDay) {
   date = toStringDate(date)
   if (isValidDate(date)) {
     var hasStartDay = isNumber(firstDay)
-    var whatDayTime = helperGetDateTime(date)
+    var whatDayTime = helperDateGetTime(date)
     var viewStartDay = hasStartDay ? firstDay : setupDefaults.firstDayOfWeek
     var currentDay = date.getDay()
     var isValidDay
     var offsetNum, customDay
-    if (offsetDay === 'first') {
+    if (offsetDay === staticStrFirst) {
       isValidDay = true
       customDay = viewStartDay
-    } else if (offsetDay === 'last') {
+    } else if (offsetDay === staticStrLast) {
       isValidDay = true
       customDay = (viewStartDay + 6) % 7
     } else {
@@ -59,7 +62,7 @@ function getWhatWeek (date, offsetWeek, offsetDay, firstDay) {
     if (offsetWeek && !isNaN(offsetWeek)) {
       whatDayTime += offsetWeek * staticWeekTime
     }
-    return new Date(whatDayTime)
+    return helperNewDateByTime(whatDayTime)
   }
   return date
 }

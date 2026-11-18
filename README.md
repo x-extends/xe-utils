@@ -122,6 +122,25 @@ _.mixin(
 )
 ```
 
+## 默认全局参数
+
+```javascript
+import _ from 'xe-utils'
+
+_.setConfig({
+  treeOptions: {
+    strict: false,
+    parentKey: 'parentId',
+    key: 'id',
+    children: 'children',
+    data: null
+  },
+  onError ({ msg }) {
+    console.error(msg)
+  }
+})
+```
+
 ## Contributors
 
 Thank you to everyone who contributed to this project.

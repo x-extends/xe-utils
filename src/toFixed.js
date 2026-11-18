@@ -1,6 +1,7 @@
 var round = require('./round')
 var toValueString = require('./toValueString')
 
+var helperMathAbs = require('./helperMathAbs')
 var helperStringRepeat = require('./helperStringRepeat')
 var helperNumberOffsetPoint = require('./helperNumberOffsetPoint')
 
@@ -23,7 +24,7 @@ function toFixed (num, digits, awayZero) {
     if (digitOffsetIndex > 0) {
       return intStr + '.' + floatStr + helperStringRepeat('0', digitOffsetIndex)
     }
-    return intStr + helperNumberOffsetPoint(floatStr, Math.abs(digitOffsetIndex))
+    return intStr + helperNumberOffsetPoint(floatStr, helperMathAbs(digitOffsetIndex))
   }
   return intStr
 }

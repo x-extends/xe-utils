@@ -1,6 +1,8 @@
 var staticStrUndefined = require('./staticStrUndefined')
 var staticStrLast = require('./staticStrLast')
 var staticStrFirst = require('./staticStrFirst')
+var staticChildren = require('./staticChildren')
+var staticInvalidDate = require('./staticInvalidDate')
 var staticDayTime = require('./staticDayTime')
 var staticWeekTime = require('./staticWeekTime')
 var staticLocation = require('./staticLocation')
@@ -18,6 +20,8 @@ var staticExports = {
   staticStrUndefined: staticStrUndefined,
   staticStrLast: staticStrLast,
   staticStrFirst: staticStrFirst,
+  staticChildren: staticChildren,
+  staticInvalidDate: staticInvalidDate,
   staticDayTime: staticDayTime,
   staticWeekTime: staticWeekTime,
   staticLocation: staticLocation,

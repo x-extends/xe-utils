@@ -1,6 +1,14 @@
 var staticStrFirst = require('./staticStrFirst')
 var staticStrLast = require('./staticStrLast')
 
+var helperDateGetFullYear = require('./helperDateGetFullYear')
+var helperDateGetMonth = require('./helperDateGetMonth')
+var helperDateGetDate = require('./helperDateGetDate')
+var helperDateGetHours = require('./helperDateGetHours')
+var helperDateGetMinutes = require('./helperDateGetMinutes')
+var helperDateGetSeconds = require('./helperDateGetSeconds')
+var helperMathFloor = require('./helperMathFloor')
+
 var toStringDate = require('./toStringDate')
 var isValidDate = require('./isValidDate')
 
@@ -12,15 +20,15 @@ var isValidDate = require('./isValidDate')
   * @param {Number} day 获取哪天：月初(first)、月末(last)、指定天数(数值)，如果为空，但超过指定月份的天数时，则默认单月最后一天
   * @return {Date}
   */
-function getWhatQuarter(date, offset, day) {
+function getWhatQuarter (date, offset, day) {
   var monthOffset = (offset != null && !isNaN(offset)) ? Number(offset) * 3 : 0
   date = toStringDate(date)
   if (!isValidDate(date)) {
     return date
   }
-  var year = date.getFullYear()
-  var month = date.getMonth()
-  var quarterStart = Math.floor(month / 3) * 3
+  var year = helperDateGetFullYear(date)
+  var month = helperDateGetMonth(date)
+  var quarterStart = helperMathFloor(month / 3) * 3
   // 月初
   if (day === staticStrFirst) {
     var targetMonth = quarterStart + monthOffset
@@ -33,8 +41,8 @@ function getWhatQuarter(date, offset, day) {
   }
   // 目标季度首月 + 原始日期，溢出则回退到月末
   var targetMonth = quarterStart + monthOffset
-  var result = new Date(year, targetMonth, date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds(), date.getMilliseconds())
-  if (date.getDate() !== result.getDate()) {
+  var result = new Date(year, targetMonth, helperDateGetDate(date), helperDateGetHours(date), helperDateGetMinutes(date), helperDateGetSeconds(date), date.getMilliseconds())
+  if (helperDateGetDate(date) !== helperDateGetDate(result)) {
     result.setDate(0)
   }
   return result

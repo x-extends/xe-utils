@@ -29,9 +29,11 @@ function helperEqualCompare (val1, val2, compare, func, key, obj1, obj2) {
           result = func(val1, val2, key)
         }
         if (val1Keys.length === val2Keys.length) {
-          return isUndefined(result) ? every(val1Keys, function (key, index) {
-            return key === val2Keys[index] && helperEqualCompare(val1[key], val2[val2Keys[index]], compare, func, isObj1Arr || isObj2Arr ? index : key, val1, val2)
-          }) : !!result
+          return isUndefined(result)
+            ? every(val1Keys, function (key, index) {
+              return key === val2Keys[index] && helperEqualCompare(val1[key], val2[val2Keys[index]], compare, func, isObj1Arr || isObj2Arr ? index : key, val1, val2)
+            })
+            : !!result
         }
         return false
       }
