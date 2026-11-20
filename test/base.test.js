@@ -2020,6 +2020,50 @@ describe('Base functions', () => {
     ).toEqual(22)
   })
 
+  test('arrayEach()', () => {
+    let rest = []
+    XEUtils.arrayEach([11, 22, 33], (item, key, obj) => {
+      rest.push([item, key])
+    })
+    expect(
+      rest
+    ).toEqual([[11, 0], [22, 1], [33, 2]])
+
+    rest = []
+    XEUtils.arrayEach([{ a: 11 }, { b: 22 }, { c: 33 }], (item, key, obj) => {
+      rest.push([item, key])
+    })
+    expect(
+      rest
+    ).toEqual([[{ a: 11 }, 0], [{ b: 22 }, 1], [{ c: 33 }, 2]])
+  })
+
+  test('objectEach()', () => {
+    const test1Obj = {}
+    test1Obj.a = 11
+    test1Obj.e = 55
+    test1Obj.c = 33
+    const rest1 = []
+    XEUtils.objectEach(test1Obj, (val, key, obj) => {
+      rest1.push([val, key])
+    })
+    expect(
+      rest1
+    ).toEqual([[11, 'a'], [55, 'e'], [33, 'c']])
+
+    const test2Obj = Object.create(null)
+    test2Obj.a = 11
+    test2Obj.e = 55
+    test2Obj.c = 33
+    const rest2 = []
+    XEUtils.objectEach(test2Obj, (val, key, obj) => {
+      rest2.push([val, key])
+    })
+    expect(
+      rest2
+    ).toEqual([[11, 'a'], [55, 'e'], [33, 'c']])
+  })
+
   test('each()', () => {
     let rest = []
     XEUtils.each([11, 22, 33], (item, key, obj) => {
